@@ -1,0 +1,96 @@
+{% extends "vocabulary/base.html" %}
+
+
+{% block title %}
+{{ level.code }} Vocabulary
+{% endblock %}
+
+
+{% block content %}
+
+<a
+    href="{% url 'vocabulary:home' %}"
+    class="back"
+>
+    ← Vocabulary
+</a>
+
+
+<span class="level-badge">
+    {{ level.code }}
+</span>
+
+
+<h1>
+    {{ level.code }} Vocabulary
+</h1>
+
+
+<p class="subtitle">
+    Build your vocabulary one lesson at a time.
+</p>
+
+
+<div class="stats">
+
+    <div class="stat">
+        <span class="stat-number">
+            {{ total_words }}
+        </span>
+
+        <div class="stat-label">
+            words
+        </div>
+    </div>
+
+
+    <div class="stat">
+        <span class="stat-number">
+            {{ total_lessons }}
+        </span>
+
+        <div class="stat-label">
+            lessons
+        </div>
+    </div>
+
+
+    <div class="stat">
+        <span class="stat-number">
+            {{ groups|length }}
+        </span>
+
+        <div class="stat-label">
+            groups
+        </div>
+    </div>
+
+</div>
+
+
+<div class="grid">
+
+    {% for group in groups %}
+
+        <a
+            href="{% url 'vocabulary:group_detail' level.code group.id %}"
+            class="card"
+        >
+
+            <div class="card-title">
+                {{ group.name }}
+            </div>
+
+            <div class="card-info">
+                {{ group.word_count }} words
+                ·
+                {{ group.lesson_count }} lessons
+            </div>
+
+        </a>
+
+    {% endfor %}
+
+</div>
+
+{% endblock %}

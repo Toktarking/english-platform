@@ -1,0 +1,55 @@
+{% extends "vocabulary/base.html" %}
+
+
+{% block title %}
+Vocabulary | English Platform
+{% endblock %}
+
+
+{% block content %}
+
+<h1>Vocabulary</h1>
+
+<p class="subtitle">
+    Learn English vocabulary step by step.
+</p>
+
+
+<div class="grid">
+
+    {% for level in levels %}
+
+        <a
+            href="{% url 'vocabulary:level_detail' level.code %}"
+            class="card"
+        >
+
+            <span class="level-badge">
+                {{ level.code }}
+            </span>
+
+            <div class="card-title">
+                {{ level.name }}
+            </div>
+
+            <div class="card-info">
+                {{ level.word_count }} words
+                ·
+                {{ level.lesson_count }} lessons
+                ·
+                {{ level.group_count }} groups
+            </div>
+
+        </a>
+
+    {% empty %}
+
+        <p>
+            No vocabulary levels yet.
+        </p>
+
+    {% endfor %}
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,552 @@
+{% extends "vocabulary/base.html" %}
+
+{% block title %}
+Настройка курса
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+    .setup-page {
+        max-width: 720px;
+
+        margin: 25px auto 60px;
+    }
+
+
+    .setup-top {
+        margin-bottom: 28px;
+
+        text-align: center;
+    }
+
+
+    .setup-step {
+        display: inline-block;
+
+        margin-bottom: 12px;
+        padding: 6px 11px;
+
+        background: #ede9fe;
+
+        border-radius: 999px;
+
+        color: #6d28d9;
+
+        font-size: 11px;
+        font-weight: 800;
+    }
+
+
+    .setup-title {
+        margin: 0 0 10px;
+
+        color: #111827;
+
+        font-size: 34px;
+        font-weight: 900;
+    }
+
+
+    .setup-subtitle {
+        max-width: 560px;
+
+        margin: 0 auto;
+
+        color: #6b7280;
+
+        font-size: 15px;
+        line-height: 1.6;
+    }
+
+
+    .setup-card {
+        padding: 30px;
+
+        background: white;
+
+        border: 1px solid #e5e7eb;
+        border-radius: 22px;
+
+        box-shadow:
+            0 10px 30px
+            rgba(0, 0, 0, 0.05);
+    }
+
+
+    .field-block {
+        margin-bottom: 28px;
+    }
+
+
+    .field-label {
+        display: block;
+
+        margin-bottom: 8px;
+
+        color: #111827;
+
+        font-size: 14px;
+        font-weight: 800;
+    }
+
+
+    .field-description {
+        margin-bottom: 12px;
+
+        color: #6b7280;
+
+        font-size: 12px;
+        line-height: 1.5;
+    }
+
+
+    .course-input {
+        width: 100%;
+
+        box-sizing: border-box;
+
+        padding: 14px 15px;
+
+        background: #ffffff;
+
+        border: 1px solid #d1d5db;
+        border-radius: 12px;
+
+        color: #111827;
+
+        outline: none;
+
+        font: inherit;
+
+        font-size: 15px;
+    }
+
+
+    .course-input:focus {
+        border-color: #7c3aed;
+
+        box-shadow:
+            0 0 0 3px
+            rgba(124, 58, 237, 0.10);
+    }
+
+
+    .quick-days {
+        display: grid;
+
+        grid-template-columns:
+            repeat(3, 1fr);
+
+        gap: 8px;
+
+        margin-bottom: 12px;
+    }
+
+
+    .quick-day {
+        padding: 12px 8px;
+
+        background: #f9fafb;
+
+        border: 1px solid #e5e7eb;
+        border-radius: 11px;
+
+        color: #374151;
+
+        font-family: inherit;
+        font-size: 13px;
+        font-weight: 800;
+
+        cursor: pointer;
+
+        transition:
+            0.15s ease;
+    }
+
+
+    .quick-day:hover {
+        background: #f5f3ff;
+
+        border-color: #c4b5fd;
+
+        color: #6d28d9;
+    }
+
+
+    .quick-day.selected {
+        background: #ede9fe;
+
+        border-color: #8b5cf6;
+
+        color: #6d28d9;
+    }
+
+
+    .daily-rule {
+        display: flex;
+        align-items: flex-start;
+
+        gap: 12px;
+
+        margin-bottom: 26px;
+        padding: 15px;
+
+        background: #f9fafb;
+
+        border: 1px solid #e5e7eb;
+        border-radius: 13px;
+    }
+
+
+    .daily-rule-icon {
+        flex-shrink: 0;
+
+        font-size: 22px;
+    }
+
+
+    .daily-rule-title {
+        margin-bottom: 3px;
+
+        color: #111827;
+
+        font-size: 13px;
+        font-weight: 800;
+    }
+
+
+    .daily-rule-text {
+        color: #6b7280;
+
+        font-size: 11px;
+        line-height: 1.5;
+    }
+
+
+    .form-errors {
+        margin-bottom: 20px;
+        padding: 12px 14px;
+
+        background: #fef2f2;
+
+        border: 1px solid #fecaca;
+        border-radius: 10px;
+
+        color: #b91c1c;
+
+        font-size: 12px;
+    }
+
+
+    .calculate-button {
+        width: 100%;
+
+        padding: 14px;
+
+        background: #7c3aed;
+
+        border: 0;
+        border-radius: 12px;
+
+        color: white;
+
+        font-family: inherit;
+        font-size: 14px;
+        font-weight: 900;
+
+        cursor: pointer;
+    }
+
+
+    .calculate-button:hover {
+        background: #6d28d9;
+    }
+
+
+    @media (max-width: 600px) {
+
+        .setup-card {
+            padding: 20px;
+        }
+
+
+        .setup-title {
+            font-size: 27px;
+        }
+
+
+        .quick-days {
+            grid-template-columns: 1fr;
+        }
+
+    }
+
+</style>
+
+
+<div class="setup-page">
+
+
+    <div class="setup-top">
+
+        <div class="setup-step">
+            Шаг 1 из 2
+        </div>
+
+
+        <h1 class="setup-title">
+            Настройте свой курс
+        </h1>
+
+
+        <p class="setup-subtitle">
+
+            Выберите уровень и срок.
+            Мы рассчитаем примерную ежедневную нагрузку,
+            прежде чем вы подтвердите план.
+
+        </p>
+
+    </div>
+
+
+    <form
+        method="post"
+        class="setup-card"
+    >
+
+        {% csrf_token %}
+
+
+        {% if form.errors %}
+
+            <div class="form-errors">
+
+                Пожалуйста, проверьте введённые данные.
+
+                {{ form.non_field_errors }}
+
+            </div>
+
+        {% endif %}
+
+
+        <!-- =============================================
+             LEVEL
+             ============================================= -->
+
+        <div class="field-block">
+
+            <label
+                for="{{ form.level.id_for_label }}"
+                class="field-label"
+            >
+                Ваш уровень
+            </label>
+
+
+            <div class="field-description">
+
+                Сейчас выберите уровень,
+                который хотите пройти полностью.
+
+            </div>
+
+
+            {{ form.level }}
+
+
+            {% if form.level.errors %}
+
+                <div class="form-errors">
+                    {{ form.level.errors }}
+                </div>
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- =============================================
+             DURATION
+             ============================================= -->
+
+        <div class="field-block">
+
+            <label
+                for="{{ form.duration_days.id_for_label }}"
+                class="field-label"
+            >
+                За сколько дней хотите пройти уровень?
+            </label>
+
+
+            <div class="field-description">
+
+                Занятия рассчитаны на каждый день.
+                Чем короче срок, тем выше ежедневная нагрузка.
+
+            </div>
+
+
+            <div class="quick-days">
+
+                <button
+                    type="button"
+                    class="quick-day"
+                    data-days="30"
+                >
+                    30 дней
+                </button>
+
+
+                <button
+                    type="button"
+                    class="quick-day"
+                    data-days="60"
+                >
+                    60 дней
+                </button>
+
+
+                <button
+                    type="button"
+                    class="quick-day"
+                    data-days="90"
+                >
+                    90 дней
+                </button>
+
+            </div>
+
+
+            {{ form.duration_days }}
+
+
+            {% if form.duration_days.errors %}
+
+                <div class="form-errors">
+                    {{ form.duration_days.errors }}
+                </div>
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- =============================================
+             DAILY RULE
+             ============================================= -->
+
+        <div class="daily-rule">
+
+            <div class="daily-rule-icon">
+                📅
+            </div>
+
+
+            <div>
+
+                <div class="daily-rule-title">
+                    Занятия каждый день
+                </div>
+
+
+                <div class="daily-rule-text">
+
+                    План рассчитан на ежедневное обучение.
+                    Если день будет пропущен,
+                    оставшаяся нагрузка автоматически
+                    перераспределится до вашей конечной даты.
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <button
+            type="submit"
+            class="calculate-button"
+        >
+            Рассчитать мой план →
+        </button>
+
+
+    </form>
+
+</div>
+
+
+<script>
+
+    const durationInput =
+        document.getElementById(
+            "{{ form.duration_days.id_for_label }}"
+        );
+
+
+    const quickButtons =
+        document.querySelectorAll(
+            ".quick-day"
+        );
+
+
+    function updateSelectedButton() {
+
+        const currentValue =
+            String(
+                durationInput.value
+            );
+
+
+        quickButtons.forEach(
+            button => {
+
+                button.classList.toggle(
+                    "selected",
+                    button.dataset.days
+                    ===
+                    currentValue
+                );
+
+            }
+        );
+
+    }
+
+
+    quickButtons.forEach(
+        button => {
+
+            button.addEventListener(
+                "click",
+                function () {
+
+                    durationInput.value =
+                        this.dataset.days;
+
+
+                    updateSelectedButton();
+
+                }
+            );
+
+        }
+    );
+
+
+    durationInput.addEventListener(
+        "input",
+        updateSelectedButton
+    );
+
+
+    updateSelectedButton();
+
+</script>
+
+{% endblock %}

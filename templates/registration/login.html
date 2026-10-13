@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+
+<html lang="ru">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Login | English Platform
+    </title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        body {
+            margin: 0;
+
+            min-height: 100vh;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 20px;
+
+            background: #f5f7fb;
+
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                sans-serif;
+        }
+
+
+        .auth-wrapper {
+            width: 100%;
+            max-width: 430px;
+        }
+
+
+        .logo {
+            margin-bottom: 25px;
+
+            color: #2563eb;
+
+            font-size: 34px;
+            font-weight: 800;
+
+            text-align: center;
+
+            letter-spacing: -1px;
+        }
+
+
+        .auth-card {
+            padding: 34px;
+
+            background: white;
+
+            border: 1px solid #e5e7eb;
+            border-radius: 22px;
+
+            box-shadow:
+                0 12px 35px
+                rgba(0, 0, 0, 0.06);
+        }
+
+
+        .auth-title {
+            margin: 0 0 7px;
+
+            color: #111827;
+
+            font-size: 28px;
+            font-weight: 800;
+
+            text-align: center;
+        }
+
+
+        .auth-subtitle {
+            margin-bottom: 27px;
+
+            color: #6b7280;
+
+            font-size: 14px;
+
+            text-align: center;
+        }
+
+
+        .form-group {
+            margin-bottom: 17px;
+        }
+
+
+        label {
+            display: block;
+
+            margin-bottom: 6px;
+
+            color: #374151;
+
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+
+        input {
+            width: 100%;
+
+            padding: 13px 14px;
+
+            background: white;
+
+            border: 1px solid #d1d5db;
+            border-radius: 11px;
+
+            color: #111827;
+
+            font-size: 15px;
+
+            outline: none;
+
+            transition:
+                border-color 0.15s ease,
+                box-shadow 0.15s ease;
+        }
+
+
+        input:focus {
+            border-color: #2563eb;
+
+            box-shadow:
+                0 0 0 3px
+                rgba(37, 99, 235, 0.10);
+        }
+
+
+        .error-box {
+            margin-bottom: 18px;
+
+            padding: 11px 13px;
+
+            background: #fef2f2;
+
+            border: 1px solid #fecaca;
+            border-radius: 10px;
+
+            color: #b91c1c;
+
+            font-size: 13px;
+        }
+
+
+        .auth-button {
+            width: 100%;
+
+            margin-top: 5px;
+            padding: 13px;
+
+            background: #2563eb;
+
+            border: none;
+            border-radius: 11px;
+
+            color: white;
+
+            font-size: 15px;
+            font-weight: 800;
+
+            cursor: pointer;
+
+            transition:
+                background 0.15s ease,
+                transform 0.15s ease;
+        }
+
+
+        .auth-button:hover {
+            background: #1d4ed8;
+
+            transform: translateY(-1px);
+        }
+
+
+        .auth-bottom {
+            margin-top: 23px;
+
+            color: #6b7280;
+
+            font-size: 13px;
+
+            text-align: center;
+        }
+
+
+        .auth-bottom a {
+            color: #2563eb;
+
+            font-weight: 700;
+
+            text-decoration: none;
+        }
+
+
+        .auth-bottom a:hover {
+            text-decoration: underline;
+        }
+
+
+        @media (max-width: 500px) {
+
+            body {
+                padding: 14px;
+            }
+
+
+            .logo {
+                margin-bottom: 18px;
+
+                font-size: 30px;
+            }
+
+
+            .auth-card {
+                padding: 25px 20px;
+
+                border-radius: 18px;
+            }
+
+
+            .auth-title {
+                font-size: 25px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="auth-wrapper">
+
+
+    <div class="logo">
+        English Platform
+    </div>
+
+
+    <div class="auth-card">
+
+
+        <h1 class="auth-title">
+            Вход
+        </h1>
+
+
+        <div class="auth-subtitle">
+            Войдите, чтобы продолжить обучение
+        </div>
+
+
+        {% if form.errors %}
+
+            <div class="error-box">
+                Неверное имя пользователя или пароль.
+            </div>
+
+        {% endif %}
+
+
+        {% if next %}
+
+            {% if user.is_authenticated %}
+
+                <div class="error-box">
+                    У вашего аккаунта нет доступа к этой странице.
+                </div>
+
+            {% endif %}
+
+        {% endif %}
+
+
+        <form method="post">
+
+            {% csrf_token %}
+
+
+            <div class="form-group">
+
+                <label for="{{ form.username.id_for_label }}">
+                    Username
+                </label>
+
+                {{ form.username }}
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="{{ form.password.id_for_label }}">
+                    Пароль
+                </label>
+
+                {{ form.password }}
+
+            </div>
+
+
+            {% if next %}
+
+                <input
+                    type="hidden"
+                    name="next"
+                    value="{{ next }}"
+                >
+
+            {% endif %}
+
+
+            <button
+                type="submit"
+                class="auth-button"
+            >
+                Войти
+            </button>
+
+        </form>
+
+
+        <div class="auth-bottom">
+
+            Нет аккаунта?
+
+            <a href="{% url 'register' %}">
+                Зарегистрироваться
+            </a>
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+</body>
+
+</html>

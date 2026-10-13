@@ -1,0 +1,1678 @@
+{% extends "vocabulary/base.html" %}
+
+{% block title %}
+Practice 4 | {{ group.name }}
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+    /* =====================================================
+       MAIN
+       ===================================================== */
+
+    .practice4-container {
+        max-width: 720px;
+        margin: 0 auto;
+    }
+
+
+    .practice4-header {
+        margin-bottom: 22px;
+    }
+
+
+    .practice4-badge {
+        display: inline-block;
+
+        margin-bottom: 10px;
+        padding: 6px 11px;
+
+        background: #ede9fe;
+
+        border-radius: 999px;
+
+        color: #6d28d9;
+
+        font-size: 12px;
+        font-weight: 800;
+    }
+
+
+    /* =====================================================
+       DECK STATUS
+       ===================================================== */
+
+    .deck-status {
+        display: grid;
+
+        grid-template-columns:
+            repeat(4, 1fr);
+
+        gap: 8px;
+
+        margin-bottom: 18px;
+    }
+
+
+    .deck-item {
+        padding: 11px 8px;
+
+        background: white;
+
+        border: 1px solid #e5e7eb;
+        border-radius: 12px;
+
+        text-align: center;
+    }
+
+
+    .deck-number {
+        color: #111827;
+
+        font-size: 20px;
+        font-weight: 800;
+    }
+
+
+    .deck-label {
+        margin-top: 2px;
+
+        color: #6b7280;
+
+        font-size: 10px;
+    }
+
+
+    .deck-item.active {
+        border-color: #7c3aed;
+
+        background: #f5f3ff;
+    }
+
+
+    /* =====================================================
+       PROGRESS
+       ===================================================== */
+
+    .progress-info {
+        display: flex;
+        justify-content: space-between;
+
+        margin-bottom: 7px;
+
+        color: #6b7280;
+
+        font-size: 13px;
+    }
+
+
+    .progress-track {
+        height: 8px;
+
+        margin-bottom: 22px;
+
+        overflow: hidden;
+
+        background: #e5e7eb;
+
+        border-radius: 999px;
+    }
+
+
+    .progress-bar {
+        width: 0;
+        height: 100%;
+
+        background: #7c3aed;
+
+        border-radius: 999px;
+
+        transition:
+            width 0.25s ease;
+    }
+
+
+    /* =====================================================
+       CARD
+       ===================================================== */
+
+    .listening-card {
+        padding: 42px 30px;
+
+        background: white;
+
+        border: 1px solid #e5e7eb;
+        border-radius: 24px;
+
+        box-shadow:
+            0 10px 30px
+            rgba(0, 0, 0, 0.05);
+
+        text-align: center;
+    }
+
+
+    .listening-label {
+        margin-bottom: 13px;
+
+        color: #6b7280;
+
+        font-size: 13px;
+        font-weight: 700;
+    }
+
+
+    .speaker-icon {
+        margin-bottom: 14px;
+
+        font-size: 68px;
+
+        line-height: 1;
+    }
+
+
+    /* =====================================================
+       AUDIO
+       ===================================================== */
+
+    .audio-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        gap: 8px;
+
+        min-width: 210px;
+
+        margin-bottom: 28px;
+        padding: 14px 22px;
+
+        background: #ede9fe;
+
+        border: 2px solid #c4b5fd;
+        border-radius: 14px;
+
+        color: #6d28d9;
+
+        font-family: inherit;
+        font-size: 14px;
+        font-weight: 800;
+
+        cursor: pointer;
+
+        transition:
+            0.15s ease;
+    }
+
+
+    .audio-button:hover:not(:disabled) {
+        background: #ddd6fe;
+
+        border-color: #8b5cf6;
+
+        transform: translateY(-1px);
+    }
+
+
+    .audio-button:disabled {
+        opacity: 0.4;
+
+        cursor: not-allowed;
+    }
+
+
+    /* =====================================================
+       INPUT
+       ===================================================== */
+
+    .answer-wrap {
+        max-width: 420px;
+
+        margin: 0 auto;
+    }
+
+
+    .word-input {
+        width: 100%;
+
+        box-sizing: border-box;
+
+        padding: 16px;
+
+        background: white;
+
+        border: 2px solid #d1d5db;
+        border-radius: 13px;
+
+        color: #111827;
+
+        outline: none;
+
+        font-family: inherit;
+        font-size: 23px;
+        font-weight: 700;
+
+        text-align: center;
+
+        transition:
+            border-color 0.15s ease,
+            box-shadow 0.15s ease,
+            background 0.15s ease;
+    }
+
+
+    .word-input:focus {
+        border-color: #7c3aed;
+
+        box-shadow:
+            0 0 0 3px
+            rgba(124, 58, 237, 0.10);
+    }
+
+
+    .word-input.correct {
+        background: #dcfce7;
+
+        border-color: #16a34a;
+
+        color: #166534;
+    }
+
+
+    .word-input.wrong {
+        background: #fee2e2;
+
+        border-color: #dc2626;
+
+        color: #991b1b;
+    }
+
+
+    .input-hint {
+        margin-top: 7px;
+
+        color: #9ca3af;
+
+        font-size: 11px;
+    }
+
+
+    /* =====================================================
+       CHECK
+       ===================================================== */
+
+    .check-button {
+        min-width: 180px;
+
+        margin-top: 18px;
+        padding: 13px 22px;
+
+        background: #7c3aed;
+
+        border: none;
+        border-radius: 12px;
+
+        color: white;
+
+        font-family: inherit;
+        font-size: 14px;
+        font-weight: 800;
+
+        cursor: pointer;
+    }
+
+
+    .check-button:hover:not(:disabled) {
+        background: #6d28d9;
+    }
+
+
+    .check-button:disabled {
+        opacity: 0.4;
+
+        cursor: not-allowed;
+    }
+
+
+    /* =====================================================
+       FEEDBACK
+       ===================================================== */
+
+    .feedback {
+        min-height: 55px;
+
+        margin-top: 20px;
+
+        font-size: 15px;
+        font-weight: 700;
+
+        line-height: 1.55;
+    }
+
+
+    .feedback.correct {
+        color: #15803d;
+    }
+
+
+    .feedback.wrong {
+        color: #b91c1c;
+    }
+
+
+    /* =====================================================
+       NEXT
+       ===================================================== */
+
+    .next-area {
+        margin-top: 12px;
+
+        text-align: right;
+    }
+
+
+    .next-button {
+        display: none;
+
+        padding: 12px 20px;
+
+        background: #2563eb;
+
+        border: none;
+        border-radius: 11px;
+
+        color: white;
+
+        font-family: inherit;
+        font-size: 14px;
+        font-weight: 700;
+
+        cursor: pointer;
+    }
+
+
+    /* =====================================================
+       RESULT
+       ===================================================== */
+
+    .complete-card {
+        display: none;
+
+        padding: 48px 30px;
+
+        background: white;
+
+        border: 1px solid #e5e7eb;
+        border-radius: 24px;
+
+        text-align: center;
+    }
+
+
+    .complete-icon {
+        margin-bottom: 10px;
+
+        font-size: 55px;
+    }
+
+
+    .complete-title {
+        margin-bottom: 10px;
+
+        color: #111827;
+
+        font-size: 30px;
+        font-weight: 800;
+    }
+
+
+    .complete-text {
+        max-width: 500px;
+
+        margin:
+            0 auto
+            25px;
+
+        color: #6b7280;
+
+        line-height: 1.6;
+    }
+
+
+    .complete-actions {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+
+        gap: 10px;
+    }
+
+
+    /* =====================================================
+       ERROR
+       ===================================================== */
+
+    .audio-error {
+        display: none;
+
+        margin:
+            0 auto
+            20px;
+
+        max-width: 460px;
+
+        padding: 12px;
+
+        background: #fef2f2;
+
+        border: 1px solid #fecaca;
+        border-radius: 10px;
+
+        color: #b91c1c;
+
+        font-size: 12px;
+    }
+
+
+    /* =====================================================
+       MOBILE
+       ===================================================== */
+
+    @media (max-width: 600px) {
+
+        .deck-status {
+            grid-template-columns:
+                repeat(2, 1fr);
+        }
+
+
+        .listening-card {
+            padding:
+                30px
+                14px;
+        }
+
+
+        .speaker-icon {
+            font-size: 54px;
+        }
+
+
+        .word-input {
+            padding: 14px;
+
+            font-size: 20px;
+        }
+
+
+        .audio-button {
+            min-width: 180px;
+
+            padding: 12px 16px;
+
+            font-size: 12px;
+        }
+
+    }
+
+</style>
+
+
+<div class="practice4-container">
+
+
+    <a
+        href="{% url 'vocabulary:group_detail' level.code group.id %}"
+        class="back"
+    >
+        ← {{ group.name }}
+    </a>
+
+
+    <div class="practice4-header">
+
+        <span class="level-badge">
+            {{ level.code }}
+        </span>
+
+
+        <div class="practice4-badge">
+            Practice 4 · Listening
+        </div>
+
+
+        <h1>
+            Listen & Type
+        </h1>
+
+
+        <p class="subtitle">
+            Прослушайте английское слово
+            и напишите его самостоятельно.
+        </p>
+
+    </div>
+
+
+    <!-- =====================================================
+         PRACTICE
+         ===================================================== -->
+
+    <div id="practiceArea">
+
+
+        <!-- DECKS -->
+
+        <div class="deck-status">
+
+
+            <div
+                class="deck-item"
+                id="unopenedCard"
+            >
+
+                <div
+                    class="deck-number"
+                    id="unopenedCount"
+                >
+                    0
+                </div>
+
+                <div class="deck-label">
+                    Не открыто
+                </div>
+
+            </div>
+
+
+            <div
+                class="deck-item"
+                id="deck1Card"
+            >
+
+                <div
+                    class="deck-number"
+                    id="deck1Count"
+                >
+                    0
+                </div>
+
+                <div class="deck-label">
+                    Колода 1
+                </div>
+
+            </div>
+
+
+            <div
+                class="deck-item"
+                id="deck2Card"
+            >
+
+                <div
+                    class="deck-number"
+                    id="deck2Count"
+                >
+                    0
+                </div>
+
+                <div class="deck-label">
+                    Колода 2
+                </div>
+
+            </div>
+
+
+            <div
+                class="deck-item"
+                id="deck3Card"
+            >
+
+                <div
+                    class="deck-number"
+                    id="deck3Count"
+                >
+                    0
+                </div>
+
+                <div class="deck-label">
+                    Колода 3
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- PROGRESS -->
+
+        <div class="progress-info">
+
+            <span id="phaseLabel">
+                Первый проход
+            </span>
+
+
+            <span id="mistakeLabel">
+                Ошибок: 0
+            </span>
+
+        </div>
+
+
+        <div class="progress-track">
+
+            <div
+                class="progress-bar"
+                id="progressBar"
+            ></div>
+
+        </div>
+
+
+        <!-- CARD -->
+
+        <div class="listening-card">
+
+
+            <div class="listening-label">
+                Какое слово вы слышите?
+            </div>
+
+
+            <div class="speaker-icon">
+                🔊
+            </div>
+
+
+            <div
+                class="audio-error"
+                id="audioError"
+            >
+                Для этого слова аудиофайл не найден.
+            </div>
+
+
+            <button
+                type="button"
+                class="audio-button"
+                id="audioButton"
+                onclick="playAudio()"
+            >
+                🔊 Прослушать ещё раз
+            </button>
+
+
+            <div class="answer-wrap">
+
+                <input
+                    type="text"
+                    class="word-input"
+                    id="wordInput"
+
+                    autocomplete="off"
+                    autocorrect="off"
+                    autocapitalize="none"
+                    spellcheck="false"
+
+                    placeholder="Напишите слово..."
+                >
+
+
+                <div class="input-hint">
+                    Нажмите Enter для проверки
+                </div>
+
+            </div>
+
+
+            <button
+                type="button"
+                class="check-button"
+                id="checkButton"
+                onclick="checkAnswer()"
+                disabled
+            >
+                Проверить
+            </button>
+
+
+            <div
+                class="feedback"
+                id="feedback"
+            ></div>
+
+
+            <div class="next-area">
+
+                <button
+                    type="button"
+                    class="next-button"
+                    id="nextButton"
+                    onclick="nextQuestion()"
+                >
+                    Далее →
+                </button>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         COMPLETE
+         ===================================================== -->
+
+    <div
+        class="complete-card"
+        id="completeCard"
+    >
+
+        <div class="complete-icon">
+            🎧
+        </div>
+
+
+        <div class="complete-title">
+            Practice 4 завершён!
+        </div>
+
+
+        <div class="complete-text">
+
+            Вы успешно прошли все слова группы
+            на слух и правильно написали
+            каждое английское слово.
+
+        </div>
+
+
+        <div class="complete-actions">
+
+            <button
+                type="button"
+                class="button"
+                onclick="restartPractice()"
+            >
+                Пройти ещё раз
+            </button>
+
+
+            <a
+                href="{% url 'vocabulary:group_detail' level.code group.id %}"
+                class="button"
+            >
+                Вернуться к группе
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<form style="display: none;">
+    {% csrf_token %}
+</form>
+
+
+{{ practice_state|json_script:"practice-state" }}
+
+
+<script>
+
+    /* =====================================================
+       DATA
+       ===================================================== */
+
+    let practiceState =
+        JSON.parse(
+            document
+                .getElementById(
+                    "practice-state"
+                )
+                .textContent
+        );
+
+
+    let currentAudio =
+        null;
+
+
+    let answerLocked =
+        false;
+
+
+    /* =====================================================
+       DOM
+       ===================================================== */
+
+    const practiceArea =
+        document.getElementById(
+            "practiceArea"
+        );
+
+
+    const completeCard =
+        document.getElementById(
+            "completeCard"
+        );
+
+
+    const wordInput =
+        document.getElementById(
+            "wordInput"
+        );
+
+
+    const checkButton =
+        document.getElementById(
+            "checkButton"
+        );
+
+
+    const audioButton =
+        document.getElementById(
+            "audioButton"
+        );
+
+
+    const audioError =
+        document.getElementById(
+            "audioError"
+        );
+
+
+    const feedback =
+        document.getElementById(
+            "feedback"
+        );
+
+
+    const nextButton =
+        document.getElementById(
+            "nextButton"
+        );
+
+
+    const phaseLabel =
+        document.getElementById(
+            "phaseLabel"
+        );
+
+
+    const mistakeLabel =
+        document.getElementById(
+            "mistakeLabel"
+        );
+
+
+    const progressBar =
+        document.getElementById(
+            "progressBar"
+        );
+
+
+    /* =====================================================
+       CSRF
+       ===================================================== */
+
+    function getCsrfToken() {
+
+        return document
+            .querySelector(
+                "[name=csrfmiddlewaretoken]"
+            )
+            .value;
+
+    }
+
+
+    /* =====================================================
+       AUDIO
+       ===================================================== */
+
+    function stopAudio() {
+
+        if (
+            currentAudio
+        ) {
+
+            currentAudio.pause();
+
+            currentAudio.currentTime =
+                0;
+
+            currentAudio =
+                null;
+
+        }
+
+    }
+
+
+    function playAudio() {
+
+        const question =
+            practiceState.question;
+
+
+        if (
+            !question
+            ||
+            !question.audio_url
+        ) {
+
+            audioError.style.display =
+                "block";
+
+            return;
+
+        }
+
+
+        stopAudio();
+
+
+        currentAudio =
+            new Audio(
+                question.audio_url
+            );
+
+
+        currentAudio.play()
+            .catch(
+                error => {
+
+                    console.log(
+                        "Audio playback error:",
+                        error
+                    );
+
+                }
+            );
+
+    }
+
+
+    /* =====================================================
+       PHASE NAME
+       ===================================================== */
+
+    function getPhaseName(
+        phase
+    ) {
+
+        const names = {
+
+            "initial":
+                "Первый проход",
+
+            "deck2_first":
+                "Работа с Колодой 2",
+
+            "deck3":
+                "Колода 3 · сложные слова",
+
+            "deck2_check":
+                "Проверка Колоды 2",
+
+            "deck1_check":
+                "Финальная проверка Колоды 1",
+
+            "completed":
+                "Завершено"
+
+        };
+
+
+        return (
+            names[
+                phase
+            ]
+            ||
+            phase
+        );
+
+    }
+
+
+    /* =====================================================
+       RENDER
+       ===================================================== */
+
+    function renderState() {
+
+        if (
+            practiceState.is_completed
+        ) {
+
+            stopAudio();
+
+
+            practiceArea.style.display =
+                "none";
+
+
+            completeCard.style.display =
+                "block";
+
+
+            return;
+
+        }
+
+
+        practiceArea.style.display =
+            "block";
+
+
+        completeCard.style.display =
+            "none";
+
+
+        answerLocked =
+            false;
+
+
+        wordInput.value =
+            "";
+
+
+        wordInput.disabled =
+            false;
+
+
+        wordInput.className =
+            "word-input";
+
+
+        feedback.textContent =
+            "";
+
+
+        feedback.className =
+            "feedback";
+
+
+        nextButton.style.display =
+            "none";
+
+
+        checkButton.disabled =
+            true;
+
+
+        phaseLabel.textContent =
+            getPhaseName(
+                practiceState.phase
+            );
+
+
+        mistakeLabel.textContent =
+            `Ошибок: ${practiceState.mistake_count}`;
+
+
+        document
+            .getElementById(
+                "unopenedCount"
+            )
+            .textContent =
+                practiceState.unopened_count;
+
+
+        document
+            .getElementById(
+                "deck1Count"
+            )
+            .textContent =
+                practiceState.deck1_count;
+
+
+        document
+            .getElementById(
+                "deck2Count"
+            )
+            .textContent =
+                practiceState.deck2_count;
+
+
+        document
+            .getElementById(
+                "deck3Count"
+            )
+            .textContent =
+                practiceState.deck3_count;
+
+
+        document
+            .querySelectorAll(
+                ".deck-item"
+            )
+            .forEach(
+                item => {
+
+                    item.classList.remove(
+                        "active"
+                    );
+
+                }
+            );
+
+
+        if (
+            practiceState.current_deck
+            ===
+            1
+        ) {
+
+            document
+                .getElementById(
+                    "deck1Card"
+                )
+                .classList.add(
+                    "active"
+                );
+
+        }
+
+
+        if (
+            practiceState.current_deck
+            ===
+            2
+        ) {
+
+            document
+                .getElementById(
+                    "deck2Card"
+                )
+                .classList.add(
+                    "active"
+                );
+
+        }
+
+
+        if (
+            practiceState.current_deck
+            ===
+            3
+        ) {
+
+            document
+                .getElementById(
+                    "deck3Card"
+                )
+                .classList.add(
+                    "active"
+                );
+
+        }
+
+
+        const queueSize =
+            Math.max(
+                1,
+                Number(
+                    practiceState.queue_size
+                    ||
+                    1
+                )
+            );
+
+
+        const currentIndex =
+            Number(
+                practiceState.current_index
+                ||
+                0
+            );
+
+
+        const percentage =
+            (
+                currentIndex
+                /
+                queueSize
+            )
+            *
+            100;
+
+
+        progressBar.style.width =
+            `${percentage}%`;
+
+
+        const question =
+            practiceState.question;
+
+
+        if (
+            !question
+        ) {
+
+            return;
+
+        }
+
+
+        if (
+            question.audio_url
+        ) {
+
+            audioButton.disabled =
+                false;
+
+
+            audioError.style.display =
+                "none";
+
+
+            /*
+            Автоматическое воспроизведение.
+            Браузер может заблокировать autoplay,
+            поэтому кнопка остаётся доступна.
+            */
+
+            setTimeout(
+                function () {
+
+                    playAudio();
+
+                },
+                250
+            );
+
+        }
+
+        else {
+
+            audioButton.disabled =
+                true;
+
+
+            audioError.style.display =
+                "block";
+
+        }
+
+
+        setTimeout(
+            function () {
+
+                wordInput.focus();
+
+            },
+            300
+        );
+
+    }
+
+
+    /* =====================================================
+       INPUT
+       ===================================================== */
+
+    wordInput.addEventListener(
+        "input",
+        function () {
+
+            checkButton.disabled =
+                (
+                    answerLocked
+                    ||
+                    wordInput.value
+                        .trim()
+                        .length
+                    ===
+                    0
+                );
+
+        }
+    );
+
+
+    wordInput.addEventListener(
+        "keydown",
+        function (
+            event
+        ) {
+
+            if (
+                event.key
+                ===
+                "Enter"
+            ) {
+
+                event.preventDefault();
+
+
+                if (
+                    !checkButton.disabled
+                ) {
+
+                    checkAnswer();
+
+                }
+
+            }
+
+        }
+    );
+
+
+    /* =====================================================
+       CHECK
+       ===================================================== */
+
+    async function checkAnswer() {
+
+        if (
+            answerLocked
+        ) {
+
+            return;
+
+        }
+
+
+        const question =
+            practiceState.question;
+
+
+        if (
+            !question
+        ) {
+
+            return;
+
+        }
+
+
+        const answer =
+            wordInput
+                .value
+                .trim();
+
+
+        if (
+            !answer
+        ) {
+
+            return;
+
+        }
+
+
+        answerLocked =
+            true;
+
+
+        checkButton.disabled =
+            true;
+
+
+        wordInput.disabled =
+            true;
+
+
+        stopAudio();
+
+
+        try {
+
+            const response =
+                await fetch(
+                    "{% url 'vocabulary:group_practice4_answer' group.id %}",
+                    {
+                        method:
+                            "POST",
+
+                        headers: {
+
+                            "Content-Type":
+                                "application/json",
+
+                            "X-CSRFToken":
+                                getCsrfToken(),
+
+                        },
+
+                        body:
+                            JSON.stringify(
+                                {
+                                    word_id:
+                                        question.word_id,
+
+                                    answer:
+                                        answer,
+                                }
+                            ),
+                    }
+                );
+
+
+            const data =
+                await response.json();
+
+
+            if (
+                !response.ok
+                ||
+                !data.success
+            ) {
+
+                throw new Error(
+                    data.error
+                    ||
+                    "Answer error."
+                );
+
+            }
+
+
+            const result =
+                data.answer;
+
+
+            if (
+                result.is_correct
+            ) {
+
+                wordInput.classList.add(
+                    "correct"
+                );
+
+
+                feedback.textContent =
+                    `Правильно! ✓ `
+                    +
+                    `${result.correct_word} — `
+                    +
+                    `${result.translation_ru}`;
+
+
+                feedback.className =
+                    "feedback correct";
+
+            }
+
+            else {
+
+                wordInput.classList.add(
+                    "wrong"
+                );
+
+
+                feedback.textContent =
+                    `Неправильно. `
+                    +
+                    `Правильный ответ: `
+                    +
+                    `${result.correct_word} — `
+                    +
+                    `${result.translation_ru}`;
+
+
+                feedback.className =
+                    "feedback wrong";
+
+            }
+
+
+            practiceState =
+                data.state;
+
+
+            nextButton.style.display =
+                "inline-block";
+
+
+            if (
+                practiceState.is_completed
+            ) {
+
+                nextButton.textContent =
+                    "Завершить →";
+
+            }
+
+            else {
+
+                nextButton.textContent =
+                    "Далее →";
+
+            }
+
+        }
+
+        catch (error) {
+
+            console.error(
+                error
+            );
+
+
+            answerLocked =
+                false;
+
+
+            wordInput.disabled =
+                false;
+
+
+            checkButton.disabled =
+                false;
+
+
+            feedback.textContent =
+                "Не удалось сохранить ответ.";
+
+
+            feedback.className =
+                "feedback wrong";
+
+        }
+
+    }
+
+
+    /* =====================================================
+       NEXT
+       ===================================================== */
+
+    function nextQuestion() {
+
+        renderState();
+
+    }
+
+
+    /* =====================================================
+       RESTART
+       ===================================================== */
+
+    async function restartPractice() {
+
+        try {
+
+            const response =
+                await fetch(
+                    "{% url 'vocabulary:group_practice4_restart' group.id %}",
+                    {
+                        method:
+                            "POST",
+
+                        headers: {
+
+                            "Content-Type":
+                                "application/json",
+
+                            "X-CSRFToken":
+                                getCsrfToken(),
+
+                        },
+
+                        body:
+                            JSON.stringify(
+                                {}
+                            ),
+                    }
+                );
+
+
+            const data =
+                await response.json();
+
+
+            if (
+                !response.ok
+                ||
+                !data.success
+            ) {
+
+                throw new Error(
+                    data.error
+                    ||
+                    "Restart error."
+                );
+
+            }
+
+
+            practiceState =
+                data.state;
+
+
+            renderState();
+
+        }
+
+        catch (error) {
+
+            console.error(
+                error
+            );
+
+        }
+
+    }
+
+
+    /* =====================================================
+       START
+       ===================================================== */
+
+    renderState();
+
+</script>
+
+{% endblock %}

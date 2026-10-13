@@ -1,0 +1,861 @@
+{% extends "vocabulary/base.html" %}
+
+{% block title %}
+Ваш план {{ level.code }}
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+    .preview-page {
+        max-width: 900px;
+
+        margin: 25px auto 70px;
+    }
+
+
+    .preview-header {
+        margin-bottom: 25px;
+
+        text-align: center;
+    }
+
+
+    .preview-step {
+        display: inline-block;
+
+        margin-bottom: 11px;
+        padding: 6px 11px;
+
+        background: #dcfce7;
+
+        border-radius: 999px;
+
+        color: #15803d;
+
+        font-size: 11px;
+        font-weight: 800;
+    }
+
+
+    .preview-title {
+        margin: 0 0 8px;
+
+        color: #111827;
+
+        font-size: 34px;
+        font-weight: 900;
+    }
+
+
+    .preview-subtitle {
+        color: #6b7280;
+
+        font-size: 14px;
+    }
+
+
+    /* =====================================================
+       SUMMARY
+       ===================================================== */
+
+    .summary-card {
+        margin-bottom: 18px;
+        padding: 25px;
+
+        background: white;
+
+        border: 1px solid #e5e7eb;
+        border-radius: 22px;
+
+        box-shadow:
+            0 8px 25px
+            rgba(0, 0, 0, 0.045);
+    }
+
+
+    .summary-main {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        gap: 25px;
+
+        margin-bottom: 22px;
+    }
+
+
+    .level-big {
+        color: #7c3aed;
+
+        font-size: 50px;
+        font-weight: 900;
+    }
+
+
+    .duration-main {
+        text-align: right;
+    }
+
+
+    .duration-number {
+        color: #111827;
+
+        font-size: 28px;
+        font-weight: 900;
+    }
+
+
+    .duration-label {
+        color: #6b7280;
+
+        font-size: 11px;
+    }
+
+
+    .summary-grid {
+        display: grid;
+
+        grid-template-columns:
+            repeat(4, 1fr);
+
+        gap: 9px;
+    }
+
+
+    .summary-item {
+        padding: 13px;
+
+        background: #f9fafb;
+
+        border: 1px solid #e5e7eb;
+        border-radius: 12px;
+
+        text-align: center;
+    }
+
+
+    .summary-number {
+        color: #111827;
+
+        font-size: 19px;
+        font-weight: 900;
+    }
+
+
+    .summary-label {
+        margin-top: 3px;
+
+        color: #6b7280;
+
+        font-size: 9px;
+    }
+
+
+    /* =====================================================
+       LOAD
+       ===================================================== */
+
+    .load-card {
+        margin-bottom: 18px;
+        padding: 25px;
+
+        background:
+            linear-gradient(
+                145deg,
+                #faf8ff,
+                #ffffff
+            );
+
+        border: 1px solid #ddd6fe;
+        border-radius: 22px;
+    }
+
+
+    .load-title {
+        margin-bottom: 16px;
+
+        color: #111827;
+
+        font-size: 18px;
+        font-weight: 900;
+    }
+
+
+    .load-grid {
+        display: grid;
+
+        grid-template-columns:
+            repeat(3, 1fr);
+
+        gap: 10px;
+    }
+
+
+    .load-item {
+        padding: 14px;
+
+        background: white;
+
+        border: 1px solid #ede9fe;
+        border-radius: 12px;
+    }
+
+
+    .load-value {
+        color: #6d28d9;
+
+        font-size: 22px;
+        font-weight: 900;
+    }
+
+
+    .load-label {
+        margin-top: 3px;
+
+        color: #6b7280;
+
+        font-size: 10px;
+    }
+
+
+    .practice-note {
+        margin-top: 16px;
+        padding: 13px 15px;
+
+        background: #f5f3ff;
+
+        border-radius: 11px;
+
+        color: #5b21b6;
+
+        font-size: 11px;
+        line-height: 1.55;
+    }
+
+
+    /* =====================================================
+       WARNING
+       ===================================================== */
+
+    .intensity-warning {
+        margin-bottom: 18px;
+        padding: 17px;
+
+        background: #fff7ed;
+
+        border: 1px solid #fed7aa;
+        border-radius: 14px;
+
+        color: #9a3412;
+
+        font-size: 12px;
+        line-height: 1.6;
+    }
+
+
+    .warning-title {
+        margin-bottom: 4px;
+
+        font-weight: 900;
+    }
+
+
+    /* =====================================================
+       SCHEDULE
+       ===================================================== */
+
+    .schedule-card {
+        margin-bottom: 18px;
+        padding: 25px;
+
+        background: white;
+
+        border: 1px solid #e5e7eb;
+        border-radius: 22px;
+    }
+
+
+    .schedule-title {
+        margin-bottom: 5px;
+
+        color: #111827;
+
+        font-size: 18px;
+        font-weight: 900;
+    }
+
+
+    .schedule-description {
+        margin-bottom: 18px;
+
+        color: #9ca3af;
+
+        font-size: 11px;
+    }
+
+
+    .day-list {
+        display: flex;
+        flex-direction: column;
+
+        gap: 8px;
+    }
+
+
+    .day-row {
+        display: grid;
+
+        grid-template-columns:
+            115px
+            1fr
+            80px;
+
+        gap: 12px;
+
+        align-items: center;
+
+        padding: 13px;
+
+        background: #f9fafb;
+
+        border: 1px solid #e5e7eb;
+        border-radius: 11px;
+    }
+
+
+    .day-name {
+        color: #111827;
+
+        font-size: 11px;
+        font-weight: 900;
+    }
+
+
+    .day-date {
+        margin-top: 2px;
+
+        color: #9ca3af;
+
+        font-size: 9px;
+    }
+
+
+    .day-tasks {
+        display: flex;
+        flex-wrap: wrap;
+
+        gap: 5px;
+    }
+
+
+    .task-chip {
+        padding: 5px 8px;
+
+        background: white;
+
+        border: 1px solid #e5e7eb;
+        border-radius: 999px;
+
+        color: #4b5563;
+
+        font-size: 9px;
+        font-weight: 700;
+    }
+
+
+    .task-chip.practice {
+        background: #ede9fe;
+
+        border-color: #ddd6fe;
+
+        color: #6d28d9;
+    }
+
+
+    .day-minutes {
+        color: #6b7280;
+
+        font-size: 10px;
+        font-weight: 800;
+
+        text-align: right;
+    }
+
+
+    /* =====================================================
+       FINAL
+       ===================================================== */
+
+    .final-card {
+        padding: 24px;
+
+        background: white;
+
+        border: 1px solid #e5e7eb;
+        border-radius: 22px;
+
+        text-align: center;
+    }
+
+
+    .finish-date-label {
+        color: #9ca3af;
+
+        font-size: 10px;
+    }
+
+
+    .finish-date {
+        margin:
+            4px 0
+            22px;
+
+        color: #111827;
+
+        font-size: 21px;
+        font-weight: 900;
+    }
+
+
+    .actions {
+        display: grid;
+
+        grid-template-columns:
+            1fr
+            2fr;
+
+        gap: 9px;
+    }
+
+
+    .change-button,
+    .confirm-button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        min-height: 48px;
+
+        box-sizing: border-box;
+
+        border-radius: 12px;
+
+        font-size: 13px;
+        font-weight: 900;
+
+        text-decoration: none;
+    }
+
+
+    .change-button {
+        background: #f3f4f6;
+
+        color: #374151;
+    }
+
+
+    .confirm-button {
+        width: 100%;
+
+        background: #7c3aed;
+
+        border: 0;
+
+        color: white;
+
+        font-family: inherit;
+
+        cursor: pointer;
+    }
+
+
+    .confirm-button:hover {
+        background: #6d28d9;
+    }
+
+
+    @media (max-width: 700px) {
+
+        .summary-grid,
+        .load-grid {
+            grid-template-columns:
+                repeat(2, 1fr);
+        }
+
+
+        .day-row {
+            grid-template-columns: 1fr;
+        }
+
+
+        .day-minutes {
+            text-align: left;
+        }
+
+
+        .actions {
+            grid-template-columns: 1fr;
+        }
+
+    }
+
+</style>
+
+
+<div class="preview-page">
+
+
+    <div class="preview-header">
+
+        <div class="preview-step">
+            Шаг 2 из 2
+        </div>
+
+
+        <h1 class="preview-title">
+            Ваш план {{ level.code }}
+        </h1>
+
+
+        <div class="preview-subtitle">
+            Проверьте нагрузку перед подтверждением
+        </div>
+
+    </div>
+
+
+    <!-- =================================================
+         COURSE SUMMARY
+         ================================================= -->
+
+    <div class="summary-card">
+
+
+        <div class="summary-main">
+
+            <div class="level-big">
+                {{ level.code }}
+            </div>
+
+
+            <div class="duration-main">
+
+                <div class="duration-number">
+                    {{ preview.duration_days }}
+                </div>
+
+                <div class="duration-label">
+                    календарных дней
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="summary-grid">
+
+
+            <div class="summary-item">
+
+                <div class="summary-number">
+                    {{ preview.total_words }}
+                </div>
+
+                <div class="summary-label">
+                    слов
+                </div>
+
+            </div>
+
+
+            <div class="summary-item">
+
+                <div class="summary-number">
+                    {{ preview.total_lessons }}
+                </div>
+
+                <div class="summary-label">
+                    Lessons
+                </div>
+
+            </div>
+
+
+            <div class="summary-item">
+
+                <div class="summary-number">
+                    {{ preview.total_groups }}
+                </div>
+
+                <div class="summary-label">
+                    групп
+                </div>
+
+            </div>
+
+
+            <div class="summary-item">
+
+                <div class="summary-number">
+                    {{ preview.total_practices }}
+                </div>
+
+                <div class="summary-label">
+                    Group Practice
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <!-- =================================================
+         LOAD
+         ================================================= -->
+
+    <div class="load-card">
+
+        <div class="load-title">
+            Ожидаемая нагрузка
+        </div>
+
+
+        <div class="load-grid">
+
+
+            <div class="load-item">
+
+                <div class="load-value">
+                    ≈ {{ preview.estimated_minutes_per_day }}
+                </div>
+
+                <div class="load-label">
+                    минут ежедневно
+                </div>
+
+            </div>
+
+
+            <div class="load-item">
+
+                <div class="load-value">
+                    {{ preview.estimated_lessons_per_day }}
+                </div>
+
+                <div class="load-label">
+                    Lessons в среднем
+                </div>
+
+            </div>
+
+
+            <div class="load-item">
+
+                <div class="load-value">
+                    {{ preview.intensity_label }}
+                </div>
+
+                <div class="load-label">
+                    интенсивность
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="practice-note">
+
+            Каждый Group Practice в расчёте
+            резервирует до <strong>30 минут</strong>.
+            Фактическое время может быть меньше
+            и зависит от количества ошибок
+            и работы с колодами.
+
+        </div>
+
+    </div>
+
+
+    {% if preview.is_too_intensive %}
+
+        <div class="intensity-warning">
+
+            <div class="warning-title">
+                ⚠ Очень высокая нагрузка
+            </div>
+
+            Для выбранного срока требуется
+            более 120 минут нового материала
+            в день.
+
+            Для более реалистичного темпа
+            рекомендуется выбрать не менее
+
+            <strong>
+                {{ preview.required_minimum_days }}
+                дней
+            </strong>.
+
+            Вы всё равно можете оставить
+            текущий срок.
+
+        </div>
+
+    {% endif %}
+
+
+    <!-- =================================================
+         FIRST DAYS
+         ================================================= -->
+
+    <div class="schedule-card">
+
+        <div class="schedule-title">
+            Как может выглядеть первая неделя
+        </div>
+
+
+        <div class="schedule-description">
+
+            Это прогноз.
+            Реальный ежедневный план будет
+            автоматически меняться в зависимости
+            от вашего прогресса.
+
+        </div>
+
+
+        <div class="day-list">
+
+
+            {% for day in schedule_days %}
+
+                <div class="day-row">
+
+
+                    <div>
+
+                        <div class="day-name">
+                            День {{ day.day_number }}
+                        </div>
+
+                        <div class="day-date">
+                            {{ day.date|date:"d.m.Y" }}
+                        </div>
+
+                    </div>
+
+
+                    <div class="day-tasks">
+
+
+                        {% for item in day.items %}
+
+
+                            {% if item.type == "group_practice" %}
+
+                                <span class="task-chip practice">
+
+                                    {{ item.group_name }}
+                                    ·
+                                    Practice {{ item.practice_number }}
+
+                                </span>
+
+
+                            {% else %}
+
+                                <span class="task-chip">
+
+                                    {{ item.group_name }}
+                                    ·
+                                    Lesson {{ item.lesson_number }}
+
+                                </span>
+
+                            {% endif %}
+
+
+                        {% endfor %}
+
+
+                    </div>
+
+
+                    <div class="day-minutes">
+                        ≈ {{ day.estimated_minutes }} мин
+                    </div>
+
+
+                </div>
+
+            {% endfor %}
+
+
+        </div>
+
+    </div>
+
+
+    <!-- =================================================
+         CONFIRM
+         ================================================= -->
+
+    <div class="final-card">
+
+
+        <div class="finish-date-label">
+            Плановая дата завершения
+        </div>
+
+
+        <div class="finish-date">
+            {{ preview.target_date|date:"d.m.Y" }}
+        </div>
+
+
+        <div class="actions">
+
+
+            <a
+                href="{% url 'vocabulary:course_setup' %}"
+                class="change-button"
+            >
+                ← Изменить срок
+            </a>
+
+
+            <form
+                method="post"
+                action="{% url 'vocabulary:course_confirm' %}"
+            >
+
+                {% csrf_token %}
+
+
+                <button
+                    type="submit"
+                    class="confirm-button"
+                >
+                    ✓ Подтвердить план
+                </button>
+
+            </form>
+
+
+        </div>
+
+    </div>
+
+
+</div>
+
+{% endblock %}

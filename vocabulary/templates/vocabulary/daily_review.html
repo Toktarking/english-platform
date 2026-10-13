@@ -1,0 +1,528 @@
+{% extends "vocabulary/base.html" %}
+
+{% block title %}
+Повторение слов
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+    .review-page {
+        max-width: 650px;
+
+        margin: 30px auto;
+    }
+
+    .review-top {
+        margin-bottom: 18px;
+
+        text-align: center;
+    }
+
+    .review-label {
+        color: #7c3aed;
+
+        font-size: 11px;
+        font-weight: 900;
+    }
+
+    .review-title {
+        margin: 5px 0;
+
+        color: #111827;
+
+        font-size: 28px;
+        font-weight: 900;
+    }
+
+    .review-counter {
+        color: #9ca3af;
+
+        font-size: 11px;
+    }
+
+    .review-track {
+        height: 7px;
+
+        margin-bottom: 20px;
+
+        overflow: hidden;
+
+        background: #e5e7eb;
+
+        border-radius: 999px;
+    }
+
+    .review-bar {
+        height: 100%;
+
+        width: 0;
+
+        background: #7c3aed;
+
+        border-radius: 999px;
+
+        transition: width 0.2s ease;
+    }
+
+    .review-card {
+        padding: 40px 28px;
+
+        background: white;
+
+        border: 1px solid #e5e7eb;
+        border-radius: 24px;
+
+        box-shadow:
+            0 10px 30px
+            rgba(0, 0, 0, 0.05);
+
+        text-align: center;
+    }
+
+    .review-word {
+        color: #111827;
+
+        font-size: 37px;
+        font-weight: 900;
+    }
+
+    .review-pos {
+        margin-top: 4px;
+
+        color: #9ca3af;
+
+        font-size: 11px;
+    }
+
+    .review-answer {
+        display: none;
+
+        margin-top: 25px;
+        padding-top: 22px;
+
+        border-top: 1px solid #e5e7eb;
+    }
+
+    .review-translation {
+        color: #111827;
+
+        font-size: 20px;
+        font-weight: 800;
+    }
+
+    .review-example {
+        margin-top: 11px;
+
+        color: #6b7280;
+
+        font-size: 12px;
+        line-height: 1.5;
+    }
+
+    .show-button {
+        width: 100%;
+
+        margin-top: 28px;
+        padding: 14px;
+
+        background: #7c3aed;
+
+        border: 0;
+        border-radius: 12px;
+
+        color: white;
+
+        font-family: inherit;
+        font-weight: 900;
+
+        cursor: pointer;
+    }
+
+    .answer-buttons {
+        display: none;
+
+        grid-template-columns:
+            1fr 1fr;
+
+        gap: 9px;
+
+        margin-top: 20px;
+    }
+
+    .answer-button {
+        padding: 14px;
+
+        border: 0;
+        border-radius: 12px;
+
+        font-family: inherit;
+        font-weight: 900;
+
+        cursor: pointer;
+    }
+
+    .wrong-button {
+        background: #fee2e2;
+
+        color: #b91c1c;
+    }
+
+    .correct-button {
+        background: #dcfce7;
+
+        color: #15803d;
+    }
+
+</style>
+
+
+<div class="review-page">
+
+
+    <div class="review-top">
+
+        <div class="review-label">
+            DAILY REVIEW
+        </div>
+
+        <h1 class="review-title">
+            Повторение слов
+        </h1>
+
+        <div
+            class="review-counter"
+            id="counter"
+        ></div>
+
+    </div>
+
+
+    <div class="review-track">
+
+        <div
+            class="review-bar"
+            id="progressBar"
+        ></div>
+
+    </div>
+
+
+    <div class="review-card">
+
+        <div
+            class="review-word"
+            id="word"
+        ></div>
+
+
+        <div
+            class="review-pos"
+            id="partOfSpeech"
+        ></div>
+
+
+        <div
+            class="review-answer"
+            id="answerArea"
+        >
+
+            <div
+                class="review-translation"
+                id="translation"
+            ></div>
+
+            <div
+                class="review-example"
+                id="example"
+            ></div>
+
+        </div>
+
+
+        <button
+            class="show-button"
+            id="showButton"
+            type="button"
+            onclick="showAnswer()"
+        >
+            Показать перевод
+        </button>
+
+
+        <div
+            class="answer-buttons"
+            id="answerButtons"
+        >
+
+            <button
+                type="button"
+                class="answer-button wrong-button"
+                onclick="submitAnswer(false)"
+            >
+                Не знаю
+            </button>
+
+
+            <button
+                type="button"
+                class="answer-button correct-button"
+                onclick="submitAnswer(true)"
+            >
+                Знаю
+            </button>
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<form style="display:none;">
+    {% csrf_token %}
+</form>
+
+
+{{ review_data|json_script:"review-data" }}
+
+
+<script>
+
+    const words =
+        JSON.parse(
+            document
+                .getElementById(
+                    "review-data"
+                )
+                .textContent
+        );
+
+
+    let index = 0;
+
+
+    const wordElement =
+        document.getElementById(
+            "word"
+        );
+
+    const partOfSpeechElement =
+        document.getElementById(
+            "partOfSpeech"
+        );
+
+    const translationElement =
+        document.getElementById(
+            "translation"
+        );
+
+    const exampleElement =
+        document.getElementById(
+            "example"
+        );
+
+    const answerArea =
+        document.getElementById(
+            "answerArea"
+        );
+
+    const showButton =
+        document.getElementById(
+            "showButton"
+        );
+
+    const answerButtons =
+        document.getElementById(
+            "answerButtons"
+        );
+
+    const counter =
+        document.getElementById(
+            "counter"
+        );
+
+    const progressBar =
+        document.getElementById(
+            "progressBar"
+        );
+
+
+    function getCsrfToken() {
+
+        return document
+            .querySelector(
+                "[name=csrfmiddlewaretoken]"
+            )
+            .value;
+
+    }
+
+
+    function renderWord() {
+
+        const item =
+            words[
+                index
+            ];
+
+
+        wordElement.textContent =
+            item.word;
+
+
+        partOfSpeechElement.textContent =
+            item.part_of_speech
+            ||
+            "";
+
+
+        translationElement.textContent =
+            item.translation_ru;
+
+
+        exampleElement.textContent =
+            item.example_en
+            ||
+            "";
+
+
+        answerArea.style.display =
+            "none";
+
+
+        answerButtons.style.display =
+            "none";
+
+
+        showButton.style.display =
+            "block";
+
+
+        counter.textContent =
+            `${index + 1} из ${words.length}`;
+
+
+        progressBar.style.width =
+            `${
+                (
+                    index
+                    /
+                    words.length
+                )
+                *
+                100
+            }%`;
+
+    }
+
+
+    function showAnswer() {
+
+        answerArea.style.display =
+            "block";
+
+
+        answerButtons.style.display =
+            "grid";
+
+
+        showButton.style.display =
+            "none";
+
+    }
+
+
+    async function submitAnswer(
+        isCorrect
+    ) {
+
+        const item =
+            words[
+                index
+            ];
+
+
+        const response =
+            await fetch(
+                "{% url 'vocabulary:record_answer' %}",
+                {
+
+                    method:
+                        "POST",
+
+                    headers: {
+
+                        "Content-Type":
+                            "application/json",
+
+                        "X-CSRFToken":
+                            getCsrfToken(),
+
+                    },
+
+                    body:
+                        JSON.stringify(
+                            {
+
+                                word_id:
+                                    item.id,
+
+                                is_correct:
+                                    isCorrect,
+
+                            }
+                        ),
+
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (
+            !response.ok
+            ||
+            !data.success
+        ) {
+
+            alert(
+                "Не удалось сохранить ответ."
+            );
+
+            return;
+
+        }
+
+
+        index += 1;
+
+
+        if (
+            index
+            >=
+            words.length
+        ) {
+
+            window.location.href =
+                "{% url 'vocabulary:dashboard' %}";
+
+            return;
+
+        }
+
+
+        renderWord();
+
+    }
+
+
+    renderWord();
+
+</script>
+
+{% endblock %}

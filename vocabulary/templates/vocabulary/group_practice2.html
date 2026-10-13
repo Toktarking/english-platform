@@ -1,0 +1,2119 @@
+{% extends "vocabulary/base.html" %}
+
+
+{% block title %}
+Practice 2 | {{ group.name }}
+{% endblock %}
+
+
+{% block content %}
+
+<style>
+
+    /* =====================================================
+       MAIN
+       ===================================================== */
+
+    .practice-wrapper {
+        max-width: 760px;
+        margin: 0 auto;
+    }
+
+    .practice-header {
+        margin-bottom: 16px;
+    }
+
+
+    /* =====================================================
+       ERROR
+       ===================================================== */
+
+    .practice-error {
+        display: none;
+
+        margin-bottom: 12px;
+        padding: 11px 14px;
+
+        background: #fef2f2;
+
+        border: 1px solid #fecaca;
+        border-radius: 12px;
+
+        color: #b91c1c;
+
+        font-size: 13px;
+    }
+
+
+    /* =====================================================
+       PROGRESS
+       ===================================================== */
+
+    .progress-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        margin-bottom: 6px;
+
+        color: #6b7280;
+
+        font-size: 13px;
+    }
+
+    .progress-track {
+        width: 100%;
+        height: 8px;
+
+        margin-bottom: 11px;
+
+        overflow: hidden;
+
+        background: #e5e7eb;
+
+        border-radius: 999px;
+    }
+
+    .progress-bar {
+        width: 0;
+        height: 100%;
+
+        background: #2563eb;
+
+        border-radius: 999px;
+
+        transition: width 0.25s ease;
+    }
+
+
+    /* =====================================================
+       CURRENT DECK
+       ===================================================== */
+
+    .current-deck {
+        margin-bottom: 10px;
+
+        text-align: center;
+    }
+
+    .current-deck-title {
+        display: inline-block;
+
+        padding: 6px 14px;
+
+        background: #dbeafe;
+
+        border-radius: 999px;
+
+        color: #1d4ed8;
+
+        font-size: 13px;
+        font-weight: 800;
+    }
+
+    .current-deck-description {
+        margin-top: 4px;
+
+        color: #9ca3af;
+
+        font-size: 11px;
+    }
+
+
+    /* =====================================================
+       WORD CARD
+       ===================================================== */
+
+    .word-card {
+        min-height: 210px;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        margin-bottom: 13px;
+        padding: 25px;
+
+        background: white;
+
+        border: 1px solid #e5e7eb;
+        border-radius: 22px;
+
+        box-shadow:
+            0 10px 30px
+            rgba(0, 0, 0, 0.05);
+
+        text-align: center;
+    }
+
+    .word-label {
+        margin-bottom: 12px;
+
+        color: #9ca3af;
+
+        font-size: 13px;
+    }
+
+    .word-text {
+        color: #111827;
+
+        font-size: 50px;
+        font-weight: 800;
+
+        line-height: 1.1;
+
+        word-break: break-word;
+    }
+
+    .word-pos {
+        display: inline-block;
+
+        margin-top: 14px;
+        padding: 5px 11px;
+
+        background: #f3f4f6;
+
+        border-radius: 999px;
+
+        color: #6b7280;
+
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+
+    /* =====================================================
+       OPTIONS
+       ===================================================== */
+
+    .options-title {
+        margin-bottom: 8px;
+
+        color: #6b7280;
+
+        font-size: 13px;
+        font-weight: 700;
+
+        text-align: center;
+    }
+
+    .options-grid {
+        display: grid;
+
+        grid-template-columns:
+            repeat(2, 1fr);
+
+        gap: 9px;
+
+        margin-bottom: 11px;
+    }
+
+    .option-button {
+        min-height: 68px;
+
+        display: flex;
+        align-items: center;
+
+        padding: 12px;
+
+        background: white;
+
+        border: 2px solid #e5e7eb;
+        border-radius: 13px;
+
+        color: #111827;
+
+        font-size: 14px;
+        font-weight: 600;
+
+        text-align: left;
+
+        cursor: pointer;
+
+        transition:
+            border-color 0.15s ease,
+            background 0.15s ease,
+            transform 0.15s ease,
+            opacity 0.15s ease;
+    }
+
+    .option-button:hover:not(:disabled) {
+        border-color: #2563eb;
+
+        transform: translateY(-1px);
+    }
+
+    .option-button:disabled {
+        cursor: default;
+    }
+
+    .option-letter {
+        flex: 0 0 31px;
+
+        width: 31px;
+        height: 31px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        margin-right: 9px;
+
+        background: #f3f4f6;
+
+        border-radius: 8px;
+
+        color: #6b7280;
+
+        font-size: 12px;
+        font-weight: 800;
+    }
+
+    .option-text {
+        flex: 1;
+    }
+
+
+    /* =====================================================
+       CORRECT / WRONG
+       ===================================================== */
+
+    .option-button.correct {
+        background: #f0fdf4;
+
+        border-color: #22c55e;
+
+        color: #166534;
+    }
+
+    .option-button.correct .option-letter {
+        background: #22c55e;
+
+        color: white;
+    }
+
+    .option-button.wrong {
+        background: #fef2f2;
+
+        border-color: #ef4444;
+
+        color: #991b1b;
+    }
+
+    .option-button.wrong .option-letter {
+        background: #ef4444;
+
+        color: white;
+    }
+
+    .answer-message {
+        height: 22px;
+
+        margin-bottom: 8px;
+
+        text-align: center;
+
+        font-size: 13px;
+        font-weight: 700;
+    }
+
+    .answer-message.correct {
+        color: #16a34a;
+    }
+
+    .answer-message.wrong {
+        color: #dc2626;
+    }
+
+
+    /* =====================================================
+       DECKS
+       ===================================================== */
+
+    .deck-grid {
+        display: grid;
+
+        grid-template-columns:
+            repeat(4, 1fr);
+
+        gap: 8px;
+    }
+
+    .deck-box {
+        padding: 11px 6px;
+
+        background: white;
+
+        border: 1px solid #e5e7eb;
+        border-radius: 12px;
+
+        text-align: center;
+
+        transition:
+            border-color 0.2s ease,
+            background 0.2s ease;
+    }
+
+    .deck-box.active-deck {
+        background: #eff6ff;
+
+        border: 2px solid #2563eb;
+    }
+
+    .deck-title {
+        margin-bottom: 3px;
+
+        color: #6b7280;
+
+        font-size: 11px;
+        font-weight: 700;
+    }
+
+    .deck-number {
+        color: #111827;
+
+        font-size: 24px;
+        font-weight: 800;
+    }
+
+    .unopened-box {
+        background: #f9fafb;
+    }
+
+
+    /* =====================================================
+       SAVING
+       ===================================================== */
+
+    .saving-status {
+        height: 18px;
+
+        margin-top: 6px;
+
+        color: #9ca3af;
+
+        font-size: 10px;
+
+        text-align: center;
+    }
+
+
+    /* =====================================================
+       RESULT
+       ===================================================== */
+
+    .result-card {
+        display: none;
+
+        padding: 42px 30px;
+
+        background: white;
+
+        border: 1px solid #e5e7eb;
+        border-radius: 24px;
+
+        box-shadow:
+            0 10px 30px
+            rgba(0, 0, 0, 0.05);
+
+        text-align: center;
+    }
+
+    .result-icon {
+        margin-bottom: 8px;
+
+        font-size: 58px;
+    }
+
+    .result-title {
+        margin-bottom: 9px;
+
+        color: #111827;
+
+        font-size: 32px;
+        font-weight: 800;
+    }
+
+    .result-subtitle {
+        margin-bottom: 24px;
+
+        color: #6b7280;
+    }
+
+    .result-stats {
+        display: grid;
+
+        grid-template-columns:
+            repeat(2, 1fr);
+
+        gap: 10px;
+
+        margin-bottom: 24px;
+    }
+
+    .result-stat {
+        padding: 18px;
+
+        background: #f9fafb;
+
+        border: 1px solid #e5e7eb;
+        border-radius: 14px;
+    }
+
+    .result-stat-number {
+        color: #111827;
+
+        font-size: 30px;
+        font-weight: 800;
+    }
+
+    .result-stat-label {
+        margin-top: 3px;
+
+        color: #6b7280;
+
+        font-size: 12px;
+    }
+
+    .result-actions {
+        display: flex;
+
+        justify-content: center;
+
+        gap: 10px;
+
+        flex-wrap: wrap;
+    }
+
+
+    /* =====================================================
+       MOBILE
+       ===================================================== */
+
+    @media (max-width: 600px) {
+
+        main {
+            padding-top: 9px;
+            padding-bottom: 9px;
+        }
+
+        .practice-wrapper {
+            width: 100%;
+            max-width: 100%;
+        }
+
+
+        /* Header */
+
+        .back {
+            margin-bottom: 5px;
+
+            font-size: 11px;
+        }
+
+        .practice-header {
+            margin-bottom: 6px;
+        }
+
+        .practice-header .level-badge {
+            margin-bottom: 3px;
+
+            padding: 3px 7px;
+
+            font-size: 9px;
+        }
+
+        .practice-header h1 {
+            margin-bottom: 3px;
+
+            font-size: 24px;
+
+            line-height: 1;
+        }
+
+        .practice-header .subtitle {
+            margin: 0;
+
+            font-size: 11px;
+        }
+
+
+        /* Progress */
+
+        .progress-row {
+            margin-bottom: 2px;
+
+            font-size: 9px;
+        }
+
+        .progress-track {
+            height: 5px;
+
+            margin-bottom: 5px;
+        }
+
+
+        /* Deck title */
+
+        .current-deck {
+            margin-bottom: 5px;
+        }
+
+        .current-deck-title {
+            padding: 4px 9px;
+
+            font-size: 10px;
+        }
+
+        .current-deck-description {
+            margin-top: 2px;
+
+            font-size: 8px;
+        }
+
+
+        /* Card */
+
+        .word-card {
+            min-height: 130px;
+
+            margin-bottom: 6px;
+            padding: 12px;
+
+            border-radius: 15px;
+        }
+
+        .word-label {
+            margin-bottom: 5px;
+
+            font-size: 9px;
+        }
+
+        .word-text {
+            font-size: 33px;
+        }
+
+        .word-pos {
+            margin-top: 7px;
+            padding: 3px 7px;
+
+            font-size: 8px;
+        }
+
+
+        /* Options */
+
+        .options-title {
+            margin-bottom: 5px;
+
+            font-size: 9px;
+        }
+
+        .options-grid {
+            gap: 5px;
+
+            margin-bottom: 5px;
+        }
+
+        .option-button {
+            min-height: 48px;
+
+            padding: 6px;
+
+            border-radius: 9px;
+
+            font-size: 10px;
+        }
+
+        .option-letter {
+            flex-basis: 24px;
+
+            width: 24px;
+            height: 24px;
+
+            margin-right: 5px;
+
+            border-radius: 6px;
+
+            font-size: 9px;
+        }
+
+        .answer-message {
+            height: 17px;
+
+            margin-bottom: 3px;
+
+            font-size: 9px;
+        }
+
+
+        /* Deck counters */
+
+        .deck-grid {
+            gap: 4px;
+        }
+
+        .deck-box {
+            padding: 5px 2px;
+
+            border-radius: 8px;
+        }
+
+        .deck-title {
+            margin-bottom: 1px;
+
+            font-size: 8px;
+
+            white-space: nowrap;
+        }
+
+        .deck-number {
+            font-size: 17px;
+        }
+
+        .saving-status {
+            height: 12px;
+
+            margin-top: 3px;
+
+            font-size: 8px;
+        }
+
+
+        /* Result */
+
+        .result-card {
+            padding: 25px 16px;
+        }
+
+        .result-icon {
+            font-size: 45px;
+        }
+
+        .result-title {
+            font-size: 25px;
+        }
+
+    }
+
+</style>
+
+
+<!-- =====================================================
+     DATA FROM DJANGO
+     ===================================================== -->
+
+{{ practice_state|json_script:"practice2-state-data" }}
+
+
+<form
+    id="csrfForm"
+    style="display: none;"
+>
+    {% csrf_token %}
+</form>
+
+
+<div class="practice-wrapper">
+
+
+    <!-- BACK -->
+
+    <a
+        href="{% url 'vocabulary:group_detail' level.code group.id %}"
+        class="back"
+    >
+        ← {{ group.name }}
+    </a>
+
+
+    <!-- HEADER -->
+
+    <div class="practice-header">
+
+        <span class="level-badge">
+            {{ level.code }}
+        </span>
+
+        <h1>
+            Practice 2
+        </h1>
+
+        <p class="subtitle">
+
+            {{ group.name }}
+
+            ·
+
+            {{ word_count }} words
+
+        </p>
+
+    </div>
+
+
+    <!-- ERROR -->
+
+    <div
+        class="practice-error"
+        id="practiceError"
+    ></div>
+
+
+    <!-- =================================================
+         PRACTICE
+         ================================================= -->
+
+    <div id="practiceArea">
+
+
+        <!-- PROGRESS -->
+
+        <div class="progress-row">
+
+            <span>
+                Progress
+            </span>
+
+            <span id="progressText">
+                -
+            </span>
+
+        </div>
+
+
+        <div class="progress-track">
+
+            <div
+                class="progress-bar"
+                id="progressBar"
+            ></div>
+
+        </div>
+
+
+        <!-- CURRENT DECK -->
+
+        <div class="current-deck">
+
+            <div
+                class="current-deck-title"
+                id="currentDeckTitle"
+            >
+                Колода 1
+            </div>
+
+
+            <div
+                class="current-deck-description"
+                id="currentDeckDescription"
+            >
+            </div>
+
+        </div>
+
+
+        <!-- WORD -->
+
+        <div class="word-card">
+
+            <div class="word-label">
+                Выберите правильный перевод
+            </div>
+
+
+            <div
+                class="word-text"
+                id="wordText"
+            >
+            </div>
+
+
+            <div
+                class="word-pos"
+                id="wordPos"
+            >
+            </div>
+
+        </div>
+
+
+        <!-- OPTIONS -->
+
+        <div class="options-title">
+            Какой перевод правильный?
+        </div>
+
+
+        <div
+            class="options-grid"
+            id="optionsGrid"
+        >
+        </div>
+
+
+        <div
+            class="answer-message"
+            id="answerMessage"
+        >
+        </div>
+
+
+        <!-- DECK COUNTERS -->
+
+        <div class="deck-grid">
+
+
+            <div
+                class="deck-box"
+                id="deck1Box"
+            >
+
+                <div class="deck-title">
+                    Колода 1
+                </div>
+
+                <div
+                    class="deck-number"
+                    id="deck1Count"
+                >
+                    0
+                </div>
+
+            </div>
+
+
+            <div
+                class="deck-box"
+                id="deck2Box"
+            >
+
+                <div class="deck-title">
+                    Колода 2
+                </div>
+
+                <div
+                    class="deck-number"
+                    id="deck2Count"
+                >
+                    0
+                </div>
+
+            </div>
+
+
+            <div
+                class="deck-box"
+                id="deck3Box"
+            >
+
+                <div class="deck-title">
+                    Колода 3
+                </div>
+
+                <div
+                    class="deck-number"
+                    id="deck3Count"
+                >
+                    0
+                </div>
+
+            </div>
+
+
+            <div
+                class="deck-box unopened-box"
+            >
+
+                <div class="deck-title">
+                    Не открыто
+                </div>
+
+                <div
+                    class="deck-number"
+                    id="unopenedCount"
+                >
+                    0
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <div
+            class="saving-status"
+            id="savingStatus"
+        ></div>
+
+
+    </div>
+
+
+    <!-- =================================================
+         WIN
+         ================================================= -->
+
+    <div
+        class="result-card"
+        id="resultCard"
+    >
+
+        <div class="result-icon">
+            🏆
+        </div>
+
+
+        <div class="result-title">
+            Победа!
+        </div>
+
+
+        <div class="result-subtitle">
+
+            Вы успешно прошли Practice 2
+            группы <strong>{{ group.name }}</strong>.
+
+        </div>
+
+
+        <div class="result-stats">
+
+
+            <div class="result-stat">
+
+                <div class="result-stat-number">
+                    {{ word_count }}
+                </div>
+
+                <div class="result-stat-label">
+                    слов
+                </div>
+
+            </div>
+
+
+            <div class="result-stat">
+
+                <div
+                    class="result-stat-number"
+                    id="resultMistakes"
+                >
+                    0
+                </div>
+
+                <div class="result-stat-label">
+                    ошибок
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="result-actions">
+
+
+            <button
+                type="button"
+                class="button"
+                id="restartButton"
+                onclick="restartPractice2()"
+            >
+                Начать заново
+            </button>
+
+
+            <a
+                href="{% url 'vocabulary:group_detail' level.code group.id %}"
+                class="button"
+            >
+                Back to group
+            </a>
+
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<script>
+
+    /* =====================================================
+       DJANGO STATE
+       ===================================================== */
+
+    let practiceState =
+        JSON.parse(
+            document
+                .getElementById(
+                    "practice2-state-data"
+                )
+                .textContent
+        );
+
+
+    /*
+    Запрещает двойной ответ,
+    пока Django обрабатывает предыдущий.
+    */
+
+    let answerLocked =
+        false;
+
+
+    /*
+    ID слова, которое прямо сейчас
+    видит пользователь.
+    */
+
+    let displayedWordId =
+        null;
+
+
+    /* =====================================================
+       ELEMENTS
+       ===================================================== */
+
+    const practiceArea =
+        document.getElementById(
+            "practiceArea"
+        );
+
+
+    const resultCard =
+        document.getElementById(
+            "resultCard"
+        );
+
+
+    const practiceError =
+        document.getElementById(
+            "practiceError"
+        );
+
+
+    const progressText =
+        document.getElementById(
+            "progressText"
+        );
+
+
+    const progressBar =
+        document.getElementById(
+            "progressBar"
+        );
+
+
+    const currentDeckTitle =
+        document.getElementById(
+            "currentDeckTitle"
+        );
+
+
+    const currentDeckDescription =
+        document.getElementById(
+            "currentDeckDescription"
+        );
+
+
+    const wordText =
+        document.getElementById(
+            "wordText"
+        );
+
+
+    const wordPos =
+        document.getElementById(
+            "wordPos"
+        );
+
+
+    const optionsGrid =
+        document.getElementById(
+            "optionsGrid"
+        );
+
+
+    const answerMessage =
+        document.getElementById(
+            "answerMessage"
+        );
+
+
+    const deck1Box =
+        document.getElementById(
+            "deck1Box"
+        );
+
+
+    const deck2Box =
+        document.getElementById(
+            "deck2Box"
+        );
+
+
+    const deck3Box =
+        document.getElementById(
+            "deck3Box"
+        );
+
+
+    const deck1Count =
+        document.getElementById(
+            "deck1Count"
+        );
+
+
+    const deck2Count =
+        document.getElementById(
+            "deck2Count"
+        );
+
+
+    const deck3Count =
+        document.getElementById(
+            "deck3Count"
+        );
+
+
+    const unopenedCount =
+        document.getElementById(
+            "unopenedCount"
+        );
+
+
+    const savingStatus =
+        document.getElementById(
+            "savingStatus"
+        );
+
+
+    const resultMistakes =
+        document.getElementById(
+            "resultMistakes"
+        );
+
+
+    const restartButton =
+        document.getElementById(
+            "restartButton"
+        );
+
+
+    const csrfToken =
+        document.querySelector(
+            '#csrfForm input[name="csrfmiddlewaretoken"]'
+        ).value;
+
+
+    /* =====================================================
+       ERROR
+       ===================================================== */
+
+    function showError(
+        message
+    ) {
+
+        practiceError.textContent =
+            message;
+
+
+        practiceError.style.display =
+            "block";
+
+    }
+
+
+    function hideError() {
+
+        practiceError.textContent =
+            "";
+
+
+        practiceError.style.display =
+            "none";
+
+    }
+
+
+    /* =====================================================
+       DECK TITLE
+       ===================================================== */
+
+    function updateDeckInformation() {
+
+        deck1Box.classList.remove(
+            "active-deck"
+        );
+
+        deck2Box.classList.remove(
+            "active-deck"
+        );
+
+        deck3Box.classList.remove(
+            "active-deck"
+        );
+
+
+        if (
+            practiceState.current_deck === 1
+        ) {
+
+            currentDeckTitle.textContent =
+                "Колода 1";
+
+            deck1Box.classList.add(
+                "active-deck"
+            );
+
+        }
+
+
+        else if (
+            practiceState.current_deck === 2
+        ) {
+
+            currentDeckTitle.textContent =
+                "Колода 2";
+
+            deck2Box.classList.add(
+                "active-deck"
+            );
+
+        }
+
+
+        else if (
+            practiceState.current_deck === 3
+        ) {
+
+            currentDeckTitle.textContent =
+                "Колода 3";
+
+            deck3Box.classList.add(
+                "active-deck"
+            );
+
+        }
+
+
+        if (
+            practiceState.phase === "initial"
+        ) {
+
+            currentDeckDescription.textContent =
+                "Первичное распределение слов";
+
+        }
+
+
+        else if (
+            practiceState.phase === "deck2_first"
+        ) {
+
+            currentDeckDescription.textContent =
+                "Повторяем слова с ошибками";
+
+        }
+
+
+        else if (
+            practiceState.phase === "deck3"
+        ) {
+
+            currentDeckDescription.textContent =
+                "Нужно пройти всю Колоду 3 без ошибки";
+
+        }
+
+
+        else if (
+            practiceState.phase === "deck2_check"
+        ) {
+
+            currentDeckDescription.textContent =
+                "Контрольная проверка Колоды 2";
+
+        }
+
+
+        else if (
+            practiceState.phase === "deck1_check"
+        ) {
+
+            currentDeckDescription.textContent =
+                "Финальная проверка Колоды 1";
+
+        }
+
+    }
+
+
+    /* =====================================================
+       COUNTERS
+       ===================================================== */
+
+    function updateCounters() {
+
+        deck1Count.textContent =
+            practiceState.deck1_count;
+
+
+        deck2Count.textContent =
+            practiceState.deck2_count;
+
+
+        deck3Count.textContent =
+            practiceState.deck3_count;
+
+
+        unopenedCount.textContent =
+            practiceState.unopened_count;
+
+    }
+
+
+    /* =====================================================
+       PROGRESS
+       ===================================================== */
+
+    function updateProgress() {
+
+        const total =
+            Number(
+                practiceState.queue_size
+            );
+
+
+        if (
+            total <= 0
+        ) {
+
+            progressText.textContent =
+                "0 / 0";
+
+            progressBar.style.width =
+                "0%";
+
+            return;
+
+        }
+
+
+        const current =
+            Math.min(
+                total,
+                Number(
+                    practiceState.current_index
+                )
+                +
+                1
+            );
+
+
+        progressText.textContent =
+            `${current} / ${total}`;
+
+
+        const percent =
+            (
+                current
+                /
+                total
+            )
+            *
+            100;
+
+
+        progressBar.style.width =
+            percent + "%";
+
+    }
+
+
+    /* =====================================================
+       OPTIONS
+       ===================================================== */
+
+    function renderOptions(
+        options
+    ) {
+
+        optionsGrid.innerHTML =
+            "";
+
+
+        const letters = [
+            "A",
+            "B",
+            "C",
+            "D",
+        ];
+
+
+        options.forEach(
+            (
+                option,
+                index
+            ) => {
+
+                const button =
+                    document.createElement(
+                        "button"
+                    );
+
+
+                button.type =
+                    "button";
+
+
+                button.className =
+                    "option-button";
+
+
+                button.dataset.optionId =
+                    option.id;
+
+
+                const letter =
+                    document.createElement(
+                        "span"
+                    );
+
+
+                letter.className =
+                    "option-letter";
+
+
+                letter.textContent =
+                    letters[index]
+                    ||
+                    "";
+
+
+                const text =
+                    document.createElement(
+                        "span"
+                    );
+
+
+                text.className =
+                    "option-text";
+
+
+                text.textContent =
+                    option.translation;
+
+
+                button.appendChild(
+                    letter
+                );
+
+
+                button.appendChild(
+                    text
+                );
+
+
+                button.addEventListener(
+                    "click",
+                    () => {
+
+                        answerQuestion(
+                            Number(
+                                option.id
+                            )
+                        );
+
+                    }
+                );
+
+
+                optionsGrid.appendChild(
+                    button
+                );
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       SHOW QUESTION
+       ===================================================== */
+
+    function showQuestion() {
+
+        hideError();
+
+
+        if (
+            practiceState.is_completed
+        ) {
+
+            showVictory();
+
+            return;
+
+        }
+
+
+        const question =
+            practiceState.question;
+
+
+        if (!question) {
+
+            showError(
+                "Не удалось загрузить текущее слово."
+            );
+
+            return;
+
+        }
+
+
+        displayedWordId =
+            Number(
+                question.word_id
+            );
+
+
+        wordText.textContent =
+            question.word
+            ||
+            "";
+
+
+        wordPos.textContent =
+            question.part_of_speech
+            ||
+            "";
+
+
+        answerMessage.textContent =
+            "";
+
+
+        answerMessage.className =
+            "answer-message";
+
+
+        renderOptions(
+            question.options
+        );
+
+
+        updateDeckInformation();
+
+        updateCounters();
+
+        updateProgress();
+
+
+        answerLocked =
+            false;
+
+    }
+
+
+    /* =====================================================
+       DISABLE OPTIONS
+       ===================================================== */
+
+    function disableOptions() {
+
+        const buttons =
+            optionsGrid.querySelectorAll(
+                ".option-button"
+            );
+
+
+        buttons.forEach(
+            button => {
+
+                button.disabled =
+                    true;
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       SHOW ANSWER
+       ===================================================== */
+
+    function showAnswerResult(
+        answer
+    ) {
+
+        const buttons =
+            optionsGrid.querySelectorAll(
+                ".option-button"
+            );
+
+
+        buttons.forEach(
+            button => {
+
+                const optionId =
+                    Number(
+                        button.dataset.optionId
+                    );
+
+
+                /*
+                Правильный вариант
+                всегда зелёный.
+                */
+
+                if (
+                    optionId
+                    ===
+                    Number(
+                        answer.correct_word_id
+                    )
+                ) {
+
+                    button.classList.add(
+                        "correct"
+                    );
+
+                }
+
+
+                /*
+                Если ответ неправильный,
+                выбранный вариант красный.
+                */
+
+                if (
+                    !answer.is_correct
+                    &&
+                    optionId
+                    ===
+                    Number(
+                        answer.selected_word_id
+                    )
+                ) {
+
+                    button.classList.add(
+                        "wrong"
+                    );
+
+                }
+
+            }
+        );
+
+
+        if (
+            answer.is_correct
+        ) {
+
+            answerMessage.textContent =
+                "✓ Правильно";
+
+
+            answerMessage.className =
+                "answer-message correct";
+
+        }
+
+        else {
+
+            answerMessage.textContent =
+                "✕ Неправильно";
+
+
+            answerMessage.className =
+                "answer-message wrong";
+
+        }
+
+    }
+
+
+    /* =====================================================
+       ANSWER
+       ===================================================== */
+
+    async function answerQuestion(
+        selectedWordId
+    ) {
+
+        if (
+            answerLocked
+            ||
+            displayedWordId === null
+        ) {
+
+            return;
+
+        }
+
+
+        answerLocked =
+            true;
+
+
+        hideError();
+
+        disableOptions();
+
+
+        savingStatus.textContent =
+            "Сохраняем...";
+
+
+        try {
+
+            const response =
+                await fetch(
+                    "{% url 'vocabulary:group_practice2_answer' group.id %}",
+                    {
+
+                        method:
+                            "POST",
+
+                        headers: {
+
+                            "Content-Type":
+                                "application/json",
+
+                            "X-CSRFToken":
+                                csrfToken,
+
+                            "X-Requested-With":
+                                "XMLHttpRequest"
+
+                        },
+
+                        credentials:
+                            "same-origin",
+
+                        body:
+                            JSON.stringify(
+                                {
+                                    word_id:
+                                        displayedWordId,
+
+                                    selected_word_id:
+                                        selectedWordId
+                                }
+                            )
+
+                    }
+                );
+
+
+            const data =
+                await response.json();
+
+
+            if (
+                !response.ok
+                ||
+                !data.success
+            ) {
+
+                /*
+                Если другая вкладка
+                уже изменила прогресс,
+                просто получаем
+                актуальное состояние.
+                */
+
+                if (
+                    response.status === 409
+                ) {
+
+                    window.location.reload();
+
+                    return;
+
+                }
+
+
+                throw new Error(
+                    data.error
+                    ||
+                    "Не удалось сохранить ответ."
+                );
+
+            }
+
+
+            /*
+            Показываем результат
+            текущего ответа.
+            */
+
+            showAnswerResult(
+                data.answer
+            );
+
+
+            savingStatus.textContent =
+                "Прогресс сохранён";
+
+
+            /*
+            data.state уже относится
+            к СЛЕДУЮЩЕМУ состоянию игры.
+            */
+
+            const nextState =
+                data.state;
+
+
+            /*
+            Даём пользователю увидеть
+            зелёный / красный ответ.
+            */
+
+            setTimeout(
+                () => {
+
+                    practiceState =
+                        nextState;
+
+
+                    savingStatus.textContent =
+                        "";
+
+
+                    if (
+                        practiceState.is_completed
+                    ) {
+
+                        showVictory();
+
+                    }
+
+                    else {
+
+                        showQuestion();
+
+                    }
+
+                },
+                650
+            );
+
+        }
+
+        catch (error) {
+
+            savingStatus.textContent =
+                "";
+
+
+            answerLocked =
+                false;
+
+
+            showError(
+                error.message
+                ||
+                "Произошла ошибка."
+            );
+
+
+            /*
+            Возвращаем кнопки,
+            если запрос не прошёл.
+            */
+
+            const buttons =
+                optionsGrid.querySelectorAll(
+                    ".option-button"
+                );
+
+
+            buttons.forEach(
+                button => {
+
+                    button.disabled =
+                        false;
+
+                }
+            );
+
+        }
+
+    }
+
+
+    /* =====================================================
+       VICTORY
+       ===================================================== */
+
+    function showVictory() {
+
+        answerLocked =
+            true;
+
+
+        practiceArea.style.display =
+            "none";
+
+
+        resultCard.style.display =
+            "block";
+
+
+        resultMistakes.textContent =
+            practiceState.mistake_count;
+
+
+        savingStatus.textContent =
+            "";
+
+    }
+
+
+    /* =====================================================
+       RESTART
+       ===================================================== */
+
+    async function restartPractice2() {
+
+        restartButton.disabled =
+            true;
+
+
+        restartButton.textContent =
+            "Начинаем...";
+
+
+        hideError();
+
+
+        try {
+
+            const response =
+                await fetch(
+                    "{% url 'vocabulary:group_practice2_restart' group.id %}",
+                    {
+
+                        method:
+                            "POST",
+
+                        headers: {
+
+                            "X-CSRFToken":
+                                csrfToken,
+
+                            "X-Requested-With":
+                                "XMLHttpRequest"
+
+                        },
+
+                        credentials:
+                            "same-origin"
+
+                    }
+                );
+
+
+            const data =
+                await response.json();
+
+
+            if (
+                !response.ok
+                ||
+                !data.success
+            ) {
+
+                throw new Error(
+                    data.error
+                    ||
+                    "Не удалось начать заново."
+                );
+
+            }
+
+
+            practiceState =
+                data.state;
+
+
+            displayedWordId =
+                null;
+
+
+            resultCard.style.display =
+                "none";
+
+
+            practiceArea.style.display =
+                "block";
+
+
+            restartButton.disabled =
+                false;
+
+
+            restartButton.textContent =
+                "Начать заново";
+
+
+            showQuestion();
+
+        }
+
+        catch (error) {
+
+            restartButton.disabled =
+                false;
+
+
+            restartButton.textContent =
+                "Начать заново";
+
+
+            showError(
+                error.message
+                ||
+                "Не удалось начать Practice 2 заново."
+            );
+
+        }
+
+    }
+
+
+    /* =====================================================
+       START
+       ===================================================== */
+
+    if (
+        practiceState.is_completed
+    ) {
+
+        showVictory();
+
+    }
+
+    else {
+
+        showQuestion();
+
+    }
+
+</script>
+
+
+{% endblock %}

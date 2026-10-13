@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+
+<html lang="ru">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Register | English Platform
+    </title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        body {
+            margin: 0;
+
+            min-height: 100vh;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 20px;
+
+            background: #f5f7fb;
+
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                sans-serif;
+        }
+
+
+        .auth-wrapper {
+            width: 100%;
+            max-width: 460px;
+        }
+
+
+        .logo {
+            margin-bottom: 22px;
+
+            color: #2563eb;
+
+            font-size: 34px;
+            font-weight: 800;
+
+            text-align: center;
+
+            letter-spacing: -1px;
+        }
+
+
+        .auth-card {
+            padding: 32px;
+
+            background: white;
+
+            border: 1px solid #e5e7eb;
+            border-radius: 22px;
+
+            box-shadow:
+                0 12px 35px
+                rgba(0, 0, 0, 0.06);
+        }
+
+
+        .auth-title {
+            margin: 0 0 7px;
+
+            color: #111827;
+
+            font-size: 28px;
+            font-weight: 800;
+
+            text-align: center;
+        }
+
+
+        .auth-subtitle {
+            margin-bottom: 24px;
+
+            color: #6b7280;
+
+            font-size: 14px;
+
+            text-align: center;
+        }
+
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+
+        label {
+            display: block;
+
+            margin-bottom: 6px;
+
+            color: #374151;
+
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+
+        input {
+            width: 100%;
+
+            padding: 13px 14px;
+
+            border: 1px solid #d1d5db;
+            border-radius: 11px;
+
+            font-size: 15px;
+
+            outline: none;
+
+            transition:
+                border-color 0.15s ease,
+                box-shadow 0.15s ease;
+        }
+
+
+        input:focus {
+            border-color: #2563eb;
+
+            box-shadow:
+                0 0 0 3px
+                rgba(37, 99, 235, 0.10);
+        }
+
+
+        .field-errors {
+            margin-top: 6px;
+
+            color: #dc2626;
+
+            font-size: 11px;
+        }
+
+
+        .field-errors ul {
+            margin: 0;
+
+            padding-left: 18px;
+        }
+
+
+        .non-field-errors {
+            margin-bottom: 15px;
+
+            padding: 11px 13px;
+
+            background: #fef2f2;
+
+            border: 1px solid #fecaca;
+            border-radius: 10px;
+
+            color: #b91c1c;
+
+            font-size: 12px;
+        }
+
+
+        .password-help {
+            margin-top: 7px;
+
+            color: #9ca3af;
+
+            font-size: 10px;
+
+            line-height: 1.4;
+        }
+
+
+        .auth-button {
+            width: 100%;
+
+            margin-top: 6px;
+            padding: 13px;
+
+            background: #2563eb;
+
+            border: none;
+            border-radius: 11px;
+
+            color: white;
+
+            font-size: 15px;
+            font-weight: 800;
+
+            cursor: pointer;
+
+            transition:
+                background 0.15s ease,
+                transform 0.15s ease;
+        }
+
+
+        .auth-button:hover {
+            background: #1d4ed8;
+
+            transform: translateY(-1px);
+        }
+
+
+        .auth-bottom {
+            margin-top: 22px;
+
+            color: #6b7280;
+
+            font-size: 13px;
+
+            text-align: center;
+        }
+
+
+        .auth-bottom a {
+            color: #2563eb;
+
+            font-weight: 700;
+
+            text-decoration: none;
+        }
+
+
+        @media (max-width: 500px) {
+
+            body {
+                padding: 12px;
+            }
+
+
+            .logo {
+                margin-bottom: 16px;
+
+                font-size: 29px;
+            }
+
+
+            .auth-card {
+                padding: 23px 19px;
+
+                border-radius: 18px;
+            }
+
+
+            .auth-title {
+                font-size: 24px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="auth-wrapper">
+
+
+    <div class="logo">
+        English Platform
+    </div>
+
+
+    <div class="auth-card">
+
+
+        <h1 class="auth-title">
+            Регистрация
+        </h1>
+
+
+        <div class="auth-subtitle">
+            Создайте аккаунт и сохраняйте свой прогресс
+        </div>
+
+
+        {% if form.non_field_errors %}
+
+            <div class="non-field-errors">
+
+                {{ form.non_field_errors }}
+
+            </div>
+
+        {% endif %}
+
+
+        <form method="post">
+
+            {% csrf_token %}
+
+
+            <!-- USERNAME -->
+
+            <div class="form-group">
+
+                <label for="{{ form.username.id_for_label }}">
+                    Username
+                </label>
+
+                {{ form.username }}
+
+                {% if form.username.errors %}
+
+                    <div class="field-errors">
+                        {{ form.username.errors }}
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+
+            <!-- EMAIL -->
+
+            <div class="form-group">
+
+                <label for="{{ form.email.id_for_label }}">
+                    Email
+                </label>
+
+                {{ form.email }}
+
+                {% if form.email.errors %}
+
+                    <div class="field-errors">
+                        {{ form.email.errors }}
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+
+            <!-- PASSWORD 1 -->
+
+            <div class="form-group">
+
+                <label for="{{ form.password1.id_for_label }}">
+                    Пароль
+                </label>
+
+                {{ form.password1 }}
+
+                {% if form.password1.errors %}
+
+                    <div class="field-errors">
+                        {{ form.password1.errors }}
+                    </div>
+
+                {% endif %}
+
+                <div class="password-help">
+                    Используйте достаточно сложный пароль.
+                </div>
+
+            </div>
+
+
+            <!-- PASSWORD 2 -->
+
+            <div class="form-group">
+
+                <label for="{{ form.password2.id_for_label }}">
+                    Повторите пароль
+                </label>
+
+                {{ form.password2 }}
+
+                {% if form.password2.errors %}
+
+                    <div class="field-errors">
+                        {{ form.password2.errors }}
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="auth-button"
+            >
+                Создать аккаунт
+            </button>
+
+
+        </form>
+
+
+        <div class="auth-bottom">
+
+            Уже есть аккаунт?
+
+            <a href="{% url 'login' %}">
+                Войти
+            </a>
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+</body>
+
+</html>

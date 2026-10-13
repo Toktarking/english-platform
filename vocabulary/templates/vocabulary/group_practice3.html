@@ -1,0 +1,2764 @@
+{% extends "vocabulary/base.html" %}
+
+
+{% block title %}
+Practice 3 | {{ group.name }}
+{% endblock %}
+
+
+{% block content %}
+
+<style>
+
+    /* =====================================================
+       MAIN
+       ===================================================== */
+
+    .practice-wrapper {
+        max-width: 760px;
+        margin: 0 auto;
+    }
+
+    .practice-header {
+        margin-bottom: 16px;
+    }
+
+
+    /* =====================================================
+       ERROR
+       ===================================================== */
+
+    .practice-error {
+        display: none;
+
+        margin-bottom: 12px;
+        padding: 11px 14px;
+
+        background: #fef2f2;
+
+        border: 1px solid #fecaca;
+        border-radius: 12px;
+
+        color: #b91c1c;
+
+        font-size: 13px;
+    }
+
+
+    /* =====================================================
+       PROGRESS
+       ===================================================== */
+
+    .progress-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        margin-bottom: 6px;
+
+        color: #6b7280;
+
+        font-size: 13px;
+    }
+
+    .progress-track {
+        width: 100%;
+        height: 8px;
+
+        margin-bottom: 11px;
+
+        overflow: hidden;
+
+        background: #e5e7eb;
+
+        border-radius: 999px;
+    }
+
+    .progress-bar {
+        width: 0;
+        height: 100%;
+
+        background: #2563eb;
+
+        border-radius: 999px;
+
+        transition: width 0.25s ease;
+    }
+
+
+    /* =====================================================
+       CURRENT DECK
+       ===================================================== */
+
+    .current-deck {
+        margin-bottom: 9px;
+
+        text-align: center;
+    }
+
+    .current-deck-title {
+        display: inline-block;
+
+        padding: 6px 14px;
+
+        background: #dbeafe;
+
+        border-radius: 999px;
+
+        color: #1d4ed8;
+
+        font-size: 13px;
+        font-weight: 800;
+    }
+
+    .current-deck-description {
+        margin-top: 4px;
+
+        color: #9ca3af;
+
+        font-size: 11px;
+    }
+
+
+    /* =====================================================
+       TRANSLATION CARD
+       ===================================================== */
+
+    .translation-card {
+        min-height: 145px;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        margin-bottom: 11px;
+        padding: 20px 25px;
+
+        background: white;
+
+        border: 1px solid #e5e7eb;
+        border-radius: 20px;
+
+        box-shadow:
+            0 10px 30px
+            rgba(0, 0, 0, 0.05);
+
+        text-align: center;
+    }
+
+    .translation-label {
+        margin-bottom: 8px;
+
+        color: #9ca3af;
+
+        font-size: 12px;
+    }
+
+    .translation-text {
+        color: #111827;
+
+        font-size: 29px;
+        font-weight: 800;
+
+        line-height: 1.25;
+
+        word-break: break-word;
+    }
+
+    .word-pos {
+        display: inline-block;
+
+        margin-top: 10px;
+        padding: 4px 9px;
+
+        background: #f3f4f6;
+
+        border-radius: 999px;
+
+        color: #6b7280;
+
+        font-size: 11px;
+        font-weight: 600;
+    }
+
+
+    /* =====================================================
+       BUILD AREA
+       ===================================================== */
+
+    .build-card {
+        margin-bottom: 10px;
+        padding: 15px 10px;
+
+        background: white;
+
+        border: 1px solid #e5e7eb;
+        border-radius: 16px;
+
+        text-align: center;
+    }
+
+    .build-title {
+        margin-bottom: 10px;
+
+        color: #6b7280;
+
+        font-size: 12px;
+        font-weight: 700;
+    }
+
+
+    /* =====================================================
+       ANSWER SLOTS
+       ===================================================== */
+
+    .answer-slots {
+        min-height: 46px;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        gap: 5px;
+
+        margin-bottom: 13px;
+
+        overflow: visible;
+    }
+
+    .letter-slot {
+        width: 36px;
+        height: 43px;
+
+        flex: 0 0 36px;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        padding: 0;
+
+        background: #f9fafb;
+
+        border: 2px solid #d1d5db;
+        border-radius: 9px;
+
+        color: #111827;
+
+        font-size: 20px;
+        font-weight: 800;
+
+        text-transform: lowercase;
+
+        cursor: default;
+
+        transition:
+            border-color 0.15s ease,
+            background 0.15s ease,
+            transform 0.15s ease;
+    }
+
+    button.letter-slot.filled {
+        background: #eff6ff;
+
+        border-color: #3b82f6;
+
+        color: #1d4ed8;
+
+        cursor: pointer;
+    }
+
+    button.letter-slot.filled:hover {
+        transform: translateY(-1px);
+
+        background: #dbeafe;
+    }
+
+    .word-separator {
+        min-width: 8px;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        color: #6b7280;
+
+        font-size: 22px;
+        font-weight: 800;
+    }
+
+    .word-separator.space {
+        width: 10px;
+        min-width: 10px;
+    }
+
+
+    /* =====================================================
+       LETTER BANK
+       ===================================================== */
+
+    .letters-title {
+        margin-bottom: 7px;
+
+        color: #9ca3af;
+
+        font-size: 10px;
+    }
+
+    .letter-bank {
+        min-height: 38px;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+
+        gap: 6px;
+
+        margin: 0 auto;
+    }
+
+    .bank-letter {
+        width: 34px;
+        height: 36px;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        padding: 0;
+
+        background: white;
+
+        border: 1px solid #d1d5db;
+        border-radius: 8px;
+
+        color: #374151;
+
+        font-size: 17px;
+        font-weight: 800;
+
+        text-transform: lowercase;
+
+        cursor: pointer;
+
+        transition:
+            background 0.15s ease,
+            border-color 0.15s ease,
+            transform 0.15s ease;
+    }
+
+    .bank-letter:hover {
+        background: #eff6ff;
+
+        border-color: #3b82f6;
+
+        transform: translateY(-1px);
+    }
+
+
+    /* =====================================================
+       CHECK BUTTON
+       ===================================================== */
+
+    .check-row {
+        margin-bottom: 8px;
+
+        text-align: center;
+    }
+
+    .check-button {
+        min-width: 180px;
+
+        padding: 12px 25px;
+
+        background: #2563eb;
+
+        border: none;
+        border-radius: 12px;
+
+        color: white;
+
+        font-size: 14px;
+        font-weight: 800;
+
+        cursor: pointer;
+
+        transition:
+            opacity 0.15s ease,
+            transform 0.15s ease;
+    }
+
+    .check-button:hover:not(:disabled) {
+        transform: translateY(-1px);
+    }
+
+    .check-button:disabled {
+        opacity: 0.4;
+
+        cursor: not-allowed;
+    }
+
+
+    /* =====================================================
+       ANSWER MESSAGE
+       ===================================================== */
+
+    .answer-message {
+        min-height: 23px;
+
+        margin-bottom: 7px;
+
+        text-align: center;
+
+        font-size: 13px;
+        font-weight: 700;
+    }
+
+    .answer-message.correct {
+        color: #16a34a;
+    }
+
+    .answer-message.wrong {
+        color: #dc2626;
+    }
+
+    .correct-word {
+        font-weight: 800;
+    }
+
+
+    /* =====================================================
+       CORRECT / WRONG SLOTS
+       ===================================================== */
+
+    .answer-slots.answer-correct
+    .letter-slot.filled {
+        background: #f0fdf4;
+
+        border-color: #22c55e;
+
+        color: #166534;
+    }
+
+    .answer-slots.answer-wrong
+    .letter-slot.filled {
+        background: #fef2f2;
+
+        border-color: #ef4444;
+
+        color: #991b1b;
+    }
+
+
+    /* =====================================================
+       DECKS
+       ===================================================== */
+
+    .deck-grid {
+        display: grid;
+
+        grid-template-columns:
+            repeat(4, 1fr);
+
+        gap: 8px;
+    }
+
+    .deck-box {
+        padding: 10px 5px;
+
+        background: white;
+
+        border: 1px solid #e5e7eb;
+        border-radius: 11px;
+
+        text-align: center;
+
+        transition:
+            border-color 0.2s ease,
+            background 0.2s ease;
+    }
+
+    .deck-box.active-deck {
+        background: #eff6ff;
+
+        border: 2px solid #2563eb;
+    }
+
+    .deck-title {
+        margin-bottom: 3px;
+
+        color: #6b7280;
+
+        font-size: 10px;
+        font-weight: 700;
+    }
+
+    .deck-number {
+        color: #111827;
+
+        font-size: 22px;
+        font-weight: 800;
+    }
+
+    .unopened-box {
+        background: #f9fafb;
+    }
+
+
+    /* =====================================================
+       SAVING
+       ===================================================== */
+
+    .saving-status {
+        height: 16px;
+
+        margin-top: 5px;
+
+        color: #9ca3af;
+
+        font-size: 9px;
+
+        text-align: center;
+    }
+
+
+    /* =====================================================
+       RESULT
+       ===================================================== */
+
+    .result-card {
+        display: none;
+
+        padding: 42px 30px;
+
+        background: white;
+
+        border: 1px solid #e5e7eb;
+        border-radius: 24px;
+
+        box-shadow:
+            0 10px 30px
+            rgba(0, 0, 0, 0.05);
+
+        text-align: center;
+    }
+
+    .result-icon {
+        margin-bottom: 8px;
+
+        font-size: 58px;
+    }
+
+    .result-title {
+        margin-bottom: 9px;
+
+        color: #111827;
+
+        font-size: 32px;
+        font-weight: 800;
+    }
+
+    .result-subtitle {
+        margin-bottom: 24px;
+
+        color: #6b7280;
+    }
+
+    .result-stats {
+        display: grid;
+
+        grid-template-columns:
+            repeat(2, 1fr);
+
+        gap: 10px;
+
+        margin-bottom: 24px;
+    }
+
+    .result-stat {
+        padding: 18px;
+
+        background: #f9fafb;
+
+        border: 1px solid #e5e7eb;
+        border-radius: 14px;
+    }
+
+    .result-stat-number {
+        color: #111827;
+
+        font-size: 30px;
+        font-weight: 800;
+    }
+
+    .result-stat-label {
+        margin-top: 3px;
+
+        color: #6b7280;
+
+        font-size: 12px;
+    }
+
+    .result-actions {
+        display: flex;
+
+        justify-content: center;
+
+        gap: 10px;
+
+        flex-wrap: wrap;
+    }
+
+
+    /* =====================================================
+       MOBILE
+       ===================================================== */
+
+    @media (max-width: 600px) {
+
+        main {
+            padding-top: 8px;
+            padding-bottom: 8px;
+        }
+
+        .practice-wrapper {
+            width: 100%;
+            max-width: 100%;
+        }
+
+
+        /* Header */
+
+        .back {
+            margin-bottom: 5px;
+
+            font-size: 11px;
+        }
+
+        .practice-header {
+            margin-bottom: 5px;
+        }
+
+        .practice-header .level-badge {
+            margin-bottom: 3px;
+
+            padding: 3px 7px;
+
+            font-size: 9px;
+        }
+
+        .practice-header h1 {
+            margin-bottom: 2px;
+
+            font-size: 23px;
+
+            line-height: 1;
+        }
+
+        .practice-header .subtitle {
+            margin: 0;
+
+            font-size: 10px;
+        }
+
+
+        /* Progress */
+
+        .progress-row {
+            margin-bottom: 2px;
+
+            font-size: 9px;
+        }
+
+        .progress-track {
+            height: 5px;
+
+            margin-bottom: 5px;
+        }
+
+
+        /* Deck title */
+
+        .current-deck {
+            margin-bottom: 5px;
+        }
+
+        .current-deck-title {
+            padding: 4px 9px;
+
+            font-size: 10px;
+        }
+
+        .current-deck-description {
+            margin-top: 1px;
+
+            font-size: 7px;
+        }
+
+
+        /* Translation */
+
+        .translation-card {
+            min-height: 90px;
+
+            margin-bottom: 6px;
+            padding: 9px 12px;
+
+            border-radius: 14px;
+        }
+
+        .translation-label {
+            margin-bottom: 3px;
+
+            font-size: 8px;
+        }
+
+        .translation-text {
+            font-size: 20px;
+        }
+
+        .word-pos {
+            margin-top: 5px;
+            padding: 2px 6px;
+
+            font-size: 7px;
+        }
+
+
+        /* Build */
+
+        .build-card {
+            margin-bottom: 5px;
+            padding: 8px 4px;
+
+            border-radius: 11px;
+        }
+
+        .build-title {
+            margin-bottom: 6px;
+
+            font-size: 9px;
+        }
+
+
+        /*
+        Ключевой блок для длинных слов.
+
+        На телефоне одна ячейка примерно
+        24px, поэтому 12 букв нормально
+        помещаются в одну строку.
+        */
+
+        .answer-slots {
+            min-height: 34px;
+
+            gap: 3px;
+
+            margin-bottom: 7px;
+        }
+
+        .letter-slot {
+            width: 24px;
+            height: 31px;
+
+            flex-basis: 24px;
+
+            border-radius: 6px;
+
+            font-size: 14px;
+        }
+
+        .word-separator {
+            min-width: 4px;
+
+            font-size: 15px;
+        }
+
+        .word-separator.space {
+            width: 5px;
+            min-width: 5px;
+        }
+
+
+        /* Letter bank */
+
+        .letters-title {
+            margin-bottom: 4px;
+
+            font-size: 7px;
+        }
+
+        .letter-bank {
+            min-height: 29px;
+
+            gap: 4px;
+        }
+
+        .bank-letter {
+            width: 27px;
+            height: 28px;
+
+            border-radius: 6px;
+
+            font-size: 13px;
+        }
+
+
+        /* Button */
+
+        .check-row {
+            margin-bottom: 4px;
+        }
+
+        .check-button {
+            min-width: 150px;
+
+            padding: 8px 18px;
+
+            border-radius: 9px;
+
+            font-size: 11px;
+        }
+
+        .answer-message {
+            min-height: 16px;
+
+            margin-bottom: 3px;
+
+            font-size: 9px;
+        }
+
+
+        /* Decks */
+
+        .deck-grid {
+            gap: 4px;
+        }
+
+        .deck-box {
+            padding: 5px 2px;
+
+            border-radius: 8px;
+        }
+
+        .deck-title {
+            margin-bottom: 1px;
+
+            font-size: 8px;
+
+            white-space: nowrap;
+        }
+
+        .deck-number {
+            font-size: 17px;
+        }
+
+        .saving-status {
+            height: 11px;
+
+            margin-top: 2px;
+
+            font-size: 7px;
+        }
+
+
+        /* Result */
+
+        .result-card {
+            padding: 25px 16px;
+        }
+
+        .result-icon {
+            font-size: 45px;
+        }
+
+        .result-title {
+            font-size: 25px;
+        }
+
+    }
+
+
+    /*
+    Очень маленькие телефоны.
+    */
+
+    @media (max-width: 370px) {
+
+        .answer-slots {
+            gap: 2px;
+        }
+
+        .letter-slot {
+            width: 22px;
+            height: 29px;
+
+            flex-basis: 22px;
+
+            font-size: 13px;
+        }
+
+        .word-separator.space {
+            width: 3px;
+            min-width: 3px;
+        }
+
+        .bank-letter {
+            width: 25px;
+            height: 27px;
+
+            font-size: 12px;
+        }
+
+    }
+
+</style>
+
+
+<!-- =====================================================
+     DJANGO DATA
+     ===================================================== -->
+
+{{ practice_state|json_script:"practice3-state-data" }}
+
+
+<form
+    id="csrfForm"
+    style="display: none;"
+>
+    {% csrf_token %}
+</form>
+
+
+<div class="practice-wrapper">
+
+
+    <!-- BACK -->
+
+    <a
+        href="{% url 'vocabulary:group_detail' level.code group.id %}"
+        class="back"
+    >
+        ← {{ group.name }}
+    </a>
+
+
+    <!-- HEADER -->
+
+    <div class="practice-header">
+
+        <span class="level-badge">
+            {{ level.code }}
+        </span>
+
+        <h1>
+            Practice 3
+        </h1>
+
+        <p class="subtitle">
+
+            {{ group.name }}
+
+            ·
+
+            {{ word_count }} words
+
+        </p>
+
+    </div>
+
+
+    <!-- ERROR -->
+
+    <div
+        class="practice-error"
+        id="practiceError"
+    ></div>
+
+
+    <!-- =================================================
+         PRACTICE AREA
+         ================================================= -->
+
+    <div id="practiceArea">
+
+
+        <!-- PROGRESS -->
+
+        <div class="progress-row">
+
+            <span>
+                Progress
+            </span>
+
+            <span id="progressText">
+                -
+            </span>
+
+        </div>
+
+
+        <div class="progress-track">
+
+            <div
+                class="progress-bar"
+                id="progressBar"
+            ></div>
+
+        </div>
+
+
+        <!-- CURRENT DECK -->
+
+        <div class="current-deck">
+
+            <div
+                class="current-deck-title"
+                id="currentDeckTitle"
+            >
+                Колода 1
+            </div>
+
+            <div
+                class="current-deck-description"
+                id="currentDeckDescription"
+            ></div>
+
+        </div>
+
+
+        <!-- =================================================
+             TRANSLATION
+             ================================================= -->
+
+        <div class="translation-card">
+
+            <div class="translation-label">
+                Соберите английское слово
+            </div>
+
+            <div
+                class="translation-text"
+                id="translationText"
+            ></div>
+
+            <div
+                class="word-pos"
+                id="wordPos"
+            ></div>
+
+        </div>
+
+
+        <!-- =================================================
+             BUILD WORD
+             ================================================= -->
+
+        <div class="build-card">
+
+            <div class="build-title">
+                Ваш ответ
+            </div>
+
+
+            <!-- ANSWER SLOTS -->
+
+            <div
+                class="answer-slots"
+                id="answerSlots"
+            ></div>
+
+
+            <div class="letters-title">
+                Нажимайте на буквы в нужном порядке
+            </div>
+
+
+            <!-- AVAILABLE LETTERS -->
+
+            <div
+                class="letter-bank"
+                id="letterBank"
+            ></div>
+
+        </div>
+
+
+        <!-- CHECK -->
+
+        <div class="check-row">
+
+            <button
+                type="button"
+                class="check-button"
+                id="checkButton"
+                onclick="checkAnswer()"
+                disabled
+            >
+                Проверить
+            </button>
+
+        </div>
+
+
+        <!-- RESULT MESSAGE -->
+
+        <div
+            class="answer-message"
+            id="answerMessage"
+        ></div>
+
+
+        <!-- =================================================
+             DECK COUNTERS
+             ================================================= -->
+
+        <div class="deck-grid">
+
+
+            <div
+                class="deck-box"
+                id="deck1Box"
+            >
+
+                <div class="deck-title">
+                    Колода 1
+                </div>
+
+                <div
+                    class="deck-number"
+                    id="deck1Count"
+                >
+                    0
+                </div>
+
+            </div>
+
+
+            <div
+                class="deck-box"
+                id="deck2Box"
+            >
+
+                <div class="deck-title">
+                    Колода 2
+                </div>
+
+                <div
+                    class="deck-number"
+                    id="deck2Count"
+                >
+                    0
+                </div>
+
+            </div>
+
+
+            <div
+                class="deck-box"
+                id="deck3Box"
+            >
+
+                <div class="deck-title">
+                    Колода 3
+                </div>
+
+                <div
+                    class="deck-number"
+                    id="deck3Count"
+                >
+                    0
+                </div>
+
+            </div>
+
+
+            <div
+                class="deck-box unopened-box"
+            >
+
+                <div class="deck-title">
+                    Не открыто
+                </div>
+
+                <div
+                    class="deck-number"
+                    id="unopenedCount"
+                >
+                    0
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <div
+            class="saving-status"
+            id="savingStatus"
+        ></div>
+
+
+    </div>
+
+
+    <!-- =================================================
+         VICTORY
+         ================================================= -->
+
+    <div
+        class="result-card"
+        id="resultCard"
+    >
+
+        <div class="result-icon">
+            🏆
+        </div>
+
+        <div class="result-title">
+            Победа!
+        </div>
+
+        <div class="result-subtitle">
+
+            Вы успешно прошли Practice 3
+            группы <strong>{{ group.name }}</strong>.
+
+        </div>
+
+
+        <div class="result-stats">
+
+            <div class="result-stat">
+
+                <div class="result-stat-number">
+                    {{ word_count }}
+                </div>
+
+                <div class="result-stat-label">
+                    слов
+                </div>
+
+            </div>
+
+
+            <div class="result-stat">
+
+                <div
+                    class="result-stat-number"
+                    id="resultMistakes"
+                >
+                    0
+                </div>
+
+                <div class="result-stat-label">
+                    ошибок
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="result-actions">
+
+            <button
+                type="button"
+                class="button"
+                id="restartButton"
+                onclick="restartPractice3()"
+            >
+                Начать заново
+            </button>
+
+
+            <a
+                href="{% url 'vocabulary:group_detail' level.code group.id %}"
+                class="button"
+            >
+                Back to group
+            </a>
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<script>
+
+    /* =====================================================
+       DJANGO STATE
+       ===================================================== */
+
+    let practiceState =
+        JSON.parse(
+            document
+                .getElementById(
+                    "practice3-state-data"
+                )
+                .textContent
+        );
+
+
+    /*
+    Выбранные пользователем плитки.
+
+    Например:
+
+    [
+        {id: 3, letter: "c"},
+        {id: 7, letter: "a"},
+        {id: 1, letter: "t"}
+    ]
+    */
+
+    let selectedTiles =
+        [];
+
+
+    /*
+    Все плитки текущего вопроса.
+    */
+
+    let allTiles =
+        [];
+
+
+    let displayedWordId =
+        null;
+
+
+    let answerLocked =
+        false;
+
+
+    /* =====================================================
+       ELEMENTS
+       ===================================================== */
+
+    const practiceArea =
+        document.getElementById(
+            "practiceArea"
+        );
+
+
+    const resultCard =
+        document.getElementById(
+            "resultCard"
+        );
+
+
+    const practiceError =
+        document.getElementById(
+            "practiceError"
+        );
+
+
+    const progressText =
+        document.getElementById(
+            "progressText"
+        );
+
+
+    const progressBar =
+        document.getElementById(
+            "progressBar"
+        );
+
+
+    const currentDeckTitle =
+        document.getElementById(
+            "currentDeckTitle"
+        );
+
+
+    const currentDeckDescription =
+        document.getElementById(
+            "currentDeckDescription"
+        );
+
+
+    const translationText =
+        document.getElementById(
+            "translationText"
+        );
+
+
+    const wordPos =
+        document.getElementById(
+            "wordPos"
+        );
+
+
+    const answerSlots =
+        document.getElementById(
+            "answerSlots"
+        );
+
+
+    const letterBank =
+        document.getElementById(
+            "letterBank"
+        );
+
+
+    const checkButton =
+        document.getElementById(
+            "checkButton"
+        );
+
+
+    const answerMessage =
+        document.getElementById(
+            "answerMessage"
+        );
+
+
+    const deck1Box =
+        document.getElementById(
+            "deck1Box"
+        );
+
+
+    const deck2Box =
+        document.getElementById(
+            "deck2Box"
+        );
+
+
+    const deck3Box =
+        document.getElementById(
+            "deck3Box"
+        );
+
+
+    const deck1Count =
+        document.getElementById(
+            "deck1Count"
+        );
+
+
+    const deck2Count =
+        document.getElementById(
+            "deck2Count"
+        );
+
+
+    const deck3Count =
+        document.getElementById(
+            "deck3Count"
+        );
+
+
+    const unopenedCount =
+        document.getElementById(
+            "unopenedCount"
+        );
+
+
+    const savingStatus =
+        document.getElementById(
+            "savingStatus"
+        );
+
+
+    const resultMistakes =
+        document.getElementById(
+            "resultMistakes"
+        );
+
+
+    const restartButton =
+        document.getElementById(
+            "restartButton"
+        );
+
+
+    const csrfToken =
+        document.querySelector(
+            '#csrfForm input[name="csrfmiddlewaretoken"]'
+        ).value;
+
+
+    /* =====================================================
+       ERROR
+       ===================================================== */
+
+    function showError(
+        message
+    ) {
+
+        practiceError.textContent =
+            message;
+
+
+        practiceError.style.display =
+            "block";
+
+    }
+
+
+    function hideError() {
+
+        practiceError.textContent =
+            "";
+
+
+        practiceError.style.display =
+            "none";
+
+    }
+
+
+    /* =====================================================
+       DECK
+       ===================================================== */
+
+    function updateDeckInformation() {
+
+        deck1Box.classList.remove(
+            "active-deck"
+        );
+
+        deck2Box.classList.remove(
+            "active-deck"
+        );
+
+        deck3Box.classList.remove(
+            "active-deck"
+        );
+
+
+        if (
+            practiceState.current_deck === 1
+        ) {
+
+            currentDeckTitle.textContent =
+                "Колода 1";
+
+            deck1Box.classList.add(
+                "active-deck"
+            );
+
+        }
+
+
+        else if (
+            practiceState.current_deck === 2
+        ) {
+
+            currentDeckTitle.textContent =
+                "Колода 2";
+
+            deck2Box.classList.add(
+                "active-deck"
+            );
+
+        }
+
+
+        else if (
+            practiceState.current_deck === 3
+        ) {
+
+            currentDeckTitle.textContent =
+                "Колода 3";
+
+            deck3Box.classList.add(
+                "active-deck"
+            );
+
+        }
+
+
+        if (
+            practiceState.phase === "initial"
+        ) {
+
+            currentDeckDescription.textContent =
+                "Первичное распределение слов";
+
+        }
+
+
+        else if (
+            practiceState.phase === "deck2_first"
+        ) {
+
+            currentDeckDescription.textContent =
+                "Повторяем слова с ошибками";
+
+        }
+
+
+        else if (
+            practiceState.phase === "deck3"
+        ) {
+
+            currentDeckDescription.textContent =
+                "Нужно пройти всю Колоду 3 без ошибки";
+
+        }
+
+
+        else if (
+            practiceState.phase === "deck2_check"
+        ) {
+
+            currentDeckDescription.textContent =
+                "Контрольная проверка Колоды 2";
+
+        }
+
+
+        else if (
+            practiceState.phase === "deck1_check"
+        ) {
+
+            currentDeckDescription.textContent =
+                "Финальная проверка Колоды 1";
+
+        }
+
+    }
+
+
+    /* =====================================================
+       COUNTERS
+       ===================================================== */
+
+    function updateCounters() {
+
+        deck1Count.textContent =
+            practiceState.deck1_count;
+
+
+        deck2Count.textContent =
+            practiceState.deck2_count;
+
+
+        deck3Count.textContent =
+            practiceState.deck3_count;
+
+
+        unopenedCount.textContent =
+            practiceState.unopened_count;
+
+    }
+
+
+    /* =====================================================
+       PROGRESS
+       ===================================================== */
+
+    function updateProgress() {
+
+        const total =
+            Number(
+                practiceState.queue_size
+            );
+
+
+        if (
+            total <= 0
+        ) {
+
+            progressText.textContent =
+                "0 / 0";
+
+            progressBar.style.width =
+                "0%";
+
+            return;
+
+        }
+
+
+        const current =
+            Math.min(
+                total,
+                Number(
+                    practiceState.current_index
+                )
+                +
+                1
+            );
+
+
+        progressText.textContent =
+            `${current} / ${total}`;
+
+
+        const percentage =
+            (
+                current
+                /
+                total
+            )
+            *
+            100;
+
+
+        progressBar.style.width =
+            percentage + "%";
+
+    }
+
+
+    /* =====================================================
+       USED TILE IDS
+       ===================================================== */
+
+    function getUsedTileIds() {
+
+        return new Set(
+            selectedTiles.map(
+                tile =>
+                    Number(
+                        tile.id
+                    )
+            )
+        );
+
+    }
+
+
+    /* =====================================================
+       SELECT LETTER FROM BANK
+       ===================================================== */
+
+    function selectLetter(
+        tileId
+    ) {
+
+        if (
+            answerLocked
+        ) {
+
+            return;
+
+        }
+
+
+        const question =
+            practiceState.question;
+
+
+        if (!question) {
+
+            return;
+
+        }
+
+
+        if (
+            selectedTiles.length
+            >=
+            Number(
+                question.slot_count
+            )
+        ) {
+
+            return;
+
+        }
+
+
+        const tile =
+            allTiles.find(
+                item =>
+                    Number(
+                        item.id
+                    )
+                    ===
+                    Number(
+                        tileId
+                    )
+            );
+
+
+        if (!tile) {
+
+            return;
+
+        }
+
+
+        const alreadyUsed =
+            selectedTiles.some(
+                item =>
+                    Number(
+                        item.id
+                    )
+                    ===
+                    Number(
+                        tileId
+                    )
+            );
+
+
+        if (
+            alreadyUsed
+        ) {
+
+            return;
+
+        }
+
+
+        selectedTiles.push(
+            tile
+        );
+
+
+        renderWordBuilder();
+
+    }
+
+
+    /* =====================================================
+       REMOVE SELECTED LETTER
+       ===================================================== */
+
+    function removeSelectedLetter(
+        selectedIndex
+    ) {
+
+        if (
+            answerLocked
+        ) {
+
+            return;
+
+        }
+
+
+        selectedTiles.splice(
+            selectedIndex,
+            1
+        );
+
+
+        renderWordBuilder();
+
+    }
+
+
+    /* =====================================================
+       RENDER SLOTS
+       ===================================================== */
+
+    function renderAnswerSlots() {
+
+        answerSlots.innerHTML =
+            "";
+
+
+        answerSlots.classList.remove(
+            "answer-correct"
+        );
+
+
+        answerSlots.classList.remove(
+            "answer-wrong"
+        );
+
+
+        const question =
+            practiceState.question;
+
+
+        if (!question) {
+
+            return;
+
+        }
+
+
+        let selectedIndex =
+            0;
+
+
+        question.pattern.forEach(
+            part => {
+
+                /*
+                Буквенная позиция.
+                */
+
+                if (
+                    part.type === "slot"
+                ) {
+
+                    const tile =
+                        selectedTiles[
+                            selectedIndex
+                        ];
+
+
+                    if (tile) {
+
+                        const button =
+                            document.createElement(
+                                "button"
+                            );
+
+
+                        button.type =
+                            "button";
+
+
+                        button.className =
+                            "letter-slot filled";
+
+
+                        button.textContent =
+                            tile.letter;
+
+
+                        /*
+                        Нажатие на уже выбранную
+                        букву возвращает её вниз.
+                        */
+
+                        const indexToRemove =
+                            selectedIndex;
+
+
+                        button.addEventListener(
+                            "click",
+                            () => {
+
+                                removeSelectedLetter(
+                                    indexToRemove
+                                );
+
+                            }
+                        );
+
+
+                        answerSlots.appendChild(
+                            button
+                        );
+
+                    }
+
+                    else {
+
+                        const emptySlot =
+                            document.createElement(
+                                "div"
+                            );
+
+
+                        emptySlot.className =
+                            "letter-slot";
+
+
+                        emptySlot.textContent =
+                            "";
+
+
+                        answerSlots.appendChild(
+                            emptySlot
+                        );
+
+                    }
+
+
+                    selectedIndex += 1;
+
+                }
+
+
+                /*
+                Пробел, дефис,
+                апостроф и т. д.
+                */
+
+                else {
+
+                    const separator =
+                        document.createElement(
+                            "div"
+                        );
+
+
+                    if (
+                        part.value === " "
+                    ) {
+
+                        separator.className =
+                            "word-separator space";
+
+
+                        separator.innerHTML =
+                            "&nbsp;";
+
+                    }
+
+                    else {
+
+                        separator.className =
+                            "word-separator";
+
+
+                        separator.textContent =
+                            part.value;
+
+                    }
+
+
+                    answerSlots.appendChild(
+                        separator
+                    );
+
+                }
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       RENDER LETTER BANK
+       ===================================================== */
+
+    function renderLetterBank() {
+
+        letterBank.innerHTML =
+            "";
+
+
+        const usedIds =
+            getUsedTileIds();
+
+
+        allTiles.forEach(
+            tile => {
+
+                /*
+                Использованная плитка
+                временно исчезает снизу.
+                */
+
+                if (
+                    usedIds.has(
+                        Number(
+                            tile.id
+                        )
+                    )
+                ) {
+
+                    return;
+
+                }
+
+
+                const button =
+                    document.createElement(
+                        "button"
+                    );
+
+
+                button.type =
+                    "button";
+
+
+                button.className =
+                    "bank-letter";
+
+
+                button.textContent =
+                    tile.letter;
+
+
+                button.addEventListener(
+                    "click",
+                    () => {
+
+                        selectLetter(
+                            tile.id
+                        );
+
+                    }
+                );
+
+
+                letterBank.appendChild(
+                    button
+                );
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       CHECK BUTTON STATE
+       ===================================================== */
+
+    function updateCheckButton() {
+
+        const question =
+            practiceState.question;
+
+
+        if (
+            !question
+            ||
+            answerLocked
+        ) {
+
+            checkButton.disabled =
+                true;
+
+            return;
+
+        }
+
+
+        checkButton.disabled =
+            (
+                selectedTiles.length
+                !==
+                Number(
+                    question.slot_count
+                )
+            );
+
+    }
+
+
+    /* =====================================================
+       RENDER WHOLE WORD BUILDER
+       ===================================================== */
+
+    function renderWordBuilder() {
+
+        renderAnswerSlots();
+
+        renderLetterBank();
+
+        updateCheckButton();
+
+    }
+
+
+    /* =====================================================
+       BUILD ANSWER STRING
+       ===================================================== */
+
+    function getCurrentAnswer() {
+
+        return selectedTiles
+            .map(
+                tile =>
+                    tile.letter
+            )
+            .join("");
+
+    }
+
+
+    /* =====================================================
+       SHOW QUESTION
+       ===================================================== */
+
+    function showQuestion() {
+
+        hideError();
+
+
+        if (
+            practiceState.is_completed
+        ) {
+
+            showVictory();
+
+            return;
+
+        }
+
+
+        const question =
+            practiceState.question;
+
+
+        if (!question) {
+
+            showError(
+                "Не удалось загрузить текущее слово."
+            );
+
+            return;
+
+        }
+
+
+        answerLocked =
+            false;
+
+
+        displayedWordId =
+            Number(
+                question.word_id
+            );
+
+
+        /*
+        Новый вопрос =
+        полностью новый набор выбранных букв.
+        */
+
+        selectedTiles =
+            [];
+
+
+        allTiles =
+            question.letters.map(
+                tile => ({
+                    id:
+                        Number(
+                            tile.id
+                        ),
+
+                    letter:
+                        tile.letter
+                })
+            );
+
+
+        translationText.textContent =
+            question.translation_ru
+            ||
+            "";
+
+
+        wordPos.textContent =
+            question.part_of_speech
+            ||
+            "";
+
+
+        answerMessage.textContent =
+            "";
+
+
+        answerMessage.className =
+            "answer-message";
+
+
+        updateDeckInformation();
+
+        updateCounters();
+
+        updateProgress();
+
+        renderWordBuilder();
+
+    }
+
+
+    /* =====================================================
+       DISABLE EVERYTHING
+       ===================================================== */
+
+    function lockQuestion() {
+
+        answerLocked =
+            true;
+
+
+        checkButton.disabled =
+            true;
+
+
+        const bankButtons =
+            letterBank.querySelectorAll(
+                ".bank-letter"
+            );
+
+
+        bankButtons.forEach(
+            button => {
+
+                button.disabled =
+                    true;
+
+            }
+        );
+
+
+        const selectedButtons =
+            answerSlots.querySelectorAll(
+                "button.letter-slot"
+            );
+
+
+        selectedButtons.forEach(
+            button => {
+
+                button.disabled =
+                    true;
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       CHECK ANSWER
+       ===================================================== */
+
+    async function checkAnswer() {
+
+        if (
+            answerLocked
+            ||
+            displayedWordId === null
+        ) {
+
+            return;
+
+        }
+
+
+        const question =
+            practiceState.question;
+
+
+        if (!question) {
+
+            return;
+
+        }
+
+
+        /*
+        Нельзя отправить слово,
+        пока не заполнены
+        все буквенные позиции.
+        */
+
+        if (
+            selectedTiles.length
+            !==
+            Number(
+                question.slot_count
+            )
+        ) {
+
+            return;
+
+        }
+
+
+        const userAnswer =
+            getCurrentAnswer();
+
+
+        hideError();
+
+        lockQuestion();
+
+
+        savingStatus.textContent =
+            "Проверяем...";
+
+
+        try {
+
+            const response =
+                await fetch(
+                    "{% url 'vocabulary:group_practice3_answer' group.id %}",
+                    {
+
+                        method:
+                            "POST",
+
+                        headers: {
+
+                            "Content-Type":
+                                "application/json",
+
+                            "X-CSRFToken":
+                                csrfToken,
+
+                            "X-Requested-With":
+                                "XMLHttpRequest"
+
+                        },
+
+                        credentials:
+                            "same-origin",
+
+                        body:
+                            JSON.stringify(
+                                {
+                                    word_id:
+                                        displayedWordId,
+
+                                    answer:
+                                        userAnswer
+                                }
+                            )
+
+                    }
+                );
+
+
+            const data =
+                await response.json();
+
+
+            if (
+                !response.ok
+                ||
+                !data.success
+            ) {
+
+                if (
+                    response.status === 409
+                ) {
+
+                    window.location.reload();
+
+                    return;
+
+                }
+
+
+                throw new Error(
+                    data.error
+                    ||
+                    "Не удалось проверить ответ."
+                );
+
+            }
+
+
+            /*
+            Показываем результат
+            ТЕКУЩЕГО ответа.
+            */
+
+            if (
+                data.answer.is_correct
+            ) {
+
+                answerSlots.classList.add(
+                    "answer-correct"
+                );
+
+
+                answerMessage.textContent =
+                    "✓ Правильно";
+
+
+                answerMessage.className =
+                    "answer-message correct";
+
+            }
+
+            else {
+
+                answerSlots.classList.add(
+                    "answer-wrong"
+                );
+
+
+                answerMessage.innerHTML =
+                    "";
+
+
+                const errorText =
+                    document.createTextNode(
+                        "✕ Неправильно. Правильный ответ: "
+                    );
+
+
+                const correctWord =
+                    document.createElement(
+                        "span"
+                    );
+
+
+                correctWord.className =
+                    "correct-word";
+
+
+                correctWord.textContent =
+                    data.answer.correct_word;
+
+
+                answerMessage.appendChild(
+                    errorText
+                );
+
+
+                answerMessage.appendChild(
+                    correctWord
+                );
+
+
+                answerMessage.className =
+                    "answer-message wrong";
+
+            }
+
+
+            savingStatus.textContent =
+                "Прогресс сохранён";
+
+
+            /*
+            Сервер уже рассчитал:
+            - новую колоду,
+            - новый индекс,
+            - возможный перезапуск Deck 3.
+            */
+
+            const nextState =
+                data.state;
+
+
+            /*
+            Пользователь должен успеть
+            увидеть результат.
+            */
+
+            setTimeout(
+                () => {
+
+                    practiceState =
+                        nextState;
+
+
+                    savingStatus.textContent =
+                        "";
+
+
+                    if (
+                        practiceState.is_completed
+                    ) {
+
+                        showVictory();
+
+                    }
+
+                    else {
+
+                        showQuestion();
+
+                    }
+
+                },
+                950
+            );
+
+        }
+
+        catch (error) {
+
+            savingStatus.textContent =
+                "";
+
+
+            answerLocked =
+                false;
+
+
+            showError(
+                error.message
+                ||
+                "Произошла ошибка."
+            );
+
+
+            renderWordBuilder();
+
+        }
+
+    }
+
+
+    /* =====================================================
+       VICTORY
+       ===================================================== */
+
+    function showVictory() {
+
+        answerLocked =
+            true;
+
+
+        practiceArea.style.display =
+            "none";
+
+
+        resultCard.style.display =
+            "block";
+
+
+        resultMistakes.textContent =
+            practiceState.mistake_count;
+
+
+        savingStatus.textContent =
+            "";
+
+    }
+
+
+    /* =====================================================
+       RESTART
+       ===================================================== */
+
+    async function restartPractice3() {
+
+        restartButton.disabled =
+            true;
+
+
+        restartButton.textContent =
+            "Начинаем...";
+
+
+        hideError();
+
+
+        try {
+
+            const response =
+                await fetch(
+                    "{% url 'vocabulary:group_practice3_restart' group.id %}",
+                    {
+
+                        method:
+                            "POST",
+
+                        headers: {
+
+                            "X-CSRFToken":
+                                csrfToken,
+
+                            "X-Requested-With":
+                                "XMLHttpRequest"
+
+                        },
+
+                        credentials:
+                            "same-origin"
+
+                    }
+                );
+
+
+            const data =
+                await response.json();
+
+
+            if (
+                !response.ok
+                ||
+                !data.success
+            ) {
+
+                throw new Error(
+                    data.error
+                    ||
+                    "Не удалось начать заново."
+                );
+
+            }
+
+
+            practiceState =
+                data.state;
+
+
+            selectedTiles =
+                [];
+
+
+            allTiles =
+                [];
+
+
+            displayedWordId =
+                null;
+
+
+            resultCard.style.display =
+                "none";
+
+
+            practiceArea.style.display =
+                "block";
+
+
+            restartButton.disabled =
+                false;
+
+
+            restartButton.textContent =
+                "Начать заново";
+
+
+            showQuestion();
+
+        }
+
+        catch (error) {
+
+            restartButton.disabled =
+                false;
+
+
+            restartButton.textContent =
+                "Начать заново";
+
+
+            showError(
+                error.message
+                ||
+                "Не удалось начать Practice 3 заново."
+            );
+
+        }
+
+    }
+
+
+    /* =====================================================
+       START
+       ===================================================== */
+
+    if (
+        practiceState.is_completed
+    ) {
+
+        showVictory();
+
+    }
+
+    else {
+
+        showQuestion();
+
+    }
+
+</script>
+
+
+{% endblock %}

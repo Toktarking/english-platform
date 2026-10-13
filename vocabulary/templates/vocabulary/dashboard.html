@@ -1,0 +1,1225 @@
+{% extends "vocabulary/base.html" %}
+
+{% block title %}
+Мой курс {{ course.level.code }}
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+    .dashboard {
+        max-width: 1050px;
+        margin: 18px auto 70px;
+    }
+
+    .dashboard-header {
+        margin-bottom: 25px;
+    }
+
+    .dashboard-eyebrow {
+        margin-bottom: 5px;
+
+        color: #7c3aed;
+
+        font-size: 12px;
+        font-weight: 900;
+    }
+
+    .dashboard-title {
+        margin: 0 0 6px;
+
+        color: #111827;
+
+        font-size: 34px;
+        font-weight: 900;
+    }
+
+    .dashboard-subtitle {
+        color: #6b7280;
+
+        font-size: 14px;
+    }
+
+
+    /* =====================================================
+       COURSE HERO
+       ===================================================== */
+
+    .course-hero {
+        margin-bottom: 16px;
+        padding: 25px;
+
+        background:
+            linear-gradient(
+                135deg,
+                #6d28d9,
+                #8b5cf6
+            );
+
+        border-radius: 24px;
+
+        color: white;
+    }
+
+    .hero-top {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+
+        gap: 20px;
+
+        margin-bottom: 23px;
+    }
+
+    .hero-level {
+        margin-bottom: 4px;
+
+        font-size: 32px;
+        font-weight: 900;
+    }
+
+    .hero-day {
+        opacity: 0.82;
+
+        font-size: 13px;
+    }
+
+    .hero-finish {
+        text-align: right;
+    }
+
+    .hero-finish-label {
+        opacity: 0.72;
+
+        font-size: 9px;
+    }
+
+    .hero-finish-date {
+        margin-top: 3px;
+
+        font-size: 14px;
+        font-weight: 800;
+    }
+
+    .course-progress-info {
+        display: flex;
+        justify-content: space-between;
+
+        gap: 10px;
+
+        margin-bottom: 7px;
+
+        font-size: 11px;
+        font-weight: 700;
+    }
+
+    .course-progress-track {
+        width: 100%;
+        height: 9px;
+
+        overflow: hidden;
+
+        background:
+            rgba(255, 255, 255, 0.24);
+
+        border-radius: 999px;
+    }
+
+    .course-progress-bar {
+        height: 100%;
+
+        background: white;
+
+        border-radius: 999px;
+    }
+
+
+    /* =====================================================
+       LAYOUT
+       ===================================================== */
+
+    .dashboard-grid {
+        display: grid;
+
+        grid-template-columns:
+            minmax(0, 1.65fr)
+            minmax(280px, 0.85fr);
+
+        gap: 16px;
+
+        align-items: start;
+    }
+
+    .dashboard-column {
+        display: flex;
+        flex-direction: column;
+
+        gap: 16px;
+    }
+
+    .dashboard-card {
+        padding: 22px;
+
+        background: white;
+
+        border: 1px solid #e5e7eb;
+        border-radius: 20px;
+
+        box-shadow:
+            0 6px 22px
+            rgba(0, 0, 0, 0.035);
+    }
+
+    .card-heading {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+
+        gap: 15px;
+
+        margin-bottom: 18px;
+    }
+
+    .card-title {
+        color: #111827;
+
+        font-size: 19px;
+        font-weight: 900;
+    }
+
+    .card-subtitle {
+        margin-top: 3px;
+
+        color: #9ca3af;
+
+        font-size: 10px;
+    }
+
+    .time-pill {
+        flex-shrink: 0;
+
+        padding: 6px 9px;
+
+        background: #f5f3ff;
+
+        border-radius: 999px;
+
+        color: #6d28d9;
+
+        font-size: 10px;
+        font-weight: 800;
+    }
+
+
+    /* =====================================================
+       TODAY PLAN
+       ===================================================== */
+
+    .today-progress {
+        margin-bottom: 17px;
+    }
+
+    .today-progress-info {
+        display: flex;
+        justify-content: space-between;
+
+        margin-bottom: 6px;
+
+        color: #6b7280;
+
+        font-size: 10px;
+    }
+
+    .today-track {
+        height: 7px;
+
+        overflow: hidden;
+
+        background: #f0f1f3;
+
+        border-radius: 999px;
+    }
+
+    .today-bar {
+        height: 100%;
+
+        background: #7c3aed;
+
+        border-radius: 999px;
+    }
+
+    .plan-list {
+        display: flex;
+        flex-direction: column;
+
+        gap: 8px;
+
+        margin-bottom: 18px;
+    }
+
+    .plan-item {
+        display: flex;
+        align-items: center;
+
+        gap: 12px;
+
+        padding: 13px;
+
+        background: #f9fafb;
+
+        border: 1px solid #e5e7eb;
+        border-radius: 13px;
+    }
+
+    .plan-item.completed {
+        background: #f0fdf4;
+
+        border-color: #bbf7d0;
+    }
+
+    .plan-item.in_progress {
+        background: #eff6ff;
+
+        border-color: #bfdbfe;
+    }
+
+    .plan-number {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        flex-shrink: 0;
+
+        width: 37px;
+        height: 37px;
+
+        background: white;
+
+        border: 1px solid #e5e7eb;
+        border-radius: 10px;
+
+        color: #7c3aed;
+
+        font-size: 12px;
+        font-weight: 900;
+    }
+
+    .plan-item.completed
+    .plan-number {
+        color: #16a34a;
+    }
+
+    .plan-info {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .plan-title {
+        color: #111827;
+
+        font-size: 13px;
+        font-weight: 800;
+    }
+
+    .plan-description {
+        margin-top: 2px;
+
+        overflow: hidden;
+
+        color: #6b7280;
+
+        font-size: 9px;
+
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+
+    .plan-time {
+        flex-shrink: 0;
+
+        color: #9ca3af;
+
+        font-size: 9px;
+        font-weight: 700;
+    }
+
+    .plan-check {
+        flex-shrink: 0;
+
+        color: #16a34a;
+
+        font-size: 18px;
+        font-weight: 900;
+    }
+
+    .start-day-button {
+        display: block;
+
+        width: 100%;
+
+        box-sizing: border-box;
+
+        padding: 14px;
+
+        background: #7c3aed;
+
+        border-radius: 12px;
+
+        color: white;
+
+        font-size: 14px;
+        font-weight: 900;
+
+        text-align: center;
+        text-decoration: none;
+
+        transition:
+            transform 0.15s ease,
+            background 0.15s ease;
+    }
+
+    .start-day-button:hover {
+        background: #6d28d9;
+
+        transform: translateY(-1px);
+    }
+
+    .day-complete {
+        padding: 17px;
+
+        background: #f0fdf4;
+
+        border: 1px solid #bbf7d0;
+        border-radius: 13px;
+
+        color: #166534;
+
+        text-align: center;
+    }
+
+    .day-complete-title {
+        margin-bottom: 3px;
+
+        font-size: 15px;
+        font-weight: 900;
+    }
+
+    .day-complete-text {
+        font-size: 10px;
+    }
+
+
+    /* =====================================================
+       CURRENT GROUP
+       ===================================================== */
+
+    .group-name {
+        margin-bottom: 13px;
+
+        color: #111827;
+
+        font-size: 20px;
+        font-weight: 900;
+    }
+
+    .small-progress-track {
+        width: 100%;
+        height: 7px;
+
+        margin-bottom: 14px;
+
+        overflow: hidden;
+
+        background: #f0f1f3;
+
+        border-radius: 999px;
+    }
+
+    .small-progress-bar {
+        height: 100%;
+
+        background: #3b82f6;
+
+        border-radius: 999px;
+    }
+
+    .group-stats {
+        display: grid;
+
+        grid-template-columns:
+            repeat(2, 1fr);
+
+        gap: 8px;
+    }
+
+    .group-stat {
+        padding: 11px;
+
+        background: #f9fafb;
+
+        border-radius: 11px;
+
+        text-align: center;
+    }
+
+    .group-stat-value {
+        color: #111827;
+
+        font-size: 18px;
+        font-weight: 900;
+    }
+
+    .group-stat-label {
+        margin-top: 2px;
+
+        color: #9ca3af;
+
+        font-size: 8px;
+    }
+
+    .locked-note {
+        margin-top: 11px;
+
+        color: #9ca3af;
+
+        font-size: 9px;
+        line-height: 1.5;
+    }
+
+
+    /* =====================================================
+       STREAK
+       ===================================================== */
+
+    .streak-box {
+        display: flex;
+        align-items: center;
+
+        gap: 14px;
+    }
+
+    .streak-icon {
+        font-size: 35px;
+    }
+
+    .streak-value {
+        color: #111827;
+
+        font-size: 25px;
+        font-weight: 900;
+    }
+
+    .streak-label {
+        color: #6b7280;
+
+        font-size: 10px;
+    }
+
+
+    /* =====================================================
+       WEEK
+       ===================================================== */
+
+    .week-grid {
+        display: grid;
+
+        grid-template-columns:
+            repeat(7, 1fr);
+
+        gap: 5px;
+    }
+
+    .week-day {
+        padding: 8px 3px;
+
+        background: #f9fafb;
+
+        border: 1px solid #e5e7eb;
+        border-radius: 9px;
+
+        text-align: center;
+    }
+
+    .week-day.completed {
+        background: #dcfce7;
+
+        border-color: #bbf7d0;
+
+        color: #15803d;
+    }
+
+    .week-day.today {
+        background: #ede9fe;
+
+        border-color: #c4b5fd;
+
+        color: #6d28d9;
+    }
+
+    .week-day.missed {
+        opacity: 0.48;
+    }
+
+    .week-name {
+        font-size: 8px;
+        font-weight: 800;
+    }
+
+    .week-mark {
+        margin-top: 4px;
+
+        font-size: 12px;
+        font-weight: 900;
+    }
+
+
+    /* =====================================================
+       STATS
+       ===================================================== */
+
+    .stats-grid {
+        display: grid;
+
+        grid-template-columns:
+            repeat(2, 1fr);
+
+        gap: 8px;
+    }
+
+    .stat-card {
+        padding: 13px;
+
+        background: #f9fafb;
+
+        border: 1px solid #e5e7eb;
+        border-radius: 11px;
+    }
+
+    .stat-number {
+        color: #111827;
+
+        font-size: 20px;
+        font-weight: 900;
+    }
+
+    .stat-label {
+        margin-top: 2px;
+
+        color: #9ca3af;
+
+        font-size: 8px;
+    }
+
+
+    /* =====================================================
+       MOBILE
+       ===================================================== */
+
+    @media (max-width: 800px) {
+
+        .dashboard-grid {
+            grid-template-columns: 1fr;
+        }
+
+    }
+
+
+    @media (max-width: 600px) {
+
+        .dashboard-title {
+            font-size: 28px;
+        }
+
+        .course-hero,
+        .dashboard-card {
+            padding: 18px;
+        }
+
+        .hero-level {
+            font-size: 27px;
+        }
+
+        .plan-description {
+            white-space: normal;
+        }
+
+    }
+
+</style>
+
+
+<div class="dashboard">
+
+
+    <!-- =================================================
+         HEADER
+         ================================================= -->
+
+    <div class="dashboard-header">
+
+        <div class="dashboard-eyebrow">
+            Ваш персональный курс
+        </div>
+
+        <h1 class="dashboard-title">
+            Добро пожаловать, {{ request.user.username }}
+        </h1>
+
+        <div class="dashboard-subtitle">
+            Сегодня {{ today|date:"d.m.Y" }}
+        </div>
+
+    </div>
+
+
+    <!-- =================================================
+         COURSE
+         ================================================= -->
+
+    <div class="course-hero">
+
+        <div class="hero-top">
+
+            <div>
+
+                <div class="hero-level">
+                    {{ course.level.code }}
+                </div>
+
+                <div class="hero-day">
+                    День
+                    {{ course.current_day_number }}
+                    из
+                    {{ course.duration_days }}
+                </div>
+
+            </div>
+
+
+            <div class="hero-finish">
+
+                <div class="hero-finish-label">
+                    Плановое завершение
+                </div>
+
+                <div class="hero-finish-date">
+                    {{ course.target_date|date:"d.m.Y" }}
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="course-progress-info">
+
+            <span>
+                Прогресс курса
+            </span>
+
+            <span>
+                {{ course.progress_percent }}%
+            </span>
+
+        </div>
+
+
+        <div class="course-progress-track">
+
+            <div
+                class="course-progress-bar"
+                style="width: {{ course.progress_percent }}%;"
+            ></div>
+
+        </div>
+
+    </div>
+
+
+    <div class="dashboard-grid">
+
+
+        <!-- =================================================
+             LEFT
+             ================================================= -->
+
+        <div class="dashboard-column">
+
+
+            <!-- TODAY -->
+
+            <div class="dashboard-card">
+
+                <div class="card-heading">
+
+                    <div>
+
+                        <div class="card-title">
+                            План на сегодня
+                        </div>
+
+                        <div class="card-subtitle">
+                            День {{ today_plan.day_number }}
+                        </div>
+
+                    </div>
+
+
+                    <div class="time-pill">
+                        ≈ {{ today_plan.estimated_minutes }} мин
+                    </div>
+
+                </div>
+
+
+                <div class="today-progress">
+
+                    <div class="today-progress-info">
+
+                        <span>
+                            Выполнено
+                            {{ today_plan.completed_item_count }}
+                            из
+                            {{ today_plan.item_count }}
+                        </span>
+
+                        <span>
+                            {{ today_plan.progress_percent }}%
+                        </span>
+
+                    </div>
+
+
+                    <div class="today-track">
+
+                        <div
+                            class="today-bar"
+                            style="width: {{ today_plan.progress_percent }}%;"
+                        ></div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="plan-list">
+
+
+                    {% for item in dashboard_items %}
+
+                        <div
+                            class="
+                                plan-item
+                                {{ item.status }}
+                            "
+                        >
+
+                            <div class="plan-number">
+
+                                {% if item.status == "completed" %}
+
+                                    ✓
+
+                                {% else %}
+
+                                    {{ item.icon }}
+
+                                {% endif %}
+
+                            </div>
+
+
+                            <div class="plan-info">
+
+                                <div class="plan-title">
+                                    {{ item.title }}
+                                </div>
+
+                                <div class="plan-description">
+                                    {{ item.description }}
+                                </div>
+
+                            </div>
+
+
+                            <div class="plan-time">
+                                ≈ {{ item.estimated_minutes }} мин
+                            </div>
+
+
+                            {% if item.status == "completed" %}
+
+                                <div class="plan-check">
+                                    ✓
+                                </div>
+
+                            {% endif %}
+
+                        </div>
+
+                    {% empty %}
+
+                        <div class="day-complete">
+                            Курс завершён
+                        </div>
+
+                    {% endfor %}
+
+
+                </div>
+
+
+                {% if today_plan.is_completed %}
+
+                    <div class="day-complete">
+
+                        <div class="day-complete-title">
+                            План на сегодня выполнен ✓
+                        </div>
+
+                        <div class="day-complete-text">
+                            Отличная работа. Возвращайтесь завтра.
+                        </div>
+
+                    </div>
+
+                {% elif next_url %}
+
+                    <a
+                        href="{% url 'vocabulary:dashboard_start' %}"
+                        class="start-day-button"
+                    >
+
+                        {% if has_activity %}
+
+                            Продолжить занятие →
+
+                        {% else %}
+
+                            Начать занятие →
+
+                        {% endif %}
+
+                    </a>
+
+                {% endif %}
+
+            </div>
+
+
+            <!-- CURRENT GROUP -->
+
+            {% if current_group %}
+
+                <div class="dashboard-card">
+
+                    <div class="card-heading">
+
+                        <div>
+
+                            <div class="card-title">
+                                Текущая группа
+                            </div>
+
+                            <div class="card-subtitle">
+                                Сначала Lessons, затем Practice
+                            </div>
+
+                        </div>
+
+                        <div class="time-pill">
+                            {{ current_group.progress_percent }}%
+                        </div>
+
+                    </div>
+
+
+                    <div class="group-name">
+                        {{ current_group.name }}
+                    </div>
+
+
+                    <div class="small-progress-track">
+
+                        <div
+                            class="small-progress-bar"
+                            style="width: {{ current_group.progress_percent }}%;"
+                        ></div>
+
+                    </div>
+
+
+                    <div class="group-stats">
+
+                        <div class="group-stat">
+
+                            <div class="group-stat-value">
+                                {{ current_group.completed_lessons }}
+                                /
+                                {{ current_group.total_lessons }}
+                            </div>
+
+                            <div class="group-stat-label">
+                                Lessons
+                            </div>
+
+                        </div>
+
+
+                        <div class="group-stat">
+
+                            <div class="group-stat-value">
+                                {{ current_group.completed_practices }}
+                                / 4
+                            </div>
+
+                            <div class="group-stat-label">
+                                Practice
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    {% if not current_group.practices_unlocked %}
+
+                        <div class="locked-note">
+                            Practice откроются после завершения
+                            всех Lessons этой группы.
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+            {% endif %}
+
+
+        </div>
+
+
+        <!-- =================================================
+             RIGHT
+             ================================================= -->
+
+        <div class="dashboard-column">
+
+
+            <!-- STREAK -->
+
+            <div class="dashboard-card">
+
+                <div class="streak-box">
+
+                    <div class="streak-icon">
+                        🔥
+                    </div>
+
+                    <div>
+
+                        <div class="streak-value">
+                            {{ streak }}
+                        </div>
+
+                        <div class="streak-label">
+                            дней подряд
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- WEEK -->
+
+            <div class="dashboard-card">
+
+                <div class="card-heading">
+
+                    <div>
+
+                        <div class="card-title">
+                            Эта неделя
+                        </div>
+
+                        <div class="card-subtitle">
+                            {{ week_completed }} из 7 дней выполнено
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="week-grid">
+
+                    {% for day in week_days %}
+
+                        <div
+                            class="
+                                week-day
+                                {{ day.status }}
+                            "
+                        >
+
+                            <div class="week-name">
+                                {{ day.name }}
+                            </div>
+
+                            <div class="week-mark">
+
+                                {% if day.status == "completed" %}
+
+                                    ✓
+
+                                {% elif day.status == "today" %}
+
+                                    ●
+
+                                {% elif day.status == "missed" %}
+
+                                    ×
+
+                                {% else %}
+
+                                    ○
+
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+            </div>
+
+
+            <!-- COURSE STATS -->
+
+            <div class="dashboard-card">
+
+                <div class="card-heading">
+
+                    <div>
+
+                        <div class="card-title">
+                            Прогресс {{ course.level.code }}
+                        </div>
+
+                        <div class="card-subtitle">
+                            Общая статистика курса
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="stats-grid">
+
+
+                    <div class="stat-card">
+
+                        <div class="stat-number">
+                            {{ studied_words }}
+                            /
+                            {{ course.total_words }}
+                        </div>
+
+                        <div class="stat-label">
+                            изучено слов
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <div class="stat-number">
+                            {{ mastered_words }}
+                        </div>
+
+                        <div class="stat-label">
+                            освоено слов
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <div class="stat-number">
+                            {{ course.completed_lessons }}
+                            /
+                            {{ course.total_lessons }}
+                        </div>
+
+                        <div class="stat-label">
+                            Lessons
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <div class="stat-number">
+                            {{ course.completed_groups }}
+                            /
+                            {{ course.total_groups }}
+                        </div>
+
+                        <div class="stat-label">
+                            групп
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <div class="stat-number">
+                            {{ course.completed_group_practices }}
+                            /
+                            {{ course.total_group_practices }}
+                        </div>
+
+                        <div class="stat-label">
+                            Practice
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <div class="stat-number">
+                            {{ course.remaining_days }}
+                        </div>
+
+                        <div class="stat-label">
+                            дней осталось
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

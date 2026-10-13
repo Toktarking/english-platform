@@ -1,0 +1,2009 @@
+{% extends "vocabulary/base.html" %}
+
+{% block title %}
+{{ group.name }}
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+    /* =====================================================
+       GROUP HEADER
+       ===================================================== */
+
+    .group-header {
+        margin-bottom: 34px;
+    }
+
+    .group-title-row {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+
+        margin-top: 16px;
+        margin-bottom: 10px;
+    }
+
+    .group-title-row h1 {
+        margin: 0;
+    }
+
+    .group-subtitle {
+        color: #6b7280;
+
+        font-size: 18px;
+    }
+
+
+    /* =====================================================
+       SECTION HEADER
+       ===================================================== */
+
+    .section-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        gap: 15px;
+
+        margin-bottom: 15px;
+    }
+
+    .section-title {
+        color: #111827;
+
+        font-size: 22px;
+        font-weight: 800;
+    }
+
+    .section-description {
+        color: #9ca3af;
+
+        font-size: 12px;
+    }
+
+
+    /* =====================================================
+       PRACTICE SECTION
+       ===================================================== */
+
+    .practice-section {
+        margin-top: 30px;
+        margin-bottom: 42px;
+    }
+
+
+    /* =====================================================
+       PRACTICE GRID
+       ===================================================== */
+
+    .practice-grid {
+        display: grid;
+
+        grid-template-columns:
+            repeat(3, minmax(0, 1fr));
+
+        gap: 14px;
+    }
+
+
+    /* =====================================================
+       PRACTICE CARD
+       ===================================================== */
+
+    .practice-card {
+        position: relative;
+
+        display: flex;
+        flex-direction: column;
+
+        overflow: hidden;
+
+        min-width: 0;
+        padding: 20px;
+
+        background: white;
+
+        border: 1px solid #e5e7eb;
+        border-radius: 20px;
+
+        box-shadow:
+            0 7px 24px
+            rgba(0, 0, 0, 0.045);
+
+        transition:
+            transform 0.18s ease,
+            box-shadow 0.18s ease;
+    }
+
+    .practice-card:hover {
+        transform: translateY(-2px);
+
+        box-shadow:
+            0 12px 28px
+            rgba(0, 0, 0, 0.07);
+    }
+
+
+    /* =====================================================
+       COMPLETED PRACTICE
+       ===================================================== */
+
+    .practice-card.practice-completed {
+        background:
+            linear-gradient(
+                145deg,
+                #fffdf5 0%,
+                #fff6cf 100%
+            );
+
+        border-color: #e7c757;
+
+        box-shadow:
+            0 9px 26px
+            rgba(184, 137, 17, 0.13);
+    }
+
+    .practice-card.practice-completed::before {
+        content: "";
+
+        position: absolute;
+
+        top: 0;
+        left: 0;
+
+        width: 100%;
+        height: 4px;
+
+        background:
+            linear-gradient(
+                90deg,
+                #d4a72c,
+                #f4d35e,
+                #d4a72c
+            );
+    }
+
+    .practice-card.practice-completed
+    .practice-name {
+        color: #8a6411;
+    }
+
+    .practice-card.practice-completed
+    .practice-progress-bar {
+        background: #d4a72c;
+    }
+
+    .practice-card.practice-completed
+    .practice-button {
+        background: #d4a72c;
+    }
+
+    .practice-card.practice-completed
+    .practice-button:hover {
+        background: #b98b18;
+    }
+
+
+    /* =====================================================
+       PRACTICE HEADER
+       ===================================================== */
+
+    .practice-card-header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+
+        gap: 10px;
+
+        margin-bottom: 13px;
+    }
+
+    .practice-name {
+        color: #111827;
+
+        font-size: 21px;
+        font-weight: 800;
+    }
+
+    .practice-status {
+        margin-top: 3px;
+
+        font-size: 11px;
+        font-weight: 700;
+    }
+
+    .status-completed {
+        color: #a47913;
+    }
+
+    .status-progress {
+        color: #2563eb;
+    }
+
+    .status-not-started {
+        color: #9ca3af;
+    }
+
+    .practice-opened-main {
+        flex-shrink: 0;
+
+        text-align: right;
+    }
+
+    .practice-opened-number {
+        color: #111827;
+
+        font-size: 19px;
+        font-weight: 800;
+    }
+
+    .practice-opened-text {
+        margin-top: 1px;
+
+        color: #9ca3af;
+
+        font-size: 9px;
+    }
+
+
+    /* =====================================================
+       PRACTICE PROGRESS
+       ===================================================== */
+
+    .practice-progress-track {
+        width: 100%;
+        height: 7px;
+
+        margin-bottom: 15px;
+
+        overflow: hidden;
+
+        background: rgba(229, 231, 235, 0.85);
+
+        border-radius: 999px;
+    }
+
+    .practice-progress-bar {
+        height: 100%;
+
+        background: #7c3aed;
+
+        border-radius: 999px;
+
+        transition: width 0.3s ease;
+    }
+
+
+    /* =====================================================
+       PRACTICE DECKS
+       ===================================================== */
+
+    .practice-decks {
+        display: grid;
+
+        grid-template-columns:
+            repeat(2, 1fr);
+
+        gap: 7px;
+
+        margin-bottom: 14px;
+    }
+
+    .practice-deck {
+        padding: 9px 5px;
+
+        background: #f9fafb;
+
+        border: 1px solid #e5e7eb;
+        border-radius: 10px;
+
+        text-align: center;
+    }
+
+    .practice-card.practice-completed
+    .practice-deck {
+        background:
+            rgba(255, 255, 255, 0.5);
+
+        border-color:
+            rgba(212, 167, 44, 0.25);
+    }
+
+    .practice-deck-label {
+        margin-bottom: 2px;
+
+        color: #6b7280;
+
+        font-size: 9px;
+        font-weight: 700;
+    }
+
+    .practice-deck-number {
+        color: #111827;
+
+        font-size: 18px;
+        font-weight: 800;
+    }
+
+
+    /* =====================================================
+       PRACTICE META
+       ===================================================== */
+
+    .practice-meta {
+        margin-bottom: 13px;
+        padding-top: 10px;
+
+        border-top: 1px solid #f0f1f3;
+    }
+
+    .practice-card.practice-completed
+    .practice-meta {
+        border-top-color:
+            rgba(212, 167, 44, 0.22);
+    }
+
+    .practice-meta-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        gap: 8px;
+
+        margin-bottom: 5px;
+
+        font-size: 10px;
+    }
+
+    .practice-meta-row:last-child {
+        margin-bottom: 0;
+    }
+
+    .practice-meta-label {
+        color: #9ca3af;
+    }
+
+    .practice-meta-value {
+        color: #6b7280;
+
+        font-weight: 700;
+
+        text-align: right;
+    }
+
+    .practice-card.practice-completed
+    .practice-meta-value {
+        color: #8a6411;
+    }
+
+
+    /* =====================================================
+       PRACTICE BUTTON
+       ===================================================== */
+
+    .practice-button-area {
+        margin-top: auto;
+    }
+
+    .practice-button {
+        display: block;
+
+        width: 100%;
+
+        box-sizing: border-box;
+
+        padding: 11px 12px;
+
+        background: #7c3aed;
+
+        border-radius: 11px;
+
+        color: white;
+
+        font-size: 13px;
+        font-weight: 800;
+
+        text-align: center;
+        text-decoration: none;
+
+        transition:
+            background 0.15s ease,
+            transform 0.15s ease;
+    }
+
+    .practice-button:hover {
+        background: #6d28d9;
+
+        transform: translateY(-1px);
+    }
+
+
+    /* =====================================================
+       LESSONS
+       ===================================================== */
+
+    .lessons-section {
+        margin-top: 10px;
+    }
+
+    .lesson-list {
+        display: flex;
+        flex-direction: column;
+
+        gap: 13px;
+    }
+
+
+    /* =====================================================
+       LESSON CARD
+       ===================================================== */
+
+    .lesson-card {
+        position: relative;
+
+        overflow: hidden;
+
+        padding: 20px;
+
+        background: white;
+
+        border: 1px solid #e5e7eb;
+        border-radius: 18px;
+
+        box-shadow:
+            0 5px 18px
+            rgba(0, 0, 0, 0.035);
+    }
+
+
+    /* =====================================================
+       LESSON STATUS COLORS
+       ===================================================== */
+
+    .lesson-card.lesson-unopened {
+        background: #ffffff;
+    }
+
+    .lesson-card.lesson-unopened::before,
+    .lesson-card.lesson-started::before,
+    .lesson-card.lesson-completed::before,
+    .lesson-card.lesson-perfect::before {
+        content: "";
+
+        position: absolute;
+
+        top: 0;
+        left: 0;
+
+        width: 100%;
+        height: 4px;
+    }
+
+    .lesson-card.lesson-unopened::before {
+        background: #d1d5db;
+    }
+
+    .lesson-card.lesson-started {
+        background:
+            linear-gradient(
+                145deg,
+                #ffffff 0%,
+                #f4f8ff 100%
+            );
+
+        border-color: #bfdbfe;
+    }
+
+    .lesson-card.lesson-started::before {
+        background: #3b82f6;
+    }
+
+    .lesson-card.lesson-completed {
+        background:
+            linear-gradient(
+                145deg,
+                #ffffff 0%,
+                #f0fdf4 100%
+            );
+
+        border-color: #bbf7d0;
+    }
+
+    .lesson-card.lesson-completed::before {
+        background: #22c55e;
+    }
+
+    .lesson-card.lesson-perfect {
+        background:
+            linear-gradient(
+                145deg,
+                #fffef9 0%,
+                #fff7d6 100%
+            );
+
+        border-color: #e7c757;
+
+        box-shadow:
+            0 8px 24px
+            rgba(184, 137, 17, 0.11);
+    }
+
+    .lesson-card.lesson-perfect::before {
+        background:
+            linear-gradient(
+                90deg,
+                #d4a72c,
+                #f4d35e,
+                #d4a72c
+            );
+    }
+
+
+    /* =====================================================
+       LESSON HEADER
+       ===================================================== */
+
+    .lesson-header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+
+        gap: 15px;
+
+        margin-bottom: 16px;
+    }
+
+    .lesson-name {
+        color: #111827;
+
+        font-size: 19px;
+        font-weight: 800;
+    }
+
+    .lesson-word-count {
+        margin-top: 3px;
+
+        color: #6b7280;
+
+        font-size: 11px;
+    }
+
+    .lesson-status {
+        flex-shrink: 0;
+
+        padding: 5px 9px;
+
+        border-radius: 999px;
+
+        font-size: 10px;
+        font-weight: 800;
+    }
+
+    .lesson-unopened .lesson-status {
+        background: #f3f4f6;
+
+        color: #9ca3af;
+    }
+
+    .lesson-started .lesson-status {
+        background: #dbeafe;
+
+        color: #2563eb;
+    }
+
+    .lesson-completed .lesson-status {
+        background: #dcfce7;
+
+        color: #15803d;
+    }
+
+    .lesson-perfect .lesson-status {
+        background: #fef3c7;
+
+        color: #9a6a08;
+    }
+
+
+    /* =====================================================
+       LESSON STAGES
+       ===================================================== */
+
+    .lesson-stages {
+        display: grid;
+
+        grid-template-columns:
+            repeat(4, minmax(0, 1fr));
+
+        gap: 8px;
+
+        margin-bottom: 15px;
+    }
+
+    .lesson-stage {
+        padding: 11px 9px;
+
+        background:
+            rgba(249, 250, 251, 0.9);
+
+        border: 1px solid #e5e7eb;
+        border-radius: 11px;
+    }
+
+    .lesson-stage.completed {
+        background:
+            rgba(240, 253, 244, 0.75);
+
+        border-color: #bbf7d0;
+    }
+
+    .lesson-stage.perfect-stage {
+        background:
+            rgba(255, 247, 214, 0.75);
+
+        border-color: #f4d35e;
+    }
+
+    .lesson-stage-name {
+        margin-bottom: 6px;
+
+        color: #374151;
+
+        font-size: 11px;
+        font-weight: 800;
+    }
+
+    .lesson-stage-status {
+        margin-bottom: 6px;
+
+        color: #9ca3af;
+
+        font-size: 9px;
+        font-weight: 700;
+    }
+
+    .lesson-stage.completed
+    .lesson-stage-status {
+        color: #16a34a;
+    }
+
+    .lesson-stage-data {
+        display: flex;
+        flex-direction: column;
+
+        gap: 3px;
+
+        color: #6b7280;
+
+        font-size: 9px;
+    }
+
+    .lesson-stage-data strong {
+        color: #374151;
+    }
+
+
+    /* =====================================================
+       LESSON FOOTER
+       ===================================================== */
+
+    .lesson-footer {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+
+        gap: 18px;
+
+        padding-top: 13px;
+
+        border-top: 1px solid rgba(229, 231, 235, 0.8);
+    }
+
+    .lesson-meta {
+        flex: 1;
+
+        display: grid;
+        grid-template-columns:
+            repeat(3, minmax(0, 1fr));
+
+        gap: 8px;
+    }
+
+    .lesson-meta-item {
+        min-width: 0;
+    }
+
+    .lesson-meta-label {
+        margin-bottom: 2px;
+
+        color: #9ca3af;
+
+        font-size: 9px;
+    }
+
+    .lesson-meta-value {
+        overflow: hidden;
+
+        color: #4b5563;
+
+        font-size: 10px;
+        font-weight: 700;
+
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+
+    .lesson-action {
+        flex-shrink: 0;
+
+        min-width: 125px;
+
+        padding: 10px 16px;
+
+        background: #2563eb;
+
+        border-radius: 10px;
+
+        color: white;
+
+        font-size: 11px;
+        font-weight: 800;
+
+        text-align: center;
+        text-decoration: none;
+    }
+
+    .lesson-action:hover {
+        background: #1d4ed8;
+    }
+
+    .lesson-perfect .lesson-action {
+        background: #d4a72c;
+    }
+
+    .lesson-perfect .lesson-action:hover {
+        background: #b98b18;
+    }
+
+    .lesson-completed .lesson-action {
+        background: #16a34a;
+    }
+
+    .lesson-completed .lesson-action:hover {
+        background: #15803d;
+    }
+
+
+    /* =====================================================
+       MOBILE / TABLET
+       ===================================================== */
+
+    @media (max-width: 1000px) {
+
+        .practice-grid {
+            grid-template-columns:
+                repeat(2, minmax(0, 1fr));
+        }
+
+        .lesson-stages {
+            grid-template-columns:
+                repeat(2, minmax(0, 1fr));
+        }
+
+    }
+
+
+    @media (max-width: 800px) {
+
+        .practice-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .practice-decks {
+            grid-template-columns:
+                repeat(4, minmax(0, 1fr));
+        }
+
+        .practice-card {
+            padding: 16px;
+        }
+
+        .lesson-footer {
+            align-items: stretch;
+            flex-direction: column;
+        }
+
+        .lesson-action {
+            width: 100%;
+
+            box-sizing: border-box;
+        }
+
+    }
+
+
+    @media (max-width: 600px) {
+
+        .group-header {
+            margin-bottom: 22px;
+        }
+
+        .group-title-row {
+            margin-top: 10px;
+        }
+
+        .group-title-row h1 {
+            font-size: 32px;
+        }
+
+        .group-subtitle {
+            font-size: 15px;
+        }
+
+        .practice-section {
+            margin-top: 22px;
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 19px;
+        }
+
+        .section-description {
+            display: none;
+        }
+
+        .practice-name {
+            font-size: 19px;
+        }
+
+        .practice-opened-number {
+            font-size: 17px;
+        }
+
+        .practice-decks {
+            gap: 4px;
+        }
+
+        .practice-deck {
+            min-width: 0;
+
+            padding: 7px 2px;
+        }
+
+        .practice-deck-label {
+            overflow: hidden;
+
+            font-size: 7px;
+
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        .practice-deck-number {
+            font-size: 15px;
+        }
+
+        .lesson-card {
+            padding: 16px;
+        }
+
+        .lesson-stages {
+            grid-template-columns:
+                repeat(2, minmax(0, 1fr));
+        }
+
+        .lesson-meta {
+            grid-template-columns:
+                1fr;
+        }
+
+    }
+
+</style>
+
+
+<!-- =====================================================
+     GROUP HEADER
+     ===================================================== -->
+
+<div class="group-header">
+
+    <a
+        href="{% url 'vocabulary:level_detail' level.code %}"
+        class="back"
+    >
+        ← {{ level.code }} Vocabulary
+    </a>
+
+
+    <div class="group-title-row">
+
+        <h1>
+            {{ group.name }}
+        </h1>
+
+        <span class="level-badge">
+            {{ level.code }}
+        </span>
+
+    </div>
+
+
+    <div class="group-subtitle">
+
+        {{ total_words }} words
+        ·
+        {{ lessons|length }} lessons
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     GROUP PRACTICES
+     ===================================================== -->
+
+<div class="practice-section">
+
+
+    <div class="section-header">
+
+        <div class="section-title">
+            Practice
+        </div>
+
+        <div class="section-description">
+            Выберите способ тренировки
+        </div>
+
+    </div>
+
+
+    <div class="practice-grid">
+
+
+        {% for practice in practice_cards %}
+
+
+            <div
+                class="
+                    practice-card
+
+                    {% if practice.completed %}
+                        practice-completed
+                    {% endif %}
+                "
+            >
+
+
+                <!-- =========================================
+                     HEADER
+                     ========================================= -->
+
+                <div class="practice-card-header">
+
+
+                    <div>
+
+                        <div class="practice-name">
+
+                            {% if practice.completed %}
+                                🏆
+                            {% endif %}
+
+                            Practice {{ practice.number }}
+
+                        </div>
+
+
+                        <div
+                            class="
+                                practice-status
+
+                                {% if practice.completed %}
+                                    status-completed
+
+                                {% elif practice.started %}
+                                    status-progress
+
+                                {% else %}
+                                    status-not-started
+                                {% endif %}
+                            "
+                        >
+
+                            {% if practice.completed %}
+
+                                Завершено
+
+                            {% elif practice.started %}
+
+                                В процессе
+
+                            {% else %}
+
+                                Не начато
+
+                            {% endif %}
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="practice-opened-main">
+
+                        <div class="practice-opened-number">
+
+                            {{ practice.opened_count }}
+                            /
+                            {{ total_words }}
+
+                        </div>
+
+                        <div class="practice-opened-text">
+                            открыто
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- =========================================
+                     PROGRESS
+                     ========================================= -->
+
+                <div class="practice-progress-track">
+
+                    <div
+                        class="practice-progress-bar"
+
+                        {% if total_words %}
+
+                            style="
+                                width:
+                                {% widthratio practice.opened_count total_words 100 %}%;
+                            "
+
+                        {% else %}
+
+                            style="width: 0%;"
+
+                        {% endif %}
+                    ></div>
+
+                </div>
+
+
+                <!-- =========================================
+                     DECKS
+                     ========================================= -->
+
+                <div class="practice-decks">
+
+
+                    <div class="practice-deck">
+
+                        <div class="practice-deck-label">
+                            Колода 1
+                        </div>
+
+                        <div class="practice-deck-number">
+                            {{ practice.deck1_count }}
+                        </div>
+
+                    </div>
+
+
+                    <div class="practice-deck">
+
+                        <div class="practice-deck-label">
+                            Колода 2
+                        </div>
+
+                        <div class="practice-deck-number">
+                            {{ practice.deck2_count }}
+                        </div>
+
+                    </div>
+
+
+                    <div class="practice-deck">
+
+                        <div class="practice-deck-label">
+                            Колода 3
+                        </div>
+
+                        <div class="practice-deck-number">
+                            {{ practice.deck3_count }}
+                        </div>
+
+                    </div>
+
+
+                    <div class="practice-deck">
+
+                        <div class="practice-deck-label">
+                            Не открыто
+                        </div>
+
+                        <div class="practice-deck-number">
+                            {{ practice.unopened_count }}
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- =========================================
+                     META
+                     ========================================= -->
+
+                <div class="practice-meta">
+
+
+                    <div class="practice-meta-row">
+
+                        <span class="practice-meta-label">
+                            Последний вход
+                        </span>
+
+                        <span class="practice-meta-value">
+
+                            {% if practice.last_opened_at %}
+
+                                {{ practice.last_opened_at|date:"d.m.Y, H:i" }}
+
+                            {% else %}
+
+                                —
+
+                            {% endif %}
+
+                        </span>
+
+                    </div>
+
+
+                    {% if practice.started %}
+
+                        <div class="practice-meta-row">
+
+                            <span class="practice-meta-label">
+                                Ошибок
+                            </span>
+
+                            <span class="practice-meta-value">
+                                {{ practice.mistake_count }}
+                            </span>
+
+                        </div>
+
+                    {% endif %}
+
+
+                    {% if practice.completed and practice.completed_at %}
+
+                        <div class="practice-meta-row">
+
+                            <span class="practice-meta-label">
+                                Завершено
+                            </span>
+
+                            <span class="practice-meta-value">
+
+                                {{ practice.completed_at|date:"d.m.Y, H:i" }}
+
+                            </span>
+
+                        </div>
+
+                    {% endif %}
+
+
+                </div>
+
+
+                <!-- =========================================
+                     BUTTON
+                     ========================================= -->
+
+                <div class="practice-button-area">
+
+
+                    {% if practice.number == 1 %}
+
+                        <a
+                            href="{% url 'vocabulary:group_practice1' level.code group.id %}"
+                            class="practice-button"
+                        >
+
+                            {% if practice.completed %}
+
+                                Посмотреть результат
+
+                            {% elif practice.started %}
+
+                                Продолжить
+
+                            {% else %}
+
+                                Начать
+
+                            {% endif %}
+
+                        </a>
+
+
+                    {% elif practice.number == 2 %}
+
+                        <a
+                            href="{% url 'vocabulary:group_practice2' level.code group.id %}"
+                            class="practice-button"
+                        >
+
+                            {% if practice.completed %}
+
+                                Посмотреть результат
+
+                            {% elif practice.started %}
+
+                                Продолжить
+
+                            {% else %}
+
+                                Начать
+
+                            {% endif %}
+
+                        </a>
+
+
+                    {% elif practice.number == 3 %}
+
+                        <a
+                            href="{% url 'vocabulary:group_practice3' level.code group.id %}"
+                            class="practice-button"
+                        >
+
+                            {% if practice.completed %}
+
+                                Посмотреть результат
+
+                            {% elif practice.started %}
+
+                                Продолжить
+
+                            {% else %}
+
+                                Начать
+
+                            {% endif %}
+
+                        </a>
+
+
+                    {% elif practice.number == 4 %}
+
+                        <a
+                            href="{% url 'vocabulary:group_practice4' level.code group.id %}"
+                            class="practice-button"
+                        >
+
+                            {% if practice.completed %}
+
+                                Посмотреть результат
+
+                            {% elif practice.started %}
+
+                                Продолжить
+
+                            {% else %}
+
+                                Начать
+
+                            {% endif %}
+
+                        </a>
+
+
+                    {% endif %}
+
+
+                </div>
+
+
+            </div>
+
+
+        {% endfor %}
+
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     LESSONS
+     ===================================================== -->
+
+<div class="lessons-section">
+
+
+    <div class="section-header">
+
+        <div class="section-title">
+            Lessons
+        </div>
+
+        <div class="section-description">
+            Прогресс по каждому уроку
+        </div>
+
+    </div>
+
+
+    <div class="lesson-list">
+
+
+        {% for lesson in lessons %}
+
+
+            <div
+                class="
+                    lesson-card
+
+                    {% if lesson.practice_status == 'perfect' %}
+                        lesson-perfect
+
+                    {% elif lesson.practice_status == 'completed' %}
+                        lesson-completed
+
+                    {% elif lesson.practice_status == 'started' %}
+                        lesson-started
+
+                    {% else %}
+                        lesson-unopened
+                    {% endif %}
+                "
+            >
+
+
+                <!-- =========================================
+                     LESSON HEADER
+                     ========================================= -->
+
+                <div class="lesson-header">
+
+
+                    <div>
+
+                        <div class="lesson-name">
+
+                            {% if lesson.practice_status == 'perfect' %}
+                                ⭐
+                            {% endif %}
+
+                            Lesson {{ lesson.number }}
+
+                        </div>
+
+
+                        <div class="lesson-word-count">
+                            {{ lesson.word_count }} words
+                        </div>
+
+                    </div>
+
+
+                    <div class="lesson-status">
+
+                        {% if lesson.practice_status == 'perfect' %}
+
+                            Perfect
+
+                        {% elif lesson.practice_status == 'completed' %}
+
+                            Завершено
+
+                        {% elif lesson.practice_status == 'started' %}
+
+                            В процессе
+
+                        {% else %}
+
+                            Не начато
+
+                        {% endif %}
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- =========================================
+                     FOUR LESSON STAGES
+                     ========================================= -->
+
+                <div class="lesson-stages">
+
+
+                    <!-- STAGE 1 -->
+
+                    <div
+                        class="
+                            lesson-stage
+
+                            {% if lesson.practice_progress.stage1_completed %}
+                                completed
+                            {% endif %}
+
+                            {% if lesson.practice_progress.stage1_completed and lesson.practice_progress.stage1_mistakes == 0 %}
+                                perfect-stage
+                            {% endif %}
+                        "
+                    >
+
+                        <div class="lesson-stage-name">
+                            1. Перевод
+                        </div>
+
+
+                        <div class="lesson-stage-status">
+
+                            {% if lesson.practice_progress.stage1_completed %}
+
+                                ✓ Пройден
+
+                            {% else %}
+
+                                Не пройден
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <div class="lesson-stage-data">
+
+                            {% if lesson.practice_progress %}
+
+                                <span>
+                                    Ошибки:
+                                    <strong>
+                                        {{ lesson.practice_progress.stage1_mistakes }}
+                                    </strong>
+                                </span>
+
+                                <span>
+                                    Время:
+                                    <strong
+                                        class="lesson-time"
+                                        data-seconds="{{ lesson.practice_progress.stage1_seconds }}"
+                                    >
+                                        00:00
+                                    </strong>
+                                </span>
+
+                            {% else %}
+
+                                <span>
+                                    Ошибки:
+                                    <strong>—</strong>
+                                </span>
+
+                                <span>
+                                    Время:
+                                    <strong>—</strong>
+                                </span>
+
+                            {% endif %}
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- STAGE 2 -->
+
+                    <div
+                        class="
+                            lesson-stage
+
+                            {% if lesson.practice_progress.stage2_completed %}
+                                completed
+                            {% endif %}
+
+                            {% if lesson.practice_progress.stage2_completed and lesson.practice_progress.stage2_mistakes == 0 %}
+                                perfect-stage
+                            {% endif %}
+                        "
+                    >
+
+                        <div class="lesson-stage-name">
+                            2. Написание
+                        </div>
+
+
+                        <div class="lesson-stage-status">
+
+                            {% if lesson.practice_progress.stage2_completed %}
+
+                                ✓ Пройден
+
+                            {% else %}
+
+                                Не пройден
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <div class="lesson-stage-data">
+
+                            {% if lesson.practice_progress %}
+
+                                <span>
+                                    Ошибки:
+                                    <strong>
+                                        {{ lesson.practice_progress.stage2_mistakes }}
+                                    </strong>
+                                </span>
+
+                                <span>
+                                    Время:
+                                    <strong
+                                        class="lesson-time"
+                                        data-seconds="{{ lesson.practice_progress.stage2_seconds }}"
+                                    >
+                                        00:00
+                                    </strong>
+                                </span>
+
+                            {% else %}
+
+                                <span>
+                                    Ошибки:
+                                    <strong>—</strong>
+                                </span>
+
+                                <span>
+                                    Время:
+                                    <strong>—</strong>
+                                </span>
+
+                            {% endif %}
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- STAGE 3 -->
+
+                    <div
+                        class="
+                            lesson-stage
+
+                            {% if lesson.practice_progress.stage3_completed %}
+                                completed
+                            {% endif %}
+
+                            {% if lesson.practice_progress.stage3_completed and lesson.practice_progress.stage3_mistakes == 0 %}
+                                perfect-stage
+                            {% endif %}
+                        "
+                    >
+
+                        <div class="lesson-stage-name">
+                            3. Контекст
+                        </div>
+
+
+                        <div class="lesson-stage-status">
+
+                            {% if lesson.practice_progress.stage3_completed %}
+
+                                ✓ Пройден
+
+                            {% else %}
+
+                                Не пройден
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <div class="lesson-stage-data">
+
+                            {% if lesson.practice_progress %}
+
+                                <span>
+                                    Ошибки:
+                                    <strong>
+                                        {{ lesson.practice_progress.stage3_mistakes }}
+                                    </strong>
+                                </span>
+
+                                <span>
+                                    Время:
+                                    <strong
+                                        class="lesson-time"
+                                        data-seconds="{{ lesson.practice_progress.stage3_seconds }}"
+                                    >
+                                        00:00
+                                    </strong>
+                                </span>
+
+                            {% else %}
+
+                                <span>
+                                    Ошибки:
+                                    <strong>—</strong>
+                                </span>
+
+                                <span>
+                                    Время:
+                                    <strong>—</strong>
+                                </span>
+
+                            {% endif %}
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- STAGE 4 -->
+
+                    <div
+                        class="
+                            lesson-stage
+
+                            {% if lesson.practice_progress.stage4_completed %}
+                                completed
+                            {% endif %}
+
+                            {% if lesson.practice_progress.stage4_completed and lesson.practice_progress.stage4_mistakes == 0 %}
+                                perfect-stage
+                            {% endif %}
+                        "
+                    >
+
+                        <div class="lesson-stage-name">
+                            4. Listening
+                        </div>
+
+
+                        <div class="lesson-stage-status">
+
+                            {% if lesson.practice_progress.stage4_completed %}
+
+                                ✓ Пройден
+
+                            {% else %}
+
+                                Не пройден
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <div class="lesson-stage-data">
+
+                            {% if lesson.practice_progress %}
+
+                                <span>
+                                    Ошибки:
+                                    <strong>
+                                        {{ lesson.practice_progress.stage4_mistakes }}
+                                    </strong>
+                                </span>
+
+                                <span>
+                                    Время:
+                                    <strong
+                                        class="lesson-time"
+                                        data-seconds="{{ lesson.practice_progress.stage4_seconds }}"
+                                    >
+                                        00:00
+                                    </strong>
+                                </span>
+
+                            {% else %}
+
+                                <span>
+                                    Ошибки:
+                                    <strong>—</strong>
+                                </span>
+
+                                <span>
+                                    Время:
+                                    <strong>—</strong>
+                                </span>
+
+                            {% endif %}
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- =========================================
+                     LESSON FOOTER
+                     ========================================= -->
+
+                <div class="lesson-footer">
+
+
+                    <div class="lesson-meta">
+
+
+                        <div class="lesson-meta-item">
+
+                            <div class="lesson-meta-label">
+                                Последняя активность
+                            </div>
+
+                            <div class="lesson-meta-value">
+
+                                {% if lesson.practice_progress.last_opened_at %}
+
+                                    {{ lesson.practice_progress.last_opened_at|date:"d.m.Y, H:i" }}
+
+                                {% else %}
+
+                                    —
+
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="lesson-meta-item">
+
+                            <div class="lesson-meta-label">
+                                Всего ошибок
+                            </div>
+
+                            <div class="lesson-meta-value">
+
+                                {% if lesson.practice_progress %}
+
+                                    {{ lesson.practice_progress.total_mistakes }}
+
+                                {% else %}
+
+                                    —
+
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="lesson-meta-item">
+
+                            <div class="lesson-meta-label">
+                                Общее время
+                            </div>
+
+                            <div class="lesson-meta-value">
+
+                                {% if lesson.practice_progress %}
+
+                                    <span
+                                        class="lesson-time"
+                                        data-seconds="{{ lesson.practice_progress.total_seconds }}"
+                                    >
+                                        00:00
+                                    </span>
+
+                                {% else %}
+
+                                    —
+
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+
+                    <a
+                        href="{% url 'vocabulary:lesson_detail' level.code lesson.id %}"
+                        class="lesson-action"
+                    >
+
+                        {% if lesson.practice_status == 'perfect' %}
+
+                            Повторить
+
+                        {% elif lesson.practice_status == 'completed' %}
+
+                            Повторить
+
+                        {% elif lesson.practice_status == 'started' %}
+
+                            Продолжить
+
+                        {% else %}
+
+                            Начать
+
+                        {% endif %}
+
+                    </a>
+
+
+                </div>
+
+
+            </div>
+
+
+        {% empty %}
+
+            <p>
+                No lessons found.
+            </p>
+
+        {% endfor %}
+
+
+    </div>
+
+</div>
+
+
+<script>
+
+    /* =====================================================
+       FORMAT LESSON TIME
+       ===================================================== */
+
+    function formatLessonTime(
+        seconds
+    ) {
+
+        seconds =
+            Math.max(
+                0,
+                Number(
+                    seconds
+                    ||
+                    0
+                )
+            );
+
+
+        const hours =
+            Math.floor(
+                seconds
+                /
+                3600
+            );
+
+
+        const minutes =
+            Math.floor(
+                (
+                    seconds
+                    %
+                    3600
+                )
+                /
+                60
+            );
+
+
+        const secs =
+            Math.floor(
+                seconds
+                %
+                60
+            );
+
+
+        if (
+            hours > 0
+        ) {
+
+            return (
+                String(
+                    hours
+                ).padStart(
+                    2,
+                    "0"
+                )
+                +
+                ":"
+                +
+                String(
+                    minutes
+                ).padStart(
+                    2,
+                    "0"
+                )
+                +
+                ":"
+                +
+                String(
+                    secs
+                ).padStart(
+                    2,
+                    "0"
+                )
+            );
+
+        }
+
+
+        return (
+            String(
+                minutes
+            ).padStart(
+                2,
+                "0"
+            )
+            +
+            ":"
+            +
+            String(
+                secs
+            ).padStart(
+                2,
+                "0"
+            )
+        );
+
+    }
+
+
+    document
+        .querySelectorAll(
+            ".lesson-time"
+        )
+        .forEach(
+            element => {
+
+                const seconds =
+                    Number(
+                        element.dataset.seconds
+                        ||
+                        0
+                    );
+
+
+                element.textContent =
+                    formatLessonTime(
+                        seconds
+                    );
+
+            }
+        );
+
+</script>
+
+{% endblock %}

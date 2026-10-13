@@ -1,0 +1,677 @@
+{% extends "vocabulary/base.html" %}
+
+
+{% block title %}
+Lesson {{ lesson.number }} | {{ group.name }}
+{% endblock %}
+
+
+{% block content %}
+
+<style>
+
+    .lesson-header {
+        margin-bottom: 30px;
+    }
+
+    .progress-wrapper {
+        margin-bottom: 30px;
+    }
+
+    .progress-info {
+        display: flex;
+        justify-content: space-between;
+
+        font-size: 14px;
+        color: #6b7280;
+
+        margin-bottom: 8px;
+    }
+
+    .progress-track {
+        width: 100%;
+        height: 10px;
+
+        background: #e5e7eb;
+
+        border-radius: 999px;
+        overflow: hidden;
+    }
+
+    .progress-bar {
+        height: 100%;
+        width: 0;
+
+        background: #2563eb;
+
+        border-radius: 999px;
+
+        transition: width 0.3s ease;
+    }
+
+
+    .word-card {
+        display: none;
+
+        max-width: 720px;
+        margin: 0 auto;
+
+        background: white;
+
+        border: 1px solid #e5e7eb;
+        border-radius: 24px;
+
+        padding: 45px 35px;
+
+        text-align: center;
+
+        box-shadow:
+            0 10px 35px
+            rgba(0, 0, 0, 0.06);
+    }
+
+    .word-card.active {
+        display: block;
+    }
+
+
+    .word {
+        font-size: 48px;
+        font-weight: 800;
+
+        color: #111827;
+
+        margin-bottom: 10px;
+    }
+
+
+    .pos {
+        display: inline-block;
+
+        font-size: 13px;
+        font-weight: 600;
+
+        color: #6b7280;
+
+        background: #f3f4f6;
+
+        padding: 5px 10px;
+        border-radius: 999px;
+
+        margin-bottom: 25px;
+    }
+
+
+    .translations {
+        display: grid;
+
+        grid-template-columns:
+            repeat(2, 1fr);
+
+        gap: 15px;
+
+        margin-bottom: 30px;
+    }
+
+
+    .translation-box {
+        background: #f9fafb;
+
+        border-radius: 14px;
+
+        padding: 15px;
+    }
+
+
+    .language {
+        display: block;
+
+        font-size: 12px;
+        color: #9ca3af;
+
+        margin-bottom: 5px;
+    }
+
+
+    .translation {
+        font-size: 20px;
+        font-weight: 600;
+    }
+
+
+    .example {
+        border-top:
+            1px solid #e5e7eb;
+
+        padding-top: 25px;
+
+        text-align: left;
+    }
+
+
+    .example-en {
+        font-size: 20px;
+        font-weight: 600;
+
+        margin-bottom: 14px;
+    }
+
+
+    .example-translation {
+        color: #6b7280;
+
+        margin-top: 7px;
+
+        line-height: 1.5;
+    }
+
+
+    .lesson-controls {
+        max-width: 720px;
+
+        margin:
+            25px auto 0;
+
+        display: flex;
+
+        justify-content: space-between;
+
+        gap: 15px;
+    }
+
+
+    .control-button {
+        border: none;
+
+        padding: 13px 22px;
+
+        border-radius: 12px;
+
+        font-size: 16px;
+        font-weight: 600;
+
+        cursor: pointer;
+    }
+
+
+    .previous-button {
+        background: white;
+
+        border:
+            1px solid #d1d5db;
+
+        color: #374151;
+    }
+
+
+    .next-button {
+        background: #2563eb;
+        color: white;
+    }
+
+
+    .control-button:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+    }
+
+
+    .complete-card {
+        display: none;
+
+        max-width: 720px;
+
+        margin: 0 auto;
+
+        background: white;
+
+        border-radius: 24px;
+
+        padding: 50px 35px;
+
+        text-align: center;
+
+        border:
+            1px solid #e5e7eb;
+    }
+
+
+    .complete-card.active {
+        display: block;
+    }
+
+
+    .complete-icon {
+        font-size: 50px;
+
+        margin-bottom: 15px;
+    }
+
+
+    .complete-title {
+        font-size: 30px;
+
+        font-weight: 800;
+
+        margin-bottom: 10px;
+    }
+
+
+    .complete-text {
+        color: #6b7280;
+
+        margin-bottom: 25px;
+    }
+
+
+    @media (max-width: 600px) {
+
+        .word {
+            font-size: 38px;
+        }
+
+        .translations {
+            grid-template-columns: 1fr;
+        }
+
+        .word-card {
+            padding: 30px 20px;
+        }
+
+    }
+
+</style>
+
+
+<a
+    href="{% url 'vocabulary:group_detail' level.code group.id %}"
+    class="back"
+>
+    ← {{ group.name }}
+</a>
+
+
+<div class="lesson-header">
+
+    <span class="level-badge">
+        {{ level.code }}
+    </span>
+
+    <h1>
+        Lesson {{ lesson.number }}
+    </h1>
+
+    <p class="subtitle">
+        {{ group.name }}
+        ·
+        {{ word_count }} words
+    </p>
+
+</div>
+
+
+<div
+    class="progress-wrapper"
+    id="progressWrapper"
+>
+
+    <div class="progress-info">
+
+        <span>
+            Learning progress
+        </span>
+
+        <span id="progressText">
+            1 / {{ word_count }}
+        </span>
+
+    </div>
+
+
+    <div class="progress-track">
+
+        <div
+            class="progress-bar"
+            id="progressBar"
+        ></div>
+
+    </div>
+
+</div>
+
+
+<div id="wordContainer">
+
+    {% for word in words %}
+
+        <div
+            class="word-card"
+            data-index="{{ forloop.counter0 }}"
+        >
+
+            <div class="word">
+                {{ word.word }}
+            </div>
+
+
+            {% if word.part_of_speech %}
+
+                <div class="pos">
+                    {{ word.part_of_speech }}
+                </div>
+
+            {% endif %}
+
+
+            {% if word.sense %}
+
+                <p style="color:#6b7280;">
+                    {{ word.sense }}
+                </p>
+
+            {% endif %}
+
+
+            <div class="translations">
+
+                <div class="translation-box">
+
+                    <span class="language">
+                        RUSSIAN
+                    </span>
+
+                    <div class="translation">
+                        {{ word.translation_ru }}
+                    </div>
+
+                </div>
+
+
+                <div class="translation-box">
+
+                    <span class="language">
+                        ҚАЗАҚША
+                    </span>
+
+                    <div class="translation">
+                        {{ word.translation_kz }}
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="example">
+
+                <div class="example-en">
+                    {{ word.example_en }}
+                </div>
+
+
+                <div class="example-translation">
+                    🇷🇺 {{ word.example_ru }}
+                </div>
+
+
+                <div class="example-translation">
+                    🇰🇿 {{ word.example_kz }}
+                </div>
+
+            </div>
+
+        </div>
+
+    {% endfor %}
+
+</div>
+
+
+<div
+    class="lesson-controls"
+    id="lessonControls"
+>
+
+    <button
+        class="control-button previous-button"
+        id="previousButton"
+        onclick="previousWord()"
+    >
+        ← Previous
+    </button>
+
+
+    <button
+        class="control-button next-button"
+        id="nextButton"
+        onclick="nextWord()"
+    >
+        Next →
+    </button>
+
+</div>
+
+
+<div
+    class="complete-card"
+    id="completeCard"
+>
+
+    <div class="complete-icon">
+        🎉
+    </div>
+
+    <div class="complete-title">
+        Words learned!
+    </div>
+
+    <p class="complete-text">
+
+        You have studied
+        {{ word_count }}
+        new words.
+
+        Now it is time to practise them.
+
+    </p>
+
+
+
+    <a
+        href="{% url 'vocabulary:lesson_practice' level.code lesson.id %}"
+        class="button"
+    >
+        Start practice
+    </a>
+
+
+
+    <br><br>
+
+
+    <a
+        href="{% url 'vocabulary:group_detail' level.code group.id %}"
+        class="back"
+    >
+        Back to lessons
+    </a>
+
+</div>
+
+
+<script>
+
+    const cards =
+        document.querySelectorAll(
+            ".word-card"
+        );
+
+    const totalWords =
+        cards.length;
+
+    let currentIndex = 0;
+
+
+    const progressBar =
+        document.getElementById(
+            "progressBar"
+        );
+
+    const progressText =
+        document.getElementById(
+            "progressText"
+        );
+
+    const previousButton =
+        document.getElementById(
+            "previousButton"
+        );
+
+    const nextButton =
+        document.getElementById(
+            "nextButton"
+        );
+
+    const lessonControls =
+        document.getElementById(
+            "lessonControls"
+        );
+
+    const progressWrapper =
+        document.getElementById(
+            "progressWrapper"
+        );
+
+    const wordContainer =
+        document.getElementById(
+            "wordContainer"
+        );
+
+    const completeCard =
+        document.getElementById(
+            "completeCard"
+        );
+
+
+    function showWord(index) {
+
+        cards.forEach(
+            card => {
+                card.classList.remove(
+                    "active"
+                );
+            }
+        );
+
+
+        cards[index].classList.add(
+            "active"
+        );
+
+
+        currentIndex = index;
+
+
+        const progress =
+            (
+                (index + 1)
+                /
+                totalWords
+            )
+            * 100;
+
+
+        progressBar.style.width =
+            progress + "%";
+
+
+        progressText.textContent =
+            `${index + 1} / ${totalWords}`;
+
+
+        previousButton.disabled =
+            index === 0;
+
+
+        if (
+            index ===
+            totalWords - 1
+        ) {
+
+            nextButton.textContent =
+                "Finish ✓";
+
+        } else {
+
+            nextButton.textContent =
+                "Next →";
+
+        }
+
+    }
+
+
+    function nextWord() {
+
+        if (
+            currentIndex
+            <
+            totalWords - 1
+        ) {
+
+            showWord(
+                currentIndex + 1
+            );
+
+        } else {
+
+            finishLesson();
+
+        }
+
+    }
+
+
+    function previousWord() {
+
+        if (
+            currentIndex > 0
+        ) {
+
+            showWord(
+                currentIndex - 1
+            );
+
+        }
+
+    }
+
+
+    function finishLesson() {
+
+        wordContainer.style.display =
+            "none";
+
+        lessonControls.style.display =
+            "none";
+
+        progressWrapper.style.display =
+            "none";
+
+        completeCard.classList.add(
+            "active"
+        );
+
+    }
+
+
+    if (totalWords > 0) {
+
+        showWord(0);
+
+    }
+
+</script>
+
+
+{% endblock %}
