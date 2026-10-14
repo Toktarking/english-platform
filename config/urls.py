@@ -1,14 +1,11 @@
-from django.contrib import admin
-from django.urls import include, path
-from django.shortcuts import redirect
-
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib import admin
+from django.shortcuts import redirect
+from django.urls import include, path, re_path
+from django.views.static import serve
 
 from vocabulary import views as vocabulary_views
-
-from django.views.static import serve
-from django.urls import re_path
 
 
 urlpatterns = [
@@ -66,12 +63,28 @@ urlpatterns = [
 
 # ==============================================
 # MEDIA FILES
-# Только для локальной разработки
 # ==============================================
 
 if settings.DEBUG:
 
+    # Локальная разработка
     urlpatterns += static(
         settings.MEDIA_URL,
         document_root=settings.MEDIA_ROOT,
     )
+
+else:
+
+    # Временное решение для тестовой
+    # версии на Railway.
+    # Наши MP3 уже находятся в репозитории.
+    urlpatterns += [
+        re_path(
+            r"^media/(?P<path>.*)$",
+            serve,
+            {
+                "document_root":
+                    settings.MEDIA_ROOT,
+            },
+        ),
+    ]
