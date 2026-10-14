@@ -7,6 +7,9 @@ from django.conf.urls.static import static
 
 from vocabulary import views as vocabulary_views
 
+from django.views.static import serve
+from django.urls import re_path
+
 
 urlpatterns = [
 
