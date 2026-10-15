@@ -2437,6 +2437,55 @@ def lesson_practice(
             }
         )
 
+
+    # =====================================================
+    # LOAD / CREATE LESSON PRACTICE PROGRESS
+    # =====================================================
+
+    progress, created = (
+        LessonPracticeProgress.objects
+        .get_or_create(
+            user=request.user,
+            lesson=lesson,
+        )
+    )
+
+    now = timezone.now()
+
+    if (
+        progress.first_opened_at
+        is None
+    ):
+
+        progress.first_opened_at = (
+            now
+        )
+
+    progress.last_opened_at = (
+        now
+    )
+
+    progress.save(
+        update_fields=[
+            "first_opened_at",
+            "last_opened_at",
+            "updated_at",
+        ]
+    )
+
+
+    saved_practice_state = (
+        progress.practice_state
+
+        if isinstance(
+            progress.practice_state,
+            dict,
+        )
+
+        else {}
+    )
+
+
     return render(
         request,
         "vocabulary/practice.html",
@@ -2457,8 +2506,37 @@ def lesson_practice(
                 len(
                     questions
                 ),
+
+            # =============================================
+            # RESTORE PRACTICE
+            # =============================================
+
+            "saved_current_stage":
+                progress.current_stage,
+
+            "saved_practice_state":
+                saved_practice_state,
+
+            "lesson_progress":
+                {
+                    "stage1_completed":
+                        progress.stage1_completed,
+
+                    "stage2_completed":
+                        progress.stage2_completed,
+
+                    "stage3_completed":
+                        progress.stage3_completed,
+
+                    "stage4_completed":
+                        progress.stage4_completed,
+
+                    "completed":
+                        progress.is_completed,
+                },
         },
     )
+
 
 
 # =========================================================
@@ -4784,10 +4862,274 @@ def group_practice3_restart(
     )
 
 
+
+# =========================================================
+# LESSON PRACTICE STATE
+# =========================================================
+
+
+LESSON_PRACTICE_STAGES = {
+    "choice",
+    "spelling",
+    "context",
+    "listening",
+    "completed",
+}
+
+
+def sanitize_lesson_practice_state(
+    lesson,
+    raw_state,
+):
+
+    if not isinstance(
+        raw_state,
+        dict,
+    ):
+
+        return {}
+
+
+    valid_word_ids = set(
+
+        lesson.words
+        .filter(
+            is_active=True,
+        )
+        .values_list(
+            "id",
+            flat=True,
+        )
+
+    )
+
+
+    result = {}
+
+
+    for stage_name in [
+        "choice",
+        "spelling",
+        "context",
+        "listening",
+    ]:
+
+        raw_stage = (
+            raw_state.get(
+                stage_name,
+                {},
+            )
+        )
+
+
+        if not isinstance(
+            raw_stage,
+            dict,
+        ):
+
+            continue
+
+
+        # =============================================
+        # QUEUE
+        # =============================================
+
+        queue = []
+
+
+        for value in (
+            raw_stage.get(
+                "queue",
+                [],
+            )
+            or []
+        ):
+
+            try:
+
+                word_id = int(
+                    value
+                )
+
+            except (
+                TypeError,
+                ValueError,
+            ):
+
+                continue
+
+
+            if (
+                word_id
+                in
+                valid_word_ids
+            ):
+
+                # Дубликаты здесь разрешены:
+                # неправильное слово может быть
+                # снова добавлено в очередь.
+
+                queue.append(
+                    word_id
+                )
+
+
+        # =============================================
+        # LEARNED
+        # =============================================
+
+        learned = []
+
+
+        for value in (
+            raw_stage.get(
+                "learned",
+                [],
+            )
+            or []
+        ):
+
+            try:
+
+                word_id = int(
+                    value
+                )
+
+            except (
+                TypeError,
+                ValueError,
+            ):
+
+                continue
+
+
+            if (
+                word_id
+                in
+                valid_word_ids
+                and
+                word_id
+                not in learned
+            ):
+
+                learned.append(
+                    word_id
+                )
+
+
+        # =============================================
+        # INDEX
+        # =============================================
+
+        try:
+
+            index = int(
+                raw_stage.get(
+                    "index",
+                    0,
+                )
+            )
+
+        except (
+            TypeError,
+            ValueError,
+        ):
+
+            index = 0
+
+
+        index = max(
+            0,
+            min(
+                index,
+                len(
+                    queue
+                ),
+            ),
+        )
+
+
+        # =============================================
+        # MISTAKES
+        # =============================================
+
+        try:
+
+            mistakes = int(
+                raw_stage.get(
+                    "mistakes",
+                    0,
+                )
+            )
+
+        except (
+            TypeError,
+            ValueError,
+        ):
+
+            mistakes = 0
+
+
+        mistakes = max(
+            0,
+            mistakes,
+        )
+
+
+        # =============================================
+        # ELAPSED TIME
+        # =============================================
+
+        try:
+
+            elapsed_seconds = int(
+                raw_stage.get(
+                    "elapsed_seconds",
+                    0,
+                )
+            )
+
+        except (
+            TypeError,
+            ValueError,
+        ):
+
+            elapsed_seconds = 0
+
+
+        elapsed_seconds = max(
+            0,
+            elapsed_seconds,
+        )
+
+
+        result[
+            stage_name
+        ] = {
+
+            "queue":
+                queue,
+
+            "index":
+                index,
+
+            "learned":
+                learned,
+
+            "mistakes":
+                mistakes,
+
+            "elapsed_seconds":
+                elapsed_seconds,
+
+        }
+
+
+    return result
+
 # =========================================================
 # LESSON PRACTICE PROGRESS
 # =========================================================
-
 
 @login_required
 @require_POST
@@ -4805,13 +5147,18 @@ def lesson_practice_progress(
             is_active=True,
         )
 
+
         data = json.loads(
             request.body
         )
 
-        action = data.get(
-            "action"
+
+        action = (
+            data.get(
+                "action"
+            )
         )
+
 
         progress, created = (
             LessonPracticeProgress.objects
@@ -4822,13 +5169,14 @@ def lesson_practice_progress(
             )
         )
 
+
         now = (
             timezone.now()
         )
 
 
         # =================================================
-        # LESSON OPENED
+        # OPEN
         # =================================================
 
         if action == "open":
@@ -4842,9 +5190,11 @@ def lesson_practice_progress(
                     now
                 )
 
+
             progress.last_opened_at = (
                 now
             )
+
 
             progress.save(
                 update_fields=[
@@ -4854,10 +5204,17 @@ def lesson_practice_progress(
                 ]
             )
 
+
             return JsonResponse(
                 {
                     "success":
                         True,
+
+                    "current_stage":
+                        progress.current_stage,
+
+                    "practice_state":
+                        progress.practice_state,
 
                     "completed":
                         progress.is_completed,
@@ -4870,6 +5227,120 @@ def lesson_practice_progress(
 
                     "total_seconds":
                         progress.total_seconds,
+
+                    "stages": {
+
+                        "stage1":
+                            progress.stage1_completed,
+
+                        "stage2":
+                            progress.stage2_completed,
+
+                        "stage3":
+                            progress.stage3_completed,
+
+                        "stage4":
+                            progress.stage4_completed,
+
+                    },
+                }
+            )
+
+
+        # =================================================
+        # SAVE CURRENT STATE
+        # После каждого вопроса.
+        # =================================================
+
+        if action == "save_state":
+
+            current_stage = str(
+                data.get(
+                    "current_stage",
+                    progress.current_stage,
+                )
+            )
+
+
+            if (
+                current_stage
+                not in
+                LESSON_PRACTICE_STAGES
+            ):
+
+                return JsonResponse(
+                    {
+                        "success":
+                            False,
+
+                        "error":
+                            "Invalid practice stage.",
+                    },
+                    status=400,
+                )
+
+
+            raw_state = (
+                data.get(
+                    "state",
+                    {},
+                )
+            )
+
+
+            clean_state = (
+                sanitize_lesson_practice_state(
+                    lesson,
+                    raw_state,
+                )
+            )
+
+
+            progress.current_stage = (
+                current_stage
+            )
+
+            progress.practice_state = (
+                clean_state
+            )
+
+
+            if (
+                progress.first_opened_at
+                is None
+            ):
+
+                progress.first_opened_at = (
+                    now
+                )
+
+
+            progress.last_opened_at = (
+                now
+            )
+
+
+            progress.save(
+                update_fields=[
+                    "current_stage",
+                    "practice_state",
+                    "first_opened_at",
+                    "last_opened_at",
+                    "updated_at",
+                ]
+            )
+
+
+            return JsonResponse(
+                {
+                    "success":
+                        True,
+
+                    "current_stage":
+                        progress.current_stage,
+
+                    "practice_state":
+                        progress.practice_state,
                 }
             )
 
@@ -4879,6 +5350,15 @@ def lesson_practice_progress(
         # =================================================
 
         if action == "restart":
+
+            progress.current_stage = (
+                LessonPracticeProgress
+                .Stage
+                .CHOICE
+            )
+
+            progress.practice_state = {}
+
 
             progress.stage1_completed = (
                 False
@@ -4931,10 +5411,17 @@ def lesson_practice_progress(
 
             progress.save()
 
+
             return JsonResponse(
                 {
                     "success":
                         True,
+
+                    "current_stage":
+                        progress.current_stage,
+
+                    "practice_state":
+                        {},
 
                     "completed":
                         False,
@@ -4952,7 +5439,7 @@ def lesson_practice_progress(
 
 
         # =================================================
-        # STAGE COMPLETED
+        # STAGE COMPLETE
         # =================================================
 
         if action == "stage_complete":
@@ -4964,6 +5451,7 @@ def lesson_practice_progress(
                 )
             )
 
+
             mistakes = max(
                 0,
                 int(
@@ -4974,6 +5462,7 @@ def lesson_practice_progress(
                 ),
             )
 
+
             seconds = max(
                 0,
                 int(
@@ -4983,6 +5472,26 @@ def lesson_practice_progress(
                     )
                 ),
             )
+
+
+            # При завершении этапа frontend
+            # может одновременно передать
+            # последнее состояние.
+
+            if (
+                "state"
+                in data
+            ):
+
+                progress.practice_state = (
+                    sanitize_lesson_practice_state(
+                        lesson,
+                        data.get(
+                            "state",
+                            {},
+                        ),
+                    )
+                )
 
 
             if (
@@ -5002,7 +5511,6 @@ def lesson_practice_progress(
 
             # =============================================
             # STAGE 1
-            # TRANSLATION
             # =============================================
 
             if stage == 1:
@@ -5019,10 +5527,15 @@ def lesson_practice_progress(
                     seconds
                 )
 
+                progress.current_stage = (
+                    LessonPracticeProgress
+                    .Stage
+                    .SPELLING
+                )
+
 
             # =============================================
             # STAGE 2
-            # SPELLING
             # =============================================
 
             elif stage == 2:
@@ -5039,10 +5552,15 @@ def lesson_practice_progress(
                     seconds
                 )
 
+                progress.current_stage = (
+                    LessonPracticeProgress
+                    .Stage
+                    .CONTEXT
+                )
+
 
             # =============================================
             # STAGE 3
-            # CONTEXT
             # =============================================
 
             elif stage == 3:
@@ -5059,10 +5577,15 @@ def lesson_practice_progress(
                     seconds
                 )
 
+                progress.current_stage = (
+                    LessonPracticeProgress
+                    .Stage
+                    .LISTENING
+                )
+
 
             # =============================================
             # STAGE 4
-            # LISTENING
             # =============================================
 
             elif stage == 4:
@@ -5077,6 +5600,12 @@ def lesson_practice_progress(
 
                 progress.stage4_seconds = (
                     seconds
+                )
+
+                progress.current_stage = (
+                    LessonPracticeProgress
+                    .Stage
+                    .COMPLETED
                 )
 
 
@@ -5095,8 +5624,7 @@ def lesson_practice_progress(
 
 
             # =============================================
-            # LESSON COMPLETED
-            # ALL 4 STAGES
+            # FULL LESSON COMPLETE
             # =============================================
 
             if (
@@ -5111,6 +5639,12 @@ def lesson_practice_progress(
 
                 progress.completed_at = (
                     now
+                )
+
+                progress.current_stage = (
+                    LessonPracticeProgress
+                    .Stage
+                    .COMPLETED
                 )
 
             else:
@@ -5131,6 +5665,12 @@ def lesson_practice_progress(
                     "stage":
                         stage,
 
+                    "current_stage":
+                        progress.current_stage,
+
+                    "practice_state":
+                        progress.practice_state,
+
                     "completed":
                         progress.is_completed,
 
@@ -5143,56 +5683,53 @@ def lesson_practice_progress(
                     "total_seconds":
                         progress.total_seconds,
 
-                    "stages":
-                        {
-                            "stage1":
-                                {
-                                    "completed":
-                                        progress.stage1_completed,
+                    "stages": {
 
-                                    "mistakes":
-                                        progress.stage1_mistakes,
+                        "stage1": {
+                            "completed":
+                                progress.stage1_completed,
 
-                                    "seconds":
-                                        progress.stage1_seconds,
-                                },
+                            "mistakes":
+                                progress.stage1_mistakes,
 
-                            "stage2":
-                                {
-                                    "completed":
-                                        progress.stage2_completed,
-
-                                    "mistakes":
-                                        progress.stage2_mistakes,
-
-                                    "seconds":
-                                        progress.stage2_seconds,
-                                },
-
-                            "stage3":
-                                {
-                                    "completed":
-                                        progress.stage3_completed,
-
-                                    "mistakes":
-                                        progress.stage3_mistakes,
-
-                                    "seconds":
-                                        progress.stage3_seconds,
-                                },
-
-                            "stage4":
-                                {
-                                    "completed":
-                                        progress.stage4_completed,
-
-                                    "mistakes":
-                                        progress.stage4_mistakes,
-
-                                    "seconds":
-                                        progress.stage4_seconds,
-                                },
+                            "seconds":
+                                progress.stage1_seconds,
                         },
+
+                        "stage2": {
+                            "completed":
+                                progress.stage2_completed,
+
+                            "mistakes":
+                                progress.stage2_mistakes,
+
+                            "seconds":
+                                progress.stage2_seconds,
+                        },
+
+                        "stage3": {
+                            "completed":
+                                progress.stage3_completed,
+
+                            "mistakes":
+                                progress.stage3_mistakes,
+
+                            "seconds":
+                                progress.stage3_seconds,
+                        },
+
+                        "stage4": {
+                            "completed":
+                                progress.stage4_completed,
+
+                            "mistakes":
+                                progress.stage4_mistakes,
+
+                            "seconds":
+                                progress.stage4_seconds,
+                        },
+
+                    },
                 }
             )
 

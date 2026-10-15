@@ -647,6 +647,65 @@ class LessonPracticeProgress(models.Model):
 
 
     # =====================================================
+    # CURRENT PRACTICE STATE
+    # =====================================================
+
+    class Stage(models.TextChoices):
+
+        CHOICE = (
+            "choice",
+            "Translation",
+        )
+
+        SPELLING = (
+            "spelling",
+            "Spelling",
+        )
+
+        CONTEXT = (
+            "context",
+            "Context",
+        )
+
+        LISTENING = (
+            "listening",
+            "Listening",
+        )
+
+        COMPLETED = (
+            "completed",
+            "Completed",
+        )
+
+
+    current_stage = models.CharField(
+        max_length=20,
+        choices=Stage.choices,
+        default=Stage.CHOICE,
+    )
+
+
+    # Здесь будет храниться точное состояние практики:
+    #
+    # - очередь вопросов;
+    # - текущий индекс;
+    # - уже усвоенные слова;
+    # - ошибки;
+    # - повторно поставленные вопросы;
+    # - состояние каждого этапа.
+    #
+    # Благодаря этому:
+    #
+    # F5 -> пользователь продолжает с места остановки.
+    # Закрыл браузер -> вернулся -> продолжает.
+    # Зашёл с другого устройства -> продолжает.
+
+    practice_state = models.JSONField(
+        default=dict,
+        blank=True,
+    )
+
+    # =====================================================
     # STAGE 1
     # TRANSLATION
     # =====================================================

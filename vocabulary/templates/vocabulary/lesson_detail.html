@@ -613,12 +613,14 @@ Lesson {{ lesson.number }} | {{ group.name }}
 
     function nextWord() {
 
+        
+
         if (
             currentIndex
             <
             totalWords - 1
         ) {
-
+            playSound("click");
             showWord(
                 currentIndex + 1
             );
@@ -648,6 +650,8 @@ Lesson {{ lesson.number }} | {{ group.name }}
 
 
     function finishLesson() {
+
+        playSound("victory");
 
         wordContainer.style.display =
             "none";

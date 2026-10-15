@@ -1,3 +1,4 @@
+
 {% extends "vocabulary/base.html" %}
 
 {% block title %}
@@ -1391,6 +1392,9 @@ Practice | Lesson {{ lesson.number }}
 
 
 {{ questions|json_script:"questions-data" }}
+{{ saved_practice_state|json_script:"saved-practice-state" }}
+{{ saved_current_stage|json_script:"saved-current-stage" }}
+{{ lesson_progress|json_script:"lesson-progress-data" }}
 
 
 <script>
@@ -1415,6 +1419,55 @@ Practice | Lesson {{ lesson.number }}
 
     const MIN_LETTER_BANK =
         8;
+
+
+    const savedPracticeState =
+        JSON.parse(
+            document
+                .getElementById(
+                    "saved-practice-state"
+                )
+                .textContent
+        )
+        ||
+        {};
+
+
+    const savedCurrentStage =
+        JSON.parse(
+            document
+                .getElementById(
+                    "saved-current-stage"
+                )
+                .textContent
+        )
+        ||
+        "choice";
+
+
+    const savedLessonProgress =
+        JSON.parse(
+            document
+                .getElementById(
+                    "lesson-progress-data"
+                )
+                .textContent
+        )
+        ||
+        {};
+
+
+    const questionById =
+        new Map(
+            originalQuestions.map(
+                question => [
+                    Number(
+                        question.word_id
+                    ),
+                    question
+                ]
+            )
+        );
 
 
     let currentStage =
@@ -2002,6 +2055,959 @@ Practice | Lesson {{ lesson.number }}
 
 
     /* =====================================================
+       RESUMABLE LESSON STATE
+       ===================================================== */
+
+    function queueToWordIds(
+        queue
+    ) {
+
+        return (
+            Array.isArray(
+                queue
+            )
+
+                ? queue
+
+                : []
+        )
+        .map(
+            question =>
+                Number(
+                    question.word_id
+                )
+        )
+        .filter(
+            wordId =>
+                Number.isInteger(
+                    wordId
+                )
+                &&
+                questionById.has(
+                    wordId
+                )
+        );
+
+    }
+
+
+    function wordIdsToQueue(
+        wordIds
+    ) {
+
+        if (
+            !Array.isArray(
+                wordIds
+            )
+        ) {
+
+            return [];
+
+        }
+
+
+        return wordIds
+            .map(
+                wordId =>
+                    questionById.get(
+                        Number(
+                            wordId
+                        )
+                    )
+            )
+            .filter(
+                Boolean
+            )
+            .map(
+                question => ({
+                    ...question
+                })
+            );
+
+    }
+
+
+    function restoreLearnedSet(
+        targetSet,
+        wordIds
+    ) {
+
+        targetSet.clear();
+
+
+        if (
+            !Array.isArray(
+                wordIds
+            )
+        ) {
+
+            return;
+
+        }
+
+
+        wordIds.forEach(
+            wordId => {
+
+                const numericId =
+                    Number(
+                        wordId
+                    );
+
+
+                if (
+                    questionById.has(
+                        numericId
+                    )
+                ) {
+
+                    targetSet.add(
+                        numericId
+                    );
+
+                }
+
+            }
+        );
+
+    }
+
+
+    function safeNumber(
+        value,
+        fallback = 0
+    ) {
+
+        const number =
+            Number(
+                value
+            );
+
+
+        return Number.isFinite(
+            number
+        )
+
+            ? Math.max(
+                0,
+                number
+            )
+
+            : fallback;
+
+    }
+
+
+    function currentElapsedSeconds() {
+
+        let elapsed =
+            stageElapsedMs;
+
+
+        if (
+            stageActiveSince !== null
+        ) {
+
+            elapsed +=
+                Date.now()
+                -
+                stageActiveSince;
+
+        }
+
+
+        return Math.max(
+            0,
+            Math.round(
+                elapsed
+                /
+                1000
+            )
+        );
+
+    }
+
+
+    function restoreStageTimer(
+        seconds
+    ) {
+
+        stageElapsedMs =
+            safeNumber(
+                seconds
+            )
+            *
+            1000;
+
+
+        stageActiveSince =
+            document.hidden
+
+                ? null
+
+                : Date.now();
+
+    }
+
+
+    function stageState(
+        name
+    ) {
+
+        const value =
+            savedPracticeState[
+                name
+            ];
+
+
+        return (
+            value
+            &&
+            typeof value
+            ===
+            "object"
+            &&
+            !Array.isArray(
+                value
+            )
+        )
+
+            ? value
+
+            : {};
+
+    }
+
+
+    function hasSavedStageState(
+        name
+    ) {
+
+        const value =
+            stageState(
+                name
+            );
+
+
+        return (
+            Array.isArray(
+                value.queue
+            )
+            &&
+            value.queue.length
+            >
+            0
+        );
+
+    }
+
+
+    function buildPracticeState(
+        advanceCurrent = false
+    ) {
+
+        const choiceElapsed =
+            currentStage
+            ===
+            "choice"
+
+                ? currentElapsedSeconds()
+
+                : choiceSeconds;
+
+
+        const spellingElapsed =
+            currentStage
+            ===
+            "spelling"
+
+                ? currentElapsedSeconds()
+
+                : spellingSeconds;
+
+
+        const contextElapsed =
+            currentStage
+            ===
+            "context"
+
+                ? currentElapsedSeconds()
+
+                : contextSeconds;
+
+
+        const listeningElapsed =
+            currentStage
+            ===
+            "listening"
+
+                ? currentElapsedSeconds()
+
+                : listeningSeconds;
+
+
+        return {
+
+            choice: {
+
+                queue:
+                    queueToWordIds(
+                        choiceQueue
+                    ),
+
+                index:
+                    choiceIndex
+                    +
+                    (
+                        advanceCurrent
+                        &&
+                        currentStage
+                        ===
+                        "choice"
+
+                            ? 1
+
+                            : 0
+                    ),
+
+                learned:
+                    Array.from(
+                        choiceLearned
+                    ),
+
+                mistakes:
+                    choiceMistakes,
+
+                elapsed_seconds:
+                    choiceElapsed,
+
+            },
+
+
+            spelling: {
+
+                queue:
+                    queueToWordIds(
+                        spellingQueue
+                    ),
+
+                index:
+                    spellingIndex
+                    +
+                    (
+                        advanceCurrent
+                        &&
+                        currentStage
+                        ===
+                        "spelling"
+
+                            ? 1
+
+                            : 0
+                    ),
+
+                learned:
+                    Array.from(
+                        spellingLearned
+                    ),
+
+                mistakes:
+                    spellingMistakes,
+
+                elapsed_seconds:
+                    spellingElapsed,
+
+            },
+
+
+            context: {
+
+                queue:
+                    queueToWordIds(
+                        contextQueue
+                    ),
+
+                index:
+                    contextIndex
+                    +
+                    (
+                        advanceCurrent
+                        &&
+                        currentStage
+                        ===
+                        "context"
+
+                            ? 1
+
+                            : 0
+                    ),
+
+                learned:
+                    Array.from(
+                        contextLearned
+                    ),
+
+                mistakes:
+                    contextMistakes,
+
+                elapsed_seconds:
+                    contextElapsed,
+
+            },
+
+
+            listening: {
+
+                queue:
+                    queueToWordIds(
+                        listeningQueue
+                    ),
+
+                index:
+                    listeningIndex
+                    +
+                    (
+                        advanceCurrent
+                        &&
+                        currentStage
+                        ===
+                        "listening"
+
+                            ? 1
+
+                            : 0
+                    ),
+
+                learned:
+                    Array.from(
+                        listeningLearned
+                    ),
+
+                mistakes:
+                    listeningMistakes,
+
+                elapsed_seconds:
+                    listeningElapsed,
+
+            },
+
+        };
+
+    }
+
+
+    async function saveCurrentPracticeState(
+        advanceCurrent = false
+    ) {
+
+        return await saveLessonProgress(
+            "save_state",
+            {
+                current_stage:
+                    currentStage,
+
+                state:
+                    buildPracticeState(
+                        advanceCurrent
+                    )
+            }
+        );
+
+    }
+
+
+    function ensureCurrentQuestion(
+        queue,
+        index,
+        learned,
+        shouldShuffle = false
+    ) {
+
+        if (
+            learned.size
+            ===
+            totalWords
+        ) {
+
+            return;
+
+        }
+
+
+        if (
+            index
+            <
+            queue.length
+        ) {
+
+            return;
+
+        }
+
+
+        const remaining =
+            originalQuestions.filter(
+                question =>
+                    !learned.has(
+                        Number(
+                            question.word_id
+                        )
+                    )
+            );
+
+
+        const questions =
+            shouldShuffle
+
+                ? shuffleArray(
+                    remaining
+                )
+
+                : remaining;
+
+
+        queue.push(
+            ...questions.map(
+                question => ({
+                    ...question
+                })
+            )
+        );
+
+    }
+
+
+    function restorePracticeVariables() {
+
+        const choiceState =
+            stageState(
+                "choice"
+            );
+
+
+        if (
+            hasSavedStageState(
+                "choice"
+            )
+        ) {
+
+            choiceQueue =
+                wordIdsToQueue(
+                    choiceState.queue
+                );
+
+
+            choiceIndex =
+                Math.min(
+                    Math.floor(
+                        safeNumber(
+                            choiceState.index
+                        )
+                    ),
+                    choiceQueue.length
+                );
+
+
+            restoreLearnedSet(
+                choiceLearned,
+                choiceState.learned
+            );
+
+
+            choiceMistakes =
+                Math.floor(
+                    safeNumber(
+                        choiceState.mistakes
+                    )
+                );
+
+
+            choiceSeconds =
+                Math.floor(
+                    safeNumber(
+                        choiceState.elapsed_seconds
+                    )
+                );
+
+        }
+
+
+        const spellingState =
+            stageState(
+                "spelling"
+            );
+
+
+        if (
+            hasSavedStageState(
+                "spelling"
+            )
+        ) {
+
+            spellingQueue =
+                wordIdsToQueue(
+                    spellingState.queue
+                );
+
+
+            spellingIndex =
+                Math.min(
+                    Math.floor(
+                        safeNumber(
+                            spellingState.index
+                        )
+                    ),
+                    spellingQueue.length
+                );
+
+
+            restoreLearnedSet(
+                spellingLearned,
+                spellingState.learned
+            );
+
+
+            spellingMistakes =
+                Math.floor(
+                    safeNumber(
+                        spellingState.mistakes
+                    )
+                );
+
+
+            spellingSeconds =
+                Math.floor(
+                    safeNumber(
+                        spellingState.elapsed_seconds
+                    )
+                );
+
+        }
+
+
+        const contextState =
+            stageState(
+                "context"
+            );
+
+
+        if (
+            hasSavedStageState(
+                "context"
+            )
+        ) {
+
+            contextQueue =
+                wordIdsToQueue(
+                    contextState.queue
+                );
+
+
+            contextIndex =
+                Math.min(
+                    Math.floor(
+                        safeNumber(
+                            contextState.index
+                        )
+                    ),
+                    contextQueue.length
+                );
+
+
+            restoreLearnedSet(
+                contextLearned,
+                contextState.learned
+            );
+
+
+            contextMistakes =
+                Math.floor(
+                    safeNumber(
+                        contextState.mistakes
+                    )
+                );
+
+
+            contextSeconds =
+                Math.floor(
+                    safeNumber(
+                        contextState.elapsed_seconds
+                    )
+                );
+
+        }
+
+
+        const listeningState =
+            stageState(
+                "listening"
+            );
+
+
+        if (
+            hasSavedStageState(
+                "listening"
+            )
+        ) {
+
+            listeningQueue =
+                wordIdsToQueue(
+                    listeningState.queue
+                );
+
+
+            listeningIndex =
+                Math.min(
+                    Math.floor(
+                        safeNumber(
+                            listeningState.index
+                        )
+                    ),
+                    listeningQueue.length
+                );
+
+
+            restoreLearnedSet(
+                listeningLearned,
+                listeningState.learned
+            );
+
+
+            listeningMistakes =
+                Math.floor(
+                    safeNumber(
+                        listeningState.mistakes
+                    )
+                );
+
+
+            listeningSeconds =
+                Math.floor(
+                    safeNumber(
+                        listeningState.elapsed_seconds
+                    )
+                );
+
+        }
+
+    }
+
+
+    function renderStageCompleteCard(
+        stage
+    ) {
+
+        stopCurrentAudio();
+
+
+        quizArea.style.display =
+            "none";
+
+
+        stage1CompleteCard.style.display =
+            stage === 1
+
+                ? "block"
+
+                : "none";
+
+
+        stage2CompleteCard.style.display =
+            stage === 2
+
+                ? "block"
+
+                : "none";
+
+
+        stage3CompleteCard.style.display =
+            stage === 3
+
+                ? "block"
+
+                : "none";
+
+
+        resultCard.style.display =
+            "none";
+
+
+        stageBadge.textContent =
+            `Этап ${stage} завершён`;
+
+    }
+
+
+    function renderResultCard() {
+
+        stopCurrentAudio();
+
+
+        quizArea.style.display =
+            "none";
+
+
+        stage1CompleteCard.style.display =
+            "none";
+
+
+        stage2CompleteCard.style.display =
+            "none";
+
+
+        stage3CompleteCard.style.display =
+            "none";
+
+
+        resultCard.style.display =
+            "block";
+
+
+        stageBadge.textContent =
+            "Урок завершён";
+
+
+        document
+            .getElementById(
+                "resultScore"
+            )
+            .textContent =
+                `${totalWords} / ${totalWords}`;
+
+
+        document
+            .getElementById(
+                "choiceMistakesResult"
+            )
+            .textContent =
+                choiceMistakes;
+
+
+        document
+            .getElementById(
+                "spellingMistakesResult"
+            )
+            .textContent =
+                spellingMistakes;
+
+
+        document
+            .getElementById(
+                "contextMistakesResult"
+            )
+            .textContent =
+                contextMistakes;
+
+
+        document
+            .getElementById(
+                "listeningMistakesResult"
+            )
+            .textContent =
+                listeningMistakes;
+
+
+        document
+            .getElementById(
+                "choiceTimeResult"
+            )
+            .textContent =
+                formatTime(
+                    choiceSeconds
+                );
+
+
+        document
+            .getElementById(
+                "spellingTimeResult"
+            )
+            .textContent =
+                formatTime(
+                    spellingSeconds
+                );
+
+
+        document
+            .getElementById(
+                "contextTimeResult"
+            )
+            .textContent =
+                formatTime(
+                    contextSeconds
+                );
+
+
+        document
+            .getElementById(
+                "listeningTimeResult"
+            )
+            .textContent =
+                formatTime(
+                    listeningSeconds
+                );
+
+
+        const totalMistakes =
+            choiceMistakes
+            +
+            spellingMistakes
+            +
+            contextMistakes
+            +
+            listeningMistakes;
+
+
+        const totalSeconds =
+            choiceSeconds
+            +
+            spellingSeconds
+            +
+            contextSeconds
+            +
+            listeningSeconds;
+
+
+        document
+            .getElementById(
+                "resultMessage"
+            )
+            .textContent =
+                totalMistakes
+                ===
+                0
+
+                    ? (
+                        `Excellent! `
+                        +
+                        `Вы прошли все четыре этапа `
+                        +
+                        `без единой ошибки. `
+                        +
+                        `Общее время: `
+                        +
+                        `${formatTime(totalSeconds)}.`
+                    )
+
+                    : (
+                        `Все ${totalWords} слов `
+                        +
+                        `успешно пройдены `
+                        +
+                        `на всех четырёх этапах. `
+                        +
+                        `Всего ошибок: `
+                        +
+                        `${totalMistakes}. `
+                        +
+                        `Общее время: `
+                        +
+                        `${formatTime(totalSeconds)}.`
+                    );
+
+    }
+
+
+    /* =====================================================
        SAVE WORD ANSWER
        ===================================================== */
 
@@ -2550,7 +3556,11 @@ Practice | Lesson {{ lesson.number }}
         if (
             isCorrect
         ) {
-
+            
+            
+            playSound(
+                "correct"
+            );
             choiceLearned.add(
                 question.word_id
             );
@@ -2566,6 +3576,11 @@ Practice | Lesson {{ lesson.number }}
         }
 
         else {
+
+            playSound(
+                "wrong"
+            );
+
 
             choiceMistakes += 1;
 
@@ -2605,6 +3620,18 @@ Practice | Lesson {{ lesson.number }}
         );
 
 
+        /*
+        Сохраняем уже следующий индекс.
+        Поэтому F5 после ответа продолжит
+        со следующего вопроса, а не повторит
+        только что отвеченный.
+        */
+
+        await saveCurrentPracticeState(
+            true
+        );
+
+
         updateProgress();
 
 
@@ -2640,29 +3667,19 @@ Practice | Lesson {{ lesson.number }}
                     choiceMistakes,
 
                 seconds:
-                    choiceSeconds
+                    choiceSeconds,
+
+                state:
+                    buildPracticeState(
+                        false
+                    )
             }
         );
 
 
-        quizArea.style.display =
-            "none";
-
-
-        stage1CompleteCard.style.display =
-            "block";
-
-
-        stage2CompleteCard.style.display =
-            "none";
-
-
-        stage3CompleteCard.style.display =
-            "none";
-
-
-        resultCard.style.display =
-            "none";
+        renderStageCompleteCard(
+            1
+        );
 
     }
 
@@ -2671,7 +3688,7 @@ Practice | Lesson {{ lesson.number }}
        STAGE 2
        ===================================================== */
 
-    function startSpellingStage() {
+    async function startSpellingStage() {
 
         currentStage =
             "spelling";
@@ -2734,6 +3751,11 @@ Practice | Lesson {{ lesson.number }}
 
 
         showSpellingQuestion();
+
+
+        await saveCurrentPracticeState(
+            false
+        );
 
     }
 
@@ -3001,6 +4023,10 @@ Practice | Lesson {{ lesson.number }}
         selectedLetterTiles.push(
             tile
         );
+        playSound(
+            "letterAdd"
+        );
+
 
 
         renderSpellingBuilder(
@@ -3027,6 +4053,11 @@ Practice | Lesson {{ lesson.number }}
             index,
             1
         );
+
+        playSound(
+            "letterRemove"
+        );
+
 
 
         renderSpellingBuilder(
@@ -3360,6 +4391,11 @@ Practice | Lesson {{ lesson.number }}
             isCorrect
         ) {
 
+            playSound(
+                "correct"
+            );
+
+
             spellingLearned.add(
                 question.word_id
             );
@@ -3380,6 +4416,8 @@ Practice | Lesson {{ lesson.number }}
         }
 
         else {
+
+            playSound("wrong");
 
             spellingMistakes += 1;
 
@@ -3441,6 +4479,18 @@ Practice | Lesson {{ lesson.number }}
         );
 
 
+        /*
+        Сохраняем уже следующий индекс.
+        Поэтому F5 после ответа продолжит
+        со следующего вопроса, а не повторит
+        только что отвеченный.
+        */
+
+        await saveCurrentPracticeState(
+            true
+        );
+
+
         updateProgress();
 
 
@@ -3476,29 +4526,19 @@ Practice | Lesson {{ lesson.number }}
                     spellingMistakes,
 
                 seconds:
-                    spellingSeconds
+                    spellingSeconds,
+
+                state:
+                    buildPracticeState(
+                        false
+                    )
             }
         );
 
 
-        quizArea.style.display =
-            "none";
-
-
-        stage1CompleteCard.style.display =
-            "none";
-
-
-        stage2CompleteCard.style.display =
-            "block";
-
-
-        stage3CompleteCard.style.display =
-            "none";
-
-
-        resultCard.style.display =
-            "none";
+        renderStageCompleteCard(
+            2
+        );
 
     }
 
@@ -3507,7 +4547,7 @@ Practice | Lesson {{ lesson.number }}
        STAGE 3 — CONTEXT
        ===================================================== */
 
-    function startContextStage() {
+    async function startContextStage() {
 
         currentStage =
             "context";
@@ -3558,6 +4598,11 @@ Practice | Lesson {{ lesson.number }}
 
 
         showContextQuestion();
+
+
+        await saveCurrentPracticeState(
+            false
+        );
 
     }
 
@@ -3900,6 +4945,10 @@ Practice | Lesson {{ lesson.number }}
         if (
             isCorrect
         ) {
+            playSound(
+                "correct"
+            );
+
 
             contextLearned.add(
                 question.word_id
@@ -3916,6 +4965,8 @@ Practice | Lesson {{ lesson.number }}
         }
 
         else {
+
+            playSound("wrong");
 
             contextMistakes += 1;
 
@@ -3957,6 +5008,18 @@ Practice | Lesson {{ lesson.number }}
         );
 
 
+        /*
+        Сохраняем уже следующий индекс.
+        Поэтому F5 после ответа продолжит
+        со следующего вопроса, а не повторит
+        только что отвеченный.
+        */
+
+        await saveCurrentPracticeState(
+            true
+        );
+
+
         updateProgress();
 
 
@@ -3992,29 +5055,19 @@ Practice | Lesson {{ lesson.number }}
                     contextMistakes,
 
                 seconds:
-                    contextSeconds
+                    contextSeconds,
+
+                state:
+                    buildPracticeState(
+                        false
+                    )
             }
         );
 
 
-        quizArea.style.display =
-            "none";
-
-
-        stage1CompleteCard.style.display =
-            "none";
-
-
-        stage2CompleteCard.style.display =
-            "none";
-
-
-        stage3CompleteCard.style.display =
-            "block";
-
-
-        resultCard.style.display =
-            "none";
+        renderStageCompleteCard(
+            3
+        );
 
     }
 
@@ -4023,7 +5076,7 @@ Practice | Lesson {{ lesson.number }}
        STAGE 4 — LISTENING
        ===================================================== */
 
-    function startListeningStage() {
+    async function startListeningStage() {
 
         currentStage =
             "listening";
@@ -4078,6 +5131,11 @@ Practice | Lesson {{ lesson.number }}
 
 
         showListeningQuestion();
+
+
+        await saveCurrentPracticeState(
+            false
+        );
 
     }
 
@@ -4422,6 +5480,10 @@ Practice | Lesson {{ lesson.number }}
         if (
             isCorrect
         ) {
+            playSound(
+                "correct"
+            );
+
 
             listeningLearned.add(
                 question.word_id
@@ -4447,6 +5509,8 @@ Practice | Lesson {{ lesson.number }}
         }
 
         else {
+
+            playSound("wrong");
 
             listeningMistakes += 1;
 
@@ -4492,6 +5556,18 @@ Practice | Lesson {{ lesson.number }}
         );
 
 
+        /*
+        Сохраняем уже следующий индекс.
+        Поэтому F5 после ответа продолжит
+        со следующего вопроса, а не повторит
+        только что отвеченный.
+        */
+
+        await saveCurrentPracticeState(
+            true
+        );
+
+
         updateProgress();
 
 
@@ -4516,6 +5592,8 @@ Practice | Lesson {{ lesson.number }}
        ===================================================== */
 
     function nextQuestion() {
+
+        playSound("click");
 
 
         /* STAGE 1 */
@@ -4759,169 +5837,21 @@ Practice | Lesson {{ lesson.number }}
                     listeningMistakes,
 
                 seconds:
-                    listeningSeconds
+                    listeningSeconds,
+
+                state:
+                    buildPracticeState(
+                        false
+                    )
             }
         );
 
 
-        quizArea.style.display =
-            "none";
+        currentStage =
+            "completed";
 
 
-        stage1CompleteCard.style.display =
-            "none";
-
-
-        stage2CompleteCard.style.display =
-            "none";
-
-
-        stage3CompleteCard.style.display =
-            "none";
-
-
-        resultCard.style.display =
-            "block";
-
-
-        stageBadge.textContent =
-            "Урок завершён";
-
-
-        document
-            .getElementById(
-                "resultScore"
-            )
-            .textContent =
-                `${totalWords} / ${totalWords}`;
-
-
-        document
-            .getElementById(
-                "choiceMistakesResult"
-            )
-            .textContent =
-                choiceMistakes;
-
-
-        document
-            .getElementById(
-                "spellingMistakesResult"
-            )
-            .textContent =
-                spellingMistakes;
-
-
-        document
-            .getElementById(
-                "contextMistakesResult"
-            )
-            .textContent =
-                contextMistakes;
-
-
-        document
-            .getElementById(
-                "listeningMistakesResult"
-            )
-            .textContent =
-                listeningMistakes;
-
-
-        document
-            .getElementById(
-                "choiceTimeResult"
-            )
-            .textContent =
-                formatTime(
-                    choiceSeconds
-                );
-
-
-        document
-            .getElementById(
-                "spellingTimeResult"
-            )
-            .textContent =
-                formatTime(
-                    spellingSeconds
-                );
-
-
-        document
-            .getElementById(
-                "contextTimeResult"
-            )
-            .textContent =
-                formatTime(
-                    contextSeconds
-                );
-
-
-        document
-            .getElementById(
-                "listeningTimeResult"
-            )
-            .textContent =
-                formatTime(
-                    listeningSeconds
-                );
-
-
-        const totalMistakes =
-            choiceMistakes
-            +
-            spellingMistakes
-            +
-            contextMistakes
-            +
-            listeningMistakes;
-
-
-        const totalSeconds =
-            choiceSeconds
-            +
-            spellingSeconds
-            +
-            contextSeconds
-            +
-            listeningSeconds;
-
-
-        document
-            .getElementById(
-                "resultMessage"
-            )
-            .textContent =
-                totalMistakes === 0
-
-                    ? (
-                        `Excellent! `
-                        +
-                        `Вы прошли все четыре этапа `
-                        +
-                        `без единой ошибки. `
-                        +
-                        `Общее время: `
-                        +
-                        `${formatTime(totalSeconds)}.`
-                    )
-
-                    : (
-                        `Все ${totalWords} слов `
-                        +
-                        `успешно пройдены `
-                        +
-                        `на всех четырёх этапах. `
-                        +
-                        `Всего ошибок: `
-                        +
-                        `${totalMistakes}. `
-                        +
-                        `Общее время: `
-                        +
-                        `${formatTime(totalSeconds)}.`
-                    );
+        renderResultCard();
 
     }
 
@@ -5088,24 +6018,430 @@ Practice | Lesson {{ lesson.number }}
 
 
     /* =====================================================
-       START
+       START / RESTORE
        ===================================================== */
 
-    if (
-        totalWords > 0
-    ) {
+    async function initializeLessonPractice() {
 
-        saveLessonProgress(
+        if (
+            totalWords
+            <=
+            0
+        ) {
+
+            return;
+
+        }
+
+
+        await saveLessonProgress(
             "open"
         );
+
+
+        restorePracticeVariables();
+
+
+        /* =============================================
+           ALREADY COMPLETED
+           ============================================= */
+
+        if (
+            savedLessonProgress.completed
+            ||
+            savedCurrentStage
+            ===
+            "completed"
+        ) {
+
+            currentStage =
+                "completed";
+
+
+            renderResultCard();
+
+            return;
+
+        }
+
+
+        /* =============================================
+           STAGE 1 — CHOICE
+           ============================================= */
+
+        if (
+            savedCurrentStage
+            ===
+            "choice"
+            ||
+            !savedCurrentStage
+        ) {
+
+            currentStage =
+                "choice";
+
+
+            if (
+                !hasSavedStageState(
+                    "choice"
+                )
+            ) {
+
+                choiceQueue =
+                    originalQuestions.map(
+                        question => ({
+                            ...question
+                        })
+                    );
+
+
+                choiceIndex =
+                    0;
+
+
+                choiceLearned.clear();
+
+
+                choiceMistakes =
+                    0;
+
+
+                choiceSeconds =
+                    0;
+
+
+                restartStageTimer();
+
+
+                await saveCurrentPracticeState(
+                    false
+                );
+
+            }
+
+            else {
+
+                ensureCurrentQuestion(
+                    choiceQueue,
+                    choiceIndex,
+                    choiceLearned,
+                    false
+                );
+
+
+                restoreStageTimer(
+                    choiceSeconds
+                );
+
+            }
+
+
+            if (
+                choiceLearned.size
+                ===
+                totalWords
+            ) {
+
+                await showStage1Complete();
+
+                return;
+
+            }
+
+
+            showChoiceQuestion();
+
+            return;
+
+        }
+
+
+        /* =============================================
+           STAGE 2 — SPELLING
+           ============================================= */
+
+        if (
+            savedCurrentStage
+            ===
+            "spelling"
+        ) {
+
+            if (
+                savedLessonProgress.stage1_completed
+                &&
+                !hasSavedStageState(
+                    "spelling"
+                )
+            ) {
+
+                renderStageCompleteCard(
+                    1
+                );
+
+                return;
+
+            }
+
+
+            if (
+                !hasSavedStageState(
+                    "spelling"
+                )
+            ) {
+
+                currentStage =
+                    "choice";
+
+
+                restartStageTimer();
+
+                showChoiceQuestion();
+
+                return;
+
+            }
+
+
+            currentStage =
+                "spelling";
+
+
+            ensureCurrentQuestion(
+                spellingQueue,
+                spellingIndex,
+                spellingLearned,
+                true
+            );
+
+
+            restoreStageTimer(
+                spellingSeconds
+            );
+
+
+            if (
+                spellingLearned.size
+                ===
+                totalWords
+            ) {
+
+                await showStage2Complete();
+
+                return;
+
+            }
+
+
+            showSpellingQuestion();
+
+            return;
+
+        }
+
+
+        /* =============================================
+           STAGE 3 — CONTEXT
+           ============================================= */
+
+        if (
+            savedCurrentStage
+            ===
+            "context"
+        ) {
+
+            if (
+                savedLessonProgress.stage2_completed
+                &&
+                !hasSavedStageState(
+                    "context"
+                )
+            ) {
+
+                renderStageCompleteCard(
+                    2
+                );
+
+                return;
+
+            }
+
+
+            if (
+                !hasSavedStageState(
+                    "context"
+                )
+            ) {
+
+                renderStageCompleteCard(
+                    2
+                );
+
+                return;
+
+            }
+
+
+            currentStage =
+                "context";
+
+
+            ensureCurrentQuestion(
+                contextQueue,
+                contextIndex,
+                contextLearned,
+                true
+            );
+
+
+            restoreStageTimer(
+                contextSeconds
+            );
+
+
+            if (
+                contextLearned.size
+                ===
+                totalWords
+            ) {
+
+                await showStage3Complete();
+
+                return;
+
+            }
+
+
+            showContextQuestion();
+
+            return;
+
+        }
+
+
+        /* =============================================
+           STAGE 4 — LISTENING
+           ============================================= */
+
+        if (
+            savedCurrentStage
+            ===
+            "listening"
+        ) {
+
+            if (
+                savedLessonProgress.stage3_completed
+                &&
+                !hasSavedStageState(
+                    "listening"
+                )
+            ) {
+
+                renderStageCompleteCard(
+                    3
+                );
+
+                return;
+
+            }
+
+
+            if (
+                !hasSavedStageState(
+                    "listening"
+                )
+            ) {
+
+                renderStageCompleteCard(
+                    3
+                );
+
+                return;
+
+            }
+
+
+            currentStage =
+                "listening";
+
+
+            ensureCurrentQuestion(
+                listeningQueue,
+                listeningIndex,
+                listeningLearned,
+                true
+            );
+
+
+            restoreStageTimer(
+                listeningSeconds
+            );
+
+
+            if (
+                listeningLearned.size
+                ===
+                totalWords
+            ) {
+
+                await showResult();
+
+                return;
+
+            }
+
+
+            showListeningQuestion();
+
+            return;
+
+        }
+
+
+        /* =============================================
+           SAFE FALLBACK
+           ============================================= */
+
+        currentStage =
+            "choice";
+
+
+        choiceQueue =
+            originalQuestions.map(
+                question => ({
+                    ...question
+                })
+            );
+
+
+        choiceIndex =
+            0;
+
+
+        choiceLearned.clear();
+
+
+        choiceMistakes =
+            0;
+
+
+        choiceSeconds =
+            0;
 
 
         restartStageTimer();
 
 
+        await saveCurrentPracticeState(
+            false
+        );
+
+
         showChoiceQuestion();
 
     }
+
+
+    initializeLessonPractice();
 
 </script>
 
