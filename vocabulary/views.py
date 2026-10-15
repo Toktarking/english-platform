@@ -531,7 +531,7 @@ def get_daily_item_url(
     ):
 
         return reverse(
-            "vocabulary:lesson_practice",
+            "vocabulary:lesson_detail",
             kwargs={
                 "level_code":
                     item.lesson.group.level.code,
@@ -2055,19 +2055,6 @@ def lesson_detail(
     # ACTIVE COURSE USER
     # =====================================================
 
-    if request.user.is_authenticated:
-
-        active_course = (
-            get_active_user_course(
-                request.user
-            )
-        )
-
-        if active_course:
-
-            return redirect(
-                "vocabulary:dashboard"
-            )
 
 
     lesson = get_object_or_404(
