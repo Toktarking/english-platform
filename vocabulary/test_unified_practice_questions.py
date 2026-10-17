@@ -120,7 +120,7 @@ class UnifiedPracticeQuestionTests(TestCase):
             example_ru="Пример.",
             example_kz="Мысал.",
             context_sentence=(
-                f"I can see ___ in the room."
+                "I can see ___ in the room."
             ),
             context_wrong_options=[
                 "table",
@@ -143,10 +143,13 @@ class UnifiedPracticeQuestionTests(TestCase):
     ):
 
         self.session.phase = phase
+
         self.session.current_queue = [
             word.id
         ]
+
         self.session.current_index = 0
+
         self.session.is_completed = False
 
         self.session.save(
@@ -205,7 +208,7 @@ class UnifiedPracticeQuestionTests(TestCase):
         )
 
         # Правильное слово специально
-        # не должно передаваться браузеру.
+        # не передаётся браузеру.
         self.assertNotIn(
             "correct",
             question,
@@ -218,7 +221,8 @@ class UnifiedPracticeQuestionTests(TestCase):
 
 
     # =====================================================
-    # LISTENING ANSWER CHECK
+    # DECK 1
+    # SERVER-SIDE ANSWER CHECK
     # =====================================================
 
     def test_listening_answer_is_checked_on_server(
@@ -241,6 +245,8 @@ class UnifiedPracticeQuestionTests(TestCase):
             )
         )
 
+        # Регистр и лишние пробелы
+        # не должны влиять.
         self.assertTrue(
             check_unified_answer(
                 self.session,
@@ -308,29 +314,44 @@ class UnifiedPracticeQuestionTests(TestCase):
 
         letters = [
             item["letter"]
-            for item in question["letters"]
+            for item
+            in question["letters"]
         ]
 
 
-        # Порядок случайный,
-        # поэтому сравниваем состав букв.
+        # Порядок букв случайный.
+        # Поэтому сравниваем их состав.
         self.assertEqual(
-            Counter(letters),
-            Counter("apple"),
+            Counter(
+                letters
+            ),
+            Counter(
+                "apple"
+            ),
         )
 
 
-        # ID каждой плитки должен
-        # быть уникальным даже при
-        # повторяющихся буквах.
+        # Каждая плитка должна иметь
+        # уникальный ID.
+        #
+        # Особенно важно для слов,
+        # где одна буква встречается
+        # несколько раз.
         letter_ids = [
             item["id"]
-            for item in question["letters"]
+            for item
+            in question["letters"]
         ]
 
         self.assertEqual(
-            len(letter_ids),
-            len(set(letter_ids)),
+            len(
+                letter_ids
+            ),
+            len(
+                set(
+                    letter_ids
+                )
+            ),
         )
 
 
@@ -397,7 +418,9 @@ class UnifiedPracticeQuestionTests(TestCase):
         )
 
         self.assertEqual(
-            len(question["options"]),
+            len(
+                question["options"]
+            ),
             4,
         )
 
@@ -406,6 +429,9 @@ class UnifiedPracticeQuestionTests(TestCase):
             question["options"],
         )
 
+
+        # Все четыре варианта должны
+        # быть уникальными.
         self.assertEqual(
             len(
                 set(
@@ -435,6 +461,8 @@ class UnifiedPracticeQuestionTests(TestCase):
 
     # =====================================================
     # DECK 4
+    # MULTIPLE CHOICE 1
+    #
     # ENGLISH -> RUSSIAN
     # =====================================================
 
@@ -468,65 +496,90 @@ class UnifiedPracticeQuestionTests(TestCase):
         )
 
         self.assertEqual(
+            question["word_id"],
+            self.word1.id,
+        )
+
+        self.assertEqual(
             question["prompt"],
             "apple",
         )
 
         self.assertEqual(
-            len(question["options"]),
+            len(
+                question["options"]
+            ),
             4,
         )
 
 
-        option_ids = [
-            option["word_id"]
-            for option
-            in question["options"]
-        ]
+        # Теперь options — это только
+        # строки, а не объекты с word_id.
+        #
+        # Браузер не получает ID
+        # правильного варианта.
 
-        option_texts = [
-            option["text"]
-            for option
-            in question["options"]
-        ]
-
-
-        self.assertIn(
-            self.word1.id,
-            option_ids,
+        self.assertTrue(
+            all(
+                isinstance(
+                    option,
+                    str,
+                )
+                for option
+                in question["options"]
+            )
         )
+
 
         self.assertIn(
             "яблоко",
-            option_texts,
+            question["options"],
         )
 
+
+        # Все переводы должны
+        # быть уникальными.
         self.assertEqual(
-            len(option_ids),
-            len(set(option_ids)),
+            len(
+                set(
+                    option.lower()
+                    for option
+                    in question["options"]
+                )
+            ),
+            4,
         )
 
 
-        # Сервер принимает ID
-        # выбранного варианта.
+        # Сервер проверяет сам текст
+        # выбранного перевода.
 
         self.assertTrue(
             check_unified_answer(
                 self.session,
-                self.word1.id,
+                "яблоко",
+            )
+        )
+
+        self.assertTrue(
+            check_unified_answer(
+                self.session,
+                "  ЯБЛОКО  ",
             )
         )
 
         self.assertFalse(
             check_unified_answer(
                 self.session,
-                self.word2.id,
+                "дом",
             )
         )
 
 
     # =====================================================
     # DECK 5
+    # MULTIPLE CHOICE 2
+    #
     # RUSSIAN -> ENGLISH
     # =====================================================
 
@@ -560,58 +613,77 @@ class UnifiedPracticeQuestionTests(TestCase):
         )
 
         self.assertEqual(
+            question["word_id"],
+            self.word1.id,
+        )
+
+        self.assertEqual(
             question["prompt"],
             "яблоко",
         )
 
         self.assertEqual(
-            len(question["options"]),
+            len(
+                question["options"]
+            ),
             4,
         )
 
 
-        option_ids = [
-            option["word_id"]
-            for option
-            in question["options"]
-        ]
+        # Как и в Deck 4,
+        # браузер получает только
+        # текст вариантов.
 
-        option_texts = [
-            option["text"]
-            for option
-            in question["options"]
-        ]
-
-
-        self.assertIn(
-            self.word1.id,
-            option_ids,
+        self.assertTrue(
+            all(
+                isinstance(
+                    option,
+                    str,
+                )
+                for option
+                in question["options"]
+            )
         )
+
 
         self.assertIn(
             "apple",
-            option_texts,
+            question["options"],
         )
 
+
+        # Все английские варианты
+        # должны быть уникальными.
         self.assertEqual(
-            len(option_ids),
-            len(set(option_ids)),
+            len(
+                set(
+                    option.lower()
+                    for option
+                    in question["options"]
+                )
+            ),
+            4,
         )
 
 
         self.assertTrue(
             check_unified_answer(
                 self.session,
-                str(
-                    self.word1.id
-                ),
+                "apple",
+            )
+        )
+
+        self.assertTrue(
+            check_unified_answer(
+                self.session,
+                " APPLE ",
             )
         )
 
         self.assertFalse(
             check_unified_answer(
                 self.session,
-                self.word3.id,
+                "water",
             )
         )
 
