@@ -627,6 +627,264 @@ class GroupPracticeWordState(models.Model):
 
 
 # =========================================================
+# UNIFIED GROUP PRACTICE V2
+# =========================================================
+
+
+class UnifiedGroupPracticeSession(models.Model):
+
+    class Phase(models.TextChoices):
+
+        LISTENING_INITIAL = (
+            "listening_initial",
+            "Listening — Initial",
+        )
+
+        LETTER_FIRST = (
+            "letter_first",
+            "Letter Construction — First",
+        )
+
+        MULTIPLE_CHOICE_1 = (
+            "multiple_choice_1",
+            "Multiple Choice 1",
+        )
+
+        MULTIPLE_CHOICE_2 = (
+            "multiple_choice_2",
+            "Multiple Choice 2",
+        )
+
+        LETTER_REVIEW = (
+            "letter_review",
+            "Letter Construction — Review",
+        )
+
+        CONTEXT_REVIEW = (
+            "context_review",
+            "Context — Review",
+        )
+
+        LISTENING_REVIEW = (
+            "listening_review",
+            "Listening — Review",
+        )
+
+        COMPLETED = (
+            "completed",
+            "Completed",
+        )
+
+
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="unified_group_practice_sessions",
+    )
+
+
+    group = models.ForeignKey(
+        VocabularyGroup,
+        on_delete=models.CASCADE,
+        related_name="unified_practice_sessions",
+    )
+
+
+    phase = models.CharField(
+        max_length=30,
+        choices=Phase.choices,
+        default=Phase.LISTENING_INITIAL,
+    )
+
+
+    # Текущий случайный порядок слов.
+    #
+    # Храним на сервере, чтобы F5
+    # не менял порядок и не сбрасывал прогресс.
+    current_queue = models.JSONField(
+        default=list,
+        blank=True,
+    )
+
+
+    current_index = models.PositiveIntegerField(
+        default=0,
+    )
+
+
+    mistake_count = models.PositiveIntegerField(
+        default=0,
+    )
+
+
+    is_completed = models.BooleanField(
+        default=False,
+    )
+
+
+    started_at = models.DateTimeField(
+        auto_now_add=True,
+    )
+
+
+    last_opened_at = models.DateTimeField(
+        null=True,
+        blank=True,
+    )
+
+
+    updated_at = models.DateTimeField(
+        auto_now=True,
+    )
+
+
+    completed_at = models.DateTimeField(
+        null=True,
+        blank=True,
+    )
+
+
+    class Meta:
+
+        constraints = [
+
+            models.UniqueConstraint(
+                fields=[
+                    "user",
+                    "group",
+                ],
+                name=(
+                    "unique_user_group_"
+                    "unified_practice"
+                ),
+            ),
+
+        ]
+
+
+    def __str__(self):
+
+        return (
+            f"{self.user} — "
+            f"{self.group} — "
+            f"Unified Practice"
+        )
+
+
+# =========================================================
+# UNIFIED PRACTICE WORD STATE
+# =========================================================
+
+
+class UnifiedGroupPracticeWordState(models.Model):
+
+    session = models.ForeignKey(
+        UnifiedGroupPracticeSession,
+        on_delete=models.CASCADE,
+        related_name="word_states",
+    )
+
+
+    word = models.ForeignKey(
+        VocabularyWord,
+        on_delete=models.CASCADE,
+        related_name="unified_practice_states",
+    )
+
+
+    # -----------------------------------------------------
+    # DECK 1
+    # Listening
+    #
+    # В начале здесь находятся ВСЕ слова группы.
+    # -----------------------------------------------------
+
+    in_deck1 = models.BooleanField(
+        default=True,
+    )
+
+
+    # -----------------------------------------------------
+    # DECK 2
+    # Letter Construction
+    # -----------------------------------------------------
+
+    in_deck2 = models.BooleanField(
+        default=False,
+    )
+
+
+    # -----------------------------------------------------
+    # DECK 3
+    # Context
+    # -----------------------------------------------------
+
+    in_deck3 = models.BooleanField(
+        default=False,
+    )
+
+
+    # -----------------------------------------------------
+    # DECK 4
+    # Multiple Choice 1
+    # -----------------------------------------------------
+
+    in_deck4 = models.BooleanField(
+        default=False,
+    )
+
+
+    # -----------------------------------------------------
+    # DECK 5
+    # Multiple Choice 2
+    #
+    # ВАЖНО:
+    # эта колода НАКОПИТЕЛЬНАЯ.
+    #
+    # Если слово хотя бы один раз
+    # попало в Deck 5, оно остаётся
+    # здесь до конца всей Practice.
+    # -----------------------------------------------------
+
+    in_deck5 = models.BooleanField(
+        default=False,
+    )
+
+
+    # Сколько всего ошибок было
+    # сделано на конкретном слове.
+    mistake_count = models.PositiveIntegerField(
+        default=0,
+    )
+
+
+    class Meta:
+
+        constraints = [
+
+            models.UniqueConstraint(
+                fields=[
+                    "session",
+                    "word",
+                ],
+                name=(
+                    "unique_word_in_"
+                    "unified_practice_session"
+                ),
+            ),
+
+        ]
+
+
+    def __str__(self):
+
+        return (
+            f"{self.session.user} — "
+            f"{self.word.word}"
+        )
+
+
+# =========================================================
 # LESSON PRACTICE PROGRESS
 # =========================================================
 
