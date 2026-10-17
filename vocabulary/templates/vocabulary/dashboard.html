@@ -923,7 +923,7 @@
                             </div>
 
                             <div class="card-subtitle">
-                                Сначала Lessons, затем Practice
+                                Сначала Lessons, затем Unified Practice
                             </div>
 
                         </div>
@@ -971,11 +971,12 @@
 
                             <div class="group-stat-value">
                                 {{ current_group.completed_practices }}
-                                / 4
+                                / 
+                                {{ current_group.total_practices }}
                             </div>
 
                             <div class="group-stat-label">
-                                Practice
+                                Unified Practice
                             </div>
 
                         </div>
@@ -986,7 +987,7 @@
                     {% if not current_group.practices_unlocked %}
 
                         <div class="locked-note">
-                            Practice откроются после завершения
+                            Unified Practice откроются после завершения
                             всех Lessons этой группы.
                         </div>
 
@@ -1192,7 +1193,7 @@
                         </div>
 
                         <div class="stat-label">
-                            Practice
+                            Unified Practice
                         </div>
 
                     </div>

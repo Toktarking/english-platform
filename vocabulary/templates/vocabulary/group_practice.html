@@ -1,0 +1,2472 @@
+{% extends "vocabulary/base.html" %}
+
+{% block title %}
+Practice | {{ group.name }}
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+    /* =====================================================
+       PAGE
+       ===================================================== */
+
+    .unified-practice {
+        max-width: 760px;
+        margin: 0 auto;
+    }
+
+    .practice-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 20px;
+
+        margin-bottom: 24px;
+    }
+
+    .practice-back {
+        display: inline-block;
+
+        margin-bottom: 10px;
+
+        color: #6b7280;
+
+        font-size: 14px;
+        text-decoration: none;
+    }
+
+    .practice-back:hover {
+        color: #2563eb;
+    }
+
+    .practice-title {
+        margin: 0 0 5px;
+
+        color: #111827;
+
+        font-size: 28px;
+        font-weight: 800;
+    }
+
+    .practice-subtitle {
+        color: #6b7280;
+        font-size: 14px;
+    }
+
+    .restart-button {
+        padding: 10px 15px;
+
+        background: white;
+
+        border: 1px solid #d1d5db;
+        border-radius: 10px;
+
+        color: #374151;
+
+        font-family: inherit;
+        font-size: 13px;
+        font-weight: 700;
+
+        cursor: pointer;
+    }
+
+    .restart-button:hover {
+        background: #f9fafb;
+    }
+
+
+    /* =====================================================
+       STATUS
+       ===================================================== */
+
+    .practice-status {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 15px;
+
+        margin-bottom: 14px;
+    }
+
+    .deck-badge {
+        display: inline-flex;
+        align-items: center;
+
+        padding: 7px 12px;
+
+        background: #eff6ff;
+
+        border-radius: 999px;
+
+        color: #1d4ed8;
+
+        font-size: 12px;
+        font-weight: 800;
+    }
+
+    .mistakes {
+        color: #6b7280;
+
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+
+    /* =====================================================
+       DECK TRACK
+       ===================================================== */
+
+    .deck-track {
+        display: grid;
+
+        grid-template-columns:
+            repeat(5, 1fr);
+
+        gap: 7px;
+
+        margin-bottom: 24px;
+    }
+
+    .deck-step {
+        height: 7px;
+
+        background: #e5e7eb;
+
+        border-radius: 999px;
+
+        transition:
+            background 0.2s ease,
+            transform 0.2s ease;
+    }
+
+    .deck-step.active {
+        background: #2563eb;
+        transform: scaleY(1.35);
+    }
+
+
+    /* =====================================================
+       CARD
+       ===================================================== */
+
+    .question-card {
+        min-height: 390px;
+
+        padding: 36px;
+
+        background: white;
+
+        border: 1px solid #e5e7eb;
+        border-radius: 24px;
+
+        box-shadow:
+            0 10px 32px
+            rgba(0, 0, 0, 0.055);
+
+        text-align: center;
+    }
+
+    .question-label {
+        margin-bottom: 15px;
+
+        color: #6b7280;
+
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    .question-prompt {
+        margin-bottom: 25px;
+
+        color: #111827;
+
+        font-size: 42px;
+        font-weight: 800;
+
+        line-height: 1.2;
+
+        word-break: break-word;
+    }
+
+    .question-prompt.context {
+        max-width: 650px;
+
+        margin:
+            10px
+            auto
+            28px;
+
+        font-size: 28px;
+        line-height: 1.5;
+    }
+
+
+    /* =====================================================
+       LISTENING
+       ===================================================== */
+
+    .audio-wrapper {
+        margin: 25px 0;
+    }
+
+    .audio-wrapper audio {
+        width: 100%;
+        max-width: 400px;
+    }
+
+    .text-answer {
+        width: 100%;
+        max-width: 470px;
+
+        box-sizing: border-box;
+
+        padding: 15px 17px;
+
+        border: 2px solid #d1d5db;
+        border-radius: 13px;
+
+        color: #111827;
+
+        font-family: inherit;
+        font-size: 18px;
+
+        outline: none;
+    }
+
+    .text-answer:focus {
+        border-color: #2563eb;
+    }
+
+
+    /* =====================================================
+       BUTTONS
+       ===================================================== */
+
+    .primary-button {
+        min-width: 150px;
+
+        margin-top: 18px;
+        padding: 14px 22px;
+
+        background: #2563eb;
+
+        border: 0;
+        border-radius: 13px;
+
+        color: white;
+
+        font-family: inherit;
+        font-size: 15px;
+        font-weight: 800;
+
+        cursor: pointer;
+    }
+
+    .primary-button:hover:not(:disabled) {
+        background: #1d4ed8;
+    }
+
+    .primary-button:disabled {
+        opacity: 0.55;
+        cursor: default;
+    }
+
+    .secondary-button {
+        padding: 10px 14px;
+
+        background: #f3f4f6;
+
+        border: 0;
+        border-radius: 10px;
+
+        color: #374151;
+
+        font-family: inherit;
+        font-weight: 700;
+
+        cursor: pointer;
+    }
+
+
+    /* =====================================================
+       OPTIONS
+       ===================================================== */
+
+    .options {
+        display: grid;
+
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+        gap: 12px;
+
+        margin-top: 20px;
+    }
+
+    .option-button {
+        min-height: 64px;
+
+        padding: 14px 16px;
+
+        background: white;
+
+        border: 2px solid #e5e7eb;
+        border-radius: 14px;
+
+        color: #111827;
+
+        font-family: inherit;
+        font-size: 16px;
+        font-weight: 650;
+
+        cursor: pointer;
+
+        transition:
+            border-color 0.15s ease,
+            background 0.15s ease,
+            transform 0.15s ease;
+    }
+
+    .option-button:hover:not(:disabled) {
+        border-color: #2563eb;
+        background: #eff6ff;
+
+        transform: translateY(-1px);
+    }
+
+    .option-button:disabled {
+        cursor: default;
+    }
+
+
+    /* =====================================================
+       LETTER CONSTRUCTION
+       ===================================================== */
+
+    .translation {
+        margin-bottom: 16px;
+
+        color: #374151;
+
+        font-size: 22px;
+        font-weight: 700;
+    }
+
+    .letter-answer {
+        min-height: 62px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        margin-bottom: 20px;
+        padding: 10px 14px;
+
+        background: #f9fafb;
+
+        border: 2px solid #e5e7eb;
+        border-radius: 14px;
+
+        color: #111827;
+
+        font-size: 28px;
+        font-weight: 800;
+
+        letter-spacing: 3px;
+
+        word-break: break-word;
+    }
+
+    .letters {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+
+        gap: 9px;
+
+        margin: 20px 0;
+    }
+
+    .letter-button {
+        min-width: 48px;
+        height: 48px;
+
+        padding: 0 12px;
+
+        background: white;
+
+        border: 2px solid #d1d5db;
+        border-radius: 11px;
+
+        color: #111827;
+
+        font-family: inherit;
+        font-size: 19px;
+        font-weight: 800;
+
+        cursor: pointer;
+    }
+
+    .letter-button:hover:not(:disabled) {
+        border-color: #2563eb;
+        background: #eff6ff;
+    }
+
+    .letter-button:disabled {
+        opacity: 0.28;
+        cursor: default;
+    }
+
+    .letter-actions {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+    }
+
+
+    /* =====================================================
+       FEEDBACK
+       ===================================================== */
+
+    .feedback {
+        display: none;
+
+        margin-top: 22px;
+        padding: 14px 17px;
+
+        border-radius: 13px;
+
+        font-size: 15px;
+        font-weight: 700;
+        line-height: 1.45;
+    }
+
+    .feedback.correct {
+        display: block;
+
+        background: #dcfce7;
+
+        color: #166534;
+    }
+
+    .feedback.wrong {
+        display: block;
+
+        background: #fee2e2;
+
+        color: #991b1b;
+    }
+
+
+    /* =====================================================
+       LOADING / ERROR
+       ===================================================== */
+
+    .loading {
+        padding: 70px 20px;
+
+        color: #6b7280;
+
+        text-align: center;
+        font-size: 15px;
+    }
+
+    .error-box {
+        padding: 20px;
+
+        background: #fee2e2;
+
+        border-radius: 14px;
+
+        color: #991b1b;
+
+        line-height: 1.5;
+    }
+
+
+    /* =====================================================
+       COMPLETED
+       ===================================================== */
+
+    .completed-card {
+        padding: 55px 30px;
+
+        text-align: center;
+    }
+
+    .completed-icon {
+        margin-bottom: 12px;
+
+        font-size: 64px;
+    }
+
+    .completed-title {
+        margin-bottom: 10px;
+
+        color: #111827;
+
+        font-size: 30px;
+        font-weight: 900;
+    }
+
+    .completed-text {
+        margin-bottom: 25px;
+
+        color: #6b7280;
+
+        font-size: 15px;
+        line-height: 1.5;
+    }
+
+    .completed-actions {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+
+        gap: 10px;
+    }
+
+    .group-button {
+        display: inline-block;
+
+        padding: 13px 20px;
+
+        background: #111827;
+
+        border-radius: 12px;
+
+        color: white;
+
+        font-size: 14px;
+        font-weight: 800;
+
+        text-decoration: none;
+    }
+
+    .selected-letter-button {
+        min-width: 42px;
+        height: 46px;
+
+        margin: 0 3px;
+        padding: 0 10px;
+
+        background: white;
+
+        border: 2px solid #2563eb;
+        border-radius: 10px;
+
+        color: #111827;
+
+        font-family: inherit;
+        font-size: 22px;
+        font-weight: 800;
+
+        cursor: pointer;
+    }
+
+    .selected-letter-button:hover {
+        background: #eff6ff;
+    }
+
+    .deck-progress-info {
+        color: #374151;
+
+        font-size: 13px;
+        font-weight: 700;
+
+        text-align: center;
+    }
+
+    .deck-progress-current {
+        color: #2563eb;
+        font-weight: 800;
+    }
+
+
+
+
+    /* =====================================================
+       MOBILE
+       ===================================================== */
+
+    @media (
+        max-width: 650px
+    ) {
+
+        .practice-top {
+            flex-direction: column;
+        }
+
+        .question-card {
+            min-height: 0;
+
+            padding:
+                26px
+                18px;
+        }
+
+        .question-prompt {
+            font-size: 34px;
+        }
+
+        .question-prompt.context {
+            font-size: 23px;
+        }
+
+        .options {
+            grid-template-columns: 1fr;
+        }
+
+        .letter-answer {
+            font-size: 23px;
+            letter-spacing: 2px;
+        }
+
+        .practice-status {
+            flex-wrap: wrap;
+        }
+
+        .deck-progress-info {
+            order: 3;
+            width: 100%;
+
+            margin-top: 4px;
+
+            text-align: left;
+        }
+
+
+        
+
+    }
+
+</style>
+
+
+<div
+    class="unified-practice"
+    id="practice-root"
+>
+
+    <!-- CSRF нужен fetch POST -->
+    <form style="display:none;">
+        {% csrf_token %}
+    </form>
+
+
+    <!-- =================================================
+         HEADER
+         ================================================= -->
+
+    <div class="practice-top">
+
+        <div>
+
+            <a
+                href="{% url 'vocabulary:group_detail' level.code group.id %}"
+                class="practice-back"
+            >
+                ← {{ group.name }}
+            </a>
+
+            <h1 class="practice-title">
+                Practice
+            </h1>
+
+            <div class="practice-subtitle">
+                {{ level.code }} · {{ group.name }}
+            </div>
+
+        </div>
+
+
+        <button
+            type="button"
+            class="restart-button"
+            id="restart-button"
+        >
+            Restart practice
+        </button>
+
+    </div>
+
+
+    <!-- =================================================
+         STATUS
+         ================================================= -->
+
+
+
+    <div class="practice-status">
+
+        <div
+            class="deck-badge"
+            id="deck-badge"
+        >
+            Loading...
+        </div>
+
+
+        <div
+            class="deck-progress-info"
+            id="deck-progress-info"
+        >
+        </div>
+
+
+        <div
+            class="mistakes"
+            id="mistake-count"
+        >
+        </div>
+
+    </div>
+
+
+
+    <!-- =================================================
+         DECK INDICATOR
+         ================================================= -->
+
+    <div class="deck-track">
+
+        <div
+            class="deck-step"
+            data-deck="1"
+        ></div>
+
+        <div
+            class="deck-step"
+            data-deck="2"
+        ></div>
+
+        <div
+            class="deck-step"
+            data-deck="3"
+        ></div>
+
+        <div
+            class="deck-step"
+            data-deck="4"
+        ></div>
+
+        <div
+            class="deck-step"
+            data-deck="5"
+        ></div>
+
+    </div>
+
+
+    <!-- =================================================
+         QUESTION
+         ================================================= -->
+
+    <div
+        class="question-card"
+        id="question-card"
+    >
+
+        <div class="loading">
+            Loading practice...
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+    /* =====================================================
+       URLS
+       ===================================================== */
+
+    const STATE_URL =
+        "{% url 'vocabulary:unified_practice_state' level.code group.id %}";
+
+    const ANSWER_URL =
+        "{% url 'vocabulary:unified_practice_answer' group.id %}";
+
+    const RESTART_URL =
+        "{% url 'vocabulary:unified_practice_restart' group.id %}";
+
+
+    /* =====================================================
+       ELEMENTS
+       ===================================================== */
+
+    const questionCard =
+        document.getElementById(
+            "question-card"
+        );
+
+    const deckBadge =
+        document.getElementById(
+            "deck-badge"
+        );
+
+    const mistakeCount =
+        document.getElementById(
+            "mistake-count"
+        );
+
+    const deckProgressInfo =
+        document.getElementById(
+            "deck-progress-info"
+        );
+
+
+    const restartButton =
+        document.getElementById(
+            "restart-button"
+        );
+
+    const deckSteps =
+        document.querySelectorAll(
+            ".deck-step"
+        );
+
+    const csrfToken =
+        document.querySelector(
+            "[name=csrfmiddlewaretoken]"
+        ).value;
+
+
+    /* =====================================================
+       STATE
+       ===================================================== */
+
+    let currentState = null;
+
+    let answerLocked = false;
+
+    let selectedLetters = [];
+
+    let currentLetterQuestion = null;
+
+
+    /* =====================================================
+       PHASE NAMES
+       ===================================================== */
+
+    const PHASE_LABELS = {
+
+        LISTENING_INITIAL:
+            "Deck 1 · Listening",
+
+        LETTER_FIRST:
+            "Deck 2 · Letter Construction",
+
+        MULTIPLE_CHOICE_1:
+            "Deck 4 · Multiple Choice",
+
+        MULTIPLE_CHOICE_2:
+            "Deck 5 · Error Review",
+
+        LETTER_REVIEW:
+            "Deck 2 · Letter Review",
+
+        CONTEXT_REVIEW:
+            "Deck 3 · Context",
+
+        LISTENING_REVIEW:
+            "Deck 1 · Listening Review",
+
+        COMPLETED:
+            "Completed",
+
+    };
+
+
+    /* =====================================================
+       HTML ESCAPE
+       ===================================================== */
+
+    function escapeHtml(
+        value
+    ) {
+
+        const div =
+            document.createElement(
+                "div"
+            );
+
+        div.textContent =
+            String(
+                value ?? ""
+            );
+
+        return div.innerHTML;
+
+    }
+
+
+    /* =====================================================
+       STATUS
+       ===================================================== */
+
+    function updateStatus(
+        state
+    ) {
+
+        deckBadge.textContent =
+            PHASE_LABELS[
+                state.phase
+            ]
+            ||
+            state.phase
+            ||
+            "Practice";
+
+
+        const mistakes =
+            Number(
+                state.mistake_count
+                ||
+                0
+            );
+
+
+        mistakeCount.textContent =
+            mistakes === 1
+
+                ? "1 mistake"
+
+                : `${mistakes} mistakes`;
+
+        const queueSize =
+            Number(
+                state.queue_size
+                ||
+                0
+            );
+
+
+        const currentIndex =
+            Number(
+                state.current_index
+                ||
+                0
+            );
+
+
+        if (
+            !state.is_completed
+            &&
+            queueSize > 0
+        ) {
+
+            const answered =
+                Math.min(
+                    currentIndex,
+                    queueSize
+                );
+
+
+            const remaining =
+                Math.max(
+                    queueSize
+                    -
+                    currentIndex,
+                    0
+                );
+
+
+            const currentNumber =
+                Math.min(
+                    currentIndex + 1,
+                    queueSize
+                );
+
+
+            deckProgressInfo.innerHTML = `
+
+                <span class="deck-progress-current">
+                    ${currentNumber} / ${queueSize}
+                </span>
+
+                · Answered ${answered}
+
+                · Left ${remaining}
+
+            `;
+
+        }
+
+        else {
+
+            deckProgressInfo.textContent =
+                "";
+
+        }
+
+
+        deckSteps.forEach(
+            step => {
+
+                step.classList.remove(
+                    "active"
+                );
+
+            }
+        );
+
+
+        if (
+            state.question
+            &&
+            state.question.deck
+        ) {
+
+            const activeStep =
+                document.querySelector(
+                    `.deck-step[data-deck="${state.question.deck}"]`
+                );
+
+
+            if (activeStep) {
+
+                activeStep.classList.add(
+                    "active"
+                );
+
+            }
+
+        }
+
+    }
+
+
+    /* =====================================================
+       FEEDBACK
+       ===================================================== */
+
+    function showFeedback(
+        isCorrect,
+        answerData
+    ) {
+
+        let feedback =
+            document.getElementById(
+                "answer-feedback"
+            );
+
+
+        if (!feedback) {
+
+            feedback =
+                document.createElement(
+                    "div"
+                );
+
+            feedback.id =
+                "answer-feedback";
+
+            questionCard.appendChild(
+                feedback
+            );
+
+        }
+
+
+        if (isCorrect) {
+
+            feedback.className =
+                "feedback correct";
+
+            feedback.textContent =
+                "Correct!";
+
+        }
+
+        else {
+
+            feedback.className =
+                "feedback wrong";
+
+
+            let text =
+                `Correct answer: ${answerData.correct_word}`;
+
+
+            if (
+                answerData.translation_ru
+            ) {
+
+                text +=
+                    ` — ${answerData.translation_ru}`;
+
+            }
+
+
+            feedback.textContent =
+                text;
+
+        }
+
+    }
+
+
+    /* =====================================================
+       DISABLE CURRENT CONTROLS
+       ===================================================== */
+
+    function disableControls() {
+
+        questionCard
+            .querySelectorAll(
+                "button, input"
+            )
+            .forEach(
+                element => {
+
+                    element.disabled =
+                        true;
+
+                }
+            );
+
+    }
+
+
+    /* =====================================================
+       SUBMIT ANSWER
+       ===================================================== */
+
+    async function submitAnswer(
+        answer
+    ) {
+
+        if (
+            answerLocked
+            ||
+            !currentState
+            ||
+            !currentState.question
+        ) {
+
+            return;
+
+        }
+
+
+        answerLocked = true;
+
+        disableControls();
+
+
+        try {
+
+            const response =
+                await fetch(
+                    ANSWER_URL,
+                    {
+
+                        method:
+                            "POST",
+
+                        headers: {
+
+                            "Content-Type":
+                                "application/json",
+
+                            "X-CSRFToken":
+                                csrfToken,
+
+                        },
+
+                        body:
+                            JSON.stringify(
+                                {
+
+                                    word_id:
+                                        currentState
+                                        .question
+                                        .word_id,
+
+                                    answer:
+                                        answer,
+
+                                }
+                            ),
+
+                    }
+                );
+
+
+            const data =
+                await response.json();
+
+
+            if (
+                !response.ok
+                ||
+                !data.success
+            ) {
+
+                throw new Error(
+                    data.error
+                    ||
+                    "Could not submit answer."
+                );
+
+            }
+
+
+
+            showFeedback(
+                data.answer.is_correct,
+                data.answer,
+            );
+
+
+            if (
+                typeof window.playSound
+                ===
+                "function"
+            ) {
+
+                if (
+                    data.state
+                    &&
+                    data.state.is_completed
+                ) {
+
+                    window.playSound(
+                        "victory"
+                    );
+
+                }
+
+                else {
+
+                    window.playSound(
+                        data.answer.is_correct
+                            ? "correct"
+                            : "wrong"
+                    );
+
+                }
+
+            }
+
+
+            const delay =
+                data.answer.is_correct
+
+                    ? 550
+
+                    : 1200;
+
+            window.setTimeout(
+                function () {
+
+                    answerLocked =
+                        false;
+
+                    renderState(
+                        data.state
+                    );
+
+                },
+                delay,
+            );
+
+        }
+
+        catch (
+            error
+        ) {
+
+            answerLocked =
+                false;
+
+            showError(
+                error.message
+            );
+
+        }
+
+    }
+
+
+    /* =====================================================
+       DECK 1
+       LISTENING
+       ===================================================== */
+
+    function renderListening(
+        question
+    ) {
+
+        const audioUrl =
+            question.audio_url
+            || "";
+
+
+        questionCard.innerHTML = `
+
+            <div class="question-label">
+                Listen and type the English word
+            </div>
+
+            <div class="question-prompt">
+                🎧
+            </div>
+
+            <div class="audio-wrapper">
+
+                ${
+                    audioUrl
+
+                    ?
+
+                    `
+                    <audio
+                        controls
+                        preload="auto"
+                        autoplay
+                        src="${escapeHtml(audioUrl)}"
+                        id="listening-audio"
+                    ></audio>
+                    `
+
+                    :
+
+                    `
+                    <div class="error-box">
+                        Audio is not available for this word.
+                    </div>
+                    `
+                }
+
+            </div>
+
+            <input
+                type="text"
+                class="text-answer"
+                id="listening-answer"
+                autocomplete="off"
+                autocapitalize="none"
+                spellcheck="false"
+                placeholder="Type the word"
+            >
+
+            <br>
+
+            <button
+                type="button"
+                class="primary-button"
+                id="listening-submit"
+            >
+                Check
+            </button>
+
+        `;
+
+
+        const input =
+            document.getElementById(
+                "listening-answer"
+            );
+
+        const submit =
+            document.getElementById(
+                "listening-submit"
+            );
+
+        const listeningAudio =
+            document.getElementById(
+                "listening-audio"
+            );
+
+
+        if (
+            listeningAudio
+        ) {
+
+            listeningAudio.currentTime =
+                0;
+
+
+            const playPromise =
+                listeningAudio.play();
+
+
+            if (
+                playPromise
+                &&
+                typeof playPromise.catch
+                ===
+                "function"
+            ) {
+
+                playPromise.catch(
+                    function () {
+
+                        /*
+                        * Некоторые мобильные браузеры
+                        * блокируют первое автоматическое
+                        * воспроизведение до первого
+                        * действия пользователя.
+                        *
+                        * Плеер остаётся доступным
+                        * для ручного запуска.
+                        */
+
+                    }
+                );
+
+            }
+
+        }
+
+
+        submit.addEventListener(
+            "click",
+            function () {
+
+                const answer =
+                    input.value.trim();
+
+
+                if (!answer) {
+                    return;
+                }
+
+
+                submitAnswer(
+                    answer
+                );
+
+            }
+        );
+
+
+        input.addEventListener(
+            "keydown",
+            function (
+                event
+            ) {
+
+                if (
+                    event.key
+                    ===
+                    "Enter"
+                ) {
+
+                    event.preventDefault();
+
+                    submit.click();
+
+                }
+
+            }
+        );
+
+
+        input.focus();
+
+    }
+
+
+    /* =====================================================
+       DECK 2
+       LETTER CONSTRUCTION
+       ===================================================== */
+
+    function buildLetterAnswer() {
+
+        if (
+            !currentLetterQuestion
+        ) {
+
+            return "";
+
+        }
+
+
+        const pattern =
+            currentLetterQuestion.pattern
+            ||
+            "";
+
+
+        let letterIndex = 0;
+
+        let answer = "";
+
+
+        for (
+            const character
+            of pattern
+        ) {
+
+            if (
+                character
+                ===
+                "_"
+            ) {
+
+                if (
+                    letterIndex
+                    <
+                    selectedLetters.length
+                ) {
+
+                    answer +=
+                        selectedLetters[
+                            letterIndex
+                        ].letter;
+
+                    letterIndex += 1;
+
+                }
+
+                else {
+
+                    answer += "_";
+
+                }
+
+            }
+
+            else {
+
+                answer +=
+                    character;
+
+            }
+
+        }
+
+
+        return answer;
+
+    }
+
+
+    function buildLetterSubmission() {
+
+        return (
+            buildLetterAnswer()
+            .replace(
+                /_/g,
+                ""
+            )
+        );
+
+    }
+
+    function renderSelectedLetters() {
+
+        const answerBox =
+            document.getElementById(
+                "letter-answer"
+            );
+
+
+        if (!answerBox) {
+            return;
+        }
+
+
+        answerBox.innerHTML = "";
+
+
+        if (
+            selectedLetters.length === 0
+        ) {
+
+            answerBox.textContent =
+                currentLetterQuestion.pattern;
+
+            return;
+
+        }
+
+
+        selectedLetters.forEach(
+            (
+                item,
+                index
+            ) => {
+
+                const button =
+                    document.createElement(
+                        "button"
+                    );
+
+
+                button.type =
+                    "button";
+
+                button.className =
+                    "selected-letter-button";
+
+                button.textContent =
+                    item.letter;
+
+
+                button.addEventListener(
+                    "click",
+                    function () {
+
+                        removeSelectedLetter(
+                            index
+                        );
+
+                    }
+                );
+
+
+                answerBox.appendChild(
+                    button
+                );
+
+            }
+        );
+
+    }
+
+
+
+    function removeSelectedLetter(
+        index
+    ) {
+
+        if (answerLocked) {
+            return;
+        }
+
+
+        const item =
+            selectedLetters[
+                index
+            ];
+
+
+        if (!item) {
+            return;
+        }
+
+
+        if (
+            typeof window.playSound
+            ===
+            "function"
+        ) {
+
+            window.playSound(
+                "letterRemove"
+            );
+
+        }
+
+
+        if (
+            item.button
+        ) {
+
+            item.button.disabled =
+                false;
+
+        }
+
+
+        selectedLetters.splice(
+            index,
+            1
+        );
+
+
+        renderSelectedLetters();
+
+    }
+
+    function addLetter(
+        token,
+        button
+    ) {
+
+        if (answerLocked) {
+            return;
+        }
+        if (
+            currentLetterQuestion
+            &&
+            selectedLetters.length
+            >=
+            currentLetterQuestion.slot_count
+        ) {
+
+            return;
+
+        }
+
+        if (
+            typeof window.playSound
+            ===
+            "function"
+        ) {
+
+            window.playSound(
+                "letterAdd"
+            );
+
+        }
+
+
+
+        selectedLetters.push(
+            {
+
+                ...token,
+
+                button:
+                    button,
+
+            }
+        );
+
+
+        button.disabled =
+            true;
+
+
+        renderSelectedLetters();
+
+    }
+
+
+    function removeLastLetter() {
+
+        const item =
+            selectedLetters.pop();
+
+
+        if (
+            item
+            &&
+            typeof window.playSound
+            ===
+            "function"
+        ) {
+
+            window.playSound(
+                "letterRemove"
+            );
+
+        }
+
+
+
+        if (
+            item
+            &&
+            item.button
+        ) {
+
+            item.button.disabled =
+                false;
+
+        }
+
+
+        renderSelectedLetters();
+
+    }
+
+    function clearLetters() {
+
+        if (
+            selectedLetters.length > 0
+            &&
+            typeof window.playSound
+            ===
+            "function"
+        ) {
+
+            window.playSound(
+                "letterRemove"
+            );
+
+        }
+
+
+        selectedLetters.forEach(
+            item => {
+
+                if (item.button) {
+
+                    item.button.disabled =
+                        false;
+
+                }
+
+            }
+        );
+
+
+        selectedLetters = [];
+
+
+        renderSelectedLetters();
+
+    }
+
+   
+
+
+    function renderLetters(
+        question
+    ) {
+
+        selectedLetters = [];
+
+        currentLetterQuestion =
+            question;
+
+
+        questionCard.innerHTML = `
+
+            <div class="question-label">
+                Build the English word
+            </div>
+
+            <div class="translation">
+                ${escapeHtml(question.translation)}
+            </div>
+
+            <div
+                class="letter-answer"
+                id="letter-answer"
+            >
+                ${escapeHtml(question.pattern)}
+            </div>
+
+            <div
+                class="letters"
+                id="letter-buttons"
+            ></div>
+
+
+
+
+            <div class="letter-actions">
+
+                <button
+                    type="button"
+                    class="secondary-button"
+                    id="letter-clear"
+                >
+                    Clear
+                </button>
+
+            </div>
+
+
+            <button
+                type="button"
+                class="primary-button"
+                id="letter-submit"
+            >
+                Check
+            </button>
+
+        `;
+
+
+        const container =
+            document.getElementById(
+                "letter-buttons"
+            );
+
+
+        question.letters.forEach(
+            token => {
+
+                const button =
+                    document.createElement(
+                        "button"
+                    );
+
+
+                button.type =
+                    "button";
+
+                button.className =
+                    "letter-button";
+
+                button.textContent =
+                    token.letter;
+
+
+                button.addEventListener(
+                    "click",
+                    function () {
+
+                        addLetter(
+                            token,
+                            button,
+                        );
+
+                    }
+                );
+
+
+                container.appendChild(
+                    button
+                );
+
+            }
+        );
+
+
+
+
+        document
+            .getElementById(
+                "letter-clear"
+            )
+            .addEventListener(
+                "click",
+                clearLetters,
+            );
+
+
+        document
+            .getElementById(
+                "letter-submit"
+            )
+            .addEventListener(
+                "click",
+                function () {
+
+                    const requiredLetters =
+                        question.slot_count;
+
+
+                    if (
+                        selectedLetters.length
+                        !==
+                        requiredLetters
+                    ) {
+
+                        return;
+
+                    }
+
+
+                    submitAnswer(
+                        buildLetterSubmission()
+                    );
+
+                }
+            );
+
+
+        renderSelectedLetters();
+
+    }
+
+
+    /* =====================================================
+       OPTION QUESTIONS
+       DECK 3 / 4 / 5
+       ===================================================== */
+
+    function renderOptions(
+        question,
+        label,
+        prompt,
+        isContext=false,
+    ) {
+
+        questionCard.innerHTML = `
+
+            <div class="question-label">
+                ${escapeHtml(label)}
+            </div>
+
+            <div
+                class="
+                    question-prompt
+                    ${isContext ? "context" : ""}
+                "
+            >
+                ${escapeHtml(prompt)}
+            </div>
+
+            <div
+                class="options"
+                id="answer-options"
+            ></div>
+
+        `;
+
+
+        const container =
+            document.getElementById(
+                "answer-options"
+            );
+
+
+        question.options.forEach(
+            option => {
+
+                const button =
+                    document.createElement(
+                        "button"
+                    );
+
+
+                button.type =
+                    "button";
+
+                button.className =
+                    "option-button";
+
+                button.textContent =
+                    option;
+
+
+                button.addEventListener(
+                    "click",
+                    function () {
+
+                        submitAnswer(
+                            option
+                        );
+
+                    }
+                );
+
+
+                container.appendChild(
+                    button
+                );
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       COMPLETED
+       ===================================================== */
+
+    function renderCompleted(
+        state
+    ) {
+
+        updateStatus(
+            state
+        );
+
+
+        deckSteps.forEach(
+            step => {
+
+                step.classList.remove(
+                    "active"
+                );
+
+            }
+        );
+
+
+        questionCard.innerHTML = `
+
+            <div class="completed-card">
+
+                <div class="completed-icon">
+                    🏆
+                </div>
+
+                <div class="completed-title">
+                    Practice completed!
+                </div>
+
+                <div class="completed-text">
+                    You successfully completed
+                    the unified vocabulary practice.
+                    <br>
+                    Mistakes:
+                    <strong>
+                        ${Number(state.mistake_count || 0)}
+                    </strong>
+                </div>
+
+                <div class="completed-actions">
+
+                    <a
+                        href="{% url 'vocabulary:group_detail' level.code group.id %}"
+                        class="group-button"
+                    >
+                        Back to group
+                    </a>
+
+                    <button
+                        type="button"
+                        class="primary-button"
+                        id="completed-restart"
+                        style="margin-top:0;"
+                    >
+                        Practice again
+                    </button>
+
+                </div>
+
+            </div>
+
+        `;
+
+
+        document
+            .getElementById(
+                "completed-restart"
+            )
+            .addEventListener(
+                "click",
+                restartPractice,
+            );
+
+    }
+
+
+    /* =====================================================
+       RENDER STATE
+       ===================================================== */
+
+    function renderState(
+        state
+    ) {
+
+        currentState =
+            state;
+
+        answerLocked =
+            false;
+
+
+        if (
+            !state
+        ) {
+
+            showError(
+                "Practice state is missing."
+            );
+
+            return;
+
+        }
+
+
+        if (
+            state.is_completed
+        ) {
+
+            renderCompleted(
+                state
+            );
+
+            return;
+
+        }
+
+
+        updateStatus(
+            state
+        );
+
+
+        const question =
+            state.question;
+
+
+        if (
+            !question
+        ) {
+
+            showError(
+                "No question is available for the current practice state."
+            );
+
+            return;
+
+        }
+
+
+        switch (
+            question.type
+        ) {
+
+            case "listening":
+
+                renderListening(
+                    question
+                );
+
+                break;
+
+
+            case "letters":
+
+                renderLetters(
+                    question
+                );
+
+                break;
+
+
+            case "context":
+
+                renderOptions(
+                    question,
+                    "Choose the correct word",
+                    question.sentence,
+                    true,
+                );
+
+                break;
+
+
+            case "multiple_choice_1":
+
+                renderOptions(
+                    question,
+                    "Choose the Russian translation",
+                    question.prompt,
+                );
+
+                break;
+
+
+            case "multiple_choice_2":
+
+                renderOptions(
+                    question,
+                    "Choose the English word",
+                    question.prompt,
+                );
+
+                break;
+
+
+            default:
+
+                showError(
+                    `Unknown question type: ${question.type}`
+                );
+
+        }
+
+    }
+
+
+    /* =====================================================
+       LOAD STATE
+       ===================================================== */
+
+    async function loadPractice() {
+
+        questionCard.innerHTML = `
+
+            <div class="loading">
+                Loading practice...
+            </div>
+
+        `;
+
+
+        try {
+
+            const response =
+                await fetch(
+                    STATE_URL,
+                    {
+
+                        method:
+                            "GET",
+
+                        credentials:
+                            "same-origin",
+
+                    }
+                );
+
+
+            const data =
+                await response.json();
+
+
+            if (
+                !response.ok
+                ||
+                !data.success
+            ) {
+
+                throw new Error(
+                    data.error
+                    ||
+                    "Could not load practice."
+                );
+
+            }
+
+
+            renderState(
+                data.state
+            );
+
+        }
+
+        catch (
+            error
+        ) {
+
+            showError(
+                error.message
+            );
+
+        }
+
+    }
+
+
+    /* =====================================================
+       RESTART
+       ===================================================== */
+
+    async function restartPractice() {
+
+        const confirmed =
+            window.confirm(
+                "Restart this practice from the beginning?"
+            );
+
+
+        if (!confirmed) {
+            return;
+        }
+
+
+        restartButton.disabled =
+            true;
+
+
+        try {
+
+            const response =
+                await fetch(
+                    RESTART_URL,
+                    {
+
+                        method:
+                            "POST",
+
+                        credentials:
+                            "same-origin",
+
+                        headers: {
+
+                            "X-CSRFToken":
+                                csrfToken,
+
+                        },
+
+                    }
+                );
+
+
+            const data =
+                await response.json();
+
+
+            if (
+                !response.ok
+                ||
+                !data.success
+            ) {
+
+                throw new Error(
+                    data.error
+                    ||
+                    "Could not restart practice."
+                );
+
+            }
+
+
+            renderState(
+                data.state
+            );
+
+        }
+
+        catch (
+            error
+        ) {
+
+            showError(
+                error.message
+            );
+
+        }
+
+        finally {
+
+            restartButton.disabled =
+                false;
+
+        }
+
+    }
+
+
+    /* =====================================================
+       ERROR
+       ===================================================== */
+
+    function showError(
+        message
+    ) {
+
+        questionCard.innerHTML = `
+
+            <div class="error-box">
+                ${escapeHtml(message)}
+            </div>
+
+        `;
+
+    }
+
+
+    /* =====================================================
+       EVENTS
+       ===================================================== */
+
+    restartButton.addEventListener(
+        "click",
+        restartPractice,
+    );
+
+
+    /* =====================================================
+       START
+       ===================================================== */
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        loadPractice,
+    );
+
+</script>
+
+{% endblock %}
