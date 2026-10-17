@@ -1,12 +1,41 @@
 from django.urls import path
 
 from . import views
+from . import unified_practice_views
 
 
 app_name = "vocabulary"
 
 
 urlpatterns = [
+
+    # ==========================================
+    # UNIFIED GROUP PRACTICE V2 API
+    # ==========================================
+
+    path(
+        "api/unified-practice/<str:level_code>/group/<int:group_id>/state/",
+        unified_practice_views.unified_practice_state,
+        name="unified_practice_state",
+    ),
+
+    path(
+        "api/unified-practice/<int:group_id>/answer/",
+        unified_practice_views.unified_practice_answer,
+        name="unified_practice_answer",
+    ),
+
+    path(
+        "api/unified-practice/<int:group_id>/restart/",
+        unified_practice_views.unified_practice_restart,
+        name="unified_practice_restart",
+    ),
+
+
+ 
+
+    # дальше весь твой старый urls.py без изменений
+
 
     # ВАЖНО:
     # этот URL должен идти ДО <str:level_code>/
