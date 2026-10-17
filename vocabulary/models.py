@@ -404,7 +404,17 @@ class UserWordProgress(models.Model):
 
 
 # =========================================================
-# GROUP PRACTICE SESSION
+# LEGACY GROUP PRACTICE SESSION
+# =========================================================
+#
+# Старая система Practice 1–4.
+#
+# Пока сохраняем её для rollback
+# и совместимости со старыми данными.
+#
+# Новая система курса использует:
+#
+# UnifiedGroupPracticeSession.
 # =========================================================
 
 
@@ -555,7 +565,7 @@ class GroupPracticeSession(models.Model):
 
 
 # =========================================================
-# GROUP PRACTICE WORD STATE
+# LEGACY GROUP PRACTICE WORD STATE
 # =========================================================
 
 
@@ -701,6 +711,7 @@ class UnifiedGroupPracticeSession(models.Model):
     #
     # Храним на сервере, чтобы F5
     # не менял порядок и не сбрасывал прогресс.
+
     current_queue = models.JSONField(
         default=list,
         blank=True,
@@ -838,12 +849,11 @@ class UnifiedGroupPracticeWordState(models.Model):
     # DECK 5
     # Multiple Choice 2
     #
-    # ВАЖНО:
-    # эта колода НАКОПИТЕЛЬНАЯ.
+    # Накопительная колода ошибок.
     #
     # Если слово хотя бы один раз
     # попало в Deck 5, оно остаётся
-    # здесь до конца всей Practice.
+    # здесь до завершения всей Practice.
     # -----------------------------------------------------
 
     in_deck5 = models.BooleanField(
@@ -851,8 +861,6 @@ class UnifiedGroupPracticeWordState(models.Model):
     )
 
 
-    # Сколько всего ошибок было
-    # сделано на конкретном слове.
     mistake_count = models.PositiveIntegerField(
         default=0,
     )
@@ -943,25 +951,26 @@ class LessonPracticeProgress(models.Model):
     )
 
 
-    # Здесь будет храниться точное состояние практики:
+    # Здесь хранится точное состояние Lesson Practice:
     #
     # - очередь вопросов;
     # - текущий индекс;
-    # - уже усвоенные слова;
+    # - усвоенные слова;
     # - ошибки;
-    # - повторно поставленные вопросы;
+    # - повторные вопросы;
     # - состояние каждого этапа.
     #
     # Благодаря этому:
     #
     # F5 -> пользователь продолжает с места остановки.
     # Закрыл браузер -> вернулся -> продолжает.
-    # Зашёл с другого устройства -> продолжает.
+    # Другое устройство -> продолжает.
 
     practice_state = models.JSONField(
         default=dict,
         blank=True,
     )
+
 
     # =====================================================
     # STAGE 1
@@ -1194,12 +1203,6 @@ class UserCourse(models.Model):
     # COURSE DURATION
     # =====================================================
 
-    # Пользователь занимается каждый день.
-    #
-    # Например:
-    #
-    # A1 за 60 календарных дней.
-
     duration_days = models.PositiveIntegerField()
 
 
@@ -1211,10 +1214,6 @@ class UserCourse(models.Model):
         default=timezone.localdate,
     )
 
-
-    # Рассчитывается автоматически:
-    #
-    # start_date + duration_days - 1
 
     target_date = models.DateField(
         null=True,
@@ -1232,29 +1231,12 @@ class UserCourse(models.Model):
     # INITIAL PLAN ESTIMATE
     # =====================================================
 
-    # Среднее количество Lessons,
-    # которое нужно проходить в день.
-    #
-    # Это первоначальная ориентировочная
-    # величина.
-    #
-    # Например:
-    #
-    # 100 Lessons / 60 дней = 1.67
-
     estimated_lessons_per_day = models.DecimalField(
         max_digits=6,
         decimal_places=2,
         default=0,
     )
 
-
-    # Предварительная оценка
-    # продолжительности одного дня.
-    #
-    # Позже планировщик сможет
-    # корректировать её по реальной
-    # скорости пользователя.
 
     estimated_minutes_per_day = models.PositiveIntegerField(
         default=0,
@@ -1271,12 +1253,6 @@ class UserCourse(models.Model):
         default=Status.ACTIVE,
     )
 
-
-    # UserCourse создаём только ПОСЛЕ того,
-    # как пользователь увидел рассчитанный
-    # план и нажал:
-    #
-    # "Подтвердить план"
 
     confirmed_at = models.DateTimeField(
         default=timezone.now,
@@ -1399,21 +1375,20 @@ class UserCourse(models.Model):
         )
 
 
+    # =====================================================
+    # TOTAL UNIFIED PRACTICES
+    # =====================================================
+
     @property
     def total_group_practices(self):
 
-        # Для каждой группы:
+        # Новая система:
         #
-        # Practice 1
-        # Practice 2
-        # Practice 3
-        # Practice 4
+        # 1 VocabularyGroup
+        # =
+        # 1 Unified Practice.
 
-        return (
-            self.total_groups
-            *
-            4
-        )
+        return self.total_groups
 
 
     # =====================================================
@@ -1456,25 +1431,24 @@ class UserCourse(models.Model):
 
 
     # =====================================================
-    # COMPLETED GROUP PRACTICES
+    # COMPLETED UNIFIED PRACTICES
     # =====================================================
 
     @property
     def completed_group_practices(self):
 
+        # Старые GroupPracticeSession
+        # здесь больше не учитываются.
+        #
+        # Завершение групповой практики
+        # определяется только новой
+        # Unified Practice V2.
+
         return (
-            GroupPracticeSession.objects
+            UnifiedGroupPracticeSession.objects
             .filter(
                 user=self.user,
                 group__level=self.level,
-
-                practice_number__in=[
-                    1,
-                    2,
-                    3,
-                    4,
-                ],
-
                 is_completed=True,
             )
             .count()
@@ -1482,7 +1456,7 @@ class UserCourse(models.Model):
 
 
     # =====================================================
-    # REMAINING GROUP PRACTICES
+    # REMAINING UNIFIED PRACTICES
     # =====================================================
 
     @property
@@ -1550,24 +1524,22 @@ class UserCourse(models.Model):
             )
 
 
-            practices_completed = (
-                GroupPracticeSession.objects
+            unified_practice_completed = (
+                UnifiedGroupPracticeSession.objects
                 .filter(
                     user=self.user,
                     group=group,
-
-                    practice_number__in=[
-                        1,
-                        2,
-                        3,
-                        4,
-                    ],
-
                     is_completed=True,
                 )
-                .count()
+                .exists()
             )
 
+
+            # Группа считается полностью
+            # завершённой только если:
+            #
+            # 1. завершены ВСЕ активные Lessons;
+            # 2. завершён Unified Practice.
 
             if (
                 lesson_count > 0
@@ -1576,9 +1548,7 @@ class UserCourse(models.Model):
                 ==
                 lesson_count
                 and
-                practices_completed
-                ==
-                4
+                unified_practice_completed
             ):
 
                 completed_count += 1
@@ -1593,6 +1563,14 @@ class UserCourse(models.Model):
 
     @property
     def progress_percent(self):
+
+        # Например для A1:
+        #
+        # 100 Lessons
+        # +
+        # 20 Unified Practice
+        # =
+        # 120 элементов курса.
 
         total = (
             self.total_lessons
@@ -1709,11 +1687,19 @@ class UserCourse(models.Model):
     @property
     def is_completed(self):
 
+        # Курс завершён только тогда,
+        # когда:
+        #
+        # - завершены все Lessons;
+        # - завершены все Unified Practice.
+
         return (
             self.completed_lessons
             >=
             self.total_lessons
+
             and
+
             self.completed_group_practices
             >=
             self.total_group_practices
@@ -1758,25 +1744,13 @@ class DailyStudyPlan(models.Model):
     )
 
 
-    # Пользователь должен заниматься
-    # каждый календарный день.
-
     date = models.DateField()
 
-
-    # День курса:
-    #
-    # 1 / 60
-    # 2 / 60
-    # ...
-    # 60 / 60
 
     day_number = models.PositiveIntegerField(
         default=1,
     )
 
-
-    # Примерное время сегодняшнего плана.
 
     estimated_minutes = models.PositiveIntegerField(
         default=0,
@@ -1933,24 +1907,17 @@ class DailyStudyPlanItem(models.Model):
 
     class Type(models.TextChoices):
 
-        # Повторение ранее изученных слов.
-
         REVIEW = (
             "review",
             "Review",
         )
 
 
-        # Новый или незавершённый Lesson.
-
         LESSON = (
             "lesson",
             "Lesson",
         )
 
-
-        # Practice после завершения
-        # всех Lessons текущей группы.
 
         GROUP_PRACTICE = (
             "group_practice",
@@ -2003,7 +1970,7 @@ class DailyStudyPlanItem(models.Model):
 
 
     # =====================================================
-    # GROUP PRACTICE
+    # UNIFIED GROUP PRACTICE
     # =====================================================
 
     group = models.ForeignKey(
@@ -2015,7 +1982,16 @@ class DailyStudyPlanItem(models.Model):
     )
 
 
-    # 1 / 2 / 3 / 4
+    # В новой системе всегда используется:
+    #
+    # practice_number = 1
+    #
+    # Поле сохраняем для совместимости
+    # со старыми DailyStudyPlanItem.
+    #
+    # Старые записи могут содержать:
+    #
+    # 1 / 2 / 3 / 4.
 
     practice_number = models.PositiveSmallIntegerField(
         null=True,
@@ -2027,9 +2003,6 @@ class DailyStudyPlanItem(models.Model):
     # REVIEW
     # =====================================================
 
-    # Слова, которые назначены
-    # на повторение именно сегодня.
-
     review_word_ids = models.JSONField(
         default=list,
         blank=True,
@@ -2039,18 +2012,6 @@ class DailyStudyPlanItem(models.Model):
     # =====================================================
     # ORDER
     # =====================================================
-
-    # Например:
-    #
-    # 1. Review
-    # 2. Lesson
-    # 3. Lesson
-    #
-    # Или:
-    #
-    # 1. Review
-    # 2. Practice 1
-    # 3. Practice 2
 
     order = models.PositiveSmallIntegerField(
         default=1,
@@ -2104,10 +2065,16 @@ class DailyStudyPlanItem(models.Model):
 
         constraints = [
 
-            # Если это Practice,
-            # его номер может быть только 1–4.
+            # Legacy compatibility.
             #
-            # Для Lesson и Review practice_number = NULL.
+            # Старые DailyStudyPlanItem
+            # могли иметь Practice 1–4.
+            #
+            # Поэтому ограничение БД
+            # пока НЕ меняем на "только 1".
+            #
+            # Новый planner создаёт
+            # только practice_number = 1.
 
             models.CheckConstraint(
                 condition=(
@@ -2159,8 +2126,7 @@ class DailyStudyPlanItem(models.Model):
             return (
                 f"{self.plan.date} — "
                 f"{self.group.name} — "
-                f"Practice "
-                f"{self.practice_number}"
+                f"Unified Practice"
             )
 
 
