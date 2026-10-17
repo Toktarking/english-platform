@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import math
 
-from collections import defaultdict
 from datetime import timedelta
 from decimal import Decimal, ROUND_HALF_UP
 
@@ -13,8 +12,8 @@ from django.utils import timezone
 from .models import (
     DailyStudyPlan,
     DailyStudyPlanItem,
-    GroupPracticeSession,
     LessonPracticeProgress,
+    UnifiedGroupPracticeSession,
     UserCourse,
     UserWordProgress,
     VocabularyGroup,
@@ -57,23 +56,36 @@ MIN_LESSON_MINUTES = 10
 
 
 # ---------------------------------------------------------
-# GROUP PRACTICE
+# UNIFIED GROUP PRACTICE
 # ---------------------------------------------------------
 #
-# ВАЖНО:
+# После завершения всех Lessons группы
+# пользователь проходит ОДИН
+# Unified Practice.
 #
-# Practice может занимать до 30 минут.
-#
-# Поэтому при построении плана
-# каждый Practice оцениваем именно
-# в 30 минут.
-#
-# Это консервативная оценка,
-# чтобы не обещать пользователю
-# слишком лёгкий курс.
+# Старые Practice 1–4 больше
+# не участвуют в маршруте курса.
 
 
 GROUP_PRACTICE_MINUTES = 30
+
+
+# ---------------------------------------------------------
+# COMPATIBILITY
+# ---------------------------------------------------------
+#
+# В DailyStudyPlanItem исторически есть
+# поле practice_number.
+#
+# Пока модель не меняем и используем
+# значение 1 исключительно как
+# технический маркер.
+#
+# Для пользователя никакого
+# Practice 1 больше нет.
+
+
+UNIFIED_PRACTICE_COMPAT_NUMBER = 1
 
 
 # ---------------------------------------------------------
@@ -97,20 +109,10 @@ REVIEW_SECONDS_PER_WORD = 15
 # MAX DAILY CONTENT
 # ---------------------------------------------------------
 #
-# Если пользователь выбрал слишком
-# короткий срок, программа не должна
-# автоматически назначать ему,
-# например, 4 часа заданий.
-#
-# 120 минут — верхняя граница
-# нового материала + Group Practice.
+# Верхняя граница нового материала
+# + Unified Practice.
 #
 # Review считается отдельно.
-#
-# При превышении этого значения
-# интерфейс сможет показать:
-#
-# "Выбранный срок слишком интенсивный."
 
 
 MAX_DAILY_CONTENT_MINUTES = 120
@@ -261,30 +263,42 @@ def get_intensity(
     if minutes_per_day <= 30:
 
         return {
-            "code": "comfortable",
-            "label": "Комфортный",
+            "code":
+                "comfortable",
+
+            "label":
+                "Комфортный",
         }
 
 
     if minutes_per_day <= 60:
 
         return {
-            "code": "balanced",
-            "label": "Средний",
+            "code":
+                "balanced",
+
+            "label":
+                "Средний",
         }
 
 
     if minutes_per_day <= 90:
 
         return {
-            "code": "intensive",
-            "label": "Интенсивный",
+            "code":
+                "intensive",
+
+            "label":
+                "Интенсивный",
         }
 
 
     return {
-        "code": "very_intensive",
-        "label": "Очень интенсивный",
+        "code":
+            "very_intensive",
+
+        "label":
+            "Очень интенсивный",
     }
 
 
@@ -299,24 +313,19 @@ def build_full_level_sequence(
     """
     Полный маршрут уровня.
 
-    ВАЖНО:
-
     Для каждой группы:
 
-        Lessons
+        Lesson 1
+        Lesson 2
+        ...
+        Lesson N
             ↓
-        Practice 1
-            ↓
-        Practice 2
-            ↓
-        Practice 3
-            ↓
-        Practice 4
+        Unified Practice
             ↓
         следующая группа
 
-    Таким образом Practice никогда
-    не появляется раньше Lessons.
+    Unified Practice всегда находится
+    после всех Lessons группы.
     """
 
     sequence = []
@@ -382,31 +391,24 @@ def build_full_level_sequence(
 
 
         # =================================================
-        # PRACTICE 1–4
+        # ONE UNIFIED PRACTICE
         # =================================================
 
-        for practice_number in [
-            1,
-            2,
-            3,
-            4,
-        ]:
+        sequence.append(
+            {
+                "type":
+                    "group_practice",
 
-            sequence.append(
-                {
-                    "type":
-                        "group_practice",
+                "group":
+                    group,
 
-                    "group":
-                        group,
+                "practice_number":
+                    UNIFIED_PRACTICE_COMPAT_NUMBER,
 
-                    "practice_number":
-                        practice_number,
-
-                    "estimated_minutes":
-                        GROUP_PRACTICE_MINUTES,
-                }
-            )
+                "estimated_minutes":
+                    GROUP_PRACTICE_MINUTES,
+            }
+        )
 
 
     return sequence
@@ -425,16 +427,6 @@ def calculate_course_preview(
 ):
     """
     Используется ДО создания UserCourse.
-
-    Например пользователь выбрал:
-
-        A1
-        60 дней
-
-    Мы показываем ему рассчитанную
-    нагрузку, а уже потом он нажимает:
-
-        "Подтвердить план"
     """
 
     duration_days = (
@@ -460,7 +452,10 @@ def calculate_course_preview(
 
     lesson_items = [
         item
-        for item in sequence
+
+        for item
+        in sequence
+
         if (
             item["type"]
             ==
@@ -471,7 +466,10 @@ def calculate_course_preview(
 
     practice_items = [
         item
-        for item in sequence
+
+        for item
+        in sequence
+
         if (
             item["type"]
             ==
@@ -484,7 +482,9 @@ def calculate_course_preview(
         item[
             "estimated_minutes"
         ]
-        for item in lesson_items
+
+        for item
+        in lesson_items
     )
 
 
@@ -492,7 +492,9 @@ def calculate_course_preview(
         item[
             "estimated_minutes"
         ]
-        for item in practice_items
+
+        for item
+        in practice_items
     )
 
 
@@ -509,9 +511,10 @@ def calculate_course_preview(
             /
             duration_days
         )
+
         if duration_days
-        else
-        0
+
+        else 0
     )
 
 
@@ -519,6 +522,9 @@ def calculate_course_preview(
         lesson_items
     )
 
+
+    # Теперь количество Practices
+    # фактически равно количеству групп.
 
     total_practices = len(
         practice_items
@@ -592,9 +598,10 @@ def calculate_course_preview(
             /
             MAX_DAILY_CONTENT_MINUTES
         )
+
         if total_course_minutes
-        else
-        1
+
+        else 1
     )
 
 
@@ -698,6 +705,10 @@ def serialize_sequence_item(
     item,
 ):
 
+    # =====================================================
+    # LESSON
+    # =====================================================
+
     if (
         item["type"]
         ==
@@ -709,6 +720,7 @@ def serialize_sequence_item(
                 "lesson"
             ]
         )
+
 
         group = (
             item[
@@ -747,16 +759,13 @@ def serialize_sequence_item(
         }
 
 
+    # =====================================================
+    # UNIFIED PRACTICE
+    # =====================================================
+
     group = (
         item[
             "group"
-        ]
-    )
-
-
-    practice_number = (
-        item[
-            "practice_number"
         ]
     )
 
@@ -767,10 +776,7 @@ def serialize_sequence_item(
             "group_practice",
 
         "title":
-            (
-                f"Practice "
-                f"{practice_number}"
-            ),
+            "Unified Practice",
 
         "group_id":
             group.id,
@@ -778,8 +784,11 @@ def serialize_sequence_item(
         "group_name":
             group.name,
 
+        # Поле оставляем только
+        # для совместимости.
+
         "practice_number":
-            practice_number,
+            UNIFIED_PRACTICE_COMPAT_NUMBER,
 
         "estimated_minutes":
             item[
@@ -801,17 +810,11 @@ def select_tasks_for_budget(
     Берёт последовательные задания
     до достижения дневной нагрузки.
 
-    ВАЖНО:
-
     Задания нельзя переставлять.
 
-    Если следующим идёт Practice,
-    мы НЕ можем перепрыгнуть через него
+    Если следующим идёт Unified Practice,
+    нельзя перепрыгнуть через него
     к следующей группе.
-
-    Даже если дневной budget = 20 минут,
-    а Practice = 30 минут,
-    Practice всё равно назначается целиком.
     """
 
     selected = []
@@ -930,7 +933,9 @@ def build_registration_schedule_preview(
             item[
                 "estimated_minutes"
             ]
-            for item in sequence
+
+            for item
+            in sequence
         )
 
 
@@ -947,7 +952,10 @@ def build_registration_schedule_preview(
         )
 
 
-        selected, selected_minutes = (
+        (
+            selected,
+            selected_minutes,
+        ) = (
             select_tasks_for_budget(
                 sequence=sequence,
                 minute_budget=minute_budget,
@@ -987,7 +995,9 @@ def build_registration_schedule_preview(
                         serialize_sequence_item(
                             item
                         )
-                        for item in selected
+
+                        for item
+                        in selected
                     ],
             }
         )
@@ -1081,6 +1091,7 @@ def create_confirmed_course(
 
                 "confirmed_at":
                     timezone.now(),
+
             },
         )
     )
@@ -1102,9 +1113,15 @@ def get_course_completion_state(
     course,
 ):
     """
-    Загружает выполненные Lessons
-    и Group Practice одним набором данных.
+    Загружает:
+
+    - завершённые Lessons;
+    - завершённые Unified Practice.
     """
+
+    # =====================================================
+    # LESSONS
+    # =====================================================
 
     completed_lesson_ids = set(
 
@@ -1126,49 +1143,34 @@ def get_course_completion_state(
     )
 
 
-    completed_practices = defaultdict(
-        set
-    )
+    # =====================================================
+    # UNIFIED PRACTICE
+    # =====================================================
 
+    completed_group_ids = set(
 
-    practice_rows = (
-        GroupPracticeSession.objects
+        UnifiedGroupPracticeSession.objects
         .filter(
             user=course.user,
             group__level=course.level,
             is_completed=True,
-            practice_number__in=[
-                1,
-                2,
-                3,
-                4,
-            ],
         )
         .values_list(
             "group_id",
-            "practice_number",
+            flat=True,
         )
+
     )
 
 
-    for (
-        group_id,
-        practice_number,
-    ) in practice_rows:
-
-        completed_practices[
-            group_id
-        ].add(
-            practice_number
-        )
-
-
     return {
+
         "completed_lesson_ids":
             completed_lesson_ids,
 
-        "completed_practices":
-            completed_practices,
+        "completed_group_ids":
+            completed_group_ids,
+
     }
 
 
@@ -1183,23 +1185,16 @@ def build_remaining_sequence(
     """
     Строит оставшийся маршрут курса.
 
-    Последовательность всегда:
+    Для каждой группы:
 
         незавершённые Lessons
-        текущей группы
             ↓
-        Practice 1
-            ↓
-        Practice 2
-            ↓
-        Practice 3
-            ↓
-        Practice 4
+        Unified Practice
             ↓
         следующая группа
 
-    Практики уже завершённые
-    повторно в план не попадают.
+    Завершённый Unified Practice
+    повторно в маршрут не попадает.
     """
 
     state = (
@@ -1216,9 +1211,9 @@ def build_remaining_sequence(
     )
 
 
-    completed_practices = (
+    completed_group_ids = (
         state[
-            "completed_practices"
+            "completed_group_ids"
         ]
     )
 
@@ -1297,38 +1292,21 @@ def build_remaining_sequence(
 
 
         # =================================================
-        # REMAINING PRACTICES
+        # UNIFIED PRACTICE
         # =================================================
         #
-        # В sequence они идут ПОСЛЕ Lessons.
+        # Unified Practice расположен
+        # после всех Lessons группы.
         #
-        # Следовательно даже если сейчас
-        # Lessons ещё не закончены,
-        # план не сможет поставить Practice
-        # раньше них.
+        # Поэтому он не может появиться
+        # в последовательности раньше
+        # незавершённых уроков.
 
-        completed_numbers = (
-            completed_practices[
-                group.id
-            ]
-        )
-
-
-        for practice_number in [
-            1,
-            2,
-            3,
-            4,
-        ]:
-
-            if (
-                practice_number
-                in
-                completed_numbers
-            ):
-
-                continue
-
+        if (
+            group.id
+            not in
+            completed_group_ids
+        ):
 
             sequence.append(
                 {
@@ -1339,7 +1317,7 @@ def build_remaining_sequence(
                         group,
 
                     "practice_number":
-                        practice_number,
+                        UNIFIED_PRACTICE_COMPAT_NUMBER,
 
                     "estimated_minutes":
                         GROUP_PRACTICE_MINUTES,
@@ -1370,7 +1348,9 @@ def calculate_remaining_course_load(
         item[
             "estimated_minutes"
         ]
-        for item in sequence
+
+        for item
+        in sequence
     )
 
 
@@ -1386,9 +1366,10 @@ def calculate_remaining_course_load(
             /
             remaining_days
         )
+
         if remaining_minutes
-        else
-        0
+
+        else 0
     )
 
 
@@ -1536,6 +1517,173 @@ def mark_old_plans_missed(
 
 
 # =========================================================
+# LEGACY PRACTICE 1–4 -> ONE UNIFIED PRACTICE
+# =========================================================
+
+
+def collapse_legacy_group_practice_items(
+    plan,
+):
+    """
+    Сегодняшний DailyStudyPlan мог быть
+    создан ещё старой системой:
+
+        Practice 1
+        Practice 2
+        Practice 3
+        Practice 4
+
+    Для каждой группы оставляем только
+    один DailyStudyPlanItem.
+
+    Этот item теперь представляет
+    Unified Practice.
+
+    Старые Practice 2–4 удаляем.
+
+    ВАЖНО:
+    это не удаляет старые
+    GroupPracticeSession из базы.
+    Они просто больше не используются.
+    """
+
+    practice_items = list(
+
+        plan.items
+        .filter(
+            item_type=(
+                DailyStudyPlanItem
+                .Type
+                .GROUP_PRACTICE
+            ),
+            group__isnull=False,
+        )
+        .order_by(
+            "order",
+            "id",
+        )
+
+    )
+
+
+    keepers = {}
+
+
+    for item in practice_items:
+
+        group_id = (
+            item.group_id
+        )
+
+
+        # =================================================
+        # FIRST ITEM FOR GROUP
+        # =================================================
+
+        if (
+            group_id
+            not in
+            keepers
+        ):
+
+            keepers[
+                group_id
+            ] = item
+
+
+            changed_fields = []
+
+
+            if (
+                item.practice_number
+                !=
+                UNIFIED_PRACTICE_COMPAT_NUMBER
+            ):
+
+                item.practice_number = (
+                    UNIFIED_PRACTICE_COMPAT_NUMBER
+                )
+
+                changed_fields.append(
+                    "practice_number"
+                )
+
+
+            if (
+                item.estimated_minutes
+                !=
+                GROUP_PRACTICE_MINUTES
+            ):
+
+                item.estimated_minutes = (
+                    GROUP_PRACTICE_MINUTES
+                )
+
+                changed_fields.append(
+                    "estimated_minutes"
+                )
+
+
+            if changed_fields:
+
+                changed_fields.append(
+                    "updated_at"
+                )
+
+
+                item.save(
+                    update_fields=(
+                        changed_fields
+                    )
+                )
+
+
+            continue
+
+
+        # =================================================
+        # OLD DUPLICATES
+        # PRACTICE 2 / 3 / 4
+        # =================================================
+
+        item.delete()
+
+
+    # =====================================================
+    # RECALCULATE PLAN MINUTES
+    # =====================================================
+
+    new_estimated_minutes = sum(
+
+        plan.items
+        .values_list(
+            "estimated_minutes",
+            flat=True,
+        )
+
+    )
+
+
+    if (
+        plan.estimated_minutes
+        !=
+        new_estimated_minutes
+    ):
+
+        plan.estimated_minutes = (
+            new_estimated_minutes
+        )
+
+
+        plan.save(
+            update_fields=[
+                "estimated_minutes",
+                "updated_at",
+            ]
+        )
+
+
+# =========================================================
 # GENERATE TODAY PLAN
 # =========================================================
 
@@ -1545,18 +1693,12 @@ def get_or_create_today_plan(
     course,
 ):
     """
-    Главная функция ежедневного планировщика.
+    Главная функция ежедневного
+    планировщика.
 
-    Каждый раз, когда пользователь
-    заходит на главную страницу:
-
-        get_or_create_today_plan(course)
-
-    Если план уже существует —
-    возвращаем его.
-
-    Если нет —
-    создаём автоматически.
+    Если сегодняшний план уже существует,
+    сначала преобразуем возможные старые
+    Practice 1–4 в один Unified Practice.
     """
 
     today = (
@@ -1591,9 +1733,15 @@ def get_or_create_today_plan(
 
     if existing_plan:
 
+        collapse_legacy_group_practice_items(
+            existing_plan
+        )
+
+
         sync_daily_plan(
             existing_plan
         )
+
 
         return existing_plan
 
@@ -1675,9 +1823,11 @@ def get_or_create_today_plan(
                 .COMPLETED
             )
 
+
             course.completed_at = (
                 timezone.now()
             )
+
 
             course.save(
                 update_fields=[
@@ -1699,7 +1849,9 @@ def get_or_create_today_plan(
         item[
             "estimated_minutes"
         ]
-        for item in remaining_sequence
+
+        for item
+        in remaining_sequence
     )
 
 
@@ -1723,9 +1875,10 @@ def get_or_create_today_plan(
             /
             remaining_days
         )
+
         if remaining_minutes
-        else
-        0
+
+        else 0
     )
 
 
@@ -1752,6 +1905,7 @@ def get_or_create_today_plan(
         ) = (
             select_tasks_for_budget(
                 sequence=remaining_sequence,
+
                 minute_budget=max(
                     1,
                     content_budget,
@@ -1808,7 +1962,6 @@ def get_or_create_today_plan(
 
 
     # =====================================================
-    # ITEM 1
     # REVIEW
     # =====================================================
 
@@ -1840,10 +1993,14 @@ def get_or_create_today_plan(
 
 
     # =====================================================
-    # LESSONS / PRACTICES
+    # LESSONS / UNIFIED PRACTICE
     # =====================================================
 
     for item in selected_content:
+
+        # =================================================
+        # LESSON
+        # =================================================
 
         if (
             item["type"]
@@ -1877,6 +2034,10 @@ def get_or_create_today_plan(
             )
 
 
+        # =================================================
+        # UNIFIED PRACTICE
+        # =================================================
+
         elif (
             item["type"]
             ==
@@ -1900,9 +2061,7 @@ def get_or_create_today_plan(
                 ),
 
                 practice_number=(
-                    item[
-                        "practice_number"
-                    ]
+                    UNIFIED_PRACTICE_COMPAT_NUMBER
                 ),
 
                 order=order,
@@ -1935,12 +2094,11 @@ def sync_daily_plan(
     пользователя и обновляет статусы
     DailyStudyPlanItem.
 
-    Например пользователь закончил
-    Lesson не через кнопку Daily Plan,
-    а через обычную страницу Lesson.
+    Lessons проверяются через
+    LessonPracticeProgress.
 
-    План всё равно поймёт,
-    что Lesson уже выполнен.
+    Group Practice проверяется только
+    через UnifiedGroupPracticeSession.
     """
 
     now = (
@@ -1954,12 +2112,14 @@ def sync_daily_plan(
 
 
     items = list(
+
         plan.items
         .select_related(
             "lesson",
             "group",
         )
         .all()
+
     )
 
 
@@ -1975,7 +2135,9 @@ def sync_daily_plan(
             DailyStudyPlanItem
             .Type
             .LESSON
+
             and
+
             item.lesson
         ):
 
@@ -1990,6 +2152,10 @@ def sync_daily_plan(
 
             )
 
+
+            # =============================================
+            # COMPLETED
+            # =============================================
 
             if (
                 progress
@@ -2011,11 +2177,13 @@ def sync_daily_plan(
                         .COMPLETED
                     )
 
+
                     item.completed_at = (
                         progress.completed_at
                         or
                         now
                     )
+
 
                     item.save(
                         update_fields=[
@@ -2025,6 +2193,10 @@ def sync_daily_plan(
                         ]
                     )
 
+
+            # =============================================
+            # IN PROGRESS
+            # =============================================
 
             elif (
                 progress
@@ -2046,9 +2218,11 @@ def sync_daily_plan(
                         .IN_PROGRESS
                     )
 
+
                     item.started_at = (
                         progress.first_opened_at
                     )
+
 
                     item.save(
                         update_fields=[
@@ -2060,7 +2234,7 @@ def sync_daily_plan(
 
 
         # =================================================
-        # GROUP PRACTICE
+        # UNIFIED GROUP PRACTICE
         # =================================================
 
         elif (
@@ -2069,27 +2243,27 @@ def sync_daily_plan(
             DailyStudyPlanItem
             .Type
             .GROUP_PRACTICE
+
             and
+
             item.group
-            and
-            item.practice_number
         ):
 
             session = (
 
-                GroupPracticeSession.objects
+                UnifiedGroupPracticeSession.objects
                 .filter(
                     user=plan.course.user,
                     group=item.group,
-
-                    practice_number=(
-                        item.practice_number
-                    ),
                 )
                 .first()
 
             )
 
+
+            # =============================================
+            # COMPLETED
+            # =============================================
 
             if (
                 session
@@ -2111,20 +2285,34 @@ def sync_daily_plan(
                         .COMPLETED
                     )
 
+
+                    item.started_at = (
+                        item.started_at
+                        or
+                        session.started_at
+                    )
+
+
                     item.completed_at = (
                         session.completed_at
                         or
                         now
                     )
 
+
                     item.save(
                         update_fields=[
                             "status",
+                            "started_at",
                             "completed_at",
                             "updated_at",
                         ]
                     )
 
+
+            # =============================================
+            # IN PROGRESS
+            # =============================================
 
             elif (
                 session
@@ -2132,28 +2320,74 @@ def sync_daily_plan(
                 session.last_opened_at
             ):
 
+                item.status = (
+                    DailyStudyPlanItem
+                    .Status
+                    .IN_PROGRESS
+                )
+
+
+                item.started_at = (
+                    item.started_at
+                    or
+                    session.started_at
+                    or
+                    session.last_opened_at
+                )
+
+
+                item.completed_at = None
+
+
+                item.save(
+                    update_fields=[
+                        "status",
+                        "started_at",
+                        "completed_at",
+                        "updated_at",
+                    ]
+                )
+
+
+            # =============================================
+            # NOT STARTED
+            # =============================================
+
+            else:
+
                 if (
                     item.status
-                    ==
+                    !=
                     DailyStudyPlanItem
                     .Status
                     .PLANNED
+
+                    or
+
+                    item.started_at is not None
+
+                    or
+
+                    item.completed_at is not None
                 ):
 
                     item.status = (
                         DailyStudyPlanItem
                         .Status
-                        .IN_PROGRESS
+                        .PLANNED
                     )
 
-                    item.started_at = (
-                        session.last_opened_at
-                    )
+
+                    item.started_at = None
+
+                    item.completed_at = None
+
 
                     item.save(
                         update_fields=[
                             "status",
                             "started_at",
+                            "completed_at",
                             "updated_at",
                         ]
                     )
@@ -2224,9 +2458,11 @@ def sync_daily_plan(
                             .COMPLETED
                         )
 
+
                         item.completed_at = (
                             now
                         )
+
 
                         item.save(
                             update_fields=[
@@ -2258,11 +2494,13 @@ def sync_daily_plan(
             .COMPLETED
         )
 
+
         plan.completed_at = (
             plan.completed_at
             or
             now
         )
+
 
         plan.save(
             update_fields=[
@@ -2271,6 +2509,7 @@ def sync_daily_plan(
                 "updated_at",
             ]
         )
+
 
         return plan
 
@@ -2287,7 +2526,8 @@ def sync_daily_plan(
         .Status
         .COMPLETED
 
-        for item in items
+        for item
+        in items
 
     )
 
@@ -2299,6 +2539,7 @@ def sync_daily_plan(
             .Status
             .COMPLETED
         )
+
 
         plan.completed_at = (
             plan.completed_at
@@ -2343,6 +2584,7 @@ def sync_daily_plan(
             .MISSED
         )
 
+
         plan.save(
             update_fields=[
                 "status",
@@ -2371,7 +2613,8 @@ def sync_daily_plan(
             .COMPLETED,
         ]
 
-        for item in items
+        for item
+        in items
 
     )
 
@@ -2409,9 +2652,17 @@ def sync_daily_plan(
             .PLANNED
         )
 
+
+        plan.started_at = None
+
+        plan.completed_at = None
+
+
         plan.save(
             update_fields=[
                 "status",
+                "started_at",
+                "completed_at",
                 "updated_at",
             ]
         )
@@ -2436,9 +2687,9 @@ def build_week_preview(
 
     Это только прогноз.
 
-    Почему:
-    завтра план может измениться,
+    Завтра план может измениться,
     если пользователь сегодня:
+
     - сделал больше;
     - сделал меньше;
     - допустил много ошибок;
@@ -2503,7 +2754,9 @@ def build_week_preview(
             item[
                 "estimated_minutes"
             ]
-            for item in sequence
+
+            for item
+            in sequence
         )
 
 
@@ -2561,7 +2814,9 @@ def build_week_preview(
                         serialize_sequence_item(
                             item
                         )
-                        for item in selected
+
+                        for item
+                        in selected
                     ],
             }
         )

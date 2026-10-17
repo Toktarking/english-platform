@@ -266,7 +266,6 @@ class UnifiedPracticeQuestionTests(TestCase):
     # DECK 2
     # LETTER CONSTRUCTION
     # =====================================================
-
     def test_letter_question(
         self,
     ):
@@ -280,31 +279,41 @@ class UnifiedPracticeQuestionTests(TestCase):
             self.word1,
         )
 
+
         question = (
             build_unified_question(
                 self.session
             )
         )
 
+
+        # =================================================
+        # BASIC QUESTION DATA
+        # =================================================
+
         self.assertEqual(
             question["type"],
             "letters",
         )
+
 
         self.assertEqual(
             question["deck"],
             2,
         )
 
+
         self.assertEqual(
             question["word_id"],
             self.word1.id,
         )
 
+
         self.assertEqual(
             question["translation"],
             "яблоко",
         )
+
 
         self.assertEqual(
             question["pattern"],
@@ -312,36 +321,104 @@ class UnifiedPracticeQuestionTests(TestCase):
         )
 
 
-        letters = [
-            item["letter"]
-            for item
-            in question["letters"]
-        ]
+        # =================================================
+        # SLOT COUNT
+        # =================================================
+        #
+        # Пользователь должен выбрать
+        # ровно столько букв,
+        # сколько букв в правильном слове.
+        #
+        # apple = 5 букв.
 
-
-        # Порядок букв случайный.
-        # Поэтому сравниваем их состав.
         self.assertEqual(
-            Counter(
-                letters
-            ),
-            Counter(
-                "apple"
-            ),
+            question["slot_count"],
+            5,
         )
 
 
-        # Каждая плитка должна иметь
-        # уникальный ID.
-        #
-        # Особенно важно для слов,
-        # где одна буква встречается
-        # несколько раз.
-        letter_ids = [
-            item["id"]
+        # =================================================
+        # LETTER TILES
+        # =================================================
+
+        letters = [
+            item["letter"]
+
             for item
             in question["letters"]
         ]
+
+
+        # Для коротких слов показываем
+        # минимум 8 плиток.
+        #
+        # apple имеет 5 букв,
+        # поэтому добавляются
+        # ещё 3 случайные буквы.
+
+        self.assertEqual(
+            len(
+                letters
+            ),
+            8,
+        )
+
+
+        # =================================================
+        # REQUIRED LETTERS
+        # =================================================
+        #
+        # Все буквы правильного слова
+        # обязательно должны присутствовать.
+        #
+        # При этом дополнительные
+        # отвлекающие буквы разрешены.
+
+        actual_counts = Counter(
+            letters
+        )
+
+
+        expected_counts = Counter(
+            "apple"
+        )
+
+
+        for (
+            letter,
+            expected_count,
+        ) in expected_counts.items():
+
+            self.assertGreaterEqual(
+                actual_counts[
+                    letter
+                ],
+                expected_count,
+            )
+
+
+        # =================================================
+        # UNIQUE TILE IDS
+        # =================================================
+        #
+        # Каждая плитка должна иметь
+        # собственный уникальный ID.
+        #
+        # Это особенно важно для слов,
+        # где одна буква встречается
+        # несколько раз.
+        #
+        # Например:
+        #
+        # apple -> две разные плитки "p".
+
+        letter_ids = [
+            item["id"]
+
+            for item
+            in question["letters"]
+        ]
+
 
         self.assertEqual(
             len(
@@ -355,12 +432,25 @@ class UnifiedPracticeQuestionTests(TestCase):
         )
 
 
+        # =================================================
+        # SERVER-SIDE ANSWER CHECK
+        # =================================================
+
         self.assertTrue(
             check_unified_answer(
                 self.session,
                 "apple",
             )
         )
+
+
+        self.assertTrue(
+            check_unified_answer(
+                self.session,
+                " APPLE ",
+            )
+        )
+
 
         self.assertFalse(
             check_unified_answer(

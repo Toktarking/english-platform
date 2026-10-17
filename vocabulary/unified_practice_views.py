@@ -3,7 +3,7 @@ import json
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
 from django.http import JsonResponse
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, render
 from django.views.decorators.http import (
     require_GET,
     require_POST,
@@ -51,6 +51,44 @@ def serialize_complete_unified_state(
 
     return state
 
+
+
+# =========================================================
+# UNIFIED PRACTICE PAGE
+# =========================================================
+
+
+@login_required
+@require_GET
+def unified_practice_page(
+    request,
+    level_code,
+    group_id,
+):
+
+    level = get_object_or_404(
+        VocabularyLevel,
+        code__iexact=level_code,
+        is_active=True,
+    )
+
+    group = get_object_or_404(
+        VocabularyGroup,
+        id=group_id,
+        level=level,
+    )
+
+    return render(
+        request,
+        "vocabulary/group_practice.html",
+        {
+            "level":
+                level,
+
+            "group":
+                group,
+        },
+    )
 
 # =========================================================
 # GET STATE / OPEN / CONTINUE

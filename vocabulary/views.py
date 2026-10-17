@@ -28,6 +28,7 @@ from .models import (
     GroupPracticeSession,
     GroupPracticeWordState,
     LessonPracticeProgress,
+    UnifiedGroupPracticeSession,
     UserCourse,
     UserWordProgress,
     VocabularyGroup,
@@ -498,7 +499,6 @@ def get_active_user_course(
 # DAILY ITEM URL
 # =========================================================
 
-
 def get_daily_item_url(
     item,
 ):
@@ -510,7 +510,9 @@ def get_daily_item_url(
     if (
         item.item_type
         ==
-        DailyStudyPlanItem.Type.REVIEW
+        DailyStudyPlanItem
+        .Type
+        .REVIEW
     ):
 
         return reverse(
@@ -525,8 +527,12 @@ def get_daily_item_url(
     if (
         item.item_type
         ==
-        DailyStudyPlanItem.Type.LESSON
+        DailyStudyPlanItem
+        .Type
+        .LESSON
+
         and
+
         item.lesson
     ):
 
@@ -534,7 +540,10 @@ def get_daily_item_url(
             "vocabulary:lesson_detail",
             kwargs={
                 "level_code":
-                    item.lesson.group.level.code,
+                    item.lesson
+                    .group
+                    .level
+                    .code,
 
                 "lesson_id":
                     item.lesson.id,
@@ -543,61 +552,48 @@ def get_daily_item_url(
 
 
     # =====================================================
-    # GROUP PRACTICE
+    # UNIFIED GROUP PRACTICE
     # =====================================================
+    #
+    # Старое practice_number здесь
+    # больше не используется.
+    #
+    # Любой Group Practice из Daily Plan
+    # ведёт только в Unified Practice.
 
     if (
         item.item_type
         ==
-        DailyStudyPlanItem.Type.GROUP_PRACTICE
+        DailyStudyPlanItem
+        .Type
+        .GROUP_PRACTICE
+
         and
+
         item.group
-        and
-        item.practice_number
     ):
 
-        practice_urls = {
+        return reverse(
+            "vocabulary:unified_group_practice",
+            kwargs={
+                "level_code":
+                    item.group
+                    .level
+                    .code,
 
-            1:
-                "vocabulary:group_practice1",
-
-            2:
-                "vocabulary:group_practice2",
-
-            3:
-                "vocabulary:group_practice3",
-
-            4:
-                "vocabulary:group_practice4",
-
-        }
-
-
-        url_name = (
-            practice_urls.get(
-                item.practice_number
-            )
+                "group_id":
+                    item.group.id,
+            },
         )
 
 
-        if url_name:
-
-            return reverse(
-                url_name,
-                kwargs={
-                    "level_code":
-                        item.group.level.code,
-
-                    "group_id":
-                        item.group.id,
-                },
-            )
-
+    # =====================================================
+    # FALLBACK
+    # =====================================================
 
     return reverse(
         "vocabulary:dashboard"
     )
-
 
 # =========================================================
 # STREAK
@@ -779,7 +775,9 @@ def dashboard(
         if (
             item.item_type
             ==
-            DailyStudyPlanItem.Type.REVIEW
+            DailyStudyPlanItem
+            .Type
+            .REVIEW
         ):
 
             item_data.update(
@@ -808,8 +806,12 @@ def dashboard(
         elif (
             item.item_type
             ==
-            DailyStudyPlanItem.Type.LESSON
+            DailyStudyPlanItem
+            .Type
+            .LESSON
+
             and
+
             item.lesson
         ):
 
@@ -848,7 +850,7 @@ def dashboard(
 
 
         # =================================================
-        # PRACTICE
+        # UNIFIED PRACTICE
         # =================================================
 
         elif (
@@ -857,26 +859,11 @@ def dashboard(
             DailyStudyPlanItem
             .Type
             .GROUP_PRACTICE
+
             and
+
             item.group
         ):
-
-            practice_names = {
-
-                1:
-                    "Карточки",
-
-                2:
-                    "Выбор перевода",
-
-                3:
-                    "Соберите слово",
-
-                4:
-                    "Listening",
-
-            }
-
 
             item_data.update(
                 {
@@ -885,16 +872,13 @@ def dashboard(
                         "P",
 
                     "title":
-                        (
-                            f"Practice "
-                            f"{item.practice_number}"
-                        ),
+                        "Unified Practice",
 
                     "description":
                         (
                             f"{item.group.name}"
                             f" · "
-                            f"{practice_names.get(item.practice_number, '')}"
+                            f"5 колод"
                         ),
 
                 }
@@ -932,10 +916,16 @@ def dashboard(
         get_daily_item_url(
             next_item
         )
+
         if next_item
+
         else None
     )
 
+
+    # =====================================================
+    # TODAY HAS ACTIVITY
+    # =====================================================
 
     has_activity = any(
 
@@ -950,7 +940,8 @@ def dashboard(
             .COMPLETED,
         ]
 
-        for item in plan_items
+        for item
+        in plan_items
 
     )
 
@@ -985,6 +976,10 @@ def dashboard(
 
     if current_group:
 
+        # =================================================
+        # LESSONS
+        # =================================================
+
         group_lessons = (
             VocabularyLesson.objects
             .filter(
@@ -1016,36 +1011,65 @@ def dashboard(
         )
 
 
-        group_completed_practices = (
+        # =================================================
+        # UNIFIED PRACTICE
+        # =================================================
 
-            GroupPracticeSession.objects
+        unified_session = (
+
+            UnifiedGroupPracticeSession.objects
             .filter(
                 user=request.user,
                 group=current_group,
-                practice_number__in=[
-                    1,
-                    2,
-                    3,
-                    4,
-                ],
-                is_completed=True,
             )
-            .count()
+            .first()
 
         )
 
 
+        unified_practice_completed = bool(
+            unified_session
+            and
+            unified_session.is_completed
+        )
+
+
+        unified_practice_started = bool(
+            unified_session
+            and
+            unified_session.last_opened_at
+        )
+
+
+        # =================================================
+        # GROUP PROGRESS
+        # =================================================
+        #
+        # Раньше:
+        #
+        #   Lessons + 4 Practice
+        #
+        # Теперь:
+        #
+        #   Lessons + 1 Unified Practice
+
         group_total_items = (
             group_total_lessons
             +
-            4
+            1
         )
 
 
         group_completed_items = (
             group_completed_lessons
             +
-            group_completed_practices
+            (
+                1
+
+                if unified_practice_completed
+
+                else 0
+            )
         )
 
 
@@ -1067,10 +1091,36 @@ def dashboard(
         )
 
 
+        # =================================================
+        # PRACTICE UNLOCKED
+        # =================================================
+        #
+        # Unified Practice становится доступен
+        # после завершения всех Lessons группы.
+
+        practice_unlocked = (
+            group_total_lessons > 0
+
+            and
+
+            group_completed_lessons
+            >=
+            group_total_lessons
+        )
+
+
         current_group_data = {
+
+            "id":
+                current_group.id,
 
             "name":
                 current_group.name,
+
+
+            # =============================================
+            # LESSONS
+            # =============================================
 
             "completed_lessons":
                 group_completed_lessons,
@@ -1078,17 +1128,51 @@ def dashboard(
             "total_lessons":
                 group_total_lessons,
 
+
+            # =============================================
+            # UNIFIED PRACTICE
+            # =============================================
+            #
+            # Старое имя completed_practices
+            # пока оставляем для совместимости
+            # с dashboard.html.
+            #
+            # Теперь значение только:
+            #
+            # 0 = Unified Practice не завершён
+            # 1 = Unified Practice завершён
+
             "completed_practices":
-                group_completed_practices,
+                (
+                    1
+
+                    if unified_practice_completed
+
+                    else 0
+                ),
+
+            "total_practices":
+                1,
+
+            "practice_started":
+                unified_practice_started,
+
+            "practice_completed":
+                unified_practice_completed,
 
             "practices_unlocked":
-                (
-                    group_total_lessons > 0
-                    and
-                    group_completed_lessons
-                    >=
-                    group_total_lessons
-                ),
+                practice_unlocked,
+
+
+            # =============================================
+            # TOTAL GROUP PROGRESS
+            # =============================================
+
+            "completed_items":
+                group_completed_items,
+
+            "total_items":
+                group_total_items,
 
             "progress_percent":
                 group_percent,
@@ -1105,6 +1189,7 @@ def dashboard(
         UserWordProgress.objects
         .filter(
             user=request.user,
+
             word__lesson__group__level=(
                 course.level
             ),
@@ -1130,9 +1215,11 @@ def dashboard(
         UserWordProgress.objects
         .filter(
             user=request.user,
+
             word__lesson__group__level=(
                 course.level
             ),
+
             status=(
                 UserWordProgress
                 .Status
@@ -1185,6 +1272,7 @@ def dashboard(
             DailyStudyPlan.objects
             .filter(
                 course=course,
+
                 date__range=[
                     week_start,
                     week_end,
@@ -1233,7 +1321,9 @@ def dashboard(
         )
 
 
-        status = "future"
+        status = (
+            "future"
+        )
 
 
         if (
@@ -1246,19 +1336,33 @@ def dashboard(
             .COMPLETED
         ):
 
-            status = "completed"
+            status = (
+                "completed"
+            )
 
             week_completed += 1
 
 
-        elif date == today:
+        elif (
+            date
+            ==
+            today
+        ):
 
-            status = "today"
+            status = (
+                "today"
+            )
 
 
-        elif date < today:
+        elif (
+            date
+            <
+            today
+        ):
 
-            status = "missed"
+            status = (
+                "missed"
+            )
 
 
         week_days.append(
@@ -1331,7 +1435,6 @@ def dashboard(
         "vocabulary/dashboard.html",
         context,
     )
-
 
 # =========================================================
 # START / CONTINUE TODAY

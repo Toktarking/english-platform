@@ -14,6 +14,12 @@ urlpatterns = [
     # ==========================================
 
     path(
+        "<str:level_code>/group/<int:group_id>/practice/",
+        unified_practice_views.unified_practice_page,
+        name="unified_group_practice",
+    ),
+
+    path(
         "api/unified-practice/<str:level_code>/group/<int:group_id>/state/",
         unified_practice_views.unified_practice_state,
         name="unified_practice_state",

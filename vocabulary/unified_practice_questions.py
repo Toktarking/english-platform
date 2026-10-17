@@ -373,6 +373,11 @@ def build_listening_question(
 # =========================================================
 
 
+MIN_LETTER_TILES = 8
+
+EXTRA_LETTERS_POOL = (
+    "etaoinshrdlucmfwypvbgkjqxz"
+)
 def build_letter_question(
     session,
     word,
@@ -385,22 +390,10 @@ def build_letter_question(
 
 
     # =====================================================
-    # LETTER TOKENS
+    # CORRECT LETTERS
     # =====================================================
-    #
-    # Каждая буква имеет уникальный ID.
-    #
-    # Это важно для слов с повторяющимися
-    # буквами:
-    #
-    # apple -> p и p должны быть
-    # разными плитками.
-    #
-    # Пробелы и дефисы не превращаем
-    # в отдельные плитки.
 
-    letter_tokens = []
-
+    correct_letters = []
 
     for index, char in enumerate(
         source
@@ -417,21 +410,71 @@ def build_letter_question(
                 "—",
             ]
         ):
-
             continue
+
+
+        correct_letters.append(
+            {
+                "id":
+                    f"{word.id}-correct-{index}",
+
+                "letter":
+                    char,
+            }
+        )
+
+
+    # Количество букв,
+    # которое пользователь должен выбрать.
+
+    slot_count = len(
+        correct_letters
+    )
+
+
+    # =====================================================
+    # LETTER BANK
+    # =====================================================
+
+    letter_tokens = (
+        correct_letters.copy()
+    )
+
+
+    # Для коротких слов добавляем
+    # лишние буквы минимум до 8 плиток.
+
+    extra_index = 0
+
+    while (
+        len(letter_tokens)
+        <
+        MIN_LETTER_TILES
+    ):
+
+        extra_letter = (
+            random.choice(
+                EXTRA_LETTERS_POOL
+            )
+        )
 
 
         letter_tokens.append(
             {
-
                 "id":
-                    f"{word.id}-{index}",
+                    (
+                        f"{word.id}"
+                        f"-extra-"
+                        f"{extra_index}"
+                    ),
 
                 "letter":
-                    char,
-
+                    extra_letter,
             }
         )
+
+
+        extra_index += 1
 
 
     random.shuffle(
@@ -440,22 +483,10 @@ def build_letter_question(
 
 
     # =====================================================
-    # WORD PATTERN
+    # PATTERN
     # =====================================================
-    #
-    # Например:
-    #
-    # apple
-    # _____
-    #
-    # ice cream
-    # ___ _____
-    #
-    # part-time
-    # ____-____
 
     pattern = ""
-
 
     for char in source:
 
@@ -481,7 +512,6 @@ def build_letter_question(
 
 
     return {
-
         "type":
             "letters",
 
@@ -497,19 +527,12 @@ def build_letter_question(
         "pattern":
             pattern,
 
+        "slot_count":
+            slot_count,
+
         "letters":
             letter_tokens,
-
     }
-
-
-# =========================================================
-# DECK 3
-#
-# CONTEXT
-# CHOOSE CORRECT ENGLISH WORD
-# =========================================================
-
 
 def build_context_question(
     session,
