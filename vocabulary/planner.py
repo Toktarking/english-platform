@@ -117,6 +117,19 @@ REVIEW_SECONDS_PER_WORD = 15
 
 MAX_DAILY_CONTENT_MINUTES = 120
 
+# ---------------------------------------------------------
+# DAILY REVIEW
+# ---------------------------------------------------------
+#
+# Временно отключаем интервальное повторение.
+# Код и данные сохраняются.
+#
+# Чтобы вернуть Daily Review:
+# DAILY_REVIEW_ENABLED = True
+#
+
+DAILY_REVIEW_ENABLED = False
+
 
 # =========================================================
 # BASIC HELPERS
@@ -1775,12 +1788,18 @@ def get_or_create_today_plan(
     )
 
 
-    due_review_word_ids = (
-        get_due_review_word_ids(
-            course
-        )
-    )
 
+    if DAILY_REVIEW_ENABLED:
+
+        due_review_word_ids = (
+            get_due_review_word_ids(
+                course
+            )
+        )
+
+    else:
+
+        due_review_word_ids = []
 
     if (
         not remaining_sequence
