@@ -6,6 +6,15 @@
 
 {% block content %}
 
+
+<div
+    id="commitmentCompactMount"
+    class="commitment-dashboard-shell"
+>
+    {% include "commitments/_dashboard_card.html" %}
+</div>
+
+
 <style>
 
     .dashboard {
@@ -1222,5 +1231,2036 @@
     </div>
 
 </div>
+
+
+<!-- CHATGPT_ADVANCE_PLAN_V2 -->
+
+<style>
+
+    .advance-plan-heading {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+        align-items: flex-start;
+        margin-bottom: 8px;
+    }
+
+    .advance-plan-title {
+        font-size: 22px;
+        font-weight: 800;
+        color: #111827;
+    }
+
+    .advance-plan-label {
+        margin-top: 4px;
+        font-size: 12px;
+        font-weight: 700;
+        color: #7c3aed;
+    }
+
+    .advance-time-pill {
+        flex: 0 0 auto;
+        padding: 6px 10px;
+        border-radius: 999px;
+        background: #f5f3ff;
+        color: #7c3aed;
+        font-size: 12px;
+        font-weight: 800;
+    }
+
+    .advance-summary {
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        margin-top: 18px;
+        margin-bottom: 8px;
+        color: #6b7280;
+        font-size: 12px;
+    }
+
+    .advance-progress-track {
+        width: 100%;
+        height: 8px;
+        border-radius: 999px;
+        overflow: hidden;
+        background: #eef0f4;
+        margin-bottom: 18px;
+    }
+
+    .advance-progress-bar {
+        height: 100%;
+        border-radius: 999px;
+        background:
+            linear-gradient(
+                90deg,
+                #7c3aed,
+                #8b5cf6
+            );
+    }
+
+    .advance-task-list {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .advance-task-row {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        min-height: 64px;
+        padding: 12px 14px;
+        border: 1px solid #e5e7eb;
+        border-radius: 14px;
+        background: #ffffff;
+        color: inherit;
+        text-decoration: none;
+    }
+
+    .advance-task-row:hover {
+        text-decoration: none;
+    }
+
+    .advance-task-row.completed {
+        background: #f0fdf4;
+        border-color: #bbf7d0;
+    }
+
+    .advance-task-row.current {
+        border-color: #c4b5fd;
+        background: #faf7ff;
+    }
+
+    .advance-task-row.locked {
+        opacity: 0.55;
+        cursor: default;
+    }
+
+    .advance-task-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex: 0 0 38px;
+        width: 38px;
+        height: 38px;
+        border-radius: 10px;
+        border: 1px solid #e5e7eb;
+        background: #ffffff;
+        font-size: 15px;
+        font-weight: 900;
+        color: #7c3aed;
+    }
+
+    .advance-task-row.completed
+    .advance-task-icon {
+        color: #16a34a;
+    }
+
+    .advance-task-main {
+        flex: 1 1 auto;
+        min-width: 0;
+    }
+
+    .advance-task-title {
+        color: #111827;
+        font-size: 14px;
+        font-weight: 800;
+    }
+
+    .advance-task-description {
+        margin-top: 2px;
+        color: #6b7280;
+        font-size: 11px;
+    }
+
+    .advance-task-right {
+        flex: 0 0 auto;
+        color: #9ca3af;
+        font-size: 11px;
+        font-weight: 700;
+    }
+
+    .advance-task-check {
+        color: #16a34a;
+        font-size: 18px;
+        font-weight: 900;
+    }
+
+    .advance-footer {
+        margin-top: 18px;
+        padding: 18px;
+        border-radius: 14px;
+        text-align: center;
+        background: #f0fdf4;
+        border: 1px solid #bbf7d0;
+    }
+
+    .advance-footer-title {
+        color: #15803d;
+        font-size: 16px;
+        font-weight: 800;
+    }
+
+    .advance-footer-text {
+        margin-top: 4px;
+        color: #4b5563;
+        font-size: 12px;
+    }
+
+    .advance-action {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 46px;
+        margin-top: 14px;
+        padding: 0 22px;
+        border-radius: 13px;
+        background:
+            linear-gradient(
+                135deg,
+                #7c3aed,
+                #8b5cf6
+            );
+        color: white !important;
+        text-decoration: none !important;
+        font-size: 14px;
+        font-weight: 800;
+    }
+
+    .continue-ahead-box-v2 {
+        margin-top: 15px;
+        text-align: center;
+    }
+
+    .continue-ahead-note-v2 {
+        margin-top: 8px;
+        color: #6b7280;
+        font-size: 11px;
+        line-height: 1.45;
+    }
+
+</style>
+
+
+{% if advance_plan %}
+
+<div
+    id="advancePlanSource"
+    style="display:none;"
+>
+
+    <div class="advance-plan-heading">
+
+        <div>
+
+            <div class="advance-plan-title">
+                План — День {{ advance_plan.day_number }}
+            </div>
+
+            <div class="advance-plan-label">
+                🔥 Вы опережаете график
+            </div>
+
+        </div>
+
+
+        <div class="advance-time-pill">
+            ≈ {{ advance_plan.estimated_minutes }} мин
+        </div>
+
+    </div>
+
+
+    <div class="advance-summary">
+
+        <span>
+            Выполнено
+            {{ advance_plan.completed_count }}
+            из
+            {{ advance_plan.total_count }}
+        </span>
+
+        <span>
+            {{ advance_plan.progress_percent }}%
+        </span>
+
+    </div>
+
+
+    <div class="advance-progress-track">
+
+        <div
+            class="advance-progress-bar"
+            style="width: {{ advance_plan.progress_percent }}%;"
+        ></div>
+
+    </div>
+
+
+    <div class="advance-task-list">
+
+        {% for item in advance_plan.items %}
+
+            <a
+                href="{% if item.clickable %}{{ item.url }}{% else %}#{% endif %}"
+                class="
+                    advance-task-row
+                    {% if item.completed %}completed{% endif %}
+                    {% if item.current %}current{% endif %}
+                    {% if not item.clickable %}locked{% endif %}
+                "
+                {% if not item.clickable %}
+                    onclick="return false;"
+                    aria-disabled="true"
+                {% endif %}
+            >
+
+                <div class="advance-task-icon">
+
+                    {% if item.completed %}
+                        ✓
+                    {% elif item.type == "group_practice" %}
+                        P
+                    {% else %}
+                        A
+                    {% endif %}
+
+                </div>
+
+
+                <div class="advance-task-main">
+
+                    <div class="advance-task-title">
+                        {{ item.title }}
+                    </div>
+
+                    <div class="advance-task-description">
+                        {{ item.group_name }}
+
+                        {% if item.current %}
+                            · Следующее задание
+                        {% endif %}
+                    </div>
+
+                </div>
+
+
+                <div class="advance-task-right">
+
+                    {% if item.completed %}
+
+                        <span class="advance-task-check">
+                            ✓
+                        </span>
+
+                    {% else %}
+
+                        ≈ {{ item.estimated_minutes }} мин
+
+                    {% endif %}
+
+                </div>
+
+            </a>
+
+        {% endfor %}
+
+    </div>
+
+
+    {% if advance_plan.is_completed %}
+
+        <div class="advance-footer">
+
+            <div class="advance-footer-title">
+                День {{ advance_plan.day_number }} выполнен ✓
+            </div>
+
+            <div class="advance-footer-text">
+                Отличная работа.
+                Можно продолжить обучение прямо сейчас.
+            </div>
+
+            <a
+                href="{% url 'vocabulary:dashboard_start' %}"
+                class="advance-action"
+            >
+                Начать День {{ advance_plan.day_number|add:"1" }} →
+            </a>
+
+            <div class="continue-ahead-note-v2">
+                Streak увеличивается только один раз
+                за календарный день.
+            </div>
+
+        </div>
+
+    {% else %}
+
+        {% if advance_plan.next_url %}
+
+            <div style="text-align:center;">
+
+                <a
+                    href="{{ advance_plan.next_url }}"
+                    class="advance-action"
+                >
+                    Продолжить День {{ advance_plan.day_number }} →
+                </a>
+
+                <div class="continue-ahead-note-v2">
+                    Сегодняшний streak уже засчитан.
+                    Вы просто идёте быстрее учебного графика.
+                </div>
+
+            </div>
+
+        {% endif %}
+
+    {% endif %}
+
+</div>
+
+{% endif %}
+
+
+<script>
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        // =================================================
+        // FIND TODAY PLAN CARD
+        // =================================================
+
+        const cards =
+            Array.from(
+                document.querySelectorAll(
+                    ".dashboard-card"
+                )
+            );
+
+
+        let planCard =
+            cards.find(
+                function (card) {
+
+                    const title =
+                        card.querySelector(
+                            ".card-title"
+                        );
+
+                    return (
+                        title
+                        &&
+                        title.textContent
+                            .trim()
+                            .includes(
+                                "План на сегодня"
+                            )
+                    );
+                }
+            );
+
+
+        // Fallback, если структура карточки
+        // немного отличается.
+
+        if (!planCard) {
+
+            const all =
+                Array.from(
+                    document.querySelectorAll(
+                        "div, h1, h2, h3"
+                    )
+                );
+
+            const heading =
+                all.find(
+                    function (el) {
+
+                        return (
+                            el.textContent
+                                .trim()
+                            ===
+                            "План на сегодня"
+                        );
+                    }
+                );
+
+            if (heading) {
+
+                planCard =
+                    heading.closest(
+                        ".dashboard-card"
+                    );
+
+            }
+
+        }
+
+
+        // =================================================
+        // ADVANCE PLAN ACTIVE
+        // =================================================
+
+        const source =
+            document.getElementById(
+                "advancePlanSource"
+            );
+
+
+        if (
+            source
+            &&
+            planCard
+        ) {
+
+            planCard.innerHTML =
+                source.innerHTML;
+
+
+            // =============================================
+            // TOP PURPLE COURSE CARD
+            // День 1 из 30
+            // ->
+            // День курса 2 из 30
+            // =============================================
+
+            const leafElements =
+                Array.from(
+                    document.querySelectorAll(
+                        "div, span, p"
+                    )
+                );
+
+
+            const dayLabel =
+                leafElements.find(
+                    function (el) {
+
+                        if (
+                            el.children.length
+                            !==
+                            0
+                        ) {
+                            return false;
+                        }
+
+                        const text =
+                            el.textContent
+                                .trim();
+
+                        return (
+                            /^День\s+\d+\s+из\s+\d+$/
+                            .test(
+                                text
+                            )
+                        );
+
+                    }
+                );
+
+
+            if (dayLabel) {
+
+                dayLabel.textContent =
+                    "День курса "
+                    +
+                    "{{ advance_plan.day_number }}"
+                    +
+                    " из "
+                    +
+                    "{{ course.duration_days }}";
+
+            }
+
+
+            return;
+        }
+
+
+        // =================================================
+        // TODAY COMPLETED, BUT DAY 2 NOT STARTED YET
+        // =================================================
+
+        const elements =
+            Array.from(
+                document.querySelectorAll(
+                    "div, p, span, strong"
+                )
+            );
+
+
+        const completedTitle =
+            elements.find(
+                function (el) {
+
+                    const text =
+                        (
+                            el.textContent
+                            ||
+                            ""
+                        ).trim();
+
+                    return (
+                        el.children.length
+                        ===
+                        0
+                        &&
+                        text.includes(
+                            "План на сегодня выполнен"
+                        )
+                    );
+
+                }
+            );
+
+
+        if (!completedTitle) {
+            return;
+        }
+
+
+        const tomorrowText =
+            elements.find(
+                function (el) {
+
+                    const text =
+                        (
+                            el.textContent
+                            ||
+                            ""
+                        ).trim();
+
+                    return (
+                        el.children.length
+                        ===
+                        0
+                        &&
+                        text.includes(
+                            "Возвращайтесь завтра"
+                        )
+                    );
+
+                }
+            );
+
+
+        if (tomorrowText) {
+
+            tomorrowText.textContent =
+                "Вы выполнили обязательный минимум на сегодня.";
+
+        }
+
+
+        if (
+            document.querySelector(
+                ".continue-ahead-box-v2"
+            )
+        ) {
+            return;
+        }
+
+
+        const box =
+            document.createElement(
+                "div"
+            );
+
+        box.className =
+            "continue-ahead-box-v2";
+
+
+        const button =
+            document.createElement(
+                "a"
+            );
+
+        button.href =
+            "{% url 'vocabulary:dashboard_start' %}";
+
+        button.className =
+            "advance-action";
+
+        button.textContent =
+            "Начать День {{ today_plan.day_number|add:'1' }} →";
+
+
+        const note =
+            document.createElement(
+                "div"
+            );
+
+        note.className =
+            "continue-ahead-note-v2";
+
+        note.textContent =
+            "Можно идти быстрее графика. "
+            +
+            "Streak увеличивается только "
+            +
+            "один раз за календарный день.";
+
+
+        box.appendChild(
+            button
+        );
+
+        box.appendChild(
+            note
+        );
+
+
+        const anchor =
+            tomorrowText
+            ||
+            completedTitle;
+
+
+        anchor.insertAdjacentElement(
+            "afterend",
+            box
+        );
+
+    }
+);
+
+</script>
+
+
+
+
+<!-- COMMITMENT_COMPACT_V1 START -->
+
+<style>
+
+    /* ==============================================
+       COMMITMENT — COMPACT DASHBOARD CARD
+       ============================================== */
+
+    .commitment-dashboard-shell {
+        width: 100%;
+        max-width: 1080px;
+        margin:
+            26px
+            auto
+            30px;
+    }
+
+
+    .commitment-compact-card {
+        width: 100%;
+        box-sizing: border-box;
+
+        padding:
+            24px
+            26px
+            20px;
+
+        border:
+            1px solid
+            #e5e7eb;
+
+        border-radius:
+            22px;
+
+        background:
+            #ffffff;
+
+        box-shadow:
+            0 8px 30px
+            rgba(
+                17,
+                24,
+                39,
+                0.045
+            );
+    }
+
+
+    /* HEADER */
+
+    .cc-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 28px;
+
+        margin-bottom: 20px;
+    }
+
+
+    .cc-eyebrow {
+        margin-bottom: 5px;
+
+        color: #9ca3af;
+
+        font-size: 11px;
+        font-weight: 800;
+
+        letter-spacing: 0.10em;
+        text-transform: uppercase;
+    }
+
+
+    .cc-promise {
+        max-width: 700px;
+
+        color: #111827;
+
+        font-size: 20px;
+        line-height: 1.25;
+        font-weight: 850;
+    }
+
+
+    .cc-day {
+        flex: 0 0 auto;
+        min-width: 105px;
+
+        text-align: right;
+    }
+
+
+    .cc-day-label {
+        margin-bottom: 3px;
+
+        color: #9ca3af;
+
+        font-size: 11px;
+        font-weight: 800;
+
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+    }
+
+
+    .cc-day-value {
+        color: #111827;
+
+        font-size: 25px;
+        line-height: 1;
+        font-weight: 900;
+    }
+
+
+    /* MONEY */
+
+    .cc-money-grid {
+        display: grid;
+
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(0, 1fr)
+            );
+
+        gap: 12px;
+
+        margin-bottom: 16px;
+    }
+
+
+    .cc-money-item {
+        padding:
+            14px
+            16px;
+
+        border-radius:
+            14px;
+
+        background:
+            #f8fafc;
+
+        border:
+            1px solid
+            #eef0f4;
+    }
+
+
+    .cc-money-label {
+        color: #9ca3af;
+
+        font-size: 10px;
+        font-weight: 800;
+
+        letter-spacing: 0.07em;
+        text-transform: uppercase;
+    }
+
+
+    .cc-money-value {
+        margin-top: 3px;
+
+        color: #111827;
+
+        font-size: 27px;
+        line-height: 1.05;
+        font-weight: 900;
+    }
+
+
+    .cc-money-sub {
+        margin-top: 3px;
+
+        color: #9ca3af;
+
+        font-size: 11px;
+        font-weight: 600;
+    }
+
+
+    /* PROGRESS */
+
+    .cc-progress-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        margin-bottom: 6px;
+    }
+
+
+    .cc-progress-text {
+        color: #6b7280;
+
+        font-size: 11px;
+        font-weight: 700;
+    }
+
+
+    .cc-progress-percent {
+        color: #7c3aed;
+
+        font-size: 12px;
+        font-weight: 850;
+    }
+
+
+    .cc-progress-track {
+        width: 100%;
+        height: 7px;
+
+        overflow: hidden;
+
+        border-radius:
+            999px;
+
+        background:
+            #eef0f4;
+
+        margin-bottom: 18px;
+    }
+
+
+    .cc-progress-bar {
+        height: 100%;
+
+        border-radius:
+            999px;
+
+        background:
+            linear-gradient(
+                90deg,
+                #7c3aed,
+                #8b5cf6
+            );
+
+        min-width: 3px;
+    }
+
+
+    /* BOTTOM STATS */
+
+    .cc-stats {
+        display: grid;
+
+        grid-template-columns:
+            repeat(
+                4,
+                minmax(0, 1fr)
+            );
+
+        border-top:
+            1px solid
+            #eef0f4;
+
+        padding-top:
+            16px;
+    }
+
+
+    .cc-stat {
+        min-width: 0;
+
+        padding:
+            0
+            18px;
+
+        border-right:
+            1px solid
+            #eef0f4;
+    }
+
+
+    .cc-stat:first-child {
+        padding-left: 0;
+    }
+
+
+    .cc-stat:last-child {
+        border-right: 0;
+        padding-right: 0;
+    }
+
+
+    .cc-stat-label {
+        overflow: hidden;
+
+        color: #9ca3af;
+
+        font-size: 9px;
+        font-weight: 800;
+
+        letter-spacing: 0.05em;
+        text-overflow: ellipsis;
+        text-transform: uppercase;
+        white-space: nowrap;
+    }
+
+
+    .cc-stat-value {
+        margin-top: 4px;
+
+        color: #111827;
+
+        font-size: 16px;
+        line-height: 1.15;
+        font-weight: 900;
+    }
+
+
+    /* ==============================================
+       RESPONSIVE
+       ============================================== */
+
+    @media (
+        max-width: 800px
+    ) {
+
+        .commitment-dashboard-shell {
+            margin:
+                18px
+                auto
+                22px;
+        }
+
+
+        .commitment-compact-card {
+            padding:
+                20px
+                18px;
+        }
+
+
+        .cc-header {
+            gap: 16px;
+        }
+
+
+        .cc-promise {
+            font-size: 17px;
+        }
+
+
+        .cc-day-value {
+            font-size: 22px;
+        }
+
+
+        .cc-money-grid {
+            grid-template-columns: 1fr;
+        }
+
+
+        .cc-stats {
+            grid-template-columns:
+                repeat(
+                    2,
+                    minmax(0, 1fr)
+                );
+
+            gap: 0;
+        }
+
+
+        .cc-stat {
+            padding:
+                13px
+                12px;
+
+            border-bottom:
+                1px solid
+                #eef0f4;
+        }
+
+
+        .cc-stat:nth-child(2) {
+            border-right: 0;
+        }
+
+
+        .cc-stat:nth-child(3),
+        .cc-stat:nth-child(4) {
+            border-bottom: 0;
+        }
+
+
+        .cc-stat:nth-child(3) {
+            padding-left: 0;
+        }
+
+    }
+
+
+    @media (
+        max-width: 500px
+    ) {
+
+        .cc-header {
+            flex-direction: column;
+        }
+
+
+        .cc-day {
+            text-align: left;
+        }
+
+
+        .cc-money-value {
+            font-size: 24px;
+        }
+
+    }
+
+</style>
+
+
+<script>
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        const shell =
+            document.getElementById(
+                "commitmentCompactMount"
+            );
+
+
+        if (!shell) {
+            return;
+        }
+
+
+        // =============================================
+        // FIND VISIBLE TEXT ELEMENT
+        // =============================================
+
+        function findLeaf(
+            text
+        ) {
+
+            const elements =
+                Array.from(
+                    shell.querySelectorAll(
+                        "*"
+                    )
+                );
+
+
+            return elements.find(
+                function (element) {
+
+                    if (
+                        element.tagName
+                        ===
+                        "SCRIPT"
+                        ||
+                        element.tagName
+                        ===
+                        "STYLE"
+                    ) {
+                        return false;
+                    }
+
+
+                    if (
+                        element.children.length
+                        !==
+                        0
+                    ) {
+                        return false;
+                    }
+
+
+                    return (
+                        (
+                            element.textContent
+                            ||
+                            ""
+                        )
+                        .trim()
+                        .toUpperCase()
+                        ===
+                        text.toUpperCase()
+                    );
+
+                }
+            );
+
+        }
+
+
+        const promiseLabel =
+            findLeaf(
+                "МОЁ ОБЕЩАНИЕ"
+            );
+
+        const returnedLabel =
+            findLeaf(
+                "ВОЗВРАЩЕНО"
+            );
+
+        const balanceLabel =
+            findLeaf(
+                "ДОСТУПНЫЙ БАЛАНС"
+            );
+
+
+        if (
+            !promiseLabel
+            ||
+            !returnedLabel
+            ||
+            !balanceLabel
+        ) {
+
+            console.warn(
+                "Compact commitment: "
+                +
+                "не удалось найти основные поля."
+            );
+
+            return;
+        }
+
+
+        // =============================================
+        // FIND SMALLEST COMMON PARENT
+        // =============================================
+
+        function ancestors(
+            element
+        ) {
+
+            const result = [];
+
+            let current =
+                element;
+
+
+            while (
+                current
+                &&
+                current
+                !==
+                shell
+            ) {
+
+                result.push(
+                    current
+                );
+
+                current =
+                    current.parentElement;
+
+            }
+
+
+            result.push(
+                shell
+            );
+
+
+            return result;
+
+        }
+
+
+        const a1 =
+            ancestors(
+                promiseLabel
+            );
+
+        const a2 =
+            new Set(
+                ancestors(
+                    returnedLabel
+                )
+            );
+
+        const a3 =
+            new Set(
+                ancestors(
+                    balanceLabel
+                )
+            );
+
+
+        let originalCard =
+            a1.find(
+                function (node) {
+
+                    return (
+                        a2.has(node)
+                        &&
+                        a3.has(node)
+                    );
+
+                }
+            );
+
+
+        if (
+            !originalCard
+            ||
+            originalCard
+            ===
+            shell
+        ) {
+
+            originalCard =
+                Array.from(
+                    shell.children
+                )
+                .find(
+                    function (child) {
+
+                        const text =
+                            (
+                                child.innerText
+                                ||
+                                ""
+                            )
+                            .toUpperCase();
+
+                        return (
+                            text.includes(
+                                "МОЁ ОБЕЩАНИЕ"
+                            )
+                            &&
+                            text.includes(
+                                "ВОЗВРАЩЕНО"
+                            )
+                            &&
+                            text.includes(
+                                "ДОСТУПНЫЙ БАЛАНС"
+                            )
+                        );
+
+                    }
+                );
+
+        }
+
+
+        if (!originalCard) {
+
+            console.warn(
+                "Compact commitment: "
+                +
+                "не найдена исходная карточка."
+            );
+
+            return;
+        }
+
+
+        // =============================================
+        // EXTRACT VALUES FROM EXISTING CARD
+        // =============================================
+
+        const lines =
+            (
+                originalCard.innerText
+                ||
+                ""
+            )
+            .split("\n")
+            .map(
+                function (line) {
+
+                    return (
+                        line
+                        .replace(
+                            /\s+/g,
+                            " "
+                        )
+                        .trim()
+                    );
+
+                }
+            )
+            .filter(Boolean);
+
+
+        function indexOfLabel(
+            label
+        ) {
+
+            const target =
+                label.toUpperCase();
+
+
+            return lines.findIndex(
+                function (line) {
+
+                    return (
+                        line.toUpperCase()
+                        ===
+                        target
+                    );
+
+                }
+            );
+
+        }
+
+
+        function valueAfter(
+            label,
+            fallback
+        ) {
+
+
+
+
+
+
+            const index =
+                indexOfLabel(
+                    label
+                );
+
+
+            if (
+                index >= 0
+                &&
+                lines[index + 1]
+            ) {
+
+                return (
+                    lines[
+                        index + 1
+                    ]
+                );
+
+            }
+
+
+            return fallback || "—";
+
+        }
+
+
+        function escapeHtml(
+            value
+        ) {
+
+            const div =
+                document.createElement(
+                    "div"
+                );
+
+            div.textContent =
+                value || "";
+
+            return div.innerHTML;
+
+        }
+
+
+        const promise =
+            valueAfter(
+                "МОЁ ОБЕЩАНИЕ",
+                "Моё обещание"
+            );
+
+
+        const day =
+            valueAfter(
+                "ДЕНЬ",
+                "—"
+            );
+
+
+        
+        
+        const returned =
+            valueAfter(
+                "ВОЗВРАЩЕНО",
+                "0 ₸"
+            );
+        
+        
+
+
+        
+        
+        const balance =
+            valueAfter(
+                "ДОСТУПНЫЙ БАЛАНС",
+                returned
+            );
+        
+        
+
+
+        const nextLesson =
+            valueAfter(
+                "СЛЕДУЮЩИЙ LESSON",
+                "—"
+            );
+
+
+        const unified =
+            valueAfter(
+                "UNIFIED PRACTICE",
+                "—"
+            );
+
+
+        
+        
+        const withdraw =
+            valueAfter(
+                "ДО ВЫВОДА",
+                "—"
+            );
+        
+        
+
+
+        const pauseDays =
+            valueAfter(
+                "PAUSE DAYS",
+                "—"
+            );
+
+
+        // =============================================
+        // TOTAL AMOUNT
+        // =============================================
+
+        let totalLine =
+            lines.find(
+                function (line) {
+
+                    return (
+                        /^из\s+[\d\s]+₸$/i
+                    )
+                    .test(
+                        line
+                    );
+
+                }
+            );
+
+
+        if (!totalLine) {
+
+            totalLine =
+                lines.find(
+                    function (line) {
+
+                        return (
+                            /^\d[\d\s]*₸$/
+                            .test(
+                                line
+                            )
+                            &&
+                            line
+                            !==
+                            returned
+                            &&
+                            line
+                            !==
+                            balance
+                            &&
+                            line
+                            !==
+                            nextLesson
+                            &&
+                            line
+                            !==
+                            unified
+                            &&
+                            line
+                            !==
+                            withdraw
+                        );
+
+                    }
+                );
+
+        }
+
+
+        if (!totalLine) {
+            totalLine = "20 000 ₸";
+        }
+
+
+        if (
+            !/^из\s/i.test(
+                totalLine
+            )
+        ) {
+
+            totalLine =
+                "из "
+                +
+                totalLine;
+
+        }
+
+
+        // =============================================
+        // PROGRESS
+        // =============================================
+
+        let percent =
+            lines.find(
+                function (line) {
+
+                    return (
+                        /^\d+(?:[.,]\d+)?%$/
+                    )
+                    .test(
+                        line
+                    );
+
+                }
+            );
+
+
+        function moneyNumber(
+            value
+        ) {
+
+            const number =
+                parseFloat(
+                    (
+                        value
+                        ||
+                        ""
+                    )
+                    .replace(
+                        /[^\d.,]/g,
+                        ""
+                    )
+                    .replace(
+                        ",",
+                        "."
+                    )
+                );
+
+
+            return (
+                Number.isFinite(number)
+                ?
+                number
+                :
+                0
+            );
+
+        }
+
+
+        if (!percent) {
+
+            const returnedN =
+                moneyNumber(
+                    returned
+                );
+
+            const totalN =
+                moneyNumber(
+                    totalLine
+                );
+
+
+            percent =
+                totalN > 0
+                ?
+                (
+                    Math.round(
+                        (
+                            returnedN
+                            /
+                            totalN
+                        )
+                        *
+                        100
+                    )
+                    +
+                    "%"
+                )
+                :
+                "0%";
+
+        }
+
+
+        const progressNumber =
+            Math.max(
+                0,
+                Math.min(
+                    100,
+                    parseFloat(
+                        percent
+                        .replace(
+                            ",",
+                            "."
+                        )
+                    )
+                    ||
+                    0
+                )
+            );
+
+
+        // =============================================
+        // CREATE NEW CARD
+        // =============================================
+
+        const compact =
+            document.createElement(
+                "section"
+            );
+
+
+        compact.className =
+            "commitment-compact-card";
+
+
+        compact.innerHTML = `
+
+            <div class="cc-header">
+
+                <div>
+
+                    <div class="cc-eyebrow">
+                        Моё обещание
+                    </div>
+
+                    <div class="cc-promise">
+                        ${escapeHtml(promise)}
+                    </div>
+
+                </div>
+
+
+                <div class="cc-day">
+
+                    <div class="cc-day-label">
+                        День
+                    </div>
+
+                    <div class="cc-day-value">
+                        ${escapeHtml(day)}
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="cc-money-grid">
+
+                <div class="cc-money-item">
+
+                    <div class="cc-money-label">
+                        Возвращено
+                    </div>
+
+                    <div class="cc-money-value">
+                        ${escapeHtml(returned)}
+                    </div>
+
+                    <div class="cc-money-sub">
+                        ${escapeHtml(totalLine)}
+                    </div>
+
+                </div>
+
+
+                <div class="cc-money-item">
+
+                    <div class="cc-money-label">
+                        Доступный баланс
+                    </div>
+
+                    <div class="cc-money-value">
+                        ${escapeHtml(balance)}
+                    </div>
+
+                    <div class="cc-money-sub">
+                        можно использовать после вывода
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="cc-progress-row">
+
+                <div class="cc-progress-text">
+                    Прогресс возврата
+                </div>
+
+                <div class="cc-progress-percent">
+                    ${escapeHtml(percent)}
+                </div>
+
+            </div>
+
+
+            <div class="cc-progress-track">
+
+                <div
+                    class="cc-progress-bar"
+                    style="
+                        width:
+                        ${progressNumber}%;
+                    "
+                ></div>
+
+            </div>
+
+
+            <div class="cc-stats">
+
+                <div class="cc-stat">
+
+                    <div class="cc-stat-label">
+                        Следующий Lesson
+                    </div>
+
+                    <div class="cc-stat-value">
+                        ${escapeHtml(nextLesson)}
+                    </div>
+
+                </div>
+
+
+                <div class="cc-stat">
+
+                    <div class="cc-stat-label">
+                        Unified Practice
+                    </div>
+
+                    <div class="cc-stat-value">
+                        ${escapeHtml(unified)}
+                    </div>
+
+                </div>
+
+
+                <div class="cc-stat">
+
+                    <div class="cc-stat-label">
+                        До вывода
+                    </div>
+
+                    <div class="cc-stat-value">
+                        ${escapeHtml(withdraw)}
+                    </div>
+
+                </div>
+
+
+                <div class="cc-stat">
+
+                    <div class="cc-stat-label">
+                        Pause Days
+                    </div>
+
+                    <div class="cc-stat-value">
+                        ${escapeHtml(pauseDays)}
+                    </div>
+
+                </div>
+
+            </div>
+
+        `;
+
+
+        // Старую визуальную карточку
+        // скрываем, но НЕ удаляем:
+        // данные и JS commitments остаются в DOM.
+
+        originalCard.style.setProperty(
+            "display",
+            "none",
+            "important"
+        );
+
+
+        originalCard.insertAdjacentElement(
+            "beforebegin",
+            compact
+        );
+
+
+        shell.classList.add(
+            "commitment-compact-ready"
+        );
+
+    }
+);
+
+</script>
+
+<!-- COMMITMENT_COMPACT_V1 END -->
+
+
+
+
+<!-- PAUSE_DAY_UI_V3 -->
+
+<style>
+
+    .week-day.pause,
+    .week-day-box.pause,
+    .week-day-item.pause,
+    .calendar-day.pause,
+    [class*="week"][class~="pause"] {
+
+        background:
+            #fff7ed !important;
+
+        border-color:
+            #fdba74 !important;
+
+        color:
+            #c2410c !important;
+    }
+
+
+    .week-day.pause *,
+    .week-day-box.pause *,
+    .week-day-item.pause *,
+    .calendar-day.pause *,
+    [class*="week"][class~="pause"] * {
+
+        color:
+            #c2410c !important;
+    }
+
+</style>
+
+
+<script>
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        const boxes =
+            document.querySelectorAll(
+                [
+                    ".week-day.pause",
+                    ".week-day-box.pause",
+                    ".week-day-item.pause",
+                    ".calendar-day.pause",
+                    '[class*="week"][class~="pause"]'
+                ].join(",")
+            );
+
+
+        boxes.forEach(
+            function (box) {
+
+                box.title =
+                    "Pause Day — streak сохранён";
+
+
+                const leaves =
+                    Array.from(
+                        box.querySelectorAll("*")
+                    )
+                    .filter(
+                        function (node) {
+
+                            return (
+                                node.children.length
+                                ===
+                                0
+                            );
+
+                        }
+                    );
+
+
+                const symbol =
+                    leaves.find(
+                        function (node) {
+
+                            return [
+                                "×",
+                                "✕",
+                                "○",
+                                "✓",
+                                "•"
+                            ]
+                            .includes(
+                                (
+                                    node.textContent
+                                    ||
+                                    ""
+                                )
+                                .trim()
+                            );
+
+                        }
+                    );
+
+
+                if (symbol) {
+
+                    symbol.textContent =
+                        "⏸";
+
+                }
+
+            }
+        );
+
+    }
+);
+
+</script>
+
+
+
+
+
 
 {% endblock %}

@@ -284,7 +284,7 @@ Lesson {{ lesson.number }} | {{ group.name }}
 
 
 <a
-    href="{% url 'vocabulary:group_detail' level.code group.id %}"
+    href="{% if request.session.trial_guest_user_id %}{% url 'vocabulary:trial_dashboard' %}{% else %}{% url 'vocabulary:dashboard' %}{% endif %}"
     class="back"
 >
     ← {{ group.name }}
@@ -490,7 +490,7 @@ Lesson {{ lesson.number }} | {{ group.name }}
 
 
     <a
-        href="{% url 'vocabulary:group_detail' level.code group.id %}"
+        href="{% if request.session.trial_guest_user_id %}{% url 'vocabulary:trial_dashboard' %}{% else %}{% url 'vocabulary:dashboard' %}{% endif %}"
         class="back"
     >
         Back to lessons

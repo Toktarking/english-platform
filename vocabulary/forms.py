@@ -71,9 +71,25 @@ class RegistrationForm(UserCreationForm):
             .lower()
         )
 
-        if User.objects.filter(
-            email__iexact=email,
-        ).exists():
+        existing_users = (
+            User.objects
+            .filter(
+                email__iexact=email,
+            )
+        )
+
+        # При регистрации trial-пользователя
+        # мы редактируем уже существующий User,
+        # поэтому самого себя исключаем.
+        if self.instance and self.instance.pk:
+            existing_users = (
+                existing_users
+                .exclude(
+                    pk=self.instance.pk,
+                )
+            )
+
+        if existing_users.exists():
 
             raise forms.ValidationError(
                 "Пользователь с таким email уже существует."

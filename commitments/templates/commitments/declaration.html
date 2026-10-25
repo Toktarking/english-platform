@@ -1,0 +1,173 @@
+{% extends "vocabulary/base.html" %}
+
+{% block content %}
+
+<div style="max-width: 760px; margin: 50px auto; padding: 30px;">
+
+    <div style="text-align: center; margin-bottom: 35px;">
+        <div style="font-size: 14px; opacity: .6;">
+            МОЁ ОБЕЩАНИЕ СЕБЕ
+        </div>
+
+        <h1 style="font-size: 40px;">
+            Commitment
+        </h1>
+    </div>
+
+    {% if error %}
+        <div style="
+            padding: 15px 18px;
+            background: #fee;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        ">
+            {{ error }}
+        </div>
+    {% endif %}
+
+    <div style="
+        padding: 30px;
+        border-radius: 20px;
+        background: rgba(0,0,0,.04);
+        line-height: 1.7;
+        font-size: 17px;
+        margin-bottom: 30px;
+    ">
+
+        <p>
+            Я начинаю программу английского языка
+            <strong>{{ commitment.plan.level.code }}</strong>.
+        </p>
+
+        <p>
+            <strong>Моя цель:</strong><br>
+            “{{ commitment.goal_text }}”
+        </p>
+
+        <p>
+            <strong>Почему это важно для меня:</strong><br>
+            “{{ commitment.motivation_text }}”
+        </p>
+
+        <p>
+            Я выбираю пройти программу за
+            <strong>{{ commitment.duration_days }} дней</strong>.
+        </p>
+
+        <p>
+            Стоимость обучения:
+            <strong>
+                {{ commitment.tuition_amount|floatformat:0 }} ₸
+            </strong>
+        </p>
+
+        <p>
+            Возвратная часть:
+            <strong>
+                {{ commitment.refundable_amount|floatformat:0 }} ₸
+            </strong>
+        </p>
+
+        <p>
+            Lesson:
+            <strong>
+                +{{ commitment.lesson_reward|floatformat:0 }} ₸
+            </strong>
+
+            <br>
+
+            Unified Practice:
+            <strong>
+                +{{ commitment.unified_practice_reward|floatformat:0 }} ₸
+            </strong>
+        </p>
+
+        <p>
+            Ошибки во время обучения
+            <strong>не уменьшают</strong>
+            мой депозит.
+        </p>
+
+        <p>
+            Я понимаю, что невыполнение этапов
+            в предусмотренные сроки может уменьшить
+            сумму возврата.
+        </p>
+
+        <p style="font-size: 20px; font-weight: 700;">
+            Я беру это обязательство прежде всего перед собой.
+        </p>
+
+    </div>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <label style="display:block; margin: 14px 0;">
+            <input
+                type="checkbox"
+                name="accept_rules"
+                required
+            >
+            Я прочитал правила программы
+        </label>
+
+        <label style="display:block; margin: 14px 0;">
+            <input
+                type="checkbox"
+                name="accept_refund"
+                required
+            >
+            Я понимаю правила возврата
+        </label>
+
+        <label style="display:block; margin: 14px 0 30px;">
+            <input
+                type="checkbox"
+                name="accept_commitment"
+                required
+            >
+            Я действительно хочу выполнить эту цель
+        </label>
+
+        <label>
+            <strong>
+                Для подтверждения напишите своё имя
+            </strong>
+        </label>
+
+        <input
+            type="text"
+            name="signed_name"
+            value="{{ signed_name }}"
+            required
+            style="
+                width: 100%;
+                box-sizing: border-box;
+                padding: 16px;
+                margin: 10px 0 30px;
+                font-size: 17px;
+                border-radius: 12px;
+            "
+        >
+
+        <button
+            type="submit"
+            style="
+                width: 100%;
+                padding: 18px;
+                border: 0;
+                border-radius: 14px;
+                font-size: 18px;
+                font-weight: 700;
+                cursor: pointer;
+            "
+        >
+            Я принимаю это обязательство
+        </button>
+
+    </form>
+
+</div>
+
+{% endblock %}

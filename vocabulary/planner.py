@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from .pause_days import ensure_pause_days_for_past_gaps
+
 import math
 
 from datetime import timedelta
@@ -1722,6 +1724,11 @@ def get_or_create_today_plan(
     # =====================================================
     # OLD DAYS
     # =====================================================
+
+    # AUTO_PAUSE_DAYS_V3
+    ensure_pause_days_for_past_gaps(
+        course
+    )
 
     mark_old_plans_missed(
         course

@@ -1,0 +1,242 @@
+{% if active_commitment %}
+
+<div style="
+    margin-bottom: 28px;
+    padding: 28px;
+    border-radius: 24px;
+    background: linear-gradient(
+        135deg,
+        rgba(255,255,255,.06),
+        rgba(255,255,255,.02)
+    );
+    border: 1px solid rgba(255,255,255,.10);
+">
+
+    <div style="
+        display:flex;
+        justify-content:space-between;
+        align-items:flex-start;
+        gap:20px;
+        flex-wrap:wrap;
+    ">
+
+        <div>
+            <div style="
+                font-size:13px;
+                opacity:.55;
+                letter-spacing:1.5px;
+                margin-bottom:8px;
+            ">
+                МОЁ ОБЕЩАНИЕ
+            </div>
+
+            <div style="
+                font-size:22px;
+                font-weight:700;
+                max-width:650px;
+            ">
+                “{{ active_commitment.goal_text }}”
+            </div>
+        </div>
+
+        <div style="
+            text-align:right;
+            white-space:nowrap;
+        ">
+            <div style="
+                font-size:13px;
+                opacity:.55;
+            ">
+                ДЕНЬ
+            </div>
+
+            <div style="
+                font-size:26px;
+                font-weight:800;
+            ">
+                {{ commitment_day_number }}
+                /
+                {{ active_commitment.duration_days }}
+            </div>
+        </div>
+
+    </div>
+
+
+    <div style="
+        margin-top:32px;
+        display:flex;
+        justify-content:space-between;
+        align-items:flex-end;
+        gap:20px;
+        flex-wrap:wrap;
+    ">
+
+        <div>
+            <div style="
+                font-size:13px;
+                opacity:.55;
+                margin-bottom:5px;
+            ">
+                ВОЗВРАЩЕНО
+            </div>
+
+            <div style="
+                font-size:36px;
+                font-weight:850;
+            ">
+                {{ commitment_earned|floatformat:0 }} ₸
+            </div>
+
+            <div style="
+                font-size:14px;
+                opacity:.55;
+            ">
+                из
+                {{ active_commitment.refundable_amount|floatformat:0 }}
+                ₸
+            </div>
+        </div>
+
+        <div style="text-align:right;">
+            <div style="
+                font-size:13px;
+                opacity:.55;
+            ">
+                ДОСТУПНЫЙ БАЛАНС
+            </div>
+
+            <div style="
+                font-size:25px;
+                font-weight:750;
+            ">
+                {{ commitment_available|floatformat:0 }} ₸
+            </div>
+        </div>
+
+    </div>
+
+
+    <div style="
+        height:12px;
+        margin-top:22px;
+        background:rgba(255,255,255,.08);
+        border-radius:999px;
+        overflow:hidden;
+    ">
+
+        <div style="
+            width:{{ commitment_progress_percent }}%;
+            height:100%;
+            background:#ffffff;
+            border-radius:999px;
+            transition:width .5s ease;
+        ">
+        </div>
+
+    </div>
+
+    <div style="
+        margin-top:8px;
+        display:flex;
+        justify-content:space-between;
+        font-size:13px;
+        opacity:.55;
+    ">
+        <span>
+            {{ commitment_progress_percent }}%
+        </span>
+
+        <span>
+            {{ active_commitment.refundable_amount|floatformat:0 }} ₸
+        </span>
+    </div>
+
+
+    <div style="
+        margin-top:26px;
+        display:grid;
+        grid-template-columns:repeat(auto-fit, minmax(170px, 1fr));
+        gap:12px;
+    ">
+
+        <div style="
+            padding:16px;
+            border-radius:16px;
+            background:rgba(255,255,255,.05);
+        ">
+            <div style="
+                font-size:12px;
+                opacity:.55;
+                margin-bottom:6px;
+            ">
+                СЛЕДУЮЩИЙ LESSON
+            </div>
+
+            <strong>
+                +{{ active_commitment.lesson_reward|floatformat:0 }} ₸
+            </strong>
+        </div>
+
+
+        <div style="
+            padding:16px;
+            border-radius:16px;
+            background:rgba(255,255,255,.05);
+        ">
+            <div style="
+                font-size:12px;
+                opacity:.55;
+                margin-bottom:6px;
+            ">
+                UNIFIED PRACTICE
+            </div>
+
+            <strong>
+                +{{ active_commitment.unified_practice_reward|floatformat:0 }} ₸
+            </strong>
+        </div>
+
+
+        <div style="
+            padding:16px;
+            border-radius:16px;
+            background:rgba(255,255,255,.05);
+        ">
+            <div style="
+                font-size:12px;
+                opacity:.55;
+                margin-bottom:6px;
+            ">
+                ДО ВЫВОДА
+            </div>
+
+            <strong>
+                {{ commitment_until_withdrawal|floatformat:0 }} ₸
+            </strong>
+        </div>
+
+
+        <div style="
+            padding:16px;
+            border-radius:16px;
+            background:rgba(255,255,255,.05);
+        ">
+            <div style="
+                font-size:12px;
+                opacity:.55;
+                margin-bottom:6px;
+            ">
+                PAUSE DAYS
+            </div>
+
+            <strong>
+                {{ commitment_pause_days_remaining }}
+            </strong>
+        </div>
+
+    </div>
+
+</div>
+
+{% endif %}

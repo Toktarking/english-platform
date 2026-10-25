@@ -8,6 +8,17 @@ app_name = "vocabulary"
 
 
 urlpatterns = [
+    path(
+        "start-free-trial/",
+        views.start_free_trial,
+        name="start_free_trial",
+    ),
+    path(
+        "trial/",
+        views.trial_dashboard,
+        name="trial_dashboard",
+    ),
+
 
     # ==========================================
     # UNIFIED GROUP PRACTICE V2 API

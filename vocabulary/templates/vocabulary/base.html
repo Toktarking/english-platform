@@ -911,7 +911,7 @@
         <!-- LOGO -->
 
         <a
-            href="{% url 'vocabulary:home' %}"
+            href="{% if request.session.trial_guest_user_id %}{% url 'vocabulary:trial_dashboard' %}{% else %}{% url 'vocabulary:home' %}{% endif %}"
             class="logo"
         >
             English Platform
@@ -923,96 +923,129 @@
         <div class="navbar-right">
 
 
-            <!-- VOCABULARY -->
+            {% if request.session.trial_guest_user_id %}
 
-            <div class="main-nav">
+                <!-- TRIAL MODE -->
 
-                <a
-                    href="{% url 'vocabulary:home' %}"
-                    class="nav-link"
-                >
-                    Vocabulary
-                </a>
+                <div class="auth-nav">
 
-            </div>
-
-
-            <!-- AUTH -->
-
-            <div class="auth-nav">
-
-
-                {% if user.is_authenticated %}
-
-
-                    <!-- USER -->
-
-                    <div class="auth-user">
-
-                        <span class="user-icon">
-
-                            {{ user.username|slice:":1"|upper }}
-
-                        </span>
-
-
-                        <span class="auth-username">
-
-                            {{ user.username }}
-
-                        </span>
-
-                    </div>
-
-
-                    <!-- LOGOUT -->
-
-                    <form
-                        method="post"
-                        action="{% url 'logout' %}"
-                        class="logout-form"
-                    >
-
-                        {% csrf_token %}
-
-
-                        <button
-                            type="submit"
-                            class="logout-button"
-                        >
-                            Выйти
-                        </button>
-
-                    </form>
-
-
-                {% else %}
-
-
-                    <!-- LOGIN -->
-
-                    <a
-                        href="{% url 'login' %}"
+                    <span
                         class="auth-link"
+                        style="
+                            color:#7c3aed;
+                            font-weight:700;
+                            cursor:default;
+                        "
                     >
-                        Войти
-                    </a>
-
-
-                    <!-- REGISTER -->
+                        Бесплатный доступ
+                    </span>
 
                     <a
                         href="{% url 'register' %}"
                         class="register-link"
                     >
-                        Регистрация
+                        Создать аккаунт
                     </a>
 
+                </div>
 
-                {% endif %}
+
+            {% else %}
 
 
-            </div>
+                <!-- VOCABULARY -->
+
+                <div class="main-nav">
+
+                    <a
+                        href="{% url 'vocabulary:home' %}"
+                        class="nav-link"
+                    >
+                        Vocabulary
+                    </a>
+
+                </div>
+
+
+                <!-- AUTH -->
+
+                <div class="auth-nav">
+
+
+                    {% if user.is_authenticated %}
+
+
+                        <!-- USER -->
+
+                        <div class="auth-user">
+
+                            <span class="user-icon">
+
+                                {{ user.username|slice:":1"|upper }}
+
+                            </span>
+
+
+                            <span class="auth-username">
+
+                                {{ user.username }}
+
+                            </span>
+
+                        </div>
+
+
+                        <!-- LOGOUT -->
+
+                        <form
+                            method="post"
+                            action="{% url 'logout' %}"
+                            class="logout-form"
+                        >
+
+                            {% csrf_token %}
+
+
+                            <button
+                                type="submit"
+                                class="logout-button"
+                            >
+                                Выйти
+                            </button>
+
+                        </form>
+
+
+                    {% else %}
+
+
+                        <!-- LOGIN -->
+
+                        <a
+                            href="{% url 'login' %}"
+                            class="auth-link"
+                        >
+                            Войти
+                        </a>
+
+
+                        <!-- REGISTER -->
+
+                        <a
+                            href="{% url 'register' %}"
+                            class="register-link"
+                        >
+                            Регистрация
+                        </a>
+
+
+                    {% endif %}
+
+
+                </div>
+
+
+            {% endif %}
 
         </div>
 
@@ -1042,6 +1075,9 @@
 <script
     src="{% static 'vocabulary/js/sounds.js' %}"
 ></script>
+
+
+{% include "commitments/_reward_popup.html" %}
 
 </body>
 

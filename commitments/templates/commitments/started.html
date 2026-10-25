@@ -1,0 +1,88 @@
+{% extends "vocabulary/base.html" %}
+
+{% block content %}
+
+<div style="
+    max-width: 720px;
+    margin: 70px auto;
+    padding: 30px;
+    text-align: center;
+">
+
+    <div style="font-size: 64px;">
+        🎯
+    </div>
+
+    <h1 style="font-size: 42px;">
+        Всё начинается сегодня.
+    </h1>
+
+    <p style="font-size: 20px; opacity: .75;">
+        Вы поставили цель.<br>
+        Вы дали обещание себе.<br>
+        Теперь осталось его выполнить.
+    </p>
+
+    <div style="
+        margin: 40px 0;
+        padding: 30px;
+        border-radius: 20px;
+        background: rgba(0,0,0,.04);
+    ">
+
+        <div style="font-size: 15px; opacity: .6;">
+            ВАША ЦЕЛЬ
+        </div>
+
+        <p style="
+            font-size: 22px;
+            font-weight: 700;
+        ">
+            “{{ commitment.goal_text }}”
+        </p>
+
+        <hr style="opacity:.15; margin:30px 0;">
+
+        <div style="font-size: 36px; font-weight: 800;">
+            {{ commitment.refundable_amount|floatformat:0 }} ₸
+        </div>
+
+        <div style="opacity:.65;">
+            можно вернуть
+        </div>
+
+        <br>
+
+        <strong>
+            {{ commitment.duration_days }} дней
+        </strong>
+
+        <br><br>
+
+        {{ milestone_count }} учебных этапов
+
+        <br>
+
+        {{ checkpoint_count }} контрольных периодов
+
+    </div>
+
+    <a
+        href="{% url 'vocabulary:dashboard' %}"
+        style="
+            display:block;
+            padding:18px;
+            border-radius:14px;
+            text-decoration:none;
+            font-size:18px;
+            font-weight:700;
+            background:#111;
+            color:#fff;
+        "
+    >
+        Начать путь
+    </a>
+
+</div>
+
+{% endblock %}

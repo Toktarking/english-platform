@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1"
+    >
+
+    <title>
+        Бесплатный курс A1 | English Platform
+    </title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: #f7f8fc;
+            color: #151a2d;
+            font-family:
+                Inter,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                sans-serif;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .topbar {
+            background: white;
+            border-bottom: 1px solid #e8eaf0;
+        }
+
+        .topbar-inner {
+            max-width: 980px;
+            margin: 0 auto;
+            min-height: 76px;
+            padding: 0 24px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .logo {
+            color: #2563eb;
+            font-size: 23px;
+            font-weight: 800;
+        }
+
+        .top-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .trial-badge {
+            padding: 8px 12px;
+            border-radius: 999px;
+            background: #f0eaff;
+            color: #7c3aed;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .register-small {
+            padding: 10px 16px;
+            border-radius: 10px;
+            background: #151a2d;
+            color: white;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .page {
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 54px 24px 90px;
+        }
+
+        .eyebrow {
+            margin-bottom: 12px;
+            color: #7c3aed;
+            font-size: 13px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+        }
+
+        h1 {
+            margin: 0;
+            max-width: 700px;
+
+            font-size: clamp(
+                36px,
+                6vw,
+                58px
+            );
+
+            line-height: 1.02;
+            letter-spacing: -0.045em;
+        }
+
+        .lead {
+            margin-top: 20px;
+            max-width: 650px;
+            color: #697085;
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        .progress-card {
+            margin-top: 38px;
+            padding: 26px;
+
+            border-radius: 22px;
+
+            background:
+                linear-gradient(
+                    120deg,
+                    #6d28d9,
+                    #8b5cf6
+                );
+
+            color: white;
+        }
+
+        .progress-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+            gap: 20px;
+        }
+
+        .progress-title {
+            font-size: 22px;
+            font-weight: 800;
+        }
+
+        .progress-number {
+            font-size: 14px;
+            opacity: .9;
+        }
+
+        .track {
+            margin-top: 20px;
+            height: 9px;
+            border-radius: 999px;
+            overflow: hidden;
+            background: rgba(
+                255,
+                255,
+                255,
+                .25
+            );
+        }
+
+        .fill {
+            height: 100%;
+            border-radius: inherit;
+            background: white;
+        }
+
+        .reward-card {
+            margin-top: 18px;
+            padding: 24px 26px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 24px;
+
+            background: white;
+            border: 1px solid #e6e8ef;
+            border-radius: 20px;
+
+            box-shadow:
+                0 5px 20px
+                rgba(15, 23, 42, .035);
+        }
+
+        .reward-label {
+            color: #858b9d;
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .04em;
+        }
+
+        .reward-amount {
+            margin-top: 5px;
+            font-size: 30px;
+            font-weight: 850;
+            letter-spacing: -.03em;
+        }
+
+        .reward-caption {
+            margin-top: 5px;
+            max-width: 540px;
+            color: #7b8193;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .reward-max {
+            text-align: right;
+        }
+
+        .reward-max-number {
+            font-size: 16px;
+            font-weight: 800;
+        }
+
+        .lesson-reward {
+            margin-top: 5px;
+            color: #15803d;
+            font-size: 13px;
+            font-weight: 750;
+        }
+
+        .practice-reward {
+            margin-top: 12px;
+            color: #15803d;
+            font-size: 15px;
+            font-weight: 800;
+        }
+
+        .section-title {
+            margin: 48px 0 20px;
+            font-size: 26px;
+            font-weight: 800;
+        }
+
+        .lessons {
+            display: grid;
+            gap: 14px;
+        }
+
+        .lesson {
+            padding: 20px 22px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+
+            background: white;
+            border: 1px solid #e6e8ef;
+            border-radius: 18px;
+
+            box-shadow:
+                0 5px 20px
+                rgba(15, 23, 42, .035);
+        }
+
+        .lesson-main {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .lesson-number {
+            width: 44px;
+            height: 44px;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 14px;
+
+            background: #f3f0ff;
+            color: #7c3aed;
+
+            font-weight: 800;
+        }
+
+        .lesson-title {
+            font-size: 17px;
+            font-weight: 800;
+        }
+
+        .lesson-meta {
+            margin-top: 4px;
+            color: #8a90a3;
+            font-size: 13px;
+        }
+
+        .button {
+            min-width: 116px;
+            padding: 11px 17px;
+
+            text-align: center;
+
+            border-radius: 11px;
+            background: #2563eb;
+            color: white;
+
+            font-size: 14px;
+            font-weight: 750;
+        }
+
+        .button-repeat {
+            background: #eef2ff;
+            color: #4338ca;
+        }
+
+        .completed {
+            border-color: #c9ead4;
+        }
+
+        .completed .lesson-number {
+            background: #e9f9ef;
+            color: #15803d;
+        }
+
+        .locked {
+            opacity: .55;
+        }
+
+        .locked-button {
+            min-width: 116px;
+            padding: 11px 17px;
+
+            text-align: center;
+
+            border-radius: 11px;
+            background: #eef0f4;
+            color: #979cab;
+
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .practice-card {
+            margin-top: 14px;
+            padding: 28px;
+
+            background: white;
+            border: 1px solid #e6e8ef;
+            border-radius: 22px;
+        }
+
+        .practice-icon {
+            font-size: 30px;
+        }
+
+        .practice-card h2 {
+            margin: 13px 0 8px;
+            font-size: 24px;
+        }
+
+        .practice-card p {
+            margin: 0;
+            max-width: 600px;
+            color: #73798c;
+            line-height: 1.55;
+        }
+
+        .practice-action {
+            margin-top: 22px;
+        }
+
+        .practice-action .button {
+            display: inline-block;
+        }
+
+        .finish-card {
+            margin-top: 28px;
+            padding: 35px;
+
+            text-align: center;
+
+            border-radius: 24px;
+            background: #151a2d;
+            color: white;
+        }
+
+        .finish-icon {
+            font-size: 42px;
+        }
+
+        .finish-card h2 {
+            margin: 14px 0 10px;
+            font-size: 29px;
+        }
+
+        .finish-card p {
+            margin: 0 auto;
+            max-width: 590px;
+            color: #c5cada;
+            line-height: 1.6;
+        }
+
+        .finish-button {
+            display: inline-block;
+            margin-top: 24px;
+            padding: 14px 24px;
+
+            border-radius: 12px;
+
+            background: #7c3aed;
+            color: white;
+
+            font-weight: 800;
+        }
+
+        @media (
+            max-width: 640px
+        ) {
+
+            .topbar-inner {
+                padding: 0 16px;
+            }
+
+            .trial-badge {
+                display: none;
+            }
+
+            .page {
+                padding:
+                    38px
+                    16px
+                    70px;
+            }
+
+            .lesson {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .button,
+            .locked-button {
+                width: 100%;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<header class="topbar">
+
+    <div class="topbar-inner">
+
+        <div class="logo">
+            English Platform
+        </div>
+
+        <div class="top-actions">
+
+            <div class="trial-badge">
+                Бесплатный доступ
+            </div>
+
+            <a
+                class="register-small"
+                href="{% url 'register' %}"
+            >
+                Создать аккаунт
+            </a>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<main class="page">
+
+    <div class="eyebrow">
+        Попробуйте бесплатно
+    </div>
+
+    <h1>
+        {{ level.code }} · {{ group.name }}
+    </h1>
+
+    <p class="lead">
+        Пройдите первую группу полностью:
+        все Lessons и итоговую Unified Practice.
+        Регистрация пока не нужна.
+    </p>
+
+
+    <section class="progress-card">
+
+        <div class="progress-top">
+
+            <div>
+
+                <div class="progress-title">
+                    Ваш прогресс
+                </div>
+
+                <div class="progress-number">
+                    {{ completed_lessons }}
+                    из
+                    {{ total_lessons }}
+                    Lessons
+                </div>
+
+            </div>
+
+            <div class="progress-number">
+                {{ progress_percent }}%
+            </div>
+
+        </div>
+
+        <div class="track">
+
+            <div
+                class="fill"
+                style="width: {{ progress_percent }}%;"
+            ></div>
+
+        </div>
+
+    </section>
+
+
+    <section class="reward-card">
+
+        <div>
+
+            <div class="reward-label">
+                Заработано в бесплатном режиме
+            </div>
+
+            <div class="reward-amount">
+                {{ trial_reward_amount }} ₸
+            </div>
+
+            <div class="reward-caption">
+                После регистрации и подключения
+                Commitment эта сумма будет
+                зачислена на ваш баланс.
+            </div>
+
+        </div>
+
+        <div class="reward-max">
+
+            <div class="reward-label">
+                Можно заработать
+            </div>
+
+            <div class="reward-max-number">
+                {{ trial_reward_max }} ₸
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <div class="section-title">
+        Lessons
+    </div>
+
+
+    <div class="lessons">
+
+        {% for lesson in lessons %}
+
+            <div
+                class="
+                    lesson
+                    {% if lesson.trial_completed %}
+                        completed
+                    {% endif %}
+                    {% if lesson.trial_locked %}
+                        locked
+                    {% endif %}
+                "
+            >
+
+                <div class="lesson-main">
+
+                    <div class="lesson-number">
+
+                        {% if lesson.trial_completed %}
+                            ✓
+                        {% else %}
+                            {{ lesson.number }}
+                        {% endif %}
+
+                    </div>
+
+                    <div>
+
+                        <div class="lesson-title">
+                            Lesson {{ lesson.number }}
+                        </div>
+
+                        <div class="lesson-meta">
+                            {{ lesson.word_count }} слов
+
+                            {% if lesson.trial_completed %}
+                                · завершён
+                            {% elif lesson.trial_started %}
+                                · начат
+                            {% endif %}
+                        </div>
+
+                        <div class="lesson-reward">
+                            +{{ lesson_reward }} ₸
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                {% if lesson.trial_locked %}
+
+                    <div class="locked-button">
+                        🔒 Позже
+                    </div>
+
+                {% else %}
+
+                    <a
+                        class="
+                            button
+                            {% if lesson.trial_completed %}
+                                button-repeat
+                            {% endif %}
+                        "
+                        href="{% url 'vocabulary:lesson_detail' level.code lesson.id %}"
+                    >
+
+                        {% if lesson.trial_completed %}
+                            Повторить
+                        {% elif lesson.trial_started %}
+                            Продолжить
+                        {% else %}
+                            Начать
+                        {% endif %}
+
+                    </a>
+
+                {% endif %}
+
+            </div>
+
+        {% endfor %}
+
+    </div>
+
+
+    <div class="section-title">
+        Финал бесплатной части
+    </div>
+
+
+    <section class="practice-card">
+
+        <div class="practice-icon">
+            🎯
+        </div>
+
+        <h2>
+            Unified Practice
+        </h2>
+
+        <div class="practice-reward">
+            +{{ unified_reward }} ₸
+        </div>
+
+        {% if unified_completed %}
+
+            <p>
+                Отлично. Вы завершили первую
+                Unified Practice.
+            </p>
+
+        {% elif all_lessons_completed %}
+
+            <p>
+                Все Lessons завершены.
+                Теперь закрепите всю группу
+                в одной итоговой тренировке.
+            </p>
+
+            <div class="practice-action">
+
+                <a
+                    class="button"
+                    href="{% url 'vocabulary:unified_group_practice' level.code group.id %}"
+                >
+                    {% if unified_started %}
+                        Продолжить Practice
+                    {% else %}
+                        Начать Unified Practice
+                    {% endif %}
+                </a>
+
+            </div>
+
+        {% else %}
+
+            <p>
+                Unified Practice откроется после
+                завершения всех Lessons этой группы.
+            </p>
+
+            <div class="practice-action">
+
+                <div class="locked-button">
+                    🔒 Сначала завершите Lessons
+                </div>
+
+            </div>
+
+        {% endif %}
+
+    </section>
+
+
+    {% if trial_finished %}
+
+        <section class="finish-card">
+
+            <div class="finish-icon">
+                🎉
+            </div>
+
+            <h2>
+                Бесплатная часть завершена
+            </h2>
+
+            <p>
+                Вы заработали
+                <strong>{{ trial_reward_amount }} ₸</strong>
+                в бесплатной части.
+                Создайте аккаунт и подключите
+                Commitment, чтобы зачислить
+                вознаграждение и продолжить курс.
+            </p>
+
+            <a
+                class="finish-button"
+                href="{% url 'register' %}"
+            >
+                Создать аккаунт и продолжить
+            </a>
+
+        </section>
+
+    {% endif %}
+
+</main>
+
+</body>
+</html>

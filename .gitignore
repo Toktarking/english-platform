@@ -17,3 +17,11 @@ staticfiles/
 .vscode/
 
 *.log
+
+# Local development / ChatGPT backups
+.backup_*/
+*.backup
+*.duration_backup
+*.guest_backup
+*.trial_dashboard_backup
+*.before_*
