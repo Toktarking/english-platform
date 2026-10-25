@@ -1132,7 +1132,7 @@ def backfill_legacy_progress(
 
     milestones = (
         CommitmentMilestone.objects
-        .select_for_update()
+        .select_for_update(of=("self",))
         .filter(
             commitment=commitment,
         )
