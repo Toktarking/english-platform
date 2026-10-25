@@ -30,10 +30,12 @@ class GrammarLesson(models.Model):
         default=1
     )
 
+    # Оставляем для совместимости / короткого описания.
     theory_text = models.TextField(
         blank=True
     )
 
+    # Можно использовать для полного аудио всего урока.
     audio_file = models.FileField(
         upload_to="grammar/audio/",
         blank=True,
@@ -42,6 +44,19 @@ class GrammarLesson(models.Model):
 
     estimated_minutes = models.PositiveIntegerField(
         default=10
+    )
+
+    pass_score = models.PositiveSmallIntegerField(
+        default=70,
+        validators=[
+            MinValueValidator(0),
+            MaxValueValidator(100),
+        ],
+    )
+
+    # Пока это НЕ деньги Commitment.
+    xp_reward = models.PositiveIntegerField(
+        default=100
     )
 
     is_published = models.BooleanField(
@@ -73,7 +88,130 @@ class GrammarLesson(models.Model):
         ]
 
     def __str__(self):
-        return f"{self.level} · {self.order}. {self.title}"
+        return (
+            f"{self.level} · "
+            f"{self.order}. "
+            f"{self.title}"
+        )
+
+
+class GrammarLessonSection(models.Model):
+
+    lesson = models.ForeignKey(
+        GrammarLesson,
+        on_delete=models.CASCADE,
+        related_name="sections",
+    )
+
+    order = models.PositiveIntegerField()
+
+    title = models.CharField(
+        max_length=200
+    )
+
+    body = models.TextField()
+
+    # Позволит использовать уже записанные
+    # отдельные аудиофрагменты.
+    audio_file = models.FileField(
+        upload_to="grammar/audio/sections/",
+        blank=True,
+        null=True,
+    )
+
+    class Meta:
+        ordering = [
+            "order",
+        ]
+
+        constraints = [
+            models.UniqueConstraint(
+                fields=[
+                    "lesson",
+                    "order",
+                ],
+                name="unique_grammar_section_order",
+            ),
+        ]
+
+    def __str__(self):
+        return (
+            f"{self.lesson} · "
+            f"{self.order}. "
+            f"{self.title}"
+        )
+
+
+class GrammarExercise(models.Model):
+
+    class Type(models.TextChoices):
+        CHOICE = (
+            "choice",
+            "Choose one",
+        )
+
+    lesson = models.ForeignKey(
+        GrammarLesson,
+        on_delete=models.CASCADE,
+        related_name="exercises",
+    )
+
+    section = models.ForeignKey(
+        GrammarLessonSection,
+        on_delete=models.SET_NULL,
+        related_name="exercises",
+        blank=True,
+        null=True,
+    )
+
+    order = models.PositiveIntegerField()
+
+    exercise_type = models.CharField(
+        max_length=30,
+        choices=Type.choices,
+        default=Type.CHOICE,
+    )
+
+    prompt = models.TextField()
+
+    # Например:
+    # ["a", "an", "the", "—"]
+    options = models.JSONField(
+        default=list
+    )
+
+    correct_answer = models.CharField(
+        max_length=500
+    )
+
+    explanation = models.TextField(
+        blank=True
+    )
+
+    is_published = models.BooleanField(
+        default=True
+    )
+
+    class Meta:
+        ordering = [
+            "order",
+        ]
+
+        constraints = [
+            models.UniqueConstraint(
+                fields=[
+                    "lesson",
+                    "order",
+                ],
+                name="unique_grammar_exercise_order",
+            ),
+        ]
+
+    def __str__(self):
+        return (
+            f"{self.lesson} · "
+            f"Exercise {self.order}"
+        )
 
 
 class GrammarLessonProgress(models.Model):
@@ -116,6 +254,20 @@ class GrammarLessonProgress(models.Model):
             MinValueValidator(0),
             MaxValueValidator(100),
         ],
+    )
+
+    correct_answers = models.PositiveIntegerField(
+        default=0
+    )
+
+    total_questions = models.PositiveIntegerField(
+        default=0
+    )
+
+    # Награда внутри Grammar.
+    # Не связана с CommitmentLedgerEntry.
+    xp_earned = models.PositiveIntegerField(
+        default=0
     )
 
     started_at = models.DateTimeField(

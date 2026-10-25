@@ -1,9 +1,25 @@
 from django.contrib import admin
 
 from .models import (
+    GrammarExercise,
     GrammarLesson,
     GrammarLessonProgress,
+    GrammarLessonSection,
 )
+
+
+class GrammarLessonSectionInline(
+    admin.StackedInline
+):
+    model = GrammarLessonSection
+    extra = 0
+
+
+class GrammarExerciseInline(
+    admin.StackedInline
+):
+    model = GrammarExercise
+    extra = 0
 
 
 @admin.register(GrammarLesson)
@@ -13,8 +29,9 @@ class GrammarLessonAdmin(admin.ModelAdmin):
         "order",
         "title",
         "level",
+        "pass_score",
+        "xp_reward",
         "is_published",
-        "estimated_minutes",
     )
 
     list_filter = (
@@ -33,15 +50,50 @@ class GrammarLessonAdmin(admin.ModelAdmin):
         ),
     }
 
+    inlines = [
+        GrammarLessonSectionInline,
+        GrammarExerciseInline,
+    ]
+
+
+@admin.register(GrammarLessonSection)
+class GrammarLessonSectionAdmin(
+    admin.ModelAdmin
+):
+    list_display = (
+        "lesson",
+        "order",
+        "title",
+    )
+
+
+@admin.register(GrammarExercise)
+class GrammarExerciseAdmin(
+    admin.ModelAdmin
+):
+    list_display = (
+        "lesson",
+        "order",
+        "exercise_type",
+        "is_published",
+    )
+
+    list_filter = (
+        "exercise_type",
+        "is_published",
+    )
+
 
 @admin.register(GrammarLessonProgress)
-class GrammarLessonProgressAdmin(admin.ModelAdmin):
-
+class GrammarLessonProgressAdmin(
+    admin.ModelAdmin
+):
     list_display = (
         "user",
         "lesson",
         "status",
         "score",
+        "xp_earned",
         "completed_at",
     )
 
