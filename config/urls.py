@@ -58,6 +58,13 @@ urlpatterns = [
             ),
     ),
 
+
+    path(
+        "commitment/",
+        include("commitments.urls"),
+    ),
+
+
 ]
 
 

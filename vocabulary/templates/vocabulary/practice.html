@@ -1373,7 +1373,7 @@ Practice | Lesson {{ lesson.number }}
 
 
             <a
-                href="{% url 'vocabulary:group_detail' level.code group.id %}"
+                href="{% if request.session.trial_guest_user_id %}{% url 'vocabulary:trial_dashboard' %}{% else %}{% url 'vocabulary:dashboard' %}{% endif %}"
                 class="button"
             >
                 Back to lessons

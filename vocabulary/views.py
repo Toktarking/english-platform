@@ -2,6 +2,7 @@ import json
 import random
 
 from datetime import timedelta
+from uuid import uuid4
 
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
@@ -40,24 +41,176 @@ from .models import (
 from .planner import (
     build_registration_schedule_preview,
     build_remaining_sequence,
+    build_week_preview,
     calculate_course_preview,
     create_confirmed_course,
     get_or_create_today_plan,
     sync_daily_plan,
 )
 
+from .pause_days import get_pause_dates
+
 # =========================================================
-# REGISTER
+# FREE TRIAL
 # =========================================================
 
 
-def register_view(
+TRIAL_GUEST_SESSION_KEY = (
+    "trial_guest_user_id"
+)
+
+TRIAL_CONVERTED_SESSION_KEY = (
+    "trial_converted_user_id"
+)
+
+TRIAL_LEVEL_SESSION_KEY = (
+    "trial_level_id"
+)
+
+TRIAL_GROUP_SESSION_KEY = (
+    "trial_group_id"
+)
+
+
+def is_trial_guest(
     request,
 ):
+    """
+    Проверяет, является ли текущий пользователь
+    временным пользователем бесплатного trial.
+    """
 
-    # =====================================================
-    # ALREADY LOGGED IN
-    # =====================================================
+    if not request.user.is_authenticated:
+        return False
+
+    session_guest_id = (
+        request.session.get(
+            TRIAL_GUEST_SESSION_KEY
+        )
+    )
+
+    if (
+        session_guest_id
+        ==
+        request.user.id
+    ):
+        return True
+
+    # Дополнительная страховка на случай,
+    # если session marker потерялся,
+    # но auth-сессия сохранилась.
+    return (
+        request.user.username.startswith(
+            "guest_"
+        )
+        and
+        not request.user.has_usable_password()
+    )
+
+
+def get_trial_start_content():
+    """
+    Бесплатный trial всегда начинается
+    с первой активной группы A1
+    и первого Lesson этой группы.
+    """
+
+    level = (
+        VocabularyLevel.objects
+        .filter(
+            code__iexact="A1",
+            is_active=True,
+        )
+        .order_by(
+            "order",
+        )
+        .first()
+    )
+
+    if level is None:
+        return None
+
+    group = (
+        VocabularyGroup.objects
+        .filter(
+            level=level,
+        )
+        .order_by(
+            "order",
+        )
+        .first()
+    )
+
+    if group is None:
+        return None
+
+    lesson = (
+        VocabularyLesson.objects
+        .filter(
+            group=group,
+            is_active=True,
+        )
+        .order_by(
+            "order",
+        )
+        .first()
+    )
+
+    if lesson is None:
+        return None
+
+    return {
+        "level": level,
+        "group": group,
+        "lesson": lesson,
+    }
+
+
+def start_free_trial(
+    request,
+):
+    """
+    Создаёт временного пользователя без формы
+    регистрации и сразу открывает первый Lesson A1.
+
+    Для посетителя это выглядит как обычный
+    бесплатный старт без регистрации.
+    """
+
+    trial_content = (
+        get_trial_start_content()
+    )
+
+    if trial_content is None:
+        return redirect(
+            "vocabulary:home"
+        )
+
+    level = trial_content["level"]
+    group = trial_content["group"]
+    lesson = trial_content["lesson"]
+
+    # ---------------------------------------------
+    # Уже trial-user
+    # ---------------------------------------------
+
+    if is_trial_guest(request):
+
+        request.session[
+            TRIAL_LEVEL_SESSION_KEY
+        ] = level.id
+
+        request.session[
+            TRIAL_GROUP_SESSION_KEY
+        ] = group.id
+
+        return redirect(
+            "vocabulary:trial_dashboard"
+        )
+
+    # ---------------------------------------------
+    # Уже обычный зарегистрированный пользователь
+    # ---------------------------------------------
 
     if request.user.is_authenticated:
 
@@ -69,13 +222,634 @@ def register_view(
             .exists()
         )
 
+        if has_course:
+            return redirect(
+                "vocabulary:dashboard"
+            )
+
+        return redirect(
+            "vocabulary:course_setup"
+        )
+
+    # ---------------------------------------------
+    # Создаём временного User
+    # ---------------------------------------------
+
+    from django.contrib.auth import (
+        get_user_model,
+    )
+
+    User = get_user_model()
+
+    while True:
+
+        username = (
+            "guest_"
+            + uuid4().hex[:20]
+        )
+
+        if not User.objects.filter(
+            username=username,
+        ).exists():
+            break
+
+    guest_user = User(
+        username=username,
+        email="",
+    )
+
+    # Нельзя войти по паролю.
+    guest_user.set_unusable_password()
+
+    guest_user.save()
+
+    login(
+        request,
+        guest_user,
+        backend=(
+            "django.contrib.auth.backends."
+            "ModelBackend"
+        ),
+    )
+
+    request.session[
+        TRIAL_GUEST_SESSION_KEY
+    ] = guest_user.id
+
+    request.session[
+        TRIAL_LEVEL_SESSION_KEY
+    ] = level.id
+
+    request.session[
+        TRIAL_GROUP_SESSION_KEY
+    ] = group.id
+
+    request.session.modified = True
+
+    return redirect(
+        "vocabulary:lesson_detail",
+        level_code=level.code,
+        lesson_id=lesson.id,
+    )
+
+
+# =========================================================
+# FREE TRIAL
+# =========================================================
+
+
+TRIAL_GUEST_SESSION_KEY = (
+    "trial_guest_user_id"
+)
+
+TRIAL_CONVERTED_SESSION_KEY = (
+    "trial_converted_user_id"
+)
+
+TRIAL_LEVEL_SESSION_KEY = (
+    "trial_level_id"
+)
+
+TRIAL_GROUP_SESSION_KEY = (
+    "trial_group_id"
+)
+
+
+def is_trial_guest(
+    request,
+):
+    """
+    Текущий пользователь является временным
+    пользователем бесплатного trial.
+    """
+
+    if not request.user.is_authenticated:
+        return False
+
+    session_guest_id = (
+        request.session.get(
+            TRIAL_GUEST_SESSION_KEY
+        )
+    )
+
+    if (
+        session_guest_id
+        ==
+        request.user.id
+    ):
+        return True
+
+    return (
+        request.user.username.startswith(
+            "guest_"
+        )
+        and
+        not request.user.has_usable_password()
+    )
+
+
+def get_trial_start_content():
+    """
+    Trial начинается с первой активной
+    группы A1 и первого Lesson.
+    """
+
+    level = (
+        VocabularyLevel.objects
+        .filter(
+            code__iexact="A1",
+            is_active=True,
+        )
+        .order_by(
+            "order",
+        )
+        .first()
+    )
+
+    if level is None:
+        return None
+
+    group = (
+        VocabularyGroup.objects
+        .filter(
+            level=level,
+        )
+        .order_by(
+            "order",
+        )
+        .first()
+    )
+
+    if group is None:
+        return None
+
+    lesson = (
+        VocabularyLesson.objects
+        .filter(
+            group=group,
+            is_active=True,
+        )
+        .order_by(
+            "order",
+        )
+        .first()
+    )
+
+    if lesson is None:
+        return None
+
+    return {
+        "level": level,
+        "group": group,
+        "lesson": lesson,
+    }
+
+
+def start_free_trial(
+    request,
+):
+    """
+    Создаёт временного User без регистрации
+    и открывает первый Lesson A1.
+    """
+
+    trial_content = (
+        get_trial_start_content()
+    )
+
+    if trial_content is None:
+        return redirect(
+            "vocabulary:home"
+        )
+
+    level = trial_content["level"]
+    group = trial_content["group"]
+    lesson = trial_content["lesson"]
+
+    # ---------------------------------------------
+    # Уже trial-user
+    # ---------------------------------------------
+
+    if is_trial_guest(request):
+
+        request.session[
+            TRIAL_LEVEL_SESSION_KEY
+        ] = level.id
+
+        request.session[
+            TRIAL_GROUP_SESSION_KEY
+        ] = group.id
+
+        return redirect(
+            "vocabulary:trial_dashboard"
+        )
+
+    # ---------------------------------------------
+    # Обычный зарегистрированный пользователь
+    # ---------------------------------------------
+
+    if request.user.is_authenticated:
+
+        has_course = (
+            UserCourse.objects
+            .filter(
+                user=request.user,
+            )
+            .exists()
+        )
+
+        if has_course:
+            return redirect(
+                "vocabulary:dashboard"
+            )
+
+        return redirect(
+            "vocabulary:course_setup"
+        )
+
+    # ---------------------------------------------
+    # Создаём временного пользователя
+    # ---------------------------------------------
+
+    from django.contrib.auth import (
+        get_user_model,
+    )
+
+    User = get_user_model()
+
+    while True:
+
+        username = (
+            "guest_"
+            + uuid4().hex[:20]
+        )
+
+        if not User.objects.filter(
+            username=username,
+        ).exists():
+            break
+
+    guest_user = User(
+        username=username,
+        email="",
+    )
+
+    guest_user.set_unusable_password()
+    guest_user.save()
+
+    login(
+        request,
+        guest_user,
+        backend=(
+            "django.contrib.auth.backends."
+            "ModelBackend"
+        ),
+    )
+
+    request.session[
+        TRIAL_GUEST_SESSION_KEY
+    ] = guest_user.id
+
+    request.session[
+        TRIAL_LEVEL_SESSION_KEY
+    ] = level.id
+
+    request.session[
+        TRIAL_GROUP_SESSION_KEY
+    ] = group.id
+
+    request.session.modified = True
+
+    return redirect(
+        "vocabulary:lesson_detail",
+        level_code=level.code,
+        lesson_id=lesson.id,
+    )
+
+
+
+
+# =========================================================
+# TRIAL DASHBOARD
+# =========================================================
+
+
+@login_required
+def trial_dashboard(
+    request,
+):
+    """
+    Отдельная страница бесплатного знакомства.
+
+    Guest получает доступ только к:
+    - первой группе A1;
+    - всем Lessons этой группы;
+    - первой Unified Practice.
+    """
+
+    # Обычный пользователь сюда не должен попадать.
+    if not is_trial_guest(request):
+
+        course = (
+            UserCourse.objects
+            .filter(
+                user=request.user,
+                status=UserCourse.Status.ACTIVE,
+            )
+            .first()
+        )
+
+        if course:
+            return redirect(
+                "vocabulary:dashboard"
+            )
+
+        return redirect(
+            "vocabulary:course_setup"
+        )
+
+    trial_content = (
+        get_trial_start_content()
+    )
+
+    if trial_content is None:
+        return redirect(
+            "vocabulary:home"
+        )
+
+    level = trial_content["level"]
+    group = trial_content["group"]
+
+    lessons = list(
+        VocabularyLesson.objects
+        .filter(
+            group=group,
+            is_active=True,
+        )
+        .annotate(
+            word_count=Count(
+                "words",
+                distinct=True,
+            )
+        )
+        .order_by(
+            "order",
+        )
+    )
+
+    # -----------------------------------------------------
+    # LESSON PROGRESS
+    # -----------------------------------------------------
+
+    progress_records = (
+        LessonPracticeProgress.objects
+        .filter(
+            user=request.user,
+            lesson__in=lessons,
+        )
+    )
+
+    progress_by_lesson = {
+        progress.lesson_id: progress
+        for progress in progress_records
+    }
+
+    completed_lessons = 0
+    next_lesson_found = False
+
+    for lesson in lessons:
+
+        progress = (
+            progress_by_lesson.get(
+                lesson.id
+            )
+        )
+
+        lesson.trial_started = (
+            progress is not None
+        )
+
+        lesson.trial_completed = bool(
+            progress
+            and
+            progress.completed_at
+        )
+
+        lesson.trial_completed_at = (
+            progress.completed_at
+            if progress
+            else None
+        )
+
+        if lesson.trial_completed:
+            completed_lessons += 1
+
+        # UI ведём последовательно:
+        # завершённые можно повторять,
+        # первый незавершённый открыт,
+        # следующие пока визуально locked.
+        if lesson.trial_completed:
+
+            lesson.trial_locked = False
+            lesson.trial_is_next = False
+
+        elif not next_lesson_found:
+
+            lesson.trial_locked = False
+            lesson.trial_is_next = True
+            next_lesson_found = True
+
+        else:
+
+            lesson.trial_locked = True
+            lesson.trial_is_next = False
+
+    total_lessons = len(
+        lessons
+    )
+
+    all_lessons_completed = (
+        total_lessons > 0
+        and
+        completed_lessons
+        ==
+        total_lessons
+    )
+
+    # -----------------------------------------------------
+    # UNIFIED PRACTICE
+    # -----------------------------------------------------
+
+    unified_session = (
+        UnifiedGroupPracticeSession.objects
+        .filter(
+            user=request.user,
+            group=group,
+        )
+        .order_by(
+            "-id",
+        )
+        .first()
+    )
+
+    unified_started = (
+        unified_session is not None
+    )
+
+    unified_completed = bool(
+        unified_session
+        and
+        unified_session.is_completed
+    )
+
+    # -----------------------------------------------------
+    # OVERALL PROGRESS
+    # -----------------------------------------------------
+
+    total_steps = (
+        total_lessons + 1
+    )
+
+    completed_steps = (
+        completed_lessons
+        +
+        (
+            1
+            if unified_completed
+            else 0
+        )
+    )
+
+    progress_percent = (
+        round(
+            completed_steps
+            * 100
+            /
+            total_steps
+        )
+        if total_steps
+        else 0
+    )
+
+    # -----------------------------------------------------
+    # TRIAL REWARD
+    #
+    # Это пока НЕ реальный Commitment balance.
+    # Сумма показывает, сколько пользователь заработал
+    # в бесплатной части и сможет получить после
+    # регистрации + принятия Commitment.
+    # -----------------------------------------------------
+
+    lesson_reward = 100
+    unified_reward = 500
+
+    trial_reward_amount = (
+        completed_lessons
+        * lesson_reward
+    )
+
+    if unified_completed:
+        trial_reward_amount += (
+            unified_reward
+        )
+
+    trial_reward_max = (
+        total_lessons
+        * lesson_reward
+        +
+        unified_reward
+    )
+
+    trial_reward_remaining = (
+        trial_reward_max
+        -
+        trial_reward_amount
+    )
+
+    return render(
+        request,
+        "vocabulary/trial_dashboard.html",
+        {
+            "level": level,
+            "group": group,
+
+            "lessons": lessons,
+
+            "completed_lessons":
+                completed_lessons,
+
+            "total_lessons":
+                total_lessons,
+
+            "all_lessons_completed":
+                all_lessons_completed,
+
+            "unified_started":
+                unified_started,
+
+            "unified_completed":
+                unified_completed,
+
+            "progress_percent":
+                progress_percent,
+
+            "trial_reward_amount":
+                trial_reward_amount,
+
+            "trial_reward_max":
+                trial_reward_max,
+
+            "trial_reward_remaining":
+                trial_reward_remaining,
+
+            "lesson_reward":
+                lesson_reward,
+
+            "unified_reward":
+                unified_reward,
+
+            "trial_finished":
+                unified_completed,
+        },
+    )
+
+
+# =========================================================
+# REGISTER
+# =========================================================
+
+
+def register_view(
+    request,
+):
+
+    trial_guest = (
+        is_trial_guest(request)
+    )
+
+    # =====================================================
+    # ALREADY LOGGED IN — NORMAL USER
+    # =====================================================
+
+    if (
+        request.user.is_authenticated
+        and
+        not trial_guest
+    ):
+
+        has_course = (
+            UserCourse.objects
+            .filter(
+                user=request.user,
+            )
+            .exists()
+        )
 
         if has_course:
 
             return redirect(
                 "vocabulary:home"
             )
-
 
         return redirect(
             "vocabulary:course_setup"
@@ -88,9 +862,18 @@ def register_view(
 
     if request.method == "POST":
 
-        form = RegistrationForm(
-            request.POST
-        )
+        if trial_guest:
+
+            form = RegistrationForm(
+                request.POST,
+                instance=request.user,
+            )
+
+        else:
+
+            form = RegistrationForm(
+                request.POST
+            )
 
 
         if form.is_valid():
@@ -99,15 +882,31 @@ def register_view(
                 form.save()
             )
 
+            was_trial_guest = (
+                trial_guest
+            )
 
             login(
                 request,
                 user,
+                backend=(
+                    "django.contrib.auth.backends."
+                    "ModelBackend"
+                ),
             )
 
+            if was_trial_guest:
 
-            # После регистрации пользователь
-            # ОБЯЗАТЕЛЬНО настраивает курс.
+                request.session.pop(
+                    TRIAL_GUEST_SESSION_KEY,
+                    None,
+                )
+
+                request.session[
+                    TRIAL_CONVERTED_SESSION_KEY
+                ] = user.id
+
+                request.session.modified = True
 
             return redirect(
                 "vocabulary:course_setup"
@@ -120,17 +919,29 @@ def register_view(
 
     else:
 
-        form = (
-            RegistrationForm()
-        )
+        if trial_guest:
+
+            form = RegistrationForm(
+                instance=request.user,
+                initial={
+                    "username": "",
+                    "email": "",
+                },
+            )
+
+        else:
+
+            form = (
+                RegistrationForm()
+            )
 
 
     return render(
         request,
         "registration/register.html",
         {
-            "form":
-                form,
+            "form": form,
+            "trial_guest": trial_guest,
         },
     )
 
@@ -468,7 +1279,8 @@ def course_confirm(
     # на страницу уровня.
 
     return redirect(
-        "vocabulary:dashboard",
+        "commitments:setup",
+        user_course_id=course.id,
     )
 
 
@@ -603,11 +1415,21 @@ def get_daily_item_url(
 def calculate_course_streak(
     course,
 ):
+    """
+    COMPLETED:
+        +1 streak.
+
+    PAUSE:
+        streak сохраняется,
+        но не увеличивается.
+
+    MISSED:
+        streak обрывается.
+    """
 
     today = (
         timezone.localdate()
     )
-
 
     completed_dates = set(
 
@@ -628,13 +1450,13 @@ def calculate_course_streak(
 
     )
 
+    pause_dates = (
+        get_pause_dates(
+            course
+        )
+    )
 
     cursor = today
-
-
-    # Если сегодняшний план ещё
-    # не завершён, серия считается
-    # до вчерашнего дня.
 
     if (
         cursor
@@ -642,36 +1464,707 @@ def calculate_course_streak(
         completed_dates
     ):
 
-        cursor = (
-            cursor
-            -
-            timedelta(
-                days=1
-            )
+        cursor -= timedelta(
+            days=1
         )
-
 
     streak = 0
 
+    while True:
 
-    while (
-        cursor
+        if (
+            cursor
+            in
+            completed_dates
+        ):
+
+            streak += 1
+
+            cursor -= timedelta(
+                days=1
+            )
+
+            continue
+
+        if (
+            cursor
+            in
+            pause_dates
+        ):
+
+            cursor -= timedelta(
+                days=1
+            )
+
+            continue
+
+        break
+
+    return streak
+
+
+
+
+
+# ADVANCE PLAN V2 HELPERS START
+
+ADVANCE_PLAN_SESSION_KEY = (
+    "vocabulary_advance_plan_v2"
+)
+
+
+def get_advance_plan_session(
+    request,
+    course,
+):
+    """
+    Ускоренный учебный день.
+
+    ВАЖНО:
+    это НЕ DailyStudyPlan и он
+    не влияет на календарный streak.
+    """
+
+    data = request.session.get(
+        ADVANCE_PLAN_SESSION_KEY
+    )
+
+    if not data:
+        return None
+
+    today = (
+        timezone.localdate()
+        .isoformat()
+    )
+
+    valid = (
+        isinstance(
+            data,
+            dict,
+        )
+        and
+        data.get("course_id")
+        ==
+        course.id
+        and
+        data.get("calendar_date")
+        ==
+        today
+    )
+
+    if not valid:
+
+        request.session.pop(
+            ADVANCE_PLAN_SESSION_KEY,
+            None,
+        )
+
+        request.session.modified = True
+
+        return None
+
+    return data
+
+
+def clear_advance_plan_session(
+    request,
+):
+
+    if (
+        ADVANCE_PLAN_SESSION_KEY
         in
-        completed_dates
+        request.session
     ):
 
-        streak += 1
+        request.session.pop(
+            ADVANCE_PLAN_SESSION_KEY,
+            None,
+        )
 
-        cursor = (
-            cursor
-            -
-            timedelta(
-                days=1
+        request.session.modified = True
+
+
+def get_advance_item_url(
+    course,
+    item,
+):
+
+    # =====================================================
+    # LESSON
+    # =====================================================
+
+    if (
+        item.get("type")
+        ==
+        "lesson"
+    ):
+
+        lesson_id = (
+            item.get("lesson_id")
+        )
+
+        if lesson_id:
+
+            return reverse(
+                "vocabulary:lesson_detail",
+                kwargs={
+                    "level_code":
+                        course.level.code,
+
+                    "lesson_id":
+                        lesson_id,
+                },
+            )
+
+
+    # =====================================================
+    # UNIFIED PRACTICE
+    # =====================================================
+
+    if (
+        item.get("type")
+        ==
+        "group_practice"
+    ):
+
+        group_id = (
+            item.get("group_id")
+        )
+
+        if group_id:
+
+            return reverse(
+                "vocabulary:unified_group_practice",
+                kwargs={
+                    "level_code":
+                        course.level.code,
+
+                    "group_id":
+                        group_id,
+                },
+            )
+
+
+    return reverse(
+        "vocabulary:dashboard"
+    )
+
+
+def build_advance_plan_context(
+    request,
+    course,
+):
+    """
+    Подготавливает Accelerated Day
+    для dashboard.
+
+    Статусы читаются из реального
+    прогресса пользователя.
+    """
+
+    plan = (
+        get_advance_plan_session(
+            request,
+            course,
+        )
+    )
+
+    if not plan:
+        return None
+
+
+    raw_items = (
+        plan.get("items")
+        or
+        []
+    )
+
+
+    if not raw_items:
+        return None
+
+
+    lesson_ids = [
+
+        item.get("lesson_id")
+
+        for item in raw_items
+
+        if (
+            item.get("type")
+            ==
+            "lesson"
+            and
+            item.get("lesson_id")
+        )
+    ]
+
+
+    group_ids = [
+
+        item.get("group_id")
+
+        for item in raw_items
+
+        if (
+            item.get("type")
+            ==
+            "group_practice"
+            and
+            item.get("group_id")
+        )
+    ]
+
+
+    # =====================================================
+    # COMPLETED LESSONS
+    # =====================================================
+
+    completed_lesson_ids = set(
+
+        LessonPracticeProgress.objects
+        .filter(
+            user=request.user,
+            lesson_id__in=lesson_ids,
+
+            stage1_completed=True,
+            stage2_completed=True,
+            stage3_completed=True,
+            stage4_completed=True,
+        )
+        .values_list(
+            "lesson_id",
+            flat=True,
+        )
+
+    )
+
+
+    # =====================================================
+    # COMPLETED UNIFIED PRACTICES
+    # =====================================================
+
+    completed_group_ids = set(
+
+        UnifiedGroupPracticeSession.objects
+        .filter(
+            user=request.user,
+            group_id__in=group_ids,
+            is_completed=True,
+        )
+        .values_list(
+            "group_id",
+            flat=True,
+        )
+
+    )
+
+
+    items = []
+
+    completed_count = 0
+
+    current_found = False
+
+    next_url = None
+
+
+    for raw_item in raw_items:
+
+        item = dict(
+            raw_item
+        )
+
+
+        # =================================================
+        # STATUS
+        # =================================================
+
+        if (
+            item.get("type")
+            ==
+            "lesson"
+        ):
+
+            completed = (
+                item.get("lesson_id")
+                in
+                completed_lesson_ids
+            )
+
+            title = (
+                f"Lesson "
+                f"{item.get('lesson_number', '')}"
+            )
+
+
+        else:
+
+            completed = (
+                item.get("group_id")
+                in
+                completed_group_ids
+            )
+
+            title = (
+                "Unified Practice"
+            )
+
+
+        if completed:
+
+            completed_count += 1
+
+
+        current = False
+
+        if (
+            not completed
+            and
+            not current_found
+        ):
+
+            current = True
+            current_found = True
+
+
+        url = (
+            get_advance_item_url(
+                course,
+                item,
             )
         )
 
 
-    return streak
+        if current:
+
+            next_url = url
+
+
+        item.update(
+            {
+                "title":
+                    title,
+
+                "completed":
+                    completed,
+
+                "current":
+                    current,
+
+                "clickable":
+                    (
+                        completed
+                        or
+                        current
+                    ),
+
+                "url":
+                    url,
+
+                "group_name":
+                    item.get(
+                        "group_name",
+                        "",
+                    ),
+
+                "estimated_minutes":
+                    item.get(
+                        "estimated_minutes",
+                        0,
+                    ),
+            }
+        )
+
+
+        items.append(
+            item
+        )
+
+
+    total_count = len(
+        items
+    )
+
+
+    progress_percent = (
+
+        round(
+            (
+                completed_count
+                /
+                total_count
+            )
+            *
+            100
+        )
+
+        if total_count
+
+        else 0
+    )
+
+
+    is_completed = (
+        total_count > 0
+        and
+        completed_count
+        ==
+        total_count
+    )
+
+
+    return {
+
+        "day_number":
+            plan.get(
+                "day_number",
+                1,
+            ),
+
+        "estimated_minutes":
+            plan.get(
+                "estimated_minutes",
+                0,
+            ),
+
+        "items":
+            items,
+
+        "completed_count":
+            completed_count,
+
+        "total_count":
+            total_count,
+
+        "progress_percent":
+            progress_percent,
+
+        "is_completed":
+            is_completed,
+
+        "next_url":
+            next_url,
+
+    }
+
+
+def create_next_advance_plan(
+    request,
+    course,
+    today_plan,
+):
+    """
+    Создаёт следующий УЧЕБНЫЙ день,
+    но НЕ создаёт будущий DailyStudyPlan.
+
+    План хранится только в session.
+    """
+
+    previous = (
+        get_advance_plan_session(
+            request,
+            course,
+        )
+    )
+
+
+    # =====================================================
+    # DAY NUMBER
+    # =====================================================
+
+    if previous:
+
+        previous_context = (
+            build_advance_plan_context(
+                request,
+                course,
+            )
+        )
+
+        # Если текущий ускоренный день
+        # ещё не завершён —
+        # новый создавать нельзя.
+
+        if (
+            previous_context
+            and
+            not
+            previous_context[
+                "is_completed"
+            ]
+        ):
+
+            return previous
+
+
+        next_day_number = (
+            int(
+                previous.get(
+                    "day_number",
+                    today_plan.day_number,
+                )
+            )
+            +
+            1
+        )
+
+
+    else:
+
+        next_day_number = (
+            today_plan.day_number
+            +
+            1
+        )
+
+
+    # =====================================================
+    # BUILD NEXT DAY
+    # =====================================================
+
+    preview = (
+        build_week_preview(
+            course,
+            days=1,
+        )
+    )
+
+
+    if not preview:
+
+        clear_advance_plan_session(
+            request
+        )
+
+        return None
+
+
+    preview_day = (
+        preview[0]
+    )
+
+
+    preview_items = (
+        preview_day.get("items")
+        or
+        []
+    )
+
+
+    if not preview_items:
+
+        clear_advance_plan_session(
+            request
+        )
+
+        return None
+
+
+    # Только JSON-compatible данные
+    # сохраняем в session.
+
+    session_items = []
+
+
+    for item in preview_items:
+
+        safe_item = {
+
+            "type":
+                item.get("type"),
+
+            "group_id":
+                item.get("group_id"),
+
+            "group_name":
+                item.get("group_name"),
+
+            "estimated_minutes":
+                item.get(
+                    "estimated_minutes",
+                    0,
+                ),
+        }
+
+
+        if (
+            item.get("type")
+            ==
+            "lesson"
+        ):
+
+            safe_item[
+                "lesson_id"
+            ] = (
+                item.get(
+                    "lesson_id"
+                )
+            )
+
+            safe_item[
+                "lesson_number"
+            ] = (
+                item.get(
+                    "lesson_number"
+                )
+            )
+
+
+        else:
+
+            safe_item[
+                "practice_number"
+            ] = (
+                item.get(
+                    "practice_number"
+                )
+            )
+
+
+        session_items.append(
+            safe_item
+        )
+
+
+    plan = {
+
+        "course_id":
+            course.id,
+
+        "calendar_date":
+            (
+                timezone.localdate()
+                .isoformat()
+            ),
+
+        "day_number":
+            next_day_number,
+
+        "estimated_minutes":
+            preview_day.get(
+                "estimated_content_minutes",
+                preview_day.get(
+                    "estimated_minutes",
+                    0,
+                ),
+            ),
+
+        "items":
+            session_items,
+    }
+
+
+    request.session[
+        ADVANCE_PLAN_SESSION_KEY
+    ] = plan
+
+    request.session.modified = True
+
+
+    return plan
+
+# ADVANCE PLAN V2 HELPERS END
 
 
 # =========================================================
@@ -703,6 +2196,35 @@ def dashboard(
 
 
     # =====================================================
+    # COMMITMENT GATE
+    # =====================================================
+
+    from commitments.models import (
+        CourseCommitment,
+    )
+
+    has_active_commitment = (
+        CourseCommitment.objects
+        .filter(
+            user_course=course,
+            status=(
+                CourseCommitment
+                .Status
+                .ACTIVE
+            ),
+        )
+        .exists()
+    )
+
+    if not has_active_commitment:
+
+        return redirect(
+            "commitments:setup",
+            user_course_id=course.id,
+        )
+
+
+    # =====================================================
     # TODAY PLAN
     # =====================================================
 
@@ -718,6 +2240,39 @@ def dashboard(
             today_plan
         )
     )
+
+
+
+    # ADVANCE PLAN CONTEXT V2 START
+
+    advance_plan = None
+
+    if (
+        today_plan.status
+        ==
+        DailyStudyPlan
+        .Status
+        .COMPLETED
+    ):
+
+        advance_plan = (
+            build_advance_plan_context(
+                request,
+                course,
+            )
+        )
+
+    else:
+
+        # Ускоренный день может существовать
+        # только после выполнения
+        # обязательного плана.
+
+        clear_advance_plan_session(
+            request
+        )
+
+    # ADVANCE PLAN CONTEXT V2 END
 
 
     # =====================================================
@@ -1387,6 +2942,36 @@ def dashboard(
     # CONTEXT
     # =====================================================
 
+
+    # PAUSE_WEEK_STATUS_V3
+
+    paused_dates = (
+        get_pause_dates(
+            course
+        )
+    )
+
+    for week_day in week_days:
+
+        if (
+            week_day["date"]
+            in
+            paused_dates
+            and
+            week_day["date"]
+            <
+            today
+            and
+            week_day["status"]
+            !=
+            "completed"
+        ):
+
+            week_day[
+                "status"
+            ] = "pause"
+
+
     context = {
 
         "course":
@@ -1424,6 +3009,9 @@ def dashboard(
         "week_completed":
             week_completed,
 
+        "advance_plan":
+            advance_plan,
+
         "today":
             today,
 
@@ -1460,6 +3048,10 @@ def dashboard_start(
         )
 
 
+    # =====================================================
+    # CALENDAR TODAY PLAN
+    # =====================================================
+
     plan = (
         get_or_create_today_plan(
             course
@@ -1473,6 +3065,10 @@ def dashboard_start(
         )
     )
 
+
+    # =====================================================
+    # FIRST: NORMAL TODAY TASKS
+    # =====================================================
 
     next_item = (
 
@@ -1499,18 +3095,102 @@ def dashboard_start(
     )
 
 
-    if not next_item:
+    if next_item:
+
+        return redirect(
+            get_daily_item_url(
+                next_item
+            )
+        )
+
+
+    # =====================================================
+    # TODAY IS COMPLETED
+    # NOW USER MAY GO AHEAD
+    # =====================================================
+
+    advance_context = (
+        build_advance_plan_context(
+            request,
+            course,
+        )
+    )
+
+
+    # Уже существует незаконченный
+    # ускоренный День 2 / День 3 / ...
+
+    if (
+        advance_context
+        and
+        not
+        advance_context[
+            "is_completed"
+        ]
+    ):
+
+        next_url = (
+            advance_context.get(
+                "next_url"
+            )
+        )
+
+        if next_url:
+
+            return redirect(
+                next_url
+            )
+
+
+    # Нет ускоренного дня
+    # ИЛИ предыдущий ускоренный день
+    # уже завершён.
+    #
+    # Создаём следующий.
+
+    advance_plan = (
+        create_next_advance_plan(
+            request,
+            course,
+            plan,
+        )
+    )
+
+
+    if not advance_plan:
 
         return redirect(
             "vocabulary:dashboard"
         )
 
 
-    return redirect(
-        get_daily_item_url(
-            next_item
+    advance_context = (
+        build_advance_plan_context(
+            request,
+            course,
         )
     )
+
+
+    if (
+        advance_context
+        and
+        advance_context.get(
+            "next_url"
+        )
+    ):
+
+        return redirect(
+            advance_context[
+                "next_url"
+            ]
+        )
+
+
+    return redirect(
+        "vocabulary:dashboard"
+    )
+
 
 # =========================================================
 # VOCABULARY HOME
@@ -1875,11 +3555,139 @@ def get_practice_card_data(
 # =========================================================
 
 
+
+# =========================================================
+# TRIAL ACCESS GATE
+# =========================================================
+
+
+def _trial_lesson_access_allowed(
+    request,
+    lesson_id,
+    level_code=None,
+):
+    """
+    Guest может открыть только Lessons первой группы A1
+    и только последовательно.
+
+    Разрешено:
+    - уже завершённые Lessons;
+    - первый ещё не завершённый Lesson.
+
+    Запрещено:
+    - другие группы;
+    - другие уровни;
+    - будущие Lessons.
+    """
+
+    if not is_trial_guest(request):
+        return True
+
+    trial_content = (
+        get_trial_start_content()
+    )
+
+    if not trial_content:
+        return False
+
+    trial_group = (
+        trial_content["group"]
+    )
+
+    query = (
+        VocabularyLesson.objects
+        .filter(
+            id=lesson_id,
+            is_active=True,
+        )
+        .select_related(
+            "group",
+            "group__level",
+        )
+    )
+
+    if level_code is not None:
+
+        query = query.filter(
+            group__level__code__iexact=
+                level_code
+        )
+
+    lesson = query.first()
+
+    if lesson is None:
+        return False
+
+    if (
+        lesson.group_id
+        !=
+        trial_group.id
+    ):
+        return False
+
+    lesson_ids = list(
+        VocabularyLesson.objects
+        .filter(
+            group=trial_group,
+            is_active=True,
+        )
+        .order_by(
+            "order",
+            "id",
+        )
+        .values_list(
+            "id",
+            flat=True,
+        )
+    )
+
+    if lesson.id not in lesson_ids:
+        return False
+
+    completed_ids = set(
+        LessonPracticeProgress.objects
+        .filter(
+            user=request.user,
+            lesson_id__in=lesson_ids,
+            completed_at__isnull=False,
+        )
+        .values_list(
+            "lesson_id",
+            flat=True,
+        )
+    )
+
+    # Уже завершённый Lesson
+    # всегда можно открыть повторно.
+    if lesson.id in completed_ids:
+        return True
+
+    # Первый незавершённый Lesson.
+    for current_id in lesson_ids:
+
+        if current_id not in completed_ids:
+
+            return (
+                current_id
+                ==
+                lesson.id
+            )
+
+    return False
+
+
 def group_detail(
     request,
     level_code,
     group_id,
 ):
+
+    # TRIAL_GATE_GROUP
+    if is_trial_guest(request):
+        return redirect(
+            "vocabulary:trial_dashboard"
+        )
+
 
     # =====================================================
     # ACTIVE COURSE USER
@@ -2154,6 +3962,21 @@ def lesson_detail(
     lesson_id,
 ):
 
+    # TRIAL_GATE_LESSON_DETAIL
+    if (
+        is_trial_guest(request)
+        and
+        not _trial_lesson_access_allowed(
+            request,
+            lesson_id,
+            level_code,
+        )
+    ):
+        return redirect(
+            "vocabulary:trial_dashboard"
+        )
+
+
     # =====================================================
     # ACTIVE COURSE USER
     # =====================================================
@@ -2298,6 +4121,21 @@ def lesson_practice(
     level_code,
     lesson_id,
 ):
+
+    # TRIAL_GATE_LESSON_PRACTICE
+    if (
+        is_trial_guest(request)
+        and
+        not _trial_lesson_access_allowed(
+            request,
+            lesson_id,
+            level_code,
+        )
+    ):
+        return redirect(
+            "vocabulary:trial_dashboard"
+        )
+
 
     lesson = get_object_or_404(
         VocabularyLesson,
@@ -5241,6 +7079,24 @@ def lesson_practice_progress(
     request,
     lesson_id,
 ):
+
+    # TRIAL_GATE_LESSON_PROGRESS
+    if (
+        is_trial_guest(request)
+        and
+        not _trial_lesson_access_allowed(
+            request,
+            lesson_id,
+        )
+    ):
+        return JsonResponse(
+            {
+                "success": False,
+                "error": "Trial access denied.",
+            },
+            status=403,
+        )
+
 
     try:
 

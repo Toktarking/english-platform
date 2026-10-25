@@ -1,0 +1,125 @@
+{% extends "vocabulary/base.html" %}
+
+{% block content %}
+
+<div style="max-width: 720px; margin: 50px auto; padding: 30px;">
+
+    <div style="margin-bottom: 35px;">
+        <div style="font-size: 14px; opacity: .6;">
+            COMMITMENT PROGRAM
+        </div>
+
+        <h1 style="font-size: 40px; margin: 8px 0;">
+            Зачем вам английский?
+        </h1>
+
+        <p style="font-size: 18px; opacity: .75;">
+            Не для нас. Для себя.
+        </p>
+    </div>
+
+    {% if error %}
+        <div style="
+            padding: 15px 18px;
+            background: #fee;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        ">
+            {{ error }}
+        </div>
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+
+        <label style="font-weight: 600;">
+            Я хочу выучить английский, потому что…
+        </label>
+
+        <textarea
+            name="goal_text"
+            rows="4"
+            required
+            style="
+                width: 100%;
+                box-sizing: border-box;
+                padding: 16px;
+                margin-top: 10px;
+                margin-bottom: 30px;
+                font-size: 17px;
+                border-radius: 12px;
+            "
+        >{{ goal_text }}</textarea>
+
+        <label style="font-weight: 600;">
+            Что изменится в вашей жизни,
+            когда вы достигнете этой цели?
+        </label>
+
+        <textarea
+            name="motivation_text"
+            rows="4"
+            required
+            style="
+                width: 100%;
+                box-sizing: border-box;
+                padding: 16px;
+                margin-top: 10px;
+                margin-bottom: 35px;
+                font-size: 17px;
+                border-radius: 12px;
+            "
+        >{{ motivation_text }}</textarea>
+
+        <div style="
+            padding: 22px;
+            border-radius: 16px;
+            background: rgba(0,0,0,.04);
+            margin-bottom: 30px;
+        ">
+            <strong>
+                {{ user_course.duration_days }} дней
+            </strong>
+
+            <br><br>
+
+            Стоимость программы:
+            <strong>
+                {{ plan.tuition_amount|floatformat:0 }} ₸
+            </strong>
+
+            <br>
+
+            Возвратная часть:
+            <strong>
+                {{ plan.refundable_amount|floatformat:0 }} ₸
+            </strong>
+
+            <br>
+
+            Максимально можно вернуть:
+            <strong>
+                {{ plan.refundable_amount|floatformat:0 }} ₸
+            </strong>
+        </div>
+
+        <button
+            type="submit"
+            style="
+                width: 100%;
+                padding: 18px;
+                border: 0;
+                border-radius: 14px;
+                font-size: 18px;
+                font-weight: 700;
+                cursor: pointer;
+            "
+        >
+            Продолжить
+        </button>
+
+    </form>
+
+</div>
+
+{% endblock %}
