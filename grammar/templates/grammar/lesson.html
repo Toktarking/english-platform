@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1"
+    >
+    <title>{{ lesson.title }}</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 20px;
+            line-height: 1.6;
+        }
+
+        .theory {
+            white-space: pre-wrap;
+            margin: 30px 0;
+        }
+
+        audio {
+            width: 100%;
+            margin: 20px 0;
+        }
+
+        button {
+            padding: 14px 22px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <a href="{% url 'grammar:home' %}">
+        ← Grammar
+    </a>
+
+    <h1>
+        Lesson {{ lesson.order }}.
+        {{ lesson.title }}
+    </h1>
+
+    <p>
+        Status:
+        <strong>
+            {{ progress.get_status_display }}
+        </strong>
+    </p>
+
+    {% if lesson.audio_file %}
+        <audio controls>
+            <source src="{{ lesson.audio_file.url }}">
+        </audio>
+    {% endif %}
+
+    <div class="theory">
+        {{ lesson.theory_text }}
+    </div>
+
+    {% if progress.status != "completed" %}
+
+        <form
+            method="post"
+            action="{% url 'grammar:complete' lesson.slug %}"
+        >
+            {% csrf_token %}
+
+            <input
+                type="hidden"
+                name="score"
+                value="100"
+            >
+
+            <button type="submit">
+                Complete lesson
+            </button>
+        </form>
+
+    {% else %}
+
+        <h2>✅ Lesson completed</h2>
+
+        <p>
+            Score:
+            {{ progress.score }}%
+        </p>
+
+    {% endif %}
+
+</body>
+</html>

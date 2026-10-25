@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1"
+    >
+    <title>Grammar</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+            background: #f7f7f7;
+            color: #222;
+        }
+
+        .lesson {
+            display: block;
+            padding: 20px;
+            margin-bottom: 14px;
+            background: white;
+            border-radius: 14px;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .status {
+            opacity: .6;
+            margin-top: 8px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Grammar</h1>
+
+    {% for item in lesson_cards %}
+
+        <a
+            class="lesson"
+            href="{% url 'grammar:lesson' item.lesson.slug %}"
+        >
+            <strong>
+                Lesson {{ item.lesson.order }}.
+                {{ item.lesson.title }}
+            </strong>
+
+            <div>
+                {{ item.lesson.level }}
+                ·
+                {{ item.lesson.estimated_minutes }} min
+            </div>
+
+            <div class="status">
+                {% if item.progress %}
+                    {{ item.progress.get_status_display }}
+                {% else %}
+                    Not started
+                {% endif %}
+            </div>
+        </a>
+
+    {% empty %}
+
+        <p>
+            Grammar lessons will appear here.
+        </p>
+
+    {% endfor %}
+
+</body>
+</html>
