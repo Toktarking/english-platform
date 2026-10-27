@@ -214,6 +214,7 @@ class GrammarLessonTests(TestCase):
                 f"answer_{self.exercise2.id}":
                     "a",
             },
+            follow=True,
         )
 
         self.assertEqual(
@@ -286,4 +287,83 @@ class GrammarLessonTests(TestCase):
         self.assertContains(
             response,
             "startWithPractice",
+        )
+
+
+    def test_passed_attempt_still_shows_mistake_review(
+        self
+    ):
+
+        self.login()
+
+        # 1 из 2 = 50%.
+        # Для этого теста делаем проходным 50%.
+        self.lesson.pass_score = 50
+        self.lesson.save(
+            update_fields=[
+                "pass_score",
+            ]
+        )
+
+        response = self.client.post(
+            reverse(
+                "grammar:complete",
+                kwargs={
+                    "slug":
+                        self.lesson.slug,
+                },
+            ),
+            {
+                f"answer_{self.exercise1.id}":
+                    "a",
+
+                f"answer_{self.exercise2.id}":
+                    "a",
+            },
+            follow=True,
+        )
+
+        self.assertEqual(
+            response.status_code,
+            200,
+        )
+
+        progress = (
+            GrammarLessonProgress.objects
+            .get(
+                user=self.user,
+                lesson=self.lesson,
+            )
+        )
+
+        self.assertEqual(
+            progress.status,
+            GrammarLessonProgress
+            .Status
+            .COMPLETED,
+        )
+
+        self.assertEqual(
+            progress.score,
+            50,
+        )
+
+        self.assertEqual(
+            progress.xp_earned,
+            100,
+        )
+
+        self.assertContains(
+            response,
+            "Где были ошибки",
+        )
+
+        self.assertContains(
+            response,
+            "This is ___ apple.",
+        )
+
+        self.assertContains(
+            response,
+            "Apple begins with",
         )

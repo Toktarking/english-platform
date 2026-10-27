@@ -23,13 +23,19 @@ def _lesson_content(lesson):
 
     exercises = list(
         lesson.exercises
-        .filter(
-            is_published=True
-        )
+        .filter(is_published=True)
         .order_by("order")
     )
 
     return sections, exercises
+
+
+def _review_session_key(lesson):
+
+    return (
+        f"grammar_attempt_review_"
+        f"{lesson.id}"
+    )
 
 
 @login_required
@@ -139,6 +145,24 @@ def grammar_lesson(request, slug):
         == "1"
     )
 
+    attempt_result = (
+        request.session.pop(
+            _review_session_key(lesson),
+            None,
+        )
+    )
+
+    wrong_results = []
+
+    if attempt_result:
+
+        wrong_results = (
+            attempt_result.pop(
+                "wrong_results",
+                [],
+            )
+        )
+
     return render(
         request,
         "grammar/lesson.html",
@@ -147,8 +171,15 @@ def grammar_lesson(request, slug):
             "progress": progress,
             "sections": sections,
             "exercises": exercises,
+
             "start_with_practice":
                 start_with_practice,
+
+            "attempt_result":
+                attempt_result,
+
+            "wrong_results":
+                wrong_results,
         },
     )
 
@@ -168,7 +199,7 @@ def complete_lesson(request, slug):
             slug=lesson.slug,
         )
 
-    sections, exercises = (
+    _, exercises = (
         _lesson_content(lesson)
     )
 
@@ -184,9 +215,9 @@ def complete_lesson(request, slug):
         progress.started_at = timezone.now()
 
     total = len(exercises)
-
     correct = 0
-    review_results = []
+
+    wrong_results = []
 
     for exercise in exercises:
 
@@ -209,19 +240,33 @@ def complete_lesson(request, slug):
         )
 
         if is_correct:
+
             correct += 1
 
-        review_results.append(
-            {
-                "exercise": exercise,
-                "submitted": (
-                    submitted
-                    or "Нет ответа"
-                ),
-                "correct_answer": expected,
-                "is_correct": is_correct,
-            }
-        )
+        else:
+
+            wrong_results.append(
+                {
+                    "order":
+                        exercise.order,
+
+                    "prompt":
+                        exercise.prompt,
+
+                    "submitted":
+                        (
+                            submitted
+                            or
+                            "Нет ответа"
+                        ),
+
+                    "correct_answer":
+                        expected,
+
+                    "explanation":
+                        exercise.explanation,
+                }
+            )
 
     score = (
         round(
@@ -251,8 +296,6 @@ def complete_lesson(request, slug):
             .COMPLETED
         )
 
-        # XP начисляется один раз как итог
-        # за завершённый Grammar Lesson.
         progress.xp_earned = (
             lesson.xp_reward
         )
@@ -262,32 +305,16 @@ def complete_lesson(request, slug):
                 timezone.now()
             )
 
-        progress.save(
-            update_fields=[
-                "status",
-                "score",
-                "correct_answers",
-                "total_questions",
-                "xp_earned",
-                "started_at",
-                "completed_at",
-                "updated_at",
-            ]
+    else:
+
+        progress.status = (
+            GrammarLessonProgress
+            .Status
+            .IN_PROGRESS
         )
 
-        return redirect(
-            "grammar:lesson",
-            slug=lesson.slug,
-        )
-
-    progress.status = (
-        GrammarLessonProgress
-        .Status
-        .IN_PROGRESS
-    )
-
-    progress.xp_earned = 0
-    progress.completed_at = None
+        progress.xp_earned = 0
+        progress.completed_at = None
 
     progress.save(
         update_fields=[
@@ -302,31 +329,29 @@ def complete_lesson(request, slug):
         ]
     )
 
-    wrong_results = [
-        item
-        for item in review_results
-        if not item["is_correct"]
-    ]
+    # Сохраняем результат одной попытки.
+    # После redirect страница сможет показать,
+    # где именно пользователь ошибся.
+    request.session[
+        _review_session_key(lesson)
+    ] = {
+        "passed":
+            passed,
 
-    return render(
-        request,
-        "grammar/lesson.html",
-        {
-            "lesson": lesson,
-            "progress": progress,
-            "sections": sections,
-            "exercises": exercises,
+        "score":
+            score,
 
-            "attempt_result": {
-                "passed": False,
-                "score": score,
-                "correct": correct,
-                "total": total,
-            },
+        "correct":
+            correct,
 
-            "wrong_results":
-                wrong_results,
+        "total":
+            total,
 
-            "start_with_practice": True,
-        },
+        "wrong_results":
+            wrong_results,
+    }
+
+    return redirect(
+        "grammar:lesson",
+        slug=lesson.slug,
     )

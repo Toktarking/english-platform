@@ -623,6 +623,81 @@
             </div>
 
 
+            {% if attempt_result %}
+
+                {% if wrong_results %}
+
+                    <div class="mistakes">
+
+                        <h2>
+                            Где были ошибки
+                        </h2>
+
+                        <p class="result-meta">
+                            Ошибок:
+                            <strong>
+                                {{ wrong_results|length }}
+                            </strong>
+                        </p>
+
+
+                        {% for item in wrong_results %}
+
+                            <div class="mistake">
+
+                                <div class="mistake-question">
+                                    {{ item.order }}.
+                                    {{ item.prompt }}
+                                </div>
+
+                                <div class="wrong">
+                                    Ваш ответ:
+                                    <strong>
+                                        {{ item.submitted }}
+                                    </strong>
+                                </div>
+
+                                <div class="correct">
+                                    Правильный ответ:
+                                    <strong>
+                                        {{ item.correct_answer }}
+                                    </strong>
+                                </div>
+
+                                {% if item.explanation %}
+
+                                    <div class="explanation">
+                                        {{ item.explanation }}
+                                    </div>
+
+                                {% endif %}
+
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+                {% else %}
+
+                    <div
+                        class="mistakes"
+                        style="
+                            background:#f3fbf5;
+                            padding:18px;
+                            border-radius:16px;
+                        "
+                    >
+                        <strong>
+                            🎯 Все ответы правильные!
+                        </strong>
+                    </div>
+
+                {% endif %}
+
+            {% endif %}
+
+
             <div class="result-actions">
 
                 <a
@@ -711,8 +786,8 @@
 
                             <div class="mistake-question">
 
-                                {{ item.exercise.order }}.
-                                {{ item.exercise.prompt }}
+                                {{ item.order }}.
+                                {{ item.prompt }}
 
                             </div>
 
@@ -737,11 +812,11 @@
                             </div>
 
 
-                            {% if item.exercise.explanation %}
+                            {% if item.explanation %}
 
                                 <div class="explanation">
 
-                                    {{ item.exercise.explanation }}
+                                    {{ item.explanation }}
 
                                 </div>
 
