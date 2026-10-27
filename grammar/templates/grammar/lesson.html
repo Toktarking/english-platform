@@ -2,12 +2,10 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-
     <meta
         name="viewport"
         content="width=device-width, initial-scale=1"
     >
-
     <title>{{ lesson.title }}</title>
 
     <style>
@@ -24,112 +22,264 @@
                 BlinkMacSystemFont,
                 "Segoe UI",
                 sans-serif;
-            line-height: 1.65;
+            line-height: 1.6;
         }
 
         .page {
-            width: min(820px, 92%);
-            margin: 40px auto 80px;
+            width: min(860px, 92%);
+            margin: 36px auto 80px;
         }
 
         .back {
-            color: #555;
+            display: inline-block;
+            margin-bottom: 16px;
+            color: #5b5b5b;
             text-decoration: none;
+            font-weight: 500;
         }
 
         .hero,
-        .section,
-        .practice,
+        .card,
         .result {
             background: #fff;
-            border-radius: 22px;
-            padding: 26px;
-            margin-top: 20px;
-            box-shadow:
-                0 4px 22px rgba(0,0,0,.05);
+            border-radius: 24px;
+            box-shadow: 0 6px 24px rgba(0,0,0,.05);
         }
 
-        h1 {
-            font-size: 38px;
-            line-height: 1.15;
-            margin: 14px 0;
-        }
-
-        h2 {
-            margin-top: 0;
+        .hero {
+            padding: 28px;
+            margin-bottom: 20px;
         }
 
         .meta {
             opacity: .6;
+            font-size: 15px;
         }
 
-        .section-body {
+        h1 {
+            margin: 12px 0 12px;
+            font-size: 32px;
+            line-height: 1.2;
+        }
+
+        .reward-line {
+            font-size: 18px;
+            font-weight: 600;
+            color: #555;
+        }
+
+        .wizard-shell {
+            background: #fff;
+            border-radius: 24px;
+            box-shadow: 0 6px 24px rgba(0,0,0,.05);
+            padding: 28px;
+        }
+
+        .wizard-top {
+            display: flex;
+            justify-content: space-between;
+            gap: 14px;
+            align-items: center;
+            margin-bottom: 18px;
+            flex-wrap: wrap;
+        }
+
+        .mode-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 14px;
+            border-radius: 999px;
+            background: #f0ebff;
+            color: #6b35ff;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .step-counter {
+            font-size: 14px;
+            opacity: .65;
+            font-weight: 600;
+        }
+
+        .progress-track {
+            width: 100%;
+            height: 10px;
+            background: #ececf2;
+            border-radius: 999px;
+            overflow: hidden;
+            margin-bottom: 26px;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #6c2cff, #9b72ff);
+            transition: width .25s ease;
+        }
+
+        .step-panel {
+            display: none;
+            min-height: 340px;
+        }
+
+        .step-panel.active {
+            display: block;
+        }
+
+        .panel-title {
+            margin: 0 0 16px;
+            font-size: 22px;
+            line-height: 1.25;
+            font-weight: 800;
+        }
+
+        .panel-body {
             white-space: pre-wrap;
+            font-size: 17px;
         }
 
         audio {
             width: 100%;
-            margin-top: 16px;
+            margin-top: 20px;
         }
 
-        .exercise {
-            padding: 22px 0;
-            border-bottom: 1px solid #eee;
-        }
-
-        .exercise:last-child {
-            border-bottom: 0;
-        }
-
-        .prompt {
-            font-size: 18px;
-            font-weight: 700;
-            margin-bottom: 14px;
+        .options {
+            margin-top: 18px;
         }
 
         .option {
             display: block;
-            padding: 11px 14px;
-            margin: 8px 0;
+            padding: 14px 16px;
+            margin: 10px 0;
             border: 1px solid #ddd;
-            border-radius: 14px;
+            border-radius: 16px;
             cursor: pointer;
+            transition:
+                background .15s ease,
+                border-color .15s ease;
         }
 
         .option:hover {
-            background: #f6f6f6;
+            background: #f7f7fb;
+            border-color: #cfc8ff;
         }
 
-        button {
-            width: 100%;
+        .option input {
+            margin-right: 10px;
+        }
+
+        .wizard-nav {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            margin-top: 26px;
+            flex-wrap: wrap;
+        }
+
+        .nav-left,
+        .nav-right {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
             border: 0;
             border-radius: 16px;
-            padding: 16px;
-            margin-top: 24px;
-            font-size: 17px;
+            padding: 14px 18px;
+            font-size: 16px;
             font-weight: 750;
             cursor: pointer;
+            transition:
+                transform .05s ease,
+                opacity .15s ease,
+                background .15s ease;
+        }
+
+        .btn:active {
+            transform: translateY(1px);
+        }
+
+        .btn-secondary {
+            background: #efeff6;
+            color: #171717;
+        }
+
+        .btn-primary {
             background: #171717;
             color: white;
         }
 
+        .btn-accent {
+            background: linear-gradient(90deg, #6c2cff, #9b72ff);
+            color: white;
+        }
+
+        .btn[disabled] {
+            opacity: .45;
+            cursor: not-allowed;
+        }
+
+        .hidden-submit {
+            display: none;
+        }
+
+        .result {
+            padding: 28px;
+        }
+
         .success {
-            font-size: 26px;
-            font-weight: 800;
+            font-size: 28px;
+            font-weight: 850;
+            margin-bottom: 10px;
         }
 
         .score {
-            font-size: 34px;
+            font-size: 38px;
             font-weight: 850;
+            line-height: 1;
+            margin-bottom: 12px;
         }
 
         .xp {
             font-size: 20px;
             font-weight: 750;
+            color: #6b35ff;
         }
 
-        .try-again {
-            font-weight: 700;
+        .muted {
+            opacity: .7;
+        }
+
+        @media (max-width: 640px) {
+            h1 {
+                font-size: 28px;
+            }
+
+            .wizard-shell,
+            .hero,
+            .result {
+                padding: 20px;
+            }
+
+            .step-panel {
+                min-height: 280px;
+            }
+
+            .wizard-nav {
+                flex-direction: column;
+            }
+
+            .nav-left,
+            .nav-right {
+                width: 100%;
+            }
+
+            .nav-left .btn,
+            .nav-right .btn {
+                width: 100%;
+            }
         }
     </style>
 </head>
@@ -145,168 +295,297 @@
         ← Grammar
     </a>
 
-
     <div class="hero">
-
         <div class="meta">
-            {{ lesson.level }}
-            · Lesson {{ lesson.order }}
-            · {{ lesson.estimated_minutes }} min
+            {{ lesson.level }} · Lesson {{ lesson.order }} · {{ lesson.estimated_minutes }} min
         </div>
 
-        <h1>
-            {{ lesson.title }}
-        </h1>
+        <h1>{{ lesson.title }}</h1>
 
-        <div class="meta">
-            Passing score:
-            {{ lesson.pass_score }}%
+        <div class="reward-line">
+            Passing score: {{ lesson.pass_score }}%
             ·
-            Reward:
-            +{{ lesson.xp_reward }} XP
+            Reward: +{{ lesson.xp_reward }} XP
         </div>
 
         {% if lesson.audio_file %}
-
             <audio controls>
-                <source
-                    src="{{ lesson.audio_file.url }}"
-                >
+                <source src="{{ lesson.audio_file.url }}">
             </audio>
-
         {% endif %}
-
     </div>
-
-
-    {% for section in sections %}
-
-        <section class="section">
-
-            <h2>
-                {{ section.order }}.
-                {{ section.title }}
-            </h2>
-
-            <div class="section-body">
-                {{ section.body }}
-            </div>
-
-            {% if section.audio_file %}
-
-                <audio controls>
-                    <source
-                        src="{{ section.audio_file.url }}"
-                    >
-                </audio>
-
-            {% endif %}
-
-        </section>
-
-    {% endfor %}
-
 
     {% if progress.status == "completed" %}
 
         <div class="result">
-
-            <div class="success">
-                ✅ Lesson completed
-            </div>
-
-            <div class="score">
-                {{ progress.score }}%
-            </div>
+            <div class="success">✅ Lesson completed</div>
+            <div class="score">{{ progress.score }}%</div>
 
             <p>
                 Correct:
-                {{ progress.correct_answers }}
-                /
-                {{ progress.total_questions }}
+                <strong>{{ progress.correct_answers }} / {{ progress.total_questions }}</strong>
             </p>
 
-            <div class="xp">
-                ⭐ +{{ progress.xp_earned }} XP
-            </div>
-
+            <div class="xp">⭐ +{{ progress.xp_earned }} XP</div>
         </div>
 
     {% else %}
 
         <form
-            class="practice"
+            id="lessonForm"
             method="post"
             action="{% url 'grammar:complete' lesson.slug %}"
         >
-
             {% csrf_token %}
 
-            <h2>
-                Practice
-            </h2>
+            <div class="wizard-shell">
 
-            <p class="meta">
-                Answer all questions.
-                You need {{ lesson.pass_score }}%
-                to complete the lesson.
-            </p>
-
-
-            {% for exercise in exercises %}
-
-                <div class="exercise">
-
-                    <div class="prompt">
-                        {{ exercise.order }}.
-                        {{ exercise.prompt }}
+                <div class="wizard-top">
+                    <div
+                        id="modeBadge"
+                        class="mode-badge"
+                    >
+                        Theory
                     </div>
 
-                    {% for option in exercise.options %}
-
-                        <label class="option">
-
-                            <input
-                                type="radio"
-                                name="answer_{{ exercise.id }}"
-                                value="{{ option }}"
-                                required
-                            >
-
-                            {{ option }}
-
-                        </label>
-
-                    {% endfor %}
-
+                    <div
+                        id="stepCounter"
+                        class="step-counter"
+                    >
+                        Step 1
+                    </div>
                 </div>
 
-            {% endfor %}
+                <div class="progress-track">
+                    <div
+                        id="progressBar"
+                        class="progress-bar"
+                    ></div>
+                </div>
 
+                {% for section in sections %}
+                    <div
+                        class="step-panel theory-step"
+                        data-step-type="theory"
+                        data-step-index="{{ forloop.counter0 }}"
+                    >
+                        <h2 class="panel-title">
+                            {{ section.order }}. {{ section.title }}
+                        </h2>
 
-            {% if progress.total_questions %}
+                        <div class="panel-body">
+                            {{ section.body }}
+                        </div>
 
-                <p class="try-again">
+                        {% if section.audio_file %}
+                            <audio controls>
+                                <source src="{{ section.audio_file.url }}">
+                            </audio>
+                        {% endif %}
+                    </div>
+                {% endfor %}
 
-                    Previous result:
-                    {{ progress.correct_answers }}
-                    /
-                    {{ progress.total_questions }}
-                    —
-                    {{ progress.score }}%.
+                {% for exercise in exercises %}
+                    <div
+                        class="step-panel practice-step"
+                        data-step-type="practice"
+                        data-step-index="{{ forloop.counter0 }}"
+                    >
+                        <h2 class="panel-title">
+                            Question {{ forloop.counter }} of {{ exercises|length }}
+                        </h2>
 
-                    Try again.
+                        <div class="panel-body" style="white-space: normal;">
+                            <strong>{{ exercise.prompt }}</strong>
+                        </div>
 
-                </p>
+                        <div class="options">
+                            {% for option in exercise.options %}
+                                <label class="option">
+                                    <input
+                                        type="radio"
+                                        name="answer_{{ exercise.id }}"
+                                        value="{{ option }}"
+                                    >
+                                    {{ option }}
+                                </label>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endfor %}
 
-            {% endif %}
+                <div class="wizard-nav">
+                    <div class="nav-left">
+                        <button
+                            type="button"
+                            id="prevBtn"
+                            class="btn btn-secondary"
+                        >
+                            ← Back
+                        </button>
+                    </div>
 
+                    <div class="nav-right">
+                        <button
+                            type="button"
+                            id="nextBtn"
+                            class="btn btn-primary"
+                        >
+                            Next →
+                        </button>
 
-            <button type="submit">
-                Check answers →
-            </button>
+                        <button
+                            type="submit"
+                            id="submitBtn"
+                            class="btn btn-accent hidden-submit"
+                        >
+                            Finish lesson →
+                        </button>
+                    </div>
+                </div>
 
+            </div>
         </form>
+
+        <script>
+            (function () {
+                const theorySteps = Array.from(
+                    document.querySelectorAll('.theory-step')
+                );
+
+                const practiceSteps = Array.from(
+                    document.querySelectorAll('.practice-step')
+                );
+
+                const allSteps = [
+                    ...theorySteps,
+                    ...practiceSteps
+                ];
+
+                const prevBtn = document.getElementById('prevBtn');
+                const nextBtn = document.getElementById('nextBtn');
+                const submitBtn = document.getElementById('submitBtn');
+                const progressBar = document.getElementById('progressBar');
+                const stepCounter = document.getElementById('stepCounter');
+                const modeBadge = document.getElementById('modeBadge');
+
+                let currentStep = 0;
+
+                function isTheory(index) {
+                    return index < theorySteps.length;
+                }
+
+                function currentPracticeNumber(index) {
+                    return index - theorySteps.length + 1;
+                }
+
+                function totalPractice() {
+                    return practiceSteps.length;
+                }
+
+                function updateUI() {
+                    allSteps.forEach((step, index) => {
+                        step.classList.toggle(
+                            'active',
+                            index === currentStep
+                        );
+                    });
+
+                    const totalSteps = allSteps.length;
+                    const percent = ((currentStep + 1) / totalSteps) * 100;
+                    progressBar.style.width = percent + '%';
+
+                    prevBtn.disabled = currentStep === 0;
+
+                    const inTheory = isTheory(currentStep);
+                    const isLastStep = currentStep === totalSteps - 1;
+
+                    if (inTheory) {
+                        modeBadge.textContent = 'Theory';
+                        stepCounter.textContent =
+                            'Theory ' +
+                            (currentStep + 1) +
+                            ' / ' +
+                            theorySteps.length;
+                    } else {
+                        modeBadge.textContent = 'Practice';
+                        stepCounter.textContent =
+                            'Question ' +
+                            currentPracticeNumber(currentStep) +
+                            ' / ' +
+                            totalPractice();
+                    }
+
+                    if (isLastStep) {
+                        nextBtn.classList.add('hidden-submit');
+                        submitBtn.classList.remove('hidden-submit');
+                    } else {
+                        nextBtn.classList.remove('hidden-submit');
+                        submitBtn.classList.add('hidden-submit');
+                    }
+
+                    if (inTheory) {
+                        if (currentStep === theorySteps.length - 1) {
+                            nextBtn.textContent = 'Go to practice →';
+                        } else {
+                            nextBtn.textContent = 'Next →';
+                        }
+                    } else {
+                        if (currentStep === totalSteps - 2) {
+                            nextBtn.textContent = 'Last question →';
+                        } else {
+                            nextBtn.textContent = 'Next →';
+                        }
+                    }
+                }
+
+                function canGoNext() {
+                    if (isTheory(currentStep)) {
+                        return true;
+                    }
+
+                    const currentPanel = allSteps[currentStep];
+                    const checked = currentPanel.querySelector(
+                        'input[type="radio"]:checked'
+                    );
+
+                    if (!checked) {
+                        alert('Please choose one answer first.');
+                        return false;
+                    }
+
+                    return true;
+                }
+
+                nextBtn.addEventListener('click', function () {
+                    if (!canGoNext()) {
+                        return;
+                    }
+
+                    if (currentStep < allSteps.length - 1) {
+                        currentStep += 1;
+                        updateUI();
+                        window.scrollTo({
+                            top: 0,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+
+                prevBtn.addEventListener('click', function () {
+                    if (currentStep > 0) {
+                        currentStep -= 1;
+                        updateUI();
+                        window.scrollTo({
+                            top: 0,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+
+                updateUI();
+            })();
+        </script>
 
     {% endif %}
 
