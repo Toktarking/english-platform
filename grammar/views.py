@@ -13,6 +13,25 @@ from .models import (
 )
 
 
+def _lesson_content(lesson):
+
+    sections = list(
+        lesson.sections
+        .all()
+        .order_by("order")
+    )
+
+    exercises = list(
+        lesson.exercises
+        .filter(
+            is_published=True
+        )
+        .order_by("order")
+    )
+
+    return sections, exercises
+
+
 @login_required
 def grammar_home(request):
 
@@ -111,18 +130,13 @@ def grammar_lesson(request, slug):
             ]
         )
 
-    sections = list(
-        lesson.sections
-        .all()
-        .order_by("order")
+    sections, exercises = (
+        _lesson_content(lesson)
     )
 
-    exercises = list(
-        lesson.exercises
-        .filter(
-            is_published=True
-        )
-        .order_by("order")
+    start_with_practice = (
+        request.GET.get("practice")
+        == "1"
     )
 
     return render(
@@ -133,6 +147,8 @@ def grammar_lesson(request, slug):
             "progress": progress,
             "sections": sections,
             "exercises": exercises,
+            "start_with_practice":
+                start_with_practice,
         },
     )
 
@@ -152,12 +168,8 @@ def complete_lesson(request, slug):
             slug=lesson.slug,
         )
 
-    exercises = list(
-        lesson.exercises
-        .filter(
-            is_published=True
-        )
-        .order_by("order")
+    sections, exercises = (
+        _lesson_content(lesson)
     )
 
     progress, _ = (
@@ -172,7 +184,9 @@ def complete_lesson(request, slug):
         progress.started_at = timezone.now()
 
     total = len(exercises)
+
     correct = 0
+    review_results = []
 
     for exercise in exercises:
 
@@ -190,8 +204,24 @@ def complete_lesson(request, slug):
             .strip()
         )
 
-        if submitted == expected:
+        is_correct = (
+            submitted == expected
+        )
+
+        if is_correct:
             correct += 1
+
+        review_results.append(
+            {
+                "exercise": exercise,
+                "submitted": (
+                    submitted
+                    or "Нет ответа"
+                ),
+                "correct_answer": expected,
+                "is_correct": is_correct,
+            }
+        )
 
     score = (
         round(
@@ -214,24 +244,50 @@ def complete_lesson(request, slug):
     progress.total_questions = total
 
     if passed:
+
         progress.status = (
-            GrammarLessonProgress.Status.COMPLETED
+            GrammarLessonProgress
+            .Status
+            .COMPLETED
         )
 
-        # Идемпотентно:
-        # повторное прохождение не удваивает XP.
-        progress.xp_earned = lesson.xp_reward
+        # XP начисляется один раз как итог
+        # за завершённый Grammar Lesson.
+        progress.xp_earned = (
+            lesson.xp_reward
+        )
 
         if not progress.completed_at:
-            progress.completed_at = timezone.now()
+            progress.completed_at = (
+                timezone.now()
+            )
 
-    else:
-        progress.status = (
-            GrammarLessonProgress.Status.IN_PROGRESS
+        progress.save(
+            update_fields=[
+                "status",
+                "score",
+                "correct_answers",
+                "total_questions",
+                "xp_earned",
+                "started_at",
+                "completed_at",
+                "updated_at",
+            ]
         )
 
-        progress.xp_earned = 0
-        progress.completed_at = None
+        return redirect(
+            "grammar:lesson",
+            slug=lesson.slug,
+        )
+
+    progress.status = (
+        GrammarLessonProgress
+        .Status
+        .IN_PROGRESS
+    )
+
+    progress.xp_earned = 0
+    progress.completed_at = None
 
     progress.save(
         update_fields=[
@@ -246,7 +302,31 @@ def complete_lesson(request, slug):
         ]
     )
 
-    return redirect(
-        "grammar:lesson",
-        slug=lesson.slug,
+    wrong_results = [
+        item
+        for item in review_results
+        if not item["is_correct"]
+    ]
+
+    return render(
+        request,
+        "grammar/lesson.html",
+        {
+            "lesson": lesson,
+            "progress": progress,
+            "sections": sections,
+            "exercises": exercises,
+
+            "attempt_result": {
+                "passed": False,
+                "score": score,
+                "correct": correct,
+                "total": total,
+            },
+
+            "wrong_results":
+                wrong_results,
+
+            "start_with_practice": True,
+        },
     )

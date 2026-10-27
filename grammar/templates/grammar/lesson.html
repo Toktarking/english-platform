@@ -1,292 +1,556 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
+
     <meta charset="UTF-8">
+
     <meta
         name="viewport"
         content="width=device-width, initial-scale=1"
     >
+
     <title>{{ lesson.title }}</title>
 
+
     <style>
+
         * {
             box-sizing: border-box;
         }
 
+
         body {
             margin: 0;
-            background: #f6f7f9;
+            background: #f5f6f8;
             color: #171717;
+
             font-family:
                 -apple-system,
                 BlinkMacSystemFont,
                 "Segoe UI",
                 sans-serif;
+
             line-height: 1.6;
         }
 
+
         .page {
             width: min(860px, 92%);
-            margin: 36px auto 80px;
+            margin: 28px auto 70px;
         }
+
 
         .back {
             display: inline-block;
             margin-bottom: 16px;
-            color: #5b5b5b;
+
+            color: #666;
             text-decoration: none;
-            font-weight: 500;
+            font-weight: 600;
         }
+
 
         .hero,
-        .card,
-        .result {
+        .wizard,
+        .result-card {
             background: #fff;
             border-radius: 24px;
-            box-shadow: 0 6px 24px rgba(0,0,0,.05);
+
+            box-shadow:
+                0 5px 24px
+                rgba(0, 0, 0, .055);
         }
 
+
         .hero {
-            padding: 28px;
+            padding: 26px 28px;
             margin-bottom: 20px;
         }
 
-        .meta {
-            opacity: .6;
+
+        .hero-meta {
+            color: #777;
             font-size: 15px;
         }
 
+
         h1 {
-            margin: 12px 0 12px;
-            font-size: 32px;
-            line-height: 1.2;
+            margin:
+                10px
+                0
+                10px;
+
+            font-size: 34px;
+            line-height: 1.15;
         }
 
-        .reward-line {
-            font-size: 18px;
+
+        .reward {
+            color: #666;
             font-weight: 600;
-            color: #555;
         }
 
-        .wizard-shell {
-            background: #fff;
-            border-radius: 24px;
-            box-shadow: 0 6px 24px rgba(0,0,0,.05);
-            padding: 28px;
+
+        /* ================================
+           WIZARD
+        ================================= */
+
+
+        .wizard {
+            padding: 26px 28px;
         }
 
-        .wizard-top {
+
+        .phase-row {
+            display: grid;
+            grid-template-columns:
+                1fr
+                1fr;
+
+            gap: 10px;
+
+            margin-bottom: 16px;
+        }
+
+
+        .phase {
+            padding: 10px;
+            border-radius: 12px;
+
+            text-align: center;
+            font-weight: 750;
+            font-size: 14px;
+
+            background: #eeeef3;
+            color: #777;
+
+            transition: .2s ease;
+        }
+
+
+        .phase.active {
+            background: #171717;
+            color: #fff;
+        }
+
+
+        .phase.done {
+            background: #e8f7ed;
+            color: #168242;
+        }
+
+
+        .progress-line {
+            height: 8px;
+
+            background: #ececf1;
+            border-radius: 100px;
+
+            overflow: hidden;
+
+            margin-bottom: 12px;
+        }
+
+
+        .progress-fill {
+            width: 0%;
+            height: 100%;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #7047eb,
+                    #9b75ff
+                );
+
+            transition:
+                width .25s ease;
+        }
+
+
+        .step-status {
             display: flex;
             justify-content: space-between;
-            gap: 14px;
             align-items: center;
-            margin-bottom: 18px;
-            flex-wrap: wrap;
-        }
 
-        .mode-badge {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 8px 14px;
-            border-radius: 999px;
-            background: #f0ebff;
-            color: #6b35ff;
+            gap: 12px;
+
+            color: #777;
             font-size: 14px;
-            font-weight: 700;
-        }
 
-        .step-counter {
-            font-size: 14px;
-            opacity: .65;
-            font-weight: 600;
-        }
-
-        .progress-track {
-            width: 100%;
-            height: 10px;
-            background: #ececf2;
-            border-radius: 999px;
-            overflow: hidden;
             margin-bottom: 26px;
         }
 
-        .progress-bar {
-            height: 100%;
-            width: 0%;
-            background: linear-gradient(90deg, #6c2cff, #9b72ff);
-            transition: width .25s ease;
+
+        .step-type {
+            font-weight: 750;
+            color: #7047eb;
         }
+
 
         .step-panel {
             display: none;
-            min-height: 340px;
+            min-height: 330px;
         }
+
 
         .step-panel.active {
             display: block;
         }
 
+
         .panel-title {
-            margin: 0 0 16px;
-            font-size: 22px;
+            font-size: 24px;
             line-height: 1.25;
-            font-weight: 800;
+
+            margin:
+                0
+                0
+                20px;
         }
 
+
         .panel-body {
-            white-space: pre-wrap;
             font-size: 17px;
+            white-space: pre-wrap;
         }
+
 
         audio {
             width: 100%;
-            margin-top: 20px;
+            margin-top: 22px;
         }
 
-        .options {
-            margin-top: 18px;
+
+        /* ================================
+           QUESTIONS
+        ================================= */
+
+
+        .question-number {
+            color: #7047eb;
+            font-weight: 800;
+            margin-bottom: 8px;
         }
+
+
+        .question {
+            font-size: 22px;
+            font-weight: 800;
+            line-height: 1.35;
+
+            margin-bottom: 22px;
+        }
+
 
         .option {
-            display: block;
+            display: flex;
+            align-items: center;
+
+            gap: 12px;
+
             padding: 14px 16px;
+
             margin: 10px 0;
-            border: 1px solid #ddd;
-            border-radius: 16px;
+
+            border:
+                1px solid
+                #ddd;
+
+            border-radius: 15px;
+
             cursor: pointer;
+
             transition:
-                background .15s ease,
-                border-color .15s ease;
+                background .15s,
+                border-color .15s;
         }
+
 
         .option:hover {
-            background: #f7f7fb;
-            border-color: #cfc8ff;
+            background: #f7f6ff;
+            border-color: #bdb0f5;
         }
+
+
+        .option:has(
+            input:checked
+        ) {
+            background: #f1edff;
+            border-color: #7047eb;
+        }
+
 
         .option input {
-            margin-right: 10px;
+            accent-color: #7047eb;
         }
 
-        .wizard-nav {
+
+        /* ================================
+           NAVIGATION
+        ================================= */
+
+
+        .nav {
             display: flex;
-            justify-content: space-between;
+
+            justify-content:
+                space-between;
+
+            align-items: center;
+
             gap: 12px;
+
             margin-top: 26px;
-            flex-wrap: wrap;
         }
 
-        .nav-left,
-        .nav-right {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
 
         .btn {
             border: 0;
-            border-radius: 16px;
-            padding: 14px 18px;
+            border-radius: 15px;
+
+            padding:
+                14px
+                20px;
+
             font-size: 16px;
             font-weight: 750;
+
             cursor: pointer;
-            transition:
-                transform .05s ease,
-                opacity .15s ease,
-                background .15s ease;
         }
 
-        .btn:active {
-            transform: translateY(1px);
-        }
 
-        .btn-secondary {
-            background: #efeff6;
+        .btn-back {
+            background: #ededf2;
             color: #171717;
         }
 
-        .btn-primary {
+
+        .btn-next {
+            margin-left: auto;
+
             background: #171717;
             color: white;
         }
 
-        .btn-accent {
-            background: linear-gradient(90deg, #6c2cff, #9b72ff);
+
+        .btn-finish {
+            margin-left: auto;
+
+            background: #7047eb;
             color: white;
         }
 
+
         .btn[disabled] {
-            opacity: .45;
+            opacity: .35;
             cursor: not-allowed;
         }
 
-        .hidden-submit {
+
+        .hidden {
             display: none;
         }
 
-        .result {
-            padding: 28px;
+
+        /* ================================
+           RESULT
+        ================================= */
+
+
+        .result-card {
+            padding: 30px;
         }
 
-        .success {
+
+        .result-icon {
+            font-size: 42px;
+            margin-bottom: 8px;
+        }
+
+
+        .result-title {
             font-size: 28px;
             font-weight: 850;
-            margin-bottom: 10px;
+
+            margin-bottom: 8px;
         }
 
+
         .score {
-            font-size: 38px;
-            font-weight: 850;
+            font-size: 46px;
+            font-weight: 900;
             line-height: 1;
+
+            margin:
+                22px
+                0
+                8px;
+        }
+
+
+        .result-meta {
+            color: #666;
+        }
+
+
+        .xp-earned {
+            margin-top: 20px;
+
+            font-size: 22px;
+            font-weight: 800;
+
+            color: #7047eb;
+        }
+
+
+        .result-actions {
+            display: flex;
+            flex-wrap: wrap;
+
+            gap: 10px;
+
+            margin-top: 26px;
+        }
+
+
+        .action-link {
+            display: inline-block;
+
+            padding:
+                13px
+                18px;
+
+            border-radius: 14px;
+
+            text-decoration: none;
+            font-weight: 750;
+        }
+
+
+        .retry {
+            background: #171717;
+            color: white;
+        }
+
+
+        .review-theory {
+            background: #ededf2;
+            color: #171717;
+        }
+
+
+        /* ================================
+           ERROR REVIEW
+        ================================= */
+
+
+        .mistakes {
+            margin-top: 30px;
+        }
+
+
+        .mistakes h2 {
+            margin-bottom: 16px;
+        }
+
+
+        .mistake {
+            background: #fafafa;
+
+            border:
+                1px solid
+                #ececec;
+
+            border-radius: 16px;
+
+            padding: 18px;
+
             margin-bottom: 12px;
         }
 
-        .xp {
-            font-size: 20px;
-            font-weight: 750;
-            color: #6b35ff;
+
+        .mistake-question {
+            font-weight: 800;
+            margin-bottom: 12px;
         }
 
-        .muted {
-            opacity: .7;
+
+        .wrong {
+            color: #b42318;
+            margin-bottom: 5px;
         }
 
-        @media (max-width: 640px) {
+
+        .correct {
+            color: #168242;
+            margin-bottom: 8px;
+        }
+
+
+        .explanation {
+            margin-top: 10px;
+            color: #555;
+        }
+
+
+        @media (
+            max-width: 620px
+        ) {
+
+            .page {
+                width: 94%;
+            }
+
+            .hero,
+            .wizard,
+            .result-card {
+                padding: 20px;
+            }
+
             h1 {
                 font-size: 28px;
             }
 
-            .wizard-shell,
-            .hero,
-            .result {
-                padding: 20px;
+            .panel-title {
+                font-size: 21px;
             }
 
             .step-panel {
-                min-height: 280px;
+                min-height: 300px;
             }
 
-            .wizard-nav {
+            .nav {
+                display: grid;
+                grid-template-columns:
+                    1fr
+                    1fr;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            .result-actions {
                 flex-direction: column;
             }
 
-            .nav-left,
-            .nav-right {
-                width: 100%;
+            .action-link {
+                text-align: center;
             }
 
-            .nav-left .btn,
-            .nav-right .btn {
-                width: 100%;
-            }
         }
+
     </style>
+
 </head>
+
 
 <body>
 
+
 <div class="page">
+
 
     <a
         class="back"
@@ -295,301 +559,802 @@
         ← Grammar
     </a>
 
+
     <div class="hero">
-        <div class="meta">
-            {{ lesson.level }} · Lesson {{ lesson.order }} · {{ lesson.estimated_minutes }} min
-        </div>
 
-        <h1>{{ lesson.title }}</h1>
-
-        <div class="reward-line">
-            Passing score: {{ lesson.pass_score }}%
+        <div class="hero-meta">
+            {{ lesson.level }}
             ·
-            Reward: +{{ lesson.xp_reward }} XP
+            Lesson {{ lesson.order }}
+            ·
+            {{ lesson.estimated_minutes }} min
         </div>
 
-        {% if lesson.audio_file %}
-            <audio controls>
-                <source src="{{ lesson.audio_file.url }}">
-            </audio>
-        {% endif %}
+
+        <h1>
+            {{ lesson.title }}
+        </h1>
+
+
+        <div class="reward">
+            Проходной балл:
+            {{ lesson.pass_score }}%
+            ·
+            Награда:
+            +{{ lesson.xp_reward }} XP
+        </div>
+
     </div>
+
+
 
     {% if progress.status == "completed" %}
 
-        <div class="result">
-            <div class="success">✅ Lesson completed</div>
-            <div class="score">{{ progress.score }}%</div>
 
-            <p>
-                Correct:
-                <strong>{{ progress.correct_answers }} / {{ progress.total_questions }}</strong>
-            </p>
+        <div class="result-card">
 
-            <div class="xp">⭐ +{{ progress.xp_earned }} XP</div>
+            <div class="result-icon">
+                🎉
+            </div>
+
+            <div class="result-title">
+                Урок завершён
+            </div>
+
+            <div class="score">
+                {{ progress.score }}%
+            </div>
+
+            <div class="result-meta">
+
+                Правильных ответов:
+
+                <strong>
+                    {{ progress.correct_answers }}
+                    /
+                    {{ progress.total_questions }}
+                </strong>
+
+            </div>
+
+
+            <div class="xp-earned">
+                ⭐ +{{ progress.xp_earned }} XP
+            </div>
+
+
+            <div class="result-actions">
+
+                <a
+                    class="action-link review-theory"
+                    href="{% url 'grammar:home' %}"
+                >
+                    ← К урокам
+                </a>
+
+            </div>
+
         </div>
 
+
+
+    {% elif attempt_result %}
+
+
+        <div class="result-card">
+
+            <div class="result-icon">
+                📚
+            </div>
+
+            <div class="result-title">
+                Почти получилось
+            </div>
+
+
+            <div class="score">
+                {{ attempt_result.score }}%
+            </div>
+
+
+            <div class="result-meta">
+
+                Правильно:
+
+                <strong>
+                    {{ attempt_result.correct }}
+                    /
+                    {{ attempt_result.total }}
+                </strong>
+
+                <br>
+
+                Для завершения урока нужно
+                {{ lesson.pass_score }}%.
+
+            </div>
+
+
+            <div class="result-actions">
+
+                <a
+                    class="action-link retry"
+                    href="{% url 'grammar:lesson' lesson.slug %}?practice=1"
+                >
+                    Попробовать практику снова →
+                </a>
+
+
+                <a
+                    class="action-link review-theory"
+                    href="{% url 'grammar:lesson' lesson.slug %}"
+                >
+                    Повторить теорию
+                </a>
+
+            </div>
+
+
+
+            {% if wrong_results %}
+
+                <div class="mistakes">
+
+                    <h2>
+                        Разбор ошибок
+                    </h2>
+
+
+                    {% for item in wrong_results %}
+
+                        <div class="mistake">
+
+                            <div class="mistake-question">
+
+                                {{ item.exercise.order }}.
+                                {{ item.exercise.prompt }}
+
+                            </div>
+
+
+                            <div class="wrong">
+
+                                Ваш ответ:
+                                <strong>
+                                    {{ item.submitted }}
+                                </strong>
+
+                            </div>
+
+
+                            <div class="correct">
+
+                                Правильный ответ:
+                                <strong>
+                                    {{ item.correct_answer }}
+                                </strong>
+
+                            </div>
+
+
+                            {% if item.exercise.explanation %}
+
+                                <div class="explanation">
+
+                                    {{ item.exercise.explanation }}
+
+                                </div>
+
+                            {% endif %}
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+
+
     {% else %}
+
 
         <form
             id="lessonForm"
             method="post"
             action="{% url 'grammar:complete' lesson.slug %}"
         >
+
             {% csrf_token %}
 
-            <div class="wizard-shell">
 
-                <div class="wizard-top">
-                    <div
-                        id="modeBadge"
-                        class="mode-badge"
-                    >
-                        Theory
-                    </div>
+            <div class="wizard">
+
+
+                <div class="phase-row">
 
                     <div
-                        id="stepCounter"
-                        class="step-counter"
+                        id="phaseTheory"
+                        class="phase"
                     >
-                        Step 1
+                        1 · Теория
                     </div>
+
+
+                    <div
+                        id="phasePractice"
+                        class="phase"
+                    >
+                        2 · Практика
+                    </div>
+
                 </div>
 
-                <div class="progress-track">
+
+
+                <div class="progress-line">
+
                     <div
-                        id="progressBar"
-                        class="progress-bar"
+                        id="progressFill"
+                        class="progress-fill"
                     ></div>
+
                 </div>
+
+
+
+                <div class="step-status">
+
+                    <span
+                        id="stepType"
+                        class="step-type"
+                    >
+                        Теория
+                    </span>
+
+                    <span
+                        id="stepCounter"
+                    >
+                    </span>
+
+                </div>
+
+
 
                 {% for section in sections %}
+
                     <div
                         class="step-panel theory-step"
-                        data-step-type="theory"
-                        data-step-index="{{ forloop.counter0 }}"
+                        data-type="theory"
                     >
+
                         <h2 class="panel-title">
-                            {{ section.order }}. {{ section.title }}
+
+                            {{ section.order }}.
+                            {{ section.title }}
+
                         </h2>
+
 
                         <div class="panel-body">
+
                             {{ section.body }}
+
                         </div>
+
 
                         {% if section.audio_file %}
+
                             <audio controls>
-                                <source src="{{ section.audio_file.url }}">
+
+                                <source
+                                    src="{{ section.audio_file.url }}"
+                                >
+
                             </audio>
+
                         {% endif %}
+
                     </div>
+
                 {% endfor %}
+
+
 
                 {% for exercise in exercises %}
+
                     <div
                         class="step-panel practice-step"
-                        data-step-type="practice"
-                        data-step-index="{{ forloop.counter0 }}"
+                        data-type="practice"
                     >
-                        <h2 class="panel-title">
-                            Question {{ forloop.counter }} of {{ exercises|length }}
-                        </h2>
 
-                        <div class="panel-body" style="white-space: normal;">
-                            <strong>{{ exercise.prompt }}</strong>
+                        <div class="question-number">
+
+                            Вопрос
+                            {{ forloop.counter }}
+                            из
+                            {{ exercises|length }}
+
                         </div>
 
-                        <div class="options">
-                            {% for option in exercise.options %}
-                                <label class="option">
-                                    <input
-                                        type="radio"
-                                        name="answer_{{ exercise.id }}"
-                                        value="{{ option }}"
-                                    >
+
+                        <div class="question">
+
+                            {{ exercise.prompt }}
+
+                        </div>
+
+
+                        {% for option in exercise.options %}
+
+                            <label class="option">
+
+                                <input
+                                    type="radio"
+
+                                    name="answer_{{ exercise.id }}"
+
+                                    value="{{ option }}"
+                                >
+
+                                <span>
                                     {{ option }}
-                                </label>
-                            {% endfor %}
-                        </div>
+                                </span>
+
+                            </label>
+
+                        {% endfor %}
+
                     </div>
+
                 {% endfor %}
 
-                <div class="wizard-nav">
-                    <div class="nav-left">
-                        <button
-                            type="button"
-                            id="prevBtn"
-                            class="btn btn-secondary"
-                        >
-                            ← Back
-                        </button>
-                    </div>
 
-                    <div class="nav-right">
-                        <button
-                            type="button"
-                            id="nextBtn"
-                            class="btn btn-primary"
-                        >
-                            Next →
-                        </button>
 
-                        <button
-                            type="submit"
-                            id="submitBtn"
-                            class="btn btn-accent hidden-submit"
-                        >
-                            Finish lesson →
-                        </button>
-                    </div>
+                <div class="nav">
+
+
+                    <button
+                        id="prevButton"
+                        class="btn btn-back"
+                        type="button"
+                    >
+                        ← Назад
+                    </button>
+
+
+                    <button
+                        id="nextButton"
+                        class="btn btn-next"
+                        type="button"
+                    >
+                        Далее →
+                    </button>
+
+
+                    <button
+                        id="finishButton"
+                        class="btn btn-finish hidden"
+                        type="submit"
+                    >
+                        Проверить ответы →
+                    </button>
+
+
                 </div>
 
+
             </div>
+
         </form>
 
-        <script>
-            (function () {
-                const theorySteps = Array.from(
-                    document.querySelectorAll('.theory-step')
-                );
 
-                const practiceSteps = Array.from(
-                    document.querySelectorAll('.practice-step')
-                );
+
+        <script>
+
+            (function () {
+
+                const theorySteps =
+                    Array.from(
+                        document.querySelectorAll(
+                            '.theory-step'
+                        )
+                    );
+
+
+                const practiceSteps =
+                    Array.from(
+                        document.querySelectorAll(
+                            '.practice-step'
+                        )
+                    );
+
 
                 const allSteps = [
                     ...theorySteps,
                     ...practiceSteps
                 ];
 
-                const prevBtn = document.getElementById('prevBtn');
-                const nextBtn = document.getElementById('nextBtn');
-                const submitBtn = document.getElementById('submitBtn');
-                const progressBar = document.getElementById('progressBar');
-                const stepCounter = document.getElementById('stepCounter');
-                const modeBadge = document.getElementById('modeBadge');
 
-                let currentStep = 0;
+                const theoryCount =
+                    theorySteps.length;
 
-                function isTheory(index) {
-                    return index < theorySteps.length;
+
+                const practiceCount =
+                    practiceSteps.length;
+
+
+                const prevButton =
+                    document.getElementById(
+                        'prevButton'
+                    );
+
+
+                const nextButton =
+                    document.getElementById(
+                        'nextButton'
+                    );
+
+
+                const finishButton =
+                    document.getElementById(
+                        'finishButton'
+                    );
+
+
+                const progressFill =
+                    document.getElementById(
+                        'progressFill'
+                    );
+
+
+                const stepType =
+                    document.getElementById(
+                        'stepType'
+                    );
+
+
+                const stepCounter =
+                    document.getElementById(
+                        'stepCounter'
+                    );
+
+
+                const phaseTheory =
+                    document.getElementById(
+                        'phaseTheory'
+                    );
+
+
+                const phasePractice =
+                    document.getElementById(
+                        'phasePractice'
+                    );
+
+
+                const startWithPractice =
+                    {{ start_with_practice|yesno:"true,false" }};
+
+
+                let currentStep =
+                    (
+                        startWithPractice
+                        &&
+                        practiceCount > 0
+                    )
+                    ?
+                    theoryCount
+                    :
+                    0;
+
+
+                function inTheory() {
+
+                    return (
+                        currentStep
+                        <
+                        theoryCount
+                    );
+
                 }
 
-                function currentPracticeNumber(index) {
-                    return index - theorySteps.length + 1;
+
+                function practiceNumber() {
+
+                    return (
+                        currentStep
+                        -
+                        theoryCount
+                        +
+                        1
+                    );
+
                 }
 
-                function totalPractice() {
-                    return practiceSteps.length;
-                }
 
-                function updateUI() {
-                    allSteps.forEach((step, index) => {
-                        step.classList.toggle(
-                            'active',
-                            index === currentStep
-                        );
-                    });
+                function answerSelected() {
 
-                    const totalSteps = allSteps.length;
-                    const percent = ((currentStep + 1) / totalSteps) * 100;
-                    progressBar.style.width = percent + '%';
-
-                    prevBtn.disabled = currentStep === 0;
-
-                    const inTheory = isTheory(currentStep);
-                    const isLastStep = currentStep === totalSteps - 1;
-
-                    if (inTheory) {
-                        modeBadge.textContent = 'Theory';
-                        stepCounter.textContent =
-                            'Theory ' +
-                            (currentStep + 1) +
-                            ' / ' +
-                            theorySteps.length;
-                    } else {
-                        modeBadge.textContent = 'Practice';
-                        stepCounter.textContent =
-                            'Question ' +
-                            currentPracticeNumber(currentStep) +
-                            ' / ' +
-                            totalPractice();
-                    }
-
-                    if (isLastStep) {
-                        nextBtn.classList.add('hidden-submit');
-                        submitBtn.classList.remove('hidden-submit');
-                    } else {
-                        nextBtn.classList.remove('hidden-submit');
-                        submitBtn.classList.add('hidden-submit');
-                    }
-
-                    if (inTheory) {
-                        if (currentStep === theorySteps.length - 1) {
-                            nextBtn.textContent = 'Go to practice →';
-                        } else {
-                            nextBtn.textContent = 'Next →';
-                        }
-                    } else {
-                        if (currentStep === totalSteps - 2) {
-                            nextBtn.textContent = 'Last question →';
-                        } else {
-                            nextBtn.textContent = 'Next →';
-                        }
-                    }
-                }
-
-                function canGoNext() {
-                    if (isTheory(currentStep)) {
+                    if (inTheory()) {
                         return true;
                     }
 
-                    const currentPanel = allSteps[currentStep];
-                    const checked = currentPanel.querySelector(
-                        'input[type="radio"]:checked'
+
+                    const currentPanel =
+                        allSteps[currentStep];
+
+
+                    return Boolean(
+                        currentPanel.querySelector(
+                            'input[type="radio"]:checked'
+                        )
                     );
 
-                    if (!checked) {
-                        alert('Please choose one answer first.');
-                        return false;
-                    }
-
-                    return true;
                 }
 
-                nextBtn.addEventListener('click', function () {
-                    if (!canGoNext()) {
+
+                function render() {
+
+                    allSteps.forEach(
+                        (step, index) => {
+
+                            step.classList.toggle(
+                                'active',
+                                index === currentStep
+                            );
+
+                        }
+                    );
+
+
+                    const total =
+                        allSteps.length;
+
+
+                    const progress =
+                        total
+                        ?
+                        (
+                            (
+                                currentStep + 1
+                            )
+                            /
+                            total
+                            *
+                            100
+                        )
+                        :
+                        0;
+
+
+                    progressFill.style.width =
+                        progress + '%';
+
+
+                    prevButton.disabled =
+                        currentStep === 0;
+
+
+                    const lastStep =
+                        (
+                            currentStep
+                            ===
+                            total - 1
+                        );
+
+
+                    if (inTheory()) {
+
+                        stepType.textContent =
+                            'Теория';
+
+
+                        stepCounter.textContent =
+                            (
+                                'Шаг '
+                                +
+                                (currentStep + 1)
+                                +
+                                ' из '
+                                +
+                                theoryCount
+                            );
+
+
+                        phaseTheory.classList.add(
+                            'active'
+                        );
+
+
+                        phaseTheory.classList.remove(
+                            'done'
+                        );
+
+
+                        phasePractice.classList.remove(
+                            'active'
+                        );
+
+
+                        nextButton.textContent =
+                            (
+                                currentStep
+                                ===
+                                theoryCount - 1
+                            )
+                            ?
+                            'Перейти к практике →'
+                            :
+                            'Далее →';
+
+                    }
+
+                    else {
+
+                        stepType.textContent =
+                            'Практика';
+
+
+                        stepCounter.textContent =
+                            (
+                                'Вопрос '
+                                +
+                                practiceNumber()
+                                +
+                                ' из '
+                                +
+                                practiceCount
+                            );
+
+
+                        phaseTheory.classList.remove(
+                            'active'
+                        );
+
+
+                        phaseTheory.classList.add(
+                            'done'
+                        );
+
+
+                        phasePractice.classList.add(
+                            'active'
+                        );
+
+
+                        nextButton.textContent =
+                            'Следующий вопрос →';
+
+                    }
+
+
+                    if (lastStep) {
+
+                        nextButton.classList.add(
+                            'hidden'
+                        );
+
+
+                        finishButton.classList.remove(
+                            'hidden'
+                        );
+
+                    }
+
+                    else {
+
+                        nextButton.classList.remove(
+                            'hidden'
+                        );
+
+
+                        finishButton.classList.add(
+                            'hidden'
+                        );
+
+                    }
+
+                }
+
+
+                function goNext() {
+
+                    if (!answerSelected()) {
+
+                        alert(
+                            'Сначала выберите ответ.'
+                        );
+
                         return;
                     }
 
-                    if (currentStep < allSteps.length - 1) {
+
+                    if (
+                        currentStep
+                        <
+                        allSteps.length - 1
+                    ) {
+
                         currentStep += 1;
-                        updateUI();
+
+                        render();
+
                         window.scrollTo({
                             top: 0,
                             behavior: 'smooth'
                         });
-                    }
-                });
 
-                prevBtn.addEventListener('click', function () {
+                    }
+
+                }
+
+
+                function goBack() {
+
                     if (currentStep > 0) {
+
                         currentStep -= 1;
-                        updateUI();
+
+                        render();
+
                         window.scrollTo({
                             top: 0,
                             behavior: 'smooth'
                         });
-                    }
-                });
 
-                updateUI();
+                    }
+
+                }
+
+
+                nextButton.addEventListener(
+                    'click',
+                    goNext
+                );
+
+
+                prevButton.addEventListener(
+                    'click',
+                    goBack
+                );
+
+
+                document
+                .getElementById(
+                    'lessonForm'
+                )
+                .addEventListener(
+                    'submit',
+                    function (event) {
+
+                        if (!answerSelected()) {
+
+                            event.preventDefault();
+
+                            alert(
+                                'Сначала выберите ответ.'
+                            );
+
+                        }
+
+                    }
+                );
+
+
+                render();
+
             })();
+
         </script>
+
 
     {% endif %}
 
+
 </div>
+
 
 </body>
 </html>

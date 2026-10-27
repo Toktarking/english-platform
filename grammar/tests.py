@@ -48,12 +48,16 @@ class GrammarLessonTests(TestCase):
                 lesson=self.lesson,
                 section=self.section,
                 order=1,
-                prompt="___ book",
+                prompt="This is ___ book.",
                 options=[
                     "a",
                     "an",
                 ],
                 correct_answer="a",
+                explanation=(
+                    "Book begins with "
+                    "a consonant sound."
+                ),
             )
         )
 
@@ -62,12 +66,16 @@ class GrammarLessonTests(TestCase):
                 lesson=self.lesson,
                 section=self.section,
                 order=2,
-                prompt="___ apple",
+                prompt="This is ___ apple.",
                 options=[
                     "a",
                     "an",
                 ],
                 correct_answer="an",
+                explanation=(
+                    "Apple begins with "
+                    "a vowel sound."
+                ),
             )
         )
 
@@ -78,7 +86,7 @@ class GrammarLessonTests(TestCase):
             password="test-password-123",
         )
 
-    def test_grammar_home(self):
+    def test_home(self):
 
         self.login()
 
@@ -96,7 +104,9 @@ class GrammarLessonTests(TestCase):
             "Articles A and AN",
         )
 
-    def test_open_lesson_creates_progress(self):
+    def test_open_lesson_creates_progress(
+        self
+    ):
 
         self.login()
 
@@ -104,7 +114,8 @@ class GrammarLessonTests(TestCase):
             reverse(
                 "grammar:lesson",
                 kwargs={
-                    "slug": self.lesson.slug,
+                    "slug":
+                        self.lesson.slug,
                 },
             )
         )
@@ -115,7 +126,8 @@ class GrammarLessonTests(TestCase):
         )
 
         progress = (
-            GrammarLessonProgress.objects.get(
+            GrammarLessonProgress.objects
+            .get(
                 user=self.user,
                 lesson=self.lesson,
             )
@@ -123,10 +135,12 @@ class GrammarLessonTests(TestCase):
 
         self.assertEqual(
             progress.status,
-            GrammarLessonProgress.Status.IN_PROGRESS,
+            GrammarLessonProgress
+            .Status
+            .IN_PROGRESS,
         )
 
-    def test_correct_answers_complete_lesson_and_award_xp(
+    def test_pass_completes_and_awards_xp(
         self
     ):
 
@@ -136,7 +150,8 @@ class GrammarLessonTests(TestCase):
             reverse(
                 "grammar:complete",
                 kwargs={
-                    "slug": self.lesson.slug,
+                    "slug":
+                        self.lesson.slug,
                 },
             ),
             {
@@ -154,7 +169,8 @@ class GrammarLessonTests(TestCase):
         )
 
         progress = (
-            GrammarLessonProgress.objects.get(
+            GrammarLessonProgress.objects
+            .get(
                 user=self.user,
                 lesson=self.lesson,
             )
@@ -162,7 +178,9 @@ class GrammarLessonTests(TestCase):
 
         self.assertEqual(
             progress.status,
-            GrammarLessonProgress.Status.COMPLETED,
+            GrammarLessonProgress
+            .Status
+            .COMPLETED,
         )
 
         self.assertEqual(
@@ -175,17 +193,18 @@ class GrammarLessonTests(TestCase):
             100,
         )
 
-    def test_failed_attempt_does_not_award_xp(
+    def test_failed_attempt_shows_review(
         self
     ):
 
         self.login()
 
-        self.client.post(
+        response = self.client.post(
             reverse(
                 "grammar:complete",
                 kwargs={
-                    "slug": self.lesson.slug,
+                    "slug":
+                        self.lesson.slug,
                 },
             ),
             {
@@ -197,8 +216,29 @@ class GrammarLessonTests(TestCase):
             },
         )
 
+        self.assertEqual(
+            response.status_code,
+            200,
+        )
+
+        self.assertContains(
+            response,
+            "Почти получилось",
+        )
+
+        self.assertContains(
+            response,
+            "Разбор ошибок",
+        )
+
+        self.assertContains(
+            response,
+            "Apple begins with",
+        )
+
         progress = (
-            GrammarLessonProgress.objects.get(
+            GrammarLessonProgress.objects
+            .get(
                 user=self.user,
                 lesson=self.lesson,
             )
@@ -206,7 +246,9 @@ class GrammarLessonTests(TestCase):
 
         self.assertEqual(
             progress.status,
-            GrammarLessonProgress.Status.IN_PROGRESS,
+            GrammarLessonProgress
+            .Status
+            .IN_PROGRESS,
         )
 
         self.assertEqual(
@@ -217,4 +259,31 @@ class GrammarLessonTests(TestCase):
         self.assertEqual(
             progress.xp_earned,
             0,
+        )
+
+    def test_retry_can_start_at_practice(
+        self
+    ):
+
+        self.login()
+
+        response = self.client.get(
+            reverse(
+                "grammar:lesson",
+                kwargs={
+                    "slug":
+                        self.lesson.slug,
+                },
+            )
+            + "?practice=1"
+        )
+
+        self.assertEqual(
+            response.status_code,
+            200,
+        )
+
+        self.assertContains(
+            response,
+            "startWithPractice",
         )
