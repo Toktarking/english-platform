@@ -41,6 +41,18 @@ urlpatterns = [
     ),
 
     path(
+        "plan/",
+        views.grammar_plan,
+        name="plan",
+    ),
+
+    path(
+        "plan/setup/",
+        views.grammar_plan_setup,
+        name="plan_setup",
+    ),
+
+    path(
         "<slug:slug>/",
         views.grammar_lesson,
         name="lesson",

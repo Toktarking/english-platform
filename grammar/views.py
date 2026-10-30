@@ -1,3 +1,5 @@
+from datetime import date, timedelta
+
 from django.contrib.auth.decorators import login_required
 from django.db.models import Sum
 from django.shortcuts import (
@@ -13,6 +15,7 @@ from .models import (
     GrammarLesson,
     GrammarLessonProgress,
     GrammarPlacementAttempt,
+    GrammarStudyPlan,
     GrammarTopicAssessment,
 )
 
@@ -22,6 +25,13 @@ from .placement import (
     get_personal_plan,
     record_answer,
     start_placement,
+)
+
+
+from .study_plan import (
+    build_study_plan,
+    get_active_study_plan,
+    get_plan_calendar,
 )
 
 
@@ -886,5 +896,180 @@ def grammar_placement_result(request):
             "plan_count": len(plan_items),
             "plan_groups": plan_groups,
             "next_item": next_item,
+        },
+    )
+
+
+@login_required
+def grammar_plan_setup(request):
+
+    completed_placement = (
+        GrammarPlacementAttempt.objects
+        .filter(
+            user=request.user,
+            status=(
+                GrammarPlacementAttempt
+                .Status
+                .COMPLETED
+            ),
+        )
+        .exists()
+    )
+
+    if not completed_placement:
+
+        return redirect(
+            "grammar:placement"
+        )
+
+    today = timezone.localdate()
+
+    current_plan = (
+        get_active_study_plan(
+            request.user
+        )
+    )
+
+    default_exam_date = (
+        current_plan.exam_date
+        if current_plan
+        else
+        today
+        + timedelta(days=20)
+    )
+
+    error = None
+
+    if request.method == "POST":
+
+        raw_exam_date = (
+            request.POST
+            .get(
+                "exam_date",
+                "",
+            )
+            .strip()
+        )
+
+        try:
+
+            exam_date = (
+                date.fromisoformat(
+                    raw_exam_date
+                )
+            )
+
+        except ValueError:
+
+            exam_date = None
+
+        if exam_date is None:
+
+            error = (
+                "Укажите корректную дату экзамена."
+            )
+
+        elif exam_date <= today:
+
+            error = (
+                "Дата экзамена должна быть "
+                "позже сегодняшней."
+            )
+
+        else:
+
+            build_study_plan(
+                user=request.user,
+                exam_date=exam_date,
+                start_date=today,
+            )
+
+            return redirect(
+                "grammar:plan"
+            )
+
+    return render(
+        request,
+        "grammar/study_plan.html",
+        {
+            "mode": "setup",
+            "default_exam_date":
+                default_exam_date,
+            "min_exam_date":
+                today
+                + timedelta(days=1),
+            "error": error,
+        },
+    )
+
+
+@login_required
+def grammar_plan(request):
+
+    plan = (
+        get_active_study_plan(
+            request.user
+        )
+    )
+
+    if plan is None:
+
+        return redirect(
+            "grammar:plan_setup"
+        )
+
+    calendar = (
+        get_plan_calendar(
+            plan
+        )
+    )
+
+    learn_count = (
+        plan.items
+        .filter(
+            action="LEARN",
+        )
+        .count()
+    )
+
+    review_count = (
+        plan.items
+        .filter(
+            action="REVIEW",
+        )
+        .count()
+    )
+
+    final_review_count = (
+        plan.items
+        .filter(
+            action="FINAL_REVIEW",
+        )
+        .count()
+    )
+
+    today = timezone.localdate()
+
+    days_remaining = max(
+        0,
+        (
+            plan.exam_date
+            - today
+        ).days,
+    )
+
+    return render(
+        request,
+        "grammar/study_plan.html",
+        {
+            "mode": "calendar",
+            "plan": plan,
+            "calendar": calendar,
+            "learn_count": learn_count,
+            "review_count": review_count,
+            "final_review_count":
+                final_review_count,
+            "days_remaining":
+                days_remaining,
         },
     )

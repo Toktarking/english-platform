@@ -560,3 +560,122 @@ class GrammarTopicAssessment(models.Model):
             f"Lesson {self.lesson.order} · "
             f"{self.status}"
         )
+
+
+class GrammarStudyPlan(models.Model):
+
+    class Status(models.TextChoices):
+
+        ACTIVE = (
+            "ACTIVE",
+            "Active",
+        )
+
+        ARCHIVED = (
+            "ARCHIVED",
+            "Archived",
+        )
+
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="grammar_study_plans",
+    )
+
+    start_date = models.DateField()
+
+    exam_date = models.DateField()
+
+    status = models.CharField(
+        max_length=20,
+        choices=Status.choices,
+        default=Status.ACTIVE,
+        db_index=True,
+    )
+
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+    )
+
+    updated_at = models.DateTimeField(
+        auto_now=True,
+    )
+
+    class Meta:
+
+        ordering = [
+            "-created_at",
+        ]
+
+    def __str__(self):
+
+        return (
+            f"{self.user} · "
+            f"{self.start_date} → "
+            f"{self.exam_date}"
+        )
+
+
+class GrammarStudyPlanItem(models.Model):
+
+    class Action(models.TextChoices):
+
+        LEARN = (
+            "LEARN",
+            "Learn",
+        )
+
+        REVIEW = (
+            "REVIEW",
+            "Review",
+        )
+
+        FINAL_REVIEW = (
+            "FINAL_REVIEW",
+            "Final review",
+        )
+
+    plan = models.ForeignKey(
+        GrammarStudyPlan,
+        on_delete=models.CASCADE,
+        related_name="items",
+    )
+
+    lesson = models.ForeignKey(
+        "GrammarLesson",
+        on_delete=models.CASCADE,
+        related_name="study_plan_items",
+    )
+
+    scheduled_date = models.DateField(
+        db_index=True,
+    )
+
+    action = models.CharField(
+        max_length=20,
+        choices=Action.choices,
+    )
+
+    order = models.PositiveIntegerField(
+        default=1,
+    )
+
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+    )
+
+    class Meta:
+
+        ordering = [
+            "scheduled_date",
+            "order",
+            "lesson__order",
+        ]
+
+    def __str__(self):
+
+        return (
+            f"{self.scheduled_date} · "
+            f"{self.action} · "
+            f"{self.lesson}"
+        )
