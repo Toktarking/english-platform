@@ -8,8 +8,20 @@ from django.shortcuts import (
 from django.utils import timezone
 
 from .models import (
+    GrammarAssessmentQuestion,
+    GrammarBlock,
     GrammarLesson,
     GrammarLessonProgress,
+    GrammarPlacementAttempt,
+    GrammarTopicAssessment,
+)
+
+from .placement import (
+    get_knowledge_summary,
+    get_next_question,
+    get_personal_plan,
+    record_answer,
+    start_placement,
 )
 
 
@@ -41,38 +53,6 @@ def _review_session_key(lesson):
 @login_required
 def grammar_home(request):
 
-    lessons = list(
-        GrammarLesson.objects
-        .filter(is_published=True)
-        .order_by(
-            "level",
-            "order",
-        )
-    )
-
-    progress_list = list(
-        GrammarLessonProgress.objects
-        .filter(
-            user=request.user,
-            lesson__in=lessons,
-        )
-    )
-
-    progress_map = {
-        progress.lesson_id: progress
-        for progress in progress_list
-    }
-
-    lesson_cards = [
-        {
-            "lesson": lesson,
-            "progress": progress_map.get(
-                lesson.id
-            ),
-        }
-        for lesson in lessons
-    ]
-
     total_xp = (
         GrammarLessonProgress.objects
         .filter(
@@ -90,12 +70,166 @@ def grammar_home(request):
         or 0
     )
 
+    active_attempt = (
+        GrammarPlacementAttempt.objects
+        .filter(
+            user=request.user,
+            status=(
+                GrammarPlacementAttempt
+                .Status
+                .IN_PROGRESS
+            ),
+        )
+        .order_by("-started_at")
+        .first()
+    )
+
+    completed_placement = (
+        GrammarPlacementAttempt.objects
+        .filter(
+            user=request.user,
+            status=(
+                GrammarPlacementAttempt
+                .Status
+                .COMPLETED
+            ),
+        )
+        .order_by("-completed_at")
+        .first()
+    )
+
+    # First Grammar visit:
+    # do not show a catalogue of 60 lessons.
+    if not completed_placement:
+
+        return render(
+            request,
+            "grammar/home.html",
+            {
+                "needs_placement": True,
+                "active_attempt": active_attempt,
+                "total_xp": total_xp,
+            },
+        )
+
+    plan_items = list(
+        get_personal_plan(
+            request.user
+        )
+    )
+
+    next_item = (
+        plan_items[0]
+        if plan_items
+        else None
+    )
+
+    assessments = {
+        item.lesson_id: item
+        for item in (
+            GrammarTopicAssessment.objects
+            .filter(
+                user=request.user,
+                lesson__level="A1",
+                lesson__order__range=(1, 60),
+            )
+            .select_related(
+                "lesson",
+                "lesson__block",
+            )
+        )
+    }
+
+    blocks = (
+        GrammarBlock.objects
+        .filter(
+            level="A1",
+            is_published=True,
+        )
+        .order_by("order")
+    )
+
+    block_rows = []
+
+    for block in blocks:
+
+        lessons = list(
+            block.lessons
+            .filter(
+                level="A1",
+                order__range=(1, 60),
+                is_published=True,
+            )
+            .order_by("order")
+        )
+
+        statuses = [
+            assessments[lesson.id].status
+            for lesson in lessons
+            if lesson.id in assessments
+        ]
+
+        known = sum(
+            1
+            for status in statuses
+            if status in {
+                GrammarTopicAssessment
+                .Status
+                .PROVISIONAL_MASTERED,
+
+                GrammarTopicAssessment
+                .Status
+                .MASTERED,
+            }
+        )
+
+        review = statuses.count(
+            GrammarTopicAssessment.Status.REVIEW
+        )
+
+        learn = statuses.count(
+            GrammarTopicAssessment.Status.LEARN
+        )
+
+        unknown = statuses.count(
+            GrammarTopicAssessment.Status.UNKNOWN
+        )
+
+        total = len(lessons)
+
+        percent = (
+            round(
+                known
+                / total
+                * 100
+            )
+            if total
+            else 0
+        )
+
+        block_rows.append(
+            {
+                "block": block,
+                "total": total,
+                "known": known,
+                "review": review,
+                "learn": learn,
+                "unknown": unknown,
+                "percent": percent,
+            }
+        )
+
     return render(
         request,
         "grammar/home.html",
         {
-            "lesson_cards": lesson_cards,
+            "needs_placement": False,
             "total_xp": total_xp,
+            "placement": completed_placement,
+            "plan_items": plan_items,
+            "plan_count": len(plan_items),
+            "next_item": next_item,
+            "block_rows": block_rows,
         },
     )
 
@@ -354,4 +488,403 @@ def complete_lesson(request, slug):
     return redirect(
         "grammar:lesson",
         slug=lesson.slug,
+    )
+
+@login_required
+def grammar_placement(request):
+
+    attempt = (
+        GrammarPlacementAttempt.objects
+        .filter(
+            user=request.user,
+            status=(
+                GrammarPlacementAttempt
+                .Status
+                .IN_PROGRESS
+            ),
+        )
+        .order_by("-started_at")
+        .first()
+    )
+
+    if attempt is None:
+
+        completed = (
+            GrammarPlacementAttempt.objects
+            .filter(
+                user=request.user,
+                status=(
+                    GrammarPlacementAttempt
+                    .Status
+                    .COMPLETED
+                ),
+            )
+            .order_by("-completed_at")
+            .first()
+        )
+
+        if completed:
+            return redirect(
+                "grammar:placement_result"
+            )
+
+        return render(
+            request,
+            "grammar/placement.html",
+            {
+                "mode": "intro",
+            },
+        )
+
+    question = get_next_question(
+        attempt
+    )
+
+    attempt.refresh_from_db()
+
+    if question is None:
+        return redirect(
+            "grammar:placement_result"
+        )
+
+    if (
+        attempt.stage
+        ==
+        GrammarPlacementAttempt
+        .Stage
+        .SCREENING
+    ):
+
+        answered = (
+            attempt.answers
+            .filter(
+                assessment_question__role=(
+                    "SCREENING"
+                ),
+            )
+            .count()
+        )
+
+        stage_total = 40
+
+        progress_pct = round(
+            answered
+            / stage_total
+            * 100
+        )
+
+        phase_title = (
+            "Этап 1 · Базовая диагностика"
+        )
+
+        progress_text = (
+            f"{answered + 1} из {stage_total}"
+        )
+
+        context_label = (
+            f"Блок "
+            f"{question.exercise.lesson.block.order}"
+            f" · "
+            f"{question.exercise.lesson.block.title}"
+        )
+
+    else:
+
+        answered = (
+            attempt.answers
+            .filter(
+                assessment_question__role="TOPIC",
+            )
+            .count()
+        )
+
+        unresolved_topics = (
+            GrammarTopicAssessment.objects
+            .filter(
+                user=request.user,
+                status=(
+                    GrammarTopicAssessment
+                    .Status
+                    .UNKNOWN
+                ),
+            )
+            .count()
+        )
+
+        resolved_topics = (
+            GrammarTopicAssessment.objects
+            .filter(
+                user=request.user,
+                source=(
+                    GrammarTopicAssessment
+                    .Source
+                    .PLACEMENT_TOPIC
+                ),
+            )
+            .count()
+        )
+
+        stage_total = (
+            unresolved_topics
+            + resolved_topics
+        ) * 2
+
+        if stage_total < answered + 1:
+            stage_total = answered + 1
+
+        progress_pct = (
+            round(
+                answered
+                / stage_total
+                * 100
+            )
+            if stage_total
+            else 0
+        )
+
+        phase_title = (
+            "Этап 2 · Уточнение слабых тем"
+        )
+
+        progress_text = (
+            f"{answered + 1} из {stage_total}"
+            if stage_total
+            else
+            f"Вопрос {answered + 1}"
+        )
+
+        context_label = (
+            question.exercise.lesson.title
+        )
+
+    return render(
+        request,
+        "grammar/placement.html",
+        {
+            "mode": "question",
+            "attempt": attempt,
+            "question": question,
+            "exercise": question.exercise,
+            "phase_title": phase_title,
+            "progress_text": progress_text,
+            "progress_pct": progress_pct,
+            "context_label": context_label,
+        },
+    )
+
+
+@login_required
+def start_grammar_placement(request):
+
+    if request.method != "POST":
+        return redirect(
+            "grammar:placement"
+        )
+
+    start_placement(
+        request.user
+    )
+
+    return redirect(
+        "grammar:placement"
+    )
+
+
+@login_required
+def answer_grammar_placement(request):
+
+    if request.method != "POST":
+        return redirect(
+            "grammar:placement"
+        )
+
+    attempt = get_object_or_404(
+        GrammarPlacementAttempt,
+        pk=request.POST.get("attempt_id"),
+        user=request.user,
+        status=(
+            GrammarPlacementAttempt
+            .Status
+            .IN_PROGRESS
+        ),
+    )
+
+    assessment_question = get_object_or_404(
+        GrammarAssessmentQuestion,
+        pk=request.POST.get("question_id"),
+        is_active=True,
+    )
+
+    current_question = get_next_question(
+        attempt
+    )
+
+    if current_question is None:
+        return redirect(
+            "grammar:placement_result"
+        )
+
+    # Prevent skipping or answering another question.
+    if (
+        current_question.id
+        != assessment_question.id
+    ):
+        return redirect(
+            "grammar:placement"
+        )
+
+    selected_answer = (
+        request.POST
+        .get(
+            "answer",
+            "",
+        )
+        .strip()
+    )
+
+    allowed_answers = [
+        str(option)
+        for option in (
+            current_question
+            .exercise
+            .options
+        )
+    ]
+
+    if selected_answer not in allowed_answers:
+        return redirect(
+            "grammar:placement"
+        )
+
+    record_answer(
+        attempt=attempt,
+        assessment_question=current_question,
+        selected_answer=selected_answer,
+    )
+
+    attempt.refresh_from_db()
+
+    if (
+        attempt.status
+        ==
+        GrammarPlacementAttempt
+        .Status
+        .COMPLETED
+    ):
+        return redirect(
+            "grammar:placement_result"
+        )
+
+    return redirect(
+        "grammar:placement"
+    )
+
+
+@login_required
+def grammar_placement_result(request):
+
+    attempt = (
+        GrammarPlacementAttempt.objects
+        .filter(
+            user=request.user,
+            status=(
+                GrammarPlacementAttempt
+                .Status
+                .COMPLETED
+            ),
+        )
+        .order_by("-completed_at")
+        .first()
+    )
+
+    if attempt is None:
+        return redirect(
+            "grammar:placement"
+        )
+
+    summary = get_knowledge_summary(
+        request.user
+    )
+
+    mastered = (
+        summary.get(
+            GrammarTopicAssessment
+            .Status
+            .MASTERED,
+            0,
+        )
+        +
+        summary.get(
+            GrammarTopicAssessment
+            .Status
+            .PROVISIONAL_MASTERED,
+            0,
+        )
+    )
+
+    review = summary.get(
+        GrammarTopicAssessment.Status.REVIEW,
+        0,
+    )
+
+    learn = summary.get(
+        GrammarTopicAssessment.Status.LEARN,
+        0,
+    )
+
+    plan_items = list(
+        get_personal_plan(
+            request.user
+        )
+    )
+
+    next_item = (
+        plan_items[0]
+        if plan_items
+        else None
+    )
+
+    plan_groups = []
+
+    blocks = (
+        GrammarBlock.objects
+        .filter(
+            level="A1",
+            is_published=True,
+        )
+        .order_by("order")
+    )
+
+    for block in blocks:
+
+        items = [
+            item
+            for item in plan_items
+            if (
+                item.lesson.block_id
+                == block.id
+            )
+        ]
+
+        if items:
+            plan_groups.append(
+                {
+                    "block": block,
+                    "items": items,
+                }
+            )
+
+    return render(
+        request,
+        "grammar/placement.html",
+        {
+            "mode": "result",
+            "attempt": attempt,
+            "mastered": mastered,
+            "review": review,
+            "learn": learn,
+            "plan_count": len(plan_items),
+            "plan_groups": plan_groups,
+            "next_item": next_item,
+        },
     )

@@ -87,8 +87,9 @@ class GrammarLessonTests(TestCase):
         )
 
     def test_home(self):
-
-        self.login()
+        self.client.force_login(
+            self.user
+        )
 
         response = self.client.get(
             reverse("grammar:home")
@@ -101,7 +102,7 @@ class GrammarLessonTests(TestCase):
 
         self.assertContains(
             response,
-            "Articles A and AN",
+            "Определим ваши знания грамматики",
         )
 
     def test_open_lesson_creates_progress(
