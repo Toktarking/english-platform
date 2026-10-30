@@ -3,7 +3,44 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 
 
+class GrammarBlock(models.Model):
+    level = models.CharField(
+        max_length=10,
+        default="A1",
+        db_index=True,
+    )
+    title = models.CharField(max_length=200)
+    slug = models.SlugField(max_length=120)
+    order = models.PositiveSmallIntegerField()
+    description = models.TextField(blank=True)
+    is_published = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ["level", "order"]
+        constraints = [
+            models.UniqueConstraint(
+                fields=["level", "order"],
+                name="uniq_grammar_block_level_order",
+            ),
+            models.UniqueConstraint(
+                fields=["level", "slug"],
+                name="uniq_grammar_block_level_slug",
+            ),
+        ]
+
+    def __str__(self):
+        return f"{self.level} · Block {self.order} · {self.title}"
+
+
 class GrammarLesson(models.Model):
+    block = models.ForeignKey(
+        "GrammarBlock",
+        on_delete=models.SET_NULL,
+        related_name="lessons",
+        null=True,
+        blank=True,
+    )
+
 
     class Level(models.TextChoices):
         A1 = "A1", "A1"
