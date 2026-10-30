@@ -743,7 +743,15 @@
             */
 
             .main-nav {
+                display: flex;
+            }
+
+            .nav-vocabulary {
                 display: none;
+            }
+
+            .nav-grammar {
+                font-size: 12px;
             }
 
 
@@ -898,7 +906,7 @@
 
 <body>
 
-{% include "_module_navigation.html" with active_module="vocabulary" %}
+
 
 
 
@@ -963,9 +971,16 @@
 
                     <a
                         href="{% url 'vocabulary:home' %}"
-                        class="nav-link"
+                        class="nav-link nav-vocabulary"
                     >
                         Vocabulary
+                    </a>
+
+                    <a
+                        href="{% url 'grammar:home' %}"
+                        class="nav-link nav-grammar"
+                    >
+                        Grammar
                     </a>
 
                 </div>
@@ -1085,4 +1100,4 @@
 
 </body>
 
-</html>
+</html>\n
