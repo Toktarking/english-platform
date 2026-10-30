@@ -16,6 +16,7 @@ from .models import (
     GrammarLessonProgress,
     GrammarPlacementAttempt,
     GrammarStudyPlan,
+    GrammarStudyPlanItem,
     GrammarTopicAssessment,
 )
 
@@ -472,6 +473,49 @@ def complete_lesson(request, slug):
             "updated_at",
         ]
     )
+
+    # Sync successful lesson with Knowledge Map
+    # and remove its normal task from the active Daily Plan.
+    if passed:
+
+        GrammarTopicAssessment.objects.update_or_create(
+            user=request.user,
+            lesson=lesson,
+            defaults={
+                "status": (
+                    GrammarTopicAssessment
+                    .Status
+                    .MASTERED
+                ),
+                "source": (
+                    GrammarTopicAssessment
+                    .Source
+                    .LESSON
+                ),
+                "correct_answers": correct,
+                "total_questions": total,
+            },
+        )
+
+        GrammarStudyPlanItem.objects.filter(
+            plan__user=request.user,
+            plan__status=(
+                GrammarStudyPlan
+                .Status
+                .ACTIVE
+            ),
+            lesson=lesson,
+            action__in=[
+                GrammarStudyPlanItem
+                .Action
+                .LEARN,
+
+                GrammarStudyPlanItem
+                .Action
+                .REVIEW,
+            ],
+        ).delete()
+
 
     # Сохраняем результат одной попытки.
     # После redirect страница сможет показать,
