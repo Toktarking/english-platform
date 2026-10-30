@@ -338,3 +338,225 @@ class GrammarLessonProgress(models.Model):
             f"{self.lesson} · "
             f"{self.status}"
         )
+
+
+class GrammarAssessmentQuestion(models.Model):
+    class Role(models.TextChoices):
+        SCREENING = "SCREENING", "Screening"
+        TOPIC = "TOPIC", "Topic diagnosis"
+        CHECKPOINT = "CHECKPOINT", "Block checkpoint"
+
+    exercise = models.ForeignKey(
+        "GrammarExercise",
+        on_delete=models.CASCADE,
+        related_name="assessment_links",
+    )
+    role = models.CharField(
+        max_length=20,
+        choices=Role.choices,
+        db_index=True,
+    )
+    priority = models.PositiveSmallIntegerField(
+        default=100,
+    )
+    is_active = models.BooleanField(
+        default=True,
+    )
+
+    class Meta:
+        ordering = [
+            "role",
+            "priority",
+            "exercise__lesson__order",
+            "exercise__order",
+        ]
+        constraints = [
+            models.UniqueConstraint(
+                fields=["exercise", "role"],
+                name="uniq_grammar_assessment_exercise_role",
+            ),
+        ]
+
+    def __str__(self):
+        return (
+            f"{self.role} · "
+            f"Lesson {self.exercise.lesson.order} · "
+            f"Q{self.exercise.order}"
+        )
+
+
+class GrammarPlacementAttempt(models.Model):
+    class Status(models.TextChoices):
+        IN_PROGRESS = "IN_PROGRESS", "In progress"
+        COMPLETED = "COMPLETED", "Completed"
+        ABANDONED = "ABANDONED", "Abandoned"
+
+    class Stage(models.TextChoices):
+        SCREENING = "SCREENING", "Block screening"
+        TOPIC = "TOPIC", "Topic diagnosis"
+        COMPLETE = "COMPLETE", "Complete"
+
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="grammar_placement_attempts",
+    )
+    status = models.CharField(
+        max_length=20,
+        choices=Status.choices,
+        default=Status.IN_PROGRESS,
+        db_index=True,
+    )
+    stage = models.CharField(
+        max_length=20,
+        choices=Stage.choices,
+        default=Stage.SCREENING,
+        db_index=True,
+    )
+
+    correct_answers = models.PositiveSmallIntegerField(
+        default=0,
+    )
+    total_questions = models.PositiveSmallIntegerField(
+        default=0,
+    )
+
+    started_at = models.DateTimeField(
+        auto_now_add=True,
+    )
+    completed_at = models.DateTimeField(
+        null=True,
+        blank=True,
+    )
+    updated_at = models.DateTimeField(
+        auto_now=True,
+    )
+
+    class Meta:
+        ordering = ["-started_at"]
+
+    def __str__(self):
+        return (
+            f"Grammar placement #{self.pk} · "
+            f"{self.user} · {self.status}"
+        )
+
+
+class GrammarPlacementAnswer(models.Model):
+    attempt = models.ForeignKey(
+        "GrammarPlacementAttempt",
+        on_delete=models.CASCADE,
+        related_name="answers",
+    )
+    assessment_question = models.ForeignKey(
+        "GrammarAssessmentQuestion",
+        on_delete=models.CASCADE,
+        related_name="placement_answers",
+    )
+
+    selected_answer = models.TextField()
+    is_correct = models.BooleanField(
+        default=False,
+        db_index=True,
+    )
+
+    answered_at = models.DateTimeField(
+        auto_now_add=True,
+    )
+
+    class Meta:
+        ordering = ["answered_at"]
+        constraints = [
+            models.UniqueConstraint(
+                fields=[
+                    "attempt",
+                    "assessment_question",
+                ],
+                name="uniq_grammar_placement_attempt_question",
+            ),
+        ]
+
+    def __str__(self):
+        return (
+            f"Attempt {self.attempt_id} · "
+            f"Question {self.assessment_question_id} · "
+            f"{'correct' if self.is_correct else 'wrong'}"
+        )
+
+
+class GrammarTopicAssessment(models.Model):
+    class Status(models.TextChoices):
+        UNKNOWN = "UNKNOWN", "Unknown"
+        PROVISIONAL_MASTERED = (
+            "PROVISIONAL_MASTERED",
+            "Provisionally mastered",
+        )
+        REVIEW = "REVIEW", "Review"
+        LEARN = "LEARN", "Learn"
+        MASTERED = "MASTERED", "Mastered"
+
+    class Source(models.TextChoices):
+        PLACEMENT_SCREENING = (
+            "PLACEMENT_SCREENING",
+            "Placement screening",
+        )
+        PLACEMENT_TOPIC = (
+            "PLACEMENT_TOPIC",
+            "Placement topic diagnosis",
+        )
+        CHECKPOINT = "CHECKPOINT", "Checkpoint"
+        LESSON = "LESSON", "Lesson"
+        REVIEW = "REVIEW", "Review"
+
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="grammar_topic_assessments",
+    )
+    lesson = models.ForeignKey(
+        "GrammarLesson",
+        on_delete=models.CASCADE,
+        related_name="topic_assessments",
+    )
+
+    status = models.CharField(
+        max_length=30,
+        choices=Status.choices,
+        default=Status.UNKNOWN,
+        db_index=True,
+    )
+
+    correct_answers = models.PositiveSmallIntegerField(
+        default=0,
+    )
+    total_questions = models.PositiveSmallIntegerField(
+        default=0,
+    )
+
+    source = models.CharField(
+        max_length=30,
+        choices=Source.choices,
+        default=Source.PLACEMENT_SCREENING,
+    )
+
+    updated_at = models.DateTimeField(
+        auto_now=True,
+    )
+
+    class Meta:
+        ordering = [
+            "lesson__order",
+        ]
+        constraints = [
+            models.UniqueConstraint(
+                fields=["user", "lesson"],
+                name="uniq_grammar_topic_assessment_user_lesson",
+            ),
+        ]
+
+    def __str__(self):
+        return (
+            f"{self.user} · "
+            f"Lesson {self.lesson.order} · "
+            f"{self.status}"
+        )
