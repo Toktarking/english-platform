@@ -1,0 +1,1439 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1"
+    >
+
+    <title>{{ lesson.title }}</title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        body {
+            margin: 0;
+            background: #f5f6f8;
+            color: #171717;
+
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                sans-serif;
+
+            line-height: 1.6;
+        }
+
+
+        .page {
+            width: min(860px, 92%);
+            margin: 28px auto 70px;
+        }
+
+
+        .back {
+            display: inline-block;
+            margin-bottom: 16px;
+
+            color: #666;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+
+        .hero,
+        .wizard,
+        .result-card {
+            background: #fff;
+            border-radius: 24px;
+
+            box-shadow:
+                0 5px 24px
+                rgba(0, 0, 0, .055);
+        }
+
+
+        .hero {
+            padding: 26px 28px;
+            margin-bottom: 20px;
+        }
+
+
+        .hero-meta {
+            color: #777;
+            font-size: 15px;
+        }
+
+
+        h1 {
+            margin:
+                10px
+                0
+                10px;
+
+            font-size: 34px;
+            line-height: 1.15;
+        }
+
+
+        .reward {
+            color: #666;
+            font-weight: 600;
+        }
+
+
+        /* ================================
+           WIZARD
+        ================================= */
+
+
+        .wizard {
+            padding: 26px 28px;
+        }
+
+
+        .phase-row {
+            display: grid;
+            grid-template-columns:
+                1fr
+                1fr;
+
+            gap: 10px;
+
+            margin-bottom: 16px;
+        }
+
+
+        .phase {
+            padding: 10px;
+            border-radius: 12px;
+
+            text-align: center;
+            font-weight: 750;
+            font-size: 14px;
+
+            background: #eeeef3;
+            color: #777;
+
+            transition: .2s ease;
+        }
+
+
+        .phase.active {
+            background: #171717;
+            color: #fff;
+        }
+
+
+        .phase.done {
+            background: #e8f7ed;
+            color: #168242;
+        }
+
+
+        .progress-line {
+            height: 8px;
+
+            background: #ececf1;
+            border-radius: 100px;
+
+            overflow: hidden;
+
+            margin-bottom: 12px;
+        }
+
+
+        .progress-fill {
+            width: 0%;
+            height: 100%;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #7047eb,
+                    #9b75ff
+                );
+
+            transition:
+                width .25s ease;
+        }
+
+
+        .step-status {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            gap: 12px;
+
+            color: #777;
+            font-size: 14px;
+
+            margin-bottom: 26px;
+        }
+
+
+        .step-type {
+            font-weight: 750;
+            color: #7047eb;
+        }
+
+
+        .step-panel {
+            display: none;
+            min-height: 330px;
+        }
+
+
+        .step-panel.active {
+            display: block;
+        }
+
+
+        .panel-title {
+            font-size: 24px;
+            line-height: 1.25;
+
+            margin:
+                0
+                0
+                20px;
+        }
+
+
+        .panel-body {
+            font-size: 17px;
+            white-space: pre-wrap;
+        }
+
+
+        audio {
+            width: 100%;
+            margin-top: 22px;
+        }
+
+
+        /* ================================
+           QUESTIONS
+        ================================= */
+
+
+        .question-number {
+            color: #7047eb;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+
+        .question {
+            font-size: 22px;
+            font-weight: 800;
+            line-height: 1.35;
+
+            margin-bottom: 22px;
+        }
+
+
+        .option {
+            display: flex;
+            align-items: center;
+
+            gap: 12px;
+
+            padding: 14px 16px;
+
+            margin: 10px 0;
+
+            border:
+                1px solid
+                #ddd;
+
+            border-radius: 15px;
+
+            cursor: pointer;
+
+            transition:
+                background .15s,
+                border-color .15s;
+        }
+
+
+        .option:hover {
+            background: #f7f6ff;
+            border-color: #bdb0f5;
+        }
+
+
+        .option:has(
+            input:checked
+        ) {
+            background: #f1edff;
+            border-color: #7047eb;
+        }
+
+
+        .option input {
+            accent-color: #7047eb;
+        }
+
+
+        /* ================================
+           NAVIGATION
+        ================================= */
+
+
+        .nav {
+            display: flex;
+
+            justify-content:
+                space-between;
+
+            align-items: center;
+
+            gap: 12px;
+
+            margin-top: 26px;
+        }
+
+
+        .btn {
+            border: 0;
+            border-radius: 15px;
+
+            padding:
+                14px
+                20px;
+
+            font-size: 16px;
+            font-weight: 750;
+
+            cursor: pointer;
+        }
+
+
+        .btn-back {
+            background: #ededf2;
+            color: #171717;
+        }
+
+
+        .btn-next {
+            margin-left: auto;
+
+            background: #171717;
+            color: white;
+        }
+
+
+        .btn-finish {
+            margin-left: auto;
+
+            background: #7047eb;
+            color: white;
+        }
+
+
+        .btn[disabled] {
+            opacity: .35;
+            cursor: not-allowed;
+        }
+
+
+        .hidden {
+            display: none;
+        }
+
+
+        /* ================================
+           RESULT
+        ================================= */
+
+
+        .result-card {
+            padding: 30px;
+        }
+
+
+        .result-icon {
+            font-size: 42px;
+            margin-bottom: 8px;
+        }
+
+
+        .result-title {
+            font-size: 28px;
+            font-weight: 850;
+
+            margin-bottom: 8px;
+        }
+
+
+        .score {
+            font-size: 46px;
+            font-weight: 900;
+            line-height: 1;
+
+            margin:
+                22px
+                0
+                8px;
+        }
+
+
+        .result-meta {
+            color: #666;
+        }
+
+
+        .xp-earned {
+            margin-top: 20px;
+
+            font-size: 22px;
+            font-weight: 800;
+
+            color: #7047eb;
+        }
+
+
+        .result-actions {
+            display: flex;
+            flex-wrap: wrap;
+
+            gap: 10px;
+
+            margin-top: 26px;
+        }
+
+
+        .action-link {
+            display: inline-block;
+
+            padding:
+                13px
+                18px;
+
+            border-radius: 14px;
+
+            text-decoration: none;
+            font-weight: 750;
+        }
+
+
+        .retry {
+            background: #171717;
+            color: white;
+        }
+
+
+        .review-theory {
+            background: #ededf2;
+            color: #171717;
+        }
+
+
+        /* ================================
+           ERROR REVIEW
+        ================================= */
+
+
+        .mistakes {
+            margin-top: 30px;
+        }
+
+
+        .mistakes h2 {
+            margin-bottom: 16px;
+        }
+
+
+        .mistake {
+            background: #fafafa;
+
+            border:
+                1px solid
+                #ececec;
+
+            border-radius: 16px;
+
+            padding: 18px;
+
+            margin-bottom: 12px;
+        }
+
+
+        .mistake-question {
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+
+
+        .wrong {
+            color: #b42318;
+            margin-bottom: 5px;
+        }
+
+
+        .correct {
+            color: #168242;
+            margin-bottom: 8px;
+        }
+
+
+        .explanation {
+            margin-top: 10px;
+            color: #555;
+        }
+
+
+        @media (
+            max-width: 620px
+        ) {
+
+            .page {
+                width: 94%;
+            }
+
+            .hero,
+            .wizard,
+            .result-card {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 28px;
+            }
+
+            .panel-title {
+                font-size: 21px;
+            }
+
+            .step-panel {
+                min-height: 300px;
+            }
+
+            .nav {
+                display: grid;
+                grid-template-columns:
+                    1fr
+                    1fr;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            .result-actions {
+                flex-direction: column;
+            }
+
+            .action-link {
+                text-align: center;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+{% include "_module_navigation.html" with active_module="grammar" %}
+
+
+
+
+<div class="page">
+
+
+    <a
+        class="back"
+        href="{% url 'grammar:home' %}"
+    >
+        ← Grammar
+    </a>
+
+
+    <div class="hero">
+
+        <div class="hero-meta">
+            {{ lesson.level }}
+            ·
+            Lesson {{ lesson.order }}
+            ·
+            {{ lesson.estimated_minutes }} min
+        </div>
+
+
+        <h1>
+            {{ lesson.title }}
+        </h1>
+
+
+        <div class="reward">
+            Проходной балл:
+            {{ lesson.pass_score }}%
+            ·
+            Награда:
+            +{{ lesson.xp_reward }} XP
+        </div>
+
+    </div>
+
+
+
+    {% if progress.status == "completed" %}
+
+
+        <div class="result-card">
+
+            <div class="result-icon">
+                🎉
+            </div>
+
+            <div class="result-title">
+                Урок завершён
+            </div>
+
+            <div class="score">
+                {{ progress.score }}%
+            </div>
+
+            <div class="result-meta">
+
+                Правильных ответов:
+
+                <strong>
+                    {{ progress.correct_answers }}
+                    /
+                    {{ progress.total_questions }}
+                </strong>
+
+            </div>
+
+
+            <div class="xp-earned">
+                ⭐ +{{ progress.xp_earned }} XP
+            </div>
+
+
+            {% if attempt_result %}
+
+                {% if wrong_results %}
+
+                    <div class="mistakes">
+
+                        <h2>
+                            Где были ошибки
+                        </h2>
+
+                        <p class="result-meta">
+                            Ошибок:
+                            <strong>
+                                {{ wrong_results|length }}
+                            </strong>
+                        </p>
+
+
+                        {% for item in wrong_results %}
+
+                            <div class="mistake">
+
+                                <div class="mistake-question">
+                                    {{ item.order }}.
+                                    {{ item.prompt }}
+                                </div>
+
+                                <div class="wrong">
+                                    Ваш ответ:
+                                    <strong>
+                                        {{ item.submitted }}
+                                    </strong>
+                                </div>
+
+                                <div class="correct">
+                                    Правильный ответ:
+                                    <strong>
+                                        {{ item.correct_answer }}
+                                    </strong>
+                                </div>
+
+                                {% if item.explanation %}
+
+                                    <div class="explanation">
+                                        {{ item.explanation }}
+                                    </div>
+
+                                {% endif %}
+
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+                {% else %}
+
+                    <div
+                        class="mistakes"
+                        style="
+                            background:#f3fbf5;
+                            padding:18px;
+                            border-radius:16px;
+                        "
+                    >
+                        <strong>
+                            🎯 Все ответы правильные!
+                        </strong>
+                    </div>
+
+                {% endif %}
+
+            {% endif %}
+
+
+            <div class="result-actions">
+
+                <a
+                    class="action-link review-theory"
+                    href="{% url 'grammar:plan' %}"
+                >
+                    ← К плану
+                </a>
+
+            </div>
+
+        </div>
+
+
+
+    {% elif attempt_result %}
+
+
+        <div class="result-card">
+
+            <div class="result-icon">
+                📚
+            </div>
+
+            <div class="result-title">
+                Почти получилось
+            </div>
+
+
+            <div class="score">
+                {{ attempt_result.score }}%
+            </div>
+
+
+            <div class="result-meta">
+
+                Правильно:
+
+                <strong>
+                    {{ attempt_result.correct }}
+                    /
+                    {{ attempt_result.total }}
+                </strong>
+
+                <br>
+
+                Для завершения урока нужно
+                {{ lesson.pass_score }}%.
+
+            </div>
+
+
+            <div class="result-actions">
+
+                <a
+                    class="action-link retry"
+                    href="{% url 'grammar:lesson' lesson.slug %}?practice=1"
+                >
+                    Попробовать практику снова →
+                </a>
+
+
+                <a
+                    class="action-link review-theory"
+                    href="{% url 'grammar:lesson' lesson.slug %}"
+                >
+                    Повторить теорию
+                </a>
+
+            </div>
+
+
+
+            {% if wrong_results %}
+
+                <div class="mistakes">
+
+                    <h2>
+                        Разбор ошибок
+                    </h2>
+
+
+                    {% for item in wrong_results %}
+
+                        <div class="mistake">
+
+                            <div class="mistake-question">
+
+                                {{ item.order }}.
+                                {{ item.prompt }}
+
+                            </div>
+
+
+                            <div class="wrong">
+
+                                Ваш ответ:
+                                <strong>
+                                    {{ item.submitted }}
+                                </strong>
+
+                            </div>
+
+
+                            <div class="correct">
+
+                                Правильный ответ:
+                                <strong>
+                                    {{ item.correct_answer }}
+                                </strong>
+
+                            </div>
+
+
+                            {% if item.explanation %}
+
+                                <div class="explanation">
+
+                                    {{ item.explanation }}
+
+                                </div>
+
+                            {% endif %}
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+
+
+    {% else %}
+
+
+        <form
+            id="lessonForm"
+            method="post"
+            action="{% url 'grammar:complete' lesson.slug %}"
+        >
+
+            {% csrf_token %}
+
+
+            <div class="wizard">
+
+
+                <div class="phase-row">
+
+                    <div
+                        id="phaseTheory"
+                        class="phase"
+                    >
+                        1 · Теория
+                    </div>
+
+
+                    <div
+                        id="phasePractice"
+                        class="phase"
+                    >
+                        2 · Практика
+                    </div>
+
+                </div>
+
+
+
+                <div class="progress-line">
+
+                    <div
+                        id="progressFill"
+                        class="progress-fill"
+                    ></div>
+
+                </div>
+
+
+
+                <div class="step-status">
+
+                    <span
+                        id="stepType"
+                        class="step-type"
+                    >
+                        Теория
+                    </span>
+
+                    <span
+                        id="stepCounter"
+                    >
+                    </span>
+
+                </div>
+
+
+
+                {% for section in sections %}
+
+                    <div
+                        class="step-panel theory-step"
+                        data-type="theory"
+                    >
+
+                        <h2 class="panel-title">
+
+                            {{ section.order }}.
+                            {{ section.title }}
+
+                        </h2>
+
+
+                        <div class="panel-body">
+
+                            {{ section.body }}
+
+                        </div>
+
+
+                        {% if section.audio_file %}
+
+                            <audio controls>
+
+                                <source
+                                    src="{{ section.audio_file.url }}"
+                                >
+
+                            </audio>
+
+                        {% endif %}
+
+                    </div>
+
+                {% endfor %}
+
+
+
+                {% for exercise in exercises %}
+
+                    <div
+                        class="step-panel practice-step"
+                        data-type="practice"
+                    >
+
+                        <div class="question-number">
+
+                            Вопрос
+                            {{ forloop.counter }}
+                            из
+                            {{ exercises|length }}
+
+                        </div>
+
+
+                        <div class="question">
+
+                            {{ exercise.prompt }}
+
+                        </div>
+
+
+                        {% for option in exercise.options %}
+
+                            <label class="option">
+
+                                <input
+                                    type="radio"
+
+                                    name="answer_{{ exercise.id }}"
+
+                                    value="{{ option }}"
+                                >
+
+                                <span>
+                                    {{ option }}
+                                </span>
+
+                            </label>
+
+                        {% endfor %}
+
+                    </div>
+
+                {% endfor %}
+
+
+
+                <div class="nav">
+
+
+                    <button
+                        id="prevButton"
+                        class="btn btn-back"
+                        type="button"
+                    >
+                        ← Назад
+                    </button>
+
+
+                    <button
+                        id="nextButton"
+                        class="btn btn-next"
+                        type="button"
+                    >
+                        Далее →
+                    </button>
+
+
+                    <button
+                        id="finishButton"
+                        class="btn btn-finish hidden"
+                        type="submit"
+                    >
+                        Проверить ответы →
+                    </button>
+
+
+                </div>
+
+
+            </div>
+
+        </form>
+
+
+
+        <script>
+
+            (function () {
+
+                const theorySteps =
+                    Array.from(
+                        document.querySelectorAll(
+                            '.theory-step'
+                        )
+                    );
+
+
+                const practiceSteps =
+                    Array.from(
+                        document.querySelectorAll(
+                            '.practice-step'
+                        )
+                    );
+
+
+                const allSteps = [
+                    ...theorySteps,
+                    ...practiceSteps
+                ];
+
+
+                const theoryCount =
+                    theorySteps.length;
+
+
+                const practiceCount =
+                    practiceSteps.length;
+
+
+                const prevButton =
+                    document.getElementById(
+                        'prevButton'
+                    );
+
+
+                const nextButton =
+                    document.getElementById(
+                        'nextButton'
+                    );
+
+
+                const finishButton =
+                    document.getElementById(
+                        'finishButton'
+                    );
+
+
+                const progressFill =
+                    document.getElementById(
+                        'progressFill'
+                    );
+
+
+                const stepType =
+                    document.getElementById(
+                        'stepType'
+                    );
+
+
+                const stepCounter =
+                    document.getElementById(
+                        'stepCounter'
+                    );
+
+
+                const phaseTheory =
+                    document.getElementById(
+                        'phaseTheory'
+                    );
+
+
+                const phasePractice =
+                    document.getElementById(
+                        'phasePractice'
+                    );
+
+
+                const startWithPractice =
+                    {{ start_with_practice|yesno:"true,false" }};
+
+
+                let currentStep =
+                    (
+                        startWithPractice
+                        &&
+                        practiceCount > 0
+                    )
+                    ?
+                    theoryCount
+                    :
+                    0;
+
+
+                function inTheory() {
+
+                    return (
+                        currentStep
+                        <
+                        theoryCount
+                    );
+
+                }
+
+
+                function practiceNumber() {
+
+                    return (
+                        currentStep
+                        -
+                        theoryCount
+                        +
+                        1
+                    );
+
+                }
+
+
+                function answerSelected() {
+
+                    if (inTheory()) {
+                        return true;
+                    }
+
+
+                    const currentPanel =
+                        allSteps[currentStep];
+
+
+                    return Boolean(
+                        currentPanel.querySelector(
+                            'input[type="radio"]:checked'
+                        )
+                    );
+
+                }
+
+
+                function render() {
+
+                    allSteps.forEach(
+                        (step, index) => {
+
+                            step.classList.toggle(
+                                'active',
+                                index === currentStep
+                            );
+
+                        }
+                    );
+
+
+                    const total =
+                        allSteps.length;
+
+
+                    const progress =
+                        total
+                        ?
+                        (
+                            (
+                                currentStep + 1
+                            )
+                            /
+                            total
+                            *
+                            100
+                        )
+                        :
+                        0;
+
+
+                    progressFill.style.width =
+                        progress + '%';
+
+
+                    prevButton.disabled =
+                        currentStep === 0;
+
+
+                    const lastStep =
+                        (
+                            currentStep
+                            ===
+                            total - 1
+                        );
+
+
+                    if (inTheory()) {
+
+                        stepType.textContent =
+                            'Теория';
+
+
+                        stepCounter.textContent =
+                            (
+                                'Шаг '
+                                +
+                                (currentStep + 1)
+                                +
+                                ' из '
+                                +
+                                theoryCount
+                            );
+
+
+                        phaseTheory.classList.add(
+                            'active'
+                        );
+
+
+                        phaseTheory.classList.remove(
+                            'done'
+                        );
+
+
+                        phasePractice.classList.remove(
+                            'active'
+                        );
+
+
+                        nextButton.textContent =
+                            (
+                                currentStep
+                                ===
+                                theoryCount - 1
+                            )
+                            ?
+                            'Перейти к практике →'
+                            :
+                            'Далее →';
+
+                    }
+
+                    else {
+
+                        stepType.textContent =
+                            'Практика';
+
+
+                        stepCounter.textContent =
+                            (
+                                'Вопрос '
+                                +
+                                practiceNumber()
+                                +
+                                ' из '
+                                +
+                                practiceCount
+                            );
+
+
+                        phaseTheory.classList.remove(
+                            'active'
+                        );
+
+
+                        phaseTheory.classList.add(
+                            'done'
+                        );
+
+
+                        phasePractice.classList.add(
+                            'active'
+                        );
+
+
+                        nextButton.textContent =
+                            'Следующий вопрос →';
+
+                    }
+
+
+                    if (lastStep) {
+
+                        nextButton.classList.add(
+                            'hidden'
+                        );
+
+
+                        finishButton.classList.remove(
+                            'hidden'
+                        );
+
+                    }
+
+                    else {
+
+                        nextButton.classList.remove(
+                            'hidden'
+                        );
+
+
+                        finishButton.classList.add(
+                            'hidden'
+                        );
+
+                    }
+
+                }
+
+
+                function goNext() {
+
+                    if (!answerSelected()) {
+
+                        alert(
+                            'Сначала выберите ответ.'
+                        );
+
+                        return;
+                    }
+
+
+                    if (
+                        currentStep
+                        <
+                        allSteps.length - 1
+                    ) {
+
+                        currentStep += 1;
+
+                        render();
+
+                        window.scrollTo({
+                            top: 0,
+                            behavior: 'smooth'
+                        });
+
+                    }
+
+                }
+
+
+                function goBack() {
+
+                    if (currentStep > 0) {
+
+                        currentStep -= 1;
+
+                        render();
+
+                        window.scrollTo({
+                            top: 0,
+                            behavior: 'smooth'
+                        });
+
+                    }
+
+                }
+
+
+                nextButton.addEventListener(
+                    'click',
+                    goNext
+                );
+
+
+                prevButton.addEventListener(
+                    'click',
+                    goBack
+                );
+
+
+                document
+                .getElementById(
+                    'lessonForm'
+                )
+                .addEventListener(
+                    'submit',
+                    function (event) {
+
+                        if (!answerSelected()) {
+
+                            event.preventDefault();
+
+                            alert(
+                                'Сначала выберите ответ.'
+                            );
+
+                        }
+
+                    }
+                );
+
+
+                render();
+
+            })();
+
+        </script>
+
+
+    {% endif %}
+
+
+</div>
+
+
+</body>
+</html>

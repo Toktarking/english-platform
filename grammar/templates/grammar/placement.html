@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1"
+    >
+
+    <title>Grammar Placement</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: #f5f6f8;
+            color: #171717;
+
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                sans-serif;
+
+            line-height: 1.55;
+        }
+
+        .page {
+            width: min(820px, 92%);
+            margin: 36px auto 70px;
+        }
+
+        .back {
+            display: inline-block;
+            margin-bottom: 18px;
+
+            color: #666;
+            text-decoration: none;
+            font-weight: 650;
+        }
+
+        .card {
+            background: #fff;
+            border-radius: 26px;
+            padding: 30px;
+
+            box-shadow:
+                0 5px 24px
+                rgba(0, 0, 0, .055);
+        }
+
+        h1 {
+            margin: 0 0 12px;
+            font-size: 36px;
+            line-height: 1.15;
+        }
+
+        h2 {
+            margin: 0 0 18px;
+            font-size: 25px;
+        }
+
+        .muted {
+            color: #737373;
+        }
+
+        .intro-text {
+            max-width: 650px;
+            font-size: 17px;
+            margin-bottom: 28px;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns:
+                repeat(
+                    3,
+                    minmax(0, 1fr)
+                );
+
+            gap: 12px;
+            margin: 26px 0;
+        }
+
+        .feature {
+            background: #f7f7fa;
+            border-radius: 18px;
+            padding: 17px;
+        }
+
+        .feature strong {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .button {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+
+            min-height: 50px;
+
+            padding: 0 24px;
+
+            border: 0;
+            border-radius: 15px;
+
+            background: #171717;
+            color: #fff;
+
+            font-size: 16px;
+            font-weight: 750;
+
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .button.purple {
+            background: #7047eb;
+        }
+
+        .button.secondary {
+            background: #eeeef3;
+            color: #252525;
+        }
+
+        .button:disabled {
+            opacity: .35;
+            cursor: not-allowed;
+        }
+
+        .phase {
+            color: #7047eb;
+            font-size: 14px;
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+
+        .progress-line {
+            height: 9px;
+            background: #ececf1;
+            border-radius: 100px;
+            overflow: hidden;
+            margin: 16px 0 10px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background:
+                linear-gradient(
+                    90deg,
+                    #7047eb,
+                    #9b75ff
+                );
+        }
+
+        .progress-meta {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+
+            color: #777;
+            font-size: 14px;
+
+            margin-bottom: 30px;
+        }
+
+        .topic-label {
+            display: inline-block;
+
+            background: #f0ecff;
+            color: #6339d8;
+
+            border-radius: 100px;
+            padding: 7px 12px;
+
+            font-size: 13px;
+            font-weight: 750;
+
+            margin-bottom: 18px;
+        }
+
+        .question {
+            font-size: 24px;
+            line-height: 1.35;
+            font-weight: 800;
+
+            margin-bottom: 24px;
+        }
+
+        .option {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+
+            padding: 15px 17px;
+            margin: 11px 0;
+
+            border:
+                1px solid
+                #dcdce3;
+
+            border-radius: 16px;
+
+            cursor: pointer;
+            transition: .15s ease;
+        }
+
+        .option:hover {
+            border-color: #a88cff;
+            background: #faf8ff;
+        }
+
+        .option:has(input:checked) {
+            border-color: #7047eb;
+            background: #f5f1ff;
+        }
+
+        .option input {
+            margin-top: 5px;
+        }
+
+        .actions {
+            margin-top: 28px;
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns:
+                repeat(
+                    3,
+                    minmax(0, 1fr)
+                );
+
+            gap: 12px;
+
+            margin: 26px 0;
+        }
+
+        .summary {
+            border-radius: 18px;
+            padding: 18px;
+            background: #f7f7fa;
+        }
+
+        .summary-number {
+            font-size: 30px;
+            font-weight: 850;
+        }
+
+        .summary-label {
+            color: #777;
+            font-size: 14px;
+        }
+
+        .plan-block {
+            margin-top: 24px;
+            padding-top: 22px;
+            border-top: 1px solid #eeeeef;
+        }
+
+        .plan-block h3 {
+            margin: 0 0 12px;
+        }
+
+        .plan-item {
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+            align-items: center;
+
+            padding: 14px 0;
+
+            border-bottom:
+                1px solid
+                #f0f0f2;
+        }
+
+        .plan-title {
+            font-weight: 720;
+        }
+
+        .tag {
+            display: inline-block;
+            margin-top: 5px;
+
+            padding: 4px 8px;
+            border-radius: 100px;
+
+            font-size: 12px;
+            font-weight: 750;
+        }
+
+        .tag.learn {
+            background: #fff1ef;
+            color: #b63b2c;
+        }
+
+        .tag.review {
+            background: #fff6d8;
+            color: #806300;
+        }
+
+        .small-link {
+            white-space: nowrap;
+            color: #7047eb;
+            text-decoration: none;
+            font-weight: 750;
+        }
+
+        @media (max-width: 650px) {
+            .feature-grid,
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 30px;
+            }
+
+            .card {
+                padding: 22px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+{% include "_module_navigation.html" with active_module="grammar" %}
+
+
+
+<div class="page">
+
+{% if mode == "intro" %}
+
+    <a
+        class="back"
+        href="{% url 'grammar:home' %}"
+    >
+        ← Grammar
+    </a>
+
+    <div class="card">
+
+        <div class="phase">
+            Персональный Grammar Plan
+        </div>
+
+        <h1>
+            Определим ваши знания грамматики
+        </h1>
+
+        <div class="intro-text muted">
+            Вам не нужно проходить темы,
+            которые вы уже знаете.
+            Сначала мы проведём диагностику,
+            найдём слабые темы и автоматически
+            составим персональный маршрут.
+        </div>
+
+        <div class="feature-grid">
+
+            <div class="feature">
+                <strong>
+                    1 · Screening
+                </strong>
+
+                <span class="muted">
+                    40 базовых вопросов
+                    по 10 блокам.
+                </span>
+            </div>
+
+            <div class="feature">
+                <strong>
+                    2 · Уточнение
+                </strong>
+
+                <span class="muted">
+                    Дополнительные вопросы
+                    только по сомнительным темам.
+                </span>
+            </div>
+
+            <div class="feature">
+                <strong>
+                    3 · План
+                </strong>
+
+                <span class="muted">
+                    Система определит,
+                    что изучать, повторять
+                    или пропустить.
+                </span>
+            </div>
+
+        </div>
+
+        <form
+            method="post"
+            action="{% url 'grammar:placement_start' %}"
+        >
+            {% csrf_token %}
+
+            <button
+                class="button purple"
+                type="submit"
+            >
+                Начать диагностику
+            </button>
+        </form>
+
+    </div>
+
+
+{% elif mode == "question" %}
+
+    <div class="card">
+
+        <div class="phase">
+            {{ phase_title }}
+        </div>
+
+        <div class="progress-line">
+            <div
+                class="progress-fill"
+                style="width: {{ progress_pct }}%;"
+            ></div>
+        </div>
+
+        <div class="progress-meta">
+            <span>
+                {{ progress_text }}
+            </span>
+
+            <span>
+                Ответов всего:
+                {{ attempt.total_questions }}
+            </span>
+        </div>
+
+        <div class="topic-label">
+            {{ context_label }}
+        </div>
+
+        <div class="question">
+            {{ exercise.prompt }}
+        </div>
+
+        <form
+            method="post"
+            action="{% url 'grammar:placement_answer' %}"
+            id="placement-form"
+        >
+
+            {% csrf_token %}
+
+            <input
+                type="hidden"
+                name="attempt_id"
+                value="{{ attempt.id }}"
+            >
+
+            <input
+                type="hidden"
+                name="question_id"
+                value="{{ question.id }}"
+            >
+
+            {% for option in exercise.options %}
+
+                <label class="option">
+
+                    <input
+                        type="radio"
+                        name="answer"
+                        value="{{ option }}"
+                        required
+                    >
+
+                    <span>
+                        {{ option }}
+                    </span>
+
+                </label>
+
+            {% endfor %}
+
+            <div class="actions">
+
+                <button
+                    class="button purple"
+                    type="submit"
+                    id="next-button"
+                    disabled
+                >
+                    Ответить →
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+    <script>
+        const radios = document.querySelectorAll(
+            'input[name="answer"]'
+        );
+
+        const button = document.getElementById(
+            'next-button'
+        );
+
+        radios.forEach((radio) => {
+            radio.addEventListener(
+                'change',
+                () => {
+                    button.disabled = false;
+                }
+            );
+        });
+    </script>
+
+
+{% elif mode == "result" %}
+
+    <a
+        class="back"
+        href="{% url 'grammar:home' %}"
+    >
+        ← Grammar
+    </a>
+
+    <div class="card">
+
+        <div class="phase">
+            Диагностика завершена
+        </div>
+
+        <h1>
+            Ваш Grammar Plan готов
+        </h1>
+
+        <p class="muted">
+            Мы не оцениваем вас только одной
+            общей цифрой. Результат сохранён
+            отдельно по каждой теме.
+        </p>
+
+        <div class="summary-grid">
+
+            <div class="summary">
+                <div class="summary-number">
+                    {{ mastered }}
+                </div>
+
+                <div class="summary-label">
+                    тем уже освоено
+                </div>
+            </div>
+
+            <div class="summary">
+                <div class="summary-number">
+                    {{ review }}
+                </div>
+
+                <div class="summary-label">
+                    тем нужно повторить
+                </div>
+            </div>
+
+            <div class="summary">
+                <div class="summary-number">
+                    {{ learn }}
+                </div>
+
+                <div class="summary-label">
+                    тем нужно изучить
+                </div>
+            </div>
+
+        </div>
+
+        {% if next_item %}
+
+            <div class="plan-block">
+
+                <div class="muted">
+                    Рекомендуемый следующий шаг
+                </div>
+
+                <h2>
+                    {{ next_item.lesson.title }}
+                </h2>
+
+                {% if next_item.status == "REVIEW" %}
+
+                    <a
+                        class="button purple"
+                        href="{% url 'grammar:lesson' next_item.lesson.slug %}?practice=1"
+                    >
+                        Повторить тему →
+                    </a>
+
+                {% else %}
+
+                    <a
+                        class="button purple"
+                        href="{% url 'grammar:lesson' next_item.lesson.slug %}"
+                    >
+                        Начать урок →
+                    </a>
+
+                {% endif %}
+
+            </div>
+
+        {% else %}
+
+            <div class="plan-block">
+
+                <h2>
+                    Отличный результат
+                </h2>
+
+                <p class="muted">
+                    Сейчас система не нашла тем,
+                    которые требуют обязательного
+                    изучения или повторения.
+                </p>
+
+            </div>
+
+        {% endif %}
+
+
+        {% if plan_groups %}
+
+            {% for group in plan_groups %}
+
+                <div class="plan-block">
+
+                    <h3>
+                        Block {{ group.block.order }} ·
+                        {{ group.block.title }}
+                    </h3>
+
+                    {% for item in group.items %}
+
+                        <div class="plan-item">
+
+                            <div>
+
+                                <div class="plan-title">
+                                    Lesson
+                                    {{ item.lesson.order }} ·
+                                    {{ item.lesson.title }}
+                                </div>
+
+                                {% if item.status == "LEARN" %}
+
+                                    <span class="tag learn">
+                                        Изучить
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="tag review">
+                                        Повторить
+                                    </span>
+
+                                {% endif %}
+
+                            </div>
+
+                            {% if item.status == "REVIEW" %}
+
+                                <a
+                                    class="small-link"
+                                    href="{% url 'grammar:lesson' item.lesson.slug %}?practice=1"
+                                >
+                                    Practice →
+                                </a>
+
+                            {% else %}
+
+                                <a
+                                    class="small-link"
+                                    href="{% url 'grammar:lesson' item.lesson.slug %}"
+                                >
+                                    Открыть →
+                                </a>
+
+                            {% endif %}
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+            {% endfor %}
+
+        {% endif %}
+
+
+        <div class="actions">
+
+            <a
+                class="button"
+                href="{% url 'grammar:home' %}"
+            >
+                Открыть мой Roadmap
+            </a>
+
+            <form
+                method="post"
+                action="{% url 'grammar:placement_start' %}"
+            >
+                {% csrf_token %}
+
+                <button
+                    class="button secondary"
+                    type="submit"
+                >
+                    Пройти диагностику заново
+                </button>
+            </form>
+
+        </div>
+
+    </div>
+
+{% endif %}
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1"
+    >
+
+    <title>Grammar Daily Plan</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: #f5f6f8;
+            color: #171717;
+
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                sans-serif;
+        }
+
+        .page {
+            width: min(900px, 92%);
+            margin: 38px auto 80px;
+        }
+
+        .back {
+            display: inline-block;
+            margin-bottom: 18px;
+
+            color: #686868;
+            text-decoration: none;
+            font-weight: 650;
+        }
+
+        .card {
+            background: #fff;
+            border-radius: 24px;
+            padding: 28px;
+            margin-bottom: 16px;
+
+            box-shadow:
+                0 5px 22px
+                rgba(0,0,0,.05);
+        }
+
+        h1 {
+            margin: 0 0 10px;
+            font-size: 34px;
+        }
+
+        h2 {
+            margin: 0;
+        }
+
+        .muted {
+            color: #737373;
+        }
+
+        .label {
+            color: #7047eb;
+            font-weight: 800;
+            font-size: 13px;
+            margin-bottom: 8px;
+        }
+
+        .button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            min-height: 48px;
+
+            padding: 0 22px;
+
+            border: 0;
+            border-radius: 14px;
+
+            background: #7047eb;
+            color: #fff;
+
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 750;
+
+            cursor: pointer;
+        }
+
+        .button.secondary {
+            background: #eeeef3;
+            color: #252525;
+        }
+
+        .date-input {
+            width: 100%;
+            max-width: 360px;
+
+            padding: 14px 16px;
+
+            border:
+                1px solid
+                #d9d9df;
+
+            border-radius: 14px;
+
+            font-size: 17px;
+
+            margin:
+                10px
+                0
+                20px;
+        }
+
+        .error {
+            margin-bottom: 18px;
+
+            background: #fff0ee;
+            color: #a83228;
+
+            border-radius: 14px;
+            padding: 13px 15px;
+        }
+
+        .summary {
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    3,
+                    minmax(0, 1fr)
+                );
+
+            gap: 12px;
+
+            margin-top: 22px;
+        }
+
+        .summary-item {
+            background: #f7f7fa;
+            border-radius: 17px;
+            padding: 17px;
+        }
+
+        .summary-number {
+            font-size: 27px;
+            font-weight: 850;
+        }
+
+        .summary-label {
+            margin-top: 3px;
+
+            color: #757575;
+            font-size: 13px;
+        }
+
+        .day {
+            background: #fff;
+
+            border-radius: 20px;
+            padding: 21px 23px;
+
+            margin-bottom: 12px;
+
+            box-shadow:
+                0 4px 18px
+                rgba(0,0,0,.045);
+        }
+
+        .day.today {
+            border:
+                2px solid
+                #7047eb;
+        }
+
+        .day.past {
+            opacity: .62;
+        }
+
+        .day-top {
+            display: flex;
+
+            justify-content:
+                space-between;
+
+            align-items:
+                flex-start;
+
+            gap: 15px;
+        }
+
+        .day-number {
+            font-size: 18px;
+            font-weight: 800;
+        }
+
+        .day-date {
+            color: #777;
+            font-size: 14px;
+            margin-top: 3px;
+        }
+
+        .phase {
+            display: inline-block;
+
+            padding: 5px 9px;
+
+            border-radius: 100px;
+
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+        .phase.study {
+            background: #efeaff;
+            color: #6339d8;
+        }
+
+        .phase.review {
+            background: #fff2cd;
+            color: #806000;
+        }
+
+
+        .phase.exam {
+            background: #171717;
+            color: #fff;
+        }
+
+        .phase.completed {
+            background: #e7f7eb;
+            color: #168242;
+        }
+
+        .phase.rest {
+            background: #ededf1;
+            color: #686868;
+        }
+
+        .task {
+            display: flex;
+
+            justify-content:
+                space-between;
+
+            align-items:
+                center;
+
+            gap: 16px;
+
+            border-top:
+                1px solid
+                #eeeeef;
+
+            padding-top: 15px;
+            margin-top: 15px;
+        }
+
+        .task-title {
+            font-weight: 750;
+        }
+
+        .task-meta {
+            margin-top: 4px;
+
+            color: #777;
+            font-size: 13px;
+        }
+
+        .task-link {
+            white-space: nowrap;
+
+            color: #7047eb;
+            text-decoration: none;
+            font-weight: 750;
+        }
+
+        .exam-card {
+            border:
+                2px solid
+                #171717;
+        }
+
+        .actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+
+            margin-top: 22px;
+        }
+
+        @media (
+            max-width: 650px
+        ) {
+
+            .summary {
+                grid-template-columns: 1fr;
+            }
+
+            .task {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            h1 {
+                font-size: 30px;
+            }
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+{% include "_module_navigation.html" with active_module="grammar" %}
+
+
+
+<div class="page">
+
+
+{% if mode == "setup" %}
+
+    <a
+        class="back"
+        href="{% url 'grammar:home' %}"
+    >
+        ← Grammar
+    </a>
+
+    <div class="card">
+
+        <div class="label">
+            DAILY GRAMMAR PLAN
+        </div>
+
+        <h1>
+            Когда экзамен?
+        </h1>
+
+        <p class="muted">
+            Мы возьмём результаты вашей диагностики
+            и распределим только нужные темы
+            по оставшимся дням.
+            Последние дни оставим
+            для повторения.
+        </p>
+
+
+        {% if error %}
+
+            <div class="error">
+                {{ error }}
+            </div>
+
+        {% endif %}
+
+
+        <form method="post">
+
+            {% csrf_token %}
+
+            <label
+                for="exam_date"
+                style="font-weight: 750;"
+            >
+                Дата экзамена
+            </label>
+
+            <br>
+
+            <input
+                class="date-input"
+                id="exam_date"
+                type="date"
+                name="exam_date"
+                required
+                min="{{ min_exam_date|date:'Y-m-d' }}"
+                value="{{ default_exam_date|date:'Y-m-d' }}"
+            >
+
+            <br>
+
+            <button
+                class="button"
+                type="submit"
+            >
+                Составить план →
+            </button>
+
+        </form>
+
+    </div>
+
+
+{% elif mode == "calendar" %}
+
+    <a
+        class="back"
+        href="{% url 'grammar:home' %}"
+    >
+        ← Grammar
+    </a>
+
+
+    <div class="card">
+
+        <div class="label">
+            МОЙ ПЛАН ПОДГОТОВКИ
+        </div>
+
+        <h1>
+            {{ days_remaining }}
+            дней до экзамена
+        </h1>
+
+        <div class="muted">
+            Экзамен:
+            {{ plan.exam_date|date:"d.m.Y" }}
+        </div>
+
+
+        <div class="summary">
+
+            <div class="summary-item">
+
+                <div class="summary-number">
+                    {{ learn_count }}
+                </div>
+
+                <div class="summary-label">
+                    тем изучить
+                </div>
+
+            </div>
+
+            <div class="summary-item">
+
+                <div class="summary-number">
+                    {{ review_count }}
+                </div>
+
+                <div class="summary-label">
+                    тем повторить
+                </div>
+
+            </div>
+
+            <div class="summary-item">
+
+                <div class="summary-number">
+                    {{ exam_days_count }}
+                </div>
+
+                <div class="summary-label">
+                    дня Mixed Exam Practice
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="actions">
+
+            <a
+                class="button secondary"
+                href="{% url 'grammar:plan_setup' %}"
+            >
+                Изменить дату / пересобрать
+            </a>
+
+        </div>
+
+    </div>
+
+
+    {% for day in calendar %}
+
+        <div
+            class="
+                day
+                {% if day.is_today %}today{% endif %}
+                {% if day.is_past %}past{% endif %}
+            "
+        >
+
+            <div class="day-top">
+
+                <div>
+
+                    <div class="day-number">
+                        День {{ day.number }}
+
+                        {% if day.is_today %}
+                            · Сегодня
+                        {% endif %}
+                    </div>
+
+                    <div class="day-date">
+                        {{ day.date|date:"d.m.Y" }}
+                    </div>
+
+                </div>
+
+
+                {% if day.phase == "EXAM" %}
+
+                    <span class="phase exam">
+                        Exam Practice
+                    </span>
+
+                {% elif day.phase == "COMPLETED" %}
+
+                    <span class="phase completed">
+                        ✓ Выполнено
+                    </span>
+
+                {% elif day.phase == "FINAL_REVIEW" %}
+
+                    <span class="phase review">
+                        Финальное повторение
+                    </span>
+
+                {% elif day.phase == "STUDY" %}
+
+                    <span class="phase study">
+                        Учёба
+                    </span>
+
+                {% else %}
+
+                    <span class="phase rest">
+                        Резерв
+                    </span>
+
+                {% endif %}
+
+            </div>
+
+
+            {% if day.phase == "EXAM" %}
+
+                <div class="task">
+
+                    <div>
+
+                        <div class="task-title">
+                            Mixed Exam Practice
+                        </div>
+
+                        <div class="task-meta">
+                            20 смешанных вопросов
+                            · без подсказки темы
+                        </div>
+
+                    </div>
+
+                    <a
+                        class="task-link"
+                        href="{% url 'grammar:exam_practice' %}"
+                    >
+                        Начать →
+                    </a>
+
+                </div>
+
+            {% else %}
+
+            {% for item in day.items %}
+
+                <div class="task">
+
+                    <div>
+
+                        <div class="task-title">
+                            Lesson
+                            {{ item.lesson.order }}
+                            ·
+                            {{ item.lesson.title }}
+                        </div>
+
+                        <div class="task-meta">
+
+                            {% if item.is_completed %}
+
+                                ✅ Выполнено
+
+                            {% elif item.action == "LEARN" %}
+
+                                Изучить тему
+
+                            {% elif item.action == "REVIEW" %}
+
+                                Короткое повторение
+
+                            {% else %}
+
+                                Финальное повторение
+
+                            {% endif %}
+
+                            {% if item.lesson.block %}
+
+                                · Block
+                                {{ item.lesson.block.order }}
+
+                            {% endif %}
+
+                        </div>
+
+                    </div>
+
+
+                    {% if item.is_completed %}
+
+                        <span
+                            class="task-link"
+                            style="color: #168242;"
+                        >
+                            Готово ✓
+                        </span>
+
+                    {% elif item.action == "LEARN" %}
+
+                        <a
+                            class="task-link"
+                            href="{% url 'grammar:lesson' item.lesson.slug %}"
+                        >
+                            Учить →
+                        </a>
+
+                    {% else %}
+
+                        <a
+                            class="task-link"
+                            href="{% url 'grammar:lesson' item.lesson.slug %}?practice=1"
+                        >
+                            Practice →
+                        </a>
+
+                    {% endif %}
+
+                </div>
+
+            {% empty %}
+
+                <div
+                    class="muted"
+                    style="margin-top: 15px;"
+                >
+                    Резервный день.
+                    Можно отдохнуть или повторить
+                    предыдущие ошибки.
+                </div>
+
+            {% endfor %}
+
+            {% endif %}
+
+        </div>
+
+    {% endfor %}
+
+
+    <div class="card exam-card">
+
+        <div class="label">
+            EXAM DAY
+        </div>
+
+        <h2>
+            {{ plan.exam_date|date:"d.m.Y" }}
+        </h2>
+
+        <p class="muted">
+            В этот день система
+            не ставит новые темы.
+        </p>
+
+    </div>
+
+{% endif %}
+
+
+</div>
+
+</body>
+</html>

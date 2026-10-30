@@ -1,0 +1,98 @@
+<style>
+    .module-navigation-wrap {
+        width: min(900px, 92%);
+        margin: 20px auto 0;
+    }
+
+    .module-navigation {
+        display: inline-flex;
+        gap: 4px;
+
+        padding: 4px;
+
+        background: #eaeaef;
+        border-radius: 14px;
+    }
+
+    .module-navigation a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        min-height: 40px;
+        padding: 0 18px;
+
+        border-radius: 11px;
+
+        color: #686868;
+        text-decoration: none;
+
+        font-size: 14px;
+        font-weight: 750;
+
+        transition:
+            background .15s ease,
+            color .15s ease;
+    }
+
+    .module-navigation a:hover {
+        color: #171717;
+    }
+
+    .module-navigation a.active {
+        background: #fff;
+        color: #171717;
+
+        box-shadow:
+            0 2px 8px
+            rgba(0, 0, 0, .06);
+    }
+
+    @media (max-width: 600px) {
+        .module-navigation-wrap {
+            margin-top: 14px;
+        }
+
+        .module-navigation {
+            width: 100%;
+        }
+
+        .module-navigation a {
+            flex: 1;
+        }
+    }
+</style>
+
+
+<div class="module-navigation-wrap">
+
+    <nav
+        class="module-navigation"
+        aria-label="Learning modules"
+    >
+
+        <a
+            href="{% url 'vocabulary:home' %}"
+            class="
+                {% if active_module == 'vocabulary' %}
+                    active
+                {% endif %}
+            "
+        >
+            Vocabulary
+        </a>
+
+        <a
+            href="{% url 'grammar:home' %}"
+            class="
+                {% if active_module == 'grammar' %}
+                    active
+                {% endif %}
+            "
+        >
+            Grammar
+        </a>
+
+    </nav>
+
+</div>
