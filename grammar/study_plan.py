@@ -4,6 +4,7 @@ from django.db import transaction
 from django.utils import timezone
 
 from grammar.models import (
+    GrammarLessonProgress,
     GrammarStudyPlan,
     GrammarStudyPlanItem,
     GrammarTopicAssessment,
@@ -14,15 +15,15 @@ from grammar.placement import (
 )
 
 
-def _review_days_count(total_days):
+def get_exam_days_count(total_days):
     """
-    Reserve the final part of the preparation
-    period for revision.
+    Reserve the last preparation days
+    for mixed exam-style practice.
 
-    14+ days -> 3 review days
-    7-13 days -> 2 review days
-    3-6 days -> 1 review day
-    1-2 days -> 0 dedicated review days
+    14+ days -> 3 exam-practice days
+    7-13 days -> 2
+    3-6 days -> 1
+    1-2 days -> 0
     """
 
     if total_days >= 14:
@@ -37,44 +38,6 @@ def _review_days_count(total_days):
     return 0
 
 
-def _pick_evenly(items, count):
-    """
-    Pick items from across the entire roadmap
-    rather than only from its beginning.
-    """
-
-    items = list(items)
-
-    if not items or count <= 0:
-        return []
-
-    if count >= len(items):
-        return items
-
-    if count == 1:
-        return [
-            items[len(items) // 2]
-        ]
-
-    selected = []
-
-    last_index = len(items) - 1
-
-    for position in range(count):
-
-        index = round(
-            position
-            * last_index
-            / (count - 1)
-        )
-
-        selected.append(
-            items[index]
-        )
-
-    return selected
-
-
 @transaction.atomic
 def build_study_plan(
     user,
@@ -82,13 +45,13 @@ def build_study_plan(
     start_date=None,
 ):
     """
-    Build a date-based study plan from the user's
-    current Grammar Knowledge Map.
+    Build the personal Grammar calendar.
 
-    LEARN has weight 2.
-    REVIEW has weight 1.
+    LEARN = weight 2
+    REVIEW = weight 1
 
-    The final days are reserved for revision.
+    Final preparation days are reserved
+    for Mixed Exam Practice.
     """
 
     if start_date is None:
@@ -99,7 +62,6 @@ def build_study_plan(
             "Exam date must be later than start date."
         )
 
-    # Archive previous active plans.
     GrammarStudyPlan.objects.filter(
         user=user,
         status=GrammarStudyPlan.Status.ACTIVE,
@@ -125,62 +87,34 @@ def build_study_plan(
         - start_date
     ).days
 
-    study_dates = [
+    preparation_dates = [
         start_date
         + timedelta(days=index)
 
-        for index in range(
-            total_days
-        )
+        for index in range(total_days)
     ]
 
-    review_days_count = (
-        _review_days_count(
-            len(study_dates)
+    exam_days_count = (
+        get_exam_days_count(
+            total_days
         )
     )
 
-    # Keep at least one normal study day
-    # whenever the user has topics to learn.
-    if (
-        source_items
-        and
-        len(study_dates) > 0
-        and
-        review_days_count
-        >= len(study_dates)
-    ):
-        review_days_count = (
-            len(study_dates)
-            - 1
-        )
-
-    if review_days_count:
-
-        core_dates = (
-            study_dates[
-                :-review_days_count
+    if exam_days_count:
+        study_dates = (
+            preparation_dates[
+                :-exam_days_count
             ]
         )
-
-        final_review_dates = (
-            study_dates[
-                -review_days_count:
-            ]
-        )
-
     else:
+        study_dates = (
+            preparation_dates
+        )
 
-        core_dates = study_dates
-        final_review_dates = []
-
-    if source_items and not core_dates:
-        core_dates = study_dates
-        final_review_dates = []
-
-    # -----------------------------------------
-    # MAIN PLAN
-    # -----------------------------------------
+    # If preparation is extremely short,
+    # always retain a study day.
+    if source_items and not study_dates:
+        study_dates = preparation_dates
 
     weights = []
 
@@ -221,14 +155,14 @@ def build_study_plan(
         start=1,
     ):
 
-        if not core_dates:
+        if not study_dates:
             break
 
         if total_weight:
 
             date_index = int(
                 cumulative_weight
-                * len(core_dates)
+                * len(study_dates)
                 / total_weight
             )
 
@@ -237,7 +171,7 @@ def build_study_plan(
 
         date_index = min(
             date_index,
-            len(core_dates) - 1,
+            len(study_dates) - 1,
         )
 
         if (
@@ -267,7 +201,7 @@ def build_study_plan(
                 plan=plan,
                 lesson=topic.lesson,
                 scheduled_date=(
-                    core_dates[
+                    study_dates[
                         date_index
                     ]
                 ),
@@ -277,59 +211,6 @@ def build_study_plan(
         )
 
         cumulative_weight += weight
-
-    # -----------------------------------------
-    # FINAL REVISION
-    # -----------------------------------------
-
-    if (
-        final_review_dates
-        and
-        source_items
-    ):
-
-        max_final_topics = (
-            len(final_review_dates)
-            * 3
-        )
-
-        revision_topics = (
-            _pick_evenly(
-                source_items,
-                min(
-                    len(source_items),
-                    max_final_topics,
-                ),
-            )
-        )
-
-        for position, topic in enumerate(
-            revision_topics,
-            start=1,
-        ):
-
-            date_index = (
-                (position - 1)
-                % len(final_review_dates)
-            )
-
-            plan_items.append(
-                GrammarStudyPlanItem(
-                    plan=plan,
-                    lesson=topic.lesson,
-                    scheduled_date=(
-                        final_review_dates[
-                            date_index
-                        ]
-                    ),
-                    action=(
-                        GrammarStudyPlanItem
-                        .Action
-                        .FINAL_REVIEW
-                    ),
-                    order=position,
-                )
-            )
 
     GrammarStudyPlanItem.objects.bulk_create(
         plan_items
@@ -352,13 +233,16 @@ def get_active_study_plan(user):
 
 
 def get_plan_calendar(plan):
-    """
-    Return every calendar day before the exam,
-    including rest/reserve days.
-    """
 
     items = list(
         plan.items
+        .exclude(
+            action=(
+                GrammarStudyPlanItem
+                .Action
+                .FINAL_REVIEW
+            ),
+        )
         .select_related(
             "lesson",
             "lesson__block",
@@ -369,6 +253,30 @@ def get_plan_calendar(plan):
             "lesson__order",
         )
     )
+
+    completed_lesson_ids = set(
+        GrammarLessonProgress.objects
+        .filter(
+            user=plan.user,
+            status=(
+                GrammarLessonProgress
+                .Status
+                .COMPLETED
+            ),
+            completed_at__gte=plan.created_at,
+        )
+        .values_list(
+            "lesson_id",
+            flat=True,
+        )
+    )
+
+    for item in items:
+
+        item.is_completed = (
+            item.lesson_id
+            in completed_lesson_ids
+        )
 
     grouped = {}
 
@@ -386,13 +294,30 @@ def get_plan_calendar(plan):
         - plan.start_date
     ).days
 
-    calendar = []
+    exam_days_count = (
+        get_exam_days_count(
+            total_days
+        )
+    )
+
+    if exam_days_count:
+
+        first_exam_day = (
+            plan.exam_date
+            - timedelta(
+                days=exam_days_count
+            )
+        )
+
+    else:
+
+        first_exam_day = None
 
     today = timezone.localdate()
 
-    for index in range(
-        total_days
-    ):
+    calendar = []
+
+    for index in range(total_days):
 
         current_date = (
             plan.start_date
@@ -404,17 +329,28 @@ def get_plan_calendar(plan):
             [],
         )
 
-        if any(
-            item.action
-            ==
-            GrammarStudyPlanItem
-            .Action
-            .FINAL_REVIEW
-
-            for item in day_items
+        if (
+            first_exam_day
+            and
+            current_date >= first_exam_day
         ):
 
-            phase = "FINAL_REVIEW"
+            phase = "EXAM"
+
+        elif (
+            day_items
+            and
+            all(
+                getattr(
+                    item,
+                    "is_completed",
+                    False,
+                )
+                for item in day_items
+            )
+        ):
+
+            phase = "COMPLETED"
 
         elif day_items:
 

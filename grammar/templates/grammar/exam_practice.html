@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+>
+
+<title>Mixed Exam Practice</title>
+
+<style>
+
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        background: #f5f6f8;
+        color: #171717;
+
+        font-family:
+            -apple-system,
+            BlinkMacSystemFont,
+            "Segoe UI",
+            sans-serif;
+    }
+
+    .page {
+        width: min(820px, 92%);
+        margin: 40px auto 80px;
+    }
+
+    .back {
+        display: inline-block;
+        margin-bottom: 18px;
+        color: #666;
+        text-decoration: none;
+        font-weight: 650;
+    }
+
+    .card {
+        background: #fff;
+        padding: 30px;
+        border-radius: 25px;
+
+        box-shadow:
+            0 5px 24px
+            rgba(0,0,0,.055);
+    }
+
+    h1 {
+        margin: 0 0 12px;
+        font-size: 35px;
+    }
+
+    .muted {
+        color: #747474;
+    }
+
+    .label {
+        color: #7047eb;
+        font-weight: 800;
+        font-size: 13px;
+        margin-bottom: 9px;
+    }
+
+    .button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        min-height: 49px;
+        padding: 0 23px;
+
+        border: 0;
+        border-radius: 14px;
+
+        background: #7047eb;
+        color: #fff;
+
+        font-weight: 750;
+        font-size: 15px;
+
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    .progress {
+        height: 8px;
+        background: #ececf1;
+        border-radius: 100px;
+        overflow: hidden;
+        margin: 15px 0 10px;
+    }
+
+    .fill {
+        height: 100%;
+
+        background:
+            linear-gradient(
+                90deg,
+                #7047eb,
+                #9b75ff
+            );
+    }
+
+    .progress-meta {
+        display: flex;
+        justify-content: space-between;
+
+        color: #777;
+        font-size: 14px;
+
+        margin-bottom: 30px;
+    }
+
+    .question {
+        font-size: 24px;
+        font-weight: 800;
+        line-height: 1.35;
+
+        margin-bottom: 24px;
+    }
+
+    .option {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+
+        border:
+            1px solid
+            #ddddE4;
+
+        border-radius: 16px;
+
+        padding: 15px 17px;
+        margin: 11px 0;
+
+        cursor: pointer;
+    }
+
+    .option:hover {
+        border-color: #9f82ff;
+    }
+
+    .option:has(input:checked) {
+        border-color: #7047eb;
+        background: #f5f1ff;
+    }
+
+    .option input {
+        margin-top: 4px;
+    }
+
+    .actions {
+        margin-top: 28px;
+    }
+
+    .score {
+        font-size: 54px;
+        font-weight: 900;
+        margin: 18px 0 0;
+    }
+
+    .wrong {
+        margin-top: 17px;
+        padding: 17px;
+
+        border:
+            1px solid
+            #e5e5e8;
+
+        border-radius: 17px;
+    }
+
+    .wrong-question {
+        font-weight: 750;
+        margin-bottom: 8px;
+    }
+
+    .bad {
+        color: #c0352b;
+        margin-bottom: 5px;
+    }
+
+    .good {
+        color: #168242;
+        margin-bottom: 5px;
+    }
+
+    .topic {
+        color: #777;
+        font-size: 13px;
+        margin-top: 8px;
+    }
+
+</style>
+
+</head>
+
+<body>
+
+{% include "_module_navigation.html" with active_module="grammar" %}
+
+
+
+<div class="page">
+
+
+{% if mode == "intro" %}
+
+    <a
+        class="back"
+        href="{% url 'grammar:plan' %}"
+    >
+        ← К плану
+    </a>
+
+    <div class="card">
+
+        <div class="label">
+            MIXED EXAM PRACTICE
+        </div>
+
+        <h1>
+            20 смешанных вопросов
+        </h1>
+
+        <p class="muted">
+            Темы не будут показаны заранее.
+            Вопросы перемешаны по всей грамматике,
+            как в реальном лексико-грамматическом тесте.
+        </p>
+
+        <p class="muted">
+            Большая часть вопросов будет взята
+            из ваших слабых тем.
+        </p>
+
+        <form
+            method="post"
+            action="{% url 'grammar:exam_practice_start' %}"
+        >
+            {% csrf_token %}
+
+            <button
+                class="button"
+                type="submit"
+            >
+                Начать 20 вопросов →
+            </button>
+        </form>
+
+    </div>
+
+
+{% elif mode == "question" %}
+
+    <div class="card">
+
+        <div class="label">
+            MIXED EXAM PRACTICE
+        </div>
+
+        <div class="progress">
+
+            <div
+                class="fill"
+                style="width: {{ progress_pct }}%;"
+            ></div>
+
+        </div>
+
+        <div class="progress-meta">
+
+            <span>
+                Вопрос
+                {{ question_number }}
+                из
+                {{ total }}
+            </span>
+
+            <span>
+                Без подсказки темы
+            </span>
+
+        </div>
+
+        <div class="question">
+            {{ exercise.prompt }}
+        </div>
+
+        <form
+            method="post"
+            action="{% url 'grammar:exam_practice_answer' %}"
+            id="exam-form"
+        >
+
+            {% csrf_token %}
+
+            {% for option in exercise.options %}
+
+                <label class="option">
+
+                    <input
+                        type="radio"
+                        name="answer"
+                        value="{{ option }}"
+                        required
+                    >
+
+                    <span>
+                        {{ option }}
+                    </span>
+
+                </label>
+
+            {% endfor %}
+
+            <div class="actions">
+
+                <button
+                    class="button"
+                    id="answer-button"
+                    type="submit"
+                    disabled
+                >
+                    Следующий вопрос →
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+    <script>
+
+        const radios =
+            document.querySelectorAll(
+                'input[name="answer"]'
+            );
+
+        const button =
+            document.getElementById(
+                'answer-button'
+            );
+
+        radios.forEach(
+            (radio) => {
+
+                radio.addEventListener(
+                    'change',
+                    () => {
+                        button.disabled = false;
+                    }
+                );
+
+            }
+        );
+
+    </script>
+
+
+{% elif mode == "result" %}
+
+    <a
+        class="back"
+        href="{% url 'grammar:plan' %}"
+    >
+        ← К плану
+    </a>
+
+    <div class="card">
+
+        <div class="label">
+            РЕЗУЛЬТАТ
+        </div>
+
+        <h1>
+            Mixed Exam Practice
+        </h1>
+
+        <div class="score">
+            {{ score }}%
+        </div>
+
+        <p class="muted">
+            Правильных ответов:
+            <strong>
+                {{ correct }} / {{ total }}
+            </strong>
+        </p>
+
+
+        {% if wrong_answers %}
+
+            <h2 style="margin-top: 32px;">
+                Где были ошибки
+            </h2>
+
+            {% for item in wrong_answers %}
+
+                <div class="wrong">
+
+                    <div class="wrong-question">
+                        {{ item.prompt }}
+                    </div>
+
+                    <div class="bad">
+                        Ваш ответ:
+                        {{ item.selected }}
+                    </div>
+
+                    <div class="good">
+                        Правильный ответ:
+                        {{ item.correct }}
+                    </div>
+
+                    {% if item.explanation %}
+
+                        <div class="muted">
+                            {{ item.explanation }}
+                        </div>
+
+                    {% endif %}
+
+                    <div class="topic">
+                        Тема:
+                        Lesson {{ item.lesson_order }}
+                        ·
+                        {{ item.lesson_title }}
+                    </div>
+
+                </div>
+
+            {% endfor %}
+
+        {% endif %}
+
+
+        <div
+            class="actions"
+            style="display:flex;gap:10px;flex-wrap:wrap;"
+        >
+
+            <form
+                method="post"
+                action="{% url 'grammar:exam_practice_start' %}"
+            >
+                {% csrf_token %}
+
+                <button
+                    class="button"
+                    type="submit"
+                >
+                    Ещё 20 вопросов
+                </button>
+            </form>
+
+            <a
+                class="button"
+                style="background:#eeeef3;color:#222;"
+                href="{% url 'grammar:plan' %}"
+            >
+                К плану
+            </a>
+
+        </div>
+
+    </div>
+
+{% endif %}
+
+
+</div>
+
+</body>
+</html>

@@ -53,6 +53,24 @@ urlpatterns = [
     ),
 
     path(
+        "exam-practice/",
+        views.grammar_exam_practice,
+        name="exam_practice",
+    ),
+
+    path(
+        "exam-practice/start/",
+        views.start_grammar_exam_practice,
+        name="exam_practice_start",
+    ),
+
+    path(
+        "exam-practice/answer/",
+        views.answer_grammar_exam_practice,
+        name="exam_practice_answer",
+    ),
+
+    path(
         "<slug:slug>/",
         views.grammar_lesson,
         name="lesson",

@@ -36,6 +36,14 @@ from .study_plan import (
 )
 
 
+from .exam_practice import (
+    get_current_exam_question,
+    get_exam_state,
+    start_exam_session,
+    submit_exam_answer,
+)
+
+
 def _lesson_content(lesson):
 
     sections = list(
@@ -497,24 +505,6 @@ def complete_lesson(request, slug):
             },
         )
 
-        GrammarStudyPlanItem.objects.filter(
-            plan__user=request.user,
-            plan__status=(
-                GrammarStudyPlan
-                .Status
-                .ACTIVE
-            ),
-            lesson=lesson,
-            action__in=[
-                GrammarStudyPlanItem
-                .Action
-                .LEARN,
-
-                GrammarStudyPlanItem
-                .Action
-                .REVIEW,
-            ],
-        ).delete()
 
 
     # Сохраняем результат одной попытки.
@@ -1068,6 +1058,12 @@ def grammar_plan(request):
         )
     )
 
+    exam_days_count = sum(
+        1
+        for day in calendar
+        if day["phase"] == "EXAM"
+    )
+
     learn_count = (
         plan.items
         .filter(
@@ -1110,10 +1106,198 @@ def grammar_plan(request):
             "plan": plan,
             "calendar": calendar,
             "learn_count": learn_count,
+            "exam_days_count": exam_days_count,
             "review_count": review_count,
             "final_review_count":
                 final_review_count,
             "days_remaining":
                 days_remaining,
         },
+    )
+
+
+@login_required
+def grammar_exam_practice(request):
+
+    state = get_exam_state(
+        request
+    )
+
+    if not state:
+
+        return render(
+            request,
+            "grammar/exam_practice.html",
+            {
+                "mode": "intro",
+            },
+        )
+
+    question = (
+        get_current_exam_question(
+            request
+        )
+    )
+
+    if question is None:
+
+        total = len(
+            state.get(
+                "question_ids",
+                [],
+            )
+        )
+
+        correct = state.get(
+            "correct",
+            0,
+        )
+
+        score = (
+            round(
+                correct
+                / total
+                * 100
+            )
+            if total
+            else 0
+        )
+
+        wrong_answers = [
+            answer
+            for answer in state.get(
+                "answers",
+                [],
+            )
+            if (
+                not answer.get(
+                    "is_correct"
+                )
+            )
+        ]
+
+        return render(
+            request,
+            "grammar/exam_practice.html",
+            {
+                "mode": "result",
+                "correct": correct,
+                "total": total,
+                "score": score,
+                "wrong_answers":
+                    wrong_answers,
+            },
+        )
+
+    total = len(
+        state.get(
+            "question_ids",
+            [],
+        )
+    )
+
+    index = state.get(
+        "index",
+        0,
+    )
+
+    progress_pct = (
+        round(
+            index
+            / total
+            * 100
+        )
+        if total
+        else 0
+    )
+
+    return render(
+        request,
+        "grammar/exam_practice.html",
+        {
+            "mode": "question",
+            "exercise": question,
+            "question_number":
+                index + 1,
+            "total": total,
+            "progress_pct":
+                progress_pct,
+        },
+    )
+
+
+@login_required
+def start_grammar_exam_practice(
+    request
+):
+
+    if request.method != "POST":
+
+        return redirect(
+            "grammar:exam_practice"
+        )
+
+    start_exam_session(
+        request,
+        count=20,
+    )
+
+    return redirect(
+        "grammar:exam_practice"
+    )
+
+
+@login_required
+def answer_grammar_exam_practice(
+    request
+):
+
+    if request.method != "POST":
+
+        return redirect(
+            "grammar:exam_practice"
+        )
+
+    question = (
+        get_current_exam_question(
+            request
+        )
+    )
+
+    if question is None:
+
+        return redirect(
+            "grammar:exam_practice"
+        )
+
+    selected_answer = (
+        request.POST
+        .get(
+            "answer",
+            "",
+        )
+        .strip()
+    )
+
+    if not selected_answer:
+
+        return redirect(
+            "grammar:exam_practice"
+        )
+
+    try:
+
+        submit_exam_answer(
+            request,
+            selected_answer,
+        )
+
+    except ValueError:
+
+        return redirect(
+            "grammar:exam_practice"
+        )
+
+    return redirect(
+        "grammar:exam_practice"
     )

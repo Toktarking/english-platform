@@ -157,7 +157,7 @@ class GrammarLessonKnowledgeSyncTests(TestCase):
             .LESSON,
         )
 
-        self.assertFalse(
+        self.assertTrue(
             GrammarStudyPlanItem.objects
             .filter(
                 plan__user=self.user,

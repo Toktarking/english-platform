@@ -230,6 +230,17 @@
             color: #806000;
         }
 
+
+        .phase.exam {
+            background: #171717;
+            color: #fff;
+        }
+
+        .phase.completed {
+            background: #e7f7eb;
+            color: #168242;
+        }
+
         .phase.rest {
             background: #ededf1;
             color: #686868;
@@ -310,6 +321,10 @@
 </head>
 
 <body>
+
+{% include "_module_navigation.html" with active_module="grammar" %}
+
+
 
 <div class="page">
 
@@ -444,11 +459,11 @@
             <div class="summary-item">
 
                 <div class="summary-number">
-                    {{ final_review_count }}
+                    {{ exam_days_count }}
                 </div>
 
                 <div class="summary-label">
-                    заданий финального повторения
+                    дня Mixed Exam Practice
                 </div>
 
             </div>
@@ -499,7 +514,19 @@
                 </div>
 
 
-                {% if day.phase == "FINAL_REVIEW" %}
+                {% if day.phase == "EXAM" %}
+
+                    <span class="phase exam">
+                        Exam Practice
+                    </span>
+
+                {% elif day.phase == "COMPLETED" %}
+
+                    <span class="phase completed">
+                        ✓ Выполнено
+                    </span>
+
+                {% elif day.phase == "FINAL_REVIEW" %}
 
                     <span class="phase review">
                         Финальное повторение
@@ -522,6 +549,34 @@
             </div>
 
 
+            {% if day.phase == "EXAM" %}
+
+                <div class="task">
+
+                    <div>
+
+                        <div class="task-title">
+                            Mixed Exam Practice
+                        </div>
+
+                        <div class="task-meta">
+                            20 смешанных вопросов
+                            · без подсказки темы
+                        </div>
+
+                    </div>
+
+                    <a
+                        class="task-link"
+                        href="{% url 'grammar:exam_practice' %}"
+                    >
+                        Начать →
+                    </a>
+
+                </div>
+
+            {% else %}
+
             {% for item in day.items %}
 
                 <div class="task">
@@ -537,7 +592,11 @@
 
                         <div class="task-meta">
 
-                            {% if item.action == "LEARN" %}
+                            {% if item.is_completed %}
+
+                                ✅ Выполнено
+
+                            {% elif item.action == "LEARN" %}
 
                                 Изучить тему
 
@@ -563,7 +622,16 @@
                     </div>
 
 
-                    {% if item.action == "LEARN" %}
+                    {% if item.is_completed %}
+
+                        <span
+                            class="task-link"
+                            style="color: #168242;"
+                        >
+                            Готово ✓
+                        </span>
+
+                    {% elif item.action == "LEARN" %}
 
                         <a
                             class="task-link"
@@ -597,6 +665,8 @@
                 </div>
 
             {% endfor %}
+
+            {% endif %}
 
         </div>
 

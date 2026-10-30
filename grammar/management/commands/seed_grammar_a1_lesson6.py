@@ -680,7 +680,7 @@ no.
 
             {
                 "order": 20,
-                "prompt": "There is ___ useful in this article.",
+                "prompt": "There is ___ in this article.",
                 "options": [
                     "useful something",
                     "something useful",

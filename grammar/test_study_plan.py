@@ -171,7 +171,7 @@ class GrammarStudyPlanTests(TestCase):
             2,
         )
 
-        self.assertGreater(
+        self.assertEqual(
             plan.items.filter(
                 action=(
                     GrammarStudyPlanItem
@@ -180,6 +180,15 @@ class GrammarStudyPlanTests(TestCase):
                 ),
             ).count(),
             0,
+        )
+
+        self.assertEqual(
+            sum(
+                1
+                for day in calendar
+                if day["phase"] == "EXAM"
+            ),
+            3,
         )
 
     def test_rebuild_archives_old_plan(self):
