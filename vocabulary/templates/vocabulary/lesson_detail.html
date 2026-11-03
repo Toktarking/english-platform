@@ -85,6 +85,53 @@ Lesson {{ lesson.number }} | {{ group.name }}
     }
 
 
+    .word-row {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+
+        margin-bottom: 10px;
+    }
+
+    .word-row .word {
+        margin-bottom: 0;
+    }
+
+    .word-audio-button {
+        width: 44px;
+        height: 44px;
+
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        border: none;
+        border-radius: 50%;
+
+        background: #eff6ff;
+        color: #2563eb;
+
+        font-size: 20px;
+
+        cursor: pointer;
+
+        transition:
+            background 0.2s ease,
+            transform 0.15s ease;
+    }
+
+    .word-audio-button:hover {
+        background: #dbeafe;
+        transform: scale(1.05);
+    }
+
+    .word-audio-button:active {
+        transform: scale(0.96);
+    }
+
+
+
     .pos {
         display: inline-block;
 
@@ -347,10 +394,29 @@ Lesson {{ lesson.number }} | {{ group.name }}
         <div
             class="word-card"
             data-index="{{ forloop.counter0 }}"
+            data-audio-url="{% if word.audio_file %}{{ word.audio_file.url|escape }}{% endif %}"
         >
 
-            <div class="word">
-                {{ word.word }}
+            <div class="word-row">
+
+                <div class="word">
+                    {{ word.word }}
+                </div>
+
+                {% if word.audio_file %}
+
+                    <button
+                        type="button"
+                        class="word-audio-button"
+                        title="Listen"
+                        aria-label="Listen to {{ word.word }}"
+                        onclick="playLessonWordAudio(this.closest('.word-card'))"
+                    >
+                        🔊
+                    </button>
+
+                {% endif %}
+
             </div>
 
 
@@ -553,6 +619,83 @@ Lesson {{ lesson.number }} | {{ group.name }}
         );
 
 
+    let currentLessonAudio =
+        null;
+
+
+    function stopLessonWordAudio() {
+
+        if (
+            currentLessonAudio
+        ) {
+
+            currentLessonAudio.pause();
+
+            currentLessonAudio.currentTime =
+                0;
+
+            currentLessonAudio =
+                null;
+
+        }
+
+    }
+
+
+    function playLessonWordAudio(
+        card = cards[currentIndex]
+    ) {
+
+        if (
+            !card
+        ) {
+
+            return;
+
+        }
+
+
+        const audioUrl =
+            card.dataset.audioUrl;
+
+
+        if (
+            !audioUrl
+        ) {
+
+            return;
+
+        }
+
+
+        stopLessonWordAudio();
+
+
+        currentLessonAudio =
+            new Audio(
+                audioUrl
+            );
+
+
+        currentLessonAudio.preload =
+            "auto";
+
+
+        currentLessonAudio.play()
+            .catch(
+                error => {
+
+                    console.log(
+                        "Word autoplay blocked:",
+                        error
+                    );
+
+                }
+            );
+
+    }
+
+
     function showWord(index) {
 
         cards.forEach(
@@ -607,6 +750,25 @@ Lesson {{ lesson.number }} | {{ group.name }}
                 "Next →";
 
         }
+
+
+        /*
+        Произносим слово при появлении карточки.
+        Первый autoplay браузер может запретить
+        до первого действия пользователя.
+        Кнопка 🔊 остаётся доступной всегда.
+        */
+
+        setTimeout(
+            function () {
+
+                playLessonWordAudio(
+                    cards[index]
+                );
+
+            },
+            150
+        );
 
     }
 

@@ -1829,6 +1829,55 @@ Practice | Lesson {{ lesson.number }}
         null;
 
 
+    /*
+    Проигрывает аудио конкретного слова.
+    Используется после правильного ответа
+    вместо стандартного звука "correct".
+    */
+
+    function playWordAudio(
+        question
+    ) {
+
+        if (
+            !question
+            ||
+            !question.audio_url
+        ) {
+
+            return;
+
+        }
+
+
+        stopCurrentAudio();
+
+
+        currentAudio =
+            new Audio(
+                question.audio_url
+            );
+
+
+        currentAudio.preload =
+            "auto";
+
+
+        currentAudio.play()
+            .catch(
+                error => {
+
+                    console.log(
+                        "Word audio error:",
+                        error
+                    );
+
+                }
+            );
+
+    }
+
+
     /* =====================================================
        DOM
        ===================================================== */
@@ -3558,8 +3607,8 @@ Practice | Lesson {{ lesson.number }}
         ) {
             
             
-            playSound(
-                "correct"
+            playWordAudio(
+                question
             );
             choiceLearned.add(
                 question.word_id
@@ -4391,8 +4440,8 @@ Practice | Lesson {{ lesson.number }}
             isCorrect
         ) {
 
-            playSound(
-                "correct"
+            playWordAudio(
+                question
             );
 
 
@@ -4945,8 +4994,8 @@ Practice | Lesson {{ lesson.number }}
         if (
             isCorrect
         ) {
-            playSound(
-                "correct"
+            playWordAudio(
+                question
             );
 
 
@@ -5480,8 +5529,8 @@ Practice | Lesson {{ lesson.number }}
         if (
             isCorrect
         ) {
-            playSound(
-                "correct"
+            playWordAudio(
+                question
             );
 
 
