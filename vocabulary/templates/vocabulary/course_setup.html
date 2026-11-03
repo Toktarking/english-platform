@@ -1,7 +1,7 @@
 {% extends "vocabulary/base.html" %}
 
 {% block title %}
-Настройка курса
+Выбор курса
 {% endblock %}
 
 {% block content %}
@@ -9,27 +9,21 @@
 <style>
 
     .setup-page {
-        max-width: 720px;
-
+        max-width: 900px;
         margin: 25px auto 60px;
     }
 
-
     .setup-top {
-        margin-bottom: 28px;
-
+        margin-bottom: 30px;
         text-align: center;
     }
 
-
     .setup-step {
         display: inline-block;
-
         margin-bottom: 12px;
         padding: 6px 11px;
 
         background: #ede9fe;
-
         border-radius: 999px;
 
         color: #6d28d9;
@@ -37,7 +31,6 @@
         font-size: 11px;
         font-weight: 800;
     }
-
 
     .setup-title {
         margin: 0 0 10px;
@@ -48,10 +41,8 @@
         font-weight: 900;
     }
 
-
     .setup-subtitle {
-        max-width: 560px;
-
+        max-width: 600px;
         margin: 0 auto;
 
         color: #6b7280;
@@ -59,7 +50,6 @@
         font-size: 15px;
         line-height: 1.6;
     }
-
 
     .setup-card {
         padding: 30px;
@@ -74,11 +64,9 @@
             rgba(0, 0, 0, 0.05);
     }
 
-
     .field-block {
-        margin-bottom: 28px;
+        margin-bottom: 30px;
     }
-
 
     .field-label {
         display: block;
@@ -87,13 +75,12 @@
 
         color: #111827;
 
-        font-size: 14px;
-        font-weight: 800;
+        font-size: 15px;
+        font-weight: 900;
     }
 
-
     .field-description {
-        margin-bottom: 12px;
+        margin-bottom: 15px;
 
         color: #6b7280;
 
@@ -101,6 +88,152 @@
         line-height: 1.5;
     }
 
+    /* =============================================
+       LEVEL CARDS
+       ============================================= */
+
+    .level-select-hidden {
+        display: none;
+    }
+
+    .level-grid {
+        display: grid;
+
+        grid-template-columns:
+            repeat(4, 1fr);
+
+        gap: 12px;
+    }
+
+    .level-card {
+        position: relative;
+
+        min-height: 160px;
+
+        padding: 20px 14px;
+
+        background: #ffffff;
+
+        border: 2px solid #e5e7eb;
+        border-radius: 18px;
+
+        text-align: center;
+
+        cursor: pointer;
+
+        transition:
+            transform 0.15s ease,
+            border-color 0.15s ease,
+            background 0.15s ease,
+            box-shadow 0.15s ease;
+    }
+
+    .level-card:hover:not(.disabled) {
+        transform: translateY(-2px);
+
+        border-color: #c4b5fd;
+
+        box-shadow:
+            0 8px 20px
+            rgba(124, 58, 237, 0.08);
+    }
+
+    .level-card.selected {
+        background: #f5f3ff;
+
+        border-color: #7c3aed;
+
+        box-shadow:
+            0 0 0 3px
+            rgba(124, 58, 237, 0.08);
+    }
+
+    .level-code {
+        margin-bottom: 7px;
+
+        color: #111827;
+
+        font-size: 30px;
+        font-weight: 950;
+    }
+
+    .level-name {
+        margin-bottom: 7px;
+
+        color: #374151;
+
+        font-size: 13px;
+        font-weight: 800;
+    }
+
+    .level-description {
+        color: #9ca3af;
+
+        font-size: 11px;
+        line-height: 1.4;
+    }
+
+    .level-card.selected .level-code {
+        color: #6d28d9;
+    }
+
+    .level-check {
+        display: none;
+
+        position: absolute;
+
+        top: 10px;
+        right: 10px;
+
+        width: 24px;
+        height: 24px;
+
+        align-items: center;
+        justify-content: center;
+
+        background: #7c3aed;
+
+        border-radius: 50%;
+
+        color: white;
+
+        font-size: 13px;
+        font-weight: 900;
+    }
+
+    .level-card.selected .level-check {
+        display: flex;
+    }
+
+    .level-card.disabled {
+        background: #f9fafb;
+
+        opacity: 0.58;
+
+        cursor: not-allowed;
+    }
+
+    .coming-soon {
+        display: inline-block;
+
+        margin-top: 10px;
+        padding: 4px 8px;
+
+        background: #e5e7eb;
+
+        border-radius: 999px;
+
+        color: #6b7280;
+
+        font-size: 9px;
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+    }
+
+    /* =============================================
+       DURATION
+       ============================================= */
 
     .course-input {
         width: 100%;
@@ -123,7 +256,6 @@
         font-size: 15px;
     }
 
-
     .course-input:focus {
         border-color: #7c3aed;
 
@@ -131,7 +263,6 @@
             0 0 0 3px
             rgba(124, 58, 237, 0.10);
     }
-
 
     .quick-days {
         display: grid;
@@ -143,7 +274,6 @@
 
         margin-bottom: 12px;
     }
-
 
     .quick-day {
         padding: 12px 8px;
@@ -161,10 +291,8 @@
 
         cursor: pointer;
 
-        transition:
-            0.15s ease;
+        transition: 0.15s ease;
     }
-
 
     .quick-day:hover {
         background: #f5f3ff;
@@ -174,7 +302,6 @@
         color: #6d28d9;
     }
 
-
     .quick-day.selected {
         background: #ede9fe;
 
@@ -182,7 +309,6 @@
 
         color: #6d28d9;
     }
-
 
     .daily-rule {
         display: flex;
@@ -199,13 +325,11 @@
         border-radius: 13px;
     }
 
-
     .daily-rule-icon {
         flex-shrink: 0;
 
         font-size: 22px;
     }
-
 
     .daily-rule-title {
         margin-bottom: 3px;
@@ -216,14 +340,12 @@
         font-weight: 800;
     }
 
-
     .daily-rule-text {
         color: #6b7280;
 
         font-size: 11px;
         line-height: 1.5;
     }
-
 
     .form-errors {
         margin-bottom: 20px;
@@ -239,11 +361,10 @@
         font-size: 12px;
     }
 
-
     .calculate-button {
         width: 100%;
 
-        padding: 14px;
+        padding: 15px;
 
         background: #7c3aed;
 
@@ -259,23 +380,32 @@
         cursor: pointer;
     }
 
-
     .calculate-button:hover {
         background: #6d28d9;
     }
 
+    @media (max-width: 750px) {
 
-    @media (max-width: 600px) {
+        .level-grid {
+            grid-template-columns:
+                repeat(2, 1fr);
+        }
+
+    }
+
+    @media (max-width: 500px) {
 
         .setup-card {
             padding: 20px;
         }
 
-
         .setup-title {
             font-size: 27px;
         }
 
+        .level-grid {
+            grid-template-columns: 1fr;
+        }
 
         .quick-days {
             grid-template-columns: 1fr;
@@ -288,25 +418,20 @@
 
 <div class="setup-page">
 
-
     <div class="setup-top">
 
         <div class="setup-step">
             Шаг 1 из 2
         </div>
 
-
         <h1 class="setup-title">
-            Настройте свой курс
+            Выберите свой уровень
         </h1>
 
-
         <p class="setup-subtitle">
-
-            Выберите уровень и срок.
-            Мы рассчитаем примерную ежедневную нагрузку,
-            прежде чем вы подтвердите план.
-
+            Выберите уровень английского,
+            который хотите пройти.
+            Затем настройте удобный срок обучения.
         </p>
 
     </div>
@@ -323,11 +448,8 @@
         {% if form.errors %}
 
             <div class="form-errors">
-
                 Пожалуйста, проверьте введённые данные.
-
                 {{ form.non_field_errors }}
-
             </div>
 
         {% endif %}
@@ -339,28 +461,134 @@
 
         <div class="field-block">
 
-            <label
-                for="{{ form.level.id_for_label }}"
-                class="field-label"
-            >
-                Ваш уровень
-            </label>
-
+            <div class="field-label">
+                Уровень английского
+            </div>
 
             <div class="field-description">
+                Вы сможете пройти весь словарный курс выбранного уровня.
+            </div>
 
-                Сейчас выберите уровень,
-                который хотите пройти полностью.
+
+            <div class="level-select-hidden">
+                {{ form.level }}
+            </div>
+
+
+            <div class="level-grid">
+
+                <button
+                    type="button"
+                    class="level-card"
+                    data-level="A1"
+                >
+
+                    <div class="level-check">
+                        ✓
+                    </div>
+
+                    <div class="level-code">
+                        A1
+                    </div>
+
+                    <div class="level-name">
+                        Beginner
+                    </div>
+
+                    <div class="level-description">
+                        Базовые слова и выражения
+                        для начала изучения английского.
+                    </div>
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="level-card"
+                    data-level="A2"
+                >
+
+                    <div class="level-check">
+                        ✓
+                    </div>
+
+                    <div class="level-code">
+                        A2
+                    </div>
+
+                    <div class="level-name">
+                        Elementary
+                    </div>
+
+                    <div class="level-description">
+                        Расширение словаря
+                        для повседневного общения.
+                    </div>
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="level-card disabled"
+                    disabled
+                >
+
+                    <div class="level-code">
+                        B1
+                    </div>
+
+                    <div class="level-name">
+                        Intermediate
+                    </div>
+
+                    <div class="level-description">
+                        Уверенное общение
+                        на повседневные темы.
+                    </div>
+
+                    <div class="coming-soon">
+                        Скоро
+                    </div>
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="level-card disabled"
+                    disabled
+                >
+
+                    <div class="level-code">
+                        B2
+                    </div>
+
+                    <div class="level-name">
+                        Upper-Intermediate
+                    </div>
+
+                    <div class="level-description">
+                        Продвинутый словарь
+                        для учёбы, работы и общения.
+                    </div>
+
+                    <div class="coming-soon">
+                        Скоро
+                    </div>
+
+                </button>
 
             </div>
 
 
-            {{ form.level }}
-
-
             {% if form.level.errors %}
 
-                <div class="form-errors">
+                <div
+                    class="form-errors"
+                    style="margin-top: 12px;"
+                >
                     {{ form.level.errors }}
                 </div>
 
@@ -382,12 +610,9 @@
                 За сколько дней хотите пройти уровень?
             </label>
 
-
             <div class="field-description">
-
-                Занятия рассчитаны на каждый день.
-                Чем короче срок, тем выше ежедневная нагрузка.
-
+                Чем короче срок,
+                тем выше ежедневная нагрузка.
             </div>
 
 
@@ -401,7 +626,6 @@
                     30 дней
                 </button>
 
-
                 <button
                     type="button"
                     class="quick-day"
@@ -409,7 +633,6 @@
                 >
                     60 дней
                 </button>
-
 
                 <button
                     type="button"
@@ -436,16 +659,11 @@
         </div>
 
 
-        <!-- =============================================
-             DAILY RULE
-             ============================================= -->
-
         <div class="daily-rule">
 
             <div class="daily-rule-icon">
                 📅
             </div>
-
 
             <div>
 
@@ -453,14 +671,10 @@
                     Занятия каждый день
                 </div>
 
-
                 <div class="daily-rule-text">
-
-                    План рассчитан на ежедневное обучение.
                     Если день будет пропущен,
                     оставшаяся нагрузка автоматически
-                    перераспределится до вашей конечной даты.
-
+                    перераспределится до конечной даты.
                 </div>
 
             </div>
@@ -475,13 +689,157 @@
             Рассчитать мой план →
         </button>
 
-
     </form>
 
 </div>
 
 
 <script>
+
+    /* =============================================
+       LEVEL SELECT
+       ============================================= */
+
+    const levelSelect =
+        document.getElementById(
+            "{{ form.level.id_for_label }}"
+        );
+
+    const levelCards =
+        document.querySelectorAll(
+            ".level-card[data-level]"
+        );
+
+
+    function findLevelOption(
+        levelCode
+    ) {
+
+        return Array.from(
+            levelSelect.options
+        ).find(
+            option => {
+
+                const text =
+                    option.textContent
+                    .trim()
+                    .toUpperCase();
+
+                return (
+                    text === levelCode
+                    ||
+                    text.startsWith(
+                        levelCode + " "
+                    )
+                    ||
+                    text.startsWith(
+                        levelCode + " —"
+                    )
+                );
+
+            }
+        );
+
+    }
+
+
+    function updateSelectedLevel() {
+
+        const selectedOption =
+            levelSelect.options[
+                levelSelect.selectedIndex
+            ];
+
+
+        if (!selectedOption) {
+            return;
+        }
+
+
+        const selectedText =
+            selectedOption.textContent
+            .trim()
+            .toUpperCase();
+
+
+        levelCards.forEach(
+            card => {
+
+                const code =
+                    card.dataset.level;
+
+                card.classList.toggle(
+                    "selected",
+                    selectedText === code
+                    ||
+                    selectedText.startsWith(
+                        code + " "
+                    )
+                    ||
+                    selectedText.startsWith(
+                        code + " —"
+                    )
+                );
+
+            }
+        );
+
+    }
+
+
+    levelCards.forEach(
+        card => {
+
+            card.addEventListener(
+                "click",
+                function () {
+
+                    const option =
+                        findLevelOption(
+                            this.dataset.level
+                        );
+
+
+                    if (!option) {
+
+                        alert(
+                            "Этот уровень пока недоступен."
+                        );
+
+                        return;
+
+                    }
+
+
+                    levelSelect.value =
+                        option.value;
+
+
+                    levelSelect.dispatchEvent(
+                        new Event(
+                            "change",
+                            {
+                                bubbles: true
+                            }
+                        )
+                    );
+
+
+                    updateSelectedLevel();
+
+                }
+            );
+
+        }
+    );
+
+
+    updateSelectedLevel();
+
+
+    /* =============================================
+       DURATION
+       ============================================= */
 
     const durationInput =
         document.getElementById(

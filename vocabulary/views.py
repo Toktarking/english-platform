@@ -946,6 +946,30 @@ def register_view(
     )
 
 
+
+# =========================================================
+# ACTIVE FINANCIAL COMMITMENT
+# =========================================================
+
+def get_active_financial_commitment(user):
+
+    from commitments.models import CourseCommitment
+
+    return (
+        CourseCommitment.objects
+        .select_related(
+            "user_course",
+            "user_course__level",
+        )
+        .filter(
+            user_course__user=user,
+            status=CourseCommitment.Status.ACTIVE,
+        )
+        .order_by("-created_at")
+        .first()
+    )
+
+
 # =========================================================
 # COURSE SETUP
 # =========================================================
@@ -966,6 +990,45 @@ def course_setup(
 
     Пока UserCourse НЕ создаётся.
     """
+
+    # =====================================================
+    # FINANCIAL LOCK — COURSE SETUP
+    # =====================================================
+
+    active_commitment = (
+        get_active_financial_commitment(
+            request.user
+        )
+    )
+
+    if active_commitment:
+
+        return redirect(
+            "vocabulary:dashboard"
+        )
+
+
+
+    # =====================================================
+    # COURSE LOCK: SETUP
+    # =====================================================
+
+    active_course = (
+        UserCourse.objects
+        .filter(
+            user=request.user,
+            status=UserCourse.Status.ACTIVE,
+        )
+        .select_related(
+            "level",
+        )
+        .first()
+    )
+
+    if active_course:
+        return redirect(
+            "vocabulary:dashboard"
+        )
 
 
     # =====================================================
@@ -1116,6 +1179,45 @@ def course_preview(
     не создаётся.
     """
 
+    # =====================================================
+    # FINANCIAL LOCK — COURSE PREVIEW
+    # =====================================================
+
+    active_commitment = (
+        get_active_financial_commitment(
+            request.user
+        )
+    )
+
+    if active_commitment:
+
+        return redirect(
+            "vocabulary:dashboard"
+        )
+
+
+
+    # =====================================================
+    # COURSE LOCK: PREVIEW
+    # =====================================================
+
+    active_course = (
+        UserCourse.objects
+        .filter(
+            user=request.user,
+            status=UserCourse.Status.ACTIVE,
+        )
+        .select_related(
+            "level",
+        )
+        .first()
+    )
+
+    if active_course:
+        return redirect(
+            "vocabulary:dashboard"
+        )
+
 
     level_id = (
         request.session.get(
@@ -1207,6 +1309,45 @@ def course_confirm(
     """
     Только здесь создаётся UserCourse.
     """
+
+    # =====================================================
+    # FINANCIAL LOCK — COURSE CONFIRM
+    # =====================================================
+
+    active_commitment = (
+        get_active_financial_commitment(
+            request.user
+        )
+    )
+
+    if active_commitment:
+
+        return redirect(
+            "vocabulary:dashboard"
+        )
+
+
+
+    # =====================================================
+    # COURSE LOCK: CONFIRM
+    # =====================================================
+
+    active_course = (
+        UserCourse.objects
+        .filter(
+            user=request.user,
+            status=UserCourse.Status.ACTIVE,
+        )
+        .select_related(
+            "level",
+        )
+        .first()
+    )
+
+    if active_course:
+        return redirect(
+            "vocabulary:dashboard"
+        )
 
 
     level_id = (

@@ -17,7 +17,6 @@ async def create_audio(
     text,
     output_path,
 ):
-
     communicate = edge_tts.Communicate(
         text=text,
         voice=VOICE,
@@ -36,23 +35,43 @@ class Command(BaseCommand):
         "for vocabulary words."
     )
 
+    def add_arguments(
+        self,
+        parser,
+    ):
+        parser.add_argument(
+            "--level",
+            type=str,
+            help=(
+                "Generate audio only for a specific "
+                "CEFR level, e.g. A1 or A2."
+            ),
+        )
 
     def handle(
         self,
         *args,
         **options,
     ):
+        level = options.get(
+            "level"
+        )
 
         words = (
             VocabularyWord.objects
             .filter(
                 is_active=True
             )
-            .order_by(
-                "id"
-            )
         )
 
+        if level:
+            words = words.filter(
+                lesson__group__level__code__iexact=level
+            )
+
+        words = words.order_by(
+            "id"
+        )
 
         temp_directory = (
             settings.BASE_DIR
@@ -60,21 +79,29 @@ class Command(BaseCommand):
             "temp_audio"
         )
 
-
         os.makedirs(
             temp_directory,
             exist_ok=True,
         )
 
-
         total = words.count()
 
         created = 0
-
         skipped = 0
-
         errors = 0
 
+        if level:
+            self.stdout.write(
+                f"Generating audio for level: {level.upper()}"
+            )
+
+        self.stdout.write(
+            f"Words found: {total}"
+        )
+
+        self.stdout.write(
+            ""
+        )
 
         for index, word in enumerate(
             words,
@@ -94,13 +121,11 @@ class Command(BaseCommand):
 
                 continue
 
-
             temp_path = (
                 temp_directory
                 /
-                f"word_{word.id}.mp3"
+                f"{word.lesson.group.level.code.lower()}_{word.source_id}.mp3"
             )
-
 
             try:
 
@@ -113,21 +138,18 @@ class Command(BaseCommand):
                     )
                 )
 
-
                 with open(
                     temp_path,
                     "rb",
                 ) as audio:
 
                     word.audio_file.save(
-                        f"word_{word.id}.mp3",
+                        f"{word.lesson.group.level.code.lower()}_{word.source_id}.mp3",
                         File(audio),
                         save=True,
                     )
 
-
                 created += 1
-
 
                 self.stdout.write(
                     self.style.SUCCESS(
@@ -136,11 +158,9 @@ class Command(BaseCommand):
                     )
                 )
 
-
             except Exception as error:
 
                 errors += 1
-
 
                 self.stdout.write(
                     self.style.ERROR(
@@ -151,29 +171,24 @@ class Command(BaseCommand):
                     )
                 )
 
-
             finally:
 
                 if os.path.exists(
                     temp_path
                 ):
-
                     os.remove(
                         temp_path
                     )
 
-
         self.stdout.write(
             ""
         )
-
 
         self.stdout.write(
             self.style.SUCCESS(
                 "Finished."
             )
         )
-
 
         self.stdout.write(
             f"Generated: {created}"

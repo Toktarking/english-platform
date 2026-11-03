@@ -456,6 +456,30 @@ def activate_commitment(
         .get(pk=commitment.pk)
     )
 
+    # =====================================================
+    # FINANCIAL LOCK — SECOND ACTIVE COMMITMENT
+    # =====================================================
+
+    another_active_commitment = (
+        CourseCommitment.objects
+        .select_for_update()
+        .filter(
+            user_course__user=commitment.user_course.user,
+            status=CourseCommitment.Status.ACTIVE,
+        )
+        .exclude(
+            pk=commitment.pk,
+        )
+        .exists()
+    )
+
+    if another_active_commitment:
+
+        raise CommitmentError(
+            "User already has another active commitment."
+        )
+
+
     if commitment.status != CourseCommitment.Status.DRAFT:
         raise CommitmentError(
             "Only draft commitment can be activated."

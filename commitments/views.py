@@ -74,6 +74,60 @@ def commitment_setup(request, user_course_id):
         user=request.user,
     )
 
+    # =====================================================
+    # COMMITMENT LOCK: ONE FINANCIAL COURSE
+    # =====================================================
+
+    other_commitment = (
+        CourseCommitment.objects
+        .filter(
+            user_course__user=request.user,
+            status__in=[
+                CourseCommitment.Status.DRAFT,
+                CourseCommitment.Status.ACTIVE,
+            ],
+        )
+        .exclude(
+            user_course=user_course,
+        )
+        .first()
+    )
+
+    if other_commitment:
+
+        return HttpResponseBadRequest(
+            "У вас уже есть другой активный "
+            "или неподтверждённый денежный курс."
+        )
+
+
+    # =====================================================
+    # FINANCIAL LOCK — OTHER COMMITMENT
+    # =====================================================
+
+    other_commitment = (
+        CourseCommitment.objects
+        .filter(
+            user_course__user=request.user,
+            status__in=[
+                CourseCommitment.Status.DRAFT,
+                CourseCommitment.Status.ACTIVE,
+            ],
+        )
+        .exclude(
+            user_course=user_course,
+        )
+        .first()
+    )
+
+    if other_commitment:
+
+        return HttpResponseBadRequest(
+            "У вас уже есть другой активный "
+            "или неподтверждённый денежный курс."
+        )
+
+
     existing = CourseCommitment.objects.filter(
         user_course=user_course,
     ).first()
