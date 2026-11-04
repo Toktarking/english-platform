@@ -78,6 +78,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "config.middleware.OldDomainRedirectMiddleware",
 
     "whitenoise.middleware.WhiteNoiseMiddleware",
 
