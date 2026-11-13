@@ -3263,4 +3263,759 @@ document.addEventListener(
 
 
 
+
+<!-- =========================================================
+     MOBILE DASHBOARD TABS V1
+     ========================================================= -->
+
+<style>
+    .ep-mobile-app {
+        width: min(720px, 100%);
+        margin: 0 auto;
+        padding-bottom: 96px;
+    }
+
+    .ep-mobile-screen {
+        display: none;
+    }
+
+    .ep-mobile-screen.is-active {
+        display: block;
+    }
+
+    .ep-mobile-screen-header {
+        margin: 4px 0 18px;
+    }
+
+    .ep-mobile-kicker {
+        margin-bottom: 5px;
+        color: #7c3aed;
+        font-size: 12px;
+        font-weight: 900;
+    }
+
+    .ep-mobile-title {
+        margin: 0;
+        color: #111827;
+        font-size: 30px;
+        line-height: 1.08;
+        font-weight: 900;
+        letter-spacing: -0.7px;
+    }
+
+    .ep-mobile-subtitle {
+        margin-top: 6px;
+        color: #6b7280;
+        font-size: 14px;
+    }
+
+    .ep-mobile-card {
+        margin-bottom: 14px;
+        padding: 20px;
+        background: #fff;
+        border: 1px solid #e5e7eb;
+        border-radius: 20px;
+        box-shadow: 0 7px 24px rgba(17, 24, 39, .035);
+    }
+
+    .ep-mobile-card-title {
+        color: #111827;
+        font-size: 19px;
+        font-weight: 900;
+    }
+
+    .ep-mobile-card-note {
+        margin-top: 4px;
+        color: #9ca3af;
+        font-size: 11px;
+        line-height: 1.45;
+    }
+
+    .ep-study-shortcuts {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 9px;
+        margin-bottom: 14px;
+    }
+
+    .ep-study-shortcut {
+        display: block;
+        padding: 16px;
+        background: #fff;
+        border: 1px solid #e5e7eb;
+        border-radius: 16px;
+        color: #111827;
+        text-decoration: none;
+    }
+
+    .ep-study-shortcut-icon {
+        font-size: 21px;
+    }
+
+    .ep-study-shortcut-title {
+        margin-top: 7px;
+        font-size: 13px;
+        font-weight: 900;
+    }
+
+    .ep-study-shortcut-note {
+        margin-top: 3px;
+        color: #6b7280;
+        font-size: 9px;
+    }
+
+    .ep-reward-list {
+        display: flex;
+        flex-direction: column;
+        gap: 9px;
+        margin-top: 14px;
+    }
+
+    .ep-reward-row {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 13px;
+        background: #fff;
+        border: 1px solid #e5e7eb;
+        border-radius: 14px;
+    }
+
+    .ep-reward-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex: 0 0 40px;
+        width: 40px;
+        height: 40px;
+        background: #f5f3ff;
+        border-radius: 12px;
+        font-size: 19px;
+    }
+
+    .ep-reward-copy {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .ep-reward-title {
+        color: #111827;
+        font-size: 13px;
+        font-weight: 850;
+    }
+
+    .ep-reward-note {
+        margin-top: 2px;
+        color: #6b7280;
+        font-size: 9px;
+    }
+
+    .ep-reward-state {
+        flex: 0 0 auto;
+        padding: 5px 8px;
+        border-radius: 999px;
+        background: #f5f3ff;
+        color: #7c3aed;
+        font-size: 9px;
+        font-weight: 900;
+    }
+
+    .ep-profile-head {
+        text-align: center;
+    }
+
+    .ep-profile-avatar {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 68px;
+        height: 68px;
+        margin: 0 auto 12px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #dbeafe, #ede9fe);
+        color: #7c3aed;
+        font-size: 25px;
+        font-weight: 950;
+    }
+
+    .ep-profile-name {
+        color: #111827;
+        font-size: 22px;
+        font-weight: 900;
+    }
+
+    .ep-profile-level {
+        margin-top: 4px;
+        color: #6b7280;
+        font-size: 12px;
+    }
+
+    .ep-profile-logout {
+        width: 100%;
+        min-height: 47px;
+        border: 1px solid #fecaca;
+        border-radius: 13px;
+        background: #fff;
+        color: #dc2626;
+        font-family: inherit;
+        font-size: 13px;
+        font-weight: 850;
+        cursor: pointer;
+    }
+
+    .ep-bottom-nav-wrap {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 9000;
+        pointer-events: none;
+    }
+
+    .ep-bottom-nav {
+        width: min(720px, 100%);
+        margin: 0 auto;
+        min-height: 72px;
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        padding:
+            7px
+            max(8px, env(safe-area-inset-right))
+            calc(7px + env(safe-area-inset-bottom))
+            max(8px, env(safe-area-inset-left));
+        background: rgba(255, 255, 255, .97);
+        border: 1px solid #e5e7eb;
+        border-bottom: 0;
+        border-radius: 20px 20px 0 0;
+        box-shadow: 0 -8px 28px rgba(17, 24, 39, .10);
+        backdrop-filter: blur(16px);
+        pointer-events: auto;
+    }
+
+    .ep-bottom-tab {
+        appearance: none;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 3px;
+        min-width: 0;
+        padding: 5px 2px;
+        border: 0;
+        border-radius: 12px;
+        background: transparent;
+        color: #9ca3af;
+        font-family: inherit;
+        cursor: pointer;
+    }
+
+    .ep-bottom-tab.is-active {
+        color: #7c3aed;
+        background: #faf7ff;
+    }
+
+    .ep-bottom-tab svg {
+        width: 21px;
+        height: 21px;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+    }
+
+    .ep-bottom-label {
+        max-width: 100%;
+        overflow: hidden;
+        font-size: 8.5px;
+        line-height: 1.1;
+        font-weight: 850;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+
+    @media (max-width: 700px) {
+        .navbar-right {
+            display: none !important;
+        }
+
+        main {
+            padding-top: 76px !important;
+            padding-bottom: 98px !important;
+        }
+
+        main > .container {
+            width: 92%;
+        }
+
+        .ep-mobile-title {
+            font-size: 27px;
+        }
+
+        .commitment-dashboard-shell,
+        .dashboard {
+            margin-top: 0 !important;
+        }
+    }
+
+    @media (max-width: 390px) {
+        .ep-mobile-title {
+            font-size: 25px;
+        }
+
+        .ep-mobile-card {
+            padding: 17px;
+        }
+
+        .ep-bottom-label {
+            font-size: 8px;
+        }
+    }
+</style>
+
+<script>
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        const oldDashboard =
+            document.querySelector(".dashboard");
+
+        const commitment =
+            document.getElementById("commitmentCompactMount");
+
+        if (!oldDashboard) {
+            return;
+        }
+
+        const header =
+            oldDashboard.querySelector(".dashboard-header");
+
+        const hero =
+            oldDashboard.querySelector(".course-hero");
+
+        const columns =
+            Array.from(
+                oldDashboard.querySelectorAll(
+                    ".dashboard-grid > .dashboard-column"
+                )
+            );
+
+        const leftColumn =
+            columns[0] || null;
+
+        const rightColumn =
+            columns[1] || null;
+
+        const leftCards =
+            leftColumn
+            ? Array.from(leftColumn.children)
+            : [];
+
+        const rightCards =
+            rightColumn
+            ? Array.from(rightColumn.children)
+            : [];
+
+        const todayCard =
+            leftCards[0] || null;
+
+        const groupCard =
+            leftCards[1] || null;
+
+        const streakCard =
+            rightCards[0] || null;
+
+        const weekCard =
+            rightCards[1] || null;
+
+        const statsCard =
+            rightCards[2] || null;
+
+
+        function makeScreen(
+            name,
+            kicker,
+            title,
+            subtitle
+        ) {
+
+            const section =
+                document.createElement("section");
+
+            section.className =
+                "ep-mobile-screen";
+
+            section.dataset.screen =
+                name;
+
+            section.innerHTML =
+                '<div class="ep-mobile-screen-header">'
+                + '<div class="ep-mobile-kicker">'
+                + kicker
+                + '</div>'
+                + '<h2 class="ep-mobile-title">'
+                + title
+                + '</h2>'
+                + (
+                    subtitle
+                    ? '<div class="ep-mobile-subtitle">'
+                      + subtitle
+                      + '</div>'
+                    : ''
+                )
+                + '</div>';
+
+            return section;
+        }
+
+
+        const app =
+            document.createElement("div");
+
+        app.className =
+            "ep-mobile-app";
+
+
+        /* HOME */
+
+        const home =
+            makeScreen(
+                "home",
+                "План на сегодня",
+                "Добро пожаловать, {{ request.user.username }}",
+                "Сегодня {{ today|date:'d.m.Y' }}"
+            );
+
+        home.classList.add("is-active");
+
+        if (todayCard) {
+            home.appendChild(todayCard);
+        }
+
+
+        /* STUDY */
+
+        const study =
+            makeScreen(
+                "study",
+                "Учёба",
+                "Твой курс",
+                "Общий путь и прогресс"
+            );
+
+        const shortcuts =
+            document.createElement("div");
+
+        shortcuts.className =
+            "ep-study-shortcuts";
+
+        shortcuts.innerHTML =
+            '<a class="ep-study-shortcut" href="{% url "vocabulary:dashboard" %}#study">'
+            + '<div class="ep-study-shortcut-icon">📘</div>'
+            + '<div class="ep-study-shortcut-title">Vocabulary</div>'
+            + '<div class="ep-study-shortcut-note">Текущий курс {{ course.level.code }}</div>'
+            + '</a>'
+            + '<a class="ep-study-shortcut" href="{% url "grammar:home" %}">'
+            + '<div class="ep-study-shortcut-icon">✍️</div>'
+            + '<div class="ep-study-shortcut-title">Grammar</div>'
+            + '<div class="ep-study-shortcut-note">Грамматика английского</div>'
+            + '</a>';
+
+        study.appendChild(shortcuts);
+
+        if (hero) {
+            study.appendChild(hero);
+        }
+
+        if (groupCard) {
+            study.appendChild(groupCard);
+        }
+
+        if (statsCard) {
+            study.appendChild(statsCard.cloneNode(true));
+        }
+
+
+        /* BALANCE */
+
+        const balance =
+            makeScreen(
+                "balance",
+                "Баланс",
+                "Моё обещание",
+                "Деньги, сроки и прогресс возврата"
+            );
+
+        if (commitment) {
+            commitment.style.marginTop = "0";
+            commitment.style.marginBottom = "0";
+            balance.appendChild(commitment);
+        } else {
+            const empty =
+                document.createElement("div");
+
+            empty.className =
+                "ep-mobile-card";
+
+            empty.innerHTML =
+                '<div class="ep-mobile-card-title">Активного обещания пока нет</div>';
+
+            balance.appendChild(empty);
+        }
+
+
+        /* REWARDS */
+
+        const rewards =
+            makeScreen(
+                "rewards",
+                "Награды",
+                "Возможности",
+                "Открытые режимы и будущие усиления"
+            );
+
+        const rewardCard =
+            document.createElement("div");
+
+        rewardCard.className =
+            "ep-mobile-card";
+
+        rewardCard.innerHTML =
+            '<div class="ep-mobile-card-title">Режимы обучения</div>'
+            + '<div class="ep-mobile-card-note">Открыто режимов: {{ lesson_unlocked_stage_count }} из 4</div>'
+            + '<div class="ep-reward-list">'
+            + '<div class="ep-reward-row"><div class="ep-reward-icon">👁</div><div class="ep-reward-copy"><div class="ep-reward-title">Выбор перевода</div><div class="ep-reward-note">Один вариант из четырёх</div></div><div class="ep-reward-state">Доступно</div></div>'
+            {% if lesson_unlocked_stage_count >= 2 %}
+            + '<div class="ep-reward-row"><div class="ep-reward-icon">⌨️</div><div class="ep-reward-copy"><div class="ep-reward-title">Spelling</div><div class="ep-reward-note">Собрать или написать слово</div></div><div class="ep-reward-state">Доступно</div></div>'
+{% else %}
+            + '<div class="ep-reward-row"><div class="ep-reward-icon">⌨️</div><div class="ep-reward-copy"><div class="ep-reward-title">Spelling</div><div class="ep-reward-note">Собрать или написать слово</div></div><div class="ep-reward-state">🔒 После 1-го Practice</div></div>'
+{% endif %}
+            {% if lesson_unlocked_stage_count >= 3 %}
+            + '<div class="ep-reward-row"><div class="ep-reward-icon">📖</div><div class="ep-reward-copy"><div class="ep-reward-title">Context</div><div class="ep-reward-note">Найти слово по смыслу</div></div><div class="ep-reward-state">Доступно</div></div>'
+{% else %}
+            + '<div class="ep-reward-row"><div class="ep-reward-icon">📖</div><div class="ep-reward-copy"><div class="ep-reward-title">Context</div><div class="ep-reward-note">Найти слово по смыслу</div></div><div class="ep-reward-state">🔒 После 2-го Practice</div></div>'
+{% endif %}
+            {% if lesson_unlocked_stage_count >= 4 %}
+            + '<div class="ep-reward-row"><div class="ep-reward-icon">🎧</div><div class="ep-reward-copy"><div class="ep-reward-title">Listening</div><div class="ep-reward-note">Распознать слово на слух</div></div><div class="ep-reward-state">Доступно</div></div>'
+{% else %}
+            + '<div class="ep-reward-row"><div class="ep-reward-icon">🎧</div><div class="ep-reward-copy"><div class="ep-reward-title">Listening</div><div class="ep-reward-note">Распознать слово на слух</div></div><div class="ep-reward-state">🔒 После 3-го Practice</div></div>'
+{% endif %}
+            + '</div>';
+
+        rewards.appendChild(rewardCard);
+
+        const powerups =
+            document.createElement("div");
+
+        powerups.className =
+            "ep-mobile-card";
+
+        powerups.innerHTML =
+            '<div class="ep-mobile-card-title">Усиления</div>'
+            + '<div class="ep-mobile-card-note">Экран уже готов под будущую систему наград</div>'
+            + '<div class="ep-reward-list">'
+            + '<div class="ep-reward-row"><div class="ep-reward-icon">🛡</div><div class="ep-reward-copy"><div class="ep-reward-title">Право на ошибку</div><div class="ep-reward-note">Одна ошибка без сброса Practice</div></div><div class="ep-reward-state">Скоро</div></div>'
+            + '<div class="ep-reward-row"><div class="ep-reward-icon">✂️</div><div class="ep-reward-copy"><div class="ep-reward-title">50/50</div><div class="ep-reward-note">Убрать два неверных варианта</div></div><div class="ep-reward-state">Скоро</div></div>'
+            + '<div class="ep-reward-row"><div class="ep-reward-icon">💬</div><div class="ep-reward-copy"><div class="ep-reward-title">Показать перевод</div><div class="ep-reward-note">Редкая помощь в Practice</div></div><div class="ep-reward-state">Скоро</div></div>'
+            + '</div>';
+
+        rewards.appendChild(powerups);
+
+
+        /* PROFILE */
+
+        const profile =
+            makeScreen(
+                "profile",
+                "Профиль",
+                "Мой прогресс",
+                ""
+            );
+
+        const profileHead =
+            document.createElement("div");
+
+        profileHead.className =
+            "ep-mobile-card ep-profile-head";
+
+        profileHead.innerHTML =
+            '<div class="ep-profile-avatar">{{ request.user.username|slice:":1"|upper }}</div>'
+            + '<div class="ep-profile-name">{{ request.user.username }}</div>'
+            + '<div class="ep-profile-level">Текущий курс · {{ course.level.code }}</div>';
+
+        profile.appendChild(profileHead);
+
+        if (streakCard) {
+            profile.appendChild(streakCard);
+        }
+
+        if (weekCard) {
+            profile.appendChild(weekCard);
+        }
+
+        if (statsCard) {
+            profile.appendChild(statsCard);
+        }
+
+        const logoutCard =
+            document.createElement("div");
+
+        logoutCard.className =
+            "ep-mobile-card";
+
+        logoutCard.innerHTML =
+            '<form method="post" action="{% url "logout" %}">'
+            + '<input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">'
+            + '<button class="ep-profile-logout" type="submit">Выйти из аккаунта</button>'
+            + '</form>';
+
+        profile.appendChild(logoutCard);
+
+
+        app.appendChild(home);
+        app.appendChild(study);
+        app.appendChild(balance);
+        app.appendChild(rewards);
+        app.appendChild(profile);
+
+        oldDashboard.insertAdjacentElement(
+            "beforebegin",
+            app
+        );
+
+        oldDashboard.remove();
+
+
+        /* BOTTOM NAV */
+
+        const navWrap =
+            document.createElement("div");
+
+        navWrap.className =
+            "ep-bottom-nav-wrap";
+
+        navWrap.innerHTML =
+            '<nav class="ep-bottom-nav" aria-label="Основная навигация">'
+            + '<button type="button" class="ep-bottom-tab is-active" data-target="home" aria-label="Главная"><svg viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5"></path><path d="M5 9.5V21h14V9.5"></path><path d="M9 21v-6h6v6"></path></svg><span class="ep-bottom-label">Главная</span></button>'
+            + '<button type="button" class="ep-bottom-tab" data-target="study" aria-label="Учёба"><svg viewBox="0 0 24 24"><path d="M4 5.5A3.5 3.5 0 0 1 7.5 2H11v17H7.5A3.5 3.5 0 0 0 4 22V5.5Z"></path><path d="M20 5.5A3.5 3.5 0 0 0 16.5 2H13v17h3.5A3.5 3.5 0 0 1 20 22V5.5Z"></path></svg><span class="ep-bottom-label">Учёба</span></button>'
+            + '<button type="button" class="ep-bottom-tab" data-target="balance" aria-label="Баланс"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="14" rx="3"></rect><path d="M16 11h5v5h-5a2.5 2.5 0 0 1 0-5Z"></path><path d="M6 6V4h11a2 2 0 0 1 2 2"></path></svg><span class="ep-bottom-label">Баланс</span></button>'
+            + '<button type="button" class="ep-bottom-tab" data-target="rewards" aria-label="Награды"><svg viewBox="0 0 24 24"><path d="M20 12v9H4v-9"></path><path d="M2 7h20v5H2z"></path><path d="M12 7v14"></path><path d="M12 7H8.5A2.5 2.5 0 1 1 11 4.5V7Z"></path><path d="M12 7h3.5A2.5 2.5 0 1 0 13 4.5V7Z"></path></svg><span class="ep-bottom-label">Награды</span></button>'
+            + '<button type="button" class="ep-bottom-tab" data-target="profile" aria-label="Профиль"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"></circle><path d="M4 21a8 8 0 0 1 16 0"></path></svg><span class="ep-bottom-label">Профиль</span></button>'
+            + '</nav>';
+
+        document.body.appendChild(
+            navWrap
+        );
+
+
+        const screens =
+            Array.from(
+                document.querySelectorAll(
+                    ".ep-mobile-screen"
+                )
+            );
+
+        const tabs =
+            Array.from(
+                document.querySelectorAll(
+                    ".ep-bottom-tab"
+                )
+            );
+
+        const allowed =
+            new Set([
+                "home",
+                "study",
+                "balance",
+                "rewards",
+                "profile"
+            ]);
+
+
+        function showScreen(
+            name,
+            updateHash
+        ) {
+
+            if (!allowed.has(name)) {
+                name = "home";
+            }
+
+            screens.forEach(
+                function (screen) {
+
+                    screen.classList.toggle(
+                        "is-active",
+                        screen.dataset.screen === name
+                    );
+
+                }
+            );
+
+            tabs.forEach(
+                function (tab) {
+
+                    tab.classList.toggle(
+                        "is-active",
+                        tab.dataset.target === name
+                    );
+
+                }
+            );
+
+            if (updateHash) {
+
+                history.replaceState(
+                    null,
+                    "",
+                    "#" + name
+                );
+
+            }
+
+            window.scrollTo(
+                0,
+                0
+            );
+
+        }
+
+
+        tabs.forEach(
+            function (tab) {
+
+                tab.addEventListener(
+                    "click",
+                    function () {
+
+                        showScreen(
+                            tab.dataset.target,
+                            true
+                        );
+
+                    }
+                );
+
+            }
+        );
+
+
+        const initial =
+            window.location.hash
+            ?
+            window.location.hash.slice(1)
+            :
+            "home";
+
+        showScreen(
+            initial,
+            false
+        );
+
+    }
+);
+</script>
+
+
 {% endblock %}

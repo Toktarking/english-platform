@@ -87,7 +87,72 @@ def commitment_dashboard(request):
     )
 
 
+    # =================================================
+    # НОВАЯ МЕХАНИКА ПОСЛЕ UNIFIED PRACTICE
+    # =================================================
+
+    reward_unlock = None
+
+    if (
+        reward_notification
+        and
+        reward_notification.milestone.kind
+        ==
+        "unified_practice"
+        and
+        reward_notification.milestone.group
+    ):
+
+        group_order = (
+            reward_notification
+            .milestone
+            .group
+            .order
+        )
+
+        unlocks = {
+
+            1: {
+                "icon": "🔤",
+                "gif": "vocabulary/gifs/night-spelling.gif",
+                "title": "Spelling by letters",
+                "text": (
+                    "Теперь этот режим доступен "
+                    "в следующих заданиях."
+                ),
+            },
+
+            2: {
+                "icon": "🧩",
+                "gif": "vocabulary/gifs/october-context.gif",
+                "title": "Context",
+                "text": (
+                    "Теперь доступны задания "
+                    "на выбор слова по контексту."
+                ),
+            },
+
+            3: {
+                "icon": "🎧",
+                "gif": "vocabulary/gifs/baby-listening.gif",
+                "title": "Listening",
+                "text": (
+                    "Теперь доступны задания "
+                    "на аудирование."
+                ),
+            },
+
+        }
+
+        reward_unlock = unlocks.get(
+            group_order
+        )
+
+
     return {
+        "commitment_reward_unlock":
+            reward_unlock,
+
         "active_commitment": commitment,
         "commitment_day_number": day_number,
         "commitment_progress_percent": progress_percent,

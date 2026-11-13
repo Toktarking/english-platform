@@ -1,4 +1,5 @@
 {% extends "vocabulary/base.html" %}
+{% load static %}
 
 {% block title %}
 Practice | {{ group.name }}
@@ -426,6 +427,8 @@ Practice | {{ group.name }}
     }
 
 
+
+
     /* =====================================================
        FEEDBACK
        ===================================================== */
@@ -642,6 +645,103 @@ Practice | {{ group.name }}
 
     }
 
+
+
+    /* =====================================================
+       UNIFIED_RANDOM_JOY_CSS
+
+       Reaction mascot:
+       маленький,
+       не блокирует интерфейс,
+       находится в нижнем левом углу.
+       ===================================================== */
+
+    .unified-joy-overlay {
+
+        position: fixed;
+
+        left: 18px;
+        bottom: 20px;
+
+        z-index: 99990;
+
+        width: 110px;
+        height: 110px;
+
+        display: flex;
+        align-items: flex-end;
+        justify-content: flex-start;
+
+        pointer-events: none;
+
+        animation:
+            unifiedJoyPop
+            .18s
+            ease-out;
+    }
+
+
+    .unified-joy-overlay img {
+
+        display: block;
+
+        width: 100%;
+        height: 100%;
+
+        object-fit: contain;
+
+        filter:
+            drop-shadow(
+                0 8px 12px
+                rgba(0,0,0,.16)
+            );
+    }
+
+
+    @keyframes unifiedJoyPop {
+
+        0% {
+            opacity: 0;
+
+            transform:
+                translateY(14px)
+                scale(.72);
+        }
+
+        70% {
+
+            opacity: 1;
+
+            transform:
+                translateY(-3px)
+                scale(1.07);
+        }
+
+        100% {
+
+            opacity: 1;
+
+            transform:
+                translateY(0)
+                scale(1);
+        }
+
+    }
+
+
+    @media (max-width: 650px) {
+
+        .unified-joy-overlay {
+
+            left: 10px;
+            bottom: 12px;
+
+            width: 90px;
+            height: 90px;
+        }
+
+    }
+
 </style>
 
 
@@ -677,6 +777,7 @@ Practice | {{ group.name }}
 
             <div class="practice-subtitle">
                 {{ level.code }} · {{ group.name }}
+                · Доступно режимов: {{ available_stage_count }} из 4
             </div>
 
         </div>
@@ -781,6 +882,154 @@ Practice | {{ group.name }}
 <script>
 
     /* =====================================================
+       UNIFIED_RANDOM_JOY_GLOBAL
+       ===================================================== */
+
+    window.UNIFIED_JOY_GIFS = [
+
+        "{% static 'vocabulary/gifs/book-joy-01.gif' %}",
+        "{% static 'vocabulary/gifs/book-joy-02.gif' %}",
+        "{% static 'vocabulary/gifs/book-joy-03.gif' %}",
+        "{% static 'vocabulary/gifs/book-joy-04.gif' %}",
+        "{% static 'vocabulary/gifs/book-joy-05.gif' %}",
+        "{% static 'vocabulary/gifs/book-joy-06.gif' %}",
+        "{% static 'vocabulary/gifs/book-joy-07.gif' %}",
+        "{% static 'vocabulary/gifs/book-joy-08.gif' %}",
+        "{% static 'vocabulary/gifs/book-joy-09.gif' %}",
+        "{% static 'vocabulary/gifs/book-joy-10.gif' %}",
+        "{% static 'vocabulary/gifs/corsac-joy-01.gif' %}",
+        "{% static 'vocabulary/gifs/corsac-joy-02.gif' %}",
+        "{% static 'vocabulary/gifs/corsac-joy-03.gif' %}",
+        "{% static 'vocabulary/gifs/corsac-joy-04.gif' %}",
+        "{% static 'vocabulary/gifs/corsac-joy-05.gif' %}",
+        "{% static 'vocabulary/gifs/corsac-joy-06.gif' %}",
+        "{% static 'vocabulary/gifs/corsac-joy-07.gif' %}",
+        "{% static 'vocabulary/gifs/corsac-joy-08.gif' %}",
+        "{% static 'vocabulary/gifs/corsac-joy-09.gif' %}",
+        "{% static 'vocabulary/gifs/corsac-joy-10.gif' %}",
+        "{% static 'vocabulary/gifs/penguin-joy-01.gif' %}",
+        "{% static 'vocabulary/gifs/penguin-joy-02.gif' %}",
+        "{% static 'vocabulary/gifs/penguin-joy-03.gif' %}",
+        "{% static 'vocabulary/gifs/penguin-joy-04.gif' %}",
+        "{% static 'vocabulary/gifs/penguin-joy-05.gif' %}",
+        "{% static 'vocabulary/gifs/penguin-joy-06.gif' %}",
+        "{% static 'vocabulary/gifs/penguin-joy-07.gif' %}",
+        "{% static 'vocabulary/gifs/penguin-joy-08.gif' %}",
+        "{% static 'vocabulary/gifs/penguin-joy-09.gif' %}",
+        "{% static 'vocabulary/gifs/penguin-joy-10.gif' %}",
+        "{% static 'vocabulary/gifs/red-panda-joy-01.gif' %}",
+        "{% static 'vocabulary/gifs/red-panda-joy-02.gif' %}",
+        "{% static 'vocabulary/gifs/red-panda-joy-03.gif' %}",
+        "{% static 'vocabulary/gifs/red-panda-joy-04.gif' %}",
+        "{% static 'vocabulary/gifs/red-panda-joy-05.gif' %}",
+        "{% static 'vocabulary/gifs/red-panda-joy-06.gif' %}",
+        "{% static 'vocabulary/gifs/red-panda-joy-07.gif' %}",
+        "{% static 'vocabulary/gifs/red-panda-joy-08.gif' %}",
+        "{% static 'vocabulary/gifs/red-panda-joy-09.gif' %}",
+        "{% static 'vocabulary/gifs/red-panda-joy-10.gif' %}",
+
+    ];
+
+
+    window.unifiedJoyTimer = null;
+
+
+    window.showUnifiedRandomJoyGif = function () {
+
+        const gifs =
+            window.UNIFIED_JOY_GIFS
+            ||
+            [];
+
+
+        if (!gifs.length) {
+            return;
+        }
+
+
+        document
+            .querySelectorAll(
+                ".unified-joy-overlay"
+            )
+            .forEach(
+                element => element.remove()
+            );
+
+
+        if (
+            window.unifiedJoyTimer
+        ) {
+
+            window.clearTimeout(
+                window.unifiedJoyTimer
+            );
+
+        }
+
+
+        const randomIndex =
+            Math.floor(
+                Math.random()
+                *
+                gifs.length
+            );
+
+
+        const overlay =
+            document.createElement(
+                "div"
+            );
+
+
+        overlay.className =
+            "unified-joy-overlay";
+
+
+        const img =
+            document.createElement(
+                "img"
+            );
+
+
+        img.src =
+            gifs[randomIndex];
+
+        img.alt =
+            "Correct";
+
+        img.draggable =
+            false;
+
+
+        overlay.appendChild(
+            img
+        );
+
+
+        document.body.appendChild(
+            overlay
+        );
+
+
+        window.unifiedJoyTimer =
+            window.setTimeout(
+                function () {
+
+                    overlay.remove();
+
+                    window.unifiedJoyTimer =
+                        null;
+
+                },
+                1150
+            );
+
+    };
+
+
+
+
+    /* =====================================================
        URLS
        ===================================================== */
 
@@ -855,25 +1104,25 @@ Practice | {{ group.name }}
     const PHASE_LABELS = {
 
         LISTENING_INITIAL:
-            "Deck 1 · Listening",
+            "Listening",
 
         LETTER_FIRST:
-            "Deck 2 · Letter Construction",
+            "Spelling",
 
         MULTIPLE_CHOICE_1:
-            "Deck 4 · Multiple Choice",
+            "Выбор перевода",
 
         MULTIPLE_CHOICE_2:
-            "Deck 5 · Error Review",
+            "Выбор перевода · Повтор ошибок",
 
         LETTER_REVIEW:
-            "Deck 2 · Letter Review",
+            "Spelling",
 
         CONTEXT_REVIEW:
-            "Deck 3 · Context",
+            "Context",
 
         LISTENING_REVIEW:
-            "Deck 1 · Listening Review",
+            "Listening",
 
         COMPLETED:
             "Completed",
@@ -1080,6 +1329,17 @@ Practice | {{ group.name }}
             feedback.textContent =
                 "Correct!";
 
+
+            if (
+                typeof window.showCorrectGif
+                ===
+                "function"
+            ) {
+
+
+
+            }
+
         }
 
         else {
@@ -1221,6 +1481,16 @@ Practice | {{ group.name }}
                 data.answer.is_correct,
                 data.answer,
             );
+
+            // UNIFIED_RANDOM_JOY_CALL
+            if (
+                data.answer.is_correct
+            ) {
+
+                window.showUnifiedRandomJoyGif();
+
+            }
+
 
 
             if (

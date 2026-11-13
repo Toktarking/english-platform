@@ -29,6 +29,7 @@ from .models import (
     GroupPracticeSession,
     GroupPracticeWordState,
     LessonPracticeProgress,
+    LessonStudyProgress,
     UnifiedGroupPracticeSession,
     UserCourse,
     UserWordProgress,
@@ -2437,6 +2438,20 @@ def dashboard(
     )
 
 
+    lesson_stage_count = (
+        get_unlocked_lesson_stage_count(
+            request.user,
+            course.level,
+        )
+    )
+
+    lesson_stage_label = (
+        "этап"
+        if lesson_stage_count == 1
+        else "этапа"
+    )
+
+
     dashboard_items = []
 
 
@@ -2538,7 +2553,7 @@ def dashboard(
                             f" · "
                             f"{word_count} слов"
                             f" · "
-                            f"4 этапа"
+                            f"{lesson_stage_count} {lesson_stage_label}"
                         ),
 
                 }
@@ -3138,6 +3153,12 @@ def dashboard(
 
         "mastered_words":
             mastered_words,
+
+        "lesson_unlocked_stage_count":
+            get_unlocked_lesson_stage_count(
+                request.user,
+                course.level,
+            ),
 
         "streak":
             calculate_course_streak(
@@ -4141,6 +4162,37 @@ def lesson_detail(
         )
     )
 
+    word_count = (
+        words.count()
+    )
+
+    # =====================================================
+    # RESTORE LESSON VIEW POSITION
+    # =====================================================
+
+    saved_lesson_index = 0
+
+    if request.user.is_authenticated:
+
+        study_progress, created = (
+            LessonStudyProgress.objects
+            .get_or_create(
+                user=request.user,
+                lesson=lesson,
+            )
+        )
+
+        if (
+            not study_progress.is_finished
+            and
+            word_count > 0
+        ):
+
+            saved_lesson_index = min(
+                study_progress.current_index,
+                word_count - 1,
+            )
+
     context = {
         "level":
             lesson.group.level,
@@ -4155,13 +4207,150 @@ def lesson_detail(
             words,
 
         "word_count":
-            words.count(),
+            word_count,
+
+        "saved_lesson_index":
+            saved_lesson_index,
     }
 
     return render(
         request,
         "vocabulary/lesson_detail.html",
         context,
+    )
+
+
+# =========================================================
+# LESSON VIEW PROGRESS
+# SAVE / RESUME WORD POSITION
+# =========================================================
+
+
+@login_required
+@require_POST
+@transaction.atomic
+def lesson_study_progress(
+    request,
+    lesson_id,
+):
+
+    lesson = get_object_or_404(
+        VocabularyLesson,
+        id=lesson_id,
+        is_active=True,
+    )
+
+    try:
+
+        data = json.loads(
+            request.body
+        )
+
+        current_index = int(
+            data.get(
+                "current_index",
+                0,
+            )
+        )
+
+        is_finished = bool(
+            data.get(
+                "is_finished",
+                False,
+            )
+        )
+
+    except (
+        json.JSONDecodeError,
+        TypeError,
+        ValueError,
+    ):
+
+        return JsonResponse(
+            {
+                "success": False,
+                "error": "Invalid progress data.",
+            },
+            status=400,
+        )
+
+
+    word_count = (
+        lesson.words
+        .filter(
+            is_active=True,
+        )
+        .count()
+    )
+
+    if word_count <= 0:
+
+        return JsonResponse(
+            {
+                "success": False,
+                "error": "Lesson has no active words.",
+            },
+            status=400,
+        )
+
+
+    max_index = (
+        word_count - 1
+    )
+
+    current_index = max(
+        0,
+        min(
+            current_index,
+            max_index,
+        ),
+    )
+
+
+    progress, created = (
+        LessonStudyProgress.objects
+        .select_for_update()
+        .get_or_create(
+            user=request.user,
+            lesson=lesson,
+        )
+    )
+
+
+    progress.current_index = (
+        current_index
+    )
+
+    progress.max_seen_index = max(
+        progress.max_seen_index,
+        current_index,
+    )
+
+
+    if is_finished:
+
+        progress.is_finished = True
+
+        if progress.finished_at is None:
+
+            progress.finished_at = (
+                timezone.now()
+            )
+
+
+    progress.save()
+
+
+    return JsonResponse(
+        {
+            "success": True,
+            "current_index":
+                progress.current_index,
+            "max_seen_index":
+                progress.max_seen_index,
+            "is_finished":
+                progress.is_finished,
+        }
     )
 
 
@@ -4252,6 +4441,32 @@ def clean_context_wrong_options(
 
 
 # =========================================================
+# LESSON PRACTICE UNLOCKS
+# =========================================================
+
+
+def get_unlocked_lesson_stage_count(
+    user,
+    level,
+):
+
+    completed_unified = (
+        UnifiedGroupPracticeSession.objects
+        .filter(
+            user=user,
+            group__level=level,
+            is_completed=True,
+        )
+        .count()
+    )
+
+    return min(
+        4,
+        1 + completed_unified,
+    )
+
+
+# =========================================================
 # LESSON PRACTICE
 # =========================================================
 
@@ -4287,6 +4502,13 @@ def lesson_practice(
 
     level = (
         lesson.group.level
+    )
+
+    unlocked_stage_count = (
+        get_unlocked_lesson_stage_count(
+            request.user,
+            level,
+        )
     )
 
     lesson_words = list(
@@ -4588,6 +4810,9 @@ def lesson_practice(
                 len(
                     questions
                 ),
+
+            "unlocked_stage_count":
+                unlocked_stage_count,
 
             # =============================================
             # RESTORE PRACTICE
@@ -7274,6 +7499,14 @@ def lesson_practice_progress(
             timezone.now()
         )
 
+        # api_unlocked_stage_count
+        unlocked_stage_count = (
+            get_unlocked_lesson_stage_count(
+                request.user,
+                lesson.group.level,
+            )
+        )
+
 
         # =================================================
         # OPEN
@@ -7574,6 +7807,21 @@ def lesson_practice_progress(
             )
 
 
+            if (
+                stage < 1
+                or
+                stage > unlocked_stage_count
+            ):
+
+                return JsonResponse(
+                    {
+                        "success": False,
+                        "error": "This stage is still locked.",
+                    },
+                    status=403,
+                )
+
+
             # При завершении этапа frontend
             # может одновременно передать
             # последнее состояние.
@@ -7627,11 +7875,33 @@ def lesson_practice_progress(
                     seconds
                 )
 
-                progress.current_stage = (
-                    LessonPracticeProgress
-                    .Stage
-                    .SPELLING
-                )
+                if unlocked_stage_count <= 1:
+
+                    progress.stage2_completed = True
+                    progress.stage2_mistakes = 0
+                    progress.stage2_seconds = 0
+
+                    progress.stage3_completed = True
+                    progress.stage3_mistakes = 0
+                    progress.stage3_seconds = 0
+
+                    progress.stage4_completed = True
+                    progress.stage4_mistakes = 0
+                    progress.stage4_seconds = 0
+
+                    progress.current_stage = (
+                        LessonPracticeProgress
+                        .Stage
+                        .COMPLETED
+                    )
+
+                else:
+
+                    progress.current_stage = (
+                        LessonPracticeProgress
+                        .Stage
+                        .SPELLING
+                    )
 
 
             # =============================================
@@ -7652,11 +7922,29 @@ def lesson_practice_progress(
                     seconds
                 )
 
-                progress.current_stage = (
-                    LessonPracticeProgress
-                    .Stage
-                    .CONTEXT
-                )
+                if unlocked_stage_count <= 2:
+
+                    progress.stage3_completed = True
+                    progress.stage3_mistakes = 0
+                    progress.stage3_seconds = 0
+
+                    progress.stage4_completed = True
+                    progress.stage4_mistakes = 0
+                    progress.stage4_seconds = 0
+
+                    progress.current_stage = (
+                        LessonPracticeProgress
+                        .Stage
+                        .COMPLETED
+                    )
+
+                else:
+
+                    progress.current_stage = (
+                        LessonPracticeProgress
+                        .Stage
+                        .CONTEXT
+                    )
 
 
             # =============================================
@@ -7677,11 +7965,25 @@ def lesson_practice_progress(
                     seconds
                 )
 
-                progress.current_stage = (
-                    LessonPracticeProgress
-                    .Stage
-                    .LISTENING
-                )
+                if unlocked_stage_count <= 3:
+
+                    progress.stage4_completed = True
+                    progress.stage4_mistakes = 0
+                    progress.stage4_seconds = 0
+
+                    progress.current_stage = (
+                        LessonPracticeProgress
+                        .Stage
+                        .COMPLETED
+                    )
+
+                else:
+
+                    progress.current_stage = (
+                        LessonPracticeProgress
+                        .Stage
+                        .LISTENING
+                    )
 
 
             # =============================================

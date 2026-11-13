@@ -1,6 +1,6 @@
 
 {% extends "vocabulary/base.html" %}
-
+{% load static %}
 {% block title %}
 Practice | Lesson {{ lesson.number }}
 {% endblock %}
@@ -889,7 +889,7 @@ Practice | Lesson {{ lesson.number }}
             class="stage-badge"
             id="stageBadge"
         >
-            Этап 1 из 4 · Перевод
+            Этап 1 из {{ unlocked_stage_count }} · Перевод
         </div>
 
 
@@ -1395,6 +1395,7 @@ Practice | Lesson {{ lesson.number }}
 {{ saved_practice_state|json_script:"saved-practice-state" }}
 {{ saved_current_stage|json_script:"saved-current-stage" }}
 {{ lesson_progress|json_script:"lesson-progress-data" }}
+{{ unlocked_stage_count|json_script:"unlocked-stage-count" }}
 
 
 <script>
@@ -1419,6 +1420,20 @@ Practice | Lesson {{ lesson.number }}
 
     const MIN_LETTER_BANK =
         8;
+
+
+    const unlockedStageCount =
+        Number(
+            JSON.parse(
+                document
+                    .getElementById(
+                        "unlocked-stage-count"
+                    )
+                    .textContent
+            )
+        )
+        ||
+        1;
 
 
     const savedPracticeState =
@@ -1834,6 +1849,43 @@ Practice | Lesson {{ lesson.number }}
     Используется после правильного ответа
     вместо стандартного звука "correct".
     */
+
+    /*
+    Тихий звук правильного ответа.
+    Работает только в обычном Lesson Practice.
+    */
+
+    function playQuietCorrectSound() {
+
+        window.setTimeout(
+            function () {
+
+                const correctAudio =
+                    new Audio(
+                        "{% static 'vocabulary/sounds/correct.mp3' %}"
+                    );
+
+                correctAudio.volume =
+                    0.18;
+
+                correctAudio.play()
+                    .catch(
+                        function (error) {
+
+                            console.log(
+                                "Correct sound error:",
+                                error
+                            );
+
+                        }
+                    );
+
+            },
+            70
+        );
+
+    }
+
 
     function playWordAudio(
         question
@@ -2916,6 +2968,55 @@ Practice | Lesson {{ lesson.number }}
             "Урок завершён";
 
 
+        const resultStageItems = [
+            ["choiceMistakesResult", 1],
+            ["spellingMistakesResult", 2],
+            ["contextMistakesResult", 3],
+            ["listeningMistakesResult", 4],
+        ];
+
+
+        resultStageItems.forEach(
+            function (item) {
+
+                const element =
+                    document.getElementById(
+                        item[0]
+                    );
+
+                const card =
+                    element
+                    &&
+                    element.closest(
+                        ".result-stat"
+                    );
+
+                if (card) {
+
+                    card.style.display =
+                        item[1] <= unlockedStageCount
+                            ? ""
+                            : "none";
+
+                }
+
+            }
+        );
+
+
+        const resultStats =
+            document.querySelector(
+                ".result-stats"
+            );
+
+        if (resultStats) {
+
+            resultStats.style.gridTemplateColumns =
+                "repeat(auto-fit, minmax(120px, 1fr))";
+
+        }
+
+
         document
             .getElementById(
                 "resultScore"
@@ -3028,7 +3129,7 @@ Practice | Lesson {{ lesson.number }}
                     ? (
                         `Excellent! `
                         +
-                        `Вы прошли все четыре этапа `
+                        `Вы завершили доступную тренировку `
                         +
                         `без единой ошибки. `
                         +
@@ -3042,7 +3143,7 @@ Practice | Lesson {{ lesson.number }}
                         +
                         `успешно пройдены `
                         +
-                        `на всех четырёх этапах. `
+                        `на всех доступных этапах. `
                         +
                         `Всего ошибок: `
                         +
@@ -3610,6 +3711,20 @@ Practice | Lesson {{ lesson.number }}
             playWordAudio(
                 question
             );
+
+            playQuietCorrectSound();
+
+            if (
+                typeof window.showCorrectGif
+                ===
+                "function"
+            ) {
+
+                window.showStageJoyGif(
+                    "choice"
+                );
+
+            }
             choiceLearned.add(
                 question.word_id
             );
@@ -3693,7 +3808,11 @@ Practice | Lesson {{ lesson.number }}
             ===
             totalWords
 
-                ? "Следующий этап →"
+                ? (
+                    unlockedStageCount === 1
+                        ? "Завершить урок →"
+                        : "Следующий этап →"
+                )
 
                 : "Next →";
 
@@ -3724,6 +3843,20 @@ Practice | Lesson {{ lesson.number }}
                     )
             }
         );
+
+
+        if (
+            unlockedStageCount <= 1
+        ) {
+
+            currentStage =
+                "completed";
+
+            renderResultCard();
+
+            return;
+
+        }
 
 
         renderStageCompleteCard(
@@ -3922,7 +4055,7 @@ Practice | Lesson {{ lesson.number }}
 
 
         stageBadge.textContent =
-            "Этап 2 из 4 · Написание";
+            `Этап 2 из ${unlockedStageCount} · Написание`;
 
 
         progressLabel.textContent =
@@ -4444,6 +4577,20 @@ Practice | Lesson {{ lesson.number }}
                 question
             );
 
+            playQuietCorrectSound();
+
+            if (
+                typeof window.showCorrectGif
+                ===
+                "function"
+            ) {
+
+                window.showStageJoyGif(
+                    "spelling"
+                );
+
+            }
+
 
             spellingLearned.add(
                 question.word_id
@@ -4552,7 +4699,11 @@ Practice | Lesson {{ lesson.number }}
             ===
             totalWords
 
-                ? "Следующий этап →"
+                ? (
+                    unlockedStageCount === 2
+                        ? "Завершить урок →"
+                        : "Следующий этап →"
+                )
 
                 : "Next →";
 
@@ -4583,6 +4734,20 @@ Practice | Lesson {{ lesson.number }}
                     )
             }
         );
+
+
+        if (
+            unlockedStageCount <= 2
+        ) {
+
+            currentStage =
+                "completed";
+
+            renderResultCard();
+
+            return;
+
+        }
 
 
         renderStageCompleteCard(
@@ -4769,7 +4934,7 @@ Practice | Lesson {{ lesson.number }}
 
 
         stageBadge.textContent =
-            "Этап 3 из 4 · Контекст";
+            `Этап 3 из ${unlockedStageCount} · Контекст`;
 
 
         progressLabel.textContent =
@@ -4998,6 +5163,20 @@ Practice | Lesson {{ lesson.number }}
                 question
             );
 
+            playQuietCorrectSound();
+
+            if (
+                typeof window.showCorrectGif
+                ===
+                "function"
+            ) {
+
+                window.showStageJoyGif(
+                    "context"
+                );
+
+            }
+
 
             contextLearned.add(
                 question.word_id
@@ -5081,7 +5260,11 @@ Practice | Lesson {{ lesson.number }}
             ===
             totalWords
 
-                ? "Следующий этап →"
+                ? (
+                    unlockedStageCount === 3
+                        ? "Завершить урок →"
+                        : "Следующий этап →"
+                )
 
                 : "Next →";
 
@@ -5112,6 +5295,20 @@ Practice | Lesson {{ lesson.number }}
                     )
             }
         );
+
+
+        if (
+            unlockedStageCount <= 3
+        ) {
+
+            currentStage =
+                "completed";
+
+            renderResultCard();
+
+            return;
+
+        }
 
 
         renderStageCompleteCard(
@@ -5282,7 +5479,7 @@ Practice | Lesson {{ lesson.number }}
 
 
         stageBadge.textContent =
-            "Этап 4 из 4 · Listening";
+            `Этап 4 из ${unlockedStageCount} · Listening`;
 
 
         progressLabel.textContent =
@@ -5532,6 +5729,20 @@ Practice | Lesson {{ lesson.number }}
             playWordAudio(
                 question
             );
+
+            playQuietCorrectSound();
+
+            if (
+                typeof window.showCorrectGif
+                ===
+                "function"
+            ) {
+
+                window.showStageJoyGif(
+                    "listening"
+                );
+
+            }
 
 
             listeningLearned.add(
@@ -5910,6 +6121,17 @@ Practice | Lesson {{ lesson.number }}
        ===================================================== */
 
     async function restartQuiz() {
+
+        if (
+            typeof window.resetStageJoyGifs
+            ===
+            "function"
+        ) {
+
+            window.resetStageJoyGifs();
+
+        }
+
 
         stopCurrentAudio();
 

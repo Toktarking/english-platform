@@ -565,6 +565,16 @@ Lesson {{ lesson.number }} | {{ group.name }}
 </div>
 
 
+<form style="display:none;">
+    {% csrf_token %}
+    <input
+        type="hidden"
+        id="lessonProgressCsrf"
+        value="{{ csrf_token }}"
+    >
+</form>
+
+
 <script>
 
     const cards =
@@ -575,7 +585,7 @@ Lesson {{ lesson.number }} | {{ group.name }}
     const totalWords =
         cards.length;
 
-    let currentIndex = 0;
+    let currentIndex = Number("{{ saved_lesson_index|default:0 }}") || 0;
 
 
     const progressBar =
@@ -696,6 +706,51 @@ Lesson {{ lesson.number }} | {{ group.name }}
     }
 
 
+    function saveLessonPosition(
+        index,
+        isFinished = false
+    ) {
+
+        const csrfToken =
+            document.getElementById(
+                "lessonProgressCsrf"
+            ).value;
+
+
+        fetch(
+            "{% url 'vocabulary:lesson_study_progress' lesson.id %}",
+            {
+                method: "POST",
+                credentials: "same-origin",
+                keepalive: true,
+                headers: {
+                    "Content-Type":
+                        "application/json",
+                    "X-CSRFToken":
+                        csrfToken,
+                },
+                body: JSON.stringify(
+                    {
+                        current_index:
+                            index,
+                        is_finished:
+                            isFinished,
+                    }
+                ),
+            }
+        )
+        .catch(
+            function (error) {
+                console.log(
+                    "Lesson progress save failed:",
+                    error
+                );
+            }
+        );
+
+    }
+
+
     function showWord(index) {
 
         cards.forEach(
@@ -713,6 +768,12 @@ Lesson {{ lesson.number }} | {{ group.name }}
 
 
         currentIndex = index;
+
+
+        saveLessonPosition(
+            currentIndex,
+            false
+        );
 
 
         const progress =
@@ -813,6 +874,11 @@ Lesson {{ lesson.number }} | {{ group.name }}
 
     function finishLesson() {
 
+        saveLessonPosition(
+            currentIndex,
+            true
+        );
+
         playSound("victory");
 
         wordContainer.style.display =
@@ -833,7 +899,7 @@ Lesson {{ lesson.number }} | {{ group.name }}
 
     if (totalWords > 0) {
 
-        showWord(0);
+        showWord(currentIndex);
 
     }
 

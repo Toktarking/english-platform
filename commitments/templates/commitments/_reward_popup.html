@@ -45,6 +45,46 @@
         </div>
 
 
+        {% if commitment_reward_unlock %}
+
+            <div class="commitment-unlock-card">
+
+                {% if commitment_reward_unlock.gif %}
+
+                    <div class="commitment-unlock-animation">
+
+                        <img
+                            src="{% static commitment_reward_unlock.gif %}"
+                            alt="{{ commitment_reward_unlock.title }}"
+                        >
+
+                    </div>
+
+                {% else %}
+
+                    <div class="commitment-unlock-icon">
+                        {{ commitment_reward_unlock.icon }}
+                    </div>
+
+                {% endif %}
+
+                <div class="commitment-unlock-small">
+                    НОВАЯ ВОЗМОЖНОСТЬ ОТКРЫТА
+                </div>
+
+                <div class="commitment-unlock-title">
+                    {{ commitment_reward_unlock.title }}
+                </div>
+
+                <div class="commitment-unlock-text">
+                    {{ commitment_reward_unlock.text }}
+                </div>
+
+            </div>
+
+        {% endif %}
+
+
         <div class="commitment-reward-balance">
 
             <span>
@@ -259,6 +299,120 @@
 }
 
 
+.commitment-unlock-card {
+
+    margin:
+        4px 0
+        22px;
+
+    padding:
+        18px 16px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #eff6ff,
+            #f5f3ff
+        );
+
+    border:
+        2px solid #c7d2fe;
+
+    border-radius:
+        18px;
+
+    animation:
+        commitmentUnlockAppear
+        .5s
+        ease;
+}
+
+
+.commitment-unlock-animation {
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+
+    margin:
+        -4px 0
+        10px;
+}
+
+
+.commitment-unlock-animation img {
+
+    display: block;
+
+    width: 100%;
+    max-width: 220px;
+
+    max-height: 150px;
+
+    object-fit: contain;
+}
+
+
+.commitment-unlock-icon {
+
+    margin-bottom:
+        7px;
+
+    font-size:
+        36px;
+}
+
+
+.commitment-unlock-small {
+
+    margin-bottom:
+        6px;
+
+    color:
+        #6d28d9;
+
+    font-size:
+        11px;
+
+    font-weight:
+        900;
+
+    letter-spacing:
+        1px;
+}
+
+
+.commitment-unlock-title {
+
+    margin-bottom:
+        6px;
+
+    color:
+        #111827;
+
+    font-size:
+        21px;
+
+    font-weight:
+        900;
+}
+
+
+.commitment-unlock-text {
+
+    color:
+        #6b7280;
+
+    font-size:
+        14px;
+
+    line-height:
+        1.45;
+}
+
+
 .commitment-reward-balance {
     display: flex;
     justify-content: center;
@@ -379,6 +533,25 @@
         transform:
             scale(1)
             translateY(0);
+    }
+
+}
+
+
+@keyframes commitmentUnlockAppear {
+
+    from {
+        opacity: 0;
+        transform:
+            translateY(8px)
+            scale(.96);
+    }
+
+    to {
+        opacity: 1;
+        transform:
+            translateY(0)
+            scale(1);
     }
 
 }

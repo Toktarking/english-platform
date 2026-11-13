@@ -17,6 +17,7 @@ from .models import (
 )
 
 from .unified_practice import (
+    get_unified_available_stage_count,
     get_or_create_unified_practice,
     mark_unified_practice_opened,
     process_unified_answer,
@@ -224,6 +225,12 @@ def unified_practice_page(
 
             "group":
                 group,
+
+            "available_stage_count":
+                get_unified_available_stage_count(
+                    request.user,
+                    group,
+                ),
         },
     )
 

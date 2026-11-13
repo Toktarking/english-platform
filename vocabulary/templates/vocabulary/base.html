@@ -1091,13 +1091,403 @@
 
 {% load static %}
 
+<style>
+    .correct-gif-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 20000;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        pointer-events: none;
+
+        background: rgba(255, 255, 255, 0.08);
+    }
+
+    .correct-gif-overlay img {
+        width: min(72vw, 300px);
+        max-height: 42vh;
+
+        object-fit: contain;
+
+        border-radius: 22px;
+
+        filter:
+            drop-shadow(
+                0 12px 28px
+                rgba(0, 0, 0, 0.14)
+            );
+
+        animation:
+            correctGifPop
+            0.16s
+            ease-out;
+    }
+
+    @keyframes correctGifPop {
+        from {
+            opacity: 0;
+            transform: scale(0.82);
+        }
+
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+</style>
+
+
+<script>
+
+    window.showCorrectGif =
+        function () {
+
+            const gifs = [
+                "{% static 'vocabulary/gifs/correct_1.gif' %}",
+                "{% static 'vocabulary/gifs/correct_2.gif' %}",
+                "{% static 'vocabulary/gifs/correct_3.gif' %}",
+            ];
+
+
+            const randomGif =
+                gifs[
+                    Math.floor(
+                        Math.random()
+                        *
+                        gifs.length
+                    )
+                ];
+
+
+            const oldOverlay =
+                document.querySelector(
+                    ".correct-gif-overlay"
+                );
+
+
+            if (oldOverlay) {
+
+                oldOverlay.remove();
+
+            }
+
+
+            const overlay =
+                document.createElement(
+                    "div"
+                );
+
+
+            overlay.className =
+                "correct-gif-overlay";
+
+
+            const image =
+                document.createElement(
+                    "img"
+                );
+
+
+            image.src =
+                randomGif
+                +
+                "?play="
+                +
+                Date.now();
+
+
+            image.alt =
+                "Correct answer";
+
+
+            overlay.appendChild(
+                image
+            );
+
+
+            document.body.appendChild(
+                overlay
+            );
+
+
+            window.setTimeout(
+                function () {
+
+                    overlay.remove();
+
+                },
+                1400
+            );
+
+        };
+
+</script>
+
+
 <script
     src="{% static 'vocabulary/js/sounds.js' %}"
 ></script>
 
 
+<!-- BOOK_JOY_SEQUENCE -->
+
+<style>
+
+    .book-joy-overlay {
+        position: absolute;
+
+        left: 10px;
+        bottom: 6px;
+
+        z-index: 25000;
+
+        width: 130px;
+        height: 130px;
+
+        display: flex;
+        align-items: flex-end;
+        justify-content: flex-start;
+
+        pointer-events: none;
+    }
+
+    .book-joy-overlay img {
+        width: 130px;
+        max-width: 30vw;
+        max-height: 130px;
+
+        object-fit: contain;
+
+        filter:
+            drop-shadow(
+                0 8px 18px
+                rgba(0, 0, 0, 0.16)
+            );
+
+        animation:
+            bookJoyPop
+            0.16s
+            ease-out;
+    }
+
+
+    @keyframes bookJoyPop {
+
+        from {
+            opacity: 0;
+            transform: scale(0.82);
+        }
+
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+    }
+
+</style>
+
+
+<script>
+
+    const STAGE_GIF_PREFIX = {
+        choice: "book-joy",
+        spelling: "corsac-joy",
+        context: "penguin-joy",
+        listening: "red-panda-joy",
+    };
+
+
+    function getStageJoyStorageKey(stageKey) {
+
+        return (
+            "stage-joy:"
+            +
+            "{{ user.id|default:'guest' }}"
+            +
+            ":"
+            +
+            window.location.pathname
+            +
+            ":"
+            +
+            stageKey
+        );
+
+    }
+
+
+    window.resetStageJoyGifs =
+        function () {
+
+            [
+                "choice",
+                "spelling",
+                "context",
+                "listening",
+            ].forEach(
+                function (stageKey) {
+
+                    sessionStorage.removeItem(
+                        getStageJoyStorageKey(stageKey)
+                    );
+
+                }
+            );
+
+        };
+
+
+    window.showStageJoyGif =
+        function (stageKey) {
+
+            const prefix =
+                STAGE_GIF_PREFIX[stageKey];
+
+            if (!prefix) {
+                return;
+            }
+
+            const storageKey =
+                getStageJoyStorageKey(stageKey);
+
+            let correctCount =
+                Number(
+                    sessionStorage.getItem(storageKey)
+                    ||
+                    0
+                );
+
+            correctCount += 1;
+
+            const joyLevel =
+                Math.min(
+                    correctCount,
+                    10
+                );
+
+            sessionStorage.setItem(
+                storageKey,
+                joyLevel
+            );
+
+            const levelText =
+                String(joyLevel)
+                .padStart(2, "0");
+
+            const gifBase =
+                "{% static 'vocabulary/gifs/' %}";
+
+            const gifUrl =
+                gifBase
+                +
+                prefix
+                +
+                "-"
+                +
+                levelText
+                +
+                ".gif";
+
+            const oldOverlay =
+                document.querySelector(
+                    ".book-joy-overlay"
+                );
+
+            if (oldOverlay) {
+                oldOverlay.remove();
+            }
+
+            const overlay =
+                document.createElement("div");
+
+            overlay.className =
+                "book-joy-overlay";
+
+            const image =
+                document.createElement("img");
+
+            image.src =
+                gifUrl
+                +
+                "?play="
+                +
+                Date.now();
+
+            image.alt =
+                "Great job";
+
+            overlay.appendChild(image);
+
+            const feedbackAnchor =
+                document.querySelector(
+                    ".feedback.correct"
+                )
+                ||
+                document.querySelector(
+                    ".feedback"
+                );
+
+            let targetCard =
+                null;
+
+            if (feedbackAnchor) {
+
+                targetCard =
+                    feedbackAnchor.closest(
+                        ".practice-card, .question-card, .quiz-card, .exercise-card, .card"
+                    );
+
+            }
+
+            if (!targetCard) {
+
+                targetCard =
+                    document.querySelector(
+                        ".practice-card, .question-card, .quiz-card, .exercise-card, .card"
+                    )
+                    ||
+                    document.querySelector("main")
+                    ||
+                    document.body;
+
+            }
+
+            const currentPosition =
+                window.getComputedStyle(
+                    targetCard
+                ).position;
+
+            if (
+                currentPosition
+                ===
+                "static"
+            ) {
+                targetCard.style.position =
+                    "relative";
+            }
+
+            targetCard.style.overflow =
+                "visible";
+
+            targetCard.appendChild(overlay);
+
+            window.setTimeout(
+                function () {
+                    overlay.remove();
+                },
+                1400
+            );
+
+        };
+
+</script>
+
 {% include "commitments/_reward_popup.html" %}
 
 </body>
 
-</html>\n
+</html>

@@ -404,6 +404,71 @@ class UserWordProgress(models.Model):
 
 
 # =========================================================
+# ПРОГРЕСС ПРОСМОТРА LESSON
+# =========================================================
+
+
+class LessonStudyProgress(models.Model):
+
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="lesson_study_progress",
+    )
+
+    lesson = models.ForeignKey(
+        VocabularyLesson,
+        on_delete=models.CASCADE,
+        related_name="study_progress",
+    )
+
+    current_index = models.PositiveIntegerField(
+        default=0,
+    )
+
+    max_seen_index = models.PositiveIntegerField(
+        default=0,
+    )
+
+    is_finished = models.BooleanField(
+        default=False,
+    )
+
+    finished_at = models.DateTimeField(
+        null=True,
+        blank=True,
+    )
+
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+    )
+
+    updated_at = models.DateTimeField(
+        auto_now=True,
+    )
+
+    class Meta:
+
+        constraints = [
+            models.UniqueConstraint(
+                fields=[
+                    "user",
+                    "lesson",
+                ],
+                name="unique_user_lesson_study_progress",
+            ),
+        ]
+
+    def __str__(self):
+
+        return (
+            f"{self.user} — "
+            f"Lesson {self.lesson.number} — "
+            f"{self.current_index}"
+        )
+
+
+# =========================================================
 # LEGACY GROUP PRACTICE SESSION
 # =========================================================
 #

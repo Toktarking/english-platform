@@ -199,6 +199,13 @@ urlpatterns = [
     ),
 
 
+    path(
+        "lesson/<int:lesson_id>/study-progress/",
+        views.lesson_study_progress,
+        name="lesson_study_progress",
+    ),
+
+
     # ==========================================
     # PRACTICE 4
     # LISTENING
