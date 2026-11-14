@@ -933,86 +933,194 @@ Practice | {{ group.name }}
 
     window.unifiedJoyTimer = null;
 
-
-    window.showUnifiedRandomJoyGif = function () {
-
-        const gifs =
-            window.UNIFIED_JOY_GIFS
-            ||
-            [];
+    window.unifiedNextJoyIndex = null;
+    window.unifiedNextJoyPreload = null;
 
 
-        if (!gifs.length) {
-            return;
-        }
+    window.prepareNextUnifiedJoyGif =
+        function () {
+
+            const gifs =
+                window.UNIFIED_JOY_GIFS
+                ||
+                [];
 
 
-        document
-            .querySelectorAll(
-                ".unified-joy-overlay"
-            )
-            .forEach(
-                element => element.remove()
-            );
+            if (!gifs.length) {
+                return;
+            }
 
 
-        if (
-            window.unifiedJoyTimer
-        ) {
+            const index =
+                Math.floor(
+                    Math.random()
+                    *
+                    gifs.length
+                );
 
-            window.clearTimeout(
+
+            window.unifiedNextJoyIndex =
+                index;
+
+
+            const preload =
+                new Image();
+
+
+            preload.src =
+                gifs[index];
+
+
+            window.unifiedNextJoyPreload =
+                preload;
+        };
+
+
+    window.showUnifiedRandomJoyGif =
+        function () {
+
+            const gifs =
+                window.UNIFIED_JOY_GIFS
+                ||
+                [];
+
+
+            if (!gifs.length) {
+                return;
+            }
+
+
+            document
+                .querySelectorAll(
+                    ".unified-joy-overlay"
+                )
+                .forEach(
+                    element =>
+                        element.remove()
+                );
+
+
+            if (
                 window.unifiedJoyTimer
-            );
+            ) {
 
-        }
+                window.clearTimeout(
+                    window.unifiedJoyTimer
+                );
 
-
-        const randomIndex =
-            Math.floor(
-                Math.random()
-                *
-                gifs.length
-            );
+                window.unifiedJoyTimer =
+                    null;
+            }
 
 
-        const overlay =
-            document.createElement(
-                "div"
-            );
+            let randomIndex =
+                window.unifiedNextJoyIndex;
 
 
-        overlay.className =
-            "unified-joy-overlay";
+            if (
+                !Number.isInteger(
+                    randomIndex
+                )
+                ||
+                randomIndex < 0
+                ||
+                randomIndex >= gifs.length
+            ) {
+
+                randomIndex =
+                    Math.floor(
+                        Math.random()
+                        *
+                        gifs.length
+                    );
+            }
 
 
-        const img =
-            document.createElement(
-                "img"
-            );
+            const gifUrl =
+                gifs[
+                    randomIndex
+                ];
 
 
-        img.src =
-            gifs[randomIndex];
+            window.unifiedNextJoyIndex =
+                null;
 
-        img.alt =
-            "Correct";
-
-        img.draggable =
-            false;
+            window.unifiedNextJoyPreload =
+                null;
 
 
-        overlay.appendChild(
-            img
-        );
+            const overlay =
+                document.createElement(
+                    "div"
+                );
 
 
-        document.body.appendChild(
-            overlay
-        );
+            overlay.className =
+                "unified-joy-overlay";
 
 
-        window.unifiedJoyTimer =
-            window.setTimeout(
+            /*
+            Не показываем пустой контейнер,
+            пока GIF загружается.
+            */
+            overlay.style.visibility =
+                "hidden";
+
+
+            const img =
+                document.createElement(
+                    "img"
+                );
+
+
+            img.alt =
+                "Correct";
+
+            img.draggable =
+                false;
+
+
+            img.onload =
+                function () {
+
+                    if (
+                        !overlay.isConnected
+                    ) {
+                        return;
+                    }
+
+
+                    /*
+                    GIF полностью загружен.
+                    Теперь начинается показ.
+                    */
+                    overlay.style.visibility =
+                        "visible";
+
+
+                    /*
+                    Сразу готовим следующий
+                    случайный GIF.
+                    */
+                    window.prepareNextUnifiedJoyGif();
+
+
+                    window.unifiedJoyTimer =
+                        window.setTimeout(
+                            function () {
+
+                                overlay.remove();
+
+                                window.unifiedJoyTimer =
+                                    null;
+
+                            },
+                            1800
+                        );
+                };
+
+
+            img.onerror =
                 function () {
 
                     overlay.remove();
@@ -1020,13 +1128,30 @@ Practice | {{ group.name }}
                     window.unifiedJoyTimer =
                         null;
 
-                },
-                1150
+                    window.prepareNextUnifiedJoyGif();
+                };
+
+
+            overlay.appendChild(
+                img
             );
 
-    };
+
+            document.body.appendChild(
+                overlay
+            );
 
 
+            img.src =
+                gifUrl;
+        };
+
+
+    /*
+    При открытии Practice сразу
+    загружаем один GIF заранее.
+    */
+    window.prepareNextUnifiedJoyGif();
 
 
     /* =====================================================

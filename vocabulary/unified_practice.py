@@ -390,6 +390,92 @@ def initialize_unified_practice(
         return
 
 
+    # =====================================================
+    # FOUR_STAGE_UNIFIED_INIT
+    #
+    # Practice 4:
+    #
+    # 1. Listening
+    # 2. Context
+    # 3. Spelling
+    # 4. Multiple Choice
+    # 5. Hard Multiple Choice
+    # =====================================================
+
+    if (
+        get_unified_available_stage_count(
+            session.user,
+            session.group,
+        )
+        ==
+        4
+    ):
+
+        UnifiedGroupPracticeWordState.objects.filter(
+            session=session,
+        ).delete()
+
+        UnifiedGroupPracticeWordState.objects.bulk_create(
+            [
+                UnifiedGroupPracticeWordState(
+                    session=session,
+                    word=word,
+
+                    # Listening.
+                    in_deck1=True,
+
+                    # Context.
+                    in_deck2=False,
+
+                    # Spelling / Context review marker.
+                    in_deck3=False,
+
+                    # Normal Choice.
+                    in_deck4=False,
+
+                    # Hard Choice.
+                    in_deck5=False,
+                )
+                for word in words
+            ]
+        )
+
+        initial_queue = [
+            word.id
+            for word in words
+        ]
+
+        random.shuffle(
+            initial_queue
+        )
+
+        session.phase = (
+            UnifiedGroupPracticeSession
+            .Phase
+            .LISTENING_INITIAL
+        )
+
+        session.current_queue = initial_queue
+        session.current_index = 0
+        session.mistake_count = 0
+        session.is_completed = False
+        session.completed_at = None
+
+        session.save(
+            update_fields=[
+                "phase",
+                "current_queue",
+                "current_index",
+                "mistake_count",
+                "is_completed",
+                "completed_at",
+                "updated_at",
+            ]
+        )
+
+        return
+
+
     available_stage_count = (
         get_unified_available_stage_count(
             session.user,
@@ -2288,6 +2374,852 @@ def process_three_stage_unified_answer(
     )
 
 
+
+def process_four_stage_unified_answer(
+    session,
+    word_id,
+    is_correct,
+):
+    validate_current_word(
+        session,
+        word_id,
+    )
+
+    word_state = (
+        UnifiedGroupPracticeWordState.objects
+        .select_for_update()
+        .get(
+            session=session,
+            word_id=word_id,
+        )
+    )
+
+    phase = session.phase
+
+    # -----------------------------------------------------
+    # Physical state:
+    #
+    # in_deck1 = Listening
+    #
+    # in_deck2=True, in_deck3=False
+    # = first Context
+    #
+    # in_deck2=False, in_deck3=True
+    # = Spelling
+    #
+    # in_deck2=True, in_deck3=True
+    # = Context review
+    #
+    # in_deck4 = normal Choice
+    # in_deck5 = Hard Choice
+    # -----------------------------------------------------
+
+    def spelling_ids():
+
+        return list(
+            session.word_states
+            .filter(
+                in_deck3=True,
+                in_deck2=False,
+            )
+            .values_list(
+                "word_id",
+                flat=True,
+            )
+        )
+
+
+    def initial_context_ids():
+
+        return list(
+            session.word_states
+            .filter(
+                in_deck2=True,
+                in_deck3=False,
+            )
+            .values_list(
+                "word_id",
+                flat=True,
+            )
+        )
+
+
+    def review_context_ids():
+
+        return list(
+            session.word_states
+            .filter(
+                in_deck2=True,
+                in_deck3=True,
+            )
+            .values_list(
+                "word_id",
+                flat=True,
+            )
+        )
+
+
+    def start_listening_review_4():
+
+        ids = get_deck_ids(
+            session,
+            1,
+        )
+
+        if ids:
+
+            set_unified_phase(
+                session,
+                (
+                    UnifiedGroupPracticeSession
+                    .Phase
+                    .LISTENING_REVIEW
+                ),
+                ids,
+                shuffle=True,
+            )
+
+        else:
+
+            finish_unified_practice(
+                session
+            )
+
+
+    def start_context_review_4():
+
+        ids = review_context_ids()
+
+        if ids:
+
+            set_unified_phase(
+                session,
+                (
+                    UnifiedGroupPracticeSession
+                    .Phase
+                    .CONTEXT_REVIEW
+                ),
+                ids,
+                shuffle=True,
+            )
+
+        else:
+
+            start_listening_review_4()
+
+
+    def start_spelling_review_4():
+
+        ids = spelling_ids()
+
+        if ids:
+
+            set_unified_phase(
+                session,
+                (
+                    UnifiedGroupPracticeSession
+                    .Phase
+                    .LETTER_REVIEW
+                ),
+                ids,
+                shuffle=True,
+            )
+
+        else:
+
+            start_context_review_4()
+
+
+    def start_hard_4():
+
+        ids = get_deck_ids(
+            session,
+            5,
+        )
+
+        if ids:
+
+            set_unified_phase(
+                session,
+                (
+                    UnifiedGroupPracticeSession
+                    .Phase
+                    .MULTIPLE_CHOICE_2
+                ),
+                ids,
+                shuffle=True,
+            )
+
+        else:
+
+            start_spelling_review_4()
+
+
+    # =====================================================
+    # DECK 1
+    # LISTENING — FIRST PASS
+    #
+    # Correct -> слово выходит.
+    # Wrong   -> Context.
+    # =====================================================
+
+    if (
+        phase
+        ==
+        UnifiedGroupPracticeSession
+        .Phase
+        .LISTENING_INITIAL
+    ):
+
+        if is_correct:
+
+            word_state.in_deck1 = False
+
+        else:
+
+            register_word_mistake(
+                session,
+                word_state,
+            )
+
+            # Listening остаётся незакрытым.
+            word_state.in_deck1 = True
+
+            # Первый Context.
+            word_state.in_deck2 = True
+            word_state.in_deck3 = False
+
+
+        word_state.save(
+            update_fields=[
+                "in_deck1",
+                "in_deck2",
+                "in_deck3",
+                "mistake_count",
+            ]
+        )
+
+
+        advance_current_queue(
+            session
+        )
+
+
+        if (
+            session.current_index
+            <
+            len(session.current_queue)
+        ):
+
+            return
+
+
+        ids = initial_context_ids()
+
+
+        if ids:
+
+            set_unified_phase(
+                session,
+                (
+                    UnifiedGroupPracticeSession
+                    .Phase
+                    .CONTEXT_REVIEW
+                ),
+                ids,
+                shuffle=True,
+            )
+
+        else:
+
+            finish_unified_practice(
+                session
+            )
+
+
+        return
+
+
+    # =====================================================
+    # DECK 2
+    # CONTEXT
+    #
+    # Первый Context:
+    # Correct -> Listening review.
+    # Wrong   -> Spelling.
+    #
+    # Context review:
+    # Correct -> Listening review.
+    # Wrong   -> Hard Choice.
+    # =====================================================
+
+    if (
+        phase
+        ==
+        UnifiedGroupPracticeSession
+        .Phase
+        .CONTEXT_REVIEW
+    ):
+
+        is_review_context = (
+            word_state.in_deck3
+        )
+
+
+        if is_correct:
+
+            word_state.in_deck2 = False
+
+
+            if is_review_context:
+
+                word_state.in_deck3 = False
+
+
+            word_state.save(
+                update_fields=[
+                    "in_deck2",
+                    "in_deck3",
+                ]
+            )
+
+
+            advance_current_queue(
+                session
+            )
+
+
+            if (
+                session.current_index
+                <
+                len(session.current_queue)
+            ):
+
+                return
+
+
+            if is_review_context:
+
+                start_listening_review_4()
+
+                return
+
+
+            ids = spelling_ids()
+
+
+            if ids:
+
+                set_unified_phase(
+                    session,
+                    (
+                        UnifiedGroupPracticeSession
+                        .Phase
+                        .LETTER_FIRST
+                    ),
+                    ids,
+                    shuffle=True,
+                )
+
+            else:
+
+                start_listening_review_4()
+
+
+            return
+
+
+        register_word_mistake(
+            session,
+            word_state,
+        )
+
+
+        # -------------------------------------------------
+        # FIRST CONTEXT WRONG
+        # -> Spelling
+        # -------------------------------------------------
+
+        if not is_review_context:
+
+            word_state.in_deck2 = False
+            word_state.in_deck3 = True
+
+
+            word_state.save(
+                update_fields=[
+                    "in_deck2",
+                    "in_deck3",
+                    "mistake_count",
+                ]
+            )
+
+
+            advance_current_queue(
+                session
+            )
+
+
+            if (
+                session.current_index
+                <
+                len(session.current_queue)
+            ):
+
+                return
+
+
+            ids = spelling_ids()
+
+
+            if ids:
+
+                set_unified_phase(
+                    session,
+                    (
+                        UnifiedGroupPracticeSession
+                        .Phase
+                        .LETTER_FIRST
+                    ),
+                    ids,
+                    shuffle=True,
+                )
+
+            else:
+
+                start_listening_review_4()
+
+
+            return
+
+
+        # -------------------------------------------------
+        # REVIEW CONTEXT WRONG
+        # -> Hard Choice immediately
+        # -------------------------------------------------
+
+        word_state.in_deck2 = False
+        word_state.in_deck3 = False
+        word_state.in_deck5 = True
+
+
+        word_state.save(
+            update_fields=[
+                "in_deck2",
+                "in_deck3",
+                "in_deck5",
+                "mistake_count",
+            ]
+        )
+
+
+        start_hard_4()
+
+        return
+
+
+    # =====================================================
+    # DECK 3
+    # SPELLING — FIRST PASS
+    #
+    # Correct -> Context review.
+    # Wrong   -> Choice.
+    # =====================================================
+
+    if (
+        phase
+        ==
+        UnifiedGroupPracticeSession
+        .Phase
+        .LETTER_FIRST
+    ):
+
+        if is_correct:
+
+            # Context review marker.
+            word_state.in_deck2 = True
+            word_state.in_deck3 = True
+
+        else:
+
+            register_word_mistake(
+                session,
+                word_state,
+            )
+
+            word_state.in_deck2 = False
+            word_state.in_deck3 = False
+            word_state.in_deck4 = True
+
+
+        word_state.save(
+            update_fields=[
+                "in_deck2",
+                "in_deck3",
+                "in_deck4",
+                "mistake_count",
+            ]
+        )
+
+
+        advance_current_queue(
+            session
+        )
+
+
+        if (
+            session.current_index
+            <
+            len(session.current_queue)
+        ):
+
+            return
+
+
+        ids = get_deck_ids(
+            session,
+            4,
+        )
+
+
+        if ids:
+
+            set_unified_phase(
+                session,
+                (
+                    UnifiedGroupPracticeSession
+                    .Phase
+                    .MULTIPLE_CHOICE_1
+                ),
+                ids,
+                shuffle=True,
+            )
+
+        else:
+
+            start_context_review_4()
+
+
+        return
+
+
+    # =====================================================
+    # DECK 4
+    # NORMAL CHOICE
+    #
+    # Correct -> Spelling review.
+    # Wrong   -> Hard Choice.
+    # =====================================================
+
+    if (
+        phase
+        ==
+        UnifiedGroupPracticeSession
+        .Phase
+        .MULTIPLE_CHOICE_1
+    ):
+
+        if is_correct:
+
+            word_state.in_deck4 = False
+
+            # Возвращаем в Spelling.
+            word_state.in_deck2 = False
+            word_state.in_deck3 = True
+
+        else:
+
+            register_word_mistake(
+                session,
+                word_state,
+            )
+
+            word_state.in_deck4 = False
+            word_state.in_deck2 = False
+            word_state.in_deck3 = False
+            word_state.in_deck5 = True
+
+
+        word_state.save(
+            update_fields=[
+                "in_deck2",
+                "in_deck3",
+                "in_deck4",
+                "in_deck5",
+                "mistake_count",
+            ]
+        )
+
+
+        advance_current_queue(
+            session
+        )
+
+
+        if (
+            session.current_index
+            <
+            len(session.current_queue)
+        ):
+
+            return
+
+
+        if get_deck_ids(
+            session,
+            5,
+        ):
+
+            start_hard_4()
+
+        else:
+
+            start_spelling_review_4()
+
+
+        return
+
+
+    # =====================================================
+    # DECK 5
+    # HARD CHOICE
+    #
+    # Одна ошибка -> вся колода сначала.
+    #
+    # Идеальный круг -> Spelling.
+    #
+    # Слово НЕ удаляется из Hard здесь.
+    # Оно удалится только после
+    # правильного Spelling.
+    # =====================================================
+
+    if (
+        phase
+        ==
+        UnifiedGroupPracticeSession
+        .Phase
+        .MULTIPLE_CHOICE_2
+    ):
+
+        if not is_correct:
+
+            register_word_mistake(
+                session,
+                word_state,
+            )
+
+            word_state.in_deck5 = True
+
+
+            word_state.save(
+                update_fields=[
+                    "in_deck5",
+                    "mistake_count",
+                ]
+            )
+
+
+            start_hard_4()
+
+            return
+
+
+        advance_current_queue(
+            session
+        )
+
+
+        if (
+            session.current_index
+            <
+            len(session.current_queue)
+        ):
+
+            return
+
+
+        ids = get_deck_ids(
+            session,
+            5,
+        )
+
+
+        session.word_states.filter(
+            word_id__in=ids,
+        ).update(
+            in_deck2=False,
+            in_deck3=True,
+            in_deck4=False,
+        )
+
+
+        start_spelling_review_4()
+
+        return
+
+
+    # =====================================================
+    # SPELLING REVIEW
+    #
+    # Correct:
+    # -> удаляем из Hard Choice
+    # -> Context
+    #
+    # Wrong:
+    # -> Hard Choice immediately
+    # =====================================================
+
+    if (
+        phase
+        ==
+        UnifiedGroupPracticeSession
+        .Phase
+        .LETTER_REVIEW
+    ):
+
+        if is_correct:
+
+            word_state.in_deck2 = True
+            word_state.in_deck3 = True
+
+            # КЛЮЧЕВОЕ ПРАВИЛО.
+            word_state.in_deck5 = False
+
+
+            word_state.save(
+                update_fields=[
+                    "in_deck2",
+                    "in_deck3",
+                    "in_deck5",
+                ]
+            )
+
+
+            advance_current_queue(
+                session
+            )
+
+
+            if (
+                session.current_index
+                <
+                len(session.current_queue)
+            ):
+
+                return
+
+
+            start_context_review_4()
+
+            return
+
+
+        register_word_mistake(
+            session,
+            word_state,
+        )
+
+
+        word_state.in_deck2 = False
+        word_state.in_deck3 = False
+        word_state.in_deck5 = True
+
+
+        word_state.save(
+            update_fields=[
+                "in_deck2",
+                "in_deck3",
+                "in_deck5",
+                "mistake_count",
+            ]
+        )
+
+
+        start_hard_4()
+
+        return
+
+
+    # =====================================================
+    # FINAL LISTENING
+    #
+    # Correct -> слово окончательно выходит.
+    # Wrong   -> Hard Choice immediately.
+    # =====================================================
+
+    if (
+        phase
+        ==
+        UnifiedGroupPracticeSession
+        .Phase
+        .LISTENING_REVIEW
+    ):
+
+        if is_correct:
+
+            word_state.in_deck1 = False
+
+
+            word_state.save(
+                update_fields=[
+                    "in_deck1",
+                ]
+            )
+
+
+            advance_current_queue(
+                session
+            )
+
+
+            if (
+                session.current_index
+                <
+                len(session.current_queue)
+            ):
+
+                return
+
+
+            start_listening_review_4()
+
+            return
+
+
+        register_word_mistake(
+            session,
+            word_state,
+        )
+
+
+        word_state.in_deck1 = True
+        word_state.in_deck2 = False
+        word_state.in_deck3 = False
+        word_state.in_deck4 = False
+        word_state.in_deck5 = True
+
+
+        word_state.save(
+            update_fields=[
+                "in_deck1",
+                "in_deck2",
+                "in_deck3",
+                "in_deck4",
+                "in_deck5",
+                "mistake_count",
+            ]
+        )
+
+
+        start_hard_4()
+
+        return
+
+
+    raise ValueError(
+        "Unknown phase for four-stage Unified Practice."
+    )
+
 def process_unified_answer(
     session,
     word_id,
@@ -2324,6 +3256,25 @@ def process_unified_answer(
     ):
 
         return process_three_stage_unified_answer(
+            session=session,
+            word_id=word_id,
+            is_correct=is_correct,
+        )
+
+
+
+    # FOUR_STAGE_UNIFIED_ROUTE
+
+    if (
+        get_unified_available_stage_count(
+            session.user,
+            session.group,
+        )
+        ==
+        4
+    ):
+
+        return process_four_stage_unified_answer(
             session=session,
             word_id=word_id,
             is_correct=is_correct,

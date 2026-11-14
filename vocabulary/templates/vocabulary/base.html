@@ -1341,27 +1341,94 @@
         };
 
 
-    window.showStageJoyGif =
-        function (stageKey) {
+    window.stageJoyTimer = null;
+
+    window.preloadStageJoyGif =
+        function (
+            stageKey,
+            joyLevel
+        ) {
 
             const prefix =
-                STAGE_GIF_PREFIX[stageKey];
+                STAGE_GIF_PREFIX[
+                    stageKey
+                ];
 
             if (!prefix) {
                 return;
             }
 
+            const safeLevel =
+                Math.max(
+                    1,
+                    Math.min(
+                        Number(joyLevel) || 1,
+                        10
+                    )
+                );
+
+            const levelText =
+                String(
+                    safeLevel
+                )
+                .padStart(
+                    2,
+                    "0"
+                );
+
+            const gifBase =
+                "{% static 'vocabulary/gifs/' %}";
+
+            const url =
+                gifBase
+                +
+                prefix
+                +
+                "-"
+                +
+                levelText
+                +
+                ".gif";
+
+            const preload =
+                new Image();
+
+            preload.src =
+                url;
+        };
+
+
+    window.showStageJoyGif =
+        function (stageKey) {
+
+            const prefix =
+                STAGE_GIF_PREFIX[
+                    stageKey
+                ];
+
+            if (!prefix) {
+                return;
+            }
+
+
             const storageKey =
-                getStageJoyStorageKey(stageKey);
+                getStageJoyStorageKey(
+                    stageKey
+                );
+
 
             let correctCount =
                 Number(
-                    sessionStorage.getItem(storageKey)
+                    sessionStorage.getItem(
+                        storageKey
+                    )
                     ||
                     0
                 );
 
+
             correctCount += 1;
+
 
             const joyLevel =
                 Math.min(
@@ -1369,17 +1436,26 @@
                     10
                 );
 
+
             sessionStorage.setItem(
                 storageKey,
                 joyLevel
             );
 
+
             const levelText =
-                String(joyLevel)
-                .padStart(2, "0");
+                String(
+                    joyLevel
+                )
+                .padStart(
+                    2,
+                    "0"
+                );
+
 
             const gifBase =
                 "{% static 'vocabulary/gifs/' %}";
+
 
             const gifUrl =
                 gifBase
@@ -1392,35 +1468,61 @@
                 +
                 ".gif";
 
+
             const oldOverlay =
                 document.querySelector(
                     ".book-joy-overlay"
                 );
 
+
             if (oldOverlay) {
                 oldOverlay.remove();
             }
 
+
+            if (
+                window.stageJoyTimer
+            ) {
+
+                window.clearTimeout(
+                    window.stageJoyTimer
+                );
+
+                window.stageJoyTimer =
+                    null;
+            }
+
+
             const overlay =
-                document.createElement("div");
+                document.createElement(
+                    "div"
+                );
+
 
             overlay.className =
                 "book-joy-overlay";
 
-            const image =
-                document.createElement("img");
 
-            image.src =
-                gifUrl
-                +
-                "?play="
-                +
-                Date.now();
+            /*
+            Пока файл реально не загрузился,
+            контейнер скрыт.
+            */
+            overlay.style.visibility =
+                "hidden";
+
+
+            const image =
+                document.createElement(
+                    "img"
+                );
+
 
             image.alt =
                 "Great job";
 
-            overlay.appendChild(image);
+            image.draggable =
+                false;
+
 
             const feedbackAnchor =
                 document.querySelector(
@@ -1431,8 +1533,10 @@
                     ".feedback"
                 );
 
+
             let targetCard =
                 null;
+
 
             if (feedbackAnchor) {
 
@@ -1440,8 +1544,8 @@
                     feedbackAnchor.closest(
                         ".practice-card, .question-card, .quiz-card, .exercise-card, .card"
                     );
-
             }
+
 
             if (!targetCard) {
 
@@ -1450,38 +1554,111 @@
                         ".practice-card, .question-card, .quiz-card, .exercise-card, .card"
                     )
                     ||
-                    document.querySelector("main")
+                    document.querySelector(
+                        "main"
+                    )
                     ||
                     document.body;
-
             }
+
 
             const currentPosition =
                 window.getComputedStyle(
                     targetCard
                 ).position;
 
+
             if (
                 currentPosition
                 ===
                 "static"
             ) {
+
                 targetCard.style.position =
                     "relative";
             }
 
+
             targetCard.style.overflow =
                 "visible";
 
-            targetCard.appendChild(overlay);
 
-            window.setTimeout(
+            image.onload =
                 function () {
+
+                    if (
+                        !overlay.isConnected
+                    ) {
+                        return;
+                    }
+
+
+                    /*
+                    GIF уже скачан.
+                    Только теперь показываем.
+                    */
+                    overlay.style.visibility =
+                        "visible";
+
+
+                    /*
+                    Пока текущий GIF показывается,
+                    загружаем следующий уровень.
+                    */
+                    if (
+                        joyLevel
+                        <
+                        10
+                    ) {
+
+                        window.preloadStageJoyGif(
+                            stageKey,
+                            joyLevel + 1
+                        );
+                    }
+
+
+                    window.stageJoyTimer =
+                        window.setTimeout(
+                            function () {
+
+                                overlay.remove();
+
+                                window.stageJoyTimer =
+                                    null;
+
+                            },
+                            1800
+                        );
+                };
+
+
+            image.onerror =
+                function () {
+
                     overlay.remove();
-                },
-                1400
+
+                    window.stageJoyTimer =
+                        null;
+                };
+
+
+            overlay.appendChild(
+                image
             );
 
+
+            targetCard.appendChild(
+                overlay
+            );
+
+
+            /*
+            Без ?play=Date.now()
+            браузер сможет использовать cache.
+            */
+            image.src =
+                gifUrl;
         };
 
 </script>
