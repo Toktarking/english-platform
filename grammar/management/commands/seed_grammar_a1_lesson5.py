@@ -10,764 +10,1169 @@ from grammar.models import (
 class Command(BaseCommand):
 
     help = (
-        "Create/update A1 Grammar Lesson 5: "
-        "Much, many, a lot of, few, a few, "
-        "little, a little."
+        "Create/update interactive A1 Grammar "
+        "Lesson 5: quantity words."
     )
 
-    def handle(self, *args, **options):
 
-        lesson, _ = GrammarLesson.objects.update_or_create(
-            level="A1",
-            order=5,
-            defaults={
-                "title": (
-                    "Much, many, a lot of, few, "
-                    "a few, little, a little"
-                ),
-                "slug": "much-many-few-little",
-                "theory_text": (
-                    "Words of quantity."
-                ),
-                "estimated_minutes": 30,
-                "pass_score": 70,
-                "xp_reward": 100,
-                "is_published": True,
-            },
+    def handle(
+        self,
+        *args,
+        **options,
+    ):
+
+        lesson, _ = (
+            GrammarLesson.objects
+            .update_or_create(
+                level="A1",
+                order=5,
+                defaults={
+                    "title":
+                        "Much, many, a lot of, few, "
+                        "a few, little, a little",
+
+                    "slug":
+                        "much-many-few-little",
+
+                    "theory_text":
+                        "Words of quantity.",
+
+                    "estimated_minutes":
+                        16,
+
+                    "pass_score":
+                        70,
+
+                    "xp_reward":
+                        100,
+
+                    "is_published":
+                        True,
+                },
+            )
         )
 
-        # ==================================================
-        # THEORY
-        # ==================================================
+
+        # =================================================
+        # 9 MICRO-RULES
+        # =================================================
 
         sections = [
 
             {
                 "order": 1,
-                "title": "Как выбрать слово количества",
-                "body": """В английском языке выбор слова количества зависит от существительного.
 
-Сравните:
+                "title":
+                    "Сначала определи тип существительного",
 
-many books — много книг;
-much water — много воды.
+                "body":
+                    """Перед выбором слова количества сначала спроси:
 
-Books можно посчитать, поэтому используем many.
+существительное COUNTABLE или UNCOUNTABLE?
 
-Water нельзя посчитать как отдельные предметы, поэтому используем much.
+Countable plural:
 
-Неправильно:
+books
+students
+friends
+people
+questions
 
-much books;
-many water.
+Uncountable:
 
-Поэтому сначала определите:
+water
+money
+time
+work
+information
 
-1. существительное исчисляемое или неисчисляемое;
-2. какое значение нужно: много, немного или мало.""",
+Сравни:
+
+many books
+much water
+
+Не:
+
+much books
+many water
+
+Это главное правило всего урока.""",
             },
+
 
             {
                 "order": 2,
-                "title": "Many",
-                "body": """Many означает «много».
 
-Используется с исчисляемыми существительными во множественном числе.
+                "title":
+                    "MANY — с исчисляемыми",
 
-Формула:
+                "body":
+                    """MANY означает «много» и используется с исчисляемыми существительными во множественном числе.
 
-many + countable plural noun
+many books
+many students
+many questions
+many people
 
-Примеры:
-
-many books;
-many students;
-many questions;
-many people;
-many problems.
-
-There are many books in the library.
-
-Many students study English.
-
-She has many friends.
-
-Особенно важно:
+Очень часто:
 
 How many...?
 
 How many students are there?
+
 How many apples do you need?
-How many lessons do you have today?
 
-Many также часто используется в отрицаниях:
+Также MANY часто встречается в отрицаниях:
 
-We do not have many chairs.
-She does not ask many questions.""",
+We don't have many chairs.
+
+She doesn't ask many questions.""",
             },
+
 
             {
                 "order": 3,
-                "title": "Much",
-                "body": """Much тоже означает «много».
 
-Но much используется с неисчисляемыми существительными.
+                "title":
+                    "MUCH — с неисчисляемыми",
 
-Формула:
+                "body":
+                    """MUCH означает «много» и используется с неисчисляемыми существительными.
 
-much + uncountable noun
+much money
+much water
+much time
+much information
+much work
 
-Примеры:
-
-much money;
-much water;
-much time;
-much information;
-much work.
+Очень часто:
 
 How much money do you need?
 
 How much water do you drink?
 
-Do we have much time?
-
 В отрицаниях:
 
-I do not have much money.
-We do not have much time.
-There is not much milk in the fridge.
+I don't have much money.
 
-Запомните:
+We don't have much time.
+
+There isn't much milk.
+
+Запомни:
 
 How many books?
+
 How much money?""",
             },
 
+
             {
                 "order": 4,
-                "title": "Much в утверждениях",
-                "body": """В обычной разговорной речи much реже используется в простых утвердительных предложениях.
 
-Менее естественно:
+                "title":
+                    "A LOT OF — универсальный вариант",
 
-I have much work.
-
-Более естественно:
-
-I have a lot of work.
-
-Но much нормально используется после:
-
-too;
-so;
-very;
-as.
-
-Примеры:
-
-I have too much work.
-
-She spends so much money.
-
-Thank you very much.""",
-            },
-
-            {
-                "order": 5,
-                "title": "A lot of и lots of",
-                "body": """A lot of означает «много».
-
-Главное преимущество: его можно использовать и с исчисляемыми, и с неисчисляемыми существительными.
+                "body":
+                    """A LOT OF можно использовать и с countable, и с uncountable nouns.
 
 Countable:
 
-a lot of books;
-a lot of students;
-a lot of people.
+a lot of books
+a lot of students
+a lot of people
 
 Uncountable:
 
-a lot of money;
-a lot of water;
-a lot of information;
-a lot of work.
+a lot of money
+a lot of work
+a lot of water
 
-В утверждениях a lot of звучит очень естественно:
+В обычных утвердительных предложениях A LOT OF часто звучит естественнее, чем MUCH:
+
+I have a lot of work.
 
 She has a lot of friends.
-We bought a lot of food.
-He spends a lot of money.
 
-Lots of имеет такое же значение, но немного более разговорное:
-
-lots of books;
-lots of time;
-lots of people.""",
+LOTS OF означает почти то же самое и звучит более разговорно.""",
             },
 
+
             {
-                "order": 6,
-                "title": "A lot и a lot of",
-                "body": """Нужно различать:
+                "order": 5,
 
-a lot of + существительное
+                "title":
+                    "A LOT OF или A LOT?",
 
-и
+                "body":
+                    """Если после выражения идёт существительное:
 
-a lot — без существительного.
-
-Примеры:
+a lot of + noun
 
 We spent a lot of money.
-— Мы потратили много денег.
+
+She has a lot of friends.
+
+Если существительного после него нет:
+
+a lot
 
 We spent a lot.
-— Мы много потратили.
 
-Неправильно:
+She travels a lot.
 
-We spent a lot money.
+Не говорим:
+
+a lot money
 
 Правильно:
 
-We spent a lot of money.""",
+a lot of money.""",
             },
 
-            {
-                "order": 7,
-                "title": "A few",
-                "body": """A few используется только с исчисляемыми существительными во множественном числе.
 
-A few означает:
+            {
+                "order": 6,
+
+                "title":
+                    "A FEW и FEW",
+
+                "body":
+                    """Оба выражения используются только с countable plural nouns.
+
+A FEW:
 
 несколько;
-немного;
-есть некоторое количество.
-
-Обычно смысл положительный.
-
-Примеры:
+немного, но количество есть.
 
 I have a few friends.
-— У меня есть несколько друзей.
 
-We have a few questions.
-— У нас есть несколько вопросов.
+We have a few chairs, so everyone can sit.
 
-She stayed for a few days.
-
-Количество небольшое, но оно есть и часто его достаточно.""",
-            },
-
-            {
-                "order": 8,
-                "title": "Few",
-                "body": """Few тоже используется с исчисляемыми существительными во множественном числе.
-
-Но значение другое:
+FEW:
 
 мало;
 почти нет;
 недостаточно.
 
-Обычно смысл отрицательный.
-
-Примеры:
-
 I have few friends.
-— У меня мало друзей.
 
-Few students understood the lesson.
+We have few chairs, so some people must stand.
 
-We have few chairs.
+Главное различие — смысл.
 
-Сравните:
+A few → немного, но достаточно.
 
-I have a few friends.
-— Несколько друзей есть.
-
-I have few friends.
-— Друзей почти нет.
-
-Это различие часто проверяется в тестах.""",
+Few → слишком мало.""",
             },
 
-            {
-                "order": 9,
-                "title": "A little",
-                "body": """A little используется с неисчисляемыми существительными.
 
-Означает:
+            {
+                "order": 7,
+
+                "title":
+                    "A LITTLE и LITTLE",
+
+                "body":
+                    """Оба выражения используются с uncountable nouns.
+
+A LITTLE:
 
 немного;
 некоторое количество есть.
 
-Обычно смысл положительный.
-
-Примеры:
-
-I have a little money.
-
-There is a little milk in the fridge.
-
 We have a little time.
 
-Количество маленькое, но его достаточно или оно хотя бы существует.""",
-            },
+There is a little milk.
 
-            {
-                "order": 10,
-                "title": "Little",
-                "body": """Little используется с неисчисляемыми существительными.
-
-Little означает:
+LITTLE:
 
 мало;
 почти нет;
 недостаточно.
 
-Обычно значение отрицательное.
-
-Примеры:
-
-I have little money.
-
-There is little water left.
-
-We have little time.
-
-Сравните:
-
-We have a little time.
-— У нас есть немного времени.
-
-We have little time.
-— У нас почти нет времени.
-
-She knows a little English.
-— Она немного знает английский.
-
-She knows little English.
-— Она почти не знает английский.""",
-            },
-
-            {
-                "order": 11,
-                "title": "Главная таблица",
-                "body": """Запомните:
-
-MANY
-исчисляемые, множественное число
-many books
-
-MUCH
-неисчисляемые
-much money
-
-A LOT OF
-оба типа
-a lot of books
-a lot of money
-
-A FEW
-исчисляемые
-несколько, немного
-a few books
-
-FEW
-исчисляемые
-мало, почти нет
-few books
-
-A LITTLE
-неисчисляемые
-немного
-a little water
-
-LITTLE
-неисчисляемые
-мало, почти нет
-little water""",
-            },
-
-            {
-                "order": 12,
-                "title": "Как выбрать правильный вариант",
-                "body": """Шаг 1.
-
-Посмотрите на существительное.
-
-There are ___ books.
-
-Books — исчисляемое множественное число.
-
-Возможны:
-
-many;
-a lot of;
-a few;
-few.
-
-Шаг 2.
-
-Определите смысл.
-
-Если «много»:
-
-many books;
-a lot of books.
-
-Если «несколько»:
-
-a few books.
-
-Если «мало, почти нет»:
-
-few books.
-
-Теперь:
-
-We have ___ time.
-
-Time — неисчисляемое.
-
-Если «много»:
-
-much time;
-a lot of time.
-
-Если «немного»:
-
-a little time.
-
-Если «мало, почти нет»:
-
-little time.""",
-            },
-
-            {
-                "order": 13,
-                "title": "Too many / too much / so many / so much",
-                "body": """Too означает «слишком».
-
-TOO MANY используется с исчисляемыми:
-
-too many people;
-too many questions;
-too many cars.
-
-TOO MUCH используется с неисчисляемыми:
-
-too much money;
-too much work;
-too much sugar.
-
-Примеры:
-
-There are too many people in the room.
-
-I have too much work.
-
-SO MANY:
-
-so many books;
-so many people;
-so many problems.
-
-SO MUCH:
-
-so much money;
-so much time;
-so much information.
-
-Why are there so many people here?
-
-She has so much work today.""",
-            },
-
-            {
-                "order": 14,
-                "title": "Как смысл предложения помогает",
-                "body": """Иногда оба варианта грамматически подходят, поэтому нужно понимать смысл.
-
-A FEW / FEW
-
-We have a few chairs, so everyone can sit down.
-
-Стульев немного, но достаточно.
-
-We have few chairs, so some people must stand.
-
-Стульев недостаточно.
-
-A LITTLE / LITTLE
-
-We have a little time, so let us discuss the problem.
-
-Время есть.
-
 We have little time, so we must hurry.
 
-Времени почти нет.
+There is little milk, so we need to buy more.
 
-Типичные ошибки:
+A little → немного, но достаточно.
 
-many money ❌
-a lot of money ✅
-
-much books ❌
-many books ✅
-
-a lot students ❌
-a lot of students ✅
-
-a few water ❌
-a little water ✅
-
-a little questions ❌
-a few questions ✅""",
+Little → слишком мало.""",
             },
 
-        ]
-
-        for data in sections:
-
-            GrammarLessonSection.objects.update_or_create(
-                lesson=lesson,
-                order=data["order"],
-                defaults={
-                    "title": data["title"],
-                    "body": data["body"],
-                },
-            )
-
-        # ==================================================
-        # PRACTICE — 24 QUESTIONS
-        # ==================================================
-
-        exercises = [
-
-            {
-                "order": 1,
-                "prompt": "There are ___ students in the classroom.",
-                "options": ["much", "many", "little", "a little"],
-                "answer": "many",
-                "explanation": "Students — исчисляемое существительное во множественном числе.",
-            },
-
-            {
-                "order": 2,
-                "prompt": "We do not have ___ time.",
-                "options": ["many", "a few", "much", "few"],
-                "answer": "much",
-                "explanation": "Time — неисчисляемое существительное.",
-            },
-
-            {
-                "order": 3,
-                "prompt": "She has ___ friends in London.",
-                "options": ["a little", "much", "a few", "little"],
-                "answer": "a few",
-                "explanation": "Friends — исчисляемое. A few означает, что несколько друзей есть.",
-            },
-
-            {
-                "order": 4,
-                "prompt": "There is ___ milk in the fridge. We can make some coffee.",
-                "options": ["a little", "a few", "few", "many"],
-                "answer": "a little",
-                "explanation": "Milk неисчисляемое. Молока немного, но его достаточно.",
-            },
-
-            {
-                "order": 5,
-                "prompt": "There is ___ milk in the fridge. We need to buy more.",
-                "options": ["a little", "little", "a few", "many"],
-                "answer": "little",
-                "explanation": "Молока почти нет, поэтому нужно купить ещё.",
-            },
-
-            {
-                "order": 6,
-                "prompt": "We went shopping and spent ___ money.",
-                "options": ["many", "a lot", "a lot of", "a few"],
-                "answer": "a lot of",
-                "explanation": "Перед существительным money нужно a lot of.",
-            },
-
-            {
-                "order": 7,
-                "prompt": "Only ___ students passed the examination. The result was disappointing.",
-                "options": ["a few", "few", "a little", "much"],
-                "answer": "few",
-                "explanation": "Результат разочаровывает, значит студентов было мало.",
-            },
 
             {
                 "order": 8,
-                "prompt": "I speak ___ English, so I can help you.",
-                "options": ["little", "few", "a little", "a few"],
-                "answer": "a little",
-                "explanation": "English здесь неисчисляемое понятие. Некоторое знание есть.",
+
+                "title":
+                    "TOO MANY, TOO MUCH, SO MANY, SO MUCH",
+
+                "body":
+                    """TOO означает «слишком».
+
+Countable plural:
+
+too many people
+too many questions
+too many cars
+
+Uncountable:
+
+too much work
+too much money
+too much sugar
+
+SO работает по той же схеме:
+
+so many people
+so many books
+
+so much money
+so much time
+
+Сначала снова определяем тип существительного.""",
             },
+
 
             {
                 "order": 9,
-                "prompt": "How ___ students are there in your group?",
-                "options": ["much", "many", "little", "a little"],
-                "answer": "many",
-                "explanation": "How many используется с исчисляемыми существительными.",
-            },
 
-            {
-                "order": 10,
-                "prompt": "How ___ water do you drink every day?",
-                "options": ["many", "a few", "much", "few"],
-                "answer": "much",
-                "explanation": "Water — неисчисляемое: How much water?",
-            },
+                "title":
+                    "Главная схема выбора",
 
-            {
-                "order": 11,
-                "prompt": "We have ___ apples. You can take one.",
-                "options": ["a few", "a little", "much", "little"],
-                "answer": "a few",
-                "explanation": "Apples — исчисляемое, и яблок достаточно.",
-            },
+                "body":
+                    """COUNTABLE PLURAL:
 
-            {
-                "order": 12,
-                "prompt": "We have ___ apples, so we cannot make an apple pie.",
-                "options": ["a few", "few", "a little", "much"],
-                "answer": "few",
-                "explanation": "Яблок недостаточно, поэтому few.",
-            },
+many
+a few
+few
+a lot of
 
-            {
-                "order": 13,
-                "prompt": "There is ___ coffee left. Would you like some?",
-                "options": ["a few", "many", "a little", "few"],
-                "answer": "a little",
-                "explanation": "Coffee неисчисляемое, и некоторое количество осталось.",
-            },
+UNCOUNTABLE:
 
-            {
-                "order": 14,
-                "prompt": "There is ___ coffee left. We need to make more.",
-                "options": ["a little", "little", "a few", "many"],
-                "answer": "little",
-                "explanation": "Кофе почти не осталось.",
-            },
+much
+a little
+little
+a lot of
 
-            {
-                "order": 15,
-                "prompt": "She has ___ work today.",
-                "options": ["many", "a lot of", "a few", "few"],
-                "answer": "a lot of",
-                "explanation": "Work — неисчисляемое. В утверждении a lot of звучит естественно.",
-            },
+Если смысл «много»:
 
-            {
-                "order": 16,
-                "prompt": "There were too ___ people in the room.",
-                "options": ["much", "little", "many", "a little"],
-                "answer": "many",
-                "explanation": "People — исчисляемое множественное число: too many people.",
-            },
+many books
+much water
+a lot of books
+a lot of water
 
-            {
-                "order": 17,
-                "prompt": "Do not add too ___ salt.",
-                "options": ["many", "much", "a few", "few"],
-                "answer": "much",
-                "explanation": "Salt — неисчисляемое: too much salt.",
-            },
+Если «немного, но есть»:
 
-            {
-                "order": 18,
-                "prompt": "Only ___ people knew the answer, but at least someone answered correctly.",
-                "options": ["few", "a few", "little", "a little"],
-                "answer": "a few",
-                "explanation": "Несколько людей всё-таки знали ответ, поэтому a few.",
-            },
+a few books
+a little water
 
-            {
-                "order": 19,
-                "prompt": "We have ___ chairs, so everyone can sit down.",
-                "options": ["few", "a few", "little", "a little"],
-                "answer": "a few",
-                "explanation": "Стульев немного, но их достаточно.",
-            },
+Если «мало, недостаточно»:
 
-            {
-                "order": 20,
-                "prompt": "We have ___ chairs, so some people must stand.",
-                "options": ["few", "a few", "little", "a little"],
-                "answer": "few",
-                "explanation": "Стульев недостаточно.",
-            },
+few books
+little water
 
-            {
-                "order": 21,
-                "prompt": "We have ___ time, so let us discuss the problem.",
-                "options": ["few", "a few", "little", "a little"],
-                "answer": "a little",
-                "explanation": "Времени немного, но оно есть.",
-            },
-
-            {
-                "order": 22,
-                "prompt": "We have ___ time, so we must hurry.",
-                "options": ["few", "a few", "little", "a little"],
-                "answer": "little",
-                "explanation": "Времени почти нет.",
-            },
-
-            {
-                "order": 23,
-                "prompt": "She spends so ___ money on clothes.",
-                "options": ["many", "much", "few", "a few"],
-                "answer": "much",
-                "explanation": "Money — неисчисляемое: so much money.",
-            },
-
-            {
-                "order": 24,
-                "prompt": "Why are there so ___ people here?",
-                "options": ["much", "many", "little", "a little"],
-                "answer": "many",
-                "explanation": "People — исчисляемое множественное число: so many people.",
+Всегда смотри и на тип существительного, и на смысл предложения.""",
             },
 
         ]
 
-        for data in exercises:
+
+        section_objects = {}
+
+
+        for data in sections:
+
+            section, _ = (
+                GrammarLessonSection.objects
+                .update_or_create(
+                    lesson=lesson,
+                    order=data["order"],
+
+                    defaults={
+                        "title":
+                            data["title"],
+
+                        "body":
+                            data["body"],
+                    },
+                )
+            )
+
+            section_objects[
+                data["order"]
+            ] = section
+
+
+        # =================================================
+        # 20 TRAINING EXERCISES
+        # =================================================
+
+        training = [
+
+            {
+                "order": 1,
+                "section": 1,
+                "type": "choice",
+
+                "prompt":
+                    "There are ___ students in the classroom.",
+
+                "options": [
+                    "much",
+                    "many",
+                    "little",
+                    "a little",
+                ],
+
+                "answer":
+                    "many",
+
+                "explanation":
+                    "Students — countable plural, поэтому MANY.",
+            },
+
+
+            {
+                "order": 2,
+                "section": 1,
+                "type": "choice",
+
+                "prompt":
+                    "We don't have ___ time.",
+
+                "options": [
+                    "many",
+                    "much",
+                    "a few",
+                    "few",
+                ],
+
+                "answer":
+                    "much",
+
+                "explanation":
+                    "Time — uncountable, поэтому MUCH.",
+            },
+
+
+            {
+                "order": 3,
+                "section": 2,
+                "type": "fill",
+
+                "prompt":
+                    "How ___ students are there in your group?",
+
+                "options": [],
+
+                "answer":
+                    "many",
+
+                "explanation":
+                    "Students — исчисляемое существительное во множественном числе.",
+            },
+
+
+            {
+                "order": 4,
+                "section": 2,
+                "type": "choice",
+
+                "prompt":
+                    "We don't have ___ chairs.",
+
+                "options": [
+                    "much",
+                    "many",
+                    "little",
+                    "a little",
+                ],
+
+                "answer":
+                    "many",
+
+                "explanation":
+                    "Chairs — countable plural.",
+            },
+
+
+            {
+                "order": 5,
+                "section": 3,
+                "type": "fill",
+
+                "prompt":
+                    "How ___ water do you drink every day?",
+
+                "options": [],
+
+                "answer":
+                    "much",
+
+                "explanation":
+                    "Water — uncountable.",
+            },
+
+
+            {
+                "order": 6,
+                "section": 3,
+                "type": "choice",
+
+                "prompt":
+                    "There isn't ___ milk in the fridge.",
+
+                "options": [
+                    "many",
+                    "much",
+                    "a few",
+                    "few",
+                ],
+
+                "answer":
+                    "much",
+
+                "explanation":
+                    "Milk — uncountable.",
+            },
+
+
+            {
+                "order": 7,
+                "section": 4,
+                "type": "choice",
+
+                "prompt":
+                    "She has ___ friends.",
+
+                "options": [
+                    "a lot of",
+                    "much",
+                    "little",
+                    "a little",
+                ],
+
+                "answer":
+                    "a lot of",
+
+                "explanation":
+                    "A lot of можно использовать с countable plural.",
+            },
+
+
+            {
+                "order": 8,
+                "section": 4,
+                "type": "choice",
+
+                "prompt":
+                    "I have ___ work today.",
+
+                "options": [
+                    "many",
+                    "a lot of",
+                    "a few",
+                    "few",
+                ],
+
+                "answer":
+                    "a lot of",
+
+                "explanation":
+                    "Work — uncountable. В утверждении a lot of звучит естественно.",
+            },
+
+
+            {
+                "order": 9,
+                "section": 5,
+                "type": "choice",
+
+                "prompt":
+                    "We spent ___ money.",
+
+                "options": [
+                    "a lot",
+                    "a lot of",
+                    "many",
+                    "a few",
+                ],
+
+                "answer":
+                    "a lot of",
+
+                "explanation":
+                    "Перед существительным money нужно A LOT OF.",
+            },
+
+
+            {
+                "order": 10,
+                "section": 5,
+                "type": "choice",
+
+                "prompt":
+                    "We travelled ___ last year.",
+
+                "options": [
+                    "a lot",
+                    "a lot of",
+                    "many",
+                    "much of",
+                ],
+
+                "answer":
+                    "a lot",
+
+                "explanation":
+                    "После a lot здесь нет существительного.",
+            },
+
+
+            {
+                "order": 11,
+                "section": 6,
+                "type": "choice",
+
+                "prompt":
+                    "We have ___ chairs, so everyone can sit.",
+
+                "options": [
+                    "few",
+                    "a few",
+                    "little",
+                    "a little",
+                ],
+
+                "answer":
+                    "a few",
+
+                "explanation":
+                    "Стульев немного, но их достаточно.",
+            },
+
+
+            {
+                "order": 12,
+                "section": 6,
+                "type": "choice",
+
+                "prompt":
+                    "We have ___ chairs, so some people must stand.",
+
+                "options": [
+                    "few",
+                    "a few",
+                    "little",
+                    "a little",
+                ],
+
+                "answer":
+                    "few",
+
+                "explanation":
+                    "Стульев недостаточно, поэтому FEW.",
+            },
+
+
+            {
+                "order": 13,
+                "section": 6,
+                "type": "choice",
+
+                "prompt":
+                    "Only ___ students failed, so the result was excellent.",
+
+                "options": [
+                    "few",
+                    "a few",
+                    "little",
+                    "a little",
+                ],
+
+                "answer":
+                    "a few",
+
+                "explanation":
+                    "Небольшое количество студентов не сдало, но в целом результат хороший.",
+            },
+
+
+            {
+                "order": 14,
+                "section": 7,
+                "type": "choice",
+
+                "prompt":
+                    "We have ___ time, so let's discuss it.",
+
+                "options": [
+                    "few",
+                    "a few",
+                    "little",
+                    "a little",
+                ],
+
+                "answer":
+                    "a little",
+
+                "explanation":
+                    "Времени немного, но достаточно.",
+            },
+
+
+            {
+                "order": 15,
+                "section": 7,
+                "type": "choice",
+
+                "prompt":
+                    "We have ___ time, so we must hurry.",
+
+                "options": [
+                    "few",
+                    "a few",
+                    "little",
+                    "a little",
+                ],
+
+                "answer":
+                    "little",
+
+                "explanation":
+                    "Времени почти нет.",
+            },
+
+
+            {
+                "order": 16,
+                "section": 7,
+                "type": "choice",
+
+                "prompt":
+                    "There is ___ milk left. You can make one cup of coffee.",
+
+                "options": [
+                    "few",
+                    "a few",
+                    "little",
+                    "a little",
+                ],
+
+                "answer":
+                    "a little",
+
+                "explanation":
+                    "Молока немного, но его хватает.",
+            },
+
+
+            {
+                "order": 17,
+                "section": 8,
+                "type": "choice",
+
+                "prompt":
+                    "There are too ___ people in this room.",
+
+                "options": [
+                    "much",
+                    "many",
+                    "little",
+                    "a little",
+                ],
+
+                "answer":
+                    "many",
+
+                "explanation":
+                    "People — countable plural: too many people.",
+            },
+
+
+            {
+                "order": 18,
+                "section": 8,
+                "type": "choice",
+
+                "prompt":
+                    "Don't add too ___ sugar.",
+
+                "options": [
+                    "many",
+                    "much",
+                    "few",
+                    "a few",
+                ],
+
+                "answer":
+                    "much",
+
+                "explanation":
+                    "Sugar — uncountable: too much sugar.",
+            },
+
+
+            {
+                "order": 19,
+                "section": 8,
+                "type": "choice",
+
+                "prompt":
+                    "Why are there so ___ questions?",
+
+                "options": [
+                    "much",
+                    "many",
+                    "little",
+                    "a little",
+                ],
+
+                "answer":
+                    "many",
+
+                "explanation":
+                    "Questions — countable plural.",
+            },
+
+
+            {
+                "order": 20,
+                "section": 9,
+                "type": "choice",
+
+                "prompt":
+                    "Choose the correct pair.",
+
+                "options": [
+                    "a few books / a little water",
+                    "a little books / a few water",
+                    "much books / many water",
+                    "few water / little books",
+                ],
+
+                "answer":
+                    "a few books / a little water",
+
+                "explanation":
+                    "A few идёт с countable plural, a little — с uncountable.",
+            },
+
+        ]
+
+
+        # =================================================
+        # 10 FINAL TEST QUESTIONS
+        # =================================================
+
+        final_test = [
+
+            {
+                "order": 21,
+
+                "prompt":
+                    "How ___ employees work in this company?",
+
+                "options": [
+                    "much",
+                    "many",
+                    "little",
+                    "a little",
+                ],
+
+                "answer":
+                    "many",
+
+                "explanation":
+                    "Employees — countable plural.",
+            },
+
+
+            {
+                "order": 22,
+
+                "prompt":
+                    "How ___ information do we need?",
+
+                "options": [
+                    "many",
+                    "much",
+                    "a few",
+                    "few",
+                ],
+
+                "answer":
+                    "much",
+
+                "explanation":
+                    "Information — uncountable.",
+            },
+
+
+            {
+                "order": 23,
+
+                "prompt":
+                    "She has ___ books at home.",
+
+                "options": [
+                    "a lot of",
+                    "much",
+                    "a little",
+                    "little",
+                ],
+
+                "answer":
+                    "a lot of",
+
+                "explanation":
+                    "A lot of подходит к countable plural.",
+            },
+
+
+            {
+                "order": 24,
+
+                "prompt":
+                    "He works ___, but he doesn't earn much.",
+
+                "options": [
+                    "a lot",
+                    "a lot of",
+                    "many",
+                    "few",
+                ],
+
+                "answer":
+                    "a lot",
+
+                "explanation":
+                    "После a lot здесь нет существительного.",
+            },
+
+
+            {
+                "order": 25,
+
+                "prompt":
+                    "I have ___ good friends, so I'm not alone.",
+
+                "options": [
+                    "few",
+                    "a few",
+                    "little",
+                    "a little",
+                ],
+
+                "answer":
+                    "a few",
+
+                "explanation":
+                    "Friends — countable plural, и смысл положительный: несколько друзей есть.",
+            },
+
+
+            {
+                "order": 26,
+
+                "prompt":
+                    "He has ___ friends and often feels lonely.",
+
+                "options": [
+                    "few",
+                    "a few",
+                    "little",
+                    "a little",
+                ],
+
+                "answer":
+                    "few",
+
+                "explanation":
+                    "Friends — countable plural, а смысл отрицательный: друзей почти нет.",
+            },
+
+
+            {
+                "order": 27,
+
+                "prompt":
+                    "We have ___ money, so we can buy the tickets.",
+
+                "options": [
+                    "few",
+                    "a few",
+                    "little",
+                    "a little",
+                ],
+
+                "answer":
+                    "a little",
+
+                "explanation":
+                    "Money — uncountable; денег немного, но достаточно.",
+            },
+
+
+            {
+                "order": 28,
+
+                "prompt":
+                    "We have ___ money, so we can't buy the tickets.",
+
+                "options": [
+                    "few",
+                    "a few",
+                    "little",
+                    "a little",
+                ],
+
+                "answer":
+                    "little",
+
+                "explanation":
+                    "Money — uncountable; денег недостаточно.",
+            },
+
+
+            {
+                "order": 29,
+
+                "prompt":
+                    "Choose the correct pair.",
+
+                "options": [
+                    "too many cars / too much traffic",
+                    "too much cars / too many traffic",
+                    "too many cars / too many traffic",
+                    "too much cars / too much traffic",
+                ],
+
+                "answer":
+                    "too many cars / too much traffic",
+
+                "explanation":
+                    "Cars — countable plural; traffic — uncountable.",
+            },
+
+
+            {
+                "order": 30,
+
+                "prompt":
+                    "Choose the fully correct sentence.",
+
+                "options": [
+                    "We have a few questions and a little time.",
+                    "We have a little questions and a few time.",
+                    "We have much questions and many time.",
+                    "We have little questions and few time.",
+                ],
+
+                "answer":
+                    "We have a few questions and a little time.",
+
+                "explanation":
+                    "Questions — countable plural; time — uncountable.",
+            },
+
+        ]
+
+
+        valid_orders = []
+
+
+        for data in (
+            training
+            +
+            final_test
+        ):
+
+            valid_orders.append(
+                data["order"]
+            )
+
+
+            if data["order"] <= 20:
+
+                section = (
+                    section_objects[
+                        data["section"]
+                    ]
+                )
+
+            else:
+
+                section = None
+
 
             GrammarExercise.objects.update_or_create(
                 lesson=lesson,
                 order=data["order"],
+
                 defaults={
-                    "exercise_type": GrammarExercise.Type.CHOICE,
-                    "prompt": data["prompt"],
-                    "options": data["options"],
-                    "correct_answer": data["answer"],
-                    "explanation": data["explanation"],
-                    "is_published": True,
+                    "section":
+                        section,
+
+                    "exercise_type":
+                        data.get(
+                            "type",
+                            "choice",
+                        ),
+
+                    "prompt":
+                        data["prompt"],
+
+                    "options":
+                        data["options"],
+
+                    "correct_answer":
+                        data["answer"],
+
+                    "explanation":
+                        data["explanation"],
+
+                    "is_published":
+                        True,
                 },
             )
 
+
+        GrammarExercise.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__in=valid_orders,
+        ).delete()
+
+
+        GrammarLessonSection.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__in=[
+                item["order"]
+                for item in sections
+            ],
+        ).delete()
+
+
         self.stdout.write(
             self.style.SUCCESS(
-                "✅ A1 Lesson 5 seeded: "
-                "Much, many, a lot of, few, "
-                "a few, little, a little"
+                "✅ Interactive A1 Lesson 5 seeded"
             )
         )
 
         self.stdout.write(
-            f"Sections: {lesson.sections.count()}"
+            f"Micro rules: "
+            f"{lesson.sections.count()}"
         )
 
         self.stdout.write(
-            f"Exercises: {lesson.exercises.count()}"
+            "Training exercises: "
+            f"{lesson.exercises.filter(section__isnull=False).count()}"
+        )
+
+        self.stdout.write(
+            "Final test: "
+            f"{lesson.exercises.filter(section__isnull=True).count()}"
         )

@@ -923,7 +923,7 @@
         <!-- LOGO -->
 
         <a
-            href="{% if request.session.trial_guest_user_id %}{% url 'vocabulary:trial_dashboard' %}{% else %}{% url 'vocabulary:home' %}{% endif %}"
+            href="{% if request.resolver_match.namespace == 'grammar' %}{% url 'grammar:home' %}{% elif request.session.trial_guest_user_id %}{% url 'vocabulary:trial_dashboard' %}{% else %}{% url 'vocabulary:home' %}{% endif %}"
             class="logo"
         >
             English Platform

@@ -10,50 +10,70 @@ from grammar.models import (
 class Command(BaseCommand):
 
     help = (
-        "Create/update A1 Grammar Lesson 10: "
-        "Present tense of TO BE."
+        "Create/update interactive A1 Grammar "
+        "Lesson 10: TO BE — am, is, are."
     )
+
 
     def handle(self, *args, **options):
 
-        lesson, _ = GrammarLesson.objects.update_or_create(
-            level="A1",
-            order=10,
-            defaults={
-                "title": (
-                    "Глагол TO BE в настоящем времени: "
-                    "AM, IS, ARE"
-                ),
-                "slug": "to-be-am-is-are",
-                "theory_text": (
-                    "Present tense of TO BE: "
-                    "am, is, are."
-                ),
-                "estimated_minutes": 30,
-                "pass_score": 70,
-                "xp_reward": 100,
-                "is_published": True,
-            },
+        lesson, _ = (
+            GrammarLesson.objects
+            .update_or_create(
+                level="A1",
+                order=10,
+                defaults={
+                    "title":
+                        "Глагол TO BE в настоящем времени: "
+                        "AM, IS, ARE",
+
+                    "slug":
+                        "to-be-am-is-are",
+
+                    "theory_text":
+                        "Present tense of TO BE: am, is, are.",
+
+                    "estimated_minutes":
+                        16,
+
+                    "pass_score":
+                        70,
+
+                    "xp_reward":
+                        100,
+
+                    "is_published":
+                        True,
+                },
+            )
         )
+
+
+        # =================================================
+        # 9 MICRO-RULES
+        # =================================================
 
         sections = [
 
             {
                 "order": 1,
-                "title": "Что такое TO BE",
-                "body": """Глагол to be может означать:
+                "title":
+                    "Почему в английском нужен TO BE?",
+
+                "body":
+                    """TO BE может означать:
 
 быть;
 находиться;
 являться.
 
-В русском языке в настоящем времени мы часто его не произносим:
+В русском настоящего «быть» часто не видно:
 
 Я студент.
 Она дома.
 Они заняты.
 
-Но в английском языке to be обязателен:
+В английском глагол нужен:
 
 I am a student.
 
@@ -61,7 +81,7 @@ She is at home.
 
 They are busy.
 
-Неправильно:
+Не:
 
 I a student.
 
@@ -70,18 +90,22 @@ She at home.
 They busy.""",
             },
 
+
             {
                 "order": 2,
-                "title": "Главная таблица AM, IS, ARE",
-                "body": """Запомните три основные группы:
+                "title":
+                    "Главная таблица AM, IS, ARE",
 
-I → am
+                "body":
+                    """Запомни три группы:
 
-he / she / it → is
+I → AM
 
-you / we / they → are
+he / she / it → IS
 
-Полная таблица:
+you / we / they → ARE
+
+Полная система:
 
 I am
 
@@ -97,133 +121,55 @@ we are
 
 they are
 
-Это основа всего урока.""",
+Если вместо подлежащего можно сказать HE / SHE / IT → IS.
+
+Если можно сказать THEY → ARE.""",
             },
+
 
             {
                 "order": 3,
-                "title": "Когда используется AM",
-                "body": """Am используется только с I.
+                "title":
+                    "Когда используется TO BE?",
 
-Примеры:
+                "body":
+                    """TO BE часто нужен, если после него стоит:
 
-I am a teacher.
-
-I am tired.
-
-I am at home.
-
-Нельзя:
-
-I is.
-
-I are.
-
-Правильно только:
-
-I am.""",
-            },
-
-            {
-                "order": 4,
-                "title": "Когда используется IS",
-                "body": """Is используется с:
-
-he;
-she;
-it;
-одним человеком;
-одним предметом.
-
-Примеры:
-
-He is a doctor.
-
-She is busy.
-
-It is cold.
-
-Marat is at work.
-
-The book is interesting.
-
-Если подлежащее можно заменить на he, she или it, обычно используется is.""",
-            },
-
-            {
-                "order": 5,
-                "title": "Когда используется ARE",
-                "body": """Are используется с:
-
-you;
-we;
-they;
-несколькими людьми;
-несколькими предметами.
-
-Примеры:
-
-You are my friend.
-
-We are ready.
-
-They are students.
-
-Marat and Aigul are at home.
-
-The books are new.
-
-Если подлежащее можно заменить на they, обычно используется are.""",
-            },
-
-            {
-                "order": 6,
-                "title": "Когда нужен TO BE",
-                "body": """To be часто используется, когда после него стоит:
-
-профессия;
-
-прилагательное или состояние;
-
-местонахождение;
-
-возраст;
-
-национальность или происхождение.
-
-Профессия:
+профессия:
 
 I am a teacher.
 
-He is a doctor.
-
-Состояние:
+состояние или прилагательное:
 
 She is happy.
 
 We are ready.
 
-Место:
+место:
 
-She is at work.
+He is at home.
 
-The children are in the garden.
+The children are outside.
 
-Возраст:
+возраст:
 
 My son is one year old.
 
-Национальность:
+национальность:
 
-I am Kazakh.
+She is British.
 
-She is British.""",
+То есть TO BE связывает подлежащее с описанием, состоянием, местом или характеристикой.""",
             },
 
+
             {
-                "order": 7,
-                "title": "Погода, время и возраст",
-                "body": """С погодой обычно используется it is:
+                "order": 4,
+                "title":
+                    "Погода, время и возраст",
+
+                "body":
+                    """Для погоды часто используется IT IS:
 
 It is cold.
 
@@ -231,15 +177,13 @@ It is hot.
 
 It is sunny.
 
-It is windy.
-
-Со временем:
+Для времени:
 
 It is five o'clock.
 
 It is late.
 
-Возраст в английском выражается через to be:
+Возраст выражается через TO BE:
 
 I am twenty years old.
 
@@ -247,57 +191,23 @@ She is ten.
 
 My son is one year old.
 
-Неправильно:
+Не:
 
 I have twenty years.
 
-Правильно:
+А:
 
 I am twenty years old.""",
             },
 
-            {
-                "order": 8,
-                "title": "Утвердительные предложения",
-                "body": """Формула:
-
-Подлежащее + am / is / are + остальная часть предложения.
-
-Примеры:
-
-I am a student.
-
-She is happy.
-
-They are at home.
-
-С именами:
-
-Marat is a teacher.
-
-Aigul is at home.
-
-С множественным числом:
-
-Marat and Aigul are teachers.
-
-The children are outside.
-
-Также:
-
-This is my book.
-
-That is our house.
-
-These are my keys.
-
-Those are their children.""",
-            },
 
             {
-                "order": 9,
-                "title": "Сокращённые формы",
-                "body": """В разговорной речи часто используются сокращения:
+                "order": 5,
+                "title":
+                    "Сокращённые формы",
+
+                "body":
+                    """В речи часто используются сокращения:
 
 I am → I'm
 
@@ -317,8 +227,6 @@ they are → they're
 
 I'm tired.
 
-You're late.
-
 He's a doctor.
 
 She's at home.
@@ -329,19 +237,17 @@ We're ready.
 
 They're busy.
 
-Полные и сокращённые формы имеют одинаковое значение.""",
+Полная и сокращённая форма означают одно и то же.""",
             },
 
+
             {
-                "order": 10,
-                "title": "Отрицание",
-                "body": """Чтобы сделать предложение отрицательным, после am/is/are ставится not.
+                "order": 6,
+                "title":
+                    "Как сделать отрицание",
 
-Формула:
-
-Подлежащее + am/is/are + not
-
-Примеры:
+                "body":
+                    """Для отрицания просто добавляем NOT после TO BE:
 
 I am not tired.
 
@@ -351,31 +257,35 @@ They are not ready.
 
 Сокращения:
 
-I'm not;
+I'm not
 
-isn't;
+isn't
 
-aren't.
+aren't
 
 Примеры:
 
-He isn't tired.
+She isn't busy.
 
-They aren't ready.
+We aren't late.
 
 Важно:
 
-формы I amn't в стандартном английском нет.
+стандартной формы amn't обычно нет.
 
-Правильно:
+Говорим:
 
 I'm not.""",
             },
 
+
             {
-                "order": 11,
-                "title": "Общие вопросы",
-                "body": """В вопросе am/is/are ставится перед подлежащим.
+                "order": 7,
+                "title":
+                    "Как сделать вопрос",
+
+                "body":
+                    """В вопросе AM / IS / ARE переносится перед подлежащим.
 
 Утверждение:
 
@@ -385,17 +295,11 @@ She is at home.
 
 Is she at home?
 
-Формула:
-
-Am / Is / Are + подлежащее + ... ?
-
 Примеры:
 
 Am I late?
 
 Is he a doctor?
-
-Is she at work?
 
 Is it cold?
 
@@ -403,15 +307,21 @@ Are you ready?
 
 Are they students?
 
-Are the children outside?""",
+Формула:
+
+AM / IS / ARE + subject + ... ?""",
             },
 
-            {
-                "order": 12,
-                "title": "Краткие ответы",
-                "body": """Краткие ответы:
 
-Are you tired?
+            {
+                "order": 8,
+                "title":
+                    "Краткие и специальные вопросы",
+
+                "body":
+                    """Краткий ответ повторяет TO BE:
+
+Are you ready?
 
 Yes, I am.
 
@@ -423,53 +333,17 @@ Yes, he is.
 
 No, he isn't.
 
-Are they ready?
+В положительном кратком ответе обычно не сокращаем:
 
-Yes, they are.
-
-No, they aren't.
-
-Важно:
-
-в положительном кратком ответе обычно не используется сокращение.
-
-Неправильно:
+не:
 
 Yes, I'm.
 
-Yes, he's.
-
-Правильно:
+а:
 
 Yes, I am.
 
-Yes, he is.""",
-            },
-
-            {
-                "order": 13,
-                "title": "Специальные вопросы",
-                "body": """Специальный вопрос начинается с вопросительного слова.
-
-Основные слова:
-
-who — кто;
-
-what — что / какой;
-
-where — где;
-
-how old — сколько лет;
-
-why — почему;
-
-how — как.
-
-Формула:
-
-Вопросительное слово + am/is/are + подлежащее?
-
-Примеры:
+Специальный вопрос:
 
 Where are you?
 
@@ -477,21 +351,21 @@ Where is the book?
 
 How old is she?
 
-How old are they?
-
 Why are they late?
 
 What is this?
 
-Who is he?
-
-Who are they?""",
+Who is he?""",
             },
 
+
             {
-                "order": 14,
-                "title": "TO BE или обычный глагол",
-                "body": """Очень важно не ставить am/is/are перед обычным смысловым глаголом.
+                "order": 9,
+                "title":
+                    "TO BE или обычный глагол?",
+
+                "body":
+                    """Очень важно не ставить AM / IS / ARE перед обычным смысловым глаголом.
 
 TO BE:
 
@@ -499,13 +373,9 @@ He is a teacher.
 
 She is tired.
 
-She is at home.
+They are at home.
 
-She is thirty.
-
-She is British.
-
-Обычное действие:
+Обычный глагол:
 
 I work at a university.
 
@@ -513,294 +383,819 @@ She speaks English.
 
 They live in Astana.
 
-Неправильно:
+Не:
 
-I am work at a university.
+I am work.
 
 She is speaks English.
 
 They are live in Astana.
 
-Сравните:
+Сравни:
 
 He is a teacher.
-— Teacher — профессия.
+Teacher — профессия.
 
 He works at a school.
-— Works — действие.
+Works — действие.
 
-She is tired.
-— Tired — состояние.
-
-She works hard.
-— Works — действие.""",
+Это одна из самых частых ошибок у начинающих.""",
             },
 
         ]
 
+
+        section_objects = {}
+
+
         for data in sections:
 
-            GrammarLessonSection.objects.update_or_create(
-                lesson=lesson,
-                order=data["order"],
-                defaults={
-                    "title": data["title"],
-                    "body": data["body"],
-                },
+            section, _ = (
+                GrammarLessonSection.objects
+                .update_or_create(
+                    lesson=lesson,
+                    order=data["order"],
+                    defaults={
+                        "title":
+                            data["title"],
+
+                        "body":
+                            data["body"],
+                    },
+                )
             )
 
-        exercises = [
+            section_objects[
+                data["order"]
+            ] = section
+
+
+        # =================================================
+        # 20 TRAINING EXERCISES
+        # =================================================
+
+        training = [
 
             {
                 "order": 1,
-                "prompt": "I ___ a teacher.",
-                "options": ["is", "are", "am", "be"],
-                "answer": "am",
-                "explanation": "С местоимением I используется только am.",
+                "section": 1,
+                "type": "choice",
+
+                "prompt":
+                    "I ___ a student.",
+
+                "options": [
+                    "is",
+                    "are",
+                    "am",
+                    "be",
+                ],
+
+                "answer":
+                    "am",
+
+                "explanation":
+                    "В английском TO BE обязателен: I AM.",
             },
+
 
             {
                 "order": 2,
-                "prompt": "She ___ at home.",
-                "options": ["am", "is", "are", "be"],
-                "answer": "is",
-                "explanation": "She → is.",
+                "section": 1,
+                "type": "choice",
+
+                "prompt":
+                    "She ___ at home.",
+
+                "options": [
+                    "am",
+                    "is",
+                    "are",
+                    "be",
+                ],
+
+                "answer":
+                    "is",
+
+                "explanation":
+                    "She → IS.",
             },
+
 
             {
                 "order": 3,
-                "prompt": "They ___ ready.",
-                "options": ["is", "am", "are", "be"],
-                "answer": "are",
-                "explanation": "They → are.",
+                "section": 2,
+                "type": "fill",
+
+                "prompt":
+                    "They ___ ready.",
+
+                "options": [],
+
+                "answer":
+                    "are",
+
+                "explanation":
+                    "They → ARE.",
             },
+
 
             {
                 "order": 4,
-                "prompt": "The book ___ interesting.",
-                "options": ["am", "are", "is", "be"],
-                "answer": "is",
-                "explanation": "Book — один предмет, поэтому is.",
+                "section": 2,
+                "type": "choice",
+
+                "prompt":
+                    "The book ___ interesting.",
+
+                "options": [
+                    "am",
+                    "are",
+                    "is",
+                    "be",
+                ],
+
+                "answer":
+                    "is",
+
+                "explanation":
+                    "Book — один предмет → IT → IS.",
             },
+
 
             {
                 "order": 5,
-                "prompt": "The students ___ in the classroom.",
-                "options": ["is", "am", "are", "be"],
-                "answer": "are",
-                "explanation": "Students — множественное число.",
+                "section": 2,
+                "type": "choice",
+
+                "prompt":
+                    "The students ___ in the classroom.",
+
+                "options": [
+                    "is",
+                    "am",
+                    "are",
+                    "be",
+                ],
+
+                "answer":
+                    "are",
+
+                "explanation":
+                    "Students — множественное число → ARE.",
             },
+
 
             {
                 "order": 6,
-                "prompt": "I ___ not tired.",
-                "options": ["am", "is", "are", "do"],
-                "answer": "am",
-                "explanation": "Правильно: I am not tired.",
+                "section": 3,
+                "type": "choice",
+
+                "prompt":
+                    "My wife ___ a teacher.",
+
+                "options": [
+                    "are",
+                    "is",
+                    "am",
+                    "be",
+                ],
+
+                "answer":
+                    "is",
+
+                "explanation":
+                    "My wife — один человек → SHE → IS.",
             },
+
 
             {
                 "order": 7,
-                "prompt": "___ she a doctor?",
-                "options": ["Am", "Are", "Is", "Does"],
-                "answer": "Is",
-                "explanation": "В вопросе с she форма is ставится перед подлежащим.",
+                "section": 3,
+                "type": "choice",
+
+                "prompt":
+                    "We ___ happy today.",
+
+                "options": [
+                    "am",
+                    "is",
+                    "are",
+                    "be",
+                ],
+
+                "answer":
+                    "are",
+
+                "explanation":
+                    "WE → ARE.",
             },
+
 
             {
                 "order": 8,
-                "prompt": "___ they at home?",
-                "options": ["Is", "Are", "Am", "Do"],
-                "answer": "Are",
-                "explanation": "They → are, поэтому Are they...?",
+                "section": 4,
+                "type": "choice",
+
+                "prompt":
+                    "___ is cold today.",
+
+                "options": [
+                    "He",
+                    "She",
+                    "It",
+                    "They",
+                ],
+
+                "answer":
+                    "It",
+
+                "explanation":
+                    "Для погоды используется IT.",
             },
+
 
             {
                 "order": 9,
-                "prompt": "Are you ready?",
-                "options": [
-                    "Yes, I'm.",
-                    "Yes, I am.",
-                    "Yes, you are.",
-                    "Yes, I is.",
-                ],
-                "answer": "Yes, I am.",
-                "explanation": "В положительном кратком ответе используется полная форма: Yes, I am.",
-            },
+                "section": 4,
+                "type": "choice",
 
-            {
-                "order": 10,
-                "prompt": "Where ___ your children?",
-                "options": ["is", "am", "are", "be"],
-                "answer": "are",
-                "explanation": "Children — множественное число.",
-            },
+                "prompt":
+                    "Choose the correct sentence about age.",
 
-            {
-                "order": 11,
-                "prompt": "I ___ from Kazakhstan.",
-                "options": ["is", "are", "am", "be"],
-                "answer": "am",
-                "explanation": "I → am.",
-            },
-
-            {
-                "order": 12,
-                "prompt": "My wife ___ a teacher.",
-                "options": ["are", "is", "am", "be"],
-                "answer": "is",
-                "explanation": "My wife — один человек, she → is.",
-            },
-
-            {
-                "order": 13,
-                "prompt": "My parents ___ at home.",
-                "options": ["is", "am", "are", "be"],
-                "answer": "are",
-                "explanation": "Parents — множественное число.",
-            },
-
-            {
-                "order": 14,
-                "prompt": "The weather ___ cold today.",
-                "options": ["are", "is", "am", "be"],
-                "answer": "is",
-                "explanation": "Weather — единственное число: the weather is cold.",
-            },
-
-            {
-                "order": 15,
-                "prompt": "These books ___ mine.",
-                "options": ["is", "are", "am", "be"],
-                "answer": "are",
-                "explanation": "These books — множественное число.",
-            },
-
-            {
-                "order": 16,
-                "prompt": "He ___ not at work today.",
-                "options": ["are", "am", "is", "do"],
-                "answer": "is",
-                "explanation": "He → is: He is not...",
-            },
-
-            {
-                "order": 17,
-                "prompt": "___ your sister a doctor?",
-                "options": ["Are", "Is", "Am", "Do"],
-                "answer": "Is",
-                "explanation": "Your sister — один человек, поэтому Is.",
-            },
-
-            {
-                "order": 18,
-                "prompt": "How old ___ your son?",
-                "options": ["are", "is", "am", "do"],
-                "answer": "is",
-                "explanation": "Your son — один человек: How old is your son?",
-            },
-
-            {
-                "order": 19,
-                "prompt": "Where ___ my keys?",
-                "options": ["is", "am", "are", "does"],
-                "answer": "are",
-                "explanation": "Keys — множественное число.",
-            },
-
-            {
-                "order": 20,
-                "prompt": "Is Marat at home?",
-                "options": [
-                    "Yes, he is.",
-                    "Yes, he's.",
-                    "Yes, he are.",
-                    "Yes, it is.",
-                ],
-                "answer": "Yes, he is.",
-                "explanation": "В кратком положительном ответе: Yes, he is.",
-            },
-
-            {
-                "order": 21,
-                "prompt": "Are the students ready?",
-                "options": [
-                    "No, they is not.",
-                    "No, they aren't.",
-                    "No, they not.",
-                    "No, they isn't.",
-                ],
-                "answer": "No, they aren't.",
-                "explanation": "Students → they → are. Отрицательный ответ: No, they aren't.",
-            },
-
-            {
-                "order": 22,
-                "prompt": "Choose the correct sentence.",
-                "options": [
-                    "She is speaks English.",
-                    "She are speak English.",
-                    "She speaks English.",
-                    "She is speak English.",
-                ],
-                "answer": "She speaks English.",
-                "explanation": "Speaks — обычный смысловой глагол, поэтому is перед ним не нужен.",
-            },
-
-            {
-                "order": 23,
-                "prompt": "Choose the correct sentence about age.",
                 "options": [
                     "I have twenty years.",
                     "I am twenty years old.",
                     "I is twenty years old.",
                     "I do twenty years old.",
                 ],
-                "answer": "I am twenty years old.",
-                "explanation": "Возраст в английском выражается через to be.",
+
+                "answer":
+                    "I am twenty years old.",
+
+                "explanation":
+                    "Возраст в английском выражается через TO BE.",
             },
 
+
             {
-                "order": 24,
-                "prompt": "Choose the correct question.",
+                "order": 10,
+                "section": 5,
+                "type": "choice",
+
+                "prompt":
+                    "Choose the correct contraction: She is tired.",
+
                 "options": [
-                    "She is at home?",
-                    "Does she is at home?",
-                    "Is she at home?",
-                    "Are she at home?",
+                    "She's tired.",
+                    "She're tired.",
+                    "She'm tired.",
+                    "She tired.",
                 ],
-                "answer": "Is she at home?",
-                "explanation": "В вопросе is ставится перед подлежащим.",
+
+                "answer":
+                    "She's tired.",
+
+                "explanation":
+                    "SHE IS → SHE'S.",
+            },
+
+
+            {
+                "order": 11,
+                "section": 5,
+                "type": "choice",
+
+                "prompt":
+                    "Choose the correct contraction: They are busy.",
+
+                "options": [
+                    "They're busy.",
+                    "They's busy.",
+                    "They'm busy.",
+                    "Their busy.",
+                ],
+
+                "answer":
+                    "They're busy.",
+
+                "explanation":
+                    "THEY ARE → THEY'RE.",
+            },
+
+
+            {
+                "order": 12,
+                "section": 6,
+                "type": "fill",
+
+                "prompt":
+                    "I ___ not tired.",
+
+                "options": [],
+
+                "answer":
+                    "am",
+
+                "explanation":
+                    "Правильно: I AM NOT.",
+            },
+
+
+            {
+                "order": 13,
+                "section": 6,
+                "type": "choice",
+
+                "prompt":
+                    "Choose the correct negative sentence.",
+
+                "options": [
+                    "He not is at home.",
+                    "He isn't at home.",
+                    "He don't is at home.",
+                    "He aren't at home.",
+                ],
+
+                "answer":
+                    "He isn't at home.",
+
+                "explanation":
+                    "HE → IS → ISN'T.",
+            },
+
+
+            {
+                "order": 14,
+                "section": 7,
+                "type": "choice",
+
+                "prompt":
+                    "___ she a doctor?",
+
+                "options": [
+                    "Am",
+                    "Are",
+                    "Is",
+                    "Does",
+                ],
+
+                "answer":
+                    "Is",
+
+                "explanation":
+                    "В вопросе IS ставится перед SHE.",
+            },
+
+
+            {
+                "order": 15,
+                "section": 7,
+                "type": "build",
+
+                "prompt":
+                    "Собери вопрос.",
+
+                "options": [
+                    "Are",
+                    "they",
+                    "at",
+                    "home",
+                ],
+
+                "answer":
+                    "Are they at home",
+
+                "explanation":
+                    "В вопросе ARE стоит перед THEY.",
+            },
+
+
+            {
+                "order": 16,
+                "section": 8,
+                "type": "choice",
+
+                "prompt":
+                    "Are you ready?",
+
+                "options": [
+                    "Yes, I'm.",
+                    "Yes, I am.",
+                    "Yes, you are.",
+                    "Yes, I is.",
+                ],
+
+                "answer":
+                    "Yes, I am.",
+
+                "explanation":
+                    "В положительном кратком ответе используем YES, I AM.",
+            },
+
+
+            {
+                "order": 17,
+                "section": 8,
+                "type": "choice",
+
+                "prompt":
+                    "Is Marat at home?",
+
+                "options": [
+                    "Yes, he is.",
+                    "Yes, he's.",
+                    "Yes, he are.",
+                    "Yes, it is.",
+                ],
+
+                "answer":
+                    "Yes, he is.",
+
+                "explanation":
+                    "Положительный краткий ответ: YES, HE IS.",
+            },
+
+
+            {
+                "order": 18,
+                "section": 8,
+                "type": "choice",
+
+                "prompt":
+                    "Where ___ my keys?",
+
+                "options": [
+                    "is",
+                    "am",
+                    "are",
+                    "does",
+                ],
+
+                "answer":
+                    "are",
+
+                "explanation":
+                    "Keys — множественное число → WHERE ARE.",
+            },
+
+
+            {
+                "order": 19,
+                "section": 9,
+                "type": "choice",
+
+                "prompt":
+                    "Choose the correct sentence.",
+
+                "options": [
+                    "She is speaks English.",
+                    "She speaks English.",
+                    "She are speak English.",
+                    "She is speak English.",
+                ],
+
+                "answer":
+                    "She speaks English.",
+
+                "explanation":
+                    "SPEAKS — обычный смысловой глагол. IS перед ним не нужен.",
+            },
+
+
+            {
+                "order": 20,
+                "section": 9,
+                "type": "choice",
+
+                "prompt":
+                    "Choose the correct pair.",
+
+                "options": [
+                    "He is a teacher. / He works at a school.",
+                    "He a teacher. / He is works at a school.",
+                    "He are a teacher. / He works is at a school.",
+                    "He is teacher. / He is work at school.",
+                ],
+
+                "answer":
+                    "He is a teacher. / He works at a school.",
+
+                "explanation":
+                    "Профессия требует TO BE; действие WORKS используется без IS.",
             },
 
         ]
 
-        for data in exercises:
+
+        # =================================================
+        # 10 FINAL TEST QUESTIONS
+        # =================================================
+
+        final_test = [
+
+            {
+                "order": 21,
+
+                "prompt":
+                    "My parents ___ at home.",
+
+                "options": [
+                    "is",
+                    "am",
+                    "are",
+                    "be",
+                ],
+
+                "answer":
+                    "are",
+
+                "explanation":
+                    "Parents — множественное число → ARE.",
+            },
+
+
+            {
+                "order": 22,
+
+                "prompt":
+                    "This book ___ very useful.",
+
+                "options": [
+                    "am",
+                    "are",
+                    "is",
+                    "do",
+                ],
+
+                "answer":
+                    "is",
+
+                "explanation":
+                    "Book — единственное число → IS.",
+            },
+
+
+            {
+                "order": 23,
+
+                "prompt":
+                    "It ___ five o'clock.",
+
+                "options": [
+                    "am",
+                    "is",
+                    "are",
+                    "does",
+                ],
+
+                "answer":
+                    "is",
+
+                "explanation":
+                    "Для времени используется IT IS.",
+            },
+
+
+            {
+                "order": 24,
+
+                "prompt":
+                    "Choose the correct negative sentence.",
+
+                "options": [
+                    "We isn't late.",
+                    "We aren't late.",
+                    "We don't are late.",
+                    "We not late.",
+                ],
+
+                "answer":
+                    "We aren't late.",
+
+                "explanation":
+                    "WE → ARE → AREN'T.",
+            },
+
+
+            {
+                "order": 25,
+
+                "prompt":
+                    "___ your sister at work?",
+
+                "options": [
+                    "Are",
+                    "Is",
+                    "Am",
+                    "Does",
+                ],
+
+                "answer":
+                    "Is",
+
+                "explanation":
+                    "Your sister — один человек → IS.",
+            },
+
+
+            {
+                "order": 26,
+
+                "prompt":
+                    "How old ___ your children?",
+
+                "options": [
+                    "is",
+                    "are",
+                    "am",
+                    "do",
+                ],
+
+                "answer":
+                    "are",
+
+                "explanation":
+                    "Children — множественное число → ARE.",
+            },
+
+
+            {
+                "order": 27,
+
+                "prompt":
+                    "Are the students ready?",
+
+                "options": [
+                    "No, they isn't.",
+                    "No, they aren't.",
+                    "No, they don't.",
+                    "No, they not.",
+                ],
+
+                "answer":
+                    "No, they aren't.",
+
+                "explanation":
+                    "THEY → ARE → AREN'T.",
+            },
+
+
+            {
+                "order": 28,
+
+                "prompt":
+                    "Choose the correct sentence.",
+
+                "options": [
+                    "I am from Kazakhstan.",
+                    "I is from Kazakhstan.",
+                    "I are from Kazakhstan.",
+                    "I from Kazakhstan.",
+                ],
+
+                "answer":
+                    "I am from Kazakhstan.",
+
+                "explanation":
+                    "I всегда используется с AM.",
+            },
+
+
+            {
+                "order": 29,
+
+                "prompt":
+                    "Choose the correct sentence.",
+
+                "options": [
+                    "They are live in Astana.",
+                    "They live in Astana.",
+                    "They is live in Astana.",
+                    "They are lives in Astana.",
+                ],
+
+                "answer":
+                    "They live in Astana.",
+
+                "explanation":
+                    "LIVE — обычный смысловой глагол, поэтому ARE перед ним не нужен.",
+            },
+
+
+            {
+                "order": 30,
+
+                "prompt":
+                    "Choose the fully correct option.",
+
+                "options": [
+                    "She is tired, but she works today.",
+                    "She tired, but she is works today.",
+                    "She is tired, but she is work today.",
+                    "She are tired, but she works is today.",
+                ],
+
+                "answer":
+                    "She is tired, but she works today.",
+
+                "explanation":
+                    "TIRED требует TO BE, а WORKS — обычный смысловой глагол.",
+            },
+
+        ]
+
+
+        valid_orders = []
+
+
+        for data in (
+            training
+            +
+            final_test
+        ):
+
+            valid_orders.append(
+                data["order"]
+            )
+
+
+            if data["order"] <= 20:
+                section = (
+                    section_objects[
+                        data["section"]
+                    ]
+                )
+            else:
+                section = None
+
 
             GrammarExercise.objects.update_or_create(
                 lesson=lesson,
                 order=data["order"],
+
                 defaults={
-                    "exercise_type": GrammarExercise.Type.CHOICE,
-                    "prompt": data["prompt"],
-                    "options": data["options"],
-                    "correct_answer": data["answer"],
-                    "explanation": data["explanation"],
-                    "is_published": True,
+                    "section":
+                        section,
+
+                    "exercise_type":
+                        data.get(
+                            "type",
+                            "choice",
+                        ),
+
+                    "prompt":
+                        data["prompt"],
+
+                    "options":
+                        data["options"],
+
+                    "correct_answer":
+                        data["answer"],
+
+                    "explanation":
+                        data["explanation"],
+
+                    "is_published":
+                        True,
                 },
             )
 
+
+        GrammarExercise.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__in=valid_orders,
+        ).delete()
+
+
+        GrammarLessonSection.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__in=[
+                item["order"]
+                for item in sections
+            ],
+        ).delete()
+
+
         self.stdout.write(
             self.style.SUCCESS(
-                "✅ A1 Lesson 10 seeded: "
-                "TO BE — AM, IS, ARE"
+                "✅ Interactive A1 Lesson 10 seeded"
             )
         )
 
         self.stdout.write(
-            f"Sections: {lesson.sections.count()}"
+            f"Micro rules: "
+            f"{lesson.sections.count()}"
         )
 
         self.stdout.write(
-            f"Exercises: {lesson.exercises.count()}"
+            "Training exercises: "
+            f"{lesson.exercises.filter(section__isnull=False).count()}"
+        )
+
+        self.stdout.write(
+            "Final test: "
+            f"{lesson.exercises.filter(section__isnull=True).count()}"
         )

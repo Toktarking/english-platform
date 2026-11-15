@@ -1,0 +1,689 @@
+{% extends "vocabulary/base.html" %}
+
+
+{% block title %}
+Grammar · Профиль
+{% endblock %}
+
+
+{% block content %}
+
+<style>
+
+.g-profile {
+    width: min(720px, 92%);
+
+    margin:
+        18px auto 20px;
+}
+
+
+/* =====================================================
+   PROFILE
+   ===================================================== */
+
+.profile-card {
+    padding: 22px;
+
+    background: white;
+
+    border:
+        1px solid
+        #e5e7eb;
+
+    border-radius: 20px;
+
+    text-align: center;
+
+    box-shadow:
+        0 6px 22px
+        rgba(17, 24, 39, .035);
+}
+
+.avatar {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 68px;
+    height: 68px;
+
+    margin:
+        0 auto 12px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #dbeafe,
+            #ede9fe
+        );
+
+    border-radius: 50%;
+
+    color: #7c3aed;
+
+    font-size: 27px;
+    font-weight: 950;
+}
+
+.username {
+    color: #111827;
+
+    font-size: 22px;
+    font-weight: 900;
+}
+
+.module {
+    margin-top: 4px;
+
+    color: #6b7280;
+
+    font-size: 12px;
+}
+
+
+/* =====================================================
+   STREAK
+   ===================================================== */
+
+.streak-card {
+    display: flex;
+
+    align-items: center;
+
+    gap: 18px;
+
+    margin-top: 14px;
+
+    padding: 20px;
+
+    background: white;
+
+    border:
+        1px solid
+        #e5e7eb;
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 5px 18px
+        rgba(17, 24, 39, .025);
+}
+
+.streak-fire {
+    font-size: 43px;
+}
+
+.streak-number {
+    color: #111827;
+
+    font-size: 31px;
+    font-weight: 950;
+}
+
+.streak-label {
+    margin-top: 1px;
+
+    color: #6b7280;
+
+    font-size: 12px;
+}
+
+
+/* =====================================================
+   WEEK
+   ===================================================== */
+
+.week-card {
+    margin-top: 10px;
+
+    padding: 20px;
+
+    background: white;
+
+    border:
+        1px solid
+        #e5e7eb;
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 5px 18px
+        rgba(17, 24, 39, .025);
+}
+
+.section-title {
+    color: #111827;
+
+    font-size: 19px;
+    font-weight: 900;
+}
+
+.section-note {
+    margin-top: 4px;
+
+    color: #9ca3af;
+
+    font-size: 11px;
+}
+
+.week-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            7,
+            minmax(0, 1fr)
+        );
+
+    gap: 5px;
+
+    margin-top: 17px;
+}
+
+.week-day {
+    padding:
+        10px 2px;
+
+    background: #f9fafb;
+
+    border:
+        1px solid
+        #e5e7eb;
+
+    border-radius: 10px;
+
+    text-align: center;
+}
+
+.week-day.completed {
+    background: #dcfce7;
+
+    border-color: #bbf7d0;
+
+    color: #15803d;
+}
+
+.week-day.today {
+    background: #ede9fe;
+
+    border-color: #c4b5fd;
+
+    color: #6d28d9;
+}
+
+.week-day.future {
+    opacity: .55;
+}
+
+.week-name {
+    font-size: 9px;
+    font-weight: 850;
+}
+
+.week-mark {
+    height: 20px;
+
+    margin-top: 5px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 16px;
+    font-weight: 950;
+}
+
+
+/* =====================================================
+   PROGRESS
+   ===================================================== */
+
+.progress-card {
+    margin-top: 10px;
+
+    padding: 20px;
+
+    background: white;
+
+    border:
+        1px solid
+        #e5e7eb;
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 5px 18px
+        rgba(17, 24, 39, .025);
+}
+
+.progress-head {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 15px;
+
+    margin-top: 17px;
+}
+
+.progress-label {
+    color: #6b7280;
+
+    font-size: 10px;
+}
+
+.progress-percent {
+    color: #7c3aed;
+
+    font-size: 11px;
+    font-weight: 900;
+}
+
+.progress-track {
+    width: 100%;
+    height: 8px;
+
+    margin-top: 7px;
+
+    overflow: hidden;
+
+    background: #f0f1f3;
+
+    border-radius: 999px;
+}
+
+.progress-bar {
+    height: 100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            #7c3aed,
+            #8b5cf6
+        );
+
+    border-radius: 999px;
+}
+
+
+/* =====================================================
+   STATS
+   ===================================================== */
+
+.stats-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            2,
+            minmax(0, 1fr)
+        );
+
+    gap: 9px;
+
+    margin-top: 15px;
+}
+
+.stat {
+    padding: 15px;
+
+    background: #f9fafb;
+
+    border:
+        1px solid
+        #e5e7eb;
+
+    border-radius: 14px;
+}
+
+.stat-number {
+    color: #111827;
+
+    font-size: 23px;
+    font-weight: 950;
+}
+
+.stat-label {
+    margin-top: 3px;
+
+    color: #9ca3af;
+
+    font-size: 9px;
+}
+
+
+/* =====================================================
+   LOGOUT
+   ===================================================== */
+
+.logout-card {
+    margin-top: 10px;
+
+    padding: 20px;
+
+    background: white;
+
+    border:
+        1px solid
+        #e5e7eb;
+
+    border-radius: 18px;
+}
+
+.logout-form {
+    margin: 0;
+}
+
+.logout-button {
+    width: 100%;
+    min-height: 47px;
+
+    background: white;
+
+    border:
+        1px solid
+        #fecaca;
+
+    border-radius: 13px;
+
+    color: #dc2626;
+
+    font-family: inherit;
+
+    font-size: 13px;
+    font-weight: 900;
+
+    cursor: pointer;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 420px) {
+
+    .week-grid {
+        gap: 4px;
+    }
+
+    .week-day {
+        padding:
+            9px 1px;
+    }
+
+}
+
+</style>
+
+
+<div class="g-profile">
+
+
+    <!-- PROFILE -->
+
+    <div class="profile-card">
+
+        <div class="avatar">
+            {{ request.user.username|first|upper }}
+        </div>
+
+        <div class="username">
+            {{ request.user.username }}
+        </div>
+
+        <div class="module">
+            Grammar · A1
+        </div>
+
+    </div>
+
+
+    <!-- STREAK -->
+
+    <div class="streak-card">
+
+        <div class="streak-fire">
+            🔥
+        </div>
+
+        <div>
+
+            <div class="streak-number">
+                {{ streak }}
+            </div>
+
+            <div class="streak-label">
+                дней подряд в Grammar
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- WEEK -->
+
+    <div class="week-card">
+
+        <div class="section-title">
+            Эта неделя
+        </div>
+
+        <div class="section-note">
+            {{ week_completed }}
+            из 7 дней с Grammar
+        </div>
+
+
+        <div class="week-grid">
+
+            {% for day in week_days %}
+
+                <div
+                    class="
+                        week-day
+                        {{ day.state }}
+                    "
+                >
+
+                    <div class="week-name">
+                        {{ day.name }}
+                    </div>
+
+
+                    <div class="week-mark">
+
+                        {% if day.completed %}
+
+                            ✓
+
+                        {% elif day.is_today %}
+
+                            ●
+
+                        {% elif day.state == "missed" %}
+
+                            ×
+
+                        {% else %}
+
+                            ·
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+
+    <!-- PROGRESS -->
+
+    <div class="progress-card">
+
+        <div class="section-title">
+            Прогресс A1
+        </div>
+
+        <div class="section-note">
+            Общая статистика Grammar
+        </div>
+
+
+        <div class="progress-head">
+
+            <div class="progress-label">
+                Lessons
+            </div>
+
+            <div class="progress-percent">
+                {{ lesson_percent }}%
+            </div>
+
+        </div>
+
+
+        <div class="progress-track">
+
+            <div
+                class="progress-bar"
+                style="width: {{ lesson_percent }}%;"
+            ></div>
+
+        </div>
+
+
+        <div class="stats-grid">
+
+
+            <div class="stat">
+
+                <div class="stat-number">
+
+                    {{ completed_lessons }}
+                    /
+                    {{ total_lessons }}
+
+                </div>
+
+                <div class="stat-label">
+                    Lessons
+                </div>
+
+            </div>
+
+
+            <div class="stat">
+
+                <div class="stat-number">
+
+                    {{ practices_completed }}
+                    /
+                    {{ total_practices }}
+
+                </div>
+
+                <div class="stat-label">
+                    Practice
+                </div>
+
+            </div>
+
+
+            <div class="stat">
+
+                <div class="stat-number">
+                    {{ total_xp }}
+                </div>
+
+                <div class="stat-label">
+                    Grammar XP
+                </div>
+
+            </div>
+
+
+            <div class="stat">
+
+                <div class="stat-number">
+                    {{ avg_score }}%
+                </div>
+
+                <div class="stat-label">
+                    Средний Final Test
+                </div>
+
+            </div>
+
+
+            <div class="stat">
+
+                <div class="stat-number">
+                    {{ days_remaining }}
+                </div>
+
+                <div class="stat-label">
+                    дней осталось
+                </div>
+
+            </div>
+
+
+            <div class="stat">
+
+                <div class="stat-number">
+
+                    {{ completed_lessons }}
+
+                </div>
+
+                <div class="stat-label">
+                    тем освоено
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <!-- LOGOUT -->
+
+    <div class="logout-card">
+
+        <form
+            method="post"
+            action="{% url 'logout' %}"
+            class="logout-form"
+        >
+
+            {% csrf_token %}
+
+            <button
+                type="submit"
+                class="logout-button"
+            >
+                Выйти из аккаунта
+            </button>
+
+        </form>
+
+    </div>
+
+
+</div>
+
+
+{% include "grammar/_bottom_nav.html" with active_nav="profile" %}
+
+
+{% endblock %}

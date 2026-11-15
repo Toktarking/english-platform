@@ -10,40 +10,59 @@ from grammar.models import (
 class Command(BaseCommand):
 
     help = (
-        "Create/update A1 Grammar Lesson 15: "
-        "There is / There are."
+        "Create/update interactive A1 Grammar "
+        "Lesson 15: There is / There are."
     )
+
 
     def handle(self, *args, **options):
 
-        lesson, _ = GrammarLesson.objects.update_or_create(
-            level="A1",
-            order=15,
-            defaults={
-                "title": "Конструкция THERE IS / THERE ARE",
-                "slug": "there-is-there-are",
-                "theory_text": "There is / There are.",
-                "estimated_minutes": 30,
-                "pass_score": 70,
-                "xp_reward": 100,
-                "is_published": True,
-            },
+        lesson, _ = (
+            GrammarLesson.objects
+            .update_or_create(
+                level="A1",
+                order=15,
+
+                defaults={
+                    "title":
+                        "Конструкция THERE IS / THERE ARE",
+
+                    "slug":
+                        "there-is-there-are",
+
+                    "theory_text":
+                        "There is / There are.",
+
+                    "estimated_minutes":
+                        17,
+
+                    "pass_score":
+                        70,
+
+                    "xp_reward":
+                        100,
+
+                    "is_published":
+                        True,
+                },
+            )
         )
+
+
+        # ================================================
+        # 10 MICRO-RULES
+        # ================================================
 
         sections = [
 
             {
                 "order": 1,
-                "title": "Что означает THERE IS / THERE ARE",
-                "body": """There is / there are используется, когда мы сообщаем, что:
 
-где-то что-то есть;
+                "title":
+                    "Что означает THERE IS / THERE ARE?",
 
-где-то кто-то находится;
-
-существует предмет, человек или явление.
-
-Примеры:
+                "body":
+                    """THERE IS / THERE ARE сообщает, что где-то что-то есть или находится.
 
 There is a book on the table.
 
@@ -51,9 +70,7 @@ There are three students in the room.
 
 There is some milk in the fridge.
 
-Важно:
-
-there в этой конструкции обычно не переводится буквально как «там».
+В этой конструкции THERE обычно не переводится буквально как «там».
 
 Вся конструкция означает:
 
@@ -62,184 +79,75 @@ there в этой конструкции обычно не переводитс�
 имеется.""",
             },
 
+
             {
                 "order": 2,
-                "title": "Когда используется THERE IS",
-                "body": """There is используется, если после конструкции стоит:
 
-один предмет;
+                "title":
+                    "Один предмет → THERE IS",
 
-один человек;
-
-неисчисляемое существительное.
-
-Примеры:
+                "body":
+                    """THERE IS используется с одним человеком или предметом.
 
 There is a chair in the room.
 
-There is a student at the door.
-
-There is some water in the bottle.
-
-Также:
+There is a teacher at the door.
 
 There is a problem.
 
-There is a teacher in the classroom.
+С одним исчисляемым существительным обычно нужен определитель:
 
-There is some milk in the fridge.""",
+a book
+
+an apple
+
+my phone
+
+the teacher
+
+Не:
+
+There is book.
+
+А:
+
+There is a book.""",
             },
+
 
             {
                 "order": 3,
-                "title": "Когда используется THERE ARE",
-                "body": """There are используется, если после конструкции стоит существительное во множественном числе.
 
-Примеры:
+                "title":
+                    "Много предметов → THERE ARE",
+
+                "body":
+                    """THERE ARE используется с существительными во множественном числе.
 
 There are two books on the table.
 
-There are many students in the classroom.
+There are many students in the room.
 
 There are some apples in the bag.
 
-There are no chairs in the room.
+There are no chairs here.
 
-Запомните:
+Главная схема:
 
-один предмет → there is
+singular → THERE IS
 
-неисчисляемое → there is
-
-несколько предметов → there are.""",
+plural → THERE ARE.""",
             },
+
 
             {
                 "order": 4,
-                "title": "Главная таблица",
-                "body": """Сравните:
 
-Один предмет:
+                "title":
+                    "Неисчисляемые → THERE IS",
 
-There is a chair.
-
-Один человек:
-
-There is a teacher.
-
-Неисчисляемое:
-
-There is water.
-
-Несколько предметов:
-
-There are chairs.
-
-Несколько людей:
-
-There are students.
-
-Коротко:
-
-singular → there is
-
-uncountable → there is
-
-plural → there are.""",
-            },
-
-            {
-                "order": 5,
-                "title": "Порядок слов",
-                "body": """Основная формула:
-
-There is / There are
-+
-предмет или человек
-+
-место
-
-Примеры:
-
-There is a book on the table.
-
-There are students in the room.
-
-There is milk in the fridge.
-
-Место можно поставить в начале:
-
-On the table, there is a book.
-
-Но для начинающего проще использовать основной порядок:
-
-There is a book on the table.""",
-            },
-
-            {
-                "order": 6,
-                "title": "A / AN / SOME и числа",
-                "body": """С одним исчисляемым существительным после there is обычно нужен определитель:
-
-a;
-
-an;
-
-the;
-
-my;
-
-this.
-
-Примеры:
-
-There is a book on the table.
-
-There is an apple in the bag.
-
-Неправильно:
-
-There is book on the table.
-
-С множественным числом после there are можно использовать:
-
-число;
-
-some;
-
-many;
-
-a few;
-
-no.
-
-There are two books.
-
-There are some students.
-
-There are many trees.""",
-            },
-
-            {
-                "order": 7,
-                "title": "Неисчисляемые существительные",
-                "body": """С неисчисляемыми существительными используется there is.
-
-Можно использовать:
-
-some;
-
-much;
-
-a little;
-
-little;
-
-no;
-
-a lot of.
-
-Примеры:
+                "body":
+                    """С неисчисляемыми существительными используется THERE IS.
 
 There is some water.
 
@@ -249,161 +157,40 @@ There is no information.
 
 There is a lot of work.
 
-Почему is?
+Почему IS?
 
-Потому что неисчисляемые существительные грамматически обычно рассматриваются как единственное число.""",
-            },
-
-            {
-                "order": 8,
-                "title": "Отрицание",
-                "body": """Отрицание строится при помощи not.
-
-There is not...
-
-There are not...
-
-Сокращения:
-
-there isn't;
-
-there aren't.
+Потому что uncountable nouns грамматически обычно не имеют формы множественного числа.
 
 Примеры:
 
-There isn't a book on the table.
-
-There isn't any milk.
-
-There aren't any students in the room.
-
-There aren't many cars outside.
-
-Также можно использовать no:
-
-There is no milk.
-
-There are no students.
-
-Сравните:
-
-There isn't any milk.
-
-There is no milk.
-
-Значение одинаковое.""",
+water
+money
+information
+milk
+work.""",
             },
 
-            {
-                "order": 9,
-                "title": "Нельзя использовать двойное отрицание",
-                "body": """Нельзя одновременно использовать not и no.
-
-Неправильно:
-
-There isn't no milk.
-
-Правильно:
-
-There isn't any milk.
-
-Или:
-
-There is no milk.
-
-То же самое:
-
-There aren't any students.
-
-Или:
-
-There are no students.""",
-            },
 
             {
-                "order": 10,
-                "title": "Вопросы IS THERE / ARE THERE",
-                "body": """Чтобы задать вопрос, is или are ставится перед there.
+                "order": 5,
 
-Утверждение:
+                "title":
+                    "SOME и ANY",
 
-There is a book on the table.
+                "body":
+                    """В утверждении часто используется SOME:
 
-Вопрос:
+There are some books.
 
-Is there a book on the table?
+There is some juice.
 
-Утверждение:
+В вопросах обычно ANY:
 
-There are students in the room.
+Are there any books?
 
-Вопрос:
+Is there any juice?
 
-Are there students in the room?
-
-Формулы:
-
-Is there + один предмет / неисчисляемое?
-
-Are there + множественное число?
-
-Примеры:
-
-Is there a bank near here?
-
-Is there any milk?
-
-Are there any students?
-
-Are there many shops nearby?""",
-            },
-
-            {
-                "order": 11,
-                "title": "Краткие ответы",
-                "body": """На вопрос Is there...?:
-
-Yes, there is.
-
-No, there isn't.
-
-На вопрос Are there...?:
-
-Yes, there are.
-
-No, there aren't.
-
-Важно:
-
-Is there a problem?
-
-Правильно:
-
-Yes, there is.
-
-Не:
-
-Yes, it is.
-
-Если вопрос начинается с there, краткий ответ тоже содержит there.""",
-            },
-
-            {
-                "order": 12,
-                "title": "SOME и ANY",
-                "body": """В утверждениях обычно используется some:
-
-There are some books on the desk.
-
-There is some juice in the fridge.
-
-В вопросах обычно any:
-
-Are there any books on the desk?
-
-Is there any juice in the fridge?
-
-В отрицаниях тоже any:
+В отрицаниях тоже ANY:
 
 There aren't any books.
 
@@ -411,85 +198,190 @@ There isn't any juice.
 
 Коротко:
 
-утверждение → some
+утверждение → SOME
 
-вопрос → any
+вопрос → ANY
 
-отрицание → any.""",
+отрицание → ANY.""",
             },
 
+
             {
-                "order": 13,
-                "title": "HOW MANY и HOW MUCH",
-                "body": """HOW MANY используется с исчисляемыми существительными во множественном числе.
+                "order": 6,
 
-Формула:
+                "title":
+                    "Отрицание: ISN'T / AREN'T",
 
-How many + noun + are there?
+                "body":
+                    """Отрицание:
+
+There isn't...
+
+There aren't...
 
 Примеры:
+
+There isn't a bank here.
+
+There isn't any milk.
+
+There aren't any students.
+
+Также можно использовать NO:
+
+There is no milk.
+
+There are no students.
+
+Сравни:
+
+There isn't any milk.
+
+There is no milk.
+
+Оба варианта означают отсутствие.
+
+Не используй двойное отрицание:
+
+There isn't no milk. ❌""",
+            },
+
+
+            {
+                "order": 7,
+
+                "title":
+                    "Вопросы: IS THERE? / ARE THERE?",
+
+                "body":
+                    """Для вопроса IS или ARE ставится перед THERE.
+
+There is a bank nearby.
+
+→ Is there a bank nearby?
+
+There are shops nearby.
+
+→ Are there shops nearby?
+
+Схема:
+
+IS THERE
++ singular / uncountable?
+
+ARE THERE
++ plural?
+
+Примеры:
+
+Is there any milk?
+
+Are there any students?
+
+Are there many shops?""",
+            },
+
+
+            {
+                "order": 8,
+
+                "title":
+                    "Краткие ответы",
+
+                "body":
+                    """Если вопрос начинается с IS THERE:
+
+Is there a problem?
+
+Yes, there is.
+
+No, there isn't.
+
+Если вопрос начинается с ARE THERE:
+
+Are there any questions?
+
+Yes, there are.
+
+No, there aren't.
+
+Важно:
+
+Не:
+
+Yes, it is.
+
+А:
+
+Yes, there is.
+
+В кратком ответе сохраняется THERE.""",
+            },
+
+
+            {
+                "order": 9,
+
+                "title":
+                    "HOW MANY / HOW MUCH",
+
+                "body":
+                    """С countable plural:
+
+HOW MANY + noun + ARE THERE?
 
 How many students are there?
 
 How many books are there?
 
-How many rooms are there?
+С uncountable:
 
-HOW MUCH используется с неисчисляемыми.
-
-Формула:
-
-How much + noun + is there?
-
-Примеры:
+HOW MUCH + noun + IS THERE?
 
 How much water is there?
 
 How much money is there?
 
-How much time is there?
-
-Нельзя:
+Не:
 
 How many are there students?
 
-How much is there water?""",
+А:
+
+How many students are there?""",
             },
 
+
             {
-                "order": 14,
-                "title": "THERE IS / ARE, HAVE / HAS и IT / THEY",
-                "body": """There is / there are сообщает о наличии или местонахождении.
+                "order": 10,
+
+                "title":
+                    "THERE IS или HAVE?",
+
+                "body":
+                    """THERE IS / ARE сообщает о наличии или местонахождении:
 
 There is a car outside.
-— Снаружи стоит машина.
 
-Have / has показывает принадлежность:
+Снаружи стоит машина.
+
+HAVE / HAS показывает принадлежность:
 
 I have a car.
-— У меня есть машина.
 
-Сравните:
+У меня есть машина.
 
-There are two children in the garden.
-
-They have two children.
-
-Также there is / are часто используется при первом упоминании:
+После первого упоминания можно использовать IT / THEY:
 
 There is a book on the table.
 
-После этого можно использовать it:
-
-It is very interesting.
-
-Множественное число:
+It is mine.
 
 There are two books on the table.
 
 They are mine.
 
-Если после конструкции несколько существительных, для начального уровня можно ориентироваться на первое:
+Если перечисляются разные предметы, для базового уровня ориентируемся на первый:
 
 There is a book and two pens.
 
@@ -498,274 +390,802 @@ There are two books and a pen.""",
 
         ]
 
+
+        section_objects = {}
+
+
         for data in sections:
 
-            GrammarLessonSection.objects.update_or_create(
-                lesson=lesson,
-                order=data["order"],
-                defaults={
-                    "title": data["title"],
-                    "body": data["body"],
-                },
+            section, _ = (
+                GrammarLessonSection.objects
+                .update_or_create(
+                    lesson=lesson,
+                    order=data["order"],
+
+                    defaults={
+                        "title":
+                            data["title"],
+
+                        "body":
+                            data["body"],
+                    },
+                )
             )
 
-        exercises = [
+            section_objects[
+                data["order"]
+            ] = section
+
+
+        # ================================================
+        # 20 TRAINING EXERCISES
+        # ================================================
+
+        training = [
 
             {
                 "order": 1,
-                "prompt": "There ___ a teacher in the classroom.",
-                "options": ["are", "is", "am", "have"],
-                "answer": "is",
-                "explanation": "Teacher — один человек, поэтому there is.",
+                "section": 1,
+                "type": "choice",
+
+                "prompt":
+                    "There ___ a teacher in the classroom.",
+
+                "options": [
+                    "are",
+                    "is",
+                    "am",
+                    "have",
+                ],
+
+                "answer":
+                    "is",
+
+                "explanation":
+                    "Teacher — один человек → THERE IS.",
             },
+
 
             {
                 "order": 2,
-                "prompt": "There ___ many students in the classroom.",
-                "options": ["is", "are", "am", "has"],
-                "answer": "are",
-                "explanation": "Students — множественное число, поэтому there are.",
+                "section": 1,
+                "type": "choice",
+
+                "prompt":
+                    "There ___ three students outside.",
+
+                "options": [
+                    "is",
+                    "are",
+                    "am",
+                    "has",
+                ],
+
+                "answer":
+                    "are",
+
+                "explanation":
+                    "Students — множественное число → THERE ARE.",
             },
+
 
             {
                 "order": 3,
-                "prompt": "There ___ some coffee in the cup.",
-                "options": ["are", "is", "be", "have"],
-                "answer": "is",
-                "explanation": "Coffee — неисчисляемое существительное.",
+                "section": 2,
+                "type": "choice",
+
+                "prompt":
+                    "Choose the correct sentence.",
+
+                "options": [
+                    "There is book on the desk.",
+                    "There are a book on the desk.",
+                    "There is a book on the desk.",
+                    "There have a book on the desk.",
+                ],
+
+                "answer":
+                    "There is a book on the desk.",
+
+                "explanation":
+                    "Один countable noun требует THERE IS + A/AN.",
             },
+
 
             {
                 "order": 4,
-                "prompt": "There ___ a few apples in the bag.",
-                "options": ["is", "are", "am", "has"],
-                "answer": "are",
-                "explanation": "Apples — множественное число.",
+                "section": 2,
+                "type": "fill",
+
+                "prompt":
+                    "There ___ an apple in the bag.",
+
+                "options": [],
+
+                "answer":
+                    "is",
+
+                "explanation":
+                    "An apple — один предмет → IS.",
             },
+
 
             {
                 "order": 5,
-                "prompt": "___ there a hospital near here?",
-                "options": ["Are", "Is", "Do", "Does"],
-                "answer": "Is",
-                "explanation": "Hospital — один объект: Is there...?",
+                "section": 3,
+                "type": "fill",
+
+                "prompt":
+                    "There ___ many cars outside.",
+
+                "options": [],
+
+                "answer":
+                    "are",
+
+                "explanation":
+                    "Cars — plural → ARE.",
             },
+
 
             {
                 "order": 6,
-                "prompt": "___ there any shops nearby?",
-                "options": ["Is", "Are", "Do", "Does"],
-                "answer": "Are",
-                "explanation": "Shops — множественное число.",
+                "section": 3,
+                "type": "choice",
+
+                "prompt":
+                    "There ___ a few chairs in the room.",
+
+                "options": [
+                    "is",
+                    "are",
+                    "am",
+                    "has",
+                ],
+
+                "answer":
+                    "are",
+
+                "explanation":
+                    "A few chairs — множественное число.",
             },
+
 
             {
                 "order": 7,
-                "prompt": "There isn't ___ sugar.",
-                "options": ["some", "any", "many", "a few"],
-                "answer": "any",
-                "explanation": "В отрицании обычно используется any.",
+                "section": 4,
+                "type": "choice",
+
+                "prompt":
+                    "There ___ some coffee in the cup.",
+
+                "options": [
+                    "are",
+                    "is",
+                    "be",
+                    "have",
+                ],
+
+                "answer":
+                    "is",
+
+                "explanation":
+                    "COFFEE — uncountable → THERE IS.",
             },
+
 
             {
                 "order": 8,
-                "prompt": "There aren't ___ chairs.",
-                "options": ["any", "much", "a little", "an"],
-                "answer": "any",
-                "explanation": "Chairs — множественное число; в отрицании используется any.",
+                "section": 4,
+                "type": "choice",
+
+                "prompt":
+                    "There ___ a little water left.",
+
+                "options": [
+                    "are",
+                    "is",
+                    "have",
+                    "be",
+                ],
+
+                "answer":
+                    "is",
+
+                "explanation":
+                    "WATER — uncountable → IS.",
             },
+
 
             {
                 "order": 9,
-                "prompt": "There is ___ water in the bottle.",
-                "options": ["a few", "some", "many", "several"],
-                "answer": "some",
-                "explanation": "Water — неисчисляемое, в утверждении подходит some.",
+                "section": 5,
+                "type": "choice",
+
+                "prompt":
+                    "There are ___ books on the shelf.",
+
+                "options": [
+                    "some",
+                    "any",
+                    "much",
+                    "a little",
+                ],
+
+                "answer":
+                    "some",
+
+                "explanation":
+                    "Это утвердительное предложение → SOME.",
             },
+
 
             {
                 "order": 10,
-                "prompt": "There are ___ books on the shelf.",
-                "options": ["some", "much", "a little", "an"],
-                "answer": "some",
-                "explanation": "Books — множественное число; some подходит.",
+                "section": 5,
+                "type": "choice",
+
+                "prompt":
+                    "Is there ___ juice in the fridge?",
+
+                "options": [
+                    "some",
+                    "any",
+                    "many",
+                    "a few",
+                ],
+
+                "answer":
+                    "any",
+
+                "explanation":
+                    "Обычный вопрос → ANY.",
             },
+
 
             {
                 "order": 11,
-                "prompt": "How many rooms ___ there in the house?",
-                "options": ["is", "are", "do", "does"],
-                "answer": "are",
-                "explanation": "How many + plural noun + are there?",
+                "section": 6,
+                "type": "choice",
+
+                "prompt":
+                    "There isn't ___ sugar.",
+
+                "options": [
+                    "some",
+                    "any",
+                    "many",
+                    "a few",
+                ],
+
+                "answer":
+                    "any",
+
+                "explanation":
+                    "В отрицании обычно используется ANY.",
             },
+
 
             {
                 "order": 12,
-                "prompt": "How much money ___ there in the bag?",
-                "options": ["are", "is", "do", "does"],
-                "answer": "is",
-                "explanation": "Money — неисчисляемое: How much money is there?",
-            },
+                "section": 6,
+                "type": "choice",
 
-            {
-                "order": 13,
-                "prompt": "Is there a problem?",
-                "options": [
-                    "Yes, there is.",
-                    "Yes, it is.",
-                    "Yes, there are.",
-                    "Yes, it does.",
-                ],
-                "answer": "Yes, there is.",
-                "explanation": "В кратком ответе сохраняется there.",
-            },
+                "prompt":
+                    "Choose the correct negative sentence.",
 
-            {
-                "order": 14,
-                "prompt": "Are there any questions?",
-                "options": [
-                    "No, there isn't.",
-                    "No, there aren't.",
-                    "No, they aren't.",
-                    "No, it isn't.",
-                ],
-                "answer": "No, there aren't.",
-                "explanation": "Вопрос Are there...? → No, there aren't.",
-            },
-
-            {
-                "order": 15,
-                "prompt": "There ___ a book and two pens on the table.",
-                "options": ["is", "are", "am", "have"],
-                "answer": "is",
-                "explanation": "Первым после конструкции стоит a book, поэтому для начального уровня используем there is.",
-            },
-
-            {
-                "order": 16,
-                "prompt": "There ___ two books and a pen on the table.",
-                "options": ["is", "are", "am", "has"],
-                "answer": "are",
-                "explanation": "Первым стоит множественное two books.",
-            },
-
-            {
-                "order": 17,
-                "prompt": "Choose the correct sentence.",
-                "options": [
-                    "There is book on the table.",
-                    "There are a book on the table.",
-                    "There is a book on the table.",
-                    "There have a book on the table.",
-                ],
-                "answer": "There is a book on the table.",
-                "explanation": "С одним исчисляемым существительным нужен there is + a/an.",
-            },
-
-            {
-                "order": 18,
-                "prompt": "Choose the correct negative sentence.",
                 "options": [
                     "There isn't no milk.",
                     "There isn't any milk.",
                     "There don't have milk.",
                     "There isn't some milk.",
                 ],
-                "answer": "There isn't any milk.",
-                "explanation": "Нельзя использовать двойное отрицание isn't + no.",
+
+                "answer":
+                    "There isn't any milk.",
+
+                "explanation":
+                    "ISN'T + NO создаёт неправильное двойное отрицание.",
             },
+
+
+            {
+                "order": 13,
+                "section": 7,
+                "type": "choice",
+
+                "prompt":
+                    "___ there a hospital near here?",
+
+                "options": [
+                    "Are",
+                    "Is",
+                    "Do",
+                    "Does",
+                ],
+
+                "answer":
+                    "Is",
+
+                "explanation":
+                    "Hospital — singular → IS THERE?",
+            },
+
+
+            {
+                "order": 14,
+                "section": 7,
+                "type": "choice",
+
+                "prompt":
+                    "___ there any shops nearby?",
+
+                "options": [
+                    "Is",
+                    "Are",
+                    "Do",
+                    "Does",
+                ],
+
+                "answer":
+                    "Are",
+
+                "explanation":
+                    "Shops — plural → ARE THERE?",
+            },
+
+
+            {
+                "order": 15,
+                "section": 8,
+                "type": "choice",
+
+                "prompt":
+                    "Is there a problem?",
+
+                "options": [
+                    "Yes, there is.",
+                    "Yes, it is.",
+                    "Yes, there are.",
+                    "Yes, it does.",
+                ],
+
+                "answer":
+                    "Yes, there is.",
+
+                "explanation":
+                    "IS THERE...? → YES, THERE IS.",
+            },
+
+
+            {
+                "order": 16,
+                "section": 8,
+                "type": "choice",
+
+                "prompt":
+                    "Are there any questions?",
+
+                "options": [
+                    "No, there isn't.",
+                    "No, there aren't.",
+                    "No, they aren't.",
+                    "No, it isn't.",
+                ],
+
+                "answer":
+                    "No, there aren't.",
+
+                "explanation":
+                    "ARE THERE...? → NO, THERE AREN'T.",
+            },
+
+
+            {
+                "order": 17,
+                "section": 9,
+                "type": "choice",
+
+                "prompt":
+                    "How many rooms ___ there in the house?",
+
+                "options": [
+                    "is",
+                    "are",
+                    "do",
+                    "does",
+                ],
+
+                "answer":
+                    "are",
+
+                "explanation":
+                    "HOW MANY + plural noun + ARE THERE?",
+            },
+
+
+            {
+                "order": 18,
+                "section": 9,
+                "type": "choice",
+
+                "prompt":
+                    "How much money ___ there in the account?",
+
+                "options": [
+                    "are",
+                    "is",
+                    "do",
+                    "does",
+                ],
+
+                "answer":
+                    "is",
+
+                "explanation":
+                    "MONEY — uncountable → HOW MUCH ... IS THERE?",
+            },
+
 
             {
                 "order": 19,
-                "prompt": "Choose the equivalent sentence: 'There isn't any milk.'",
-                "options": [
-                    "There are no milk.",
-                    "There is no milk.",
-                    "There doesn't milk.",
-                    "There is not no milk.",
-                ],
-                "answer": "There is no milk.",
-                "explanation": "Not any и no могут передавать одинаковое отсутствие.",
-            },
+                "section": 10,
+                "type": "choice",
 
-            {
-                "order": 20,
-                "prompt": "___ there any information in the report?",
-                "options": ["Are", "Is", "Do", "Does"],
-                "answer": "Is",
-                "explanation": "Information — неисчисляемое, поэтому Is there...?",
-            },
+                "prompt":
+                    "Which sentence describes location, not possession?",
 
-            {
-                "order": 21,
-                "prompt": "How many students ___ there in your group?",
-                "options": ["is", "are", "do", "does"],
-                "answer": "are",
-                "explanation": "Students — множественное число.",
-            },
-
-            {
-                "order": 22,
-                "prompt": "Choose the sentence about location, not possession.",
                 "options": [
                     "I have a car.",
                     "She has a phone.",
                     "There is a car outside.",
                     "They have two children.",
                 ],
-                "answer": "There is a car outside.",
-                "explanation": "There is сообщает о наличии или местонахождении, а have/has — о принадлежности.",
+
+                "answer":
+                    "There is a car outside.",
+
+                "explanation":
+                    "THERE IS сообщает о наличии или местонахождении.",
             },
 
-            {
-                "order": 23,
-                "prompt": "There are two books on the table. ___ are mine.",
-                "options": ["It", "They", "There", "These is"],
-                "answer": "They",
-                "explanation": "После первого упоминания множественное books можно заменить на they.",
-            },
 
             {
-                "order": 24,
-                "prompt": "Choose the correct sentence.",
+                "order": 20,
+                "section": 10,
+                "type": "choice",
+
+                "prompt":
+                    "There are two books on the table. ___ are mine.",
+
                 "options": [
-                    "There's two people outside.",
-                    "There are two people outside.",
-                    "There is two people outside.",
-                    "There have two people outside.",
+                    "It",
+                    "They",
+                    "There",
+                    "It is",
                 ],
-                "answer": "There are two people outside.",
-                "explanation": "Для правильного тестового английского с plural используется there are.",
+
+                "answer":
+                    "They",
+
+                "explanation":
+                    "BOOKS — plural, после первого упоминания используем THEY.",
             },
 
         ]
 
-        for data in exercises:
+
+        # ================================================
+        # 10 FINAL TEST QUESTIONS
+        # ================================================
+
+        final_test = [
+
+            {
+                "order": 21,
+
+                "prompt":
+                    "There ___ a new café near my house.",
+
+                "options": [
+                    "are",
+                    "is",
+                    "have",
+                    "am",
+                ],
+
+                "answer":
+                    "is",
+
+                "explanation":
+                    "A new café — singular → THERE IS.",
+            },
+
+
+            {
+                "order": 22,
+
+                "prompt":
+                    "There ___ five people in the room.",
+
+                "options": [
+                    "is",
+                    "are",
+                    "has",
+                    "be",
+                ],
+
+                "answer":
+                    "are",
+
+                "explanation":
+                    "Five people — plural → THERE ARE.",
+            },
+
+
+            {
+                "order": 23,
+
+                "prompt":
+                    "There ___ some information in the email.",
+
+                "options": [
+                    "are",
+                    "is",
+                    "have",
+                    "be",
+                ],
+
+                "answer":
+                    "is",
+
+                "explanation":
+                    "INFORMATION — uncountable → THERE IS.",
+            },
+
+
+            {
+                "order": 24,
+
+                "prompt":
+                    "Are there ___ restaurants near the hotel?",
+
+                "options": [
+                    "some",
+                    "any",
+                    "much",
+                    "a little",
+                ],
+
+                "answer":
+                    "any",
+
+                "explanation":
+                    "Обычный вопрос → ANY.",
+            },
+
+
+            {
+                "order": 25,
+
+                "prompt":
+                    "Choose the correct sentence.",
+
+                "options": [
+                    "There aren't no chairs.",
+                    "There aren't any chairs.",
+                    "There isn't any chairs.",
+                    "There don't have chairs.",
+                ],
+
+                "answer":
+                    "There aren't any chairs.",
+
+                "explanation":
+                    "CHAIRS — plural → AREN'T; после отрицания подходит ANY.",
+            },
+
+
+            {
+                "order": 26,
+
+                "prompt":
+                    "___ there any water in the bottle?",
+
+                "options": [
+                    "Are",
+                    "Is",
+                    "Do",
+                    "Does",
+                ],
+
+                "answer":
+                    "Is",
+
+                "explanation":
+                    "WATER — uncountable → IS THERE?",
+            },
+
+
+            {
+                "order": 27,
+
+                "prompt":
+                    "Are there two bathrooms?",
+
+                "options": [
+                    "Yes, there are.",
+                    "Yes, they are.",
+                    "Yes, there is.",
+                    "Yes, it is.",
+                ],
+
+                "answer":
+                    "Yes, there are.",
+
+                "explanation":
+                    "ARE THERE...? → YES, THERE ARE.",
+            },
+
+
+            {
+                "order": 28,
+
+                "prompt":
+                    "___ students are there in your class?",
+
+                "options": [
+                    "How much",
+                    "How many",
+                    "How often",
+                    "Which much",
+                ],
+
+                "answer":
+                    "How many",
+
+                "explanation":
+                    "STUDENTS — countable plural → HOW MANY.",
+            },
+
+
+            {
+                "order": 29,
+
+                "prompt":
+                    "___ time is there before the lesson?",
+
+                "options": [
+                    "How many",
+                    "How much",
+                    "How often",
+                    "How several",
+                ],
+
+                "answer":
+                    "How much",
+
+                "explanation":
+                    "TIME здесь uncountable → HOW MUCH.",
+            },
+
+
+            {
+                "order": 30,
+
+                "prompt":
+                    "Choose the fully correct pair.",
+
+                "options": [
+                    "There is a dog outside. / It is very friendly.",
+                    "There are a dog outside. / They is very friendly.",
+                    "There is dogs outside. / It are very friendly.",
+                    "There have a dog outside. / There is friendly.",
+                ],
+
+                "answer":
+                    "There is a dog outside. / It is very friendly.",
+
+                "explanation":
+                    "Первое упоминание — THERE IS; затем singular DOG заменяется на IT.",
+            },
+
+        ]
+
+
+        valid_orders = []
+
+
+        for data in (
+            training
+            +
+            final_test
+        ):
+
+            valid_orders.append(
+                data["order"]
+            )
+
+
+            if data["order"] <= 20:
+
+                section = (
+                    section_objects[
+                        data["section"]
+                    ]
+                )
+
+            else:
+
+                section = None
+
 
             GrammarExercise.objects.update_or_create(
                 lesson=lesson,
                 order=data["order"],
+
                 defaults={
-                    "exercise_type": GrammarExercise.Type.CHOICE,
-                    "prompt": data["prompt"],
-                    "options": data["options"],
-                    "correct_answer": data["answer"],
-                    "explanation": data["explanation"],
-                    "is_published": True,
+                    "section":
+                        section,
+
+                    "exercise_type":
+                        data.get(
+                            "type",
+                            "choice",
+                        ),
+
+                    "prompt":
+                        data["prompt"],
+
+                    "options":
+                        data["options"],
+
+                    "correct_answer":
+                        data["answer"],
+
+                    "explanation":
+                        data["explanation"],
+
+                    "is_published":
+                        True,
                 },
             )
 
+
+        GrammarExercise.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__in=valid_orders,
+        ).delete()
+
+
+        GrammarLessonSection.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__in=[
+                item["order"]
+                for item in sections
+            ],
+        ).delete()
+
+
         self.stdout.write(
             self.style.SUCCESS(
-                "✅ A1 Lesson 15 seeded: "
-                "THERE IS / THERE ARE"
+                "✅ Interactive A1 Lesson 15 seeded"
             )
         )
 
         self.stdout.write(
-            f"Sections: {lesson.sections.count()}"
+            f"Micro rules: "
+            f"{lesson.sections.count()}"
         )
 
         self.stdout.write(
-            f"Exercises: {lesson.exercises.count()}"
+            "Training exercises: "
+            f"{lesson.exercises.filter(section__isnull=False).count()}"
+        )
+
+        self.stdout.write(
+            "Final test: "
+            f"{lesson.exercises.filter(section__isnull=True).count()}"
         )

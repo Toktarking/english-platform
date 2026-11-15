@@ -1,6 +1,6 @@
 from django.urls import path
 
-from . import views
+from . import block_practice, views
 
 
 app_name = "grammar"
@@ -18,25 +18,25 @@ urlpatterns = [
     # Placement routes must come BEFORE <slug:slug>/.
     path(
         "placement/",
-        views.grammar_placement,
+        views.placement_disabled,
         name="placement",
     ),
 
     path(
         "placement/start/",
-        views.start_grammar_placement,
+        views.placement_disabled,
         name="placement_start",
     ),
 
     path(
         "placement/answer/",
-        views.answer_grammar_placement,
+        views.placement_disabled,
         name="placement_answer",
     ),
 
     path(
         "placement/result/",
-        views.grammar_placement_result,
+        views.placement_disabled,
         name="placement_result",
     ),
 
@@ -68,6 +68,51 @@ urlpatterns = [
         "exam-practice/answer/",
         views.answer_grammar_exam_practice,
         name="exam_practice_answer",
+    ),
+
+    path(
+        "<slug:slug>/final/",
+        views.grammar_final_test,
+        name="final_test",
+    ),
+
+    path(
+        "block/1/practice/",
+        block_practice.block_1_practice,
+        name="block_1_practice",
+    ),
+
+
+    path(
+        "block/2/practice/",
+        block_practice.block_2_practice,
+        name="block_2_practice",
+    ),
+
+
+    path(
+        "block/<int:block_order>/practice/",
+        block_practice.block_practice,
+        name="block_practice",
+    ),
+
+
+    path(
+        "balance/",
+        views.grammar_balance,
+        name="balance",
+    ),
+
+    path(
+        "rewards/",
+        views.grammar_rewards,
+        name="rewards",
+    ),
+
+    path(
+        "profile/",
+        views.grammar_profile,
+        name="profile",
     ),
 
     path(

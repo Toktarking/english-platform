@@ -10,42 +10,61 @@ from grammar.models import (
 class Command(BaseCommand):
 
     help = (
-        "Create/update A1 Grammar Lesson 26: "
-        "Past Simple with irregular verbs."
+        "Create/update interactive A1 Grammar "
+        "Lesson 26: Past Simple irregular verbs."
     )
+
 
     def handle(self, *args, **options):
 
-        lesson, _ = GrammarLesson.objects.update_or_create(
-            level="A1",
-            order=26,
-            defaults={
-                "title": "Past Simple с неправильными глаголами",
-                "slug": "past-simple-irregular-verbs",
-                "theory_text": "Past Simple with irregular verbs.",
-                "estimated_minutes": 40,
-                "pass_score": 70,
-                "xp_reward": 100,
-                "is_published": True,
-            },
+        lesson, _ = (
+            GrammarLesson.objects
+            .update_or_create(
+                level="A1",
+                order=26,
+
+                defaults={
+                    "title":
+                        "Past Simple с неправильными глаголами",
+
+                    "slug":
+                        "past-simple-irregular-verbs",
+
+                    "theory_text":
+                        "Past Simple with irregular verbs.",
+
+                    "estimated_minutes":
+                        20,
+
+                    "pass_score":
+                        70,
+
+                    "xp_reward":
+                        100,
+
+                    "is_published":
+                        True,
+                },
+            )
         )
+
 
         sections = [
 
             {
                 "order": 1,
-                "title": "Что такое неправильные глаголы",
-                "body": """У правильных глаголов Past Simple обычно образуется при помощи -ed:
+
+                "title":
+                    "Почему глаголы называются неправильными?",
+
+                "body":
+                    """Правильные глаголы обычно получают -ED:
 
 work → worked
 
 play → played
 
-study → studied
-
-Но неправильные глаголы меняют форму по-другому.
-
-Примеры:
+Но неправильные глаголы имеют особую форму Past Simple.
 
 go → went
 
@@ -53,317 +72,34 @@ see → saw
 
 have → had
 
-do → did
-
 come → came
 
 take → took
 
-Нельзя просто добавить -ed.
+Нельзя просто добавить -ED.
 
-Неправильно:
+Не:
 
 goed
 
 seed
 
+comed
+
 taked
 
-comed""",
+Форму нужно запоминать.""",
             },
+
 
             {
                 "order": 2,
-                "title": "Вторая форма глагола",
-                "body": """У неправильных глаголов для Past Simple нужно запомнить вторую форму.
 
-Примеры:
+                "title":
+                    "Вторая форма — только в утверждении",
 
-go → went
-
-see → saw
-
-have → had
-
-do → did
-
-come → came
-
-take → took
-
-get → got
-
-make → made
-
-give → gave
-
-find → found
-
-Форма Past Simple одинакова для всех лиц:
-
-I went.
-
-She went.
-
-They went.
-
-Не:
-
-He wents.""",
-            },
-
-            {
-                "order": 3,
-                "title": "GO, COME и SEE",
-                "body": """GO → WENT
-
-I went to work yesterday.
-
-She went home early.
-
-COME → CAME
-
-She came home late.
-
-They came by bus.
-
-SEE → SAW
-
-I saw him yesterday.
-
-We saw the accident.
-
-Сравните:
-
-I went to the office.
-— Я пошёл в офис.
-
-I came to the office.
-— Я пришёл в офис.
-
-Также:
-
-see = увидеть;
-
-watch = смотреть некоторое время.""",
-            },
-
-            {
-                "order": 4,
-                "title": "HAVE и DO",
-                "body": """HAVE → HAD
-
-I had a car.
-
-She had two children.
-
-Had также используется в выражениях:
-
-had breakfast;
-
-had lunch;
-
-had a meeting;
-
-had a good time.
-
-DO → DID
-
-I did my homework.
-
-She did the work.
-
-Важно:
-
-DID может быть и основным, и вспомогательным глаголом.
-
-I did my homework.
-
-Did you do your homework?
-
-В вопросе второе do остаётся в начальной форме.""",
-            },
-
-            {
-                "order": 5,
-                "title": "TAKE, GET и MAKE",
-                "body": """TAKE → TOOK
-
-I took the book.
-
-She took a taxi.
-
-He took a photo.
-
-GET → GOT
-
-I got a message.
-
-She got tired.
-
-We got home late.
-
-MAKE → MADE
-
-She made dinner.
-
-I made a mistake.
-
-They made a decision.
-
-Не путайте:
-
-do homework;
-
-do the cleaning;
-
-но:
-
-make dinner;
-
-make a mistake;
-
-make a decision.""",
-            },
-
-            {
-                "order": 6,
-                "title": "GIVE, FIND и KNOW",
-                "body": """GIVE → GAVE
-
-She gave me a book.
-
-I gave him my phone number.
-
-FIND → FOUND
-
-I found my keys.
-
-They found the answer.
-
-KNOW → KNEW
-
-I knew the answer.
-
-She knew him well.
-
-They knew the truth.""",
-            },
-
-            {
-                "order": 7,
-                "title": "THINK, SAY и TELL",
-                "body": """THINK → THOUGHT
-
-I thought about the problem.
-
-She thought he was right.
-
-SAY → SAID
-
-She said hello.
-
-He said that he was tired.
-
-TELL → TOLD
-
-She told me the truth.
-
-He told us a story.
-
-Сравните:
-
-She said that she was tired.
-
-She told me that she was tired.
-
-После tell часто указывается человек:
-
-told me;
-
-told him;
-
-told us.""",
-            },
-
-            {
-                "order": 8,
-                "title": "Другие частые неправильные глаголы",
-                "body": """LEAVE → LEFT
-
-She left early.
-
-FEEL → FELT
-
-I felt tired.
-
-BUY → BOUGHT
-
-I bought a new phone.
-
-BRING → BROUGHT
-
-She brought some documents.
-
-WRITE → WROTE
-
-I wrote an email.
-
-SPEAK → SPOKE
-
-I spoke to the teacher.
-
-EAT → ATE
-
-I ate breakfast.
-
-DRINK → DRANK
-
-I drank coffee.""",
-            },
-
-            {
-                "order": 9,
-                "title": "READ, SLEEP и WAKE",
-                "body": """READ → READ
-
-Написание одинаковое, но произношение разное.
-
-Настоящее:
-
-read /riːd/
-
-Прошлое:
-
-read /red/
-
-Пример:
-
-I read every day.
-
-I read this book yesterday.
-
-SLEEP → SLEPT
-
-I slept well.
-
-WAKE → WOKE
-
-wake up → woke up
-
-I woke up at seven.""",
-            },
-
-            {
-                "order": 10,
-                "title": "Утверждение",
-                "body": """В утвердительном предложении используется вторая форма неправильного глагола.
-
-Формула:
-
-Подлежащее + Past Simple form
-
-Примеры:
+                "body":
+                    """В утвердительном Past Simple используется вторая форма глагола.
 
 I went home.
 
@@ -371,131 +107,35 @@ She saw him.
 
 They had lunch.
 
-We came early.
-
 He took a taxi.
 
-Важно:
+Форма одинакова для всех лиц:
 
-вторая форма используется именно в утверждении.""",
+I went.
+
+He went.
+
+They went.
+
+Не:
+
+He wents.
+
+Главное правило:
+
+утверждение
+→ V2.""",
             },
 
-            {
-                "order": 11,
-                "title": "Отрицание с DIDN'T",
-                "body": """В отрицании используется:
-
-didn't + первая форма глагола
-
-Примеры:
-
-I didn't go.
-
-She didn't see him.
-
-They didn't come.
-
-He didn't take a taxi.
-
-We didn't have lunch.
-
-Неправильно:
-
-didn't went
-
-didn't saw
-
-didn't came
-
-didn't had
-
-Правильно:
-
-didn't go
-
-didn't see
-
-didn't come
-
-didn't have""",
-            },
 
             {
-                "order": 12,
-                "title": "Вопросы с DID",
-                "body": """Формула:
+                "order": 3,
 
-Did + подлежащее + первая форма глагола?
+                "title":
+                    "GO, COME, SEE, LEAVE",
 
-Примеры:
-
-Did you go home?
-
-Did she see him?
-
-Did they come?
-
-Did he take a taxi?
-
-Did you have breakfast?
-
-Неправильно:
-
-Did she went home?
-
-Правильно:
-
-Did she go home?
-
-Краткие ответы:
-
-Yes, I did.
-
-No, I didn't.""",
-            },
-
-            {
-                "order": 13,
-                "title": "Специальные вопросы и WHO",
-                "body": """Специальный вопрос:
-
-Question word + did + subject + verb?
-
-Примеры:
-
-Where did you go?
-
-What did she see?
-
-When did they come?
-
-Why did he leave?
-
-What did you buy?
-
-Но если WHO само выполняет действие, did не используется:
-
-Who came yesterday?
-
-Who saw the accident?
-
-Who took my phone?
-
-Who wrote this message?
-
-Сравните:
-
-Who called you?
-
-Who did you call?""",
-            },
-
-            {
-                "order": 14,
-                "title": "Как запоминать неправильные глаголы",
-                "body": """Неправильные глаголы лучше учить небольшими группами.
-
-Движение:
+                "body":
+                    """Частые глаголы движения:
 
 go → went
 
@@ -505,297 +145,1098 @@ leave → left
 
 run → ran
 
-Общение:
+Примеры:
 
-say → said
+I went to work.
+
+She came home late.
+
+They left early.
+
+He ran to the bus stop.
+
+SEE:
+
+see → saw
+
+I saw him yesterday.
+
+Важно:
+
+go = идти / ехать туда
+
+come = приходить / приезжать сюда.""",
+            },
+
+
+            {
+                "order": 4,
+
+                "title":
+                    "HAVE, DO, TAKE, GET, MAKE",
+
+                "body":
+                    """Частые формы:
+
+have → had
+
+do → did
+
+take → took
+
+get → got
+
+make → made
+
+Примеры:
+
+I had breakfast.
+
+She did her homework.
+
+He took a taxi.
+
+We got home late.
+
+They made a mistake.
+
+Важно:
+
+DID может быть смысловым глаголом:
+
+I did my homework.
+
+И вспомогательным:
+
+Did you do your homework?
+
+После вспомогательного DID используется DO, не DID.""",
+            },
+
+
+            {
+                "order": 5,
+
+                "title":
+                    "GIVE, FIND, KNOW, THINK",
+
+                "body":
+                    """give → gave
+
+find → found
+
+know → knew
+
+think → thought
+
+Примеры:
+
+She gave me a book.
+
+I found my keys.
+
+He knew the answer.
+
+We thought about the problem.
+
+Эти формы нельзя строить по правилу -ED — их нужно запомнить.""",
+            },
+
+
+            {
+                "order": 6,
+
+                "title":
+                    "SAY или TELL?",
+
+                "body":
+                    """say → said
 
 tell → told
 
-speak → spoke
+SAY обычно используется без прямого указания человека:
+
+She said hello.
+
+He said that he was tired.
+
+TELL часто требует человека:
+
+She told me the truth.
+
+He told us a story.
+
+Сравни:
+
+She said that she was tired.
+
+She told me that she was tired.
+
+Не:
+
+She said me.
+
+Обычно:
+
+She told me.""",
+            },
+
+
+            {
+                "order": 7,
+
+                "title":
+                    "Ещё важные неправильные глаголы",
+
+                "body":
+                    """buy → bought
+
+bring → brought
 
 write → wrote
 
-Еда:
+speak → spoke
 
 eat → ate
 
 drink → drank
 
-have → had
+feel → felt
 
-Лучше учить не только форму:
+sleep → slept
 
-go → went
+wake → woke
 
-а сразу предложение:
+Примеры:
 
-I went home yesterday.
+I bought a phone.
 
-Главное правило урока:
+She brought the documents.
 
-утверждение → вторая форма
+He wrote an email.
 
-She went.
+We spoke to the teacher.
 
-отрицание → didn't + первая форма
+They ate dinner.
 
-She didn't go.
+I drank coffee.
 
-вопрос → Did + первая форма
+She felt tired.
 
-Did she go?""",
+He woke up at seven.""",
             },
 
-        ]
-
-        for data in sections:
-
-            GrammarLessonSection.objects.update_or_create(
-                lesson=lesson,
-                order=data["order"],
-                defaults={
-                    "title": data["title"],
-                    "body": data["body"],
-                },
-            )
-
-        exercises = [
-
-            {
-                "order": 1,
-                "prompt": "We ___ to Astana last week.",
-                "options": ["went", "goed", "go", "did went"],
-                "answer": "went",
-                "explanation": "Past Simple глагола go — went.",
-            },
-
-            {
-                "order": 2,
-                "prompt": "She ___ home at six.",
-                "options": ["came", "comed", "come", "did came"],
-                "answer": "came",
-                "explanation": "Past Simple глагола come — came.",
-            },
-
-            {
-                "order": 3,
-                "prompt": "I ___ an interesting film yesterday.",
-                "options": ["saw", "see", "seed", "seen"],
-                "answer": "saw",
-                "explanation": "Past Simple глагола see — saw.",
-            },
-
-            {
-                "order": 4,
-                "prompt": "He ___ breakfast at seven.",
-                "options": ["had", "have", "haved", "has"],
-                "answer": "had",
-                "explanation": "Past Simple глагола have — had.",
-            },
-
-            {
-                "order": 5,
-                "prompt": "They ___ their homework.",
-                "options": ["did", "doed", "do", "done"],
-                "answer": "did",
-                "explanation": "Past Simple глагола do — did.",
-            },
-
-            {
-                "order": 6,
-                "prompt": "She ___ a photo.",
-                "options": ["taked", "took", "take", "taken"],
-                "answer": "took",
-                "explanation": "Past Simple глагола take — took.",
-            },
-
-            {
-                "order": 7,
-                "prompt": "I didn't ___ the answer.",
-                "options": ["knew", "know", "known", "knowing"],
-                "answer": "know",
-                "explanation": "После didn't используется первая форма know.",
-            },
 
             {
                 "order": 8,
-                "prompt": "He didn't ___ the door.",
-                "options": ["opened", "open", "opens", "opening"],
-                "answer": "open",
-                "explanation": "После didn't используется начальная форма.",
+
+                "title":
+                    "READ: написание одинаковое",
+
+                "body":
+                    """READ — особый случай.
+
+Настоящее:
+
+read /riːd/
+
+I read every day.
+
+Прошедшее:
+
+read /red/
+
+I read this book yesterday.
+
+Написание одинаковое:
+
+READ → READ
+
+Но произношение меняется.
+
+Поэтому время определяем по контексту:
+
+every day → Present Simple
+
+yesterday → Past Simple.""",
             },
+
 
             {
                 "order": 9,
-                "prompt": "Did she ___ the document?",
-                "options": ["found", "find", "finds", "finding"],
-                "answer": "find",
-                "explanation": "После did используется первая форма find.",
+
+                "title":
+                    "DIDN'T и DID возвращают первую форму",
+
+                "body":
+                    """В отрицании:
+
+DIDN'T + V1
+
+I didn't go.
+
+She didn't see him.
+
+They didn't come.
+
+Не:
+
+didn't went
+
+didn't saw
+
+didn't came
+
+В вопросе:
+
+DID + subject + V1?
+
+Did you go?
+
+Did she see him?
+
+Did they come?
+
+Вторая форма используется только в утверждении.""",
             },
+
 
             {
                 "order": 10,
-                "prompt": "Did you ___ him the truth?",
-                "options": ["told", "tell", "tells", "telling"],
-                "answer": "tell",
-                "explanation": "После did используется tell, не told.",
-            },
 
-            {
-                "order": 11,
-                "prompt": "Where did they ___?",
-                "options": ["went", "go", "gone", "going"],
-                "answer": "go",
-                "explanation": "После did → go.",
-            },
+                "title":
+                    "Специальные вопросы и WHO",
 
-            {
-                "order": 12,
-                "prompt": "What did she ___?",
-                "options": ["bought", "buy", "buys", "buying"],
-                "answer": "buy",
-                "explanation": "После did используется первая форма buy.",
-            },
+                "body":
+                    """Обычный специальный вопрос:
 
-            {
-                "order": 13,
-                "prompt": "Who ___ this email?",
-                "options": ["did write", "wrote", "write", "written"],
-                "answer": "wrote",
-                "explanation": "Who является подлежащим, поэтому did не нужен.",
-            },
+question word
++ DID
++ subject
++ V1?
 
-            {
-                "order": 14,
-                "prompt": "Did he come to the meeting?",
-                "options": [
-                    "Yes, he did.",
-                    "Yes, he came.",
-                    "Yes, he was.",
-                    "Yes, he does.",
-                ],
-                "answer": "Yes, he did.",
-                "explanation": "Краткий ответ на вопрос с did: Yes, he did.",
-            },
+Where did you go?
 
-            {
-                "order": 15,
-                "prompt": "She ___ tired after work.",
-                "options": ["felt", "feeled", "feel", "did felt"],
-                "answer": "felt",
-                "explanation": "Past Simple глагола feel — felt.",
-            },
+What did she buy?
 
-            {
-                "order": 16,
-                "prompt": "I ___ a new phone yesterday.",
-                "options": ["buyed", "bought", "buy", "did bought"],
-                "answer": "bought",
-                "explanation": "Buy → bought.",
-            },
+Why did he leave?
 
-            {
-                "order": 17,
-                "prompt": "He ___ me a book.",
-                "options": ["gived", "gave", "give", "given"],
-                "answer": "gave",
-                "explanation": "Give → gave.",
-            },
+Who did you call?
 
-            {
-                "order": 18,
-                "prompt": "We ___ the answer.",
-                "options": ["finded", "found", "find", "founded"],
-                "answer": "found",
-                "explanation": "Find → found.",
-            },
+Но если WHO само выполняет действие, DID не нужен:
 
-            {
-                "order": 19,
-                "prompt": "She ___ that the lesson was difficult.",
-                "options": ["thinked", "thought", "think", "thinks"],
-                "answer": "thought",
-                "explanation": "Think → thought.",
-            },
+Who came yesterday?
 
-            {
-                "order": 20,
-                "prompt": "He ___ me the truth.",
-                "options": ["said", "told", "telled", "tell"],
-                "answer": "told",
-                "explanation": "Tell + человек: He told me the truth.",
-            },
+Who saw the accident?
 
-            {
-                "order": 21,
-                "prompt": "I ___ an email yesterday.",
-                "options": ["writed", "wrote", "written", "write"],
-                "answer": "wrote",
-                "explanation": "Write → wrote.",
-            },
+Who took my phone?
 
-            {
-                "order": 22,
-                "prompt": "They ___ dinner at a restaurant.",
-                "options": ["eated", "ate", "eat", "eaten"],
-                "answer": "ate",
-                "explanation": "Eat → ate.",
-            },
+Who wrote this message?
 
-            {
-                "order": 23,
-                "prompt": "Choose the correct sentence.",
-                "options": [
-                    "She didn't went home.",
-                    "She didn't go home.",
-                    "She didn't gone home.",
-                    "She wasn't went home.",
-                ],
-                "answer": "She didn't go home.",
-                "explanation": "После didn't неправильный глагол возвращается в первую форму.",
-            },
+Сравни:
 
-            {
-                "order": 24,
-                "prompt": "Choose the correct sequence.",
-                "options": [
-                    "She went. / She didn't went. / Did she went?",
-                    "She went. / She didn't go. / Did she go?",
-                    "She go. / She didn't went. / Did she go?",
-                    "She was went. / She didn't go. / Was she go?",
-                ],
-                "answer": "She went. / She didn't go. / Did she go?",
-                "explanation": "Вторая форма только в утверждении; после did/didn't используется первая форма.",
+Who called you?
+→ кто позвонил тебе
+
+Who did you call?
+→ кому позвонил ты.""",
             },
 
         ]
 
-        for data in exercises:
+
+        section_objects = {}
+
+
+        for data in sections:
+
+            section, _ = (
+                GrammarLessonSection.objects
+                .update_or_create(
+                    lesson=lesson,
+                    order=data["order"],
+
+                    defaults={
+                        "title":
+                            data["title"],
+
+                        "body":
+                            data["body"],
+                    },
+                )
+            )
+
+            section_objects[
+                data["order"]
+            ] = section
+
+
+        training = [
+
+            {
+                "order": 1,
+                "section": 1,
+                "type": "choice",
+
+                "prompt":
+                    "We ___ to Astana last week.",
+
+                "options": [
+                    "went",
+                    "goed",
+                    "go",
+                    "did went",
+                ],
+
+                "answer":
+                    "went",
+
+                "explanation":
+                    "GO → WENT.",
+            },
+
+
+            {
+                "order": 2,
+                "section": 1,
+                "type": "choice",
+
+                "prompt":
+                    "I ___ an interesting film yesterday.",
+
+                "options": [
+                    "saw",
+                    "seed",
+                    "see",
+                    "did saw",
+                ],
+
+                "answer":
+                    "saw",
+
+                "explanation":
+                    "SEE → SAW.",
+            },
+
+
+            {
+                "order": 3,
+                "section": 2,
+                "type": "fill",
+
+                "prompt":
+                    "She ___ home late yesterday. (come)",
+
+                "options": [],
+
+                "answer":
+                    "came",
+
+                "explanation":
+                    "В утверждении используется V2: COME → CAME.",
+            },
+
+
+            {
+                "order": 4,
+                "section": 2,
+                "type": "choice",
+
+                "prompt":
+                    "Choose the correct Past Simple sentence.",
+
+                "options": [
+                    "He wents home.",
+                    "He went home.",
+                    "He did went home.",
+                    "He goed home.",
+                ],
+
+                "answer":
+                    "He went home.",
+
+                "explanation":
+                    "V2 глагола GO — WENT; форма одинакова для всех лиц.",
+            },
+
+
+            {
+                "order": 5,
+                "section": 3,
+                "type": "choice",
+
+                "prompt":
+                    "They ___ the office early.",
+
+                "options": [
+                    "leaved",
+                    "left",
+                    "leave",
+                    "did left",
+                ],
+
+                "answer":
+                    "left",
+
+                "explanation":
+                    "LEAVE → LEFT.",
+            },
+
+
+            {
+                "order": 6,
+                "section": 3,
+                "type": "choice",
+
+                "prompt":
+                    "She ___ to my house at six.",
+
+                "options": [
+                    "came",
+                    "comed",
+                    "come",
+                    "did came",
+                ],
+
+                "answer":
+                    "came",
+
+                "explanation":
+                    "COME → CAME.",
+            },
+
+
+            {
+                "order": 7,
+                "section": 4,
+                "type": "choice",
+
+                "prompt":
+                    "He ___ breakfast at seven.",
+
+                "options": [
+                    "had",
+                    "have",
+                    "haved",
+                    "has",
+                ],
+
+                "answer":
+                    "had",
+
+                "explanation":
+                    "HAVE → HAD.",
+            },
+
+
+            {
+                "order": 8,
+                "section": 4,
+                "type": "choice",
+
+                "prompt":
+                    "She ___ a taxi to the airport.",
+
+                "options": [
+                    "taked",
+                    "took",
+                    "take",
+                    "taken",
+                ],
+
+                "answer":
+                    "took",
+
+                "explanation":
+                    "TAKE → TOOK.",
+            },
+
+
+            {
+                "order": 9,
+                "section": 5,
+                "type": "choice",
+
+                "prompt":
+                    "I ___ my keys under the sofa.",
+
+                "options": [
+                    "finded",
+                    "found",
+                    "find",
+                    "founded",
+                ],
+
+                "answer":
+                    "found",
+
+                "explanation":
+                    "FIND → FOUND.",
+            },
+
+
+            {
+                "order": 10,
+                "section": 5,
+                "type": "choice",
+
+                "prompt":
+                    "She ___ he was right.",
+
+                "options": [
+                    "thinked",
+                    "thought",
+                    "think",
+                    "thinks",
+                ],
+
+                "answer":
+                    "thought",
+
+                "explanation":
+                    "THINK → THOUGHT.",
+            },
+
+
+            {
+                "order": 11,
+                "section": 6,
+                "type": "choice",
+
+                "prompt":
+                    "He ___ me the truth.",
+
+                "options": [
+                    "said",
+                    "told",
+                    "telled",
+                    "tell",
+                ],
+
+                "answer":
+                    "told",
+
+                "explanation":
+                    "TELL + person → HE TOLD ME.",
+            },
+
+
+            {
+                "order": 12,
+                "section": 6,
+                "type": "choice",
+
+                "prompt":
+                    "She ___ that she was tired.",
+
+                "options": [
+                    "said",
+                    "told",
+                    "telled",
+                    "say",
+                ],
+
+                "answer":
+                    "said",
+
+                "explanation":
+                    "SAY → SAID; здесь после глагола нет прямого объекта-человека.",
+            },
+
+
+            {
+                "order": 13,
+                "section": 7,
+                "type": "choice",
+
+                "prompt":
+                    "I ___ a new phone yesterday.",
+
+                "options": [
+                    "buyed",
+                    "bought",
+                    "buy",
+                    "did bought",
+                ],
+
+                "answer":
+                    "bought",
+
+                "explanation":
+                    "BUY → BOUGHT.",
+            },
+
+
+            {
+                "order": 14,
+                "section": 7,
+                "type": "choice",
+
+                "prompt":
+                    "We ___ dinner at eight.",
+
+                "options": [
+                    "eated",
+                    "ate",
+                    "eat",
+                    "eaten",
+                ],
+
+                "answer":
+                    "ate",
+
+                "explanation":
+                    "EAT → ATE.",
+            },
+
+
+            {
+                "order": 15,
+                "section": 8,
+                "type": "choice",
+
+                "prompt":
+                    "Yesterday I ___ this article.",
+
+                "options": [
+                    "read",
+                    "readed",
+                    "rode",
+                    "did readed",
+                ],
+
+                "answer":
+                    "read",
+
+                "explanation":
+                    "READ в Past Simple пишется так же: READ, но произносится /red/.",
+            },
+
+
+            {
+                "order": 16,
+                "section": 8,
+                "type": "choice",
+
+                "prompt":
+                    "He ___ up at seven yesterday.",
+
+                "options": [
+                    "waked",
+                    "woke",
+                    "wake",
+                    "woken",
+                ],
+
+                "answer":
+                    "woke",
+
+                "explanation":
+                    "WAKE → WOKE; WAKE UP → WOKE UP.",
+            },
+
+
+            {
+                "order": 17,
+                "section": 9,
+                "type": "choice",
+
+                "prompt":
+                    "She didn't ___ home early.",
+
+                "options": [
+                    "went",
+                    "go",
+                    "gone",
+                    "going",
+                ],
+
+                "answer":
+                    "go",
+
+                "explanation":
+                    "После DIDN'T используется V1 → GO.",
+            },
+
+
+            {
+                "order": 18,
+                "section": 9,
+                "type": "choice",
+
+                "prompt":
+                    "Did you ___ him yesterday?",
+
+                "options": [
+                    "saw",
+                    "see",
+                    "seen",
+                    "seeing",
+                ],
+
+                "answer":
+                    "see",
+
+                "explanation":
+                    "После DID используется V1 → SEE.",
+            },
+
+
+            {
+                "order": 19,
+                "section": 10,
+                "type": "build",
+
+                "prompt":
+                    "Собери правильный вопрос.",
+
+                "options": [
+                    "Where",
+                    "did",
+                    "you",
+                    "go",
+                ],
+
+                "answer":
+                    "Where did you go",
+
+                "explanation":
+                    "WHERE + DID + YOU + V1.",
+            },
+
+
+            {
+                "order": 20,
+                "section": 10,
+                "type": "choice",
+
+                "prompt":
+                    "Who ___ this message?",
+
+                "options": [
+                    "did wrote",
+                    "wrote",
+                    "did write who",
+                    "written",
+                ],
+
+                "answer":
+                    "wrote",
+
+                "explanation":
+                    "WHO само является подлежащим → DID не нужен.",
+            },
+
+        ]
+
+
+        final_test = [
+
+            {
+                "order": 21,
+
+                "prompt":
+                    "She ___ home very late last night.",
+
+                "options": [
+                    "came",
+                    "comed",
+                    "come",
+                    "did came",
+                ],
+
+                "answer":
+                    "came",
+
+                "explanation":
+                    "COME → CAME.",
+            },
+
+
+            {
+                "order": 22,
+
+                "prompt":
+                    "We ___ a lot of photos on holiday.",
+
+                "options": [
+                    "taked",
+                    "took",
+                    "take",
+                    "taken",
+                ],
+
+                "answer":
+                    "took",
+
+                "explanation":
+                    "TAKE → TOOK.",
+            },
+
+
+            {
+                "order": 23,
+
+                "prompt":
+                    "He ___ me his phone number.",
+
+                "options": [
+                    "gived",
+                    "gave",
+                    "give",
+                    "given",
+                ],
+
+                "answer":
+                    "gave",
+
+                "explanation":
+                    "GIVE → GAVE.",
+            },
+
+
+            {
+                "order": 24,
+
+                "prompt":
+                    "They ___ the answer immediately.",
+
+                "options": [
+                    "knowed",
+                    "knew",
+                    "know",
+                    "known",
+                ],
+
+                "answer":
+                    "knew",
+
+                "explanation":
+                    "KNOW → KNEW.",
+            },
+
+
+            {
+                "order": 25,
+
+                "prompt":
+                    "She ___ an email to her manager.",
+
+                "options": [
+                    "writed",
+                    "wrote",
+                    "written",
+                    "write",
+                ],
+
+                "answer":
+                    "wrote",
+
+                "explanation":
+                    "WRITE → WROTE.",
+            },
+
+
+            {
+                "order": 26,
+
+                "prompt":
+                    "I didn't ___ breakfast this morning.",
+
+                "options": [
+                    "had",
+                    "have",
+                    "has",
+                    "having",
+                ],
+
+                "answer":
+                    "have",
+
+                "explanation":
+                    "После DIDN'T используется V1 → HAVE.",
+            },
+
+
+            {
+                "order": 27,
+
+                "prompt":
+                    "Did she ___ the documents?",
+
+                "options": [
+                    "brought",
+                    "bring",
+                    "brings",
+                    "bringing",
+                ],
+
+                "answer":
+                    "bring",
+
+                "explanation":
+                    "После DID используется V1 → BRING.",
+            },
+
+
+            {
+                "order": 28,
+
+                "prompt":
+                    "What did they ___ at the restaurant?",
+
+                "options": [
+                    "ate",
+                    "eat",
+                    "eaten",
+                    "eating",
+                ],
+
+                "answer":
+                    "eat",
+
+                "explanation":
+                    "После DID используется базовая форма EAT.",
+            },
+
+
+            {
+                "order": 29,
+
+                "prompt":
+                    "Choose the correct sentence.",
+
+                "options": [
+                    "Who took my phone?",
+                    "Who did took my phone?",
+                    "Who did take my phone did?",
+                    "Who taken my phone?",
+                ],
+
+                "answer":
+                    "Who took my phone?",
+
+                "explanation":
+                    "WHO выполняет действие → используем V2 без DID.",
+            },
+
+
+            {
+                "order": 30,
+
+                "prompt":
+                    "Choose the fully correct sequence.",
+
+                "options": [
+                    "She went. / She didn't go. / Did she go?",
+                    "She went. / She didn't went. / Did she went?",
+                    "She go. / She didn't went. / Did she go?",
+                    "She was went. / She didn't go. / Was she go?",
+                ],
+
+                "answer":
+                    "She went. / She didn't go. / Did she go?",
+
+                "explanation":
+                    "V2 используется в утверждении; после DIDN'T и DID возвращаемся к V1.",
+            },
+
+        ]
+
+
+        valid_orders = []
+
+
+        for data in (
+            training
+            +
+            final_test
+        ):
+
+            valid_orders.append(
+                data["order"]
+            )
+
+
+            if data["order"] <= 20:
+
+                section = (
+                    section_objects[
+                        data["section"]
+                    ]
+                )
+
+            else:
+
+                section = None
+
 
             GrammarExercise.objects.update_or_create(
                 lesson=lesson,
                 order=data["order"],
+
                 defaults={
-                    "exercise_type": GrammarExercise.Type.CHOICE,
-                    "prompt": data["prompt"],
-                    "options": data["options"],
-                    "correct_answer": data["answer"],
-                    "explanation": data["explanation"],
-                    "is_published": True,
+                    "section":
+                        section,
+
+                    "exercise_type":
+                        data.get(
+                            "type",
+                            "choice",
+                        ),
+
+                    "prompt":
+                        data["prompt"],
+
+                    "options":
+                        data["options"],
+
+                    "correct_answer":
+                        data["answer"],
+
+                    "explanation":
+                        data["explanation"],
+
+                    "is_published":
+                        True,
                 },
             )
 
+
+        GrammarExercise.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__in=valid_orders,
+        ).delete()
+
+
+        GrammarLessonSection.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__in=[
+                item["order"]
+                for item in sections
+            ],
+        ).delete()
+
+
         self.stdout.write(
             self.style.SUCCESS(
-                "✅ A1 Lesson 26 seeded: "
-                "Past Simple — irregular verbs"
+                "✅ Interactive A1 Lesson 26 seeded"
             )
         )
 
         self.stdout.write(
-            f"Sections: {lesson.sections.count()}"
+            f"Micro rules: "
+            f"{lesson.sections.count()}"
         )
 
         self.stdout.write(
-            f"Exercises: {lesson.exercises.count()}"
+            "Training exercises: "
+            f"{lesson.exercises.filter(section__isnull=False).count()}"
+        )
+
+        self.stdout.write(
+            "Final test: "
+            f"{lesson.exercises.filter(section__isnull=True).count()}"
         )

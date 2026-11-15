@@ -10,139 +10,179 @@ from grammar.models import (
 class Command(BaseCommand):
 
     help = (
-        "Create/update A1 Grammar Lesson 6: "
-        "Some, any, no and compounds."
+        "Create/update interactive A1 Grammar "
+        "Lesson 6: Some, any, no and compounds."
     )
 
-    def handle(self, *args, **options):
 
-        lesson, _ = GrammarLesson.objects.update_or_create(
-            level="A1",
-            order=6,
-            defaults={
-                "title": (
-                    "Some, any, no и их производные"
-                ),
-                "slug": "some-any-no",
-                "theory_text": (
-                    "Some, any, no and compounds."
-                ),
-                "estimated_minutes": 30,
-                "pass_score": 70,
-                "xp_reward": 100,
-                "is_published": True,
-            },
+    def handle(
+        self,
+        *args,
+        **options,
+    ):
+
+        lesson, _ = (
+            GrammarLesson.objects
+            .update_or_create(
+                level="A1",
+                order=6,
+                defaults={
+                    "title":
+                        "Some, any, no и их производные",
+
+                    "slug":
+                        "some-any-no",
+
+                    "theory_text":
+                        "Some, any, no and compounds.",
+
+                    "estimated_minutes":
+                        16,
+
+                    "pass_score":
+                        70,
+
+                    "xp_reward":
+                        100,
+
+                    "is_published":
+                        True,
+                },
+            )
         )
+
+
+        # =================================================
+        # 9 MICRO-RULES
+        # =================================================
 
         sections = [
 
             {
                 "order": 1,
-                "title": "Some, any и no",
-                "body": """Эти слова помогают говорить о неопределённом количестве людей, предметов или вещества.
 
-Some — немного, несколько, какие-то.
+                "title":
+                    "Some, any или no?",
 
-Any — какие-нибудь, сколько-нибудь, никакие.
+                "body":
+                    """Эти слова показывают неопределённое количество.
 
-No — никакой, ни один, нисколько.
+SOME:
 
-Сравните:
+some books
+some water
+
+ANY:
+
+any books
+any water
+
+NO:
+
+no books
+no water
+
+Базовая схема:
+
+утверждение → SOME
+
+вопрос → ANY
+
+отрицание с NOT → ANY
+
+отрицание без NOT → NO
+
+Сравни:
 
 I have some books.
-— У меня есть несколько книг.
 
 Do you have any books?
-— У тебя есть какие-нибудь книги?
 
-I have no books.
-— У меня нет книг.""",
+I don't have any books.
+
+I have no books.""",
             },
+
 
             {
                 "order": 2,
-                "title": "Когда используется some",
-                "body": """Some чаще всего используется в утвердительных предложениях.
 
-Оно употребляется:
+                "title":
+                    "SOME — обычно в утверждениях",
 
-с исчисляемыми существительными во множественном числе;
+                "body":
+                    """SOME используется и с countable plural, и с uncountable nouns.
 
-с неисчисляемыми существительными.
+Countable:
+
+some books
+some students
+some apples
+
+Uncountable:
+
+some water
+some money
+some information
+some advice
 
 Примеры:
 
-some books;
-some students;
-some apples;
-some questions;
-
-some water;
-some money;
-some information;
-some advice.
-
-Предложения:
-
 I bought some apples.
-
-There are some students in the classroom.
 
 We need some information.
 
 She gave me some advice.""",
             },
 
+
             {
                 "order": 3,
-                "title": "Когда используется any",
-                "body": """Any чаще всего используется:
 
-в вопросах;
+                "title":
+                    "ANY — вопросы и отрицания",
 
-в отрицательных предложениях.
-
-Примеры:
-
-any books;
-any students;
-any water;
-any money;
-any information.
-
-Вопросы:
+                "body":
+                    """ANY часто используется в обычных вопросах:
 
 Do you have any questions?
 
-Is there any milk in the fridge?
+Is there any milk?
 
-Did she give you any information?
+Did you receive any information?
 
-Отрицания:
+И в отрицаниях с NOT:
 
-I do not have any money.
+I don't have any money.
 
-There are not any books on the table.
+There aren't any books here.
 
-We did not receive any information.""",
+We didn't receive any information.
+
+Если отрицание уже выражено через NOT, обычно не добавляем NO.""",
             },
+
 
             {
                 "order": 4,
-                "title": "Some в вопросах",
-                "body": """Обычно в вопросах используется any.
 
-Но some часто используется, когда:
+                "title":
+                    "Почему в вопросе иногда SOME?",
 
-1. мы что-то предлагаем;
-2. мы о чём-то просим;
-3. ожидаем положительный ответ.
+                "body":
+                    """Вопрос не всегда требует ANY.
+
+SOME часто используется, если мы:
+
+предлагаем что-то;
+
+просим что-то;
+
+ожидаем положительный ответ.
 
 Предложение:
 
 Would you like some tea?
-
-Would you like some cake?
 
 Do you want some coffee?
 
@@ -152,286 +192,206 @@ Can I have some water, please?
 
 Could you give me some information?
 
-Can you lend me some money?
-
-Сравните:
+Сравни:
 
 Is there any coffee?
-— Мы просто спрашиваем, есть ли кофе.
+Просто спрашиваем, есть ли кофе.
 
 Would you like some coffee?
-— Мы предлагаем кофе.""",
+Предлагаем кофе.""",
             },
+
 
             {
                 "order": 5,
-                "title": "No и not any",
-                "body": """No означает полное отсутствие чего-либо.
 
-Оно ставится непосредственно перед существительным.
+                "title":
+                    "NO = NOT ANY",
 
-Примеры:
-
-no money;
-no students;
-no time;
-no information.
+                "body":
+                    """NO означает полное отсутствие чего-либо.
 
 I have no money.
 
-There is no milk in the fridge.
+There is no milk.
 
-There are no students in the classroom.
+There are no students here.
 
-No и not any часто имеют одинаковое значение:
-
-I have no money.
-
-I do not have any money.
-
-Оба предложения означают, что денег нет.""",
-            },
-
-            {
-                "order": 6,
-                "title": "Двойное отрицание",
-                "body": """В стандартном английском обычно не используется двойное отрицание в одном простом предложении.
-
-Неправильно:
-
-I do not have no money.
-
-Здесь одновременно:
-
-do not
-и
-no.
-
-Правильно:
-
-I do not have any money.
-
-Или:
+Часто NO и NOT ANY дают одинаковый смысл:
 
 I have no money.
 
-То же правило действует с nobody, nothing и nowhere.""",
-            },
+I don't have any money.
 
-            {
-                "order": 7,
-                "title": "Производные от some",
-                "body": """От some образуются:
+Но нельзя использовать оба отрицания одновременно:
 
-somebody — кто-то;
+не:
 
-someone — кто-то;
+I don't have no money.
 
-something — что-то;
+а:
 
-somewhere — где-то, куда-то.
-
-Примеры:
-
-Somebody is at the door.
-
-Someone called you.
-
-I want to eat something.
-
-There is something in the box.
-
-My keys are somewhere in the room.
-
-Let us go somewhere quiet.""",
-            },
-
-            {
-                "order": 8,
-                "title": "Производные от any",
-                "body": """От any образуются:
-
-anybody — кто-нибудь;
-
-anyone — кто-нибудь;
-
-anything — что-нибудь;
-
-anywhere — где-нибудь, куда-нибудь.
-
-Они часто используются в вопросах и отрицаниях.
-
-Is anybody at home?
-
-Did anyone call me?
-
-I do not know anybody here.
-
-Do you want anything?
-
-I did not see anything.
-
-Did you go anywhere yesterday?
-
-We did not go anywhere.""",
-            },
-
-            {
-                "order": 9,
-                "title": "Производные от no",
-                "body": """От no образуются:
-
-nobody — никто;
-
-no one — никто;
-
-nothing — ничего;
-
-nowhere — нигде, никуда.
-
-Эти слова уже имеют отрицательное значение.
-
-Поэтому дополнительное not не нужно.
-
-Правильно:
-
-Nobody knows the answer.
-
-No one came to the meeting.
-
-I know nothing about this problem.
-
-There is nothing in the bag.
-
-We have nowhere to go.
-
-Неправильно:
-
-Nobody does not know the answer.""",
-            },
-
-            {
-                "order": 10,
-                "title": "Nothing и anything",
-                "body": """Сравните:
-
-I know nothing.
-
-I do not know anything.
-
-Оба предложения означают:
-
-Я ничего не знаю.
-
-Но нельзя смешивать две конструкции:
-
-I do not know nothing. ❌
-
-Правильно:
-
-I do not know anything. ✅
+I don't have any money.
 
 или:
 
-I know nothing. ✅
-
-То же самое:
-
-I saw nobody.
-
-I did not see anybody.""",
+I have no money.""",
             },
 
+
             {
-                "order": 11,
-                "title": "Everybody, everyone, everything, everywhere",
-                "body": """Полезно знать производные от every:
+                "order": 6,
 
-everybody — все;
+                "title":
+                    "Somebody, anybody, nobody",
 
-everyone — все;
+                "body":
+                    """Для людей:
 
-everything — всё;
+somebody / someone
+кто-то
 
-everywhere — везде.
+anybody / anyone
+кто-нибудь
+
+nobody / no one
+никто
 
 Примеры:
 
-Everybody is ready.
+Someone called you.
 
-Everyone likes holidays.
+Is anybody at home?
 
-Everything is fine.
+I didn't see anybody.
 
-I looked everywhere.
+Nobody knows the answer.
 
 Важно:
 
-Everybody, everyone и everything грамматически употребляются как единственное число.
+NOBODY уже содержит отрицание.
 
-Правильно:
+Не:
 
-Everybody is here.
+Nobody doesn't know.
+
+А:
+
+Nobody knows.""",
+            },
+
+
+            {
+                "order": 7,
+
+                "title":
+                    "Something, anything, nothing и места",
+
+                "body":
+                    """Для предметов, событий или действий:
+
+something
+что-то
+
+anything
+что-нибудь
+
+nothing
+ничего
+
+Примеры:
+
+I want something to eat.
+
+Do you need anything?
+
+I don't know anything.
+
+I know nothing.
+
+Для места:
+
+somewhere
+где-то / куда-то
+
+anywhere
+где-нибудь / куда-нибудь
+
+nowhere
+нигде / некуда
+
+Примеры:
+
+Let's go somewhere quiet.
+
+Did you go anywhere?
+
+We didn't go anywhere.
+
+We have nowhere to go.""",
+            },
+
+
+            {
+                "order": 8,
+
+                "title":
+                    "Everybody и порядок слов",
+
+                "body":
+                    """Полезная группа EVERY:
+
+everybody / everyone
+все
+
+everything
+всё
+
+everywhere
+везде
+
+Everybody, everyone и everything грамматически обычно требуют единственное число:
+
+Everybody is ready.
 
 Everyone knows the answer.
 
 Everything looks good.
 
-Неправильно:
+Ещё одно важное правило:
 
-Everybody are here.
+после something, anything, nothing и похожих слов прилагательное ставится ПОСЛЕ.
 
-Everyone know the answer.""",
+something interesting
+
+anything useful
+
+nothing new
+
+someone famous
+
+Не:
+
+interesting something.""",
             },
 
-            {
-                "order": 12,
-                "title": "Прилагательное после something",
-                "body": """После слов:
-
-something;
-anything;
-nothing;
-someone;
-anybody
-
-прилагательное обычно ставится после них.
-
-Правильно:
-
-something interesting;
-
-nothing new;
-
-someone famous;
-
-anything useful.
-
-Неправильно:
-
-interesting something.
-
-Правильно:
-
-something interesting.""",
-            },
 
             {
-                "order": 13,
-                "title": "Any в значении «любой»",
-                "body": """Иногда any используется в утвердительном предложении.
+                "order": 9,
 
-Тогда оно означает:
+                "title":
+                    "ANY может означать «любой»",
+
+                "body":
+                    """ANY не всегда используется только в вопросах и отрицаниях.
+
+В утвердительном предложении ANY может означать:
 
 любой;
-любая;
-любое;
+какой угодно;
 где угодно.
 
-Примеры:
-
 You can choose any book.
-— Ты можешь выбрать любую книгу.
 
 Come any day next week.
 
@@ -439,318 +399,812 @@ Anyone can learn English.
 
 You can sit anywhere.
 
-То есть any не всегда означает только вопрос или отрицание.""",
-            },
+Итоговая схема:
 
-            {
-                "order": 14,
-                "title": "Как выбрать правильное слово",
-                "body": """Шаг 1. Определите тип предложения.
+утверждение → SOME
 
-Утверждение:
+вопрос → ANY
 
-some;
-somebody;
-something;
-somewhere.
+NOT → ANY
 
-Вопрос:
+отрицание без NOT → NO
 
-any;
-anybody;
-anything;
-anywhere.
+предложение / просьба → часто SOME
 
-Отрицание с not:
-
-any;
-anybody;
-anything;
-anywhere.
-
-Отрицание без not:
-
-no;
-nobody;
-nothing;
-nowhere.
-
-Шаг 2. Определите значение.
-
-Человек:
-
-somebody;
-anybody;
-nobody.
-
-Предмет или действие:
-
-something;
-anything;
-nothing.
-
-Место:
-
-somewhere;
-anywhere;
-nowhere.
-
-Количество перед существительным:
-
-some;
-any;
-no.
-
-И помните исключение:
-
-в предложениях и просьбах в вопросе часто используется some.""",
+«любой» → ANY.""",
             },
 
         ]
+
+
+        section_objects = {}
+
 
         for data in sections:
 
-            GrammarLessonSection.objects.update_or_create(
-                lesson=lesson,
-                order=data["order"],
-                defaults={
-                    "title": data["title"],
-                    "body": data["body"],
-                },
+            section, _ = (
+                GrammarLessonSection.objects
+                .update_or_create(
+                    lesson=lesson,
+                    order=data["order"],
+
+                    defaults={
+                        "title":
+                            data["title"],
+
+                        "body":
+                            data["body"],
+                    },
+                )
             )
 
-        exercises = [
+            section_objects[
+                data["order"]
+            ] = section
+
+
+        # =================================================
+        # 20 TRAINING EXERCISES
+        # =================================================
+
+        training = [
 
             {
                 "order": 1,
-                "prompt": "I bought ___ apples.",
-                "options": ["any", "some", "no", "anything"],
-                "answer": "some",
-                "explanation": "Это обычное утвердительное предложение, поэтому используется some.",
+                "section": 1,
+                "type": "choice",
+
+                "prompt":
+                    "I bought ___ apples.",
+
+                "options": [
+                    "any",
+                    "some",
+                    "no",
+                    "anything",
+                ],
+
+                "answer":
+                    "some",
+
+                "explanation":
+                    "Обычное утвердительное предложение → SOME.",
             },
+
 
             {
                 "order": 2,
-                "prompt": "Do you have ___ questions?",
-                "options": ["some", "no", "any", "something"],
-                "answer": "any",
-                "explanation": "Это обычный вопрос, поэтому используется any.",
+                "section": 1,
+                "type": "choice",
+
+                "prompt":
+                    "Do you have ___ questions?",
+
+                "options": [
+                    "some",
+                    "no",
+                    "any",
+                    "something",
+                ],
+
+                "answer":
+                    "any",
+
+                "explanation":
+                    "Обычный вопрос → ANY.",
             },
+
 
             {
                 "order": 3,
-                "prompt": "We do not have ___ information.",
-                "options": ["some", "any", "no", "something"],
-                "answer": "any",
-                "explanation": "В предложении уже есть отрицание do not, поэтому используется any.",
+                "section": 2,
+                "type": "fill",
+
+                "prompt":
+                    "We need ___ information.",
+
+                "options": [],
+
+                "answer":
+                    "some",
+
+                "explanation":
+                    "Утверждение с information → SOME.",
             },
+
 
             {
                 "order": 4,
-                "prompt": "There is ___ milk in the fridge.",
-                "options": ["no", "any", "anything", "somebody"],
-                "answer": "no",
-                "explanation": "No milk означает полное отсутствие молока без дополнительного not.",
+                "section": 2,
+                "type": "choice",
+
+                "prompt":
+                    "There are ___ students in the classroom.",
+
+                "options": [
+                    "some",
+                    "any",
+                    "nothing",
+                    "anybody",
+                ],
+
+                "answer":
+                    "some",
+
+                "explanation":
+                    "Это утвердительное предложение.",
             },
+
 
             {
                 "order": 5,
-                "prompt": "Would you like ___ tea?",
-                "options": ["any", "no", "some", "anything"],
-                "answer": "some",
-                "explanation": "Это предложение напитка, поэтому в вопросе используется some.",
+                "section": 3,
+                "type": "fill",
+
+                "prompt":
+                    "Is there ___ milk in the fridge?",
+
+                "options": [],
+
+                "answer":
+                    "any",
+
+                "explanation":
+                    "Обычный вопрос → ANY.",
             },
+
 
             {
                 "order": 6,
-                "prompt": "Can I have ___ water, please?",
-                "options": ["any", "some", "no", "anything"],
-                "answer": "some",
-                "explanation": "Это просьба, поэтому используется some.",
+                "section": 3,
+                "type": "choice",
+
+                "prompt":
+                    "We didn't receive ___ information.",
+
+                "options": [
+                    "some",
+                    "any",
+                    "no",
+                    "nothing",
+                ],
+
+                "answer":
+                    "any",
+
+                "explanation":
+                    "После DIDN'T используется ANY.",
             },
+
 
             {
                 "order": 7,
-                "prompt": "Is ___ at the door?",
-                "options": ["something", "anywhere", "anybody", "nothing"],
-                "answer": "anybody",
-                "explanation": "Речь идёт о человеке и это вопрос.",
+                "section": 4,
+                "type": "choice",
+
+                "prompt":
+                    "Would you like ___ tea?",
+
+                "options": [
+                    "any",
+                    "some",
+                    "no",
+                    "anything",
+                ],
+
+                "answer":
+                    "some",
+
+                "explanation":
+                    "Это предложение напитка, поэтому используем SOME.",
             },
+
 
             {
                 "order": 8,
-                "prompt": "I did not see ___.",
-                "options": ["nobody", "anybody", "somebody", "everybody"],
-                "answer": "anybody",
-                "explanation": "После did not нельзя использовать nobody, иначе получится двойное отрицание.",
+                "section": 4,
+                "type": "choice",
+
+                "prompt":
+                    "Can I have ___ water, please?",
+
+                "options": [
+                    "any",
+                    "some",
+                    "no",
+                    "nothing",
+                ],
+
+                "answer":
+                    "some",
+
+                "explanation":
+                    "Это просьба, поэтому SOME.",
             },
+
 
             {
                 "order": 9,
-                "prompt": "___ knows the answer.",
-                "options": ["Anybody", "Nothing", "Nobody", "Anywhere"],
-                "answer": "Nobody",
-                "explanation": "Nobody уже содержит отрицательное значение и не требует not.",
+                "section": 5,
+                "type": "choice",
+
+                "prompt":
+                    "There is ___ milk in the fridge. It's empty.",
+
+                "options": [
+                    "some",
+                    "any",
+                    "no",
+                    "anything",
+                ],
+
+                "answer":
+                    "no",
+
+                "explanation":
+                    "NO показывает полное отсутствие молока.",
             },
+
 
             {
                 "order": 10,
-                "prompt": "She told me ___.",
+                "section": 5,
+                "type": "choice",
+
+                "prompt":
+                    "Choose the correct sentence.",
+
                 "options": [
-                    "interesting something",
-                    "something interesting",
-                    "anything interest",
-                    "some interesting",
+                    "I don't have no money.",
+                    "I don't have any money.",
+                    "I don't have nothing money.",
+                    "I no have money.",
                 ],
-                "answer": "something interesting",
-                "explanation": "Прилагательное ставится после something.",
+
+                "answer":
+                    "I don't have any money.",
+
+                "explanation":
+                    "После отрицания DON'T используется ANY, а не NO.",
             },
+
 
             {
                 "order": 11,
-                "prompt": "You can choose ___ seat.",
-                "options": ["any", "no", "nobody", "somewhere"],
-                "answer": "any",
-                "explanation": "Здесь any означает «любой».",
+                "section": 6,
+                "type": "choice",
+
+                "prompt":
+                    "Is ___ at the door?",
+
+                "options": [
+                    "something",
+                    "anywhere",
+                    "anybody",
+                    "nothing",
+                ],
+
+                "answer":
+                    "anybody",
+
+                "explanation":
+                    "Речь о человеке и это вопрос → ANYBODY.",
             },
+
 
             {
                 "order": 12,
-                "prompt": "There are ___ books on the desk.",
-                "options": ["some", "any", "no one", "anything"],
-                "answer": "some",
-                "explanation": "Это утвердительное предложение.",
+                "section": 6,
+                "type": "choice",
+
+                "prompt":
+                    "I didn't see ___.",
+
+                "options": [
+                    "nobody",
+                    "anybody",
+                    "somebody",
+                    "everybody",
+                ],
+
+                "answer":
+                    "anybody",
+
+                "explanation":
+                    "После DIDN'T используется ANYBODY.",
             },
+
 
             {
                 "order": 13,
-                "prompt": "Are there ___ books on the desk?",
-                "options": ["some", "any", "nothing", "somewhere"],
-                "answer": "any",
-                "explanation": "Это обычный вопрос.",
+                "section": 6,
+                "type": "fill",
+
+                "prompt":
+                    "___ knows the answer. Никто не знает ответ.",
+
+                "options": [],
+
+                "answer":
+                    "nobody",
+
+                "explanation":
+                    "NOBODY уже содержит отрицательное значение.",
             },
+
 
             {
                 "order": 14,
-                "prompt": "There are not ___ books on the desk.",
-                "options": ["some", "any", "no", "somebody"],
-                "answer": "any",
-                "explanation": "После отрицания not используется any.",
+                "section": 7,
+                "type": "choice",
+
+                "prompt":
+                    "I'm hungry. I want ___ to eat.",
+
+                "options": [
+                    "anything",
+                    "nothing",
+                    "something",
+                    "anywhere",
+                ],
+
+                "answer":
+                    "something",
+
+                "explanation":
+                    "Обычное утверждение → SOMETHING.",
             },
+
 
             {
                 "order": 15,
-                "prompt": "There are ___ books on the desk. It is empty.",
-                "options": ["some", "any", "no", "something"],
-                "answer": "no",
-                "explanation": "Стол пустой, поэтому there are no books.",
+                "section": 7,
+                "type": "choice",
+
+                "prompt":
+                    "We didn't go ___ last weekend.",
+
+                "options": [
+                    "somewhere",
+                    "nowhere",
+                    "anywhere",
+                    "everywhere",
+                ],
+
+                "answer":
+                    "anywhere",
+
+                "explanation":
+                    "После DIDN'T используется ANYWHERE.",
             },
+
 
             {
                 "order": 16,
-                "prompt": "Did ___ call me?",
-                "options": ["somebody", "anybody", "nobody", "something"],
-                "answer": "anybody",
-                "explanation": "Это вопрос о человеке.",
+                "section": 7,
+                "type": "choice",
+
+                "prompt":
+                    "The bag is empty. There is ___ inside.",
+
+                "options": [
+                    "something",
+                    "anything",
+                    "nothing",
+                    "somebody",
+                ],
+
+                "answer":
+                    "nothing",
+
+                "explanation":
+                    "NOTHING уже означает «ничего».",
             },
+
 
             {
                 "order": 17,
-                "prompt": "I did not tell ___ about the problem.",
-                "options": ["nobody", "anybody", "somebody", "everybody"],
-                "answer": "anybody",
-                "explanation": "После did not используется anybody.",
+                "section": 8,
+                "type": "choice",
+
+                "prompt":
+                    "___ is ready for the lesson.",
+
+                "options": [
+                    "Everybody",
+                    "Anything",
+                    "Nothing",
+                    "Somewhere",
+                ],
+
+                "answer":
+                    "Everybody",
+
+                "explanation":
+                    "Everybody означает «все» и требует IS.",
             },
+
 
             {
                 "order": 18,
-                "prompt": "___ came to the lesson because the school was closed.",
-                "options": ["Anybody", "Somebody", "Nobody", "Everybody"],
-                "answer": "Nobody",
-                "explanation": "Никто не пришёл; nobody уже содержит отрицание.",
+                "section": 8,
+                "type": "build",
+
+                "prompt":
+                    "Собери правильное выражение.",
+
+                "options": [
+                    "something",
+                    "interesting",
+                ],
+
+                "answer":
+                    "something interesting",
+
+                "explanation":
+                    "Прилагательное ставится после SOMETHING.",
             },
+
 
             {
                 "order": 19,
-                "prompt": "I am hungry. I want ___ to eat.",
-                "options": ["anything", "nothing", "something", "anywhere"],
-                "answer": "something",
-                "explanation": "Это утвердительное предложение: something to eat.",
+                "section": 8,
+                "type": "choice",
+
+                "prompt":
+                    "Choose the correct phrase.",
+
+                "options": [
+                    "new nothing",
+                    "nothing new",
+                    "nothing a new",
+                    "no new nothing",
+                ],
+
+                "answer":
+                    "nothing new",
+
+                "explanation":
+                    "Прилагательное ставится после NOTHING.",
             },
+
 
             {
                 "order": 20,
-                "prompt": "There is ___ in this article.",
+                "section": 9,
+                "type": "choice",
+
+                "prompt":
+                    "You can choose ___ book you like.",
+
                 "options": [
-                    "useful something",
-                    "something useful",
-                    "some useful",
-                    "useful anything",
+                    "some",
+                    "any",
+                    "no",
+                    "nothing",
                 ],
-                "answer": "something useful",
-                "explanation": "Прилагательное useful ставится после something.",
-            },
 
-            {
-                "order": 21,
-                "prompt": "We did not go ___ during the weekend.",
-                "options": ["somewhere", "nowhere", "anywhere", "everywhere"],
-                "answer": "anywhere",
-                "explanation": "После did not используется anywhere.",
-            },
+                "answer":
+                    "any",
 
-            {
-                "order": 22,
-                "prompt": "I looked ___, but I could not find my keys.",
-                "options": ["everywhere", "nowhere", "something", "nobody"],
-                "answer": "everywhere",
-                "explanation": "Everywhere означает «везде».",
-            },
-
-            {
-                "order": 23,
-                "prompt": "___ is ready for the test.",
-                "options": ["Everybody", "Anybody", "Nothing", "Somewhere"],
-                "answer": "Everybody",
-                "explanation": "Everybody означает «все» и требует глагол в единственном числе.",
-            },
-
-            {
-                "order": 24,
-                "prompt": "There is ___ in the box. The box is empty.",
-                "options": ["something", "anything", "nothing", "somebody"],
-                "answer": "nothing",
-                "explanation": "Коробка пустая, поэтому there is nothing.",
+                "explanation":
+                    "Здесь ANY означает «любую книгу».",
             },
 
         ]
 
-        for data in exercises:
+
+        # =================================================
+        # 10 FINAL TEST QUESTIONS
+        # =================================================
+
+        final_test = [
+
+            {
+                "order": 21,
+
+                "prompt":
+                    "There are ___ cookies on the table.",
+
+                "options": [
+                    "some",
+                    "any",
+                    "no one",
+                    "anything",
+                ],
+
+                "answer":
+                    "some",
+
+                "explanation":
+                    "Обычное утвердительное предложение → SOME.",
+            },
+
+
+            {
+                "order": 22,
+
+                "prompt":
+                    "Are there ___ cookies left?",
+
+                "options": [
+                    "some",
+                    "any",
+                    "no",
+                    "nothing",
+                ],
+
+                "answer":
+                    "any",
+
+                "explanation":
+                    "Обычный вопрос → ANY.",
+            },
+
+
+            {
+                "order": 23,
+
+                "prompt":
+                    "Would you like ___ cake?",
+
+                "options": [
+                    "some",
+                    "any",
+                    "no",
+                    "nothing",
+                ],
+
+                "answer":
+                    "some",
+
+                "explanation":
+                    "В предложении еды или напитка обычно используется SOME.",
+            },
+
+
+            {
+                "order": 24,
+
+                "prompt":
+                    "Choose the sentence with the same meaning as 'There is no food.'",
+
+                "options": [
+                    "There isn't any food.",
+                    "There isn't no food.",
+                    "There is any food.",
+                    "There isn't some food.",
+                ],
+
+                "answer":
+                    "There isn't any food.",
+
+                "explanation":
+                    "NO и NOT ANY могут выражать одинаковое отрицание.",
+            },
+
+
+            {
+                "order": 25,
+
+                "prompt":
+                    "Did ___ call while I was out?",
+
+                "options": [
+                    "somebody",
+                    "anybody",
+                    "nobody",
+                    "nothing",
+                ],
+
+                "answer":
+                    "anybody",
+
+                "explanation":
+                    "Обычный вопрос о человеке → ANYBODY.",
+            },
+
+
+            {
+                "order": 26,
+
+                "prompt":
+                    "___ came to the meeting. The room was empty.",
+
+                "options": [
+                    "Anybody",
+                    "Somebody",
+                    "Nobody",
+                    "Everybody",
+                ],
+
+                "answer":
+                    "Nobody",
+
+                "explanation":
+                    "NOBODY означает «никто» и не требует NOT.",
+            },
+
+
+            {
+                "order": 27,
+
+                "prompt":
+                    "I don't need ___ from the shop.",
+
+                "options": [
+                    "nothing",
+                    "anything",
+                    "something",
+                    "nowhere",
+                ],
+
+                "answer":
+                    "anything",
+
+                "explanation":
+                    "После DON'T используется ANYTHING.",
+            },
+
+
+            {
+                "order": 28,
+
+                "prompt":
+                    "Let's go ___ quiet this weekend.",
+
+                "options": [
+                    "somewhere",
+                    "anywhere",
+                    "nowhere",
+                    "anything",
+                ],
+
+                "answer":
+                    "somewhere",
+
+                "explanation":
+                    "Утвердительное предложение о неопределённом месте → SOMEWHERE.",
+            },
+
+
+            {
+                "order": 29,
+
+                "prompt":
+                    "Choose the correct sentence.",
+
+                "options": [
+                    "Everybody are ready.",
+                    "Everybody is ready.",
+                    "Everybody be ready.",
+                    "Everybody am ready.",
+                ],
+
+                "answer":
+                    "Everybody is ready.",
+
+                "explanation":
+                    "Everybody грамматически требует глагол в единственном числе.",
+            },
+
+
+            {
+                "order": 30,
+
+                "prompt":
+                    "Choose the fully correct sentence.",
+
+                "options": [
+                    "You can choose any book, and I can recommend something interesting.",
+                    "You can choose some book, and I can recommend interesting something.",
+                    "You can choose no book, and I can recommend anything interestingly.",
+                    "You can choose nothing book, and I can recommend some interesting.",
+                ],
+
+                "answer":
+                    "You can choose any book, and I can recommend something interesting.",
+
+                "explanation":
+                    "ANY означает «любой», а после SOMETHING прилагательное ставится после него.",
+            },
+
+        ]
+
+
+        valid_orders = []
+
+
+        for data in (
+            training
+            +
+            final_test
+        ):
+
+            valid_orders.append(
+                data["order"]
+            )
+
+
+            if data["order"] <= 20:
+
+                section = (
+                    section_objects[
+                        data["section"]
+                    ]
+                )
+
+            else:
+
+                section = None
+
 
             GrammarExercise.objects.update_or_create(
                 lesson=lesson,
                 order=data["order"],
+
                 defaults={
-                    "exercise_type": GrammarExercise.Type.CHOICE,
-                    "prompt": data["prompt"],
-                    "options": data["options"],
-                    "correct_answer": data["answer"],
-                    "explanation": data["explanation"],
-                    "is_published": True,
+                    "section":
+                        section,
+
+                    "exercise_type":
+                        data.get(
+                            "type",
+                            "choice",
+                        ),
+
+                    "prompt":
+                        data["prompt"],
+
+                    "options":
+                        data["options"],
+
+                    "correct_answer":
+                        data["answer"],
+
+                    "explanation":
+                        data["explanation"],
+
+                    "is_published":
+                        True,
                 },
             )
 
+
+        GrammarExercise.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__in=valid_orders,
+        ).delete()
+
+
+        GrammarLessonSection.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__in=[
+                item["order"]
+                for item in sections
+            ],
+        ).delete()
+
+
         self.stdout.write(
             self.style.SUCCESS(
-                "✅ A1 Lesson 6 seeded: "
-                "Some, any, no и их производные"
+                "✅ Interactive A1 Lesson 6 seeded"
             )
         )
 
         self.stdout.write(
-            f"Sections: {lesson.sections.count()}"
+            f"Micro rules: "
+            f"{lesson.sections.count()}"
         )
 
         self.stdout.write(
-            f"Exercises: {lesson.exercises.count()}"
+            "Training exercises: "
+            f"{lesson.exercises.filter(section__isnull=False).count()}"
+        )
+
+        self.stdout.write(
+            "Final test: "
+            f"{lesson.exercises.filter(section__isnull=True).count()}"
         )

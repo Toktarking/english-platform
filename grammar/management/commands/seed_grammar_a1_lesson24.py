@@ -10,91 +10,138 @@ from grammar.models import (
 class Command(BaseCommand):
 
     help = (
-        "Create/update A1 Grammar Lesson 24: "
-        "Past Simple with was and were."
+        "Create/update interactive A1 Grammar "
+        "Lesson 24: Past Simple with WAS/WERE."
     )
+
 
     def handle(self, *args, **options):
 
-        lesson, _ = GrammarLesson.objects.update_or_create(
-            level="A1",
-            order=24,
-            defaults={
-                "title": (
-                    "Past Simple с глаголом TO BE: "
-                    "WAS и WERE"
-                ),
-                "slug": "past-simple-was-were",
-                "theory_text": (
-                    "Past Simple with was and were."
-                ),
-                "estimated_minutes": 35,
-                "pass_score": 70,
-                "xp_reward": 100,
-                "is_published": True,
-            },
+        lesson, _ = (
+            GrammarLesson.objects
+            .update_or_create(
+                level="A1",
+                order=24,
+
+                defaults={
+                    "title":
+                        "Past Simple с глаголом TO BE: "
+                        "WAS и WERE",
+
+                    "slug":
+                        "past-simple-was-were",
+
+                    "theory_text":
+                        "Past Simple with was and were.",
+
+                    "estimated_minutes":
+                        18,
+
+                    "pass_score":
+                        70,
+
+                    "xp_reward":
+                        100,
+
+                    "is_published":
+                        True,
+                },
+            )
         )
+
 
         sections = [
 
             {
                 "order": 1,
-                "title": "Что такое WAS и WERE",
-                "body": """WAS и WERE — прошедшие формы глагола to be.
 
-Они используются, когда мы говорим о:
+                "title":
+                    "WAS и WERE = TO BE в прошлом",
 
-состоянии в прошлом;
+                "body":
+                    """WAS и WERE — прошедшие формы AM / IS / ARE.
 
-месте в прошлом;
+Настоящее:
 
-возрасте в прошлом;
+I am tired.
 
-профессии или роли в прошлом.
+Прошлое:
 
-Примеры:
+I was tired yesterday.
 
-I was at home yesterday.
+Настоящее:
 
-She was tired.
+They are at home.
 
-They were students.""",
+Прошлое:
+
+They were at home last night.
+
+WAS / WERE используются для:
+
+состояния;
+
+места;
+
+возраста;
+
+профессии или роли;
+
+погоды и времени в прошлом.""",
             },
+
 
             {
                 "order": 2,
-                "title": "WAS или WERE",
-                "body": """Главная таблица:
 
-I → was
+                "title":
+                    "Кто с WAS, а кто с WERE?",
 
-you → were
+                "body":
+                    """Главная схема:
 
-he → was
+I → WAS
 
-she → was
+he → WAS
 
-it → was
+she → WAS
 
-we → were
+it → WAS
 
-they → were
+you → WERE
 
-Запомните:
+we → WERE
 
-I / he / she / it → WAS
+they → WERE
 
-you / we / they → WERE
+Примеры:
+
+I was busy.
+
+She was tired.
+
+It was cold.
+
+You were late.
+
+We were ready.
+
+They were at school.
 
 Важно:
 
-you всегда используется с were.""",
+YOU всегда используется с WERE.""",
             },
+
 
             {
                 "order": 3,
-                "title": "Состояние, место и возраст",
-                "body": """WAS / WERE могут описывать состояние:
+
+                "title":
+                    "Состояние, место и возраст",
+
+                "body":
+                    """Состояние:
 
 I was tired yesterday.
 
@@ -108,7 +155,7 @@ I was at home.
 
 She was in Astana.
 
-We were at the university.
+We were at university.
 
 Возраст:
 
@@ -116,19 +163,26 @@ I was ten years old.
 
 She was five.
 
-Неправильно:
+В английском возраст выражается через TO BE.
+
+Не:
 
 I had ten years.
 
-Правильно:
+А:
 
 I was ten years old.""",
             },
 
+
             {
                 "order": 4,
-                "title": "Профессия, погода и время",
-                "body": """Профессия или роль:
+
+                "title":
+                    "Профессия, погода и время",
+
+                "body":
+                    """Профессия или роль:
 
 He was a teacher.
 
@@ -148,89 +202,69 @@ It was late.
 
 It was five o'clock.
 
-Формула:
+Схема:
 
-subject + was/were + остальная часть предложения""",
+subject + WAS/WERE + description.""",
             },
+
 
             {
                 "order": 5,
-                "title": "Слова-маркеры прошлого",
-                "body": """С Past Simple часто используются:
 
-yesterday;
+                "title":
+                    "Маркеры прошлого и AGO",
 
-last night;
+                "body":
+                    """Частые маркеры Past Simple:
 
-last week;
+yesterday
 
-last month;
+last night
 
-last year;
+last week
 
-two days ago;
+last year
 
-a week ago;
+two days ago
 
-in 2020;
+a week ago
 
-when I was a child.
+in 2020
 
-Примеры:
+when I was a child
 
-I was tired yesterday.
-
-She was in Almaty last week.
-
-They were students ten years ago.""",
-            },
-
-            {
-                "order": 6,
-                "title": "AGO",
-                "body": """AGO означает «назад».
-
-Оно ставится после периода времени.
-
-Правильно:
-
-two days ago;
-
-three weeks ago;
-
-a year ago;
-
-ten minutes ago.
-
-Неправильно:
-
-ago two days
+AGO означает «назад» и ставится после периода времени.
 
 Правильно:
 
 two days ago
 
-Пример:
+three weeks ago
 
-She was here a week ago.""",
+a year ago
+
+Не:
+
+ago two days.""",
             },
 
+
             {
-                "order": 7,
-                "title": "Отрицание",
-                "body": """Отрицание строится прямо с was/were.
+                "order": 6,
 
-WAS NOT:
+                "title":
+                    "Отрицание: WASN'T / WEREN'T",
 
-wasn't
+                "body":
+                    """Отрицание строится без DID.
+
+WAS NOT → WASN'T
 
 I wasn't tired.
 
 She wasn't at home.
 
-WERE NOT:
-
-weren't
+WERE NOT → WEREN'T
 
 We weren't ready.
 
@@ -238,517 +272,963 @@ They weren't at school.
 
 Формула:
 
-subject + wasn't / weren't + остальная часть
+subject
++ wasn't / weren't
++ description.
 
-Do/does/did не нужны.""",
+Не:
+
+She didn't was tired.
+
+А:
+
+She wasn't tired.""",
             },
 
-            {
-                "order": 8,
-                "title": "Общие вопросы",
-                "body": """Чтобы задать вопрос, was или were ставится перед подлежащим.
 
-Сравните:
+            {
+                "order": 7,
+
+                "title":
+                    "Вопросы и краткие ответы",
+
+                "body":
+                    """В вопросе WAS / WERE ставится перед подлежащим.
 
 She was at home.
 
-Was she at home?
+→ Was she at home?
 
 They were tired.
 
-Were they tired?
+→ Were they tired?
 
-Формула:
-
-Was/Were + subject + ...?
-
-Примеры:
-
-Was he at work?
-
-Were you busy?
-
-Were they at school?
-
-Важно:
-
-не используйте did.""",
-            },
-
-            {
-                "order": 9,
-                "title": "Краткие ответы",
-                "body": """Вопрос:
+Краткие ответы:
 
 Was she at home?
-
-Ответ:
 
 Yes, she was.
 
 No, she wasn't.
 
-Вопрос:
-
 Were they busy?
-
-Ответ:
 
 Yes, they were.
 
 No, they weren't.
 
-Вопрос:
-
-Were you tired?
-
-Ответ:
-
-Yes, I was.
-
-No, I wasn't.""",
+DID здесь не нужен.""",
             },
 
+
             {
-                "order": 10,
-                "title": "Специальные вопросы",
-                "body": """Формула:
+                "order": 8,
 
-Question word + was/were + subject?
+                "title":
+                    "WHERE, WHY и HOW WAS...?",
 
-Примеры:
+                "body":
+                    """Специальный вопрос:
 
-Where were you?
+question word
++ WAS / WERE
++ subject?
+
+Where were you yesterday?
 
 Why was she tired?
 
 When were they at home?
 
-How was the lesson?
-
-Who was at the door?
-
-Примеры ответов:
-
-Where were you yesterday?
-
-I was at home.
-
-Why was he angry?
-
-Because he was tired.""",
-            },
-
-            {
-                "order": 11,
-                "title": "HOW WAS / HOW WERE",
-                "body": """How was...? означает:
+HOW WAS...? часто означает:
 
 Как прошёл...?
-
 Каким был...?
-
-Примеры:
 
 How was your day?
 
-How was the lesson?
-
-How was the trip?
-
-Ответ:
-
 It was good.
-
-It was interesting.
-
-С множественным числом:
 
 How were the exams?
 
-How were your holidays?
-
-They were difficult.
-
-They were great.""",
+They were difficult.""",
             },
 
+
             {
-                "order": 12,
-                "title": "WAS BORN / WERE BORN",
-                "body": """Чтобы сказать «родился / родились», используется:
+                "order": 9,
 
-was born;
+                "title":
+                    "WAS BORN и THERE WAS / WERE",
 
-were born.
-
-Примеры:
+                "body":
+                    """Рождение:
 
 I was born in Kazakhstan.
 
 She was born in 2000.
 
-He was born in Karaganda.
-
 They were born in the same year.
 
-Вопросы:
+Вопрос:
 
 Where were you born?
 
 When was she born?
 
-Неправильно:
+Также:
 
-I born in 1998.
+THERE WAS → singular / uncountable
 
-Правильно:
-
-I was born in 1998.""",
-            },
-
-            {
-                "order": 13,
-                "title": "THERE WAS / THERE WERE",
-                "body": """THERE WAS используется с:
-
-одним предметом;
-
-одним человеком;
-
-неисчисляемым существительным.
-
-There was a book on the table.
+There was a problem.
 
 There was some water.
 
-THERE WERE используется с множественным числом.
-
-There were two books.
+THERE WERE → plural
 
 There were many students.
 
-Вопросы:
-
-Was there a problem?
-
-Were there any students?
-
-Ответы:
-
-Yes, there was.
-
-No, there weren't.""",
+There were two cars.""",
             },
 
-            {
-                "order": 14,
-                "title": "WAS/WERE или обычный глагол",
-                "body": """WAS/WERE используются с:
 
-профессией;
+            {
+                "order": 10,
+
+                "title":
+                    "WAS/WERE или обычный глагол?",
+
+                "body":
+                    """WAS / WERE используются с:
 
 прилагательным;
 
 местом;
 
-возрастом.
+профессией;
 
-She was a teacher.
+возрастом.
 
 He was tired.
 
-They were at home.
-
-Но если это действие, нужен обычный глагол в Past Simple.
-
-She worked yesterday.
-
-He studied English.
-
-Неправильно:
-
-She was worked yesterday.
-
-Сравните:
-
 He was at work.
-— Он был на работе.
+
+She was a teacher.
+
+Но если это действие, нужен обычный Past Simple.
 
 He worked yesterday.
-— Он работал вчера.""",
+
+She studied English.
+
+Не:
+
+He was worked yesterday.
+
+Сравни:
+
+He was at work yesterday.
+→ он был на работе
+
+He worked yesterday.
+→ он работал.""",
             },
 
         ]
 
+
+        section_objects = {}
+
+
         for data in sections:
 
-            GrammarLessonSection.objects.update_or_create(
-                lesson=lesson,
-                order=data["order"],
-                defaults={
-                    "title": data["title"],
-                    "body": data["body"],
-                },
+            section, _ = (
+                GrammarLessonSection.objects
+                .update_or_create(
+                    lesson=lesson,
+                    order=data["order"],
+
+                    defaults={
+                        "title":
+                            data["title"],
+
+                        "body":
+                            data["body"],
+                    },
+                )
             )
 
-        exercises = [
+            section_objects[
+                data["order"]
+            ] = section
+
+
+        training = [
 
             {
                 "order": 1,
-                "prompt": "We ___ at the cinema last night.",
-                "options": ["was", "were", "are", "did"],
-                "answer": "were",
-                "explanation": "We → were.",
+                "section": 1,
+                "type": "choice",
+
+                "prompt":
+                    "Yesterday I ___ very tired.",
+
+                "options": [
+                    "am",
+                    "was",
+                    "were",
+                    "did",
+                ],
+
+                "answer":
+                    "was",
+
+                "explanation":
+                    "I → WAS в прошедшем времени.",
             },
+
 
             {
                 "order": 2,
-                "prompt": "My brother ___ ill yesterday.",
-                "options": ["were", "was", "did", "is"],
-                "answer": "was",
-                "explanation": "My brother = he, поэтому was.",
+                "section": 1,
+                "type": "choice",
+
+                "prompt":
+                    "Last night they ___ at home.",
+
+                "options": [
+                    "was",
+                    "were",
+                    "are",
+                    "did",
+                ],
+
+                "answer":
+                    "were",
+
+                "explanation":
+                    "THEY → WERE.",
             },
+
 
             {
                 "order": 3,
-                "prompt": "The children ___ hungry.",
-                "options": ["was", "were", "is", "did"],
-                "answer": "were",
-                "explanation": "Children = they, поэтому were.",
+                "section": 2,
+                "type": "choice",
+
+                "prompt":
+                    "My sister ___ busy yesterday.",
+
+                "options": [
+                    "were",
+                    "was",
+                    "did",
+                    "is",
+                ],
+
+                "answer":
+                    "was",
+
+                "explanation":
+                    "My sister = SHE → WAS.",
             },
+
 
             {
                 "order": 4,
-                "prompt": "It ___ cold last week.",
-                "options": ["were", "was", "did", "are"],
-                "answer": "was",
-                "explanation": "It → was.",
+                "section": 2,
+                "type": "fill",
+
+                "prompt":
+                    "You ___ late yesterday.",
+
+                "options": [],
+
+                "answer":
+                    "were",
+
+                "explanation":
+                    "YOU всегда используется с WERE.",
             },
+
 
             {
                 "order": 5,
-                "prompt": "I ___ not at work yesterday.",
-                "options": ["were", "was", "did", "am"],
-                "answer": "was",
-                "explanation": "I → was: I was not at work.",
+                "section": 3,
+                "type": "choice",
+
+                "prompt":
+                    "When I was a child, I ___ eight years old.",
+
+                "options": [
+                    "had",
+                    "was",
+                    "were",
+                    "did",
+                ],
+
+                "answer":
+                    "was",
+
+                "explanation":
+                    "Возраст выражается через TO BE → I WAS.",
             },
+
 
             {
                 "order": 6,
-                "prompt": "They ___ not ready.",
-                "options": ["was", "were", "did", "are"],
-                "answer": "were",
-                "explanation": "They → were.",
+                "section": 3,
+                "type": "choice",
+
+                "prompt":
+                    "We ___ at the cinema last night.",
+
+                "options": [
+                    "was",
+                    "were",
+                    "did",
+                    "are",
+                ],
+
+                "answer":
+                    "were",
+
+                "explanation":
+                    "WE → WERE; здесь речь о месте.",
             },
+
 
             {
                 "order": 7,
-                "prompt": "___ your father at home?",
-                "options": ["Did", "Was", "Were", "Does"],
-                "answer": "Was",
-                "explanation": "Your father = he, поэтому Was.",
+                "section": 4,
+                "type": "choice",
+
+                "prompt":
+                    "My grandfather ___ a teacher.",
+
+                "options": [
+                    "were",
+                    "was",
+                    "did",
+                    "worked",
+                ],
+
+                "answer":
+                    "was",
+
+                "explanation":
+                    "Профессия после TO BE → WAS A TEACHER.",
             },
+
 
             {
                 "order": 8,
-                "prompt": "___ your parents at home?",
-                "options": ["Was", "Were", "Did", "Are"],
-                "answer": "Were",
-                "explanation": "Parents = they, поэтому Were.",
+                "section": 4,
+                "type": "choice",
+
+                "prompt":
+                    "It ___ very cold last weekend.",
+
+                "options": [
+                    "were",
+                    "was",
+                    "did",
+                    "are",
+                ],
+
+                "answer":
+                    "was",
+
+                "explanation":
+                    "Погода: IT → WAS.",
             },
+
 
             {
                 "order": 9,
-                "prompt": "Was the lesson interesting?",
+                "section": 5,
+                "type": "choice",
+
+                "prompt":
+                    "Two days ___, I was in Astana.",
+
                 "options": [
-                    "Yes, it was.",
-                    "Yes, it did.",
-                    "Yes, it were.",
-                    "Yes, it is.",
+                    "ago",
+                    "last",
+                    "before ago",
+                    "yesterday",
                 ],
-                "answer": "Yes, it was.",
-                "explanation": "Вопрос с was требует краткий ответ с was.",
+
+                "answer":
+                    "ago",
+
+                "explanation":
+                    "Правильный порядок: TWO DAYS AGO.",
             },
+
 
             {
                 "order": 10,
-                "prompt": "Were the students tired?",
+                "section": 5,
+                "type": "choice",
+
+                "prompt":
+                    "Choose the correct time expression.",
+
                 "options": [
-                    "No, they didn't.",
-                    "No, they wasn't.",
-                    "No, they weren't.",
-                    "No, they aren't.",
+                    "ago three weeks",
+                    "three weeks ago",
+                    "three ago weeks",
+                    "last ago three weeks",
                 ],
-                "answer": "No, they weren't.",
-                "explanation": "Were they...? → No, they weren't.",
+
+                "answer":
+                    "three weeks ago",
+
+                "explanation":
+                    "AGO ставится после периода времени.",
             },
+
 
             {
                 "order": 11,
-                "prompt": "Where ___ you yesterday?",
-                "options": ["was", "were", "did", "are"],
-                "answer": "were",
-                "explanation": "You всегда используется с were.",
+                "section": 6,
+                "type": "choice",
+
+                "prompt":
+                    "She ___ at home yesterday.",
+
+                "options": [
+                    "wasn't",
+                    "didn't was",
+                    "weren't",
+                    "didn't be",
+                ],
+
+                "answer":
+                    "wasn't",
+
+                "explanation":
+                    "SHE → WASN'T. DID не используется.",
             },
+
 
             {
                 "order": 12,
-                "prompt": "Why ___ she late?",
-                "options": ["were", "was", "did", "is"],
-                "answer": "was",
-                "explanation": "She → was.",
+                "section": 6,
+                "type": "choice",
+
+                "prompt":
+                    "They ___ ready for the exam.",
+
+                "options": [
+                    "wasn't",
+                    "weren't",
+                    "didn't were",
+                    "not were",
+                ],
+
+                "answer":
+                    "weren't",
+
+                "explanation":
+                    "THEY → WEREN'T.",
             },
+
 
             {
                 "order": 13,
-                "prompt": "How ___ your holiday?",
-                "options": ["were", "was", "did", "is"],
-                "answer": "was",
-                "explanation": "Holiday — единственное число, поэтому was.",
+                "section": 7,
+                "type": "choice",
+
+                "prompt":
+                    "___ your father at work yesterday?",
+
+                "options": [
+                    "Did",
+                    "Was",
+                    "Were",
+                    "Does",
+                ],
+
+                "answer":
+                    "Was",
+
+                "explanation":
+                    "Your father = HE → WAS.",
             },
+
 
             {
                 "order": 14,
-                "prompt": "There ___ a problem.",
-                "options": ["were", "was", "did", "have"],
-                "answer": "was",
-                "explanation": "Один problem → there was.",
+                "section": 7,
+                "type": "choice",
+
+                "prompt":
+                    "Were the students tired?",
+
+                "options": [
+                    "No, they didn't.",
+                    "No, they weren't.",
+                    "No, they wasn't.",
+                    "No, they aren't.",
+                ],
+
+                "answer":
+                    "No, they weren't.",
+
+                "explanation":
+                    "WERE THEY...? → NO, THEY WEREN'T.",
             },
+
 
             {
                 "order": 15,
-                "prompt": "There ___ many people at the meeting.",
-                "options": ["was", "were", "did", "is"],
-                "answer": "were",
-                "explanation": "Many people → there were.",
+                "section": 8,
+                "type": "build",
+
+                "prompt":
+                    "Собери правильный вопрос.",
+
+                "options": [
+                    "Where",
+                    "were",
+                    "you",
+                    "yesterday",
+                ],
+
+                "answer":
+                    "Where were you yesterday",
+
+                "explanation":
+                    "Question word + WERE + YOU.",
             },
+
 
             {
                 "order": 16,
-                "prompt": "Choose the correct sentence.",
+                "section": 8,
+                "type": "choice",
+
+                "prompt":
+                    "How ___ your trip?",
+
                 "options": [
-                    "You was late.",
-                    "You were late.",
-                    "You did were late.",
-                    "You were be late.",
+                    "were",
+                    "was",
+                    "did",
+                    "is",
                 ],
-                "answer": "You were late.",
-                "explanation": "You всегда используется с were.",
+
+                "answer":
+                    "was",
+
+                "explanation":
+                    "TRIP — singular → HOW WAS YOUR TRIP?",
             },
+
 
             {
                 "order": 17,
-                "prompt": "Choose the correct negative sentence.",
+                "section": 9,
+                "type": "choice",
+
+                "prompt":
+                    "I ___ born in Kazakhstan.",
+
                 "options": [
-                    "She didn't was tired.",
-                    "She wasn't tired.",
-                    "She weren't tired.",
-                    "She didn't be tired.",
+                    "were",
+                    "was",
+                    "did",
+                    "am",
                 ],
-                "answer": "She wasn't tired.",
-                "explanation": "To be образует отрицание без did.",
+
+                "answer":
+                    "was",
+
+                "explanation":
+                    "Правильная конструкция: I WAS BORN.",
             },
+
 
             {
                 "order": 18,
-                "prompt": "Choose the correct question.",
+                "section": 9,
+                "type": "choice",
+
+                "prompt":
+                    "There ___ many people at the meeting.",
+
                 "options": [
-                    "Did she was at home?",
-                    "Was she at home?",
-                    "Did she be at home?",
-                    "She was at home?",
+                    "was",
+                    "were",
+                    "did",
+                    "is",
                 ],
-                "answer": "Was she at home?",
-                "explanation": "Was ставится перед подлежащим; did не нужен.",
+
+                "answer":
+                    "were",
+
+                "explanation":
+                    "MANY PEOPLE → THERE WERE.",
             },
+
 
             {
                 "order": 19,
-                "prompt": "I ___ born in Kazakhstan.",
-                "options": ["were", "was", "did", "am"],
-                "answer": "was",
-                "explanation": "Правильная конструкция: I was born.",
-            },
+                "section": 10,
+                "type": "choice",
 
-            {
-                "order": 20,
-                "prompt": "Where ___ you born?",
-                "options": ["was", "were", "did", "are"],
-                "answer": "were",
-                "explanation": "You → were: Where were you born?",
-            },
+                "prompt":
+                    "Choose the sentence meaning «Он был на работе вчера».",
 
-            {
-                "order": 21,
-                "prompt": "There wasn't ___ milk in the fridge.",
-                "options": ["some", "any", "many", "a few"],
-                "answer": "any",
-                "explanation": "С отрицанием обычно используется any.",
-            },
-
-            {
-                "order": 22,
-                "prompt": "Choose the correct sentence about an action.",
-                "options": [
-                    "She was worked yesterday.",
-                    "She worked yesterday.",
-                    "She was work yesterday.",
-                    "She did worked yesterday.",
-                ],
-                "answer": "She worked yesterday.",
-                "explanation": "Work — действие; здесь нужен обычный Past Simple, не was.",
-            },
-
-            {
-                "order": 23,
-                "prompt": "Choose the sentence meaning 'Он был на работе вчера.'",
                 "options": [
                     "He worked yesterday.",
                     "He was at work yesterday.",
                     "He was work yesterday.",
                     "He did at work yesterday.",
                 ],
-                "answer": "He was at work yesterday.",
-                "explanation": "At work — место, поэтому используется was.",
+
+                "answer":
+                    "He was at work yesterday.",
+
+                "explanation":
+                    "AT WORK описывает место → WAS AT WORK.",
             },
 
+
             {
-                "order": 24,
-                "prompt": "Two days ___, I was in Astana.",
-                "options": ["last", "ago", "before ago", "yesterday"],
-                "answer": "ago",
-                "explanation": "Ago ставится после периода времени: two days ago.",
+                "order": 20,
+                "section": 10,
+                "type": "choice",
+
+                "prompt":
+                    "Choose the sentence describing an action.",
+
+                "options": [
+                    "She was worked yesterday.",
+                    "She worked yesterday.",
+                    "She was work yesterday.",
+                    "She did worked yesterday.",
+                ],
+
+                "answer":
+                    "She worked yesterday.",
+
+                "explanation":
+                    "WORK — действие, поэтому используется обычный Past Simple.",
             },
 
         ]
 
-        for data in exercises:
+
+        final_test = [
+
+            {
+                "order": 21,
+
+                "prompt":
+                    "My parents ___ in Almaty last week.",
+
+                "options": [
+                    "was",
+                    "were",
+                    "did",
+                    "are",
+                ],
+
+                "answer":
+                    "were",
+
+                "explanation":
+                    "My parents = THEY → WERE.",
+            },
+
+
+            {
+                "order": 22,
+
+                "prompt":
+                    "The weather ___ beautiful yesterday.",
+
+                "options": [
+                    "were",
+                    "was",
+                    "did",
+                    "is",
+                ],
+
+                "answer":
+                    "was",
+
+                "explanation":
+                    "THE WEATHER = IT → WAS.",
+            },
+
+
+            {
+                "order": 23,
+
+                "prompt":
+                    "Choose the correct negative sentence.",
+
+                "options": [
+                    "We didn't were busy.",
+                    "We weren't busy.",
+                    "We wasn't busy.",
+                    "We didn't be busy.",
+                ],
+
+                "answer":
+                    "We weren't busy.",
+
+                "explanation":
+                    "WE → WEREN'T; DID не нужен.",
+            },
+
+
+            {
+                "order": 24,
+
+                "prompt":
+                    "___ she at school yesterday?",
+
+                "options": [
+                    "Did",
+                    "Was",
+                    "Were",
+                    "Does",
+                ],
+
+                "answer":
+                    "Was",
+
+                "explanation":
+                    "SHE → WAS; в вопросе WAS ставится первым.",
+            },
+
+
+            {
+                "order": 25,
+
+                "prompt":
+                    "Were you tired after work?",
+
+                "options": [
+                    "Yes, I was.",
+                    "Yes, I were.",
+                    "Yes, I did.",
+                    "Yes, I am.",
+                ],
+
+                "answer":
+                    "Yes, I was.",
+
+                "explanation":
+                    "В ответе на WERE YOU...? говорим YES, I WAS.",
+            },
+
+
+            {
+                "order": 26,
+
+                "prompt":
+                    "Why ___ he angry yesterday?",
+
+                "options": [
+                    "were",
+                    "was",
+                    "did",
+                    "does",
+                ],
+
+                "answer":
+                    "was",
+
+                "explanation":
+                    "HE → WAS: WHY WAS HE...?",
+            },
+
+
+            {
+                "order": 27,
+
+                "prompt":
+                    "Where ___ you born?",
+
+                "options": [
+                    "was",
+                    "were",
+                    "did",
+                    "are",
+                ],
+
+                "answer":
+                    "were",
+
+                "explanation":
+                    "YOU → WERE: WHERE WERE YOU BORN?",
+            },
+
+
+            {
+                "order": 28,
+
+                "prompt":
+                    "There ___ some milk in the fridge.",
+
+                "options": [
+                    "were",
+                    "was",
+                    "did",
+                    "have",
+                ],
+
+                "answer":
+                    "was",
+
+                "explanation":
+                    "MILK — uncountable → THERE WAS.",
+            },
+
+
+            {
+                "order": 29,
+
+                "prompt":
+                    "Choose the correct sentence.",
+
+                "options": [
+                    "He was tired after work.",
+                    "He did tired after work.",
+                    "He were tired after work.",
+                    "He was be tired after work.",
+                ],
+
+                "answer":
+                    "He was tired after work.",
+
+                "explanation":
+                    "Прилагательное TIRED используется после WAS.",
+            },
+
+
+            {
+                "order": 30,
+
+                "prompt":
+                    "Choose the fully correct pair.",
+
+                "options": [
+                    "He was at work yesterday. / He worked yesterday.",
+                    "He did at work yesterday. / He was worked yesterday.",
+                    "He were at work yesterday. / He did worked yesterday.",
+                    "He was work yesterday. / He was working yesterday as Past Simple.",
+                ],
+
+                "answer":
+                    "He was at work yesterday. / He worked yesterday.",
+
+                "explanation":
+                    "WAS AT WORK описывает место; WORKED описывает действие.",
+            },
+
+        ]
+
+
+        valid_orders = []
+
+
+        for data in (
+            training
+            +
+            final_test
+        ):
+
+            valid_orders.append(
+                data["order"]
+            )
+
+
+            if data["order"] <= 20:
+
+                section = (
+                    section_objects[
+                        data["section"]
+                    ]
+                )
+
+            else:
+
+                section = None
+
 
             GrammarExercise.objects.update_or_create(
                 lesson=lesson,
                 order=data["order"],
+
                 defaults={
-                    "exercise_type": GrammarExercise.Type.CHOICE,
-                    "prompt": data["prompt"],
-                    "options": data["options"],
-                    "correct_answer": data["answer"],
-                    "explanation": data["explanation"],
-                    "is_published": True,
+                    "section":
+                        section,
+
+                    "exercise_type":
+                        data.get(
+                            "type",
+                            "choice",
+                        ),
+
+                    "prompt":
+                        data["prompt"],
+
+                    "options":
+                        data["options"],
+
+                    "correct_answer":
+                        data["answer"],
+
+                    "explanation":
+                        data["explanation"],
+
+                    "is_published":
+                        True,
                 },
             )
 
+
+        GrammarExercise.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__in=valid_orders,
+        ).delete()
+
+
+        GrammarLessonSection.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__in=[
+                item["order"]
+                for item in sections
+            ],
+        ).delete()
+
+
         self.stdout.write(
             self.style.SUCCESS(
-                "✅ A1 Lesson 24 seeded: "
-                "Past Simple — WAS / WERE"
+                "✅ Interactive A1 Lesson 24 seeded"
             )
         )
 
         self.stdout.write(
-            f"Sections: {lesson.sections.count()}"
+            f"Micro rules: "
+            f"{lesson.sections.count()}"
         )
 
         self.stdout.write(
-            f"Exercises: {lesson.exercises.count()}"
+            "Training exercises: "
+            f"{lesson.exercises.filter(section__isnull=False).count()}"
+        )
+
+        self.stdout.write(
+            "Final test: "
+            f"{lesson.exercises.filter(section__isnull=True).count()}"
         )

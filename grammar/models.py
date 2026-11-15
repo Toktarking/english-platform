@@ -182,9 +182,20 @@ class GrammarLessonSection(models.Model):
 class GrammarExercise(models.Model):
 
     class Type(models.TextChoices):
+
         CHOICE = (
             "choice",
             "Choose one",
+        )
+
+        FILL = (
+            "fill",
+            "Fill the gap",
+        )
+
+        BUILD = (
+            "build",
+            "Build phrase",
         )
 
     lesson = models.ForeignKey(
@@ -678,4 +689,130 @@ class GrammarStudyPlanItem(models.Model):
             f"{self.scheduled_date} · "
             f"{self.action} · "
             f"{self.lesson}"
+        )
+
+
+
+class GrammarBlockPracticeProgress(models.Model):
+
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="grammar_block_practice_progress",
+    )
+
+    block = models.ForeignKey(
+        GrammarBlock,
+        on_delete=models.CASCADE,
+        related_name="practice_progress",
+    )
+
+    is_completed = models.BooleanField(
+        default=False,
+        db_index=True,
+    )
+
+    best_score = models.PositiveSmallIntegerField(
+        default=0,
+        validators=[
+            MinValueValidator(0),
+            MaxValueValidator(100),
+        ],
+    )
+
+    attempts = models.PositiveIntegerField(
+        default=0,
+    )
+
+    completed_at = models.DateTimeField(
+        null=True,
+        blank=True,
+    )
+
+    updated_at = models.DateTimeField(
+        auto_now=True,
+    )
+
+    class Meta:
+
+        constraints = [
+            models.UniqueConstraint(
+                fields=[
+                    "user",
+                    "block",
+                ],
+                name="unique_user_grammar_block_practice",
+            ),
+        ]
+
+        ordering = [
+            "block__order",
+        ]
+
+    def __str__(self):
+
+        return (
+            f"{self.user} · "
+            f"Practice {self.block.order} · "
+            f"{self.best_score}%"
+        )
+
+
+class GrammarDailyProgress(models.Model):
+
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="grammar_daily_progress",
+    )
+
+    date = models.DateField(
+        db_index=True,
+    )
+
+    required_count = models.PositiveIntegerField(
+        default=0,
+    )
+
+    completed_count = models.PositiveIntegerField(
+        default=0,
+    )
+
+    is_completed = models.BooleanField(
+        default=False,
+        db_index=True,
+    )
+
+    completed_at = models.DateTimeField(
+        null=True,
+        blank=True,
+    )
+
+    updated_at = models.DateTimeField(
+        auto_now=True,
+    )
+
+    class Meta:
+
+        ordering = [
+            "-date",
+        ]
+
+        constraints = [
+            models.UniqueConstraint(
+                fields=[
+                    "user",
+                    "date",
+                ],
+                name="unique_user_grammar_day",
+            ),
+        ]
+
+    def __str__(self):
+
+        return (
+            f"{self.user} · "
+            f"{self.date} · "
+            f"{self.completed_count}/"
+            f"{self.required_count}"
         )

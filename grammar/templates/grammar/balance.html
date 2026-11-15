@@ -1,0 +1,208 @@
+{% extends "vocabulary/base.html" %}
+
+{% block title %}
+Grammar · Баланс
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+.g-page {
+    width: min(720px, 92%);
+    margin: 18px auto 20px;
+}
+
+.g-kicker {
+    color: #7c3aed;
+    font-size: 12px;
+    font-weight: 900;
+}
+
+.g-title {
+    margin: 5px 0 20px;
+    font-size: 32px;
+    font-weight: 900;
+}
+
+.xp-card {
+    padding: 25px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #6d28d9,
+            #8b5cf6
+        );
+
+    border-radius: 22px;
+
+    color: white;
+}
+
+.xp-label {
+    opacity: .75;
+    font-size: 11px;
+}
+
+.xp-number {
+    margin-top: 5px;
+    font-size: 42px;
+    font-weight: 950;
+}
+
+.xp-note {
+    margin-top: 6px;
+    opacity: .8;
+    font-size: 11px;
+}
+
+.section-title {
+    margin: 24px 0 10px;
+
+    font-size: 17px;
+    font-weight: 900;
+}
+
+.history {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.history-row {
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 13px;
+
+    background: white;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 13px;
+}
+
+.history-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 37px;
+    height: 37px;
+
+    background: #f5f3ff;
+
+    border-radius: 10px;
+
+    color: #7c3aed;
+
+    font-weight: 900;
+}
+
+.history-copy {
+    flex: 1;
+}
+
+.history-title {
+    font-size: 13px;
+    font-weight: 850;
+}
+
+.history-meta {
+    margin-top: 2px;
+
+    color: #9ca3af;
+
+    font-size: 9px;
+}
+
+.history-xp {
+    color: #7c3aed;
+
+    font-size: 12px;
+    font-weight: 900;
+}
+
+</style>
+
+
+<div class="g-page">
+
+<div class="g-kicker">
+    Grammar
+</div>
+
+<h1 class="g-title">
+    Баланс
+</h1>
+
+
+<div class="xp-card">
+
+    <div class="xp-label">
+        Grammar XP
+    </div>
+
+    <div class="xp-number">
+        {{ total_xp }}
+    </div>
+
+    <div class="xp-note">
+        {{ completed_lessons }} уроков завершено
+        · максимум {{ possible_xp }} XP
+    </div>
+
+</div>
+
+
+<div class="section-title">
+    Последние начисления
+</div>
+
+
+<div class="history">
+
+{% for item in recent %}
+
+    <div class="history-row">
+
+        <div class="history-icon">
+            A
+        </div>
+
+        <div class="history-copy">
+
+            <div class="history-title">
+                Lesson {{ item.lesson.order }}
+            </div>
+
+            <div class="history-meta">
+                {{ item.lesson.title }}
+            </div>
+
+        </div>
+
+        <div class="history-xp">
+            +{{ item.xp_earned }} XP
+        </div>
+
+    </div>
+
+{% empty %}
+
+    <div class="history-row">
+        Пока начислений нет.
+    </div>
+
+{% endfor %}
+
+</div>
+
+</div>
+
+
+{% include "grammar/_bottom_nav.html" with active_nav="balance" %}
+
+{% endblock %}

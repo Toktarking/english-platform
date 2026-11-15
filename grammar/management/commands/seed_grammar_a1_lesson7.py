@@ -10,51 +10,73 @@ from grammar.models import (
 class Command(BaseCommand):
 
     help = (
-        "Create/update A1 Grammar Lesson 7: "
-        "Personal, object and possessive pronouns."
+        "Create/update interactive A1 Grammar "
+        "Lesson 7: pronouns."
     )
 
-    def handle(self, *args, **options):
 
-        lesson, _ = GrammarLesson.objects.update_or_create(
-            level="A1",
-            order=7,
-            defaults={
-                "title": (
-                    "Личные, объектные и "
-                    "притяжательные местоимения"
-                ),
-                "slug": "personal-object-possessive-pronouns",
-                "theory_text": (
-                    "Personal, object and possessive pronouns."
-                ),
-                "estimated_minutes": 30,
-                "pass_score": 70,
-                "xp_reward": 100,
-                "is_published": True,
-            },
+    def handle(
+        self,
+        *args,
+        **options,
+    ):
+
+        lesson, _ = (
+            GrammarLesson.objects
+            .update_or_create(
+                level="A1",
+                order=7,
+                defaults={
+                    "title":
+                        "Личные, объектные и "
+                        "притяжательные местоимения",
+
+                    "slug":
+                        "personal-object-possessive-pronouns",
+
+                    "theory_text":
+                        "Personal, object and possessive pronouns.",
+
+                    "estimated_minutes":
+                        17,
+
+                    "pass_score":
+                        70,
+
+                    "xp_reward":
+                        100,
+
+                    "is_published":
+                        True,
+                },
+            )
         )
+
+
+        # =================================================
+        # 9 MICRO-RULES
+        # =================================================
 
         sections = [
 
             {
                 "order": 1,
-                "title": "Что такое местоимение",
-                "body": """Местоимение заменяет существительное и помогает не повторять одно и то же имя или предмет.
+
+                "title":
+                    "Зачем нужны местоимения?",
+
+                "body":
+                    """Местоимение заменяет имя или предмет, чтобы не повторять одно и то же слово.
 
 Без местоимений:
 
 Marat is a teacher.
 Marat works at a university.
-Marat likes his job.
 
-С местоимениями:
+С местоимением:
 
 Marat is a teacher.
 He works at a university.
-He likes his job.
-
-He заменяет Marat.
 
 Ещё пример:
 
@@ -62,121 +84,103 @@ Aigul has a book.
 She reads it every evening.
 
 She заменяет Aigul.
+
 It заменяет book.""",
             },
 
+
             {
                 "order": 2,
-                "title": "Личные местоимения — подлежащее",
-                "body": """Подлежащее показывает, кто или что выполняет действие.
 
-Marat works.
+                "title":
+                    "Кто выполняет действие?",
 
-Marat выполняет действие.
+                "body":
+                    """Если местоимение выполняет действие, нужна форма подлежащего:
 
-Можно сказать:
-
-He works.
-
-Основные личные местоимения:
-
-I — я
-you — ты, вы
-he — он
-she — она
-it — оно, это
-we — мы
-they — они
+I
+you
+he
+she
+it
+we
+they
 
 Примеры:
 
-I am a teacher.
-You are my friend.
-He works here.
-She speaks English.
-It is cold.
-We study together.
-They live in Astana.""",
+I work here.
+
+He studies English.
+
+She is a teacher.
+
+We live in Karaganda.
+
+They play football.
+
+Перед обычным глаголом нельзя ставить объектную форму:
+
+не:
+Me work here.
+
+а:
+I work here.""",
             },
+
 
             {
                 "order": 3,
-                "title": "I, you, he и she",
-                "body": """I всегда пишется с большой буквы.
 
-I am a student.
+                "title":
+                    "HE, SHE, IT, WE, THEY",
 
-My friend and I work together.
-
-You может означать:
-
-ты;
-вы;
-Вы;
-вы во множественном числе.
-
-He используется для мужчины или мальчика:
+                "body":
+                    """HE используется для мужчины или мальчика:
 
 Marat is a doctor.
 He works at a hospital.
 
-She используется для женщины или девочки:
+SHE — для женщины или девочки:
 
 Aigul is a teacher.
-She works at a school.""",
-            },
+She works at a school.
 
-            {
-                "order": 4,
-                "title": "It, we и they",
-                "body": """It используется для:
-
-предметов;
-животных, если пол неважен;
-погоды;
-времени;
-расстояния.
+IT — для предметов и часто для животных, если пол неважен:
 
 This is a book.
 It is interesting.
 
+IT также используется для:
+
+погоды:
 It is cold.
 
+времени:
 It is five o'clock.
 
+расстояния:
 It is five kilometres from here.
 
-We означает «мы»:
+WE:
 
-My wife and I live here.
-We live here.
+My wife and I → we
 
-They означает «они»:
+THEY:
 
-Marat and Aigul are teachers.
-They are teachers.
+Marat and Aigul → they
 
-The books are new.
-They are new.""",
+The books → they.""",
             },
 
+
             {
-                "order": 5,
-                "title": "Объектные местоимения",
-                "body": """Когда действие направлено на человека или предмет, используется объектная форма.
+                "order": 4,
 
-Сравните:
+                "title":
+                    "После глагола нужна объектная форма",
 
-He sees Marat.
-
-He выполняет действие.
-Marat получает действие.
-
-Вместо Marat:
-
-He sees him.
-
-Таблица:
+                "body":
+                    """Если действие направлено на человека или предмет:
 
 I → me
 you → you
@@ -186,32 +190,43 @@ it → it
 we → us
 they → them
 
-Примеры:
+Сравни:
+
+He works.
+I know him.
+
+She teaches.
+I know her.
+
+They live here.
+I see them every day.
+
+После глагола часто нужна именно объектная форма:
 
 She knows me.
-I know him.
-I know her.
-The teacher helps us.
-I know them.""",
+
+The teacher helps us.""",
             },
 
+
             {
-                "order": 6,
-                "title": "После глагола и предлога",
-                "body": """Объектная форма обычно ставится после глагола.
+                "order": 5,
 
-I see him.
-She knows me.
-We like them.
-They help us.
+                "title":
+                    "После предлога тоже объектная форма",
 
-После предлога тоже используется объектная форма:
+                "body":
+                    """После предлогов используется объектная форма:
 
-with me;
-for him;
-about her;
-to us;
-from them.
+with me
+
+for him
+
+about her
+
+to us
+
+from them
 
 Примеры:
 
@@ -223,573 +238,981 @@ I spoke to her.
 
 They talked about us.
 
-Нельзя:
+Не:
 
-with I;
-for he;
+with I
+for he
 to she.""",
             },
 
+
             {
-                "order": 7,
-                "title": "Притяжательные слова",
-                "body": """Притяжательные слова показывают, кому принадлежит предмет.
+                "order": 6,
 
-Они стоят перед существительным.
+                "title":
+                    "MY, YOUR, HIS, HER, OUR, THEIR",
 
-I → my
-you → your
-he → his
-she → her
-it → its
-we → our
-they → their
+                "body":
+                    """Если после местоимения идёт существительное, нужна притяжательная форма:
+
+my book
+
+your phone
+
+his car
+
+her family
+
+its name
+
+our house
+
+their children
 
 Примеры:
 
-my book;
-your phone;
-his car;
-her family;
-its name;
-our house;
-their children.
-
-Предложения:
-
 This is my book.
-
-What is your name?
 
 His car is new.
 
-Her phone is new.
+Her phone is expensive.
 
 Our teacher speaks English.
 
-The students opened their books.""",
+The students opened their books.
+
+Главный признак:
+
+после MY / YOUR / HIS / HER / OUR / THEIR обычно стоит существительное.""",
             },
 
+
             {
-                "order": 8,
-                "title": "His, her и its",
-                "body": """His выбирается, если владелец — мужчина.
+                "order": 7,
 
-Marat has a car.
-His car is new.
+                "title":
+                    "HIS, HER и ITS — смотрим на владельца",
 
-Her выбирается, если владелец — женщина.
-
-Aigul has a phone.
-Her phone is new.
-
-Важно: выбор зависит от владельца, а не от предмета.
+                "body":
+                    """HIS выбираем, если владелец — мужчина:
 
 Marat has a sister.
 His sister is a teacher.
 
+HER — если владелец женщина:
+
 Aigul has a brother.
 Her brother is a student.
 
-Its означает принадлежность предмету или животному:
+Важно:
+
+выбор зависит от владельца, а не от самого предмета.
+
+ITS показывает принадлежность предмету или животному:
 
 The dog is eating its food.
 
 The company changed its name.
 
-Не путайте:
+Не путай:
 
-its = его / её
+its = принадлежность
 
-it's = it is или it has
+it's = it is / it has
 
 The cat is in its box.
 
 It's cold.""",
             },
 
-            {
-                "order": 9,
-                "title": "Притяжательные местоимения",
-                "body": """Иногда существительное можно не повторять.
-
-Сравните:
-
-This is my book.
-
-This book is mine.
-
-Формы:
-
-my → mine
-your → yours
-his → his
-her → hers
-our → ours
-their → theirs
-
-Примеры:
-
-This book is mine.
-
-Is this bag yours?
-
-This book is his.
-
-This phone is hers.
-
-This house is ours.
-
-These books are theirs.""",
-            },
-
-            {
-                "order": 10,
-                "title": "My или mine",
-                "body": """My используется перед существительным:
-
-my book;
-my phone;
-my car.
-
-Mine используется самостоятельно:
-
-This book is mine.
-The phone is mine.
-That car is mine.
-
-Неправильно:
-
-This is mine book.
-
-Правильно:
-
-This is my book.
-
-Или:
-
-This book is mine.
-
-То же правило:
-
-your bag → the bag is yours
-
-her phone → the phone is hers
-
-our house → the house is ours
-
-their books → the books are theirs.""",
-            },
-
-            {
-                "order": 11,
-                "title": "Полная система форм",
-                "body": """Запомните четыре позиции.
-
-I:
-I → me → my → mine
-
-You:
-you → you → your → yours
-
-He:
-he → him → his → his
-
-She:
-she → her → her → hers
-
-It:
-it → it → its
-
-We:
-we → us → our → ours
-
-They:
-they → them → their → theirs
-
-Пример с he:
-
-He works here.
-I know him.
-This is his book.
-This book is his.
-
-Пример с she:
-
-She is a teacher.
-I know her.
-This is her bag.
-This bag is hers.""",
-            },
-
-            {
-                "order": 12,
-                "title": "Порядок слов",
-                "body": """Перед глаголом обычно нужна форма подлежащего:
-
-I know him.
-She helps us.
-They like her.
-
-Нельзя:
-
-Me know him.
-Her helps us.
-Them like her.
-
-После глагола нужна объектная форма:
-
-She knows me.
-
-I called him.
-
-Перед существительным:
-
-my book;
-your phone;
-his car;
-her family;
-our house;
-their children.
-
-Без существительного:
-
-mine;
-yours;
-his;
-hers;
-ours;
-theirs.""",
-            },
-
-            {
-                "order": 13,
-                "title": "Особенности английского",
-                "body": """В английском подлежащее обычно нельзя пропускать.
-
-По-русски:
-
-Работаю в университете.
-
-По-английски:
-
-I work at a university.
-
-Притяжательные слова не меняются по роду и числу предмета:
-
-my house;
-my book;
-my name;
-my friends.
-
-Выбор his/her зависит от владельца.
-
-Marat has a sister.
-His sister is a teacher.
-
-Aigul has a brother.
-Her brother is a student.""",
-            },
-
-            {
-                "order": 14,
-                "title": "Как быстро выбрать форму",
-                "body": """1. Перед глаголом, если местоимение выполняет действие:
-
-I;
-you;
-he;
-she;
-it;
-we;
-they.
-
-She works.
-
-2. После глагола или предлога:
-
-me;
-you;
-him;
-her;
-it;
-us;
-them.
-
-I know her.
-Come with us.
-
-3. Перед существительным:
-
-my;
-your;
-his;
-her;
-its;
-our;
-their.
-
-my book;
-their house.
-
-4. Без существительного:
-
-mine;
-yours;
-his;
-hers;
-ours;
-theirs.
-
-This book is mine.
-
-Главная схема:
-
-I work.
-
-She knows me.
-
-This is my book.
-
-This book is mine.""",
-            },
-
-        ]
-
-        for data in sections:
-
-            GrammarLessonSection.objects.update_or_create(
-                lesson=lesson,
-                order=data["order"],
-                defaults={
-                    "title": data["title"],
-                    "body": data["body"],
-                },
-            )
-
-        exercises = [
-
-            {
-                "order": 1,
-                "prompt": "Marat is my friend. ___ works at a university.",
-                "options": ["Him", "He", "His", "Her"],
-                "answer": "He",
-                "explanation": "Marat выполняет действие, поэтому нужна форма подлежащего He.",
-            },
-
-            {
-                "order": 2,
-                "prompt": "I know Marat. I see ___ every day.",
-                "options": ["he", "his", "him", "hers"],
-                "answer": "him",
-                "explanation": "После глагола see нужна объектная форма him.",
-            },
-
-            {
-                "order": 3,
-                "prompt": "Aigul is a teacher. ___ students like her.",
-                "options": ["She", "Hers", "Her", "Him"],
-                "answer": "Her",
-                "explanation": "После пропуска стоит существительное students, поэтому нужна форма Her.",
-            },
-
-            {
-                "order": 4,
-                "prompt": "This is my phone. The phone is ___.",
-                "options": ["my", "mine", "me", "I"],
-                "answer": "mine",
-                "explanation": "Существительное не повторяется, поэтому используется mine.",
-            },
-
-            {
-                "order": 5,
-                "prompt": "My brother and I live together. ___ have a small flat.",
-                "options": ["They", "Us", "We", "Our"],
-                "answer": "We",
-                "explanation": "My brother and I = we.",
-            },
-
-            {
-                "order": 6,
-                "prompt": "The teacher gave ___ a difficult task.",
-                "options": ["we", "our", "ours", "us"],
-                "answer": "us",
-                "explanation": "После gave нужна объектная форма us.",
-            },
-
-            {
-                "order": 7,
-                "prompt": "These students have books. These are ___ books.",
-                "options": ["them", "they", "their", "theirs"],
-                "answer": "their",
-                "explanation": "Перед существительным books используется their.",
-            },
 
             {
                 "order": 8,
-                "prompt": "These books belong to the students. They are ___.",
-                "options": ["their", "theirs", "them", "they"],
-                "answer": "theirs",
-                "explanation": "Существительное не повторяется, поэтому используется theirs.",
+
+                "title":
+                    "MY или MINE?",
+
+                "body":
+                    """Если существительное стоит после слова:
+
+my book
+your bag
+her phone
+our house
+their car
+
+Если существительное НЕ повторяется:
+
+mine
+yours
+his
+hers
+ours
+theirs
+
+Сравни:
+
+This is my book.
+
+This book is mine.
+
+This is her bag.
+
+This bag is hers.
+
+This is our house.
+
+This house is ours.
+
+Не:
+
+mine book
+
+А:
+
+my book.""",
             },
+
 
             {
                 "order": 9,
-                "prompt": "The cat is playing with ___ toy.",
-                "options": ["it's", "its", "it", "his"],
-                "answer": "its",
-                "explanation": "Its показывает принадлежность. It's = it is / it has.",
-            },
 
-            {
-                "order": 10,
-                "prompt": "Come with ___.",
-                "options": ["I", "my", "mine", "me"],
-                "answer": "me",
-                "explanation": "После предлога with используется объектная форма me.",
-            },
+                "title":
+                    "Главная таблица форм",
 
-            {
-                "order": 11,
-                "prompt": "___ am learning English.",
-                "options": ["Me", "My", "I", "Mine"],
-                "answer": "I",
-                "explanation": "Перед глаголом нужна форма подлежащего I.",
-            },
+                "body":
+                    """Запомни четыре позиции.
 
-            {
-                "order": 12,
-                "prompt": "My father is a doctor. ___ works at a hospital.",
-                "options": ["Him", "He", "His", "Her"],
-                "answer": "He",
-                "explanation": "Отец выполняет действие, поэтому He.",
-            },
+Подлежащее → объект → перед существительным → самостоятельно
 
-            {
-                "order": 13,
-                "prompt": "I often call ___.",
-                "options": ["he", "his", "him", "himself"],
-                "answer": "him",
-                "explanation": "После call нужна объектная форма him.",
-            },
+I → me → my → mine
 
-            {
-                "order": 14,
-                "prompt": "My mother is a teacher. ___ school is near our house.",
-                "options": ["She", "Hers", "Her", "Him"],
-                "answer": "Her",
-                "explanation": "Перед существительным school используется Her.",
-            },
+you → you → your → yours
 
-            {
-                "order": 15,
-                "prompt": "This bag belongs to my mother. It is ___.",
-                "options": ["her", "hers", "she", "them"],
-                "answer": "hers",
-                "explanation": "Существительное bag не повторяется, поэтому hers.",
-            },
+he → him → his → his
 
-            {
-                "order": 16,
-                "prompt": "My friends invited ___ to dinner.",
-                "options": ["I", "my", "me", "mine"],
-                "answer": "me",
-                "explanation": "После invited нужна объектная форма me.",
-            },
+she → her → her → hers
 
-            {
-                "order": 17,
-                "prompt": "My wife and I have a child. ___ child is one year old.",
-                "options": ["Us", "We", "Ours", "Our"],
-                "answer": "Our",
-                "explanation": "Перед существительным child используется Our.",
-            },
+it → it → its
 
-            {
-                "order": 18,
-                "prompt": "This house belongs to us. It is ___.",
-                "options": ["our", "us", "ours", "we"],
-                "answer": "ours",
-                "explanation": "Существительное не повторяется, поэтому ours.",
-            },
+we → us → our → ours
 
-            {
-                "order": 19,
-                "prompt": "Marat and Aigul sold ___ car.",
-                "options": ["them", "theirs", "their", "they"],
-                "answer": "their",
-                "explanation": "Перед существительным car используется their.",
-            },
+they → them → their → theirs
 
-            {
-                "order": 20,
-                "prompt": "The car was ___.",
-                "options": ["their", "theirs", "them", "they"],
-                "answer": "theirs",
-                "explanation": "После was существительное не повторяется, поэтому theirs.",
-            },
+Пример:
 
-            {
-                "order": 21,
-                "prompt": "The students are in the classroom. The teacher is speaking to ___.",
-                "options": ["they", "their", "theirs", "them"],
-                "answer": "them",
-                "explanation": "После предлога to используется объектная форма them.",
-            },
+She works here.
 
-            {
-                "order": 22,
-                "prompt": "The dog moved ___ tail.",
-                "options": ["it's", "its", "it", "theirs"],
-                "answer": "its",
-                "explanation": "Its означает принадлежность: хвост собаки.",
-            },
+I know her.
 
-            {
-                "order": 23,
-                "prompt": "Is this ___ phone?",
-                "options": ["you", "your", "yours", "yourself"],
-                "answer": "your",
-                "explanation": "Перед существительным phone используется your.",
-            },
+This is her bag.
 
-            {
-                "order": 24,
-                "prompt": "No, it is not ___. It belongs to my brother.",
-                "options": ["my", "me", "mine", "I"],
-                "answer": "mine",
-                "explanation": "После not существительное не повторяется, поэтому mine.",
+The bag is hers.
+
+Главный алгоритм:
+
+до глагола → subject form
+
+после глагола / предлога → object form
+
+перед существительным → possessive adjective
+
+без существительного → possessive pronoun.""",
             },
 
         ]
 
-        for data in exercises:
+
+        section_objects = {}
+
+
+        for data in sections:
+
+            section, _ = (
+                GrammarLessonSection.objects
+                .update_or_create(
+                    lesson=lesson,
+                    order=data["order"],
+
+                    defaults={
+                        "title":
+                            data["title"],
+
+                        "body":
+                            data["body"],
+                    },
+                )
+            )
+
+            section_objects[
+                data["order"]
+            ] = section
+
+
+        # =================================================
+        # 20 TRAINING EXERCISES
+        # =================================================
+
+        training = [
+
+            {
+                "order": 1,
+                "section": 1,
+                "type": "choice",
+
+                "prompt":
+                    "Marat is my friend. ___ works at a university.",
+
+                "options": [
+                    "Him",
+                    "He",
+                    "His",
+                    "Her",
+                ],
+
+                "answer":
+                    "He",
+
+                "explanation":
+                    "Marat выполняет действие, поэтому нужна форма HE.",
+            },
+
+
+            {
+                "order": 2,
+                "section": 1,
+                "type": "choice",
+
+                "prompt":
+                    "Aigul has a new phone. ___ uses it every day.",
+
+                "options": [
+                    "Her",
+                    "She",
+                    "Hers",
+                    "Him",
+                ],
+
+                "answer":
+                    "She",
+
+                "explanation":
+                    "Aigul выполняет действие, поэтому SHE.",
+            },
+
+
+            {
+                "order": 3,
+                "section": 2,
+                "type": "fill",
+
+                "prompt":
+                    "___ am learning English.",
+
+                "options": [],
+
+                "answer":
+                    "I",
+
+                "explanation":
+                    "Перед глаголом нужна форма подлежащего I.",
+            },
+
+
+            {
+                "order": 4,
+                "section": 2,
+                "type": "choice",
+
+                "prompt":
+                    "My brother and I live together. ___ have a small flat.",
+
+                "options": [
+                    "Us",
+                    "Our",
+                    "We",
+                    "Ours",
+                ],
+
+                "answer":
+                    "We",
+
+                "explanation":
+                    "My brother and I = WE.",
+            },
+
+
+            {
+                "order": 5,
+                "section": 3,
+                "type": "choice",
+
+                "prompt":
+                    "It's ten o'clock. What does IT describe here?",
+
+                "options": [
+                    "a man",
+                    "time",
+                    "a woman",
+                    "ownership",
+                ],
+
+                "answer":
+                    "time",
+
+                "explanation":
+                    "IT используется для обозначения времени.",
+            },
+
+
+            {
+                "order": 6,
+                "section": 3,
+                "type": "choice",
+
+                "prompt":
+                    "Marat and Aigul are teachers. ___ work at the same school.",
+
+                "options": [
+                    "Them",
+                    "Their",
+                    "They",
+                    "Theirs",
+                ],
+
+                "answer":
+                    "They",
+
+                "explanation":
+                    "Marat and Aigul = THEY.",
+            },
+
+
+            {
+                "order": 7,
+                "section": 4,
+                "type": "choice",
+
+                "prompt":
+                    "I know Marat. I see ___ every day.",
+
+                "options": [
+                    "he",
+                    "his",
+                    "him",
+                    "hers",
+                ],
+
+                "answer":
+                    "him",
+
+                "explanation":
+                    "После SEE нужна объектная форма HIM.",
+            },
+
+
+            {
+                "order": 8,
+                "section": 4,
+                "type": "fill",
+
+                "prompt":
+                    "The teacher helps ___. Мы получаем помощь.",
+
+                "options": [],
+
+                "answer":
+                    "us",
+
+                "explanation":
+                    "После helps нужна объектная форма US.",
+            },
+
+
+            {
+                "order": 9,
+                "section": 5,
+                "type": "choice",
+
+                "prompt":
+                    "Come with ___.",
+
+                "options": [
+                    "I",
+                    "my",
+                    "mine",
+                    "me",
+                ],
+
+                "answer":
+                    "me",
+
+                "explanation":
+                    "После WITH используется объектная форма ME.",
+            },
+
+
+            {
+                "order": 10,
+                "section": 5,
+                "type": "choice",
+
+                "prompt":
+                    "I spoke to Aigul. I spoke to ___.",
+
+                "options": [
+                    "she",
+                    "her",
+                    "hers",
+                    "their",
+                ],
+
+                "answer":
+                    "her",
+
+                "explanation":
+                    "После TO используется объектная форма HER.",
+            },
+
+
+            {
+                "order": 11,
+                "section": 6,
+                "type": "choice",
+
+                "prompt":
+                    "These students opened ___ books.",
+
+                "options": [
+                    "them",
+                    "they",
+                    "their",
+                    "theirs",
+                ],
+
+                "answer":
+                    "their",
+
+                "explanation":
+                    "Перед существительным BOOKS используется THEIR.",
+            },
+
+
+            {
+                "order": 12,
+                "section": 6,
+                "type": "fill",
+
+                "prompt":
+                    "My wife and I have a child. ___ child is one year old.",
+
+                "options": [],
+
+                "answer":
+                    "our",
+
+                "explanation":
+                    "Перед существительным CHILD используется OUR.",
+            },
+
+
+            {
+                "order": 13,
+                "section": 7,
+                "type": "choice",
+
+                "prompt":
+                    "Marat has a sister. ___ sister is a teacher.",
+
+                "options": [
+                    "Her",
+                    "His",
+                    "Him",
+                    "Its",
+                ],
+
+                "answer":
+                    "His",
+
+                "explanation":
+                    "Владелец — Marat, поэтому HIS.",
+            },
+
+
+            {
+                "order": 14,
+                "section": 7,
+                "type": "choice",
+
+                "prompt":
+                    "The dog is eating ___ food.",
+
+                "options": [
+                    "it's",
+                    "its",
+                    "it",
+                    "their",
+                ],
+
+                "answer":
+                    "its",
+
+                "explanation":
+                    "ITS показывает принадлежность. IT'S = IT IS / IT HAS.",
+            },
+
+
+            {
+                "order": 15,
+                "section": 8,
+                "type": "choice",
+
+                "prompt":
+                    "This is my phone. The phone is ___.",
+
+                "options": [
+                    "my",
+                    "mine",
+                    "me",
+                    "I",
+                ],
+
+                "answer":
+                    "mine",
+
+                "explanation":
+                    "Существительное PHONE уже не повторяется, поэтому MINE.",
+            },
+
+
+            {
+                "order": 16,
+                "section": 8,
+                "type": "choice",
+
+                "prompt":
+                    "This bag belongs to Aigul. It is ___.",
+
+                "options": [
+                    "her",
+                    "hers",
+                    "she",
+                    "him",
+                ],
+
+                "answer":
+                    "hers",
+
+                "explanation":
+                    "Существительное не повторяется, поэтому HERS.",
+            },
+
+
+            {
+                "order": 17,
+                "section": 8,
+                "type": "build",
+
+                "prompt":
+                    "Собери правильное предложение.",
+
+                "options": [
+                    "This",
+                    "book",
+                    "is",
+                    "mine",
+                ],
+
+                "answer":
+                    "This book is mine",
+
+                "explanation":
+                    "MINE используется самостоятельно, без существительного после него.",
+            },
+
+
+            {
+                "order": 18,
+                "section": 9,
+                "type": "choice",
+
+                "prompt":
+                    "Choose the correct sequence for SHE.",
+
+                "options": [
+                    "she → her → her → hers",
+                    "she → hers → her → him",
+                    "her → she → hers → her",
+                    "she → him → his → hers",
+                ],
+
+                "answer":
+                    "she → her → her → hers",
+
+                "explanation":
+                    "Правильная система: SHE → HER → HER → HERS.",
+            },
+
+
+            {
+                "order": 19,
+                "section": 9,
+                "type": "choice",
+
+                "prompt":
+                    "Choose the correct sentence.",
+
+                "options": [
+                    "Me know him.",
+                    "I know him.",
+                    "My know he.",
+                    "Mine know his.",
+                ],
+
+                "answer":
+                    "I know him.",
+
+                "explanation":
+                    "Перед глаголом нужна форма I, после глагола — HIM.",
+            },
+
+
+            {
+                "order": 20,
+                "section": 9,
+                "type": "choice",
+
+                "prompt":
+                    "Choose the correct pair.",
+
+                "options": [
+                    "our house / the house is ours",
+                    "ours house / the house is our",
+                    "us house / the house is we",
+                    "we house / the house is us",
+                ],
+
+                "answer":
+                    "our house / the house is ours",
+
+                "explanation":
+                    "OUR стоит перед существительным, OURS используется самостоятельно.",
+            },
+
+        ]
+
+
+        # =================================================
+        # 10 FINAL TEST QUESTIONS
+        # =================================================
+
+        final_test = [
+
+            {
+                "order": 21,
+
+                "prompt":
+                    "My father is a doctor. ___ works at a hospital.",
+
+                "options": [
+                    "Him",
+                    "He",
+                    "His",
+                    "Hers",
+                ],
+
+                "answer":
+                    "He",
+
+                "explanation":
+                    "Отец выполняет действие, поэтому HE.",
+            },
+
+
+            {
+                "order": 22,
+
+                "prompt":
+                    "My friends invited ___ to dinner.",
+
+                "options": [
+                    "I",
+                    "my",
+                    "me",
+                    "mine",
+                ],
+
+                "answer":
+                    "me",
+
+                "explanation":
+                    "После invited нужна объектная форма ME.",
+            },
+
+
+            {
+                "order": 23,
+
+                "prompt":
+                    "The students are in the classroom. The teacher is speaking to ___.",
+
+                "options": [
+                    "they",
+                    "their",
+                    "theirs",
+                    "them",
+                ],
+
+                "answer":
+                    "them",
+
+                "explanation":
+                    "После предлога TO используется THEM.",
+            },
+
+
+            {
+                "order": 24,
+
+                "prompt":
+                    "Aigul has a brother. ___ brother studies medicine.",
+
+                "options": [
+                    "His",
+                    "Her",
+                    "Hers",
+                    "She",
+                ],
+
+                "answer":
+                    "Her",
+
+                "explanation":
+                    "Владелец — Aigul, поэтому HER.",
+            },
+
+
+            {
+                "order": 25,
+
+                "prompt":
+                    "The company changed ___ name.",
+
+                "options": [
+                    "it's",
+                    "its",
+                    "it",
+                    "their",
+                ],
+
+                "answer":
+                    "its",
+
+                "explanation":
+                    "ITS показывает принадлежность компании.",
+            },
+
+
+            {
+                "order": 26,
+
+                "prompt":
+                    "Is this ___ phone?",
+
+                "options": [
+                    "you",
+                    "your",
+                    "yours",
+                    "yourself",
+                ],
+
+                "answer":
+                    "your",
+
+                "explanation":
+                    "Перед PHONE нужна форма YOUR.",
+            },
+
+
+            {
+                "order": 27,
+
+                "prompt":
+                    "No, this phone isn't ___.",
+
+                "options": [
+                    "my",
+                    "mine",
+                    "me",
+                    "I",
+                ],
+
+                "answer":
+                    "mine",
+
+                "explanation":
+                    "После MINE существительное уже не нужно.",
+            },
+
+
+            {
+                "order": 28,
+
+                "prompt":
+                    "Choose the correct sentence.",
+
+                "options": [
+                    "Her helps us.",
+                    "She helps us.",
+                    "Hers helps we.",
+                    "She helps we.",
+                ],
+
+                "answer":
+                    "She helps us.",
+
+                "explanation":
+                    "SHE выполняет действие, US получает действие.",
+            },
+
+
+            {
+                "order": 29,
+
+                "prompt":
+                    "Choose the correct pair.",
+
+                "options": [
+                    "their car / the car is theirs",
+                    "theirs car / the car is their",
+                    "them car / the car is they",
+                    "they car / the car is them",
+                ],
+
+                "answer":
+                    "their car / the car is theirs",
+
+                "explanation":
+                    "THEIR используется перед существительным, THEIRS — самостоятельно.",
+            },
+
+
+            {
+                "order": 30,
+
+                "prompt":
+                    "Choose the fully correct sentence.",
+
+                "options": [
+                    "She knows him, and this is his book.",
+                    "Her knows he, and this is him book.",
+                    "She knows he, and this is him book.",
+                    "Hers knows him, and this is he book.",
+                ],
+
+                "answer":
+                    "She knows him, and this is his book.",
+
+                "explanation":
+                    "SHE — подлежащее, HIM — объект, HIS — принадлежность перед существительным.",
+            },
+
+        ]
+
+
+        valid_orders = []
+
+
+        for data in (
+            training
+            +
+            final_test
+        ):
+
+            valid_orders.append(
+                data["order"]
+            )
+
+
+            if data["order"] <= 20:
+
+                section = (
+                    section_objects[
+                        data["section"]
+                    ]
+                )
+
+            else:
+
+                section = None
+
 
             GrammarExercise.objects.update_or_create(
                 lesson=lesson,
                 order=data["order"],
+
                 defaults={
-                    "exercise_type": GrammarExercise.Type.CHOICE,
-                    "prompt": data["prompt"],
-                    "options": data["options"],
-                    "correct_answer": data["answer"],
-                    "explanation": data["explanation"],
-                    "is_published": True,
+                    "section":
+                        section,
+
+                    "exercise_type":
+                        data.get(
+                            "type",
+                            "choice",
+                        ),
+
+                    "prompt":
+                        data["prompt"],
+
+                    "options":
+                        data["options"],
+
+                    "correct_answer":
+                        data["answer"],
+
+                    "explanation":
+                        data["explanation"],
+
+                    "is_published":
+                        True,
                 },
             )
 
+
+        GrammarExercise.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__in=valid_orders,
+        ).delete()
+
+
+        GrammarLessonSection.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__in=[
+                item["order"]
+                for item in sections
+            ],
+        ).delete()
+
+
         self.stdout.write(
             self.style.SUCCESS(
-                "✅ A1 Lesson 7 seeded: "
-                "Личные, объектные и "
-                "притяжательные местоимения"
+                "✅ Interactive A1 Lesson 7 seeded"
             )
         )
 
         self.stdout.write(
-            f"Sections: {lesson.sections.count()}"
+            f"Micro rules: "
+            f"{lesson.sections.count()}"
         )
 
         self.stdout.write(
-            f"Exercises: {lesson.exercises.count()}"
+            "Training exercises: "
+            f"{lesson.exercises.filter(section__isnull=False).count()}"
+        )
+
+        self.stdout.write(
+            "Final test: "
+            f"{lesson.exercises.filter(section__isnull=True).count()}"
         )

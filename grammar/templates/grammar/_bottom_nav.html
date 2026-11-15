@@ -1,0 +1,200 @@
+<style>
+
+.grammar-bottom-space {
+    height: 105px;
+}
+
+.grammar-bottom-wrap {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    z-index: 9000;
+
+    pointer-events: none;
+}
+
+.grammar-bottom-nav {
+    width: min(720px, 100%);
+    margin: 0 auto;
+
+    min-height: 72px;
+
+    display: grid;
+    grid-template-columns:
+        repeat(5, minmax(0, 1fr));
+
+    padding:
+        7px
+        max(8px, env(safe-area-inset-right))
+        calc(7px + env(safe-area-inset-bottom))
+        max(8px, env(safe-area-inset-left));
+
+    background:
+        rgba(255, 255, 255, .97);
+
+    border:
+        1px solid
+        #e5e7eb;
+
+    border-bottom: 0;
+
+    border-radius:
+        20px 20px 0 0;
+
+    box-shadow:
+        0 -8px 28px
+        rgba(17, 24, 39, .10);
+
+    backdrop-filter:
+        blur(16px);
+
+    pointer-events: auto;
+}
+
+.grammar-bottom-tab {
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 3px;
+
+    padding: 5px 2px;
+
+    border-radius: 12px;
+
+    color: #9ca3af;
+
+    text-decoration: none;
+
+    font-size: 9px;
+    font-weight: 800;
+}
+
+.grammar-bottom-tab.active {
+    color: #7c3aed;
+    background: #faf7ff;
+}
+
+.grammar-bottom-tab svg {
+    width: 23px;
+    height: 23px;
+
+    fill: none;
+
+    stroke: currentColor;
+    stroke-width: 1.8;
+
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+</style>
+
+
+<div class="grammar-bottom-space"></div>
+
+
+<div class="grammar-bottom-wrap">
+
+<nav class="grammar-bottom-nav">
+
+
+<a
+    class="grammar-bottom-tab {% if active_nav == 'home' %}active{% endif %}"
+    href="{% url 'grammar:home' %}"
+>
+
+<svg viewBox="0 0 24 24">
+    <path d="M3 10.5 12 3l9 7.5"></path>
+    <path d="M5 9.5V21h14V9.5"></path>
+    <path d="M9 21v-6h6v6"></path>
+</svg>
+
+<span>Главная</span>
+
+</a>
+
+
+<a
+    class="grammar-bottom-tab {% if active_nav == 'study' %}active{% endif %}"
+    href="{% url 'grammar:plan' %}"
+>
+
+<svg viewBox="0 0 24 24">
+    <path d="M4 5.5A3.5 3.5 0 0 1 7.5 2H11v17H7.5A3.5 3.5 0 0 0 4 22V5.5Z"></path>
+    <path d="M20 5.5A3.5 3.5 0 0 0 16.5 2H13v17h3.5A3.5 3.5 0 0 1 20 22V5.5Z"></path>
+</svg>
+
+<span>Учёба</span>
+
+</a>
+
+
+<a
+    class="grammar-bottom-tab {% if active_nav == 'balance' %}active{% endif %}"
+    href="{% url 'grammar:balance' %}"
+>
+
+<svg viewBox="0 0 24 24">
+    <rect
+        x="3"
+        y="6"
+        width="18"
+        height="14"
+        rx="3"
+    ></rect>
+
+    <path d="M16 11h5v5h-5a2.5 2.5 0 0 1 0-5Z"></path>
+    <path d="M6 6V4h11a2 2 0 0 1 2 2"></path>
+</svg>
+
+<span>Баланс</span>
+
+</a>
+
+
+<a
+    class="grammar-bottom-tab {% if active_nav == 'rewards' %}active{% endif %}"
+    href="{% url 'grammar:rewards' %}"
+>
+
+<svg viewBox="0 0 24 24">
+    <path d="M20 12v9H4v-9"></path>
+    <path d="M2 7h20v5H2z"></path>
+    <path d="M12 7v14"></path>
+    <path d="M12 7H8.5A2.5 2.5 0 1 1 11 4.5V7Z"></path>
+    <path d="M12 7h3.5A2.5 2.5 0 1 0 13 4.5V7Z"></path>
+</svg>
+
+<span>Награды</span>
+
+</a>
+
+
+<a
+    class="grammar-bottom-tab {% if active_nav == 'profile' %}active{% endif %}"
+    href="{% url 'grammar:profile' %}"
+>
+
+<svg viewBox="0 0 24 24">
+    <circle
+        cx="12"
+        cy="8"
+        r="4"
+    ></circle>
+
+    <path d="M4 21a8 8 0 0 1 16 0"></path>
+</svg>
+
+<span>Профиль</span>
+
+</a>
+
+
+</nav>
+
+</div>

@@ -1,0 +1,922 @@
+{% extends "vocabulary/base.html" %}
+
+
+{% block title %}
+Practice {{ block.order }}
+{% endblock %}
+
+
+{% block content %}
+
+<style>
+
+.block-practice-page {
+    width: min(760px, 92%);
+    margin: 30px auto 90px;
+}
+
+.practice-hero {
+    margin-bottom: 22px;
+}
+
+.practice-kicker {
+    font-size: 13px;
+    font-weight: 800;
+    opacity: .55;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+}
+
+.practice-title {
+    margin: 6px 0 8px;
+
+    font-size: clamp(
+        28px,
+        6vw,
+        40px
+    );
+
+    line-height: 1.08;
+}
+
+.practice-subtitle {
+    opacity: .65;
+    line-height: 1.55;
+}
+
+.practice-progress {
+    height: 9px;
+    border-radius: 999px;
+    overflow: hidden;
+    background: #ececf1;
+    margin: 22px 0 8px;
+}
+
+.practice-progress-fill {
+    height: 100%;
+    width: 0;
+    background: #7047eb;
+    transition: width .25s ease;
+}
+
+.practice-counter {
+    font-size: 13px;
+    opacity: .58;
+    text-align: right;
+}
+
+.question-card,
+.result-card,
+.topic-card,
+.error-card {
+    background: #fff;
+    border-radius: 22px;
+    padding: 24px;
+    margin-bottom: 15px;
+
+    box-shadow:
+        0 4px 22px
+        rgba(0, 0, 0, .055);
+}
+
+.question-card[hidden] {
+    display: none !important;
+}
+
+.question-number {
+    font-size: 12px;
+    font-weight: 800;
+    opacity: .5;
+    margin-bottom: 10px;
+}
+
+.question-topic {
+    font-size: 12px;
+    font-weight: 700;
+    opacity: .48;
+    margin-bottom: 8px;
+}
+
+.question-text {
+    font-size: 21px;
+    line-height: 1.4;
+    font-weight: 750;
+    margin-bottom: 20px;
+}
+
+.option {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+
+    padding: 15px 16px;
+    margin-bottom: 10px;
+
+    border:
+        1.5px solid
+        #e6e6eb;
+
+    border-radius: 15px;
+
+    cursor: pointer;
+
+    transition:
+        .15s ease;
+}
+
+.option:hover {
+    border-color: #bfb1f5;
+    background: #faf9ff;
+}
+
+.option:has(input:checked) {
+    border-color: #7047eb;
+    background: #f5f1ff;
+}
+
+.option input {
+    margin-top: 3px;
+    accent-color: #7047eb;
+}
+
+.practice-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 18px;
+}
+
+.practice-button {
+    min-height: 48px;
+
+    padding:
+        0 20px;
+
+    display:
+        inline-flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    border: 0;
+    border-radius: 14px;
+
+    text-decoration: none;
+
+    font-weight: 800;
+    font-size: 15px;
+
+    cursor: pointer;
+
+    background: #7047eb;
+    color: #fff;
+}
+
+.practice-button.secondary {
+    background: #eeeef3;
+    color: #222;
+}
+
+.practice-button:disabled {
+    opacity: .38;
+    cursor: default;
+}
+
+.answer-warning {
+    display: none;
+
+    margin-top: 14px;
+
+    color: #b54708;
+
+    font-size: 14px;
+    font-weight: 650;
+}
+
+.result-score {
+    font-size: 54px;
+    font-weight: 900;
+    line-height: 1;
+    margin: 12px 0;
+}
+
+.result-main {
+    font-size: 18px;
+    font-weight: 750;
+}
+
+.result-status {
+    margin-top: 14px;
+
+    padding:
+        12px 14px;
+
+    border-radius:
+        14px;
+
+    font-weight:
+        750;
+}
+
+.result-status.passed {
+    background: #ecfdf3;
+}
+
+.result-status.failed {
+    background: #fff4ed;
+}
+
+.topic-row {
+    display: flex;
+
+    justify-content:
+        space-between;
+
+    gap: 16px;
+
+    align-items:
+        center;
+
+    padding:
+        13px 0;
+
+    border-bottom:
+        1px solid
+        #eeeef2;
+}
+
+.topic-row:last-child {
+    border-bottom: 0;
+}
+
+.topic-name {
+    font-weight: 700;
+}
+
+.topic-score {
+    min-width: 48px;
+    text-align: right;
+    font-weight: 850;
+}
+
+.wrong-card {
+    background: #fff;
+
+    border-radius:
+        18px;
+
+    padding: 18px;
+
+    margin-bottom:
+        12px;
+
+    box-shadow:
+        0 3px 16px
+        rgba(0, 0, 0, .045);
+}
+
+.wrong-topic {
+    font-size: 12px;
+    font-weight: 800;
+    opacity: .52;
+    margin-bottom: 7px;
+}
+
+.wrong-question {
+    font-weight: 750;
+    line-height: 1.4;
+    margin-bottom: 12px;
+}
+
+.answer-line {
+    margin-top: 6px;
+    line-height: 1.45;
+}
+
+.explanation {
+    margin-top: 10px;
+    opacity: .68;
+    line-height: 1.5;
+}
+
+.section-title {
+    margin: 28px 0 12px;
+    font-size: 21px;
+}
+
+
+@media (
+    max-width: 600px
+) {
+
+    .question-card,
+    .result-card,
+    .topic-card {
+        padding: 19px;
+    }
+
+    .practice-actions {
+        flex-direction:
+            column-reverse;
+    }
+
+    .practice-button {
+        width: 100%;
+    }
+}
+
+</style>
+
+
+<div class="block-practice-page">
+
+
+{% if mode == "error" %}
+
+    <div class="error-card">
+
+        <div class="practice-kicker">
+            Practice {{ block.order }}
+        </div>
+
+        <h1 class="practice-title">
+            Не удалось создать тест
+        </h1>
+
+        <div class="practice-subtitle">
+            {{ error }}
+        </div>
+
+    </div>
+
+
+{% elif mode == "result" %}
+
+
+    <div class="practice-hero">
+
+        <div class="practice-kicker">
+            Block {{ block.order }}
+            ·
+            {{ block.title }}
+        </div>
+
+        <h1 class="practice-title">
+            Результат Practice {{ block.order }}
+        </h1>
+
+    </div>
+
+
+    <div class="result-card">
+
+        <div class="practice-kicker">
+            Общий результат
+        </div>
+
+        <div class="result-score">
+            {{ score }}%
+        </div>
+
+        <div class="result-main">
+            {{ correct }} из {{ total }}
+        </div>
+
+
+        {% if passed %}
+
+            <div class="result-status passed">
+                Practice {{ block.order }} пройден
+            </div>
+
+        {% else %}
+
+            <div class="result-status failed">
+                Для прохождения нужно минимум 70%
+            </div>
+
+        {% endif %}
+
+
+        <p class="practice-subtitle">
+            Проверено {{ lesson_count }} тем:
+            по {{ questions_per_lesson }}
+            случайных вопроса из каждого урока.
+        </p>
+
+    </div>
+
+
+    <h2 class="section-title">
+        Результат по темам
+    </h2>
+
+
+    <div class="topic-card">
+
+        {% for item in topic_results %}
+
+            <div class="topic-row">
+
+                <div class="topic-name">
+
+                    {{ item.lesson.order }}.
+                    {{ item.lesson.title }}
+
+                </div>
+
+                <div class="topic-score">
+
+                    {{ item.correct }}
+                    /
+                    {{ item.total }}
+
+                </div>
+
+            </div>
+
+        {% endfor %}
+
+    </div>
+
+
+    {% if wrong_results %}
+
+        <h2 class="section-title">
+            Разбор ошибок
+        </h2>
+
+
+        {% for item in wrong_results %}
+
+            <div class="wrong-card">
+
+                <div class="wrong-topic">
+
+                    Lesson
+                    {{ item.lesson_order }}
+                    ·
+                    {{ item.lesson_title }}
+
+                </div>
+
+                <div class="wrong-question">
+                    {{ item.prompt }}
+                </div>
+
+                <div class="answer-line">
+
+                    Ваш ответ:
+
+                    <strong>
+                        {{ item.submitted }}
+                    </strong>
+
+                </div>
+
+                <div class="answer-line">
+
+                    Правильный ответ:
+
+                    <strong>
+                        {{ item.correct_answer }}
+                    </strong>
+
+                </div>
+
+
+                {% if item.explanation %}
+
+                    <div class="explanation">
+                        {{ item.explanation }}
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+        {% endfor %}
+
+    {% else %}
+
+        <div class="result-card">
+
+            <strong>
+                {{ correct }}/{{ total }} — ошибок нет.
+            </strong>
+
+        </div>
+
+    {% endif %}
+
+
+    <div class="practice-actions">
+
+        <a
+            class="practice-button secondary"
+            href="{% url 'grammar:home' %}"
+        >
+            На главную
+        </a>
+
+        <a
+            class="practice-button"
+            href="{% url 'grammar:block_practice' block.order %}?new=1"
+        >
+            Пройти ещё раз
+        </a>
+
+    </div>
+
+
+{% else %}
+
+
+    <div class="practice-hero">
+
+        <div class="practice-kicker">
+
+            Block {{ block.order }}
+            ·
+            {{ block.title }}
+
+        </div>
+
+        <h1 class="practice-title">
+            Practice {{ block.order }}
+        </h1>
+
+        <div class="practice-subtitle">
+
+            {{ total }} вопросов ·
+
+            по {{ questions_per_lesson }}
+            случайных вопроса
+
+            из каждого Lesson
+
+            {{ first_lesson_order }}–{{ last_lesson_order }}.
+
+            Ответы и объяснения будут показаны
+            только после завершения.
+
+        </div>
+
+
+        <div class="practice-progress">
+
+            <div
+                class="practice-progress-fill"
+                id="practiceProgress"
+            ></div>
+
+        </div>
+
+        <div
+            class="practice-counter"
+            id="practiceCounter"
+        >
+            1 из {{ total }}
+        </div>
+
+    </div>
+
+
+    <form
+        method="post"
+        id="blockPracticeForm"
+    >
+
+        {% csrf_token %}
+
+
+        {% for question in questions %}
+
+            <div
+                class="question-card"
+                data-question-index="{{ forloop.counter0 }}"
+
+                {% if not forloop.first %}
+                    hidden
+                {% endif %}
+            >
+
+                <div class="question-number">
+
+                    Вопрос
+                    {{ forloop.counter }}
+                    из
+                    {{ total }}
+
+                </div>
+
+                <div class="question-topic">
+
+                    Lesson
+                    {{ question.lesson.order }}
+
+                </div>
+
+                <div class="question-text">
+                    {{ question.prompt }}
+                </div>
+
+
+                {% for option in question.options %}
+
+                    <label class="option">
+
+                        <input
+                            type="radio"
+                            name="answer_{{ question.id }}"
+                            value="{{ option }}"
+                        >
+
+                        <span>
+                            {{ option }}
+                        </span>
+
+                    </label>
+
+                {% endfor %}
+
+
+                <div class="answer-warning">
+
+                    Выберите ответ,
+                    чтобы продолжить.
+
+                </div>
+
+            </div>
+
+        {% endfor %}
+
+
+        <div class="practice-actions">
+
+            <button
+                type="button"
+                class="practice-button secondary"
+                id="backButton"
+                disabled
+            >
+                ← Назад
+            </button>
+
+            <button
+                type="button"
+                class="practice-button"
+                id="nextButton"
+            >
+                Далее →
+            </button>
+
+        </div>
+
+    </form>
+
+
+    <script>
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        function () {
+
+            const cards = Array.from(
+                document.querySelectorAll(
+                    ".question-card"
+                )
+            );
+
+            const total =
+                cards.length;
+
+            let current = 0;
+
+
+            const backButton =
+                document.getElementById(
+                    "backButton"
+                );
+
+            const nextButton =
+                document.getElementById(
+                    "nextButton"
+                );
+
+            const counter =
+                document.getElementById(
+                    "practiceCounter"
+                );
+
+            const progress =
+                document.getElementById(
+                    "practiceProgress"
+                );
+
+            const form =
+                document.getElementById(
+                    "blockPracticeForm"
+                );
+
+
+            function render() {
+
+                cards.forEach(
+                    function (
+                        card,
+                        index
+                    ) {
+
+                        card.hidden = (
+                            index !== current
+                        );
+
+                    }
+                );
+
+
+                backButton.disabled = (
+                    current === 0
+                );
+
+
+                if (
+                    current
+                    === total - 1
+                ) {
+
+                    nextButton.textContent =
+                        "Завершить тест";
+
+                } else {
+
+                    nextButton.textContent =
+                        "Далее →";
+
+                }
+
+
+                counter.textContent =
+                    (
+                        current + 1
+                    )
+                    +
+                    " из "
+                    +
+                    total;
+
+
+                progress.style.width =
+                    (
+                        (
+                            current + 1
+                        )
+                        /
+                        total
+                        *
+                        100
+                    )
+                    +
+                    "%";
+            }
+
+
+            function hasAnswer() {
+
+                const card =
+                    cards[current];
+
+                return Boolean(
+                    card.querySelector(
+                        'input[type="radio"]:checked'
+                    )
+                );
+            }
+
+
+            nextButton.addEventListener(
+                "click",
+                function () {
+
+                    const card =
+                        cards[current];
+
+                    const warning =
+                        card.querySelector(
+                            ".answer-warning"
+                        );
+
+
+                    if (
+                        !hasAnswer()
+                    ) {
+
+                        warning.style.display =
+                            "block";
+
+                        return;
+                    }
+
+
+                    warning.style.display =
+                        "none";
+
+
+                    if (
+                        current
+                        === total - 1
+                    ) {
+
+                        form.submit();
+
+                        return;
+                    }
+
+
+                    current += 1;
+
+                    render();
+
+                    window.scrollTo({
+                        top: 0,
+                        behavior: "smooth",
+                    });
+
+                }
+            );
+
+
+            backButton.addEventListener(
+                "click",
+                function () {
+
+                    if (
+                        current > 0
+                    ) {
+
+                        current -= 1;
+
+                        render();
+
+                        window.scrollTo({
+                            top: 0,
+                            behavior: "smooth",
+                        });
+
+                    }
+
+                }
+            );
+
+
+            cards.forEach(
+                function (card) {
+
+                    card
+                    .querySelectorAll(
+                        'input[type="radio"]'
+                    )
+                    .forEach(
+                        function (input) {
+
+                            input.addEventListener(
+                                "change",
+                                function () {
+
+                                    const warning =
+                                        card.querySelector(
+                                            ".answer-warning"
+                                        );
+
+                                    warning.style.display =
+                                        "none";
+
+                                }
+                            );
+
+                        }
+                    );
+
+                }
+            );
+
+
+            render();
+
+        }
+    );
+
+    </script>
+
+
+{% endif %}
+
+
+</div>
+
+{% endblock %}

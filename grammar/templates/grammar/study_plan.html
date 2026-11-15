@@ -1,510 +1,355 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-
-    <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1"
-    >
-
-    <title>Grammar Daily Plan</title>
-
-    <style>
-
-        * {
-            box-sizing: border-box;
-        }
+{% extends "vocabulary/base.html" %}
 
-        body {
-            margin: 0;
-            background: #f5f6f8;
-            color: #171717;
 
-            font-family:
-                -apple-system,
-                BlinkMacSystemFont,
-                "Segoe UI",
-                sans-serif;
-        }
+{% block title %}
+Grammar · Учёба
+{% endblock %}
 
-        .page {
-            width: min(900px, 92%);
-            margin: 38px auto 80px;
-        }
 
-        .back {
-            display: inline-block;
-            margin-bottom: 18px;
+{% block content %}
 
-            color: #686868;
-            text-decoration: none;
-            font-weight: 650;
-        }
+<style>
 
-        .card {
-            background: #fff;
-            border-radius: 24px;
-            padding: 28px;
-            margin-bottom: 16px;
+.grammar-study {
+    width: min(720px, 92%);
 
-            box-shadow:
-                0 5px 22px
-                rgba(0,0,0,.05);
-        }
+    margin:
+        18px auto 20px;
+}
 
-        h1 {
-            margin: 0 0 10px;
-            font-size: 34px;
-        }
+.study-eyebrow {
+    margin-bottom: 5px;
 
-        h2 {
-            margin: 0;
-        }
+    color: #7c3aed;
 
-        .muted {
-            color: #737373;
-        }
+    font-size: 12px;
+    font-weight: 900;
+}
 
-        .label {
-            color: #7047eb;
-            font-weight: 800;
-            font-size: 13px;
-            margin-bottom: 8px;
-        }
+.study-title {
+    margin: 0 0 5px;
 
-        .button {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
+    color: #111827;
 
-            min-height: 48px;
+    font-size: 32px;
+    font-weight: 900;
+}
 
-            padding: 0 22px;
+.study-subtitle {
+    margin-bottom: 20px;
 
-            border: 0;
-            border-radius: 14px;
+    color: #6b7280;
 
-            background: #7047eb;
-            color: #fff;
+    font-size: 13px;
+}
 
-            text-decoration: none;
-            font-size: 15px;
-            font-weight: 750;
 
-            cursor: pointer;
-        }
+.module-switch {
+    display: grid;
 
-        .button.secondary {
-            background: #eeeef3;
-            color: #252525;
-        }
+    grid-template-columns:
+        repeat(
+            2,
+            minmax(0, 1fr)
+        );
 
-        .date-input {
-            width: 100%;
-            max-width: 360px;
+    gap: 10px;
 
-            padding: 14px 16px;
+    margin-bottom: 22px;
+}
 
-            border:
-                1px solid
-                #d9d9df;
+.module-card {
+    display: block;
 
-            border-radius: 14px;
+    padding: 17px;
 
-            font-size: 17px;
+    background: #ffffff;
 
-            margin:
-                10px
-                0
-                20px;
-        }
+    border:
+        1px solid
+        #e5e7eb;
 
-        .error {
-            margin-bottom: 18px;
+    border-radius: 16px;
 
-            background: #fff0ee;
-            color: #a83228;
+    color: #111827;
 
-            border-radius: 14px;
-            padding: 13px 15px;
-        }
+    text-decoration: none;
 
-        .summary {
-            display: grid;
+    transition:
+        border-color .15s ease,
+        background .15s ease,
+        transform .15s ease;
+}
 
-            grid-template-columns:
-                repeat(
-                    3,
-                    minmax(0, 1fr)
-                );
+.module-card:hover {
+    border-color: #c4b5fd;
 
-            gap: 12px;
+    transform:
+        translateY(-1px);
+}
 
-            margin-top: 22px;
-        }
+.module-card.active {
+    background: #faf7ff;
 
-        .summary-item {
-            background: #f7f7fa;
-            border-radius: 17px;
-            padding: 17px;
-        }
+    border:
+        2px solid
+        #8b5cf6;
+}
 
-        .summary-number {
-            font-size: 27px;
-            font-weight: 850;
-        }
+.module-icon {
+    margin-bottom: 9px;
 
-        .summary-label {
-            margin-top: 3px;
+    font-size: 22px;
+}
 
-            color: #757575;
-            font-size: 13px;
-        }
+.module-title {
+    font-size: 14px;
+    font-weight: 900;
+}
 
-        .day {
-            background: #fff;
+.module-note {
+    margin-top: 3px;
 
-            border-radius: 20px;
-            padding: 21px 23px;
+    color: #6b7280;
 
-            margin-bottom: 12px;
+    font-size: 9px;
+}
 
-            box-shadow:
-                0 4px 18px
-                rgba(0,0,0,.045);
-        }
+.module-card.active
+.module-note {
+    color: #7c3aed;
+}
 
-        .day.today {
-            border:
-                2px solid
-                #7047eb;
-        }
+@media (max-width: 420px) {
 
-        .day.past {
-            opacity: .62;
-        }
+    .module-card {
+        padding: 14px;
+    }
 
-        .day-top {
-            display: flex;
+}
 
-            justify-content:
-                space-between;
+.day-card {
+    margin-bottom: 10px;
 
-            align-items:
-                flex-start;
+    padding: 17px;
 
-            gap: 15px;
-        }
+    background: #ffffff;
 
-        .day-number {
-            font-size: 18px;
-            font-weight: 800;
-        }
+    border:
+        1px solid
+        #e5e7eb;
 
-        .day-date {
-            color: #777;
-            font-size: 14px;
-            margin-top: 3px;
-        }
+    border-radius: 16px;
+}
 
-        .phase {
-            display: inline-block;
+.day-card.today {
+    border-color: #c4b5fd;
 
-            padding: 5px 9px;
+    background: #faf7ff;
+}
 
-            border-radius: 100px;
+.day-head {
+    display: flex;
 
-            font-size: 12px;
-            font-weight: 800;
-        }
+    align-items: flex-start;
+    justify-content: space-between;
 
-        .phase.study {
-            background: #efeaff;
-            color: #6339d8;
-        }
+    gap: 12px;
 
-        .phase.review {
-            background: #fff2cd;
-            color: #806000;
-        }
+    margin-bottom: 11px;
+}
 
+.day-title {
+    color: #111827;
 
-        .phase.exam {
-            background: #171717;
-            color: #fff;
-        }
+    font-size: 14px;
+    font-weight: 900;
+}
 
-        .phase.completed {
-            background: #e7f7eb;
-            color: #168242;
-        }
+.day-date {
+    margin-top: 2px;
 
-        .phase.rest {
-            background: #ededf1;
-            color: #686868;
-        }
+    color: #9ca3af;
 
-        .task {
-            display: flex;
+    font-size: 9px;
+}
 
-            justify-content:
-                space-between;
+.day-time {
+    color: #7c3aed;
 
-            align-items:
-                center;
+    font-size: 9px;
+    font-weight: 800;
+}
 
-            gap: 16px;
+.study-task {
+    display: flex;
 
-            border-top:
-                1px solid
-                #eeeeef;
+    align-items: center;
 
-            padding-top: 15px;
-            margin-top: 15px;
-        }
+    gap: 10px;
 
-        .task-title {
-            font-weight: 750;
-        }
+    padding: 10px 0;
 
-        .task-meta {
-            margin-top: 4px;
+    border-top:
+        1px solid
+        #f0f1f3;
+}
 
-            color: #777;
-            font-size: 13px;
-        }
+.study-icon {
+    display: flex;
 
-        .task-link {
-            white-space: nowrap;
+    align-items: center;
+    justify-content: center;
 
-            color: #7047eb;
-            text-decoration: none;
-            font-weight: 750;
-        }
+    flex: 0 0 32px;
 
-        .exam-card {
-            border:
-                2px solid
-                #171717;
-        }
+    width: 32px;
+    height: 32px;
 
-        .actions {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
+    background: #f9fafb;
 
-            margin-top: 22px;
-        }
+    border:
+        1px solid
+        #e5e7eb;
 
-        @media (
-            max-width: 650px
-        ) {
+    border-radius: 9px;
 
-            .summary {
-                grid-template-columns: 1fr;
-            }
+    color: #7c3aed;
 
-            .task {
-                align-items: flex-start;
-                flex-direction: column;
-            }
+    font-size: 11px;
+    font-weight: 900;
+}
 
-            h1 {
-                font-size: 30px;
-            }
-        }
+.study-copy {
+    flex: 1;
+    min-width: 0;
+}
 
-    </style>
+.study-name {
+    color: #111827;
 
-</head>
+    font-size: 12px;
+    font-weight: 850;
+}
 
-<body>
+.study-meta {
+    margin-top: 2px;
 
-{% include "_module_navigation.html" with active_module="grammar" %}
+    color: #9ca3af;
 
+    font-size: 8px;
+}
 
+.done {
+    color: #16a34a;
 
-<div class="page">
+    font-size: 12px;
+    font-weight: 900;
+}
 
+.empty {
+    padding-top: 8px;
 
-{% if mode == "setup" %}
+    color: #9ca3af;
 
-    <a
-        class="back"
-        href="{% url 'grammar:home' %}"
-    >
-        ← Grammar
-    </a>
+    font-size: 10px;
+}
 
-    <div class="card">
+</style>
 
-        <div class="label">
-            DAILY GRAMMAR PLAN
-        </div>
 
-        <h1>
-            Когда экзамен?
-        </h1>
+<div class="grammar-study">
 
-        <p class="muted">
-            Мы возьмём результаты вашей диагностики
-            и распределим только нужные темы
-            по оставшимся дням.
-            Последние дни оставим
-            для повторения.
-        </p>
 
+    <div class="study-eyebrow">
+        Учёба
+    </div>
 
-        {% if error %}
+    <h1 class="study-title">
+        Grammar
+    </h1>
 
-            <div class="error">
-                {{ error }}
+    <div class="study-subtitle">
+        Выберите раздел обучения
+    </div>
+
+
+    <div class="module-switch">
+
+
+        <a
+            class="module-card"
+            href="{% url 'vocabulary:dashboard' %}#study"
+        >
+
+            <div class="module-icon">
+                📘
             </div>
 
-        {% endif %}
+            <div class="module-title">
+                Vocabulary
+            </div>
+
+            <div class="module-note">
+                Слова и практика
+            </div>
+
+        </a>
 
 
-        <form method="post">
+        <a
+            class="module-card active"
+            href="{% url 'grammar:plan' %}"
+        >
 
-            {% csrf_token %}
+            <div class="module-icon">
+                ✍️
+            </div>
 
-            <label
-                for="exam_date"
-                style="font-weight: 750;"
-            >
-                Дата экзамена
-            </label>
+            <div class="module-title">
+                Grammar
+            </div>
 
-            <br>
+            <div class="module-note">
+                Грамматика английского
+            </div>
 
-            <input
-                class="date-input"
-                id="exam_date"
-                type="date"
-                name="exam_date"
-                required
-                min="{{ min_exam_date|date:'Y-m-d' }}"
-                value="{{ default_exam_date|date:'Y-m-d' }}"
-            >
+        </a>
 
-            <br>
-
-            <button
-                class="button"
-                type="submit"
-            >
-                Составить план →
-            </button>
-
-        </form>
 
     </div>
 
 
-{% elif mode == "calendar" %}
-
-    <a
-        class="back"
-        href="{% url 'grammar:home' %}"
-    >
-        ← Grammar
-    </a>
-
-
-    <div class="card">
-
-        <div class="label">
-            МОЙ ПЛАН ПОДГОТОВКИ
-        </div>
-
-        <h1>
-            {{ days_remaining }}
-            дней до экзамена
-        </h1>
-
-        <div class="muted">
-            Экзамен:
-            {{ plan.exam_date|date:"d.m.Y" }}
-        </div>
-
-
-        <div class="summary">
-
-            <div class="summary-item">
-
-                <div class="summary-number">
-                    {{ learn_count }}
-                </div>
-
-                <div class="summary-label">
-                    тем изучить
-                </div>
-
-            </div>
-
-            <div class="summary-item">
-
-                <div class="summary-number">
-                    {{ review_count }}
-                </div>
-
-                <div class="summary-label">
-                    тем повторить
-                </div>
-
-            </div>
-
-            <div class="summary-item">
-
-                <div class="summary-number">
-                    {{ exam_days_count }}
-                </div>
-
-                <div class="summary-label">
-                    дня Mixed Exam Practice
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <div class="actions">
-
-            <a
-                class="button secondary"
-                href="{% url 'grammar:plan_setup' %}"
-            >
-                Изменить дату / пересобрать
-            </a>
-
-        </div>
-
+    <div class="study-subtitle">
+        Ближайшие задания
     </div>
 
 
-    {% for day in calendar %}
+    {% for day in calendar|slice:":7" %}
+
 
         <div
             class="
-                day
-                {% if day.is_today %}today{% endif %}
-                {% if day.is_past %}past{% endif %}
+                day-card
+                {% if day.is_today %}
+                    today
+                {% endif %}
             "
         >
 
-            <div class="day-top">
+
+            <div class="day-head">
 
                 <div>
 
-                    <div class="day-number">
-                        День {{ day.number }}
+                    <div class="day-title">
 
                         {% if day.is_today %}
-                            · Сегодня
+                            Сегодня
+                        {% else %}
+                            День {{ day.day_number }}
                         {% endif %}
+
                     </div>
 
                     <div class="day-date">
@@ -514,186 +359,107 @@
                 </div>
 
 
-                {% if day.phase == "EXAM" %}
+                {% if day.estimated_minutes %}
 
-                    <span class="phase exam">
-                        Exam Practice
-                    </span>
-
-                {% elif day.phase == "COMPLETED" %}
-
-                    <span class="phase completed">
-                        ✓ Выполнено
-                    </span>
-
-                {% elif day.phase == "FINAL_REVIEW" %}
-
-                    <span class="phase review">
-                        Финальное повторение
-                    </span>
-
-                {% elif day.phase == "STUDY" %}
-
-                    <span class="phase study">
-                        Учёба
-                    </span>
-
-                {% else %}
-
-                    <span class="phase rest">
-                        Резерв
-                    </span>
+                    <div class="day-time">
+                        ≈ {{ day.estimated_minutes }} мин
+                    </div>
 
                 {% endif %}
 
             </div>
 
 
-            {% if day.phase == "EXAM" %}
+            {% for row in day.items %}
 
-                <div class="task">
 
-                    <div>
+                <div class="study-task">
 
-                        <div class="task-title">
-                            Mixed Exam Practice
-                        </div>
 
-                        <div class="task-meta">
-                            20 смешанных вопросов
-                            · без подсказки темы
-                        </div>
+                    <div class="study-icon">
 
-                    </div>
+                        {% if row.completed %}
 
-                    <a
-                        class="task-link"
-                        href="{% url 'grammar:exam_practice' %}"
-                    >
-                        Начать →
-                    </a>
+                            ✓
 
-                </div>
+                        {% elif row.type == "practice" %}
 
-            {% else %}
+                            P
 
-            {% for item in day.items %}
+                        {% else %}
 
-                <div class="task">
+                            A
 
-                    <div>
-
-                        <div class="task-title">
-                            Lesson
-                            {{ item.lesson.order }}
-                            ·
-                            {{ item.lesson.title }}
-                        </div>
-
-                        <div class="task-meta">
-
-                            {% if item.is_completed %}
-
-                                ✅ Выполнено
-
-                            {% elif item.action == "LEARN" %}
-
-                                Изучить тему
-
-                            {% elif item.action == "REVIEW" %}
-
-                                Короткое повторение
-
-                            {% else %}
-
-                                Финальное повторение
-
-                            {% endif %}
-
-                            {% if item.lesson.block %}
-
-                                · Block
-                                {{ item.lesson.block.order }}
-
-                            {% endif %}
-
-                        </div>
+                        {% endif %}
 
                     </div>
 
 
-                    {% if item.is_completed %}
+                    <div class="study-copy">
 
-                        <span
-                            class="task-link"
-                            style="color: #168242;"
-                        >
-                            Готово ✓
-                        </span>
 
-                    {% elif item.action == "LEARN" %}
+                        {% if row.type == "practice" %}
 
-                        <a
-                            class="task-link"
-                            href="{% url 'grammar:lesson' item.lesson.slug %}"
-                        >
-                            Учить →
-                        </a>
+                            <div class="study-name">
+                                Practice {{ row.block.order }}
+                            </div>
 
-                    {% else %}
+                            <div class="study-meta">
+                                {{ row.question_count }} вопросов
+                            </div>
 
-                        <a
-                            class="task-link"
-                            href="{% url 'grammar:lesson' item.lesson.slug %}?practice=1"
-                        >
-                            Practice →
-                        </a>
+                        {% else %}
+
+                            <div class="study-name">
+
+                                Lesson
+                                {{ row.lesson.order }}
+                                ·
+                                {{ row.lesson.title }}
+
+                            </div>
+
+                            <div class="study-meta">
+                                Block {{ row.block.order }}
+                            </div>
+
+                        {% endif %}
+
+
+                    </div>
+
+
+                    {% if row.completed %}
+
+                        <div class="done">
+                            ✓
+                        </div>
 
                     {% endif %}
 
+
                 </div>
+
 
             {% empty %}
 
-                <div
-                    class="muted"
-                    style="margin-top: 15px;"
-                >
-                    Резервный день.
-                    Можно отдохнуть или повторить
-                    предыдущие ошибки.
+                <div class="empty">
+                    Свободный день
                 </div>
 
             {% endfor %}
 
-            {% endif %}
 
         </div>
+
 
     {% endfor %}
 
 
-    <div class="card exam-card">
-
-        <div class="label">
-            EXAM DAY
-        </div>
-
-        <h2>
-            {{ plan.exam_date|date:"d.m.Y" }}
-        </h2>
-
-        <p class="muted">
-            В этот день система
-            не ставит новые темы.
-        </p>
-
-    </div>
-
-{% endif %}
-
-
 </div>
 
-</body>
-</html>
+
+{% include "grammar/_bottom_nav.html" with active_nav="study" %}
+
+
+{% endblock %}

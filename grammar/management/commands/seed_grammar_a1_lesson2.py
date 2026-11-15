@@ -9,112 +9,116 @@ from grammar.models import (
 
 class Command(BaseCommand):
 
-    help = "Create/update A1 Grammar Lesson 2: definite article THE."
+    help = (
+        "Create/update interactive A1 Grammar "
+        "Lesson 2: definite article THE."
+    )
+
 
     def handle(self, *args, **options):
 
-        lesson, _ = GrammarLesson.objects.update_or_create(
-            level="A1",
-            order=2,
-            defaults={
-                "title": "Определённый артикль THE",
-                "slug": "definite-article-the",
-                "theory_text": "Определённый артикль THE.",
-                "estimated_minutes": 20,
-                "pass_score": 70,
-                "xp_reward": 100,
-                "is_published": True,
-            },
+        lesson, _ = (
+            GrammarLesson.objects.update_or_create(
+                level="A1",
+                order=2,
+                defaults={
+                    "title":
+                        "Определённый артикль THE",
+
+                    "slug":
+                        "definite-article-the",
+
+                    "theory_text":
+                        "Определённый артикль THE.",
+
+                    "estimated_minutes":
+                        15,
+
+                    "pass_score":
+                        70,
+
+                    "xp_reward":
+                        100,
+
+                    "is_published":
+                        True,
+                },
+            )
         )
+
+
+        # =================================================
+        # 9 MICRO-RULES
+        # =================================================
 
         sections = [
 
             {
                 "order": 1,
-                "title": "Что означает THE",
-                "body": """Артикль the употребляется, когда говорящий имеет в виду конкретный, определённый предмет.
 
-Сравните:
+                "title":
+                    "Когда нужен THE?",
 
-I see a dog. — Я вижу какую-то собаку.
+                "body":
+                    """THE показывает, что речь идёт о конкретном, понятном предмете.
 
-The dog is black. — Эта собака чёрная.
+Сравни:
 
-В первом предложении собака упоминается впервые, поэтому используется a.
+I see a dog.
+Я вижу какую-то собаку.
 
-Во втором предложении уже понятно, о какой собаке идёт речь, поэтому используется the.
+The dog is black.
+Эта собака чёрная.
 
-Артикль the часто можно мысленно понять как:
+A / AN → предмет пока неизвестен.
+THE → мы уже понимаем, о каком предмете идёт речь.
 
-этот;
-эта;
-это;
-эти;
-тот;
-та;
-конкретный.
+THE можно мысленно понимать как:
+«этот», «эта», «эти», «тот», «конкретный».
 
-Но отдельно обычно он не переводится.""",
+Но отдельно THE обычно не переводится.""",
             },
+
 
             {
                 "order": 2,
-                "title": "THE с уже известным предметом",
-                "body": """Если предмет уже был назван, при повторном упоминании используется the.
 
-Пример:
+                "title":
+                    "Предмет уже известен или понятен из ситуации",
 
-I bought a book yesterday.
-— Вчера я купил книгу.
+                "body":
+                    """Если предмет уже называли, при повторном упоминании обычно используется THE.
 
-The book is very interesting.
-— Эта книга очень интересная.
+I bought a book.
+The book is interesting.
 
-Ещё пример:
-
-She saw a man near the house.
+She saw a man.
 The man was wearing a black coat.
 
-Сначала мы говорим о каком-то мужчине.
+THE также нужен, когда предмет не называли, но из ситуации понятно, о чём речь:
 
-Затем уже ясно, о каком именно мужчине идёт речь.""",
+Close the door, please.
+Open the window.
+Turn off the light.
+
+Говорящий и слушающий понимают, какую именно дверь, окно или свет имеют в виду.""",
             },
+
 
             {
                 "order": 3,
-                "title": "THE, когда предмет понятен из ситуации",
-                "body": """Иногда предмет не назывался раньше, но всем понятно, о чём идёт речь.
 
-Примеры:
+                "title":
+                    "Уникальные объекты",
 
-Close the door, please.
-— Закрой дверь, пожалуйста.
+                "body":
+                    """С объектами, которые воспринимаются как уникальные, обычно используется THE.
 
-Open the window.
-— Открой окно.
-
-Turn off the light.
-— Выключи свет.
-
-Говорящий и слушающий находятся в одной ситуации и понимают, какую дверь, какое окно или какой свет имеют в виду.""",
-            },
-
-            {
-                "order": 4,
-                "title": "THE с уникальными объектами",
-                "body": """Некоторые объекты считаются уникальными.
-
-Поэтому с ними обычно используется the.
-
-Примеры:
-
-the sun — солнце;
-the moon — луна;
-the sky — небо;
-the Earth — Земля;
-the world — мир.
-
-Предложения:
+the sun
+the moon
+the sky
+the Earth
+the world
 
 The sun is shining.
 
@@ -123,466 +127,826 @@ The moon looks beautiful tonight.
 We must protect the Earth.""",
             },
 
+
+            {
+                "order": 4,
+
+                "title":
+                    "THE перед best, biggest, first, second...",
+
+                "body":
+                    """Перед превосходной степенью прилагательного обычно используется THE:
+
+the best
+the biggest
+the highest
+the most interesting
+the most beautiful
+
+She is the best student.
+
+Перед порядковыми числительными также обычно нужен THE:
+
+the first
+the second
+the third
+the tenth
+
+He lives on the second floor.""",
+            },
+
+
             {
                 "order": 5,
-                "title": "THE с превосходной степенью",
-                "body": """Перед превосходной степенью прилагательного обычно ставится the.
 
-Примеры:
+                "title":
+                    "THE в географических названиях",
 
-the best — лучший;
-the biggest — самый большой;
-the most interesting — самый интересный;
-the most beautiful — самый красивый.
+                "body":
+                    """THE обычно используется с:
 
-Предложения:
+реками:
+the Thames
+the Nile
+the Irtysh
 
-She is the best student in the class.
+морями и океанами:
+the Caspian Sea
+the Atlantic Ocean
+the Pacific Ocean
 
-This is the most interesting book I have read.
+горными цепями:
+the Alps
+the Himalayas
 
-Everest is the highest mountain in the world.
+пустынями:
+the Sahara
+the Gobi Desert
 
-Неправильно:
+группами островов:
+the Maldives
+the Philippines
 
-She is best student.
+Но обычные названия стран чаще используются без THE:
 
-Правильно:
+Kazakhstan
+France
+China
+Germany
 
-She is the best student.""",
+THE появляется в некоторых официальных названиях:
+
+the United Kingdom
+the United States
+the Czech Republic
+the United Arab Emirates.""",
             },
+
 
             {
                 "order": 6,
-                "title": "THE с порядковыми числительными",
-                "body": """Перед порядковыми числительными обычно используется the.
 
-Примеры:
+                "title":
+                    "Музеи, театры и другие названия",
 
-the first — первый;
-the second — второй;
-the third — третий;
-the tenth — десятый.
+                "body":
+                    """THE входит в названия многих известных музеев, галерей и других объектов:
 
-Предложения:
-
-This is the first lesson.
-
-He lives on the second floor.
-
-She was the third person to arrive.""",
-            },
-
-            {
-                "order": 7,
-                "title": "THE с географическими объектами",
-                "body": """Артикль the используется с названиями некоторых географических объектов.
-
-Реки:
-
-the Thames;
-the Nile;
-the Irtysh.
-
-Моря и океаны:
-
-the Caspian Sea;
-the Atlantic Ocean;
-the Pacific Ocean.
-
-Горные цепи:
-
-the Alps;
-the Himalayas.
-
-Пустыни:
-
-the Sahara;
-the Gobi Desert.
-
-Группы островов:
-
-the Maldives;
-the Philippines.
-
-Примеры:
-
-London stands on the Thames.
-
-Kazakhstan is near the Caspian Sea.
-
-The Pacific Ocean is very large.""",
-            },
-
-            {
-                "order": 8,
-                "title": "THE с названиями некоторых стран",
-                "body": """Обычно названия стран употребляются без артикля:
-
-Kazakhstan;
-France;
-China;
-Germany.
-
-Но the используется, если в названии есть слова:
-
-republic;
-kingdom;
-states;
-federation;
-emirates.
-
-Примеры:
-
-the United Kingdom;
-the United States;
-the Czech Republic;
-the United Arab Emirates.
-
-Сравните:
-
-Kazakhstan is a large country.
-
-The United Kingdom consists of four parts.""",
-            },
-
-            {
-                "order": 9,
-                "title": "THE с известными зданиями, музеями и театрами",
-                "body": """Артикль the часто используется с названиями известных объектов.
-
-Примеры:
-
-the British Museum;
-the National Gallery;
-the Tower of London;
-the Bolshoi Theatre.
-
-Предложения:
+the British Museum
+the National Gallery
+the Tower of London
+the Bolshoi Theatre
 
 We visited the British Museum.
 
-They went to the National Gallery.
+Но THE используется не со всеми собственными названиями.
 
-Но некоторые названия употребляются без артикля:
+Например:
 
-Buckingham Palace;
-Oxford University;
-Heathrow Airport.""",
+Buckingham Palace
+Oxford University
+Heathrow Airport
+
+Поэтому названия организаций и зданий иногда нужно запоминать как готовые выражения.""",
             },
 
+
             {
-                "order": 10,
-                "title": "THE с музыкальными инструментами",
-                "body": """Когда говорим об умении играть на музыкальном инструменте, обычно используем the.
+                "order": 7,
 
-Примеры:
+                "title":
+                    "Музыкальные инструменты, спорт и группы людей",
 
-play the piano;
-play the guitar;
-play the violin.
+                "body":
+                    """Когда говорим об умении играть на музыкальном инструменте, обычно используется THE:
 
-Предложения:
-
-She plays the piano.
-
-He can play the guitar.
+play the piano
+play the guitar
+play the violin
 
 Но со спортивными играми артикль обычно не используется:
 
-play football;
-play tennis;
-play basketball.""",
-            },
+play football
+play tennis
+play basketball
 
-            {
-                "order": 11,
-                "title": "THE + прилагательное = группа людей",
-                "body": """Иногда прилагательное с артиклем the обозначает целую группу людей.
+THE + прилагательное может обозначать целую группу людей:
 
-Примеры:
-
-the rich — богатые;
-the poor — бедные;
-the young — молодые;
-the elderly — пожилые;
-the unemployed — безработные.
-
-Предложения:
+the rich — богатые
+the poor — бедные
+the young — молодые
+the elderly — пожилые
+the unemployed — безработные
 
 The government should help the poor.
 
-This programme supports the elderly.
-
-После таких слов глагол обычно стоит во множественном числе:
+Такие слова обычно требуют глагол во множественном числе:
 
 The rich are not always happy.""",
             },
 
+
             {
-                "order": 12,
-                "title": "THE с единственным, множественным и неисчисляемым",
-                "body": """Артикль the может употребляться:
+                "order": 8,
 
-с единственным числом;
-с множественным числом;
-с неисчисляемыми существительными.
+                "title":
+                    "THE может стоять перед любым типом существительного",
 
-Примеры:
+                "body":
+                    """THE может использоваться:
 
-the book;
-the books;
-the water;
-the information.
+с единственным числом:
+the book
 
-Главное — предмет или понятие должны быть конкретными.
+с множественным числом:
+the books
 
-Сравните:
+с неисчисляемым существительным:
+the water
+the information
+
+Главное условие — речь должна идти о чём-то конкретном.
+
+Сравни:
 
 Water is important.
-— Вода важна вообще.
+Вода вообще важна.
 
 The water in this bottle is cold.
-— Вода в этой бутылке холодная.""",
+Конкретная вода в этой бутылке холодная.
+
+Books are useful.
+Книги вообще полезны.
+
+The books on the table are mine.
+Конкретные книги на столе мои.""",
             },
 
+
             {
-                "order": 13,
-                "title": "Сравнение A и THE",
-                "body": """A используется, когда предмет упоминается впервые или ещё неизвестен.
+                "order": 9,
+
+                "title":
+                    "A / AN, THE или без артикля?",
+
+                "body":
+                    """Используй простой алгоритм.
+
+A / AN:
+предмет упоминается впервые и он один.
 
 I saw a cat.
 
-THE используется, когда предмет уже известен или конкретен.
+THE:
+предмет уже известен или конкретен.
 
 The cat was under the table.
 
-Ещё пример:
-
-She bought a dress.
-
-The dress was expensive.""",
-            },
-
-            {
-                "order": 14,
-                "title": "Когда THE не нужен",
-                "body": """Не нужно использовать the, когда говорим о предметах или понятиях в общем смысле.
-
-Сравните:
+Без артикля:
+говорим о множественном числе или неисчисляемом понятии вообще.
 
 Children need love.
-— Детям вообще нужна любовь.
-
-The children in this room are quiet.
-— Конкретные дети в этой комнате ведут себя тихо.
-
-Ещё пример:
-
 Books are useful.
-— Книги вообще полезны.
+Water is important.
 
-The books on the table are mine.
-— Конкретные книги на столе мои.""",
+Но если эти предметы становятся конкретными:
+
+The children in this room...
+The books on the table...
+The water in this bottle...""",
             },
 
         ]
 
+
+        section_objects = {}
+
+
         for data in sections:
 
-            GrammarLessonSection.objects.update_or_create(
-                lesson=lesson,
-                order=data["order"],
-                defaults={
-                    "title": data["title"],
-                    "body": data["body"],
-                },
+            section, _ = (
+                GrammarLessonSection.objects
+                .update_or_create(
+                    lesson=lesson,
+                    order=data["order"],
+                    defaults={
+                        "title":
+                            data["title"],
+
+                        "body":
+                            data["body"],
+                    },
+                )
             )
 
+            section_objects[
+                data["order"]
+            ] = section
 
-        exercises = [
+
+        # =================================================
+        # 20 TRAINING EXERCISES
+        # =================================================
+
+        training = [
 
             {
                 "order": 1,
-                "prompt": "I saw a dog. ___ dog was very friendly.",
-                "options": ["A", "An", "The", "—"],
-                "answer": "The",
-                "explanation": "Собака уже упоминалась, поэтому используется the.",
+                "section": 1,
+                "type": "choice",
+                "prompt":
+                    "I saw a dog. ___ dog was very friendly.",
+                "options":
+                    ["A", "An", "The", "—"],
+                "answer":
+                    "The",
+                "explanation":
+                    "Собака уже упоминалась, поэтому теперь она конкретная.",
             },
 
             {
                 "order": 2,
-                "prompt": "Please close ___ window.",
-                "options": ["a", "an", "the", "—"],
-                "answer": "the",
-                "explanation": "Из ситуации понятно, какое именно окно нужно закрыть.",
+                "section": 1,
+                "type": "choice",
+                "prompt":
+                    "She bought ___ dress. The dress was expensive.",
+                "options":
+                    ["a", "an", "the", "—"],
+                "answer":
+                    "a",
+                "explanation":
+                    "При первом упоминании одного неизвестного предмета используем A.",
             },
 
             {
                 "order": 3,
-                "prompt": "___ sun is shining.",
-                "options": ["A", "An", "The", "—"],
-                "answer": "The",
-                "explanation": "Солнце рассматривается как уникальный объект.",
+                "section": 2,
+                "type": "choice",
+                "prompt":
+                    "Please close ___ door.",
+                "options":
+                    ["a", "an", "the", "—"],
+                "answer":
+                    "the",
+                "explanation":
+                    "Из ситуации понятно, какую именно дверь нужно закрыть.",
             },
 
             {
                 "order": 4,
-                "prompt": "She is ___ best student in the group.",
-                "options": ["a", "an", "the", "—"],
-                "answer": "the",
-                "explanation": "Перед превосходной степенью используется the.",
+                "section": 2,
+                "type": "fill",
+                "prompt":
+                    "Turn off ___ light.",
+                "options":
+                    [],
+                "answer":
+                    "the",
+                "explanation":
+                    "Говорящий и слушающий понимают, о каком свете идёт речь.",
             },
 
             {
                 "order": 5,
-                "prompt": "He lives on ___ third floor.",
-                "options": ["a", "an", "the", "—"],
-                "answer": "the",
-                "explanation": "Перед порядковым числительным используется the.",
+                "section": 3,
+                "type": "choice",
+                "prompt":
+                    "___ sun is shining.",
+                "options":
+                    ["A", "An", "The", "—"],
+                "answer":
+                    "The",
+                "explanation":
+                    "Солнце рассматривается как уникальный объект.",
             },
 
             {
                 "order": 6,
-                "prompt": "I bought ___ phone yesterday. ___ phone is expensive.",
-                "options": [
-                    "a / the",
-                    "the / a",
-                    "the / the",
-                    "a / a",
-                ],
-                "answer": "a / the",
-                "explanation": "Первое упоминание — a. Повторное упоминание конкретного телефона — the.",
+                "section": 3,
+                "type": "fill",
+                "prompt":
+                    "We must protect ___ Earth.",
+                "options":
+                    [],
+                "answer":
+                    "the",
+                "explanation":
+                    "Earth здесь рассматривается как уникальный объект.",
             },
 
             {
                 "order": 7,
-                "prompt": "Kazakhstan is ___ large country.",
-                "options": ["a", "an", "the", "—"],
-                "answer": "a",
-                "explanation": "Обычное название Kazakhstan употребляется без the, но перед исчисляемым country нужен a.",
+                "section": 4,
+                "type": "choice",
+                "prompt":
+                    "She is ___ best student in the class.",
+                "options":
+                    ["a", "an", "the", "—"],
+                "answer":
+                    "the",
+                "explanation":
+                    "Перед превосходной степенью best используется THE.",
             },
 
             {
                 "order": 8,
-                "prompt": "They visited ___ United Kingdom.",
-                "options": ["a", "an", "the", "—"],
-                "answer": "the",
-                "explanation": "С названием the United Kingdom используется the.",
+                "section": 4,
+                "type": "build",
+                "prompt":
+                    "Собери правильную фразу.",
+                "options":
+                    [
+                        "the",
+                        "first",
+                        "lesson",
+                    ],
+                "answer":
+                    "the first lesson",
+                "explanation":
+                    "Перед порядковым числительным first используется THE.",
             },
 
             {
                 "order": 9,
-                "prompt": "Children like ___ games.",
-                "options": ["a", "an", "the", "—"],
-                "answer": "—",
-                "explanation": "Речь идёт об играх вообще, поэтому артикль не нужен.",
+                "section": 5,
+                "type": "choice",
+                "prompt":
+                    "London stands on ___ Thames.",
+                "options":
+                    ["a", "an", "the", "—"],
+                "answer":
+                    "the",
+                "explanation":
+                    "С названиями рек используется THE.",
             },
 
             {
                 "order": 10,
-                "prompt": "___ games on this shelf are new.",
-                "options": ["A", "An", "The", "—"],
-                "answer": "The",
-                "explanation": "Речь идёт о конкретных играх на этой полке.",
+                "section": 5,
+                "type": "choice",
+                "prompt":
+                    "They crossed ___ Pacific Ocean.",
+                "options":
+                    ["a", "an", "the", "—"],
+                "answer":
+                    "the",
+                "explanation":
+                    "С названиями океанов используется THE.",
             },
 
             {
                 "order": 11,
-                "prompt": "He can play ___ guitar.",
-                "options": ["a", "an", "the", "—"],
-                "answer": "the",
-                "explanation": "С музыкальными инструментами в конструкции play обычно используется the.",
+                "section": 5,
+                "type": "choice",
+                "prompt":
+                    "___ Kazakhstan is a large country.",
+                "options":
+                    ["A", "An", "The", "—"],
+                "answer":
+                    "—",
+                "explanation":
+                    "Обычное название Kazakhstan употребляется без THE.",
             },
 
             {
                 "order": 12,
-                "prompt": "She plays ___ tennis every weekend.",
-                "options": ["a", "an", "the", "—"],
-                "answer": "—",
-                "explanation": "С названиями спортивных игр артикль обычно не используется.",
+                "section": 5,
+                "type": "choice",
+                "prompt":
+                    "They travelled to ___ United Kingdom.",
+                "options":
+                    ["a", "an", "the", "—"],
+                "answer":
+                    "the",
+                "explanation":
+                    "Название the United Kingdom употребляется с THE.",
             },
 
             {
                 "order": 13,
-                "prompt": "This is ___ first time I have visited London.",
-                "options": ["a", "an", "the", "—"],
-                "answer": "the",
-                "explanation": "Перед порядковым числительным first используется the.",
+                "section": 6,
+                "type": "choice",
+                "prompt":
+                    "We visited ___ British Museum.",
+                "options":
+                    ["a", "an", "the", "—"],
+                "answer":
+                    "the",
+                "explanation":
+                    "Правильное название — the British Museum.",
             },
 
             {
                 "order": 14,
-                "prompt": "We went to ___ British Museum.",
-                "options": ["a", "an", "the", "—"],
-                "answer": "the",
-                "explanation": "Название музея употребляется как the British Museum.",
+                "section": 6,
+                "type": "choice",
+                "prompt":
+                    "They visited ___ Buckingham Palace.",
+                "options":
+                    ["a", "an", "the", "—"],
+                "answer":
+                    "—",
+                "explanation":
+                    "Buckingham Palace обычно используется без артикля.",
             },
 
             {
                 "order": 15,
-                "prompt": "___ water in this glass is warm.",
-                "options": ["A", "An", "The", "—"],
-                "answer": "The",
-                "explanation": "Это конкретная вода — вода именно в этом стакане.",
+                "section": 7,
+                "type": "fill",
+                "prompt":
+                    "He can play ___ guitar.",
+                "options":
+                    [],
+                "answer":
+                    "the",
+                "explanation":
+                    "При игре на музыкальном инструменте обычно используется THE.",
             },
 
             {
                 "order": 16,
-                "prompt": "We live near ___ Irtysh River.",
-                "options": ["a", "an", "the", "—"],
-                "answer": "the",
-                "explanation": "С названиями рек используется the.",
+                "section": 7,
+                "type": "choice",
+                "prompt":
+                    "She plays ___ tennis every weekend.",
+                "options":
+                    ["a", "an", "the", "—"],
+                "answer":
+                    "—",
+                "explanation":
+                    "С названиями спортивных игр артикль обычно не используется.",
             },
 
             {
                 "order": 17,
-                "prompt": "London stands on ___ Thames.",
-                "options": ["a", "an", "the", "—"],
-                "answer": "the",
-                "explanation": "С названиями рек используется the: the Thames.",
+                "section": 7,
+                "type": "choice",
+                "prompt":
+                    "The government should help ___ poor.",
+                "options":
+                    ["a", "an", "the", "—"],
+                "answer":
+                    "the",
+                "explanation":
+                    "THE + adjective может обозначать группу людей: the poor.",
             },
 
             {
                 "order": 18,
-                "prompt": "Choose the correct sentence.",
-                "options": [
-                    "She is best teacher in our school.",
-                    "She is a best teacher in our school.",
-                    "She is the best teacher in our school.",
-                    "She is an best teacher in our school.",
-                ],
-                "answer": "She is the best teacher in our school.",
-                "explanation": "Перед превосходной степенью best используется the.",
+                "section": 8,
+                "type": "choice",
+                "prompt":
+                    "___ water in this bottle is cold.",
+                "options":
+                    ["A", "An", "The", "—"],
+                "answer":
+                    "The",
+                "explanation":
+                    "Речь идёт о конкретной воде в конкретной бутылке.",
+            },
+
+            {
+                "order": 19,
+                "section": 8,
+                "type": "choice",
+                "prompt":
+                    "Books are useful. Какой артикль нужен перед Books?",
+                "options":
+                    ["a", "an", "the", "—"],
+                "answer":
+                    "—",
+                "explanation":
+                    "Речь идёт о книгах вообще, поэтому артикль не нужен.",
+            },
+
+            {
+                "order": 20,
+                "section": 9,
+                "type": "choice",
+                "prompt":
+                    "I bought ___ phone yesterday. ___ phone is expensive.",
+                "options":
+                    [
+                        "a / the",
+                        "the / a",
+                        "the / the",
+                        "a / a",
+                    ],
+                "answer":
+                    "a / the",
+                "explanation":
+                    "Первое упоминание — A. Повторное упоминание конкретного телефона — THE.",
             },
 
         ]
 
-        for data in exercises:
+
+        # =================================================
+        # 10 FINAL TEST QUESTIONS
+        # section=None means FINAL TEST
+        # =================================================
+
+        final_test = [
+
+            {
+                "order": 21,
+
+                "prompt":
+                    "I saw a movie last night. ___ movie was excellent.",
+
+                "options":
+                    ["A", "An", "The", "—"],
+
+                "answer":
+                    "The",
+
+                "explanation":
+                    "Movie уже упоминался, поэтому при повторном упоминании используется THE.",
+            },
+
+            {
+                "order": 22,
+
+                "prompt":
+                    "Could you open ___ window, please?",
+
+                "options":
+                    ["a", "an", "the", "—"],
+
+                "answer":
+                    "the",
+
+                "explanation":
+                    "Из ситуации понятно, какое конкретно окно имеется в виду.",
+            },
+
+            {
+                "order": 23,
+
+                "prompt":
+                    "___ moon is very bright tonight.",
+
+                "options":
+                    ["A", "An", "The", "—"],
+
+                "answer":
+                    "The",
+
+                "explanation":
+                    "Moon рассматривается как уникальный объект.",
+            },
+
+            {
+                "order": 24,
+
+                "prompt":
+                    "This is ___ most expensive hotel in the city.",
+
+                "options":
+                    ["a", "an", "the", "—"],
+
+                "answer":
+                    "the",
+
+                "explanation":
+                    "Перед превосходной степенью most expensive используется THE.",
+            },
+
+            {
+                "order": 25,
+
+                "prompt":
+                    "Our office is on ___ second floor.",
+
+                "options":
+                    ["a", "an", "the", "—"],
+
+                "answer":
+                    "the",
+
+                "explanation":
+                    "Перед порядковым числительным second используется THE.",
+            },
+
+            {
+                "order": 26,
+
+                "prompt":
+                    "Выбери правильную пару.",
+
+                "options": [
+                    "the Nile / Kazakhstan",
+                    "Nile / the Kazakhstan",
+                    "the Nile / the Kazakhstan",
+                    "Nile / Kazakhstan",
+                ],
+
+                "answer":
+                    "the Nile / Kazakhstan",
+
+                "explanation":
+                    "С названием реки нужен THE, а Kazakhstan обычно используется без артикля.",
+            },
+
+            {
+                "order": 27,
+
+                "prompt":
+                    "Выбери правильную пару.",
+
+                "options": [
+                    "the United States / the National Gallery",
+                    "United States / National Gallery",
+                    "the United States / National Gallery",
+                    "United States / the National Gallery",
+                ],
+
+                "answer":
+                    "the United States / the National Gallery",
+
+                "explanation":
+                    "Оба названия в этих формах употребляются с THE.",
+            },
+
+            {
+                "order": 28,
+
+                "prompt":
+                    "She plays ___ violin, but she plays ___ basketball.",
+
+                "options": [
+                    "the / —",
+                    "— / the",
+                    "the / the",
+                    "— / —",
+                ],
+
+                "answer":
+                    "the / —",
+
+                "explanation":
+                    "С музыкальным инструментом используется THE, а со спортивной игрой — без артикля.",
+            },
+
+            {
+                "order": 29,
+
+                "prompt":
+                    "This programme helps ___ elderly.",
+
+                "options":
+                    ["a", "an", "the", "—"],
+
+                "answer":
+                    "the",
+
+                "explanation":
+                    "THE + adjective может обозначать группу людей: the elderly.",
+            },
+
+            {
+                "order": 30,
+
+                "prompt":
+                    "Выбери правильный вариант.",
+
+                "options": [
+                    "Water is important. The water in this glass is cold.",
+                    "The water is important. Water in this glass is cold.",
+                    "A water is important. The water in this glass is cold.",
+                    "Water is important. A water in this glass is cold.",
+                ],
+
+                "answer":
+                    "Water is important. The water in this glass is cold.",
+
+                "explanation":
+                    "В первом предложении water означает воду вообще, а во втором речь идёт о конкретной воде.",
+            },
+
+        ]
+
+
+        all_exercises = (
+            training
+            +
+            final_test
+        )
+
+
+        valid_orders = []
+
+
+        for data in all_exercises:
+
+            valid_orders.append(
+                data["order"]
+            )
+
+
+            if data["order"] <= 20:
+
+                section = (
+                    section_objects[
+                        data["section"]
+                    ]
+                )
+
+            else:
+
+                section = None
+
 
             GrammarExercise.objects.update_or_create(
                 lesson=lesson,
                 order=data["order"],
+
                 defaults={
-                    "exercise_type": GrammarExercise.Type.CHOICE,
-                    "prompt": data["prompt"],
-                    "options": data["options"],
-                    "correct_answer": data["answer"],
-                    "explanation": data["explanation"],
-                    "is_published": True,
+                    "section":
+                        section,
+
+                    "exercise_type":
+                        data.get(
+                            "type",
+                            "choice",
+                        ),
+
+                    "prompt":
+                        data["prompt"],
+
+                    "options":
+                        data["options"],
+
+                    "correct_answer":
+                        data["answer"],
+
+                    "explanation":
+                        data["explanation"],
+
+                    "is_published":
+                        True,
                 },
             )
 
+
+        # Remove old sections 10-14 after exercises
+        # have been reassigned to the new structure.
+
+        GrammarLessonSection.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__in=[
+                item["order"]
+                for item in sections
+            ],
+        ).delete()
+
+
+        GrammarExercise.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__in=valid_orders,
+        ).delete()
+
+
         self.stdout.write(
             self.style.SUCCESS(
-                "✅ A1 Lesson 2 seeded: Определённый артикль THE"
+                "✅ Interactive A1 Lesson 2 seeded"
             )
         )
 
         self.stdout.write(
-            f"Sections: {lesson.sections.count()}"
+            f"Micro rules: "
+            f"{lesson.sections.count()}"
         )
 
         self.stdout.write(
-            f"Exercises: {lesson.exercises.count()}"
+            "Training exercises: "
+            f"{lesson.exercises.filter(section__isnull=False).count()}"
+        )
+
+        self.stdout.write(
+            "Final test: "
+            f"{lesson.exercises.filter(section__isnull=True).count()}"
         )

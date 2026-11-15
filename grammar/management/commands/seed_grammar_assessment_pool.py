@@ -123,6 +123,9 @@ class Command(BaseCommand):
                 GrammarExercise.objects.filter(
                     lesson=lesson,
                     is_published=True,
+                    exercise_type=(
+                        GrammarExercise.Type.CHOICE
+                    ),
                 ).order_by("order")
             )
 
@@ -169,6 +172,9 @@ class Command(BaseCommand):
                 GrammarExercise.objects.filter(
                     lesson=lesson,
                     is_published=True,
+                    exercise_type=(
+                        GrammarExercise.Type.CHOICE
+                    ),
                 ).order_by("order")
             )
 
@@ -246,6 +252,9 @@ class Command(BaseCommand):
                     lesson__order__range=(1, 60),
                     lesson__is_published=True,
                     is_published=True,
+                    exercise_type=(
+                        GrammarExercise.Type.CHOICE
+                    ),
                 )
                 .select_related("lesson")
                 .order_by(

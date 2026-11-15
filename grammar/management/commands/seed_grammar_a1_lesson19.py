@@ -10,77 +10,64 @@ from grammar.models import (
 class Command(BaseCommand):
 
     help = (
-        "Create/update A1 Grammar Lesson 19: "
-        "Imperatives, requests and suggestions."
+        "Create/update interactive A1 Grammar "
+        "Lesson 19: Imperatives, requests and suggestions."
     )
+
 
     def handle(self, *args, **options):
 
-        lesson, _ = GrammarLesson.objects.update_or_create(
-            level="A1",
-            order=19,
-            defaults={
-                "title": (
-                    "Повелительное наклонение: "
-                    "команды, просьбы и предложения"
-                ),
-                "slug": "imperatives-requests-suggestions",
-                "theory_text": (
-                    "Imperatives, requests and suggestions."
-                ),
-                "estimated_minutes": 30,
-                "pass_score": 70,
-                "xp_reward": 100,
-                "is_published": True,
-            },
+        lesson, _ = (
+            GrammarLesson.objects
+            .update_or_create(
+                level="A1",
+                order=19,
+
+                defaults={
+                    "title":
+                        "Повелительное наклонение: "
+                        "команды, просьбы и предложения",
+
+                    "slug":
+                        "imperatives-requests-suggestions",
+
+                    "theory_text":
+                        "Imperatives, requests and suggestions.",
+
+                    "estimated_minutes":
+                        17,
+
+                    "pass_score":
+                        70,
+
+                    "xp_reward":
+                        100,
+
+                    "is_published":
+                        True,
+                },
+            )
         )
+
+
+        # ================================================
+        # 10 MICRO-RULES
+        # ================================================
 
         sections = [
 
             {
                 "order": 1,
-                "title": "Что такое повелительное наклонение",
-                "body": """Повелительное наклонение используется, когда мы:
 
-даём команду;
+                "title":
+                    "Команда = глагол без TO",
 
-просим что-то сделать;
-
-даём инструкцию;
-
-советуем;
-
-запрещаем;
-
-предлагаем сделать что-то вместе.
-
-Примеры:
+                "body":
+                    """Чтобы дать команду или инструкцию, начинаем с базовой формы глагола.
 
 Open the door.
 
-Sit down, please.
-
-Don't touch that.
-
-Let's begin.""",
-            },
-
-            {
-                "order": 2,
-                "title": "Положительная команда",
-                "body": """Чтобы дать команду, используется обычная форма глагола без to.
-
-Формула:
-
-Глагол + остальная часть предложения
-
-Примеры:
-
-Come here.
-
 Sit down.
-
-Open the book.
 
 Read the text.
 
@@ -88,79 +75,104 @@ Listen carefully.
 
 Wait a minute.
 
-Важно:
+Не нужно:
 
-не нужно ставить to;
+TO
 
-не нужно добавлять -s.""",
+окончание -S
+
+ING
+
+Не:
+
+To open the door.
+
+Opens the door.
+
+А:
+
+Open the door.""",
             },
 
+
             {
-                "order": 3,
-                "title": "Подлежащее YOU обычно не ставится",
-                "body": """В обычной команде слово you не используется.
+                "order": 2,
 
-Неправильно:
+                "title":
+                    "YOU обычно не ставится",
 
-You open the door.
+                "body":
+                    """В обычной команде подлежащее YOU подразумевается.
+
+Не:
+
+You open the window.
 
 Если это команда:
 
-Open the door.
-
-Подлежащее you подразумевается.
+Open the window.
 
 Другие примеры:
 
 Stand up.
 
-Close the window.
-
 Write your name.
 
 Turn left.
 
-Call me tomorrow.""",
+Call me tomorrow.
+
+Человек уже понимает, что команда обращена к нему.""",
             },
 
+
             {
-                "order": 4,
-                "title": "PLEASE — вежливая просьба",
-                "body": """Чтобы сделать команду мягче, добавляется please.
+                "order": 3,
+
+                "title":
+                    "PLEASE делает просьбу вежливее",
+
+                "body":
+                    """PLEASE смягчает команду.
+
+Close the door.
+
+Более вежливо:
+
+Please close the door.
+
+или:
+
+Close the door, please.
+
+PLEASE может стоять:
+
+в начале
+
+или
+
+в конце просьбы.
 
 Примеры:
 
 Please sit down.
 
-Sit down, please.
-
-Please open the window.
-
 Wait here, please.
 
-Please может стоять:
-
-в начале;
-
-в конце.
-
-Сравните:
-
-Close the door.
-
-Please close the door.
-
-Второй вариант звучит вежливее.""",
+Please speak slowly.""",
             },
 
+
             {
-                "order": 5,
-                "title": "Отрицательная команда",
-                "body": """Чтобы запретить действие, используется:
+                "order": 4,
 
-Don't + глагол
+                "title":
+                    "DON'T + глагол",
 
-Примеры:
+                "body":
+                    """Для запрета используется:
+
+DON'T + base verb
 
 Don't speak.
 
@@ -170,35 +182,9 @@ Don't open the door.
 
 Don't touch this.
 
-Don't be late.
+После DON'T глагол остаётся в базовой форме.
 
-Полная форма:
-
-Do not + глагол
-
-Она часто используется на знаках и в официальных инструкциях:
-
-Do not enter.
-
-Do not smoke.
-
-Do not use your phone.""",
-            },
-
-            {
-                "order": 6,
-                "title": "После DON'T — базовая форма",
-                "body": """После don't используется обычная форма глагола.
-
-Правильно:
-
-Don't go.
-
-Don't speak.
-
-Don't touch.
-
-Неправильно:
+Не:
 
 Don't goes.
 
@@ -206,25 +192,24 @@ Don't speaking.
 
 Don't to touch.
 
-То же правило работает с be:
+Полная форма:
 
-Don't be late.
+DO NOT
 
-Не:
+Do not enter.
 
-Don't are late.
-
-Не:
-
-Don't being late.""",
+Do not smoke.""",
             },
 
-            {
-                "order": 7,
-                "title": "Команды с BE",
-                "body": """Если команда относится к состоянию, используется be.
 
-Примеры:
+            {
+                "order": 5,
+
+                "title":
+                    "BE и DON'T BE",
+
+                "body":
+                    """Если команда описывает состояние, используется BE.
 
 Be careful.
 
@@ -236,35 +221,40 @@ Be ready.
 
 Отрицание:
 
-Don't be + прилагательное
+DON'T BE
 
 Don't be late.
 
 Don't be afraid.
 
-Don't be rude.
+Don't be nervous.
 
-Don't be nervous.""",
+Не:
+
+Don't are late.
+
+Don't being late.""",
             },
 
+
             {
-                "order": 8,
-                "title": "Инструкции и указания",
-                "body": """Повелительное наклонение часто используется в инструкциях.
+                "order": 6,
 
-Пример:
+                "title":
+                    "Инструкции и направления",
 
-Open the box.
+                "body":
+                    """Imperative очень часто используется в инструкциях.
 
-Take out the device.
+Техника:
 
 Press the button.
 
-Wait for ten seconds.
+Wait ten seconds.
 
 Turn the device off.
 
-В рецептах:
+Рецепт:
 
 Cut the vegetables.
 
@@ -272,7 +262,7 @@ Add some salt.
 
 Mix the ingredients.
 
-В указаниях дороги:
+Дорога:
 
 Go straight.
 
@@ -280,19 +270,20 @@ Turn left.
 
 Turn right.
 
-Cross the road.""",
+Cross the road.
+
+Все эти команды начинаются с базовой формы глагола.""",
             },
 
+
             {
-                "order": 9,
-                "title": "LET'S — давай / давайте",
-                "body": """Let's используется, когда говорящий предлагает совместное действие.
+                "order": 7,
 
-Формула:
+                "title":
+                    "LET'S = давай / давайте",
 
-Let's + глагол
-
-Примеры:
+                "body":
+                    """LET'S используется для совместного предложения.
 
 Let's go.
 
@@ -302,27 +293,32 @@ Let's study together.
 
 Let's have lunch.
 
-Let's ask the teacher.
+После LET'S используется базовая форма без TO.
 
-После let's глагол используется без to.
-
-Неправильно:
+Не:
 
 Let's to go.
 
-Правильно:
+А:
 
-Let's go.""",
+Let's go.
+
+Формула:
+
+LET'S + base verb.""",
             },
 
+
             {
-                "order": 10,
-                "title": "LET'S NOT",
-                "body": """Чтобы предложить чего-то не делать:
+                "order": 8,
 
-Let's not + глагол
+                "title":
+                    "LET'S NOT = давай не будем",
 
-Примеры:
+                "body":
+                    """Чтобы предложить чего-то не делать:
+
+LET'S NOT + base verb
 
 Let's not argue.
 
@@ -332,49 +328,32 @@ Let's not tell anyone.
 
 Let's not go there.
 
-Важно:
-
-Неправильно:
+Не:
 
 Let's don't argue.
+
+Не:
+
+Let's not to argue.
 
 Правильно:
 
 Let's not argue.""",
             },
 
+
             {
-                "order": 11,
-                "title": "LET ME, LET HIM, LET HER, LET THEM",
-                "body": """Let me означает:
+                "order": 9,
 
-позвольте мне;
+                "title":
+                    "LET ME / HIM / HER / THEM",
 
-дай мне;
-
-давайте я.
-
-Примеры:
+                "body":
+                    """LET может означать «позволь».
 
 Let me help you.
 
 Let me explain.
-
-Let me check.
-
-После let используется объектная форма:
-
-let me;
-
-let him;
-
-let her;
-
-let us;
-
-let them.
-
-Примеры:
 
 Let him speak.
 
@@ -382,370 +361,870 @@ Let her decide.
 
 Let them go.
 
-Неправильно:
+После LET используется объектная форма:
 
-let he;
+me
 
-let she.""",
+him
+
+her
+
+us
+
+them
+
+Не:
+
+let he
+
+let she
+
+А:
+
+let him
+
+let her.""",
             },
 
-            {
-                "order": 12,
-                "title": "ALWAYS и NEVER",
-                "body": """Always можно использовать в советах и инструкциях:
 
-Always wash your hands.
+            {
+                "order": 10,
+
+                "title":
+                    "ALWAYS, NEVER, AND и OR",
+
+                "body":
+                    """Советы:
 
 Always check your work.
 
 Always wear a seat belt.
 
-Never означает «никогда».
+Запрет через NEVER:
 
 Never touch electrical wires.
 
-Never open the door to strangers.
+Never give personal information to strangers.
 
-Never drive when you are tired.
-
-После never используется обычный глагол.
-
-Неправильно:
+Не:
 
 Never don't touch.
 
-Правильно:
-
-Never touch.""",
-            },
-
-            {
-                "order": 13,
-                "title": "Команда + AND / OR",
-                "body": """После команды можно использовать and или or.
-
-AND показывает результат:
-
-Work hard and you will succeed.
+После команды можно показать результат через AND:
 
 Press this button and the machine will start.
 
-OR часто выражает предупреждение:
+OR часто означает предупреждение:
 
 Hurry up or you will be late.
 
-Be careful or you will fall.
-
-На знаках также часто встречаются:
-
-Stop.
-
-Keep out.
-
-Do not enter.
-
-No smoking.
-
-Push.
-
-Pull.""",
-            },
-
-            {
-                "order": 14,
-                "title": "Главное правило",
-                "body": """Положительная команда:
-
-глагол без to
-
-Open the door.
-
-Sit down.
-
-Be careful.
-
-Отрицательная команда:
-
-Don't + глагол
-
-Don't open the door.
-
-Don't speak.
-
-Don't be late.
-
-Совместное предложение:
-
-Let's + глагол
-
-Let's begin.
-
-Let's go.
-
-Отрицательное предложение:
-
-Let's not + глагол
-
-Let's not argue.
-
-Let's not be late.""",
+Be careful or you will fall.""",
             },
 
         ]
 
+
+        section_objects = {}
+
+
         for data in sections:
 
-            GrammarLessonSection.objects.update_or_create(
-                lesson=lesson,
-                order=data["order"],
-                defaults={
-                    "title": data["title"],
-                    "body": data["body"],
-                },
+            section, _ = (
+                GrammarLessonSection.objects
+                .update_or_create(
+                    lesson=lesson,
+                    order=data["order"],
+
+                    defaults={
+                        "title":
+                            data["title"],
+
+                        "body":
+                            data["body"],
+                    },
+                )
             )
 
-        exercises = [
+            section_objects[
+                data["order"]
+            ] = section
+
+
+        # ================================================
+        # 20 TRAINING EXERCISES
+        # ================================================
+
+        training = [
 
             {
                 "order": 1,
-                "prompt": "___ the door, please.",
-                "options": ["Opens", "Open", "To open", "Opening"],
-                "answer": "Open",
-                "explanation": "В команде используется базовая форма глагола без to.",
+                "section": 1,
+                "type": "choice",
+
+                "prompt":
+                    "___ the door.",
+
+                "options": [
+                    "Opens",
+                    "Open",
+                    "To open",
+                    "Opening",
+                ],
+
+                "answer":
+                    "Open",
+
+                "explanation":
+                    "Команда начинается с базовой формы OPEN.",
             },
+
 
             {
                 "order": 2,
-                "prompt": "___ late.",
-                "options": ["Don't be", "Don't is", "Not be", "Doesn't be"],
-                "answer": "Don't be",
-                "explanation": "Отрицательная команда с состоянием: Don't be.",
+                "section": 1,
+                "type": "fill",
+
+                "prompt":
+                    "___ your name here. (write)",
+
+                "options": [],
+
+                "answer":
+                    "Write",
+
+                "explanation":
+                    "В imperative используется базовая форма WRITE.",
             },
+
 
             {
                 "order": 3,
-                "prompt": "___ your phone during the lesson.",
+                "section": 2,
+                "type": "choice",
+
+                "prompt":
+                    "Choose the natural command.",
+
                 "options": [
-                    "Don't use",
-                    "Doesn't use",
-                    "Not use",
-                    "Don't using",
+                    "You sit down.",
+                    "Sit down.",
+                    "You are sit down.",
+                    "To sit down.",
                 ],
-                "answer": "Don't use",
-                "explanation": "Don't + базовая форма use.",
+
+                "answer":
+                    "Sit down.",
+
+                "explanation":
+                    "В обычной команде YOU не требуется.",
             },
+
 
             {
                 "order": 4,
-                "prompt": "___ begin the lesson.",
-                "options": ["Lets", "Let's", "Let's to", "Let us to"],
-                "answer": "Let's",
-                "explanation": "Для совместного предложения используется Let's + глагол.",
+                "section": 2,
+                "type": "build",
+
+                "prompt":
+                    "Собери команду.",
+
+                "options": [
+                    "Turn",
+                    "left",
+                    "at",
+                    "the",
+                    "corner",
+                ],
+
+                "answer":
+                    "Turn left at the corner",
+
+                "explanation":
+                    "Команда начинается с TURN.",
             },
+
 
             {
                 "order": 5,
-                "prompt": "Let's ___ home.",
-                "options": ["to go", "goes", "go", "going"],
-                "answer": "go",
-                "explanation": "После let's используется базовая форма без to.",
+                "section": 3,
+                "type": "choice",
+
+                "prompt":
+                    "Choose the more polite request.",
+
+                "options": [
+                    "Close the window.",
+                    "Please close the window.",
+                    "You close the window.",
+                    "To close the window.",
+                ],
+
+                "answer":
+                    "Please close the window.",
+
+                "explanation":
+                    "PLEASE делает просьбу более вежливой.",
             },
+
 
             {
                 "order": 6,
-                "prompt": "Let's not ___ about this now.",
-                "options": ["talks", "talking", "to talk", "talk"],
-                "answer": "talk",
-                "explanation": "Let's not + базовая форма.",
+                "section": 3,
+                "type": "choice",
+
+                "prompt":
+                    "___ speak more slowly.",
+
+                "options": [
+                    "Please",
+                    "Does",
+                    "Are",
+                    "To",
+                ],
+
+                "answer":
+                    "Please",
+
+                "explanation":
+                    "PLEASE + base verb используется для вежливой просьбы.",
             },
+
 
             {
                 "order": 7,
-                "prompt": "___ me help you.",
-                "options": ["Let", "Lets", "Let's", "Allow to"],
-                "answer": "Let",
-                "explanation": "Правильно: Let me help you.",
+                "section": 4,
+                "type": "choice",
+
+                "prompt":
+                    "___ your phone during the lesson.",
+
+                "options": [
+                    "Don't use",
+                    "Doesn't use",
+                    "Don't using",
+                    "Not use",
+                ],
+
+                "answer":
+                    "Don't use",
+
+                "explanation":
+                    "Запрет: DON'T + USE.",
             },
+
 
             {
                 "order": 8,
-                "prompt": "Never ___ this button.",
-                "options": ["touching", "to touch", "touch", "touches"],
-                "answer": "touch",
-                "explanation": "После never в такой инструкции используется базовая форма.",
+                "section": 4,
+                "type": "choice",
+
+                "prompt":
+                    "Choose the correct negative command.",
+
+                "options": [
+                    "Don't touches it.",
+                    "Don't touch it.",
+                    "Don't touching it.",
+                    "Doesn't touch it.",
+                ],
+
+                "answer":
+                    "Don't touch it.",
+
+                "explanation":
+                    "После DON'T используется базовая форма TOUCH.",
             },
+
 
             {
                 "order": 9,
-                "prompt": "___ your name here.",
-                "options": ["Writes", "Write", "To write", "Writing"],
-                "answer": "Write",
-                "explanation": "Положительная команда начинается с базовой формы Write.",
+                "section": 5,
+                "type": "choice",
+
+                "prompt":
+                    "___ careful.",
+
+                "options": [
+                    "Be",
+                    "Are",
+                    "Is",
+                    "Being",
+                ],
+
+                "answer":
+                    "Be",
+
+                "explanation":
+                    "С состоянием используем команду BE CAREFUL.",
             },
+
 
             {
                 "order": 10,
-                "prompt": "Please ___ quietly.",
-                "options": ["speak", "speaks", "speaking", "to speak"],
-                "answer": "speak",
-                "explanation": "После please в просьбе используется базовая форма.",
+                "section": 5,
+                "type": "choice",
+
+                "prompt":
+                    "___ late.",
+
+                "options": [
+                    "Don't be",
+                    "Don't is",
+                    "Doesn't be",
+                    "Not being",
+                ],
+
+                "answer":
+                    "Don't be",
+
+                "explanation":
+                    "Отрицательная команда с состоянием → DON'T BE.",
             },
+
 
             {
                 "order": 11,
-                "prompt": "___ the window.",
+                "section": 6,
+                "type": "choice",
+
+                "prompt":
+                    "___ straight for 200 metres.",
+
                 "options": [
-                    "Don't opening",
-                    "Don't open",
-                    "Doesn't open",
-                    "Not open",
+                    "Going",
+                    "Go",
+                    "Goes",
+                    "To go",
                 ],
-                "answer": "Don't open",
-                "explanation": "Отрицательная команда: Don't + open.",
+
+                "answer":
+                    "Go",
+
+                "explanation":
+                    "Указание дороги начинается с GO.",
             },
+
 
             {
                 "order": 12,
-                "prompt": "___ careful.",
-                "options": ["Be", "Are", "Is", "Being"],
-                "answer": "Be",
-                "explanation": "Команда с состоянием: Be careful.",
+                "section": 6,
+                "type": "choice",
+
+                "prompt":
+                    "First, ___ the vegetables.",
+
+                "options": [
+                    "cut",
+                    "cuts",
+                    "cutting",
+                    "to cut",
+                ],
+
+                "answer":
+                    "cut",
+
+                "explanation":
+                    "Инструкция использует базовую форму CUT.",
             },
+
 
             {
                 "order": 13,
-                "prompt": "___ afraid.",
+                "section": 7,
+                "type": "choice",
+
+                "prompt":
+                    "Let's ___ lunch.",
+
                 "options": [
-                    "Don't is",
-                    "Don't be",
-                    "Not being",
-                    "Doesn't be",
+                    "having",
+                    "have",
+                    "has",
+                    "to have",
                 ],
-                "answer": "Don't be",
-                "explanation": "Правильно: Don't be afraid.",
+
+                "answer":
+                    "have",
+
+                "explanation":
+                    "После LET'S используется базовая форма HAVE.",
             },
+
 
             {
                 "order": 14,
-                "prompt": "Let's ___ a break.",
-                "options": ["having", "have", "has", "to have"],
-                "answer": "have",
-                "explanation": "После let's используется базовая форма have.",
+                "section": 7,
+                "type": "choice",
+
+                "prompt":
+                    "Choose the correct suggestion.",
+
+                "options": [
+                    "Let's to start.",
+                    "Let's start.",
+                    "Let's starts.",
+                    "Let's starting.",
+                ],
+
+                "answer":
+                    "Let's start.",
+
+                "explanation":
+                    "LET'S + base verb.",
             },
+
 
             {
                 "order": 15,
-                "prompt": "Let's not ___ time.",
-                "options": ["wasting", "waste", "to waste", "wastes"],
-                "answer": "waste",
-                "explanation": "Let's not + waste.",
+                "section": 8,
+                "type": "choice",
+
+                "prompt":
+                    "Let's not ___ about it now.",
+
+                "options": [
+                    "talk",
+                    "talks",
+                    "talking",
+                    "to talk",
+                ],
+
+                "answer":
+                    "talk",
+
+                "explanation":
+                    "LET'S NOT + base verb.",
             },
+
 
             {
                 "order": 16,
-                "prompt": "___ me check the document.",
-                "options": ["Lets", "Let", "Let's", "Allow"],
-                "answer": "Let",
-                "explanation": "Конструкция: Let me check.",
-            },
+                "section": 8,
+                "type": "choice",
 
-            {
-                "order": 17,
-                "prompt": "Let ___ speak.",
-                "options": ["he", "him", "his", "himself"],
-                "answer": "him",
-                "explanation": "После let используется объектная форма: him.",
-            },
+                "prompt":
+                    "Choose the correct sentence.",
 
-            {
-                "order": 18,
-                "prompt": "Please don't ___ loudly.",
-                "options": ["talks", "speaking", "speak", "to speak"],
-                "answer": "speak",
-                "explanation": "После don't используется базовая форма speak.",
-            },
-
-            {
-                "order": 19,
-                "prompt": "Always ___ your seat belt.",
-                "options": ["wear", "wears", "wearing", "to wear"],
-                "answer": "wear",
-                "explanation": "В инструкции после always используется базовая форма.",
-            },
-
-            {
-                "order": 20,
-                "prompt": "Never ___ personal information to strangers.",
-                "options": ["gives", "giving", "give", "to give"],
-                "answer": "give",
-                "explanation": "Never + базовая форма give.",
-            },
-
-            {
-                "order": 21,
-                "prompt": "___ straight and turn left.",
-                "options": ["Going", "Go", "Goes", "To go"],
-                "answer": "Go",
-                "explanation": "Указание дороги начинается с команды Go.",
-            },
-
-            {
-                "order": 22,
-                "prompt": "Hurry up, ___ you will be late.",
-                "options": ["and", "but", "or", "because"],
-                "answer": "or",
-                "explanation": "Or передаёт предупреждение: иначе опоздаешь.",
-            },
-
-            {
-                "order": 23,
-                "prompt": "Press this button, ___ the machine will start.",
-                "options": ["or", "and", "but", "because"],
-                "answer": "and",
-                "explanation": "And показывает результат выполнения команды.",
-            },
-
-            {
-                "order": 24,
-                "prompt": "Choose the correct sentence.",
                 "options": [
                     "Let's don't argue.",
                     "Let's not argue.",
                     "Let's not to argue.",
                     "Let's doesn't argue.",
                 ],
-                "answer": "Let's not argue.",
-                "explanation": "Отрицательная форма предложения с let's: Let's not + verb.",
+
+                "answer":
+                    "Let's not argue.",
+
+                "explanation":
+                    "Правильная отрицательная форма — LET'S NOT.",
+            },
+
+
+            {
+                "order": 17,
+                "section": 9,
+                "type": "choice",
+
+                "prompt":
+                    "___ me help you.",
+
+                "options": [
+                    "Let",
+                    "Lets",
+                    "Let's",
+                    "To let",
+                ],
+
+                "answer":
+                    "Let",
+
+                "explanation":
+                    "Конструкция: LET ME HELP YOU.",
+            },
+
+
+            {
+                "order": 18,
+                "section": 9,
+                "type": "choice",
+
+                "prompt":
+                    "Let ___ speak.",
+
+                "options": [
+                    "he",
+                    "him",
+                    "his",
+                    "himself",
+                ],
+
+                "answer":
+                    "him",
+
+                "explanation":
+                    "После LET используется объектная форма HIM.",
+            },
+
+
+            {
+                "order": 19,
+                "section": 10,
+                "type": "choice",
+
+                "prompt":
+                    "Never ___ personal information to strangers.",
+
+                "options": [
+                    "gives",
+                    "give",
+                    "giving",
+                    "to give",
+                ],
+
+                "answer":
+                    "give",
+
+                "explanation":
+                    "После NEVER в инструкции используется базовая форма GIVE.",
+            },
+
+
+            {
+                "order": 20,
+                "section": 10,
+                "type": "choice",
+
+                "prompt":
+                    "Hurry up, ___ you will be late.",
+
+                "options": [
+                    "and",
+                    "or",
+                    "because",
+                    "so",
+                ],
+
+                "answer":
+                    "or",
+
+                "explanation":
+                    "OR показывает предупреждение: иначе опоздаешь.",
             },
 
         ]
 
-        for data in exercises:
+
+        # ================================================
+        # 10 FINAL TEST QUESTIONS
+        # ================================================
+
+        final_test = [
+
+            {
+                "order": 21,
+
+                "prompt":
+                    "___ the light, please.",
+
+                "options": [
+                    "Turn on",
+                    "Turns on",
+                    "To turn on",
+                    "Turning on",
+                ],
+
+                "answer":
+                    "Turn on",
+
+                "explanation":
+                    "Imperative начинается с базовой формы TURN.",
+            },
+
+
+            {
+                "order": 22,
+
+                "prompt":
+                    "Choose the correct command.",
+
+                "options": [
+                    "You wait here.",
+                    "Wait here.",
+                    "You are wait here.",
+                    "To wait here.",
+                ],
+
+                "answer":
+                    "Wait here.",
+
+                "explanation":
+                    "YOU в обычной команде не ставится.",
+            },
+
+
+            {
+                "order": 23,
+
+                "prompt":
+                    "___ this door.",
+
+                "options": [
+                    "Don't opens",
+                    "Don't open",
+                    "Doesn't open",
+                    "Don't opening",
+                ],
+
+                "answer":
+                    "Don't open",
+
+                "explanation":
+                    "Отрицательная команда → DON'T + OPEN.",
+            },
+
+
+            {
+                "order": 24,
+
+                "prompt":
+                    "___ nervous.",
+
+                "options": [
+                    "Don't be",
+                    "Don't are",
+                    "Doesn't be",
+                    "Not being",
+                ],
+
+                "answer":
+                    "Don't be",
+
+                "explanation":
+                    "Состояние в отрицательной команде → DON'T BE.",
+            },
+
+
+            {
+                "order": 25,
+
+                "prompt":
+                    "Choose the correct instruction.",
+
+                "options": [
+                    "Press the button.",
+                    "Presses the button.",
+                    "To press the button.",
+                    "Pressing the button.",
+                ],
+
+                "answer":
+                    "Press the button.",
+
+                "explanation":
+                    "Инструкция использует базовую форму PRESS.",
+            },
+
+
+            {
+                "order": 26,
+
+                "prompt":
+                    "Let's ___ the teacher.",
+
+                "options": [
+                    "ask",
+                    "asks",
+                    "asking",
+                    "to ask",
+                ],
+
+                "answer":
+                    "ask",
+
+                "explanation":
+                    "LET'S + base verb.",
+            },
+
+
+            {
+                "order": 27,
+
+                "prompt":
+                    "Choose the correct negative suggestion.",
+
+                "options": [
+                    "Let's don't go there.",
+                    "Let's not go there.",
+                    "Let's not to go there.",
+                    "Let's doesn't go there.",
+                ],
+
+                "answer":
+                    "Let's not go there.",
+
+                "explanation":
+                    "Отрицательное предложение → LET'S NOT + GO.",
+            },
+
+
+            {
+                "order": 28,
+
+                "prompt":
+                    "Let ___ decide.",
+
+                "options": [
+                    "she",
+                    "her",
+                    "hers",
+                    "herself",
+                ],
+
+                "answer":
+                    "her",
+
+                "explanation":
+                    "После LET используется объектная форма HER.",
+            },
+
+
+            {
+                "order": 29,
+
+                "prompt":
+                    "Choose the correct safety instruction.",
+
+                "options": [
+                    "Never don't touch the wires.",
+                    "Never touch the wires.",
+                    "Never touching the wires.",
+                    "Never to touch the wires.",
+                ],
+
+                "answer":
+                    "Never touch the wires.",
+
+                "explanation":
+                    "NEVER уже выражает запрет; затем идёт базовая форма.",
+            },
+
+
+            {
+                "order": 30,
+
+                "prompt":
+                    "Choose the fully correct pair.",
+
+                "options": [
+                    "Press this button and the machine will start. / Hurry up or you will be late.",
+                    "Press this button or the machine will start. / Hurry up and you will be late.",
+                    "Presses this button and the machine starts. / Hurry up or you are late.",
+                    "To press this button and the machine will start. / Hurrying up or you will be late.",
+                ],
+
+                "answer":
+                    "Press this button and the machine will start. / Hurry up or you will be late.",
+
+                "explanation":
+                    "AND показывает результат, OR — предупреждение.",
+            },
+
+        ]
+
+
+        valid_orders = []
+
+
+        for data in (
+            training
+            +
+            final_test
+        ):
+
+            valid_orders.append(
+                data["order"]
+            )
+
+
+            if data["order"] <= 20:
+
+                section = (
+                    section_objects[
+                        data["section"]
+                    ]
+                )
+
+            else:
+
+                section = None
+
 
             GrammarExercise.objects.update_or_create(
                 lesson=lesson,
                 order=data["order"],
+
                 defaults={
-                    "exercise_type": GrammarExercise.Type.CHOICE,
-                    "prompt": data["prompt"],
-                    "options": data["options"],
-                    "correct_answer": data["answer"],
-                    "explanation": data["explanation"],
-                    "is_published": True,
+                    "section":
+                        section,
+
+                    "exercise_type":
+                        data.get(
+                            "type",
+                            "choice",
+                        ),
+
+                    "prompt":
+                        data["prompt"],
+
+                    "options":
+                        data["options"],
+
+                    "correct_answer":
+                        data["answer"],
+
+                    "explanation":
+                        data["explanation"],
+
+                    "is_published":
+                        True,
                 },
             )
 
+
+        GrammarExercise.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__in=valid_orders,
+        ).delete()
+
+
+        GrammarLessonSection.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__in=[
+                item["order"]
+                for item in sections
+            ],
+        ).delete()
+
+
         self.stdout.write(
             self.style.SUCCESS(
-                "✅ A1 Lesson 19 seeded: "
-                "Повелительное наклонение"
+                "✅ Interactive A1 Lesson 19 seeded"
             )
         )
 
         self.stdout.write(
-            f"Sections: {lesson.sections.count()}"
+            f"Micro rules: "
+            f"{lesson.sections.count()}"
         )
 
         self.stdout.write(
-            f"Exercises: {lesson.exercises.count()}"
+            "Training exercises: "
+            f"{lesson.exercises.filter(section__isnull=False).count()}"
+        )
+
+        self.stdout.write(
+            "Final test: "
+            f"{lesson.exercises.filter(section__isnull=True).count()}"
         )

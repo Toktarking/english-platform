@@ -10,241 +10,216 @@ from grammar.models import (
 class Command(BaseCommand):
 
     help = (
-        "Create/update A1 Grammar Lesson 8: "
-        "This, that, these, those."
+        "Create/update interactive A1 Grammar "
+        "Lesson 8: this, that, these, those."
     )
 
-    def handle(self, *args, **options):
 
-        lesson, _ = GrammarLesson.objects.update_or_create(
-            level="A1",
-            order=8,
-            defaults={
-                "title": (
-                    "Указательные местоимения "
-                    "THIS, THAT, THESE, THOSE"
-                ),
-                "slug": "this-that-these-those",
-                "theory_text": (
-                    "Demonstratives: this, that, "
-                    "these, those."
-                ),
-                "estimated_minutes": 25,
-                "pass_score": 70,
-                "xp_reward": 100,
-                "is_published": True,
-            },
+    def handle(
+        self,
+        *args,
+        **options,
+    ):
+
+        lesson, _ = (
+            GrammarLesson.objects
+            .update_or_create(
+                level="A1",
+                order=8,
+
+                defaults={
+                    "title":
+                        "Указательные местоимения "
+                        "THIS, THAT, THESE, THOSE",
+
+                    "slug":
+                        "this-that-these-those",
+
+                    "theory_text":
+                        "Demonstratives: this, that, "
+                        "these, those.",
+
+                    "estimated_minutes":
+                        14,
+
+                    "pass_score":
+                        70,
+
+                    "xp_reward":
+                        100,
+
+                    "is_published":
+                        True,
+                },
+            )
         )
+
+
+        # =================================================
+        # 8 MICRO-RULES
+        # =================================================
 
         sections = [
 
             {
                 "order": 1,
-                "title": "Что такое THIS, THAT, THESE, THOSE",
-                "body": """Указательные местоимения помогают показать на человека, предмет или несколько предметов.
 
-В английском используются четыре слова:
+                "title":
+                    "Главная схема: близко или далеко?",
 
-this — этот, эта, это;
-that — тот, та, то;
-these — эти;
-those — те.
+                "body":
+                    """Нужно определить две вещи:
 
-Выбор зависит от двух вещей:
+1. Один предмет или несколько?
+2. Близко он или далеко?
 
-1. предмет один или их несколько;
-2. предмет находится близко или далеко.
+Главная схема:
 
-Главная таблица:
+THIS
+один + близко
 
-Близко + один предмет → this
+THAT
+один + далеко
 
-Далеко + один предмет → that
+THESE
+несколько + близко
 
-Близко + несколько предметов → these
+THOSE
+несколько + далеко
 
-Далеко + несколько предметов → those.""",
+Примеры:
+
+this book
+эта книга рядом
+
+that house
+тот дом далеко
+
+these keys
+эти ключи рядом
+
+those mountains
+те горы далеко.""",
             },
+
 
             {
                 "order": 2,
-                "title": "THIS",
-                "body": """This используется, когда предмет один и находится рядом с говорящим.
 
-Примеры:
+                "title":
+                    "THIS и THAT — один предмет",
 
-this book;
-this phone;
-this chair;
-this apple.
+                "body":
+                    """THIS используется с одним предметом рядом:
 
-Предложения:
+this phone
+this chair
+this apple
 
-This book is interesting.
+This phone is mine.
 
-This phone is new.
+THAT используется с одним предметом дальше:
 
-This is my bag.
+that car
+that tree
+that building
 
-Запомните:
+That car is expensive.
 
-THIS = один предмет + близко.""",
+Запомни:
+
+THIS = singular + near
+
+THAT = singular + far.""",
             },
+
 
             {
                 "order": 3,
-                "title": "THAT",
-                "body": """That используется, когда предмет один и находится далеко от говорящего.
 
-Примеры:
+                "title":
+                    "THESE и THOSE — несколько предметов",
 
-that house;
-that car;
-that tree;
-that man.
+                "body":
+                    """THESE используется с несколькими предметами рядом:
 
-Предложения:
-
-That house is very old.
-
-That car belongs to my brother.
-
-That is our school.
-
-Запомните:
-
-THAT = один предмет + далеко.""",
-            },
-
-            {
-                "order": 4,
-                "title": "THESE",
-                "body": """These используется, когда предметов несколько и они находятся рядом.
-
-Примеры:
-
-these books;
-these apples;
-these students;
-these chairs.
-
-Предложения:
+these books
+these apples
+these students
 
 These books are mine.
 
-These apples are fresh.
+THOSE — с несколькими предметами далеко:
 
-These are my keys.
-
-Запомните:
-
-THESE = несколько предметов + близко.""",
-            },
-
-            {
-                "order": 5,
-                "title": "THOSE",
-                "body": """Those используется, когда предметов несколько и они находятся далеко.
-
-Примеры:
-
-those houses;
-those cars;
-those people;
-those mountains.
-
-Предложения:
+those houses
+those people
+those mountains
 
 Those houses are new.
 
-Those people are waiting for the bus.
+Запомни:
+
+THESE = plural + near
+
+THOSE = plural + far.""",
+            },
+
+
+            {
+                "order": 4,
+
+                "title":
+                    "THIS IS, THAT IS, THESE ARE, THOSE ARE",
+
+                "body":
+                    """THIS и THAT обозначают один предмет, поэтому:
+
+this is
+
+that is
+
+This is my bag.
+
+That is our school.
+
+THESE и THOSE обозначают несколько предметов:
+
+these are
+
+those are
+
+These are my keys.
 
 Those are my friends.
 
-Запомните:
+Не:
 
-THOSE = несколько предметов + далеко.""",
+these is
+
+those is
+
+this are.""",
             },
 
-            {
-                "order": 6,
-                "title": "Единственное и множественное число",
-                "body": """После this и that используется существительное в единственном числе:
-
-this book;
-that student;
-this apple;
-that house.
-
-После these и those используется множественное число:
-
-these books;
-those students;
-these apples;
-those houses.
-
-Неправильно:
-
-this books;
-that students;
-these book;
-those student.
-
-Важно:
-
-this → these
-
-that → those
-
-Это отдельные формы, а не просто добавление окончания.""",
-            },
 
             {
-                "order": 7,
-                "title": "IS или ARE",
-                "body": """This и that обозначают один предмет, поэтому используются с is:
+                "order": 5,
 
-This is a book.
+                "title":
+                    "Перед существительным или самостоятельно",
 
-That is my car.
+                "body":
+                    """Эти слова могут стоять перед существительным:
 
-This is interesting.
+this book
 
-That is our teacher.
+that teacher
 
-These и those обозначают несколько предметов, поэтому используются с are:
+these students
 
-These are books.
+those houses
 
-Those are my friends.
-
-These are new.
-
-Those are expensive.
-
-Запомните:
-
-this is;
-that is;
-these are;
-those are.""",
-            },
-
-            {
-                "order": 8,
-                "title": "Перед существительным и самостоятельно",
-                "body": """This, that, these и those могут стоять перед существительным:
-
-this book;
-that teacher;
-these students;
-those houses.
-
-This book is useful.
-
-Those houses are expensive.
-
-Но они также могут использоваться самостоятельно:
+Но могут использоваться и самостоятельно:
 
 This is mine.
 
@@ -254,29 +229,26 @@ These are fresh.
 
 Those are yours.
 
-Сравните:
+Сравни:
 
 This book is mine.
 
-This is mine.
-
-Оба варианта правильные.""",
+This is mine.""",
             },
 
+
             {
-                "order": 9,
-                "title": "Вопросы и краткие ответы",
-                "body": """С одним предметом:
+                "order": 6,
 
-Is this ...?
+                "title":
+                    "Вопросы, ответы и отрицания",
 
-Is that ...?
-
-Примеры:
+                "body":
+                    """Один предмет:
 
 Is this your phone?
 
-Is that your house?
+Is that your car?
 
 Краткий ответ:
 
@@ -284,451 +256,902 @@ Yes, it is.
 
 No, it isn't.
 
-После того как предмет уже назван, в кратком ответе используется it.
-
-С несколькими предметами:
-
-Are these ...?
-
-Are those ...?
+Несколько предметов:
 
 Are these your keys?
 
-Are those your children?
+Are those your books?
 
-Краткий ответ:
+Ответ:
 
 Yes, they are.
 
 No, they aren't.
 
-Для нескольких предметов используется they.""",
-            },
-
-            {
-                "order": 10,
-                "title": "Отрицательные предложения",
-                "body": """Отрицание с this и that:
-
-This is not my bag.
+Отрицание:
 
 This isn't my bag.
 
-That is not our car.
-
 That isn't our car.
-
-Отрицание с these и those:
-
-These are not my books.
 
 These aren't my books.
 
-Those are not our children.
-
-Those aren't our children.
-
-Запомните:
-
-this/that → is not
-
-these/those → are not.""",
+Those aren't our children.""",
             },
 
+
             {
-                "order": 11,
-                "title": "THIS и THAT со временем",
-                "body": """This может относиться не только к физически близкому предмету, но и к текущему времени.
+                "order": 7,
 
-Примеры:
+                "title":
+                    "THIS и THAT могут говорить о времени",
 
-this week;
-this month;
-this year;
-this morning.
+                "body":
+                    """THIS часто относится к текущему времени:
 
-I am very busy this week.
+this week
 
-We moved here this year.
+this month
 
-That может относиться к более далёкому или прошлому времени:
+this year
 
-that day;
-that year;
-at that time;
-that morning.
+this morning
+
+I am busy this week.
+
+THAT может относиться к более далёкому или прошлому времени:
+
+that day
+
+that year
+
+at that time
 
 I remember that day.
 
-We were living in London that year.
-
 Также:
 
-these days = в наши дни, сейчас
+these days
+в наши дни
 
-those days = в те дни, тогда.""",
+those days
+в те дни.""",
             },
 
+
             {
-                "order": 12,
-                "title": "THIS при знакомстве и по телефону",
-                "body": """При представлении человека часто используется:
+                "order": 8,
 
-This is ...
+                "title":
+                    "Телефон, знакомство и целая ситуация",
 
-Примеры:
-
-This is my wife, Aigul.
+                "body":
+                    """При представлении человека:
 
 This is my friend, Marat.
 
 This is our new teacher.
 
-По телефону говорящий может сказать:
+По телефону:
 
-Hello, this is Marat.
-
-This is Aigul speaking.
-
-Чтобы спросить, кто говорит:
+Hello, this is Aigul.
 
 Who is this?
 
-В телефонном разговоре this обычно относится к говорящему, а that — к собеседнику.""",
-            },
-
-            {
-                "order": 13,
-                "title": "THIS и THAT для ситуации",
-                "body": """This и that могут относиться не к конкретному предмету, а ко всей ситуации.
-
-THIS — текущая ситуация:
+THIS может относиться к текущей ситуации:
 
 This is difficult.
 
 This is a good idea.
 
-This is not fair.
-
-THAT — то, что уже сказали или что произошло:
+THAT часто относится к тому, что уже сказали:
 
 That is true.
 
-That was interesting.
-
 That is a good question.
 
-I did not know that.""",
-            },
+I didn't know that.
 
-            {
-                "order": 14,
-                "title": "Как быстро выбрать правильное слово",
-                "body": """Шаг 1. Сколько предметов?
-
-Один:
-
-this;
-that.
-
-Несколько:
-
-these;
-those.
-
-Шаг 2. Где предмет?
-
-Близко:
-
-this;
-these.
-
-Далеко:
-
-that;
-those.
-
-Примеры:
-
-Одна ручка рядом:
-
-This is a pen.
-
-Одна ручка далеко:
-
-That is a pen.
-
-Несколько ручек рядом:
-
-These are pens.
-
-Несколько ручек далеко:
-
-Those are pens.
-
-И не забывайте:
-
-this is;
-that is;
-these are;
-those are.""",
+То есть THIS и THAT используются не только для физических предметов.""",
             },
 
         ]
 
+
+        section_objects = {}
+
+
         for data in sections:
 
-            GrammarLessonSection.objects.update_or_create(
-                lesson=lesson,
-                order=data["order"],
-                defaults={
-                    "title": data["title"],
-                    "body": data["body"],
-                },
+            section, _ = (
+                GrammarLessonSection.objects
+                .update_or_create(
+                    lesson=lesson,
+                    order=data["order"],
+
+                    defaults={
+                        "title":
+                            data["title"],
+
+                        "body":
+                            data["body"],
+                    },
+                )
             )
 
-        exercises = [
+            section_objects[
+                data["order"]
+            ] = section
+
+
+        # =================================================
+        # 20 TRAINING EXERCISES
+        # =================================================
+
+        training = [
 
             {
                 "order": 1,
-                "prompt": "___ is my phone here on the table.",
-                "options": ["These", "Those", "This", "They"],
-                "answer": "This",
-                "explanation": "Phone — один предмет и находится рядом.",
+                "section": 1,
+                "type": "choice",
+
+                "prompt":
+                    "___ is my phone here on the table.",
+
+                "options": [
+                    "These",
+                    "Those",
+                    "This",
+                    "They",
+                ],
+
+                "answer":
+                    "This",
+
+                "explanation":
+                    "Phone — один предмет рядом.",
             },
+
 
             {
                 "order": 2,
-                "prompt": "___ is our school over there.",
-                "options": ["This", "These", "Those", "That"],
-                "answer": "That",
-                "explanation": "School — один объект, находящийся далеко.",
+                "section": 1,
+                "type": "choice",
+
+                "prompt":
+                    "___ mountains in the distance are beautiful.",
+
+                "options": [
+                    "This",
+                    "That",
+                    "These",
+                    "Those",
+                ],
+
+                "answer":
+                    "Those",
+
+                "explanation":
+                    "Mountains — несколько объектов далеко.",
             },
+
 
             {
                 "order": 3,
-                "prompt": "___ books here are mine.",
-                "options": ["This", "That", "These", "It"],
-                "answer": "These",
-                "explanation": "Books — множественное число, предметы рядом.",
+                "section": 2,
+                "type": "choice",
+
+                "prompt":
+                    "___ pen in my hand is blue.",
+
+                "options": [
+                    "This",
+                    "These",
+                    "Those",
+                    "They",
+                ],
+
+                "answer":
+                    "This",
+
+                "explanation":
+                    "Pen — один предмет рядом.",
             },
+
 
             {
                 "order": 4,
-                "prompt": "___ mountains in the distance are beautiful.",
-                "options": ["This", "Those", "That", "It"],
-                "answer": "Those",
-                "explanation": "Mountains — множественное число и находятся далеко.",
+                "section": 2,
+                "type": "choice",
+
+                "prompt":
+                    "Look at ___ house on the hill.",
+
+                "options": [
+                    "these",
+                    "this",
+                    "those",
+                    "that",
+                ],
+
+                "answer":
+                    "that",
+
+                "explanation":
+                    "House — один объект далеко.",
             },
+
 
             {
                 "order": 5,
-                "prompt": "___ this your bag?",
-                "options": ["Are", "Is", "Am", "Be"],
-                "answer": "Is",
-                "explanation": "This обозначает один предмет: Is this...?",
+                "section": 3,
+                "type": "choice",
+
+                "prompt":
+                    "___ apples here are fresh.",
+
+                "options": [
+                    "This",
+                    "These",
+                    "That",
+                    "It",
+                ],
+
+                "answer":
+                    "These",
+
+                "explanation":
+                    "Apples — несколько предметов рядом.",
             },
+
 
             {
                 "order": 6,
-                "prompt": "___ these your keys?",
-                "options": ["Is", "Am", "Are", "Be"],
-                "answer": "Are",
-                "explanation": "These обозначает несколько предметов: Are these...?",
+                "section": 3,
+                "type": "choice",
+
+                "prompt":
+                    "___ people over there are waiting for the bus.",
+
+                "options": [
+                    "This",
+                    "That",
+                    "These",
+                    "Those",
+                ],
+
+                "answer":
+                    "Those",
+
+                "explanation":
+                    "People — множественное число, находятся далеко.",
             },
+
 
             {
                 "order": 7,
-                "prompt": "Is that your car?",
-                "options": [
-                    "Yes, that is.",
-                    "Yes, it is.",
-                    "Yes, they are.",
-                    "Yes, this is.",
-                ],
-                "answer": "Yes, it is.",
-                "explanation": "Car — один предмет, поэтому в кратком ответе используется it.",
+                "section": 4,
+                "type": "fill",
+
+                "prompt":
+                    "___ this your bag?",
+
+                "options": [],
+
+                "answer":
+                    "Is",
+
+                "explanation":
+                    "THIS обозначает один предмет → IS.",
             },
+
 
             {
                 "order": 8,
-                "prompt": "Are those your books?",
-                "options": [
-                    "Yes, it is.",
-                    "Yes, those is.",
-                    "Yes, they are.",
-                    "Yes, this is.",
-                ],
-                "answer": "Yes, they are.",
-                "explanation": "Books — множественное число, поэтому используется they.",
+                "section": 4,
+                "type": "fill",
+
+                "prompt":
+                    "___ these your keys?",
+
+                "options": [],
+
+                "answer":
+                    "Are",
+
+                "explanation":
+                    "THESE обозначает несколько предметов → ARE.",
             },
+
 
             {
                 "order": 9,
-                "prompt": "___ pen in my hand is blue.",
-                "options": ["This", "These", "Those", "They"],
-                "answer": "This",
-                "explanation": "Pen — один предмет рядом.",
-            },
+                "section": 4,
+                "type": "choice",
 
-            {
-                "order": 10,
-                "prompt": "___ building across the street is a bank.",
-                "options": ["These", "Those", "That", "They"],
-                "answer": "That",
-                "explanation": "Building — один объект и находится дальше.",
-            },
+                "prompt":
+                    "Choose the correct sentence.",
 
-            {
-                "order": 11,
-                "prompt": "___ apples on the table are fresh.",
-                "options": ["This", "These", "That", "It"],
-                "answer": "These",
-                "explanation": "Apples — несколько предметов рядом.",
-            },
-
-            {
-                "order": 12,
-                "prompt": "___ birds in the sky are flying south.",
-                "options": ["This", "That", "Those", "It"],
-                "answer": "Those",
-                "explanation": "Birds — множественное число, и они находятся далеко.",
-            },
-
-            {
-                "order": 13,
-                "prompt": "___ is my brother, Marat.",
-                "options": ["These", "This", "Those", "They"],
-                "answer": "This",
-                "explanation": "При представлении одного человека используется This is...",
-            },
-
-            {
-                "order": 14,
-                "prompt": "___ are my parents.",
-                "options": ["This", "That", "It", "These"],
-                "answer": "These",
-                "explanation": "Parents — множественное число.",
-            },
-
-            {
-                "order": 15,
-                "prompt": "Is ___ your coat here?",
-                "options": ["these", "those", "this", "they"],
-                "answer": "this",
-                "explanation": "Coat — один предмет рядом.",
-            },
-
-            {
-                "order": 16,
-                "prompt": "Are ___ your children over there?",
-                "options": ["this", "that", "those", "it"],
-                "answer": "those",
-                "explanation": "Children — множественное число и находятся далеко.",
-            },
-
-            {
-                "order": 17,
-                "prompt": "___ is a very interesting question.",
-                "options": ["Those", "These", "That", "They"],
-                "answer": "That",
-                "explanation": "That может относиться к сказанному или заданному вопросу.",
-            },
-
-            {
-                "order": 18,
-                "prompt": "I am very busy ___ week.",
-                "options": ["those", "that", "this", "these"],
-                "answer": "this",
-                "explanation": "This week относится к текущей неделе.",
-            },
-
-            {
-                "order": 19,
-                "prompt": "Life was difficult in ___ days.",
-                "options": ["this", "these", "those", "it"],
-                "answer": "those",
-                "explanation": "Those days означает «в те дни».",
-            },
-
-            {
-                "order": 20,
-                "prompt": "Who is ___? (on the phone)",
-                "options": ["these", "this", "those", "they"],
-                "answer": "this",
-                "explanation": "По телефону используется выражение Who is this?",
-            },
-
-            {
-                "order": 21,
-                "prompt": "___ books are new, but those books are old.",
-                "options": ["This", "These", "That", "It"],
-                "answer": "These",
-                "explanation": "Books — множественное число; противопоставление these / those.",
-            },
-
-            {
-                "order": 22,
-                "prompt": "Look at ___ house on the hill.",
-                "options": ["these", "this", "those", "that"],
-                "answer": "that",
-                "explanation": "House — один объект, находящийся далеко.",
-            },
-
-            {
-                "order": 23,
-                "prompt": "Are these your documents?",
-                "options": [
-                    "Yes, it is.",
-                    "Yes, this is.",
-                    "Yes, they are.",
-                    "Yes, these is.",
-                ],
-                "answer": "Yes, they are.",
-                "explanation": "Documents — множественное число, поэтому they are.",
-            },
-
-            {
-                "order": 24,
-                "prompt": "Choose the correct sentence.",
                 "options": [
                     "This are my books.",
                     "These is my books.",
                     "These are my books.",
                     "This is my books.",
                 ],
-                "answer": "These are my books.",
-                "explanation": "Books — множественное число, поэтому нужны these + are.",
+
+                "answer":
+                    "These are my books.",
+
+                "explanation":
+                    "BOOKS — множественное число, поэтому THESE ARE.",
+            },
+
+
+            {
+                "order": 10,
+                "section": 5,
+                "type": "choice",
+
+                "prompt":
+                    "Which sentence is correct?",
+
+                "options": [
+                    "This book is mine.",
+                    "This books is mine.",
+                    "These book is mine.",
+                    "Those book are mine.",
+                ],
+
+                "answer":
+                    "This book is mine.",
+
+                "explanation":
+                    "THIS используется с существительным в единственном числе.",
+            },
+
+
+            {
+                "order": 11,
+                "section": 5,
+                "type": "build",
+
+                "prompt":
+                    "Собери правильное предложение.",
+
+                "options": [
+                    "Those",
+                    "are",
+                    "yours",
+                ],
+
+                "answer":
+                    "Those are yours",
+
+                "explanation":
+                    "THOSE может использоваться самостоятельно с ARE.",
+            },
+
+
+            {
+                "order": 12,
+                "section": 6,
+                "type": "choice",
+
+                "prompt":
+                    "Is that your car?",
+
+                "options": [
+                    "Yes, that is.",
+                    "Yes, it is.",
+                    "Yes, they are.",
+                    "Yes, this is.",
+                ],
+
+                "answer":
+                    "Yes, it is.",
+
+                "explanation":
+                    "Car — один предмет, поэтому в кратком ответе IT.",
+            },
+
+
+            {
+                "order": 13,
+                "section": 6,
+                "type": "choice",
+
+                "prompt":
+                    "Are those your books?",
+
+                "options": [
+                    "Yes, it is.",
+                    "Yes, those is.",
+                    "Yes, they are.",
+                    "Yes, this is.",
+                ],
+
+                "answer":
+                    "Yes, they are.",
+
+                "explanation":
+                    "Books — множественное число, поэтому THEY.",
+            },
+
+
+            {
+                "order": 14,
+                "section": 6,
+                "type": "choice",
+
+                "prompt":
+                    "Choose the correct negative sentence.",
+
+                "options": [
+                    "These isn't my shoes.",
+                    "These aren't my shoes.",
+                    "These not my shoes.",
+                    "This aren't my shoes.",
+                ],
+
+                "answer":
+                    "These aren't my shoes.",
+
+                "explanation":
+                    "THESE требует ARE / AREN'T.",
+            },
+
+
+            {
+                "order": 15,
+                "section": 7,
+                "type": "choice",
+
+                "prompt":
+                    "I am very busy ___ week.",
+
+                "options": [
+                    "those",
+                    "that",
+                    "this",
+                    "these",
+                ],
+
+                "answer":
+                    "this",
+
+                "explanation":
+                    "THIS WEEK относится к текущей неделе.",
+            },
+
+
+            {
+                "order": 16,
+                "section": 7,
+                "type": "choice",
+
+                "prompt":
+                    "Life was different in ___ days.",
+
+                "options": [
+                    "this",
+                    "these",
+                    "those",
+                    "it",
+                ],
+
+                "answer":
+                    "those",
+
+                "explanation":
+                    "THOSE DAYS означает «в те дни».",
+            },
+
+
+            {
+                "order": 17,
+                "section": 8,
+                "type": "choice",
+
+                "prompt":
+                    "___ is my brother, Marat.",
+
+                "options": [
+                    "These",
+                    "This",
+                    "Those",
+                    "They",
+                ],
+
+                "answer":
+                    "This",
+
+                "explanation":
+                    "При представлении одного человека используется THIS IS.",
+            },
+
+
+            {
+                "order": 18,
+                "section": 8,
+                "type": "choice",
+
+                "prompt":
+                    "Who is ___? (on the phone)",
+
+                "options": [
+                    "these",
+                    "this",
+                    "those",
+                    "they",
+                ],
+
+                "answer":
+                    "this",
+
+                "explanation":
+                    "По телефону обычно спрашивают WHO IS THIS?",
+            },
+
+
+            {
+                "order": 19,
+                "section": 8,
+                "type": "choice",
+
+                "prompt":
+                    "Someone says: 'English grammar is difficult.' You agree: '___ is true.'",
+
+                "options": [
+                    "These",
+                    "Those",
+                    "That",
+                    "They",
+                ],
+
+                "answer":
+                    "That",
+
+                "explanation":
+                    "THAT может относиться к тому, что только что было сказано.",
+            },
+
+
+            {
+                "order": 20,
+                "section": 8,
+                "type": "choice",
+
+                "prompt":
+                    "You have a new idea right now. You say: '___ is a good idea.'",
+
+                "options": [
+                    "This",
+                    "Those",
+                    "These",
+                    "They",
+                ],
+
+                "answer":
+                    "This",
+
+                "explanation":
+                    "THIS может обозначать текущую ситуацию или идею.",
             },
 
         ]
 
-        for data in exercises:
+
+        # =================================================
+        # 10 FINAL TEST QUESTIONS
+        # =================================================
+
+        final_test = [
+
+            {
+                "order": 21,
+
+                "prompt":
+                    "___ notebook here belongs to me.",
+
+                "options": [
+                    "This",
+                    "That",
+                    "These",
+                    "Those",
+                ],
+
+                "answer":
+                    "This",
+
+                "explanation":
+                    "Notebook — один предмет рядом.",
+            },
+
+
+            {
+                "order": 22,
+
+                "prompt":
+                    "___ building over there is our university.",
+
+                "options": [
+                    "This",
+                    "These",
+                    "Those",
+                    "That",
+                ],
+
+                "answer":
+                    "That",
+
+                "explanation":
+                    "Building — один объект далеко.",
+            },
+
+
+            {
+                "order": 23,
+
+                "prompt":
+                    "___ flowers here are beautiful.",
+
+                "options": [
+                    "This",
+                    "That",
+                    "These",
+                    "It",
+                ],
+
+                "answer":
+                    "These",
+
+                "explanation":
+                    "Flowers — несколько предметов рядом.",
+            },
+
+
+            {
+                "order": 24,
+
+                "prompt":
+                    "Look at ___ cars across the street.",
+
+                "options": [
+                    "this",
+                    "that",
+                    "these",
+                    "those",
+                ],
+
+                "answer":
+                    "those",
+
+                "explanation":
+                    "Cars — множественное число и находятся далеко.",
+            },
+
+
+            {
+                "order": 25,
+
+                "prompt":
+                    "Choose the correct sentence.",
+
+                "options": [
+                    "That are my teacher.",
+                    "That is my teacher.",
+                    "Those is my teacher.",
+                    "These is my teacher.",
+                ],
+
+                "answer":
+                    "That is my teacher.",
+
+                "explanation":
+                    "THAT обозначает один объект и требует IS.",
+            },
+
+
+            {
+                "order": 26,
+
+                "prompt":
+                    "Are these your documents?",
+
+                "options": [
+                    "Yes, it is.",
+                    "Yes, this is.",
+                    "Yes, they are.",
+                    "Yes, these is.",
+                ],
+
+                "answer":
+                    "Yes, they are.",
+
+                "explanation":
+                    "Documents — множественное число, поэтому THEY ARE.",
+            },
+
+
+            {
+                "order": 27,
+
+                "prompt":
+                    "Choose the correct negative sentence.",
+
+                "options": [
+                    "That aren't my car.",
+                    "That isn't my car.",
+                    "Those isn't my car.",
+                    "That not my car.",
+                ],
+
+                "answer":
+                    "That isn't my car.",
+
+                "explanation":
+                    "THAT требует IS / ISN'T.",
+            },
+
+
+            {
+                "order": 28,
+
+                "prompt":
+                    "We are working very hard ___ month.",
+
+                "options": [
+                    "this",
+                    "that",
+                    "these",
+                    "those",
+                ],
+
+                "answer":
+                    "this",
+
+                "explanation":
+                    "THIS MONTH означает текущий месяц.",
+            },
+
+
+            {
+                "order": 29,
+
+                "prompt":
+                    "I remember ___ days very well.",
+
+                "options": [
+                    "this",
+                    "that",
+                    "these",
+                    "those",
+                ],
+
+                "answer":
+                    "those",
+
+                "explanation":
+                    "THOSE DAYS относится к прошлому периоду.",
+            },
+
+
+            {
+                "order": 30,
+
+                "prompt":
+                    "Choose the fully correct sentence.",
+
+                "options": [
+                    "This is my bag, and those are my shoes.",
+                    "These is my bag, and that are my shoes.",
+                    "This are my bag, and those is my shoes.",
+                    "Those is my bag, and this are my shoes.",
+                ],
+
+                "answer":
+                    "This is my bag, and those are my shoes.",
+
+                "explanation":
+                    "THIS + singular + IS; THOSE + plural + ARE.",
+            },
+
+        ]
+
+
+        valid_orders = []
+
+
+        for data in (
+            training
+            +
+            final_test
+        ):
+
+            valid_orders.append(
+                data["order"]
+            )
+
+
+            if data["order"] <= 20:
+
+                section = (
+                    section_objects[
+                        data["section"]
+                    ]
+                )
+
+            else:
+
+                section = None
+
 
             GrammarExercise.objects.update_or_create(
                 lesson=lesson,
                 order=data["order"],
+
                 defaults={
-                    "exercise_type": GrammarExercise.Type.CHOICE,
-                    "prompt": data["prompt"],
-                    "options": data["options"],
-                    "correct_answer": data["answer"],
-                    "explanation": data["explanation"],
-                    "is_published": True,
+                    "section":
+                        section,
+
+                    "exercise_type":
+                        data.get(
+                            "type",
+                            "choice",
+                        ),
+
+                    "prompt":
+                        data["prompt"],
+
+                    "options":
+                        data["options"],
+
+                    "correct_answer":
+                        data["answer"],
+
+                    "explanation":
+                        data["explanation"],
+
+                    "is_published":
+                        True,
                 },
             )
 
+
+        GrammarExercise.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__in=valid_orders,
+        ).delete()
+
+
+        GrammarLessonSection.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__in=[
+                item["order"]
+                for item in sections
+            ],
+        ).delete()
+
+
         self.stdout.write(
             self.style.SUCCESS(
-                "✅ A1 Lesson 8 seeded: "
-                "THIS, THAT, THESE, THOSE"
+                "✅ Interactive A1 Lesson 8 seeded"
             )
         )
 
         self.stdout.write(
-            f"Sections: {lesson.sections.count()}"
+            f"Micro rules: "
+            f"{lesson.sections.count()}"
         )
 
         self.stdout.write(
-            f"Exercises: {lesson.exercises.count()}"
+            "Training exercises: "
+            f"{lesson.exercises.filter(section__isnull=False).count()}"
+        )
+
+        self.stdout.write(
+            "Final test: "
+            f"{lesson.exercises.filter(section__isnull=True).count()}"
         )

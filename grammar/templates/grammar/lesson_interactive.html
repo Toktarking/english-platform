@@ -1,0 +1,1902 @@
+{% extends "vocabulary/base.html" %}
+
+{% block title %}
+{{ lesson.title }} · Grammar
+{% endblock %}
+
+{% block content %}
+
+<style>
+    .gi-page {
+        width: min(720px, 100%);
+        margin: 0 auto;
+    }
+
+    .gi-back {
+        display: inline-flex;
+        margin-bottom: 14px;
+        color: #6b7280;
+        font-size: 13px;
+        font-weight: 800;
+        text-decoration: none;
+    }
+
+    .gi-hero,
+    .gi-progress-box,
+    .gi-card,
+    .gi-result {
+        background: #fff;
+        border: 1px solid #e5e7eb;
+        border-radius: 20px;
+    }
+
+    .gi-hero {
+        padding: 20px;
+        margin-bottom: 14px;
+    }
+
+    .gi-meta {
+        color: #7c3aed;
+        font-size: 11px;
+        font-weight: 900;
+        text-transform: uppercase;
+    }
+
+    .gi-title {
+        margin: 7px 0;
+        color: #111827;
+        font-size: 25px;
+        line-height: 1.15;
+        font-weight: 950;
+    }
+
+    .gi-reward {
+        color: #6b7280;
+        font-size: 11px;
+    }
+
+    .gi-progress-box {
+        padding: 14px 17px;
+        margin-bottom: 14px;
+    }
+
+    .gi-progress-info {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 8px;
+        color: #6b7280;
+        font-size: 10px;
+        font-weight: 800;
+    }
+
+    .gi-track {
+        height: 7px;
+        overflow: hidden;
+        background: #f0f1f3;
+        border-radius: 999px;
+    }
+
+    .gi-bar {
+        width: 0;
+        height: 100%;
+        background: #7c3aed;
+        border-radius: 999px;
+        transition: width .2s ease;
+    }
+
+    .gi-card {
+        padding: 22px;
+        box-shadow: 0 7px 24px rgba(17,24,39,.035);
+    }
+
+    .gi-step {
+        display: none;
+    }
+
+    .gi-step.active {
+        display: block;
+    }
+
+    .gi-badge {
+        display: inline-flex;
+        margin-bottom: 12px;
+        padding: 6px 9px;
+        background: #f5f3ff;
+        border-radius: 999px;
+        color: #7c3aed;
+        font-size: 9px;
+        font-weight: 950;
+        text-transform: uppercase;
+    }
+
+    .gi-rule-title {
+        margin: 0 0 14px;
+        color: #111827;
+        font-size: 22px;
+        line-height: 1.2;
+        font-weight: 950;
+    }
+
+    .gi-rule-body {
+        color: #374151;
+        font-size: 15px;
+        line-height: 1.65;
+        white-space: pre-line;
+    }
+
+    .gi-question {
+        margin-bottom: 20px;
+        color: #111827;
+        font-size: 21px;
+        line-height: 1.35;
+        font-weight: 950;
+    }
+
+    .gi-options {
+        display: grid;
+        gap: 9px;
+    }
+
+    .gi-option {
+        width: 100%;
+        padding: 14px 15px;
+        background: #fff;
+        border: 1px solid #dfe3e8;
+        border-radius: 14px;
+        color: #111827;
+        font: inherit;
+        font-weight: 800;
+        text-align: left;
+        cursor: pointer;
+    }
+
+    .gi-option.correct {
+        background: #ecfdf5;
+        border-color: #86efac;
+        color: #15803d;
+    }
+
+    .gi-option.wrong {
+        background: #fef2f2;
+        border-color: #fecaca;
+        color: #b91c1c;
+    }
+
+    .gi-option.selected {
+        background: #ede9fe;
+        border-color: #8b5cf6;
+        color: #6d28d9;
+    }
+
+    .gi-final-heading {
+        margin-bottom: 18px;
+
+        padding: 15px;
+
+        background:
+            linear-gradient(
+                135deg,
+                #f5f3ff,
+                #faf7ff
+            );
+
+        border: 1px solid #ddd6fe;
+        border-radius: 14px;
+    }
+
+    .gi-final-heading-title {
+        color: #6d28d9;
+
+        font-size: 14px;
+        font-weight: 950;
+    }
+
+    .gi-final-heading-note {
+        margin-top: 4px;
+
+        color: #6b7280;
+
+        font-size: 10px;
+        line-height: 1.45;
+    }
+
+    .gi-result-errors {
+        margin-top: 20px;
+
+        text-align: left;
+    }
+
+    .gi-result-error {
+        margin-top: 9px;
+
+        padding: 13px;
+
+        background: #f9fafb;
+
+        border: 1px solid #e5e7eb;
+        border-radius: 12px;
+    }
+
+    .gi-result-error-question {
+        color: #111827;
+
+        font-size: 12px;
+        font-weight: 900;
+    }
+
+    .gi-result-error-answer {
+        margin-top: 5px;
+
+        color: #6b7280;
+
+        font-size: 10px;
+        line-height: 1.5;
+    }
+
+    .gi-result-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        min-height: 47px;
+
+        margin-top: 18px;
+
+        padding: 0 20px;
+
+        background: #7c3aed;
+
+        border-radius: 13px;
+
+        color: #ffffff;
+
+        font-size: 12px;
+        font-weight: 900;
+
+        text-decoration: none;
+    }
+
+    .gi-fill {
+        width: 100%;
+        min-height: 50px;
+        padding: 0 15px;
+        background: #fff;
+        border: 2px solid #e5e7eb;
+        border-radius: 14px;
+        outline: none;
+        color: #111827;
+        font: inherit;
+        font-size: 18px;
+        font-weight: 800;
+    }
+
+    .gi-fill:focus {
+        border-color: #7c3aed;
+    }
+
+    .gi-build-answer {
+        min-height: 58px;
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 7px;
+        margin-bottom: 13px;
+        padding: 10px;
+        background: #f9fafb;
+        border: 2px dashed #d1d5db;
+        border-radius: 14px;
+    }
+
+    .gi-placeholder {
+        color: #9ca3af;
+        font-size: 12px;
+    }
+
+    .gi-build-bank {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .gi-token {
+        padding: 10px 13px;
+        background: #fff;
+        border: 1px solid #d1d5db;
+        border-radius: 11px;
+        color: #111827;
+        font: inherit;
+        font-size: 14px;
+        font-weight: 850;
+        cursor: pointer;
+    }
+
+    .gi-token.used {
+        opacity: .25;
+        pointer-events: none;
+    }
+
+    .gi-selected {
+        padding: 8px 10px;
+        background: #ede9fe;
+        border-radius: 9px;
+        color: #6d28d9;
+        font-size: 13px;
+        font-weight: 850;
+    }
+
+    .gi-actions {
+        display: flex;
+        gap: 8px;
+        margin-top: 15px;
+    }
+
+    .gi-check,
+    .gi-reset {
+        min-height: 44px;
+        padding: 0 17px;
+        border: 0;
+        border-radius: 12px;
+        font: inherit;
+        font-size: 12px;
+        font-weight: 900;
+        cursor: pointer;
+    }
+
+    .gi-check {
+        background: #111827;
+        color: #fff;
+    }
+
+    .gi-reset {
+        background: #f3f4f6;
+        color: #374151;
+    }
+
+    .gi-feedback {
+        display: none;
+        margin-top: 17px;
+        padding: 14px;
+        border-radius: 13px;
+        font-size: 12px;
+        line-height: 1.5;
+    }
+
+    .gi-feedback.visible {
+        display: block;
+    }
+
+    .gi-feedback.correct {
+        background: #ecfdf5;
+        color: #166534;
+    }
+
+    .gi-feedback.wrong {
+        background: #fef2f2;
+        color: #991b1b;
+    }
+
+    .gi-feedback-title {
+        margin-bottom: 4px;
+        font-weight: 950;
+    }
+
+    .gi-nav {
+        display: flex;
+        gap: 9px;
+        margin-top: 14px;
+    }
+
+    .gi-nav button {
+        min-height: 48px;
+        padding: 0 19px;
+        border: 0;
+        border-radius: 13px;
+        font: inherit;
+        font-size: 13px;
+        font-weight: 900;
+        cursor: pointer;
+    }
+
+    #giPrev {
+        background: #f3f4f6;
+        color: #374151;
+    }
+
+    #giNext,
+    #giFinish {
+        flex: 1;
+        background: #7c3aed;
+        color: #fff;
+    }
+
+    .gi-nav button:disabled {
+        opacity: .35;
+    }
+
+    .gi-result {
+        padding: 25px;
+        text-align: center;
+    }
+
+    .gi-score {
+        margin: 14px 0 5px;
+        color: #7c3aed;
+        font-size: 42px;
+        font-weight: 950;
+    }
+
+    @media (max-width: 700px) {
+        main > .container {
+            width: 92%;
+        }
+
+        .gi-card {
+            padding: 19px;
+        }
+
+        .gi-rule-body {
+            font-size: 14px;
+        }
+
+        .gi-question {
+            font-size: 19px;
+        }
+    }
+</style>
+
+
+<div class="gi-page">
+
+    <a
+        class="gi-back"
+        href="{% url 'grammar:home' %}#study"
+    >
+        ← Grammar
+    </a>
+
+
+    <div class="gi-hero">
+
+        <div class="gi-meta">
+            {{ lesson.level }}
+            · Lesson {{ lesson.order }}
+            · ≈ {{ lesson.estimated_minutes }} мин
+        </div>
+
+        <h1 class="gi-title">
+            {{ lesson.title }}
+        </h1>
+
+        <div class="gi-reward">
+            Проходной балл {{ lesson.pass_score }}%
+            · ⭐ +{{ lesson.xp_reward }} XP
+        </div>
+
+    </div>
+
+
+    {% if progress.status == "completed" %}
+
+        <div class="gi-result">
+            <div style="font-size:40px;">🎉</div>
+
+            <div style="font-size:24px;font-weight:950;">
+                Урок завершён
+            </div>
+
+            <div class="gi-score">
+                {{ progress.score }}%
+            </div>
+
+            <div style="color:#6b7280;font-size:12px;">
+                {{ progress.correct_answers }}
+                из
+                {{ progress.total_questions }}
+                правильно
+                · ⭐ +{{ progress.xp_earned }} XP
+            </div>
+
+
+            {% if wrong_results %}
+
+                <div class="gi-result-errors">
+
+                    <div
+                        style="
+                            font-size:14px;
+                            font-weight:950;
+                            color:#111827;
+                        "
+                    >
+                        Разбор ошибок
+                    </div>
+
+                    {% for item in wrong_results %}
+
+                        <div class="gi-result-error">
+
+                            <div class="gi-result-error-question">
+                                {{ item.prompt }}
+                            </div>
+
+                            <div class="gi-result-error-answer">
+
+                                Твой ответ:
+                                {{ item.submitted }}
+
+                                <br>
+
+                                Правильно:
+                                <strong>
+                                    {{ item.correct_answer }}
+                                </strong>
+
+                                {% if item.explanation %}
+
+                                    <br>
+
+                                    {{ item.explanation }}
+
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+            {% endif %}
+
+
+            <a
+                class="gi-result-button"
+                href="{% url 'grammar:home' %}#study"
+            >
+                Продолжить →
+            </a>
+
+        </div>
+
+
+    {% elif attempt_result %}
+
+        <div class="gi-result">
+
+            <div style="font-size:40px;">
+                📚
+            </div>
+
+            <div
+                style="
+                    margin-top:8px;
+                    color:#111827;
+                    font-size:24px;
+                    font-weight:950;
+                "
+            >
+                Ещё немного практики
+            </div>
+
+            <div class="gi-score">
+                {{ attempt_result.score }}%
+            </div>
+
+            <div
+                style="
+                    color:#6b7280;
+                    font-size:12px;
+                    line-height:1.5;
+                "
+            >
+
+                {{ attempt_result.correct }}
+                из
+                {{ attempt_result.total }}
+                правильно.
+
+                <br>
+
+                Для прохождения нужно
+                {{ lesson.pass_score }}%.
+
+            </div>
+
+
+            {% if wrong_results %}
+
+                <div class="gi-result-errors">
+
+                    <div
+                        style="
+                            font-size:14px;
+                            font-weight:950;
+                            color:#111827;
+                        "
+                    >
+                        Что повторить
+                    </div>
+
+                    {% for item in wrong_results %}
+
+                        <div class="gi-result-error">
+
+                            <div class="gi-result-error-question">
+                                {{ item.prompt }}
+                            </div>
+
+                            <div class="gi-result-error-answer">
+
+                                Твой ответ:
+                                {{ item.submitted }}
+
+                                <br>
+
+                                Правильно:
+                                <strong>
+                                    {{ item.correct_answer }}
+                                </strong>
+
+                                {% if item.explanation %}
+
+                                    <br>
+
+                                    {{ item.explanation }}
+
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+            {% endif %}
+
+
+            <a
+                class="gi-result-button"
+                href="{% url 'grammar:final_test' lesson.slug %}"
+            >
+                Повторить только тест →
+            </a>
+
+        </div>
+
+
+    {% else %}
+
+        <form
+            id="giForm"
+            method="post"
+            action="{% url 'grammar:complete' lesson.slug %}"
+        >
+
+            {% csrf_token %}
+
+            <div class="gi-progress-box">
+
+                <div class="gi-progress-info">
+                    <span id="giType">Правило</span>
+                    <span id="giCounter"></span>
+                </div>
+
+                <div class="gi-track">
+                    <div
+                        id="giBar"
+                        class="gi-bar"
+                    ></div>
+                </div>
+
+            </div>
+
+
+            <div class="gi-card">
+
+                {% for section in sections %}
+
+                    <section
+                        class="gi-step"
+                        data-kind="rule"
+                    >
+
+                        <div class="gi-badge">
+                            Короткое правило
+                        </div>
+
+                        <h2 class="gi-rule-title">
+                            {{ section.title }}
+                        </h2>
+
+                        <div class="gi-rule-body">
+                            {{ section.body }}
+                        </div>
+
+                    </section>
+
+
+                    {% for exercise in section.exercises.all %}
+
+                        {% if exercise.is_published %}
+
+                            <section
+                                class="gi-step"
+                                data-kind="exercise"
+                                data-exercise-type="{{ exercise.exercise_type }}"
+                                data-answered="0"
+                            >
+
+                                <div class="gi-badge">
+
+                                    {% if exercise.exercise_type == "fill" %}
+                                        Впиши ответ
+                                    {% elif exercise.exercise_type == "build" %}
+                                        Собери фразу
+                                    {% else %}
+                                        Выбери ответ
+                                    {% endif %}
+
+                                </div>
+
+
+                                <div class="gi-question">
+                                    {{ exercise.prompt }}
+                                </div>
+
+
+                                <input
+                                    type="hidden"
+                                    class="gi-hidden-answer"
+                                    name="answer_{{ exercise.id }}"
+                                >
+
+
+                                <span
+                                    class="gi-correct-answer"
+                                    hidden
+                                >{{ exercise.correct_answer }}</span>
+
+                                <span
+                                    class="gi-explanation"
+                                    hidden
+                                >{{ exercise.explanation }}</span>
+
+
+                                {% if exercise.exercise_type == "choice" %}
+
+                                    <div class="gi-options">
+
+                                        {% for option in exercise.options %}
+
+                                            <button
+                                                type="button"
+                                                class="gi-option"
+                                                data-value="{{ option }}"
+                                            >
+                                                {{ option }}
+                                            </button>
+
+                                        {% endfor %}
+
+                                    </div>
+
+
+                                {% elif exercise.exercise_type == "fill" %}
+
+                                    <input
+                                        class="gi-fill"
+                                        type="text"
+                                        autocomplete="off"
+                                        autocapitalize="none"
+                                        placeholder="Введите ответ"
+                                    >
+
+                                    <div class="gi-actions">
+                                        <button
+                                            type="button"
+                                            class="gi-check"
+                                        >
+                                            Проверить
+                                        </button>
+                                    </div>
+
+
+                                {% elif exercise.exercise_type == "build" %}
+
+                                    <div class="gi-build-answer">
+                                        <span class="gi-placeholder">
+                                            Нажимай слова по порядку
+                                        </span>
+                                    </div>
+
+                                    <div class="gi-build-bank">
+
+                                        {% for option in exercise.options %}
+
+                                            <button
+                                                type="button"
+                                                class="gi-token"
+                                                data-value="{{ option }}"
+                                            >
+                                                {{ option }}
+                                            </button>
+
+                                        {% endfor %}
+
+                                    </div>
+
+                                    <div class="gi-actions">
+
+                                        <button
+                                            type="button"
+                                            class="gi-check"
+                                        >
+                                            Проверить
+                                        </button>
+
+                                        <button
+                                            type="button"
+                                            class="gi-reset"
+                                        >
+                                            Сбросить
+                                        </button>
+
+                                    </div>
+
+                                {% endif %}
+
+
+                                <div class="gi-feedback">
+
+                                    <div class="gi-feedback-title"></div>
+
+                                    <div class="gi-feedback-text"></div>
+
+                                </div>
+
+                            </section>
+
+                        {% endif %}
+
+                    {% endfor %}
+
+                {% endfor %}
+
+
+                
+            </div>
+
+
+            <div class="gi-nav">
+
+                <button
+                    id="giPrev"
+                    type="button"
+                >
+                    ←
+                </button>
+
+                <button
+                    id="giNext"
+                    type="button"
+                >
+                    Далее →
+                </button>
+
+                <button
+                    id="giFinish"
+                    type="button"
+                    style="display:none;"
+                >
+                    Начать финальный тест →
+                </button>
+
+            </div>
+
+        </form>
+
+
+        <script>
+
+(function () {
+
+    const form =
+        document.getElementById(
+            "giForm"
+        );
+
+    if (!form) {
+        return;
+    }
+
+
+    const steps =
+        Array.from(
+            document.querySelectorAll(
+                ".gi-step"
+            )
+        )
+        .filter(
+            step =>
+                step.dataset.final
+                !==
+                "1"
+        );
+
+
+    const bar =
+        document.getElementById(
+            "giBar"
+        );
+
+    const counter =
+        document.getElementById(
+            "giCounter"
+        );
+
+    const typeLabel =
+        document.getElementById(
+            "giType"
+        );
+
+    const prev =
+        document.getElementById(
+            "giPrev"
+        );
+
+    const next =
+        document.getElementById(
+            "giNext"
+        );
+
+    const finish =
+        document.getElementById(
+            "giFinish"
+        );
+
+
+    let current = 0;
+
+
+    function normalize(
+        value
+    ) {
+
+        return String(
+            value || ""
+        )
+        .trim()
+        .toLowerCase()
+        .replace(
+            /\s+/g,
+            " "
+        );
+    }
+
+
+    function expected(
+        step
+    ) {
+
+        return (
+            step.querySelector(
+                ".gi-correct-answer"
+            )
+            ?.textContent
+            ||
+            ""
+        ).trim();
+    }
+
+
+    function explanation(
+        step
+    ) {
+
+        return (
+            step.querySelector(
+                ".gi-explanation"
+            )
+            ?.textContent
+            ||
+            ""
+        ).trim();
+    }
+
+
+    function answer(
+        step,
+        value
+    ) {
+
+        if (
+            step.dataset.answered
+            ===
+            "1"
+        ) {
+
+            return false;
+        }
+
+
+        const hidden =
+            step.querySelector(
+                ".gi-hidden-answer"
+            );
+
+
+        hidden.value =
+            value;
+
+
+        const correct =
+            normalize(value)
+            ===
+            normalize(
+                expected(step)
+            );
+
+
+        step.dataset.answered =
+            "1";
+
+
+        const box =
+            step.querySelector(
+                ".gi-feedback"
+            );
+
+
+        box.classList.remove(
+            "correct",
+            "wrong"
+        );
+
+
+        box.classList.add(
+            "visible",
+            correct
+                ? "correct"
+                : "wrong"
+        );
+
+
+        step.querySelector(
+            ".gi-feedback-title"
+        ).textContent =
+            correct
+                ? "Правильно ✓"
+                : (
+                    "Правильный ответ: "
+                    +
+                    expected(step)
+                );
+
+
+        step.querySelector(
+            ".gi-feedback-text"
+        ).textContent =
+            explanation(step);
+
+
+        render();
+
+
+        return correct;
+    }
+
+
+    /* =============================================
+       CHOICE
+       ============================================= */
+
+    document
+        .querySelectorAll(
+            '.gi-step[data-exercise-type="choice"]'
+        )
+        .forEach(
+            function (step) {
+
+                if (
+                    step.dataset.final
+                    ===
+                    "1"
+                ) {
+                    return;
+                }
+
+
+                const buttons =
+                    Array.from(
+                        step.querySelectorAll(
+                            ".gi-option"
+                        )
+                    );
+
+
+                buttons.forEach(
+                    function (button) {
+
+                        button.addEventListener(
+                            "click",
+                            function () {
+
+                                if (
+                                    step.dataset.answered
+                                    ===
+                                    "1"
+                                ) {
+
+                                    return;
+                                }
+
+
+                                const correct =
+                                    answer(
+                                        step,
+                                        button.dataset.value
+                                    );
+
+
+                                buttons.forEach(
+                                    function (
+                                        item
+                                    ) {
+
+                                        item.disabled =
+                                            true;
+
+
+                                        if (
+                                            normalize(
+                                                item.dataset.value
+                                            )
+                                            ===
+                                            normalize(
+                                                expected(step)
+                                            )
+                                        ) {
+
+                                            item.classList.add(
+                                                "correct"
+                                            );
+                                        }
+
+                                    }
+                                );
+
+
+                                if (!correct) {
+
+                                    button.classList.add(
+                                        "wrong"
+                                    );
+                                }
+
+                            }
+                        );
+
+                    }
+                );
+
+            }
+        );
+
+
+    /* =============================================
+       FILL
+       ============================================= */
+
+    document
+        .querySelectorAll(
+            '.gi-step[data-exercise-type="fill"]'
+        )
+        .forEach(
+            function (step) {
+
+                const input =
+                    step.querySelector(
+                        ".gi-fill"
+                    );
+
+                const button =
+                    step.querySelector(
+                        ".gi-check"
+                    );
+
+
+                function submitFill() {
+
+                    if (
+                        step.dataset.answered
+                        ===
+                        "1"
+                    ) {
+                        return;
+                    }
+
+
+                    const value =
+                        input.value.trim();
+
+
+                    if (!value) {
+                        return;
+                    }
+
+
+                    answer(
+                        step,
+                        value
+                    );
+
+
+                    input.disabled =
+                        true;
+
+                    button.disabled =
+                        true;
+                }
+
+
+                button.addEventListener(
+                    "click",
+                    submitFill
+                );
+
+
+                input.addEventListener(
+                    "keydown",
+                    function (event) {
+
+                        if (
+                            event.key
+                            ===
+                            "Enter"
+                        ) {
+
+                            event.preventDefault();
+
+                            submitFill();
+                        }
+
+                    }
+                );
+
+            }
+        );
+
+
+    /* =============================================
+       BUILD
+       ============================================= */
+
+    document
+        .querySelectorAll(
+            '.gi-step[data-exercise-type="build"]'
+        )
+        .forEach(
+            function (step) {
+
+                const area =
+                    step.querySelector(
+                        ".gi-build-answer"
+                    );
+
+                const bank =
+                    step.querySelector(
+                        ".gi-build-bank"
+                    );
+
+                const tokens =
+                    Array.from(
+                        step.querySelectorAll(
+                            ".gi-token"
+                        )
+                    );
+
+                const check =
+                    step.querySelector(
+                        ".gi-check"
+                    );
+
+                const reset =
+                    step.querySelector(
+                        ".gi-reset"
+                    );
+
+
+                let selected = [];
+
+
+                tokens
+                    .sort(
+                        () =>
+                            Math.random()
+                            -
+                            0.5
+                    )
+                    .forEach(
+                        token =>
+                            bank.appendChild(
+                                token
+                            )
+                    );
+
+
+                function renderBuild() {
+
+                    area.innerHTML =
+                        "";
+
+
+                    if (
+                        !selected.length
+                    ) {
+
+                        const placeholder =
+                            document.createElement(
+                                "span"
+                            );
+
+                        placeholder.className =
+                            "gi-placeholder";
+
+                        placeholder.textContent =
+                            "Нажимай слова по порядку";
+
+                        area.appendChild(
+                            placeholder
+                        );
+
+                        return;
+                    }
+
+
+                    selected.forEach(
+                        function (item) {
+
+                            const span =
+                                document.createElement(
+                                    "span"
+                                );
+
+                            span.className =
+                                "gi-selected";
+
+                            span.textContent =
+                                item.value;
+
+                            area.appendChild(
+                                span
+                            );
+
+                        }
+                    );
+
+                }
+
+
+                tokens.forEach(
+                    function (token) {
+
+                        token.addEventListener(
+                            "click",
+                            function () {
+
+                                if (
+                                    step.dataset.answered
+                                    ===
+                                    "1"
+                                ) {
+                                    return;
+                                }
+
+
+                                token.classList.add(
+                                    "used"
+                                );
+
+
+                                selected.push({
+                                    token:
+                                        token,
+
+                                    value:
+                                        token.dataset.value,
+                                });
+
+
+                                renderBuild();
+                            }
+                        );
+
+                    }
+                );
+
+
+                reset.addEventListener(
+                    "click",
+                    function () {
+
+                        if (
+                            step.dataset.answered
+                            ===
+                            "1"
+                        ) {
+
+                            return;
+                        }
+
+
+                        selected.forEach(
+                            item =>
+                                item.token
+                                    .classList
+                                    .remove(
+                                        "used"
+                                    )
+                        );
+
+
+                        selected = [];
+
+
+                        renderBuild();
+                    }
+                );
+
+
+                check.addEventListener(
+                    "click",
+                    function () {
+
+                        if (
+                            step.dataset.answered
+                            ===
+                            "1"
+                        ) {
+
+                            return;
+                        }
+
+
+                        if (
+                            !selected.length
+                        ) {
+                            return;
+                        }
+
+
+                        const value =
+                            selected
+                                .map(
+                                    item =>
+                                        item.value
+                                )
+                                .join(" ");
+
+
+                        answer(
+                            step,
+                            value
+                        );
+
+
+                        tokens.forEach(
+                            token =>
+                                token.disabled =
+                                    true
+                        );
+
+
+                        check.disabled =
+                            true;
+
+                        reset.disabled =
+                            true;
+
+                    }
+                );
+
+
+                renderBuild();
+
+            }
+        );
+
+
+    /* =============================================
+       NAVIGATION
+       ============================================= */
+
+    function canContinue(
+        step
+    ) {
+
+        if (
+            step.dataset.kind
+            ===
+            "rule"
+        ) {
+
+            return true;
+        }
+
+
+        return (
+            step.dataset.answered
+            ===
+            "1"
+        );
+    }
+
+
+    function render() {
+
+        steps.forEach(
+            function (
+                step,
+                index
+            ) {
+
+                step.classList.toggle(
+                    "active",
+                    index
+                    ===
+                    current
+                );
+
+            }
+        );
+
+
+        const step =
+            steps[
+                current
+            ];
+
+
+        const isRule =
+            step.dataset.kind
+            ===
+            "rule";
+
+
+        typeLabel.textContent =
+            isRule
+                ? "Правило"
+                : "Практика";
+
+
+        counter.textContent =
+            (
+                current
+                +
+                1
+            )
+            +
+            " из "
+            +
+            steps.length;
+
+
+        bar.style.width =
+            (
+                (
+                    current
+                    +
+                    1
+                )
+                /
+                steps.length
+                *
+                100
+            )
+            +
+            "%";
+
+
+        prev.disabled =
+            current
+            ===
+            0;
+
+
+        const last =
+            current
+            ===
+            steps.length - 1;
+
+
+        next.style.display =
+            last
+                ? "none"
+                : "block";
+
+
+        finish.style.display =
+            last
+                ? "block"
+                : "none";
+
+
+        const allowed =
+            canContinue(
+                step
+            );
+
+
+        next.disabled =
+            !allowed;
+
+        finish.disabled =
+            !allowed;
+
+
+        next.textContent =
+            isRule
+                ? "Попробовать →"
+                : "Далее →";
+    }
+
+
+    prev.addEventListener(
+        "click",
+        function () {
+
+            if (
+                current
+                >
+                0
+            ) {
+
+                current -= 1;
+
+                render();
+
+                window.scrollTo(
+                    0,
+                    0
+                );
+            }
+
+        }
+    );
+
+
+    next.addEventListener(
+        "click",
+        function () {
+
+            if (
+                !canContinue(
+                    steps[
+                        current
+                    ]
+                )
+            ) {
+
+                return;
+            }
+
+
+            if (
+                current
+                <
+                steps.length - 1
+            ) {
+
+                current += 1;
+
+                render();
+
+                window.scrollTo(
+                    0,
+                    0
+                );
+            }
+
+        }
+    );
+
+
+    /*
+    КЛЮЧЕВО:
+    обучение больше ничего не отправляет.
+    После него открывается отдельный Final Test.
+    */
+
+    finish.addEventListener(
+        "click",
+        function () {
+
+            if (
+                !canContinue(
+                    steps[
+                        current
+                    ]
+                )
+            ) {
+
+                return;
+            }
+
+
+            window.location.href =
+                "{% url 'grammar:final_test' lesson.slug %}";
+        }
+    );
+
+
+    form.addEventListener(
+        "submit",
+        function (event) {
+
+            event.preventDefault();
+        }
+    );
+
+
+    render();
+
+})();
+
+</script>
+
+    {% endif %}
+
+</div>
+
+
+
+{# AFTER BLOCK 1 LESSON CTA #}
+
+{% if lesson.order == 10 and attempt_result and attempt_result.passed %}
+
+<div
+    style="
+        width: min(760px, 92%);
+        margin: 20px auto 80px;
+        padding: 24px;
+        background: #fff;
+        border-radius: 22px;
+        box-shadow:
+            0 4px 22px
+            rgba(0,0,0,.055);
+    "
+>
+
+    <div
+        style="
+            font-size: 13px;
+            font-weight: 800;
+            opacity: .55;
+            margin-bottom: 8px;
+        "
+    >
+        BLOCK 1 ЗАВЕРШЁН
+    </div>
+
+    <div
+        style="
+            font-size: 24px;
+            font-weight: 850;
+            margin-bottom: 8px;
+        "
+    >
+        Проверь весь блок
+    </div>
+
+    <div
+        style="
+            opacity: .65;
+            line-height: 1.5;
+            margin-bottom: 18px;
+        "
+    >
+        20 вопросов:
+        по 2 случайных вопроса
+        из каждой из 10 тем.
+    </div>
+
+    <a
+        href="{% url 'grammar:block_1_practice' %}?new=1"
+        style="
+            min-height: 48px;
+            padding: 0 20px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: #7047eb;
+            color: white;
+            border-radius: 14px;
+            text-decoration: none;
+            font-weight: 800;
+        "
+    >
+        Начать практику блока →
+    </a>
+
+</div>
+
+{% endif %}
+
+
+
+{# AFTER BLOCK 2 LESSON CTA #}
+
+{% if lesson.order == 20 and attempt_result and attempt_result.passed %}
+
+<div
+    style="
+        width: min(760px, 92%);
+        margin: 20px auto 80px;
+        padding: 24px;
+        background: #fff;
+        border-radius: 22px;
+        box-shadow:
+            0 4px 22px
+            rgba(0,0,0,.055);
+    "
+>
+
+    <div
+        style="
+            font-size: 13px;
+            font-weight: 800;
+            opacity: .55;
+            margin-bottom: 8px;
+        "
+    >
+        BLOCK 2 ЗАВЕРШЁН
+    </div>
+
+    <div
+        style="
+            font-size: 24px;
+            font-weight: 850;
+            margin-bottom: 8px;
+        "
+    >
+        Practice 2
+    </div>
+
+    <div
+        style="
+            opacity: .65;
+            line-height: 1.5;
+            margin-bottom: 18px;
+        "
+    >
+        20 вопросов:
+        по 2 случайных вопроса
+        из каждого Lesson 11–20.
+    </div>
+
+    <a
+        href="{% url 'grammar:block_2_practice' %}?new=1"
+        style="
+            min-height: 48px;
+            padding: 0 20px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: #7047eb;
+            color: white;
+            border-radius: 14px;
+            text-decoration: none;
+            font-weight: 800;
+        "
+    >
+        Начать Practice 2 →
+    </a>
+
+</div>
+
+{% endif %}
+
+{% endblock %}

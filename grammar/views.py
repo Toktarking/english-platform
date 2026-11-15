@@ -1,17 +1,20 @@
 from datetime import date, timedelta
 
 from django.contrib.auth.decorators import login_required
-from django.db.models import Sum
+from django.db.models import Avg, Sum
 from django.shortcuts import (
     get_object_or_404,
     redirect,
     render,
 )
+from django.urls import reverse
 from django.utils import timezone
 
 from .models import (
     GrammarAssessmentQuestion,
     GrammarBlock,
+    GrammarBlockPracticeProgress,
+    GrammarDailyProgress,
     GrammarLesson,
     GrammarLessonProgress,
     GrammarPlacementAttempt,
@@ -28,6 +31,16 @@ from .placement import (
     start_placement,
 )
 
+
+from .course_plan import (
+    get_active_vocabulary_course,
+    get_first_incomplete_lesson,
+    get_grammar_calendar,
+    get_required_grammar_step,
+    get_today_grammar_rows,
+    sync_grammar_plan,
+    update_grammar_daily_progress,
+)
 
 from .study_plan import (
     build_study_plan,
@@ -69,189 +82,192 @@ def _review_session_key(lesson):
     )
 
 
+
+
+@login_required
+def placement_disabled(request):
+
+    return redirect(
+        "grammar:home"
+    )
+
+
 @login_required
 def grammar_home(request):
 
-    total_xp = (
-        GrammarLessonProgress.objects
-        .filter(
-            user=request.user,
-            status=(
-                GrammarLessonProgress
-                .Status
-                .COMPLETED
-            ),
-        )
-        .aggregate(
-            total=Sum("xp_earned")
-        )
-        ["total"]
-        or 0
+    today = (
+        timezone.localdate()
     )
 
-    active_attempt = (
-        GrammarPlacementAttempt.objects
-        .filter(
-            user=request.user,
-            status=(
-                GrammarPlacementAttempt
-                .Status
-                .IN_PROGRESS
-            ),
+    course = (
+        get_active_vocabulary_course(
+            request.user
         )
-        .order_by("-started_at")
-        .first()
     )
 
-    completed_placement = (
-        GrammarPlacementAttempt.objects
-        .filter(
-            user=request.user,
-            status=(
-                GrammarPlacementAttempt
-                .Status
-                .COMPLETED
-            ),
-        )
-        .order_by("-completed_at")
-        .first()
-    )
 
-    # First Grammar visit:
-    # do not show a catalogue of 60 lessons.
-    if not completed_placement:
+    if course is None:
 
         return render(
             request,
             "grammar/home.html",
             {
-                "needs_placement": True,
-                "active_attempt": active_attempt,
-                "total_xp": total_xp,
+                "needs_course": True,
+                "today": today,
             },
         )
 
-    plan_items = list(
-        get_personal_plan(
+
+    plan = (
+        sync_grammar_plan(
             request.user
         )
     )
 
-    next_item = (
-        plan_items[0]
-        if plan_items
-        else None
+
+    today_rows = (
+        get_today_grammar_rows(
+            plan
+        )
+        if plan
+        else []
     )
 
-    assessments = {
-        item.lesson_id: item
-        for item in (
-            GrammarTopicAssessment.objects
-            .filter(
-                user=request.user,
-                lesson__level="A1",
-                lesson__order__range=(1, 60),
-            )
-            .select_related(
-                "lesson",
-                "lesson__block",
-            )
-        )
-    }
 
-    blocks = (
-        GrammarBlock.objects
-        .filter(
-            level="A1",
-            is_published=True,
-        )
-        .order_by("order")
+    today_total = len(
+        today_rows
     )
 
-    block_rows = []
 
-    for block in blocks:
+    today_completed = sum(
+        1
+        for row in today_rows
+        if row["completed"]
+    )
 
-        lessons = list(
-            block.lessons
-            .filter(
-                level="A1",
-                order__range=(1, 60),
-                is_published=True,
+
+    today_minutes = sum(
+        row["estimated_minutes"]
+        for row in today_rows
+    )
+
+
+    today_percent = (
+        round(
+            today_completed
+            /
+            today_total
+            *
+            100
+        )
+        if today_total
+        else 100
+    )
+
+
+    if plan:
+
+        grammar_day_number = max(
+            1,
+            (
+                today
+                -
+                plan.start_date
+            ).days
+            +
+            1,
+        )
+
+    else:
+
+        grammar_day_number = 1
+
+
+    next_row = next(
+        (
+            row
+            for row in today_rows
+            if row["is_next"]
+        ),
+        None,
+    )
+
+
+    next_url = None
+
+
+    if next_row:
+
+        if (
+            next_row["type"]
+            ==
+            "practice"
+        ):
+
+            next_url = (
+                reverse(
+                    "grammar:block_practice",
+                    kwargs={
+                        "block_order":
+                            next_row[
+                                "block"
+                            ].order,
+                    },
+                )
+                +
+                "?new=1"
             )
-            .order_by("order")
-        )
 
-        statuses = [
-            assessments[lesson.id].status
-            for lesson in lessons
-            if lesson.id in assessments
-        ]
+        else:
 
-        known = sum(
-            1
-            for status in statuses
-            if status in {
-                GrammarTopicAssessment
-                .Status
-                .PROVISIONAL_MASTERED,
-
-                GrammarTopicAssessment
-                .Status
-                .MASTERED,
-            }
-        )
-
-        review = statuses.count(
-            GrammarTopicAssessment.Status.REVIEW
-        )
-
-        learn = statuses.count(
-            GrammarTopicAssessment.Status.LEARN
-        )
-
-        unknown = statuses.count(
-            GrammarTopicAssessment.Status.UNKNOWN
-        )
-
-        total = len(lessons)
-
-        percent = (
-            round(
-                known
-                / total
-                * 100
+            next_url = reverse(
+                "grammar:lesson",
+                kwargs={
+                    "slug":
+                        next_row[
+                            "lesson"
+                        ].slug,
+                },
             )
-            if total
-            else 0
-        )
 
-        block_rows.append(
-            {
-                "block": block,
-                "total": total,
-                "known": known,
-                "review": review,
-                "learn": learn,
-                "unknown": unknown,
-                "percent": percent,
-            }
-        )
 
     return render(
         request,
         "grammar/home.html",
         {
-            "needs_placement": False,
-            "total_xp": total_xp,
-            "placement": completed_placement,
-            "plan_items": plan_items,
-            "plan_count": len(plan_items),
-            "next_item": next_item,
-            "block_rows": block_rows,
+            "needs_course": False,
+
+            "today":
+                today,
+
+            "plan":
+                plan,
+
+            "today_rows":
+                today_rows,
+
+            "today_total":
+                today_total,
+
+            "today_completed":
+                today_completed,
+
+            "today_minutes":
+                today_minutes,
+
+            "today_percent":
+                today_percent,
+
+            "grammar_day_number":
+                grammar_day_number,
+
+            "next_url":
+                next_url,
+
+            "has_activity":
+                today_completed > 0,
         },
     )
-
 
 @login_required
 def grammar_lesson(request, slug):
@@ -261,6 +277,82 @@ def grammar_lesson(request, slug):
         slug=slug,
         is_published=True,
     )
+
+    # REQUIRED GRAMMAR ORDER
+
+    existing_progress = (
+        GrammarLessonProgress.objects
+        .filter(
+            user=request.user,
+            lesson=lesson,
+        )
+        .first()
+    )
+
+
+    already_completed = (
+        existing_progress is not None
+
+        and
+
+        existing_progress.status
+        ==
+        GrammarLessonProgress
+        .Status
+        .COMPLETED
+    )
+
+
+    if not already_completed:
+
+        required_step = (
+            get_required_grammar_step(
+                request.user
+            )
+        )
+
+
+        if (
+            required_step[
+                "type"
+            ]
+            ==
+            "practice"
+        ):
+
+            return redirect(
+                "grammar:home"
+            )
+
+
+        if (
+            required_step[
+                "type"
+            ]
+            ==
+            "lesson"
+        ):
+
+            required_lesson = (
+                required_step[
+                    "lesson"
+                ]
+            )
+
+
+            if (
+                lesson.id
+                !=
+                required_lesson.id
+            ):
+
+                return redirect(
+                    "grammar:lesson",
+                    slug=(
+                        required_lesson.slug
+                    ),
+                )
+
 
     progress, _ = (
         GrammarLessonProgress.objects
@@ -293,6 +385,17 @@ def grammar_lesson(request, slug):
         _lesson_content(lesson)
     )
 
+    final_test_exercises = [
+        exercise
+        for exercise in exercises
+        if exercise.section_id is None
+    ]
+
+    start_with_final = (
+        request.GET.get("final")
+        == "1"
+    )
+
     start_with_practice = (
         request.GET.get("practice")
         == "1"
@@ -316,9 +419,16 @@ def grammar_lesson(request, slug):
             )
         )
 
+    template_name = (
+        "grammar/lesson_interactive.html"
+        if lesson.order in (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29)
+        else
+        "grammar/lesson.html"
+    )
+
     return render(
         request,
-        "grammar/lesson.html",
+        template_name,
         {
             "lesson": lesson,
             "progress": progress,
@@ -333,6 +443,77 @@ def grammar_lesson(request, slug):
 
             "wrong_results":
                 wrong_results,
+
+            "final_test_exercises":
+                final_test_exercises,
+
+            "start_with_final":
+                start_with_final,
+        },
+    )
+
+
+@login_required
+def grammar_final_test(
+    request,
+    slug,
+):
+
+    lesson = get_object_or_404(
+        GrammarLesson,
+        slug=slug,
+        is_published=True,
+    )
+
+    progress, _ = (
+        GrammarLessonProgress.objects
+        .get_or_create(
+            user=request.user,
+            lesson=lesson,
+        )
+    )
+
+    if (
+        progress.status
+        ==
+        GrammarLessonProgress
+        .Status
+        .COMPLETED
+    ):
+
+        return redirect(
+            "grammar:lesson",
+            slug=lesson.slug,
+        )
+
+    final_test_exercises = list(
+        lesson.exercises
+        .filter(
+            is_published=True,
+            section__isnull=True,
+        )
+        .order_by("order")
+    )
+
+    if not final_test_exercises:
+
+        return redirect(
+            "grammar:lesson",
+            slug=lesson.slug,
+        )
+
+    return render(
+        request,
+        "grammar/final_test.html",
+        {
+            "lesson":
+                lesson,
+
+            "progress":
+                progress,
+
+            "final_test_exercises":
+                final_test_exercises,
         },
     )
 
@@ -356,6 +537,18 @@ def complete_lesson(request, slug):
         _lesson_content(lesson)
     )
 
+    final_test_exercises = [
+        exercise
+        for exercise in exercises
+        if exercise.section_id is None
+    ]
+
+    scored_exercises = (
+        final_test_exercises
+        or
+        exercises
+    )
+
     progress, _ = (
         GrammarLessonProgress.objects
         .get_or_create(
@@ -367,12 +560,12 @@ def complete_lesson(request, slug):
     if not progress.started_at:
         progress.started_at = timezone.now()
 
-    total = len(exercises)
+    total = len(scored_exercises)
     correct = 0
 
     wrong_results = []
 
-    for exercise in exercises:
+    for exercise in scored_exercises:
 
         submitted = (
             request.POST
@@ -388,8 +581,26 @@ def complete_lesson(request, slug):
             .strip()
         )
 
+        normalized_submitted = (
+            " ".join(
+                submitted
+                .casefold()
+                .split()
+            )
+        )
+
+        normalized_expected = (
+            " ".join(
+                expected
+                .casefold()
+                .split()
+            )
+        )
+
         is_correct = (
-            submitted == expected
+            normalized_submitted
+            ==
+            normalized_expected
         )
 
         if is_correct:
@@ -481,6 +692,15 @@ def complete_lesson(request, slug):
             "updated_at",
         ]
     )
+
+    # Grammar day counts only when ALL
+    # scheduled Grammar tasks are completed.
+    if passed:
+
+        update_grammar_daily_progress(
+            request.user
+        )
+
 
     # Sync successful lesson with Knowledge Map
     # and remove its normal task from the active Daily Plan.
@@ -934,106 +1154,32 @@ def grammar_placement_result(request):
     )
 
 
+
+
+
+
+
 @login_required
 def grammar_plan_setup(request):
 
-    completed_placement = (
-        GrammarPlacementAttempt.objects
-        .filter(
-            user=request.user,
-            status=(
-                GrammarPlacementAttempt
-                .Status
-                .COMPLETED
-            ),
-        )
-        .exists()
-    )
-
-    if not completed_placement:
-
-        return redirect(
-            "grammar:placement"
-        )
-
-    today = timezone.localdate()
-
-    current_plan = (
-        get_active_study_plan(
+    course = (
+        get_active_vocabulary_course(
             request.user
         )
     )
 
-    default_exam_date = (
-        current_plan.exam_date
-        if current_plan
-        else
-        today
-        + timedelta(days=20)
-    )
+    if course is None:
 
-    error = None
-
-    if request.method == "POST":
-
-        raw_exam_date = (
-            request.POST
-            .get(
-                "exam_date",
-                "",
-            )
-            .strip()
+        return redirect(
+            "vocabulary:course_setup"
         )
 
-        try:
+    sync_grammar_plan(
+        request.user
+    )
 
-            exam_date = (
-                date.fromisoformat(
-                    raw_exam_date
-                )
-            )
-
-        except ValueError:
-
-            exam_date = None
-
-        if exam_date is None:
-
-            error = (
-                "Укажите корректную дату экзамена."
-            )
-
-        elif exam_date <= today:
-
-            error = (
-                "Дата экзамена должна быть "
-                "позже сегодняшней."
-            )
-
-        else:
-
-            build_study_plan(
-                user=request.user,
-                exam_date=exam_date,
-                start_date=today,
-            )
-
-            return redirect(
-                "grammar:plan"
-            )
-
-    return render(
-        request,
-        "grammar/study_plan.html",
-        {
-            "mode": "setup",
-            "default_exam_date":
-                default_exam_date,
-            "min_exam_date":
-                today
-                + timedelta(days=1),
-            "error": error,
-        },
+    return redirect(
+        "grammar:plan"
     )
 
 
@@ -1041,77 +1187,116 @@ def grammar_plan_setup(request):
 def grammar_plan(request):
 
     plan = (
-        get_active_study_plan(
+        sync_grammar_plan(
             request.user
         )
     )
 
+
     if plan is None:
 
         return redirect(
-            "grammar:plan_setup"
+            "vocabulary:course_setup"
         )
 
+
     calendar = (
-        get_plan_calendar(
+        get_grammar_calendar(
             plan
         )
     )
 
-    exam_days_count = sum(
-        1
-        for day in calendar
-        if day["phase"] == "EXAM"
+
+    today = (
+        timezone.localdate()
     )
 
-    learn_count = (
-        plan.items
-        .filter(
-            action="LEARN",
-        )
-        .count()
+
+    today_day = next(
+        (
+            day
+
+            for day in calendar
+
+            if day["is_today"]
+        ),
+        None,
     )
 
-    review_count = (
-        plan.items
-        .filter(
-            action="REVIEW",
-        )
-        .count()
-    )
-
-    final_review_count = (
-        plan.items
-        .filter(
-            action="FINAL_REVIEW",
-        )
-        .count()
-    )
-
-    today = timezone.localdate()
 
     days_remaining = max(
         0,
         (
             plan.exam_date
-            - today
-        ).days,
+            -
+            today
+        ).days
+        +
+        1,
     )
+
+
+    completed_ids = set(
+        GrammarLessonProgress.objects
+        .filter(
+            user=request.user,
+            lesson__level="A1",
+            lesson__order__range=(1, 60),
+            status=(
+                GrammarLessonProgress
+                .Status
+                .COMPLETED
+            ),
+        )
+        .values_list(
+            "lesson_id",
+            flat=True,
+        )
+    )
+
+
+    total_lessons = (
+        GrammarLesson.objects
+        .filter(
+            level="A1",
+            order__range=(1, 60),
+            is_published=True,
+        )
+        .count()
+    )
+
+
+    remaining_lessons = max(
+        0,
+        (
+            total_lessons
+            -
+            len(completed_ids)
+        ),
+    )
+
 
     return render(
         request,
         "grammar/study_plan.html",
         {
-            "mode": "calendar",
-            "plan": plan,
-            "calendar": calendar,
-            "learn_count": learn_count,
-            "exam_days_count": exam_days_count,
-            "review_count": review_count,
-            "final_review_count":
-                final_review_count,
+            "plan":
+                plan,
+
+            "calendar":
+                calendar,
+
+            "today_day":
+                today_day,
+
             "days_remaining":
                 days_remaining,
+
+            "remaining_lessons":
+                remaining_lessons,
+
+            "total_days":
+                len(calendar),
         },
     )
 
@@ -1300,4 +1485,604 @@ def answer_grammar_exam_practice(
 
     return redirect(
         "grammar:exam_practice"
+    )
+
+
+
+@login_required
+def grammar_balance(request):
+
+    completed = (
+        GrammarLessonProgress.objects
+        .filter(
+            user=request.user,
+            lesson__level="A1",
+            lesson__order__range=(1, 60),
+            status=(
+                GrammarLessonProgress
+                .Status
+                .COMPLETED
+            ),
+        )
+    )
+
+
+    total_xp = (
+        completed
+        .aggregate(
+            total=Sum(
+                "xp_earned"
+            )
+        )
+        ["total"]
+        or 0
+    )
+
+
+    possible_xp = (
+        GrammarLesson.objects
+        .filter(
+            level="A1",
+            order__range=(1, 60),
+            is_published=True,
+        )
+        .aggregate(
+            total=Sum(
+                "xp_reward"
+            )
+        )
+        ["total"]
+        or 0
+    )
+
+
+    recent = (
+        completed
+        .select_related(
+            "lesson",
+            "lesson__block",
+        )
+        .order_by(
+            "-completed_at"
+        )[:10]
+    )
+
+
+    return render(
+        request,
+        "grammar/balance.html",
+        {
+            "total_xp":
+                total_xp,
+
+            "possible_xp":
+                possible_xp,
+
+            "completed_lessons":
+                completed.count(),
+
+            "recent":
+                recent,
+        },
+    )
+
+
+@login_required
+def grammar_rewards(request):
+
+    completed_lessons = (
+        GrammarLessonProgress.objects
+        .filter(
+            user=request.user,
+            lesson__level="A1",
+            lesson__order__range=(1, 60),
+            status=(
+                GrammarLessonProgress
+                .Status
+                .COMPLETED
+            ),
+        )
+        .count()
+    )
+
+
+    total_xp = (
+        GrammarLessonProgress.objects
+        .filter(
+            user=request.user,
+            lesson__level="A1",
+            status=(
+                GrammarLessonProgress
+                .Status
+                .COMPLETED
+            ),
+        )
+        .aggregate(
+            total=Sum(
+                "xp_earned"
+            )
+        )
+        ["total"]
+        or 0
+    )
+
+
+    completed_practices = set(
+        GrammarBlockPracticeProgress.objects
+        .filter(
+            user=request.user,
+            is_completed=True,
+            block__level="A1",
+        )
+        .values_list(
+            "block__order",
+            flat=True,
+        )
+    )
+
+
+    rewards = [
+        {
+            "icon": "🌱",
+            "title": "Первый шаг",
+            "description": "Завершить первый Grammar Lesson",
+            "unlocked": completed_lessons >= 1,
+            "progress": f"{min(completed_lessons, 1)}/1",
+        },
+        {
+            "icon": "⚡",
+            "title": "Разгон",
+            "description": "Завершить 5 Grammar Lessons",
+            "unlocked": completed_lessons >= 5,
+            "progress": f"{min(completed_lessons, 5)}/5",
+        },
+        {
+            "icon": "📘",
+            "title": "Первый блок",
+            "description": "Завершить 10 Grammar Lessons",
+            "unlocked": completed_lessons >= 10,
+            "progress": f"{min(completed_lessons, 10)}/10",
+        },
+        {
+            "icon": "🎯",
+            "title": "Practice 1",
+            "description": "Пройти первый Grammar Practice",
+            "unlocked": 1 in completed_practices,
+            "progress": (
+                "1/1"
+                if 1 in completed_practices
+                else "0/1"
+            ),
+        },
+        {
+            "icon": "🔥",
+            "title": "20 тем",
+            "description": "Завершить 20 Grammar Lessons",
+            "unlocked": completed_lessons >= 20,
+            "progress": f"{min(completed_lessons, 20)}/20",
+        },
+        {
+            "icon": "🏆",
+            "title": "Practice 2",
+            "description": "Пройти второй Grammar Practice",
+            "unlocked": 2 in completed_practices,
+            "progress": (
+                "1/1"
+                if 2 in completed_practices
+                else "0/1"
+            ),
+        },
+        {
+            "icon": "🚀",
+            "title": "30 тем",
+            "description": "Завершить половину курса Grammar",
+            "unlocked": completed_lessons >= 30,
+            "progress": f"{min(completed_lessons, 30)}/30",
+        },
+        {
+            "icon": "💎",
+            "title": "Practice 3",
+            "description": "Пройти третий Grammar Practice",
+            "unlocked": 3 in completed_practices,
+            "progress": (
+                "1/1"
+                if 3 in completed_practices
+                else "0/1"
+            ),
+        },
+        {
+            "icon": "👑",
+            "title": "Grammar Master",
+            "description": "Завершить все 60 Grammar Lessons",
+            "unlocked": completed_lessons >= 60,
+            "progress": f"{min(completed_lessons, 60)}/60",
+        },
+    ]
+
+
+    unlocked_count = sum(
+        1
+        for reward in rewards
+        if reward["unlocked"]
+    )
+
+
+    return render(
+        request,
+        "grammar/rewards.html",
+        {
+            "rewards":
+                rewards,
+
+            "unlocked_count":
+                unlocked_count,
+
+            "reward_count":
+                len(rewards),
+
+            "total_xp":
+                total_xp,
+        },
+    )
+
+
+@login_required
+def grammar_profile(request):
+
+    today = (
+        timezone.localdate()
+    )
+
+
+    # =====================================================
+    # LESSON PROGRESS
+    # =====================================================
+
+    completed = (
+        GrammarLessonProgress.objects
+        .filter(
+            user=request.user,
+            lesson__level="A1",
+            lesson__order__range=(1, 60),
+            status=(
+                GrammarLessonProgress
+                .Status
+                .COMPLETED
+            ),
+        )
+    )
+
+
+    completed_lessons = (
+        completed.count()
+    )
+
+
+    total_lessons = (
+        GrammarLesson.objects
+        .filter(
+            level="A1",
+            order__range=(1, 60),
+            is_published=True,
+        )
+        .count()
+    )
+
+
+    lesson_percent = (
+        round(
+            completed_lessons
+            /
+            total_lessons
+            *
+            100
+        )
+        if total_lessons
+        else 0
+    )
+
+
+    stats = (
+        completed
+        .aggregate(
+            total_xp=Sum(
+                "xp_earned"
+            ),
+
+            avg_score=Avg(
+                "score"
+            ),
+        )
+    )
+
+
+    total_xp = (
+        stats[
+            "total_xp"
+        ]
+        or 0
+    )
+
+
+    avg_score = round(
+        stats[
+            "avg_score"
+        ]
+        or 0
+    )
+
+
+    # =====================================================
+    # PRACTICE PROGRESS
+    # =====================================================
+
+    practices_completed = (
+        GrammarBlockPracticeProgress.objects
+        .filter(
+            user=request.user,
+            block__level="A1",
+            block__order__in=[
+                1,
+                2,
+                3,
+            ],
+            is_completed=True,
+        )
+        .count()
+    )
+
+
+    total_practices = 3
+
+
+    # =====================================================
+    # DAYS REMAINING
+    # =====================================================
+
+    plan = (
+        sync_grammar_plan(
+            request.user
+        )
+    )
+
+
+    days_remaining = 0
+
+
+    if plan:
+
+        days_remaining = max(
+            0,
+            (
+                plan.exam_date
+                -
+                today
+            ).days
+            +
+            1,
+        )
+
+
+    # =====================================================
+    # COMPLETED GRAMMAR DAYS
+    #
+    # День попадает сюда только после выполнения
+    # ВСЕГО Grammar-плана этого дня.
+    # Vocabulary не участвует.
+    # =====================================================
+
+    activity_dates = set(
+        GrammarDailyProgress.objects
+        .filter(
+            user=request.user,
+            is_completed=True,
+        )
+        .values_list(
+            "date",
+            flat=True,
+        )
+    )
+
+
+    # Проверим сегодняшний день на случай,
+    # если пользователь только что всё завершил.
+    today_progress = (
+        update_grammar_daily_progress(
+            request.user,
+            target_date=today,
+        )
+    )
+
+
+    if (
+        today_progress is not None
+        and
+        today_progress.is_completed
+    ):
+
+        activity_dates.add(
+            today
+        )
+
+
+    # =====================================================
+    # STREAK
+    # =====================================================
+
+    streak = 0
+
+
+    cursor = today
+
+
+    # Если сегодня ещё не было Grammar,
+    # разрешаем streak продолжаться со вчера.
+    if (
+        cursor
+        not in activity_dates
+    ):
+
+        cursor = (
+            cursor
+            -
+            timedelta(
+                days=1
+            )
+        )
+
+
+    while (
+        cursor
+        in activity_dates
+    ):
+
+        streak += 1
+
+        cursor = (
+            cursor
+            -
+            timedelta(
+                days=1
+            )
+        )
+
+
+    # =====================================================
+    # CURRENT WEEK
+    # Monday -> Sunday
+    # =====================================================
+
+    week_start = (
+        today
+        -
+        timedelta(
+            days=today.weekday()
+        )
+    )
+
+
+    week_days = []
+
+
+    weekday_names = [
+        "Пн",
+        "Вт",
+        "Ср",
+        "Чт",
+        "Пт",
+        "Сб",
+        "Вс",
+    ]
+
+
+    for index in range(
+        7
+    ):
+
+        current_date = (
+            week_start
+            +
+            timedelta(
+                days=index
+            )
+        )
+
+
+        completed_day = (
+            current_date
+            in activity_dates
+        )
+
+
+        if completed_day:
+
+            state = "completed"
+
+        elif current_date == today:
+
+            state = "today"
+
+        elif current_date < today:
+
+            state = "missed"
+
+        else:
+
+            state = "future"
+
+
+        week_days.append(
+            {
+                "name":
+                    weekday_names[
+                        index
+                    ],
+
+                "date":
+                    current_date,
+
+                "state":
+                    state,
+
+                "completed":
+                    completed_day,
+
+                "is_today":
+                    (
+                        current_date
+                        ==
+                        today
+                    ),
+            }
+        )
+
+
+    week_completed = sum(
+        1
+
+        for day in week_days
+
+        if day[
+            "completed"
+        ]
+    )
+
+
+    return render(
+        request,
+        "grammar/profile.html",
+        {
+            "completed_lessons":
+                completed_lessons,
+
+            "total_lessons":
+                total_lessons,
+
+            "lesson_percent":
+                lesson_percent,
+
+            "total_xp":
+                total_xp,
+
+            "avg_score":
+                avg_score,
+
+            "practices_completed":
+                practices_completed,
+
+            "total_practices":
+                total_practices,
+
+            "days_remaining":
+                days_remaining,
+
+            "streak":
+                streak,
+
+            "week_days":
+                week_days,
+
+            "week_completed":
+                week_completed,
+        },
     )

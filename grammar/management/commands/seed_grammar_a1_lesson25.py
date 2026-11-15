@@ -10,62 +10,88 @@ from grammar.models import (
 class Command(BaseCommand):
 
     help = (
-        "Create/update A1 Grammar Lesson 25: "
-        "Past Simple with regular verbs."
+        "Create/update interactive A1 Grammar "
+        "Lesson 25: Past Simple regular verbs."
     )
+
 
     def handle(self, *args, **options):
 
-        lesson, _ = GrammarLesson.objects.update_or_create(
-            level="A1",
-            order=25,
-            defaults={
-                "title": "Past Simple с правильными глаголами",
-                "slug": "past-simple-regular-verbs",
-                "theory_text": "Past Simple with regular verbs.",
-                "estimated_minutes": 35,
-                "pass_score": 70,
-                "xp_reward": 100,
-                "is_published": True,
-            },
+        lesson, _ = (
+            GrammarLesson.objects
+            .update_or_create(
+                level="A1",
+                order=25,
+
+                defaults={
+                    "title":
+                        "Past Simple с правильными глаголами",
+
+                    "slug":
+                        "past-simple-regular-verbs",
+
+                    "theory_text":
+                        "Past Simple with regular verbs.",
+
+                    "estimated_minutes":
+                        19,
+
+                    "pass_score":
+                        70,
+
+                    "xp_reward":
+                        100,
+
+                    "is_published":
+                        True,
+                },
+            )
         )
+
 
         sections = [
 
             {
                 "order": 1,
-                "title": "Что такое Past Simple",
-                "body": """Past Simple используется, когда действие:
 
-произошло в прошлом;
+                "title":
+                    "Когда нужен Past Simple?",
 
-завершилось в прошлом;
-
-произошло в конкретный момент;
-
-больше не продолжается.
-
-Примеры:
+                "body":
+                    """Past Simple используется для завершённых действий в прошлом.
 
 I worked yesterday.
 
-She studied English last year.
+She called me last night.
 
-They played football on Sunday.""",
+They visited Almaty last year.
+
+Также он используется для:
+
+последовательности действий;
+
+повторяющихся действий в прошлом.
+
+Примеры:
+
+I opened the door, entered the room and turned on the light.
+
+We played outside every day when we were children.""",
             },
+
 
             {
                 "order": 2,
-                "title": "Правильные глаголы и -ED",
-                "body": """У правильных глаголов Past Simple обычно образуется добавлением -ed.
 
-Примеры:
+                "title":
+                    "Правильный глагол + ED",
+
+                "body":
+                    """У правильных глаголов Past Simple обычно образуется через -ED.
 
 work → worked
 
 play → played
-
-open → opened
 
 clean → cleaned
 
@@ -73,7 +99,7 @@ watch → watched
 
 visit → visited
 
-Форма одинакова для всех лиц:
+Форма одинакова для всех:
 
 I worked.
 
@@ -81,91 +107,18 @@ She worked.
 
 They worked.
 
-Окончание -s, как в Present Simple, не используется.""",
+В Past Simple не добавляем отдельное -S для HE / SHE / IT.""",
             },
+
 
             {
                 "order": 3,
-                "title": "Когда используется Past Simple",
-                "body": """Past Simple используется для завершённых действий.
 
-I finished the report yesterday.
+                "title":
+                    "Если глагол заканчивается на E",
 
-She called me last night.
-
-They visited Almaty last year.
-
-Также для последовательности действий:
-
-I opened the door, entered the room and turned on the light.
-
-И для привычек в прошлом:
-
-We played outside every day.
-
-She visited her grandmother every Sunday.""",
-            },
-
-            {
-                "order": 4,
-                "title": "Слова-маркеры",
-                "body": """Частые маркеры Past Simple:
-
-yesterday;
-
-last night;
-
-last week;
-
-last month;
-
-last year;
-
-two days ago;
-
-a week ago;
-
-in 2020;
-
-when I was a child.
-
-Примеры:
-
-I worked yesterday.
-
-She called me last night.
-
-They moved here three years ago.""",
-            },
-
-            {
-                "order": 5,
-                "title": "Обычное добавление -ED",
-                "body": """К большинству глаголов просто добавляется -ed.
-
-work → worked
-
-clean → cleaned
-
-open → opened
-
-help → helped
-
-start → started
-
-Примеры:
-
-I worked yesterday.
-
-She cleaned the room.
-
-We opened the window.""",
-            },
-
-            {
-                "order": 6,
-                "title": "Глаголы на E",
-                "body": """Если глагол уже заканчивается на e, добавляется только -d.
+                "body":
+                    """Если глагол уже заканчивается на E, добавляем только -D.
 
 live → lived
 
@@ -177,21 +130,26 @@ dance → danced
 
 arrive → arrived
 
-Неправильно:
+Не:
 
 liveed
 
-Правильно:
+А:
 
-lived""",
+lived.""",
             },
 
-            {
-                "order": 7,
-                "title": "Глаголы на Y",
-                "body": """Если перед y стоит согласная:
 
-y → i + ed
+            {
+                "order": 4,
+
+                "title":
+                    "Y → IED или Y остаётся?",
+
+                "body":
+                    """Если перед Y стоит согласная:
+
+Y → IED
 
 study → studied
 
@@ -201,7 +159,7 @@ try → tried
 
 cry → cried
 
-Если перед y стоит гласная, y сохраняется:
+Если перед Y стоит гласная, Y сохраняется:
 
 play → played
 
@@ -209,23 +167,22 @@ stay → stayed
 
 enjoy → enjoyed
 
-Сравните:
+Сравни:
 
 study → studied
 
-play → played""",
+play → played.""",
             },
 
+
             {
-                "order": 8,
-                "title": "Удвоение согласной",
-                "body": """У коротких глаголов типа:
+                "order": 5,
 
-согласная + гласная + согласная
+                "title":
+                    "Удвоение согласной",
 
-последняя согласная часто удваивается.
-
-Примеры:
+                "body":
+                    """У некоторых коротких глаголов последняя согласная удваивается.
 
 stop → stopped
 
@@ -235,101 +192,65 @@ shop → shopped
 
 drop → dropped
 
-Но обычно не удваиваются:
-
-w;
-
-x;
-
-y.
-
-Примеры:
+Но W, X и Y обычно не удваиваются:
 
 snow → snowed
 
 fix → fixed
 
-play → played""",
+play → played.
+
+Важно запоминать форму вместе с глаголом.""",
             },
 
+
             {
-                "order": 9,
-                "title": "Произношение -ED",
-                "body": """Окончание -ed имеет три основных варианта произношения:
+                "order": 6,
 
-/t/
+                "title":
+                    "Как произносится -ED?",
 
-/d/
+                "body":
+                    """Окончание -ED может звучать по-разному.
 
-/ɪd/
+/t/:
 
-Примеры /t/:
+worked
 
-worked;
+watched
 
-watched;
+helped
 
-helped;
+/d/:
 
-stopped.
+played
 
-Примеры /d/:
+cleaned
 
-played;
+called
 
-cleaned;
+/ɪd/:
 
-opened;
+wanted
 
-called.
+needed
 
-Примеры /ɪd/:
+started
 
-wanted;
+visited
 
-needed;
-
-started;
-
-visited.
-
-Написание одинаковое, но произношение разное.""",
+Написание одно — ED, но произношение зависит от последнего звука глагола.""",
             },
 
-            {
-                "order": 10,
-                "title": "Утвердительное предложение",
-                "body": """Формула:
-
-Подлежащее + глагол-ed
-
-Примеры:
-
-I worked yesterday.
-
-She played tennis.
-
-They studied English.
-
-We visited our friends.
-
-Для всех подлежащих используется одна форма Past Simple.
-
-He worked.
-
-They worked.""",
-            },
 
             {
-                "order": 11,
-                "title": "Отрицание с DIDN'T",
-                "body": """Отрицание образуется с did not / didn't.
+                "order": 7,
 
-Формула:
+                "title":
+                    "Отрицание: DIDN'T + base verb",
 
-Подлежащее + didn't + глагол
-
-Примеры:
+                "body":
+                    """Отрицание строится через DIDN'T.
 
 I didn't work.
 
@@ -337,27 +258,30 @@ She didn't play.
 
 They didn't study.
 
-Важно:
-
-после didn't глагол возвращается в начальную форму.
+После DIDN'T глагол возвращается в базовую форму.
 
 She worked.
 
-She didn't work.
+→ She didn't work.
 
-Неправильно:
+Не:
 
-She didn't worked.""",
+She didn't worked.
+
+DIDN'T уже показывает прошедшее время.""",
             },
 
+
             {
-                "order": 12,
-                "title": "Вопросы с DID",
-                "body": """Формула:
+                "order": 8,
 
-Did + подлежащее + глагол?
+                "title":
+                    "Вопросы: DID + subject + verb?",
 
-Примеры:
+                "body":
+                    """Вопрос:
+
+DID + subject + base verb?
 
 Did you work yesterday?
 
@@ -365,15 +289,13 @@ Did she call you?
 
 Did they study English?
 
-Did he open the door?
+После DID снова используется базовая форма.
 
-После did используется начальная форма.
-
-Неправильно:
+Не:
 
 Did she worked?
 
-Правильно:
+А:
 
 Did she work?
 
@@ -384,346 +306,880 @@ Yes, I did.
 No, I didn't.""",
             },
 
+
             {
-                "order": 13,
-                "title": "Специальные вопросы и WHO",
-                "body": """Формула специального вопроса:
+                "order": 9,
 
-Question word + did + subject + verb?
+                "title":
+                    "WHERE DID...? и WHO",
 
-Примеры:
+                "body":
+                    """Специальный вопрос:
+
+question word
++ DID
++ subject
++ base verb?
 
 Where did you work?
 
 When did she arrive?
 
-Why did they leave?
-
-What did he study?
+Why did they stop?
 
 Who did you call?
 
-Но если WHO само выполняет действие, did обычно не используется.
+Но если WHO само выполняет действие, DID обычно не нужен:
 
 Who called you?
 
 Who opened the door?
 
-Сравните:
+Сравни:
 
 Who called you?
-— Кто позвонил тебе?
+→ кто позвонил
 
 Who did you call?
-— Кому позвонил ты?""",
+→ кому позвонил ты.""",
             },
 
+
             {
-                "order": 14,
-                "title": "Past Simple и WAS/WERE",
-                "body": """WAS/WERE используются для:
+                "order": 10,
 
-состояния;
+                "title":
+                    "WAS/WERE или обычный Past Simple?",
 
-места;
+                "body":
+                    """WAS / WERE используются для состояния, места, профессии и возраста.
 
-профессии;
+She was tired.
 
-возраста.
-
-I was tired.
-
-She was at home.
+He was at work.
 
 They were students.
 
-Обычный Past Simple используется для действий:
+Обычный Past Simple используется для действия.
 
-I worked.
+She worked yesterday.
 
-She studied.
+He studied English.
 
-They played.
-
-Сравните:
+Сравни:
 
 He was at work yesterday.
-— Он был на работе.
+→ был на работе
 
 He worked yesterday.
-— Он работал вчера.
+→ работал
 
-Важно:
+Не:
 
-с was/were DID не используется.
+He was worked yesterday.
 
-Was she tired?
+И не смешивай вопросы:
 
-Но с обычным глаголом:
+Was he tired?
 
-Did she work yesterday?""",
+Did he work?""",
             },
 
         ]
 
+
+        section_objects = {}
+
+
         for data in sections:
 
-            GrammarLessonSection.objects.update_or_create(
-                lesson=lesson,
-                order=data["order"],
-                defaults={
-                    "title": data["title"],
-                    "body": data["body"],
-                },
+            section, _ = (
+                GrammarLessonSection.objects
+                .update_or_create(
+                    lesson=lesson,
+                    order=data["order"],
+
+                    defaults={
+                        "title":
+                            data["title"],
+
+                        "body":
+                            data["body"],
+                    },
+                )
             )
 
-        exercises = [
+            section_objects[
+                data["order"]
+            ] = section
+
+
+        training = [
 
             {
                 "order": 1,
-                "prompt": "We ___ the room yesterday.",
-                "options": ["clean", "cleaned", "cleaning", "did cleaned"],
-                "answer": "cleaned",
-                "explanation": "Утвердительный Past Simple: clean → cleaned.",
+                "section": 1,
+                "type": "choice",
+
+                "prompt":
+                    "We ___ the room yesterday.",
+
+                "options": [
+                    "clean",
+                    "cleaned",
+                    "cleaning",
+                    "did cleaned",
+                ],
+
+                "answer":
+                    "cleaned",
+
+                "explanation":
+                    "YESTERDAY → завершённое действие в прошлом.",
             },
+
 
             {
                 "order": 2,
-                "prompt": "She ___ me last night.",
-                "options": ["call", "called", "calling", "did called"],
-                "answer": "called",
-                "explanation": "Call — правильный глагол: called.",
+                "section": 1,
+                "type": "choice",
+
+                "prompt":
+                    "She ___ me last night.",
+
+                "options": [
+                    "call",
+                    "called",
+                    "calling",
+                    "did called",
+                ],
+
+                "answer":
+                    "called",
+
+                "explanation":
+                    "CALL — правильный глагол → CALLED.",
             },
+
 
             {
                 "order": 3,
-                "prompt": "They ___ in Astana for two years.",
-                "options": ["lived", "liveed", "living", "did lived"],
-                "answer": "lived",
-                "explanation": "Live заканчивается на e, поэтому добавляется только d.",
+                "section": 2,
+                "type": "fill",
+
+                "prompt":
+                    "They ___ football yesterday. (play)",
+
+                "options": [],
+
+                "answer":
+                    "played",
+
+                "explanation":
+                    "PLAY → PLAYED.",
             },
+
 
             {
                 "order": 4,
-                "prompt": "He ___ the window.",
-                "options": ["opened", "openened", "opening", "did opened"],
-                "answer": "opened",
-                "explanation": "Open → opened.",
+                "section": 2,
+                "type": "choice",
+
+                "prompt":
+                    "Choose the correct Past Simple sentence.",
+
+                "options": [
+                    "He works yesterday.",
+                    "He worked yesterday.",
+                    "He did worked yesterday.",
+                    "He working yesterday.",
+                ],
+
+                "answer":
+                    "He worked yesterday.",
+
+                "explanation":
+                    "Утверждение Past Simple → WORKED.",
             },
+
 
             {
                 "order": 5,
-                "prompt": "I ___ the film.",
-                "options": ["watched", "watchd", "watching", "did watched"],
-                "answer": "watched",
-                "explanation": "Watch → watched.",
+                "section": 3,
+                "type": "choice",
+
+                "prompt":
+                    "They ___ in London for two years.",
+
+                "options": [
+                    "lived",
+                    "liveed",
+                    "living",
+                    "did lived",
+                ],
+
+                "answer":
+                    "lived",
+
+                "explanation":
+                    "LIVE заканчивается на E → добавляем только D.",
             },
+
 
             {
                 "order": 6,
-                "prompt": "She didn't ___ the question.",
-                "options": ["answered", "answer", "answers", "answering"],
-                "answer": "answer",
-                "explanation": "После didn't используется базовая форма.",
+                "section": 3,
+                "type": "choice",
+
+                "prompt":
+                    "Choose the correct Past Simple form of MOVE.",
+
+                "options": [
+                    "moveed",
+                    "moved",
+                    "movied",
+                    "moving",
+                ],
+
+                "answer":
+                    "moved",
+
+                "explanation":
+                    "MOVE → MOVED.",
             },
+
 
             {
                 "order": 7,
-                "prompt": "We didn't ___ late.",
-                "options": ["arrived", "arrive", "arrives", "arriving"],
-                "answer": "arrive",
-                "explanation": "После didn't → arrive, не arrived.",
+                "section": 4,
+                "type": "choice",
+
+                "prompt":
+                    "Choose the correct Past Simple form of STUDY.",
+
+                "options": [
+                    "studyed",
+                    "studied",
+                    "studyd",
+                    "studing",
+                ],
+
+                "answer":
+                    "studied",
+
+                "explanation":
+                    "Согласная + Y → Y меняется на IED.",
             },
+
 
             {
                 "order": 8,
-                "prompt": "Did they ___ you?",
-                "options": ["helped", "help", "helps", "helping"],
-                "answer": "help",
-                "explanation": "После did используется базовая форма.",
+                "section": 4,
+                "type": "choice",
+
+                "prompt":
+                    "Choose the correct Past Simple form of PLAY.",
+
+                "options": [
+                    "plaied",
+                    "played",
+                    "playd",
+                    "playyed",
+                ],
+
+                "answer":
+                    "played",
+
+                "explanation":
+                    "Перед Y стоит гласная → Y сохраняется.",
             },
+
 
             {
                 "order": 9,
-                "prompt": "Did she ___ in London?",
-                "options": ["lived", "live", "lives", "living"],
-                "answer": "live",
-                "explanation": "Did + subject + base verb.",
+                "section": 5,
+                "type": "choice",
+
+                "prompt":
+                    "Choose the correct Past Simple form of STOP.",
+
+                "options": [
+                    "stoped",
+                    "stopped",
+                    "stopt",
+                    "stopping",
+                ],
+
+                "answer":
+                    "stopped",
+
+                "explanation":
+                    "STOP → STOPPED с удвоением P.",
             },
+
 
             {
                 "order": 10,
-                "prompt": "Where did you ___?",
-                "options": ["worked", "work", "works", "working"],
-                "answer": "work",
-                "explanation": "После did → work.",
+                "section": 5,
+                "type": "choice",
+
+                "prompt":
+                    "Choose the correct Past Simple form of PLAN.",
+
+                "options": [
+                    "planed",
+                    "planned",
+                    "planied",
+                    "planning",
+                ],
+
+                "answer":
+                    "planned",
+
+                "explanation":
+                    "PLAN → PLANNED.",
             },
+
 
             {
                 "order": 11,
-                "prompt": "When did the lesson ___?",
-                "options": ["started", "start", "starts", "starting"],
-                "answer": "start",
-                "explanation": "После did используется начальная форма start.",
+                "section": 6,
+                "type": "choice",
+
+                "prompt":
+                    "Which word has -ED pronounced as /ɪd/?",
+
+                "options": [
+                    "worked",
+                    "played",
+                    "wanted",
+                    "helped",
+                ],
+
+                "answer":
+                    "wanted",
+
+                "explanation":
+                    "WANTED произносится с отдельным слогом /ɪd/.",
             },
+
 
             {
                 "order": 12,
-                "prompt": "Why did he ___?",
-                "options": ["stopped", "stop", "stops", "stopping"],
-                "answer": "stop",
-                "explanation": "После did → stop.",
+                "section": 6,
+                "type": "choice",
+
+                "prompt":
+                    "Which word has -ED pronounced as /d/?",
+
+                "options": [
+                    "watched",
+                    "called",
+                    "wanted",
+                    "helped",
+                ],
+
+                "answer":
+                    "called",
+
+                "explanation":
+                    "CALLED оканчивается на звук /d/.",
             },
+
 
             {
                 "order": 13,
-                "prompt": "Who ___ the door?",
-                "options": ["did opened", "opened", "open", "opening"],
-                "answer": "opened",
-                "explanation": "Who здесь подлежащее, поэтому did не нужен.",
+                "section": 7,
+                "type": "choice",
+
+                "prompt":
+                    "She didn't ___ the question.",
+
+                "options": [
+                    "answered",
+                    "answer",
+                    "answers",
+                    "answering",
+                ],
+
+                "answer":
+                    "answer",
+
+                "explanation":
+                    "После DIDN'T используется базовая форма.",
             },
+
 
             {
                 "order": 14,
-                "prompt": "Did you visit Almaty?",
-                "options": [
-                    "Yes, I did.",
-                    "Yes, I was.",
-                    "Yes, I visited did.",
-                    "Yes, I do.",
-                ],
-                "answer": "Yes, I did.",
-                "explanation": "Вопрос с did требует краткий ответ с did.",
-            },
+                "section": 7,
+                "type": "choice",
 
-            {
-                "order": 15,
-                "prompt": "She ___ tired yesterday.",
-                "options": ["worked", "was", "did", "were"],
-                "answer": "was",
-                "explanation": "Tired — состояние, поэтому используется was.",
-            },
+                "prompt":
+                    "Choose the correct negative sentence.",
 
-            {
-                "order": 16,
-                "prompt": "Choose the correct Past Simple form of STUDY.",
-                "options": ["studyed", "studied", "studyd", "studing"],
-                "answer": "studied",
-                "explanation": "Согласная + y: y → i + ed.",
-            },
-
-            {
-                "order": 17,
-                "prompt": "Choose the correct Past Simple form of PLAY.",
-                "options": ["plaied", "played", "playd", "playyed"],
-                "answer": "played",
-                "explanation": "Перед y стоит гласная, поэтому y сохраняется.",
-            },
-
-            {
-                "order": 18,
-                "prompt": "Choose the correct Past Simple form of STOP.",
-                "options": ["stoped", "stopped", "stopt", "stopping"],
-                "answer": "stopped",
-                "explanation": "Последняя согласная удваивается: stop → stopped.",
-            },
-
-            {
-                "order": 19,
-                "prompt": "Choose the correct Past Simple form of MOVE.",
-                "options": ["moveed", "moved", "movied", "moving"],
-                "answer": "moved",
-                "explanation": "Глагол заканчивается на e, поэтому добавляем d.",
-            },
-
-            {
-                "order": 20,
-                "prompt": "Choose the correct negative sentence.",
                 "options": [
                     "She didn't worked yesterday.",
                     "She didn't work yesterday.",
                     "She wasn't work yesterday.",
                     "She doesn't worked yesterday.",
                 ],
-                "answer": "She didn't work yesterday.",
-                "explanation": "Didn't уже показывает прошлое, поэтому work без -ed.",
+
+                "answer":
+                    "She didn't work yesterday.",
+
+                "explanation":
+                    "DIDN'T уже показывает прошлое → WORK без -ED.",
             },
 
+
             {
-                "order": 21,
-                "prompt": "Choose the correct question.",
+                "order": 15,
+                "section": 8,
+                "type": "choice",
+
+                "prompt":
+                    "Did they ___ you yesterday?",
+
                 "options": [
-                    "Did she worked yesterday?",
-                    "Did she work yesterday?",
-                    "Was she work yesterday?",
-                    "Does she worked yesterday?",
+                    "helped",
+                    "help",
+                    "helps",
+                    "helping",
                 ],
-                "answer": "Did she work yesterday?",
-                "explanation": "Did + subject + base verb.",
+
+                "answer":
+                    "help",
+
+                "explanation":
+                    "DID + base verb → HELP.",
             },
 
+
             {
-                "order": 22,
-                "prompt": "Choose the sentence about an action.",
+                "order": 16,
+                "section": 8,
+                "type": "choice",
+
+                "prompt":
+                    "Did she visit Almaty?",
+
+                "options": [
+                    "Yes, she did.",
+                    "Yes, she was.",
+                    "Yes, she visited did.",
+                    "Yes, she does.",
+                ],
+
+                "answer":
+                    "Yes, she did.",
+
+                "explanation":
+                    "Вопрос с DID → краткий ответ с DID.",
+            },
+
+
+            {
+                "order": 17,
+                "section": 9,
+                "type": "build",
+
+                "prompt":
+                    "Собери правильный вопрос.",
+
+                "options": [
+                    "Where",
+                    "did",
+                    "you",
+                    "work",
+                ],
+
+                "answer":
+                    "Where did you work",
+
+                "explanation":
+                    "Question word + DID + subject + base verb.",
+            },
+
+
+            {
+                "order": 18,
+                "section": 9,
+                "type": "choice",
+
+                "prompt":
+                    "Who ___ the door?",
+
+                "options": [
+                    "did opened",
+                    "opened",
+                    "did open it who",
+                    "opening",
+                ],
+
+                "answer":
+                    "opened",
+
+                "explanation":
+                    "WHO само является подлежащим → DID не нужен.",
+            },
+
+
+            {
+                "order": 19,
+                "section": 10,
+                "type": "choice",
+
+                "prompt":
+                    "Choose the sentence about an action.",
+
                 "options": [
                     "He was at work yesterday.",
                     "He worked yesterday.",
                     "He was tired yesterday.",
                     "He was a student.",
                 ],
-                "answer": "He worked yesterday.",
-                "explanation": "Worked описывает действие; was описывает состояние/место/роль.",
+
+                "answer":
+                    "He worked yesterday.",
+
+                "explanation":
+                    "WORKED описывает действие.",
             },
 
-            {
-                "order": 23,
-                "prompt": "Which word has -ed pronounced as /ɪd/?",
-                "options": ["worked", "played", "wanted", "helped"],
-                "answer": "wanted",
-                "explanation": "После звука /t/ окончание -ed произносится как /ɪd/.",
-            },
 
             {
-                "order": 24,
-                "prompt": "Choose the correct pair.",
+                "order": 20,
+                "section": 10,
+                "type": "choice",
+
+                "prompt":
+                    "Choose the correct pair.",
+
                 "options": [
-                    "She worked. / She didn't worked.",
-                    "She worked. / She didn't work.",
-                    "She work. / Did she worked?",
-                    "She was worked. / She didn't work.",
+                    "Was she tired? / Did she work?",
+                    "Did she tired? / Was she work?",
+                    "Was she tired? / Was she worked?",
+                    "Did she was tired? / Did she worked?",
                 ],
-                "answer": "She worked. / She didn't work.",
-                "explanation": "В утверждении — worked; после didn't — базовая форма work.",
+
+                "answer":
+                    "Was she tired? / Did she work?",
+
+                "explanation":
+                    "Состояние → WAS; действие → DID + WORK.",
             },
 
         ]
 
-        for data in exercises:
+
+        final_test = [
+
+            {
+                "order": 21,
+
+                "prompt":
+                    "They ___ the office last week.",
+
+                "options": [
+                    "paint",
+                    "painted",
+                    "painting",
+                    "did painted",
+                ],
+
+                "answer":
+                    "painted",
+
+                "explanation":
+                    "Правильный глагол PAINT → PAINTED.",
+            },
+
+
+            {
+                "order": 22,
+
+                "prompt":
+                    "She ___ in Almaty in 2022.",
+
+                "options": [
+                    "liveed",
+                    "lived",
+                    "living",
+                    "did lived",
+                ],
+
+                "answer":
+                    "lived",
+
+                "explanation":
+                    "LIVE → LIVED.",
+            },
+
+
+            {
+                "order": 23,
+
+                "prompt":
+                    "Choose the correct form of TRY.",
+
+                "options": [
+                    "tryed",
+                    "tried",
+                    "tryd",
+                    "trying",
+                ],
+
+                "answer":
+                    "tried",
+
+                "explanation":
+                    "Согласная + Y → TRIED.",
+            },
+
+
+            {
+                "order": 24,
+
+                "prompt":
+                    "Choose the correct form of DROP.",
+
+                "options": [
+                    "droped",
+                    "dropped",
+                    "dropied",
+                    "dropping",
+                ],
+
+                "answer":
+                    "dropped",
+
+                "explanation":
+                    "DROP → DROPPED.",
+            },
+
+
+            {
+                "order": 25,
+
+                "prompt":
+                    "Which word has -ED pronounced as /t/?",
+
+                "options": [
+                    "played",
+                    "visited",
+                    "helped",
+                    "needed",
+                ],
+
+                "answer":
+                    "helped",
+
+                "explanation":
+                    "HELPED заканчивается произношением /t/.",
+            },
+
+
+            {
+                "order": 26,
+
+                "prompt":
+                    "We didn't ___ the window.",
+
+                "options": [
+                    "opened",
+                    "open",
+                    "opens",
+                    "opening",
+                ],
+
+                "answer":
+                    "open",
+
+                "explanation":
+                    "После DIDN'T используется базовая форма.",
+            },
+
+
+            {
+                "order": 27,
+
+                "prompt":
+                    "___ she call you yesterday?",
+
+                "options": [
+                    "Was",
+                    "Did",
+                    "Does",
+                    "Were",
+                ],
+
+                "answer":
+                    "Did",
+
+                "explanation":
+                    "CALL — обычное действие → DID SHE CALL...?",
+            },
+
+
+            {
+                "order": 28,
+
+                "prompt":
+                    "Why did they ___ the meeting early?",
+
+                "options": [
+                    "stopped",
+                    "stop",
+                    "stops",
+                    "stopping",
+                ],
+
+                "answer":
+                    "stop",
+
+                "explanation":
+                    "После DID используется базовая форма STOP.",
+            },
+
+
+            {
+                "order": 29,
+
+                "prompt":
+                    "Choose the correct sentence.",
+
+                "options": [
+                    "Who called you last night?",
+                    "Who did called you last night?",
+                    "Who did call you last night did?",
+                    "Who was called you last night?",
+                ],
+
+                "answer":
+                    "Who called you last night?",
+
+                "explanation":
+                    "WHO здесь само выполняет действие, поэтому DID не нужен.",
+            },
+
+
+            {
+                "order": 30,
+
+                "prompt":
+                    "Choose the fully correct set.",
+
+                "options": [
+                    "She worked. / She didn't work. / Did she work?",
+                    "She worked. / She didn't worked. / Did she worked?",
+                    "She was worked. / She didn't work. / Was she work?",
+                    "She work. / She wasn't work. / Did she worked?",
+                ],
+
+                "answer":
+                    "She worked. / She didn't work. / Did she work?",
+
+                "explanation":
+                    "Утверждение → WORKED; после DIDN'T и DID → WORK.",
+            },
+
+        ]
+
+
+        valid_orders = []
+
+
+        for data in (
+            training
+            +
+            final_test
+        ):
+
+            valid_orders.append(
+                data["order"]
+            )
+
+
+            if data["order"] <= 20:
+
+                section = (
+                    section_objects[
+                        data["section"]
+                    ]
+                )
+
+            else:
+
+                section = None
+
 
             GrammarExercise.objects.update_or_create(
                 lesson=lesson,
                 order=data["order"],
+
                 defaults={
-                    "exercise_type": GrammarExercise.Type.CHOICE,
-                    "prompt": data["prompt"],
-                    "options": data["options"],
-                    "correct_answer": data["answer"],
-                    "explanation": data["explanation"],
-                    "is_published": True,
+                    "section":
+                        section,
+
+                    "exercise_type":
+                        data.get(
+                            "type",
+                            "choice",
+                        ),
+
+                    "prompt":
+                        data["prompt"],
+
+                    "options":
+                        data["options"],
+
+                    "correct_answer":
+                        data["answer"],
+
+                    "explanation":
+                        data["explanation"],
+
+                    "is_published":
+                        True,
                 },
             )
 
+
+        GrammarExercise.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__in=valid_orders,
+        ).delete()
+
+
+        GrammarLessonSection.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__in=[
+                item["order"]
+                for item in sections
+            ],
+        ).delete()
+
+
         self.stdout.write(
             self.style.SUCCESS(
-                "✅ A1 Lesson 25 seeded: "
-                "Past Simple — regular verbs"
+                "✅ Interactive A1 Lesson 25 seeded"
             )
         )
 
         self.stdout.write(
-            f"Sections: {lesson.sections.count()}"
+            f"Micro rules: "
+            f"{lesson.sections.count()}"
         )
 
         self.stdout.write(
-            f"Exercises: {lesson.exercises.count()}"
+            "Training exercises: "
+            f"{lesson.exercises.filter(section__isnull=False).count()}"
+        )
+
+        self.stdout.write(
+            "Final test: "
+            f"{lesson.exercises.filter(section__isnull=True).count()}"
         )

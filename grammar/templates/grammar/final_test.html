@@ -1,0 +1,493 @@
+{% extends "vocabulary/base.html" %}
+
+{% block title %}
+Final Test · {{ lesson.title }}
+{% endblock %}
+
+{% block content %}
+
+<style>
+    .gft-page {
+        width: min(720px, 100%);
+        margin: 0 auto;
+    }
+
+    .gft-back {
+        display: inline-block;
+        margin-bottom: 14px;
+        color: #6b7280;
+        font-size: 13px;
+        font-weight: 800;
+        text-decoration: none;
+    }
+
+    .gft-hero,
+    .gft-progress,
+    .gft-card {
+        background: #fff;
+        border: 1px solid #e5e7eb;
+        border-radius: 20px;
+    }
+
+    .gft-hero {
+        padding: 20px;
+        margin-bottom: 14px;
+    }
+
+    .gft-label {
+        color: #7c3aed;
+        font-size: 10px;
+        font-weight: 950;
+        text-transform: uppercase;
+    }
+
+    .gft-title {
+        margin: 7px 0;
+        color: #111827;
+        font-size: 25px;
+        line-height: 1.15;
+        font-weight: 950;
+    }
+
+    .gft-note {
+        color: #6b7280;
+        font-size: 12px;
+        line-height: 1.5;
+    }
+
+    .gft-progress {
+        padding: 14px 17px;
+        margin-bottom: 14px;
+    }
+
+    .gft-progress-top {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 8px;
+        color: #6b7280;
+        font-size: 10px;
+        font-weight: 850;
+    }
+
+    .gft-track {
+        height: 7px;
+        background: #f0f1f3;
+        border-radius: 999px;
+        overflow: hidden;
+    }
+
+    .gft-bar {
+        width: 0;
+        height: 100%;
+        background: #7c3aed;
+        border-radius: 999px;
+        transition: width .2s ease;
+    }
+
+    .gft-card {
+        padding: 22px;
+    }
+
+    .gft-step {
+        display: none;
+    }
+
+    .gft-step.active {
+        display: block;
+    }
+
+    .gft-question {
+        margin: 10px 0 20px;
+        color: #111827;
+        font-size: 21px;
+        line-height: 1.35;
+        font-weight: 950;
+    }
+
+    .gft-options {
+        display: grid;
+        gap: 9px;
+    }
+
+    .gft-option {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 14px 15px;
+        background: #fff;
+        border: 1px solid #dfe3e8;
+        border-radius: 14px;
+        color: #111827;
+        font-size: 14px;
+        font-weight: 800;
+        cursor: pointer;
+    }
+
+    .gft-option:has(input:checked) {
+        background: #f5f3ff;
+        border-color: #8b5cf6;
+        color: #6d28d9;
+    }
+
+    .gft-option input {
+        accent-color: #7c3aed;
+    }
+
+    .gft-nav {
+        display: flex;
+        gap: 9px;
+        margin-top: 14px;
+    }
+
+    .gft-nav button {
+        min-height: 48px;
+        padding: 0 19px;
+        border: 0;
+        border-radius: 13px;
+        font-family: inherit;
+        font-size: 13px;
+        font-weight: 900;
+        cursor: pointer;
+    }
+
+    #gftPrev {
+        background: #f3f4f6;
+        color: #374151;
+    }
+
+    #gftNext,
+    #gftSubmit {
+        flex: 1;
+        background: #7c3aed;
+        color: #fff;
+    }
+
+    .gft-nav button:disabled {
+        opacity: .35;
+        cursor: default;
+    }
+</style>
+
+
+<div class="gft-page">
+
+    <a
+        class="gft-back"
+        href="{% url 'grammar:lesson' lesson.slug %}"
+    >
+        ← К уроку
+    </a>
+
+
+    <div class="gft-hero">
+
+        <div class="gft-label">
+            Финальный тест
+        </div>
+
+        <h1 class="gft-title">
+            {{ lesson.title }}
+        </h1>
+
+        <div class="gft-note">
+            10 вопросов по всему уроку.
+            Ответы будут проверены только после завершения теста.
+            Для прохождения нужно {{ lesson.pass_score }}%.
+        </div>
+
+    </div>
+
+
+    <div class="gft-progress">
+
+        <div class="gft-progress-top">
+            <span>Финальный тест</span>
+
+            <span id="gftCounter">
+                1 из {{ final_test_exercises|length }}
+            </span>
+        </div>
+
+        <div class="gft-track">
+            <div
+                id="gftBar"
+                class="gft-bar"
+            ></div>
+        </div>
+
+    </div>
+
+
+    <form
+        id="gftForm"
+        method="post"
+        action="{% url 'grammar:complete' lesson.slug %}"
+    >
+
+        {% csrf_token %}
+
+
+        <div class="gft-card">
+
+            {% for exercise in final_test_exercises %}
+
+                <section class="gft-step">
+
+                    <div class="gft-label">
+                        Вопрос {{ forloop.counter }}
+                    </div>
+
+                    <div class="gft-question">
+                        {{ exercise.prompt }}
+                    </div>
+
+                    <div class="gft-options">
+
+                        {% for option in exercise.options %}
+
+                            <label class="gft-option">
+
+                                <input
+                                    type="radio"
+                                    name="answer_{{ exercise.id }}"
+                                    value="{{ option }}"
+                                >
+
+                                <span>
+                                    {{ option }}
+                                </span>
+
+                            </label>
+
+                        {% endfor %}
+
+                    </div>
+
+                </section>
+
+            {% endfor %}
+
+        </div>
+
+
+        <div class="gft-nav">
+
+            <button
+                id="gftPrev"
+                type="button"
+            >
+                ←
+            </button>
+
+            <button
+                id="gftNext"
+                type="button"
+            >
+                Далее →
+            </button>
+
+            <button
+                id="gftSubmit"
+                type="submit"
+                style="display:none;"
+            >
+                Завершить тест →
+            </button>
+
+        </div>
+
+    </form>
+
+</div>
+
+
+<script>
+(function () {
+
+    const steps =
+        Array.from(
+            document.querySelectorAll(
+                ".gft-step"
+            )
+        );
+
+    const counter =
+        document.getElementById(
+            "gftCounter"
+        );
+
+    const bar =
+        document.getElementById(
+            "gftBar"
+        );
+
+    const prev =
+        document.getElementById(
+            "gftPrev"
+        );
+
+    const next =
+        document.getElementById(
+            "gftNext"
+        );
+
+    const submit =
+        document.getElementById(
+            "gftSubmit"
+        );
+
+    const form =
+        document.getElementById(
+            "gftForm"
+        );
+
+    let current = 0;
+
+
+    function answered(step) {
+        return Boolean(
+            step.querySelector(
+                'input[type="radio"]:checked'
+            )
+        );
+    }
+
+
+    function render() {
+
+        steps.forEach(
+            function (step, index) {
+
+                step.classList.toggle(
+                    "active",
+                    index === current
+                );
+            }
+        );
+
+        counter.textContent =
+            (current + 1)
+            +
+            " из "
+            +
+            steps.length;
+
+        bar.style.width =
+            (
+                (current + 1)
+                /
+                steps.length
+                *
+                100
+            )
+            +
+            "%";
+
+        prev.disabled =
+            current === 0;
+
+        const last =
+            current === steps.length - 1;
+
+        next.style.display =
+            last
+                ? "none"
+                : "block";
+
+        submit.style.display =
+            last
+                ? "block"
+                : "none";
+
+        next.disabled =
+            !answered(
+                steps[current]
+            );
+
+        submit.disabled =
+            !answered(
+                steps[current]
+            );
+    }
+
+
+    steps.forEach(
+        function (step) {
+
+            step
+                .querySelectorAll(
+                    'input[type="radio"]'
+                )
+                .forEach(
+                    function (input) {
+
+                        input.addEventListener(
+                            "change",
+                            render
+                        );
+                    }
+                );
+        }
+    );
+
+
+    prev.addEventListener(
+        "click",
+        function () {
+
+            if (current > 0) {
+                current -= 1;
+                render();
+                window.scrollTo(0, 0);
+            }
+        }
+    );
+
+
+    next.addEventListener(
+        "click",
+        function () {
+
+            if (
+                !answered(
+                    steps[current]
+                )
+            ) {
+                return;
+            }
+
+            if (
+                current
+                <
+                steps.length - 1
+            ) {
+                current += 1;
+                render();
+                window.scrollTo(0, 0);
+            }
+        }
+    );
+
+
+    form.addEventListener(
+        "submit",
+        function (event) {
+
+            const allAnswered =
+                steps.every(
+                    answered
+                );
+
+            if (!allAnswered) {
+                event.preventDefault();
+            }
+        }
+    );
+
+
+    render();
+
+})();
+</script>
+
+{% endblock %}

@@ -10,110 +10,98 @@ from grammar.models import (
 class Command(BaseCommand):
 
     help = (
-        "Create/update A1 Grammar Lesson 11: "
-        "Present Simple with ordinary verbs."
+        "Create/update interactive A1 Grammar "
+        "Lesson 11: Present Simple."
     )
+
 
     def handle(self, *args, **options):
 
-        lesson, _ = GrammarLesson.objects.update_or_create(
-            level="A1",
-            order=11,
-            defaults={
-                "title": (
-                    "Present Simple с обычными глаголами"
-                ),
-                "slug": "present-simple-verbs",
-                "theory_text": (
-                    "Present Simple with ordinary verbs."
-                ),
-                "estimated_minutes": 30,
-                "pass_score": 70,
-                "xp_reward": 100,
-                "is_published": True,
-            },
+        lesson, _ = (
+            GrammarLesson.objects
+            .update_or_create(
+                level="A1",
+                order=11,
+
+                defaults={
+                    "title":
+                        "Present Simple "
+                        "с обычными глаголами",
+
+                    "slug":
+                        "present-simple-verbs",
+
+                    "theory_text":
+                        "Present Simple "
+                        "with ordinary verbs.",
+
+                    "estimated_minutes":
+                        17,
+
+                    "pass_score":
+                        70,
+
+                    "xp_reward":
+                        100,
+
+                    "is_published":
+                        True,
+                },
+            )
         )
+
+
+        # ================================================
+        # 9 MICRO-RULES
+        # ================================================
 
         sections = [
 
             {
                 "order": 1,
-                "title": "Что такое Present Simple",
-                "body": """Present Simple — это настоящее простое время.
 
-Оно используется, когда мы говорим:
+                "title":
+                    "Когда нужен Present Simple?",
 
-о регулярных действиях;
+                "body":
+                    """Present Simple используется, когда мы говорим о том, что происходит регулярно или является фактом.
 
-о привычках;
-
-о фактах;
-
-о расписании;
-
-о постоянных ситуациях.
-
-Примеры:
+Регулярные действия:
 
 I work every day.
 
-She lives in Astana.
+She visits her parents on Sundays.
 
-They study English.
+Привычки:
 
-Water boils at 100°C.""",
+I drink coffee in the morning.
+
+He reads before bed.
+
+Постоянные ситуации:
+
+I live in Karaganda.
+
+She works at a school.
+
+Факты:
+
+Water boils at 100°C.
+
+Расписание:
+
+The lesson starts at nine.""",
             },
+
 
             {
                 "order": 2,
-                "title": "Обычный глагол",
-                "body": """Обычный глагол обозначает действие.
 
-Например:
+                "title":
+                    "I, YOU, WE, THEY — обычная форма",
 
-work — работать;
-
-live — жить;
-
-study — учиться;
-
-read — читать;
-
-speak — говорить;
-
-play — играть;
-
-like — нравиться;
-
-know — знать.
-
-Сравните:
-
-I am a teacher.
-
-Здесь am — форма to be.
-
-I work at a school.
-
-Здесь work — обычный смысловой глагол.""",
-            },
-
-            {
-                "order": 3,
-                "title": "I, YOU, WE, THEY",
-                "body": """С местоимениями:
-
-I;
-
-you;
-
-we;
-
-they
-
-глагол обычно используется в начальной форме.
-
-Примеры:
+                "body":
+                    """С I, YOU, WE и THEY обычный глагол используется без окончания -s.
 
 I work.
 
@@ -123,7 +111,7 @@ We work.
 
 They work.
 
-Ещё:
+Другие примеры:
 
 I live in Kazakhstan.
 
@@ -131,15 +119,23 @@ You speak English.
 
 We study together.
 
-They play football.""",
+They play football.
+
+Главная схема:
+
+I / you / we / they
+→ base verb.""",
             },
 
-            {
-                "order": 4,
-                "title": "HE, SHE, IT и окончание -S",
-                "body": """С he, she, it к глаголу обычно добавляется -s.
 
-Сравните:
+            {
+                "order": 3,
+
+                "title":
+                    "HE, SHE, IT — добавляем -S",
+
+                "body":
+                    """С HE, SHE и IT к обычному глаголу обычно добавляется -s.
 
 I work.
 He works.
@@ -150,29 +146,7 @@ She lives.
 We read.
 He reads.
 
-Главная схема:
-
-I work
-
-you work
-
-he works
-
-she works
-
-it works
-
-we work
-
-they work
-
-Если подлежащее можно заменить на he, she или it, обычно нужен -s.""",
-            },
-
-            {
-                "order": 5,
-                "title": "Имена и существительные",
-                "body": """Правило -s работает не только с местоимениями.
+Это правило действует и с существительными.
 
 Marat = he:
 
@@ -184,211 +158,154 @@ My sister lives in Almaty.
 
 The phone = it:
 
-The phone costs a lot.
-
-Но:
-
-Marat and Aigul = they:
-
-Marat and Aigul work here.
-
-My parents = they:
-
-My parents live in Karaganda.""",
+The phone costs a lot.""",
             },
 
+
             {
-                "order": 6,
-                "title": "Окончание -ES",
-                "body": """Если глагол заканчивается на:
+                "order": 4,
 
--s;
--ss;
--sh;
--ch;
--x;
--o,
+                "title":
+                    "Когда добавляется -ES?",
 
-часто добавляется -es.
+                "body":
+                    """После некоторых окончаний обычно добавляется -es:
+
+-s
+-ss
+-sh
+-ch
+-x
+-o
 
 Примеры:
 
-go → goes;
+go → goes
 
-do → does;
+do → does
 
-watch → watches;
+watch → watches
 
-wash → washes;
+wash → washes
 
-teach → teaches;
+teach → teaches
 
-fix → fixes;
+fix → fixes
 
-miss → misses.
-
-Предложения:
+Примеры в предложениях:
 
 He goes to work by bus.
 
-She watches television.
+She watches TV.
 
-My father fixes computers.
-
-The teacher teaches English.""",
+My father fixes computers.""",
             },
 
+
             {
-                "order": 7,
-                "title": "Глаголы на Y",
-                "body": """Если глагол заканчивается на согласную + y:
+                "order": 5,
+
+                "title":
+                    "STUDY → STUDIES, но PLAY → PLAYS",
+
+                "body":
+                    """Если глагол заканчивается на согласную + y:
 
 y меняется на i + es.
 
-study → studies;
+study → studies
 
-try → tries;
+try → tries
 
-carry → carries;
+carry → carries
 
-fly → flies.
-
-Примеры:
+fly → flies
 
 He studies English.
 
-She tries to help.
+Но если перед Y стоит гласная:
 
-Но если перед y стоит гласная, просто добавляется -s:
+просто добавляем -s.
 
-play → plays;
+play → plays
 
-stay → stays;
+stay → stays
 
-enjoy → enjoys;
+enjoy → enjoys
 
-buy → buys.
+buy → buys
 
-He plays football.
-
-She enjoys music.""",
+She plays tennis.""",
             },
 
+
             {
-                "order": 8,
-                "title": "HAVE и HAS",
-                "body": """Глагол have означает «иметь».
+                "order": 6,
 
-С:
+                "title":
+                    "HAVE превращается в HAS",
 
-I;
-you;
-we;
-they
+                "body":
+                    """HAVE имеет особую форму.
 
-используется have.
+I / you / we / they:
+
+have
 
 I have a car.
 
 They have two children.
 
-С:
+HE / SHE / IT:
 
-he;
-she;
-it
-
-используется has.
+has
 
 He has a car.
 
 She has a new job.
 
-Неправильно:
+Не:
 
-He haves a car.
+he haves
 
 Правильно:
 
-He has a car.""",
+he has.""",
             },
 
-            {
-                "order": 9,
-                "title": "Когда используется Present Simple",
-                "body": """Present Simple используется для регулярных действий:
-
-I go to work every day.
-
-She visits her parents on Sundays.
-
-Для привычек:
-
-I drink coffee in the morning.
-
-He reads before bed.
-
-Для фактов:
-
-Water freezes at 0°C.
-
-The Earth moves around the Sun.
-
-Для постоянных ситуаций:
-
-I live in Karaganda.
-
-She works at a school.
-
-Для расписания:
-
-The train leaves at six.
-
-The lesson starts at nine.""",
-            },
 
             {
-                "order": 10,
-                "title": "Слова-маркеры",
-                "body": """Present Simple часто используется со словами:
+                "order": 7,
 
-always — всегда;
+                "title":
+                    "Always, usually, often, sometimes, never",
 
-usually — обычно;
+                "body":
+                    """Present Simple часто используется с маркерами частоты:
 
-often — часто;
+always
 
-sometimes — иногда;
+usually
 
-rarely — редко;
+often
 
-never — никогда;
+sometimes
 
-every day;
+rarely
 
-every week;
+never
 
-on Mondays;
+every day
 
-once a week;
+every week
 
-twice a month.
+on Mondays
 
-Примеры:
+once a week
 
-I always drink tea in the morning.
+twice a month
 
-She usually walks to work.
-
-He often calls his parents.
-
-They never arrive late.""",
-            },
-
-            {
-                "order": 11,
-                "title": "Где ставить ALWAYS, OFTEN, NEVER",
-                "body": """С обычным глаголом наречие частотности обычно ставится перед глаголом:
+С обычным глаголом наречие частотности обычно стоит ПЕРЕД глаголом:
 
 I often read.
 
@@ -396,387 +313,915 @@ She always comes early.
 
 They never smoke.
 
-He usually works at home.
+Но с TO BE оно обычно стоит после AM / IS / ARE:
 
-Но с глаголом to be наречие ставится после am/is/are:
+She is often at home.
 
-I am always tired.
-
-She is usually at home.
-
-They are often busy.
-
-Сравните:
-
-She often works at home.
-
-She is often at home.""",
+They are usually busy.""",
             },
 
+
             {
-                "order": 12,
-                "title": "Утвердительные предложения",
-                "body": """Для I, you, we, they:
+                "order": 8,
 
-Подлежащее + глагол.
+                "title":
+                    "Один человек или несколько?",
 
-I work.
+                "body":
+                    """Сначала посмотри на подлежащее.
 
-You study.
+My brother = HE:
 
-We live here.
+My brother works.
 
-They play tennis.
+My parents = THEY:
 
-Для he, she, it:
+My parents work.
 
-Подлежащее + глагол с -s/-es.
+Marat and Aigul = THEY:
 
-He works.
+Marat and Aigul live here.
 
-She studies.
+The student = HE / SHE:
 
-It starts at nine.
+The student studies English.
 
-Сравните:
+The students = THEY:
 
-I read every day.
+The students study English.
 
-My brother reads every day.
+Полезный способ:
 
-They watch television.
+замени подлежащее на местоимение.
 
-He watches television.""",
+HE / SHE / IT
+→ -s / -es
+
+I / YOU / WE / THEY
+→ без -s.""",
             },
 
+
             {
-                "order": 13,
-                "title": "Present Simple и TO BE",
-                "body": """Нельзя соединять am/is/are с обычным смысловым глаголом.
+                "order": 9,
 
-Неправильно:
+                "title":
+                    "Present Simple или TO BE?",
 
-I am work every day.
+                "body":
+                    """Не ставь AM / IS / ARE перед обычным смысловым глаголом.
 
-She is lives in Astana.
-
-They are study English.
-
-Правильно:
-
-I work every day.
-
-She lives in Astana.
-
-They study English.
-
-To be нужен, если мы говорим о:
-
-профессии;
-
-состоянии;
-
-месте;
-
-возрасте.
+TO BE нужен для описания:
 
 She is a teacher.
 
 She is tired.
 
-She is at work.
+She is at home.
 
-Но:
+Обычный глагол показывает действие:
 
 She teaches English.
 
 She works hard.
 
-She lives in Astana.""",
-            },
+She lives in Astana.
 
-            {
-                "order": 14,
-                "title": "Как выбрать форму глагола",
-                "body": """Шаг 1. Найдите подлежащее.
+Не:
 
-My sister ___ English.
+She is works.
 
-Шаг 2. Замените его местоимением.
+He is lives here.
 
-My sister = she.
+They are study English.
 
-Шаг 3. Добавьте нужное окончание.
+А:
 
-My sister speaks English.
+She works.
 
-Другой пример:
+He lives here.
 
-My parents ___ English.
+They study English.
 
-My parents = they.
+Главный вопрос:
 
-С they -s не добавляется.
+это состояние / описание?
 
-My parents speak English.
+→ TO BE
 
-Главное правило:
+или действие?
 
-I / you / we / they → глагол без -s.
-
-He / she / it → глагол с -s или -es.
-
-Особые формы:
-
-study → studies;
-
-go → goes;
-
-do → does;
-
-have → has.""",
+→ обычный глагол.""",
             },
 
         ]
 
+
+        section_objects = {}
+
+
         for data in sections:
 
-            GrammarLessonSection.objects.update_or_create(
-                lesson=lesson,
-                order=data["order"],
-                defaults={
-                    "title": data["title"],
-                    "body": data["body"],
-                },
+            section, _ = (
+                GrammarLessonSection.objects
+                .update_or_create(
+                    lesson=lesson,
+                    order=data["order"],
+
+                    defaults={
+                        "title":
+                            data["title"],
+
+                        "body":
+                            data["body"],
+                    },
+                )
             )
 
-        exercises = [
+            section_objects[
+                data["order"]
+            ] = section
+
+
+        # ================================================
+        # 20 TRAINING EXERCISES
+        # ================================================
+
+        training = [
 
             {
                 "order": 1,
-                "prompt": "I ___ at a university.",
-                "options": ["works", "work", "working", "am work"],
-                "answer": "work",
-                "explanation": "С I обычный глагол используется без -s.",
+                "section": 1,
+                "type": "choice",
+
+                "prompt":
+                    "I ___ coffee every morning.",
+
+                "options": [
+                    "drink",
+                    "drinks",
+                    "am drink",
+                    "drinking",
+                ],
+
+                "answer":
+                    "drink",
+
+                "explanation":
+                    "Это регулярное действие. "
+                    "С I используется базовая форма.",
             },
+
 
             {
                 "order": 2,
-                "prompt": "Marat ___ at a university.",
-                "options": ["work", "working", "works", "is work"],
-                "answer": "works",
-                "explanation": "Marat = he, поэтому к work добавляется -s.",
+                "section": 1,
+                "type": "choice",
+
+                "prompt":
+                    "The lesson ___ at nine every day.",
+
+                "options": [
+                    "start",
+                    "starts",
+                    "starting",
+                    "is start",
+                ],
+
+                "answer":
+                    "starts",
+
+                "explanation":
+                    "The lesson = IT, "
+                    "а расписание выражается Present Simple.",
             },
+
 
             {
                 "order": 3,
-                "prompt": "They ___ in Astana.",
-                "options": ["lives", "live", "living", "are live"],
-                "answer": "live",
-                "explanation": "С they глагол используется без -s.",
+                "section": 2,
+                "type": "fill",
+
+                "prompt":
+                    "We ___ in Karaganda. "
+                    "(live)",
+
+                "options": [],
+
+                "answer":
+                    "live",
+
+                "explanation":
+                    "WE → базовая форма LIVE.",
             },
+
 
             {
                 "order": 4,
-                "prompt": "My sister ___ in Astana.",
-                "options": ["live", "living", "lives", "is live"],
-                "answer": "lives",
-                "explanation": "My sister = she, поэтому lives.",
+                "section": 2,
+                "type": "choice",
+
+                "prompt":
+                    "They ___ English twice a week.",
+
+                "options": [
+                    "studies",
+                    "study",
+                    "studys",
+                    "are study",
+                ],
+
+                "answer":
+                    "study",
+
+                "explanation":
+                    "THEY → STUDY без -s.",
             },
+
 
             {
                 "order": 5,
-                "prompt": "He ___ English every day.",
-                "options": ["study", "studys", "studies", "studying"],
-                "answer": "studies",
-                "explanation": "Study заканчивается на согласную + y: study → studies.",
+                "section": 3,
+                "type": "choice",
+
+                "prompt":
+                    "Marat ___ at a university.",
+
+                "options": [
+                    "work",
+                    "works",
+                    "working",
+                    "is work",
+                ],
+
+                "answer":
+                    "works",
+
+                "explanation":
+                    "Marat = HE → WORKS.",
             },
+
 
             {
                 "order": 6,
-                "prompt": "She ___ football on Sundays.",
-                "options": ["plays", "plaies", "play", "is play"],
-                "answer": "plays",
-                "explanation": "В play перед y стоит гласная, поэтому просто добавляется -s.",
+                "section": 3,
+                "type": "fill",
+
+                "prompt":
+                    "My sister ___ in Astana. "
+                    "(live)",
+
+                "options": [],
+
+                "answer":
+                    "lives",
+
+                "explanation":
+                    "My sister = SHE → LIVES.",
             },
+
 
             {
                 "order": 7,
-                "prompt": "The lesson ___ at nine.",
-                "options": ["start", "starts", "starting", "is start"],
-                "answer": "starts",
-                "explanation": "The lesson = it, поэтому starts.",
+                "section": 4,
+                "type": "choice",
+
+                "prompt":
+                    "He ___ TV every evening.",
+
+                "options": [
+                    "watch",
+                    "watchs",
+                    "watches",
+                    "is watch",
+                ],
+
+                "answer":
+                    "watches",
+
+                "explanation":
+                    "WATCH заканчивается на -ch, "
+                    "поэтому добавляется -es.",
             },
+
 
             {
                 "order": 8,
-                "prompt": "My father ___ a car.",
-                "options": ["have", "haves", "has", "having"],
-                "answer": "has",
-                "explanation": "My father = he, поэтому используется has.",
+                "section": 4,
+                "type": "choice",
+
+                "prompt":
+                    "My father ___ to work by car.",
+
+                "options": [
+                    "go",
+                    "gos",
+                    "goes",
+                    "going",
+                ],
+
+                "answer":
+                    "goes",
+
+                "explanation":
+                    "GO → GOES для HE / SHE / IT.",
             },
+
 
             {
                 "order": 9,
-                "prompt": "I ___ coffee every morning.",
-                "options": ["drinks", "drink", "am drink", "drinking"],
-                "answer": "drink",
-                "explanation": "I → drink без окончания -s.",
+                "section": 5,
+                "type": "choice",
+
+                "prompt":
+                    "She ___ English every day.",
+
+                "options": [
+                    "study",
+                    "studys",
+                    "studies",
+                    "studyes",
+                ],
+
+                "answer":
+                    "studies",
+
+                "explanation":
+                    "STUDY: согласная + Y → STUDIES.",
             },
+
 
             {
                 "order": 10,
-                "prompt": "My wife ___ coffee every morning.",
-                "options": ["drink", "drinks", "drinking", "is drink"],
-                "answer": "drinks",
-                "explanation": "My wife = she, поэтому drinks.",
+                "section": 5,
+                "type": "choice",
+
+                "prompt":
+                    "He ___ football on Sundays.",
+
+                "options": [
+                    "play",
+                    "plaies",
+                    "plays",
+                    "playes",
+                ],
+
+                "answer":
+                    "plays",
+
+                "explanation":
+                    "В PLAY перед Y стоит гласная, "
+                    "поэтому просто добавляем -s.",
             },
+
 
             {
                 "order": 11,
-                "prompt": "We ___ English twice a week.",
-                "options": ["studies", "study", "studying", "are study"],
-                "answer": "study",
-                "explanation": "We → базовая форма study.",
+                "section": 6,
+                "type": "choice",
+
+                "prompt":
+                    "My parents ___ a car.",
+
+                "options": [
+                    "has",
+                    "have",
+                    "haves",
+                    "are have",
+                ],
+
+                "answer":
+                    "have",
+
+                "explanation":
+                    "My parents = THEY → HAVE.",
             },
+
 
             {
                 "order": 12,
-                "prompt": "He ___ English twice a week.",
-                "options": ["study", "studies", "studys", "is study"],
-                "answer": "studies",
-                "explanation": "He → studies.",
+                "section": 6,
+                "type": "fill",
+
+                "prompt":
+                    "She ___ two children. "
+                    "(have)",
+
+                "options": [],
+
+                "answer":
+                    "has",
+
+                "explanation":
+                    "SHE → HAS.",
             },
+
 
             {
                 "order": 13,
-                "prompt": "They ___ television in the evening.",
-                "options": ["watches", "watch", "watching", "are watch"],
-                "answer": "watch",
-                "explanation": "They → watch без -s.",
+                "section": 7,
+                "type": "choice",
+
+                "prompt":
+                    "Choose the correct sentence.",
+
+                "options": [
+                    "I often read before bed.",
+                    "I read often before bed.",
+                    "I am often read before bed.",
+                    "I often reads before bed.",
+                ],
+
+                "answer":
+                    "I often read before bed.",
+
+                "explanation":
+                    "С обычным глаголом OFTEN "
+                    "обычно ставится перед глаголом.",
             },
+
 
             {
                 "order": 14,
-                "prompt": "She ___ television in the evening.",
-                "options": ["watch", "watchs", "watches", "is watch"],
-                "answer": "watches",
-                "explanation": "Watch заканчивается на -ch, поэтому watches.",
+                "section": 7,
+                "type": "choice",
+
+                "prompt":
+                    "Choose the correct sentence.",
+
+                "options": [
+                    "She always comes early.",
+                    "She comes always early.",
+                    "She is always comes early.",
+                    "She always come early.",
+                ],
+
+                "answer":
+                    "She always comes early.",
+
+                "explanation":
+                    "ALWAYS стоит перед смысловым глаголом, "
+                    "а SHE требует COMES.",
             },
+
 
             {
                 "order": 15,
-                "prompt": "My parents ___ in Karaganda.",
-                "options": ["lives", "live", "living", "are live"],
-                "answer": "live",
-                "explanation": "My parents = they, поэтому live.",
+                "section": 7,
+                "type": "choice",
+
+                "prompt":
+                    "Choose the correct sentence with TO BE.",
+
+                "options": [
+                    "She often is at home.",
+                    "She is often at home.",
+                    "She is at often home.",
+                    "She often at home.",
+                ],
+
+                "answer":
+                    "She is often at home.",
+
+                "explanation":
+                    "С TO BE наречие частотности "
+                    "обычно стоит после IS.",
             },
+
 
             {
                 "order": 16,
-                "prompt": "My father ___ in Karaganda.",
-                "options": ["live", "lives", "living", "is live"],
-                "answer": "lives",
-                "explanation": "My father = he, поэтому lives.",
+                "section": 8,
+                "type": "choice",
+
+                "prompt":
+                    "My brother and I ___ football on Saturdays.",
+
+                "options": [
+                    "plays",
+                    "play",
+                    "playing",
+                    "are play",
+                ],
+
+                "answer":
+                    "play",
+
+                "explanation":
+                    "My brother and I = WE → PLAY.",
             },
+
 
             {
                 "order": 17,
-                "prompt": "The shop ___ at nine.",
-                "options": ["open", "opens", "opening", "is opens"],
-                "answer": "opens",
-                "explanation": "The shop = it. Также речь идёт о расписании.",
+                "section": 8,
+                "type": "choice",
+
+                "prompt":
+                    "The teacher ___ many questions.",
+
+                "options": [
+                    "ask",
+                    "asks",
+                    "asking",
+                    "is ask",
+                ],
+
+                "answer":
+                    "asks",
+
+                "explanation":
+                    "The teacher — один человек → ASKS.",
             },
+
 
             {
                 "order": 18,
-                "prompt": "The students ___ many questions.",
-                "options": ["asks", "ask", "asking", "are ask"],
-                "answer": "ask",
-                "explanation": "Students = they, поэтому ask.",
+                "section": 8,
+                "type": "choice",
+
+                "prompt":
+                    "The students ___ many questions.",
+
+                "options": [
+                    "asks",
+                    "ask",
+                    "asking",
+                    "are ask",
+                ],
+
+                "answer":
+                    "ask",
+
+                "explanation":
+                    "The students = THEY → ASK.",
             },
+
 
             {
                 "order": 19,
-                "prompt": "The teacher ___ many questions.",
-                "options": ["ask", "asks", "asking", "is ask"],
-                "answer": "asks",
-                "explanation": "The teacher — один человек, поэтому asks.",
-            },
+                "section": 9,
+                "type": "choice",
 
-            {
-                "order": 20,
-                "prompt": "She ___ two children.",
-                "options": ["have", "haves", "has", "is have"],
-                "answer": "has",
-                "explanation": "С she используется особая форма has.",
-            },
+                "prompt":
+                    "Choose the correct sentence.",
 
-            {
-                "order": 21,
-                "prompt": "I usually ___ home at six.",
-                "options": ["goes", "go", "going", "am go"],
-                "answer": "go",
-                "explanation": "I → go. Usually стоит перед обычным глаголом.",
-            },
-
-            {
-                "order": 22,
-                "prompt": "He always ___ his homework.",
-                "options": ["do", "does", "dos", "is do"],
-                "answer": "does",
-                "explanation": "He → does. Always ставится перед смысловым глаголом.",
-            },
-
-            {
-                "order": 23,
-                "prompt": "Choose the correct sentence.",
                 "options": [
                     "She is works every day.",
                     "She work every day.",
                     "She works every day.",
-                    "She working every day.",
+                    "She is work every day.",
                 ],
-                "answer": "She works every day.",
-                "explanation": "С she нужен works, но to be перед обычным глаголом не ставится.",
+
+                "answer":
+                    "She works every day.",
+
+                "explanation":
+                    "WORKS — обычный смысловой глагол. "
+                    "IS перед ним не нужен.",
             },
 
+
             {
-                "order": 24,
-                "prompt": "My brother and I ___ football on Saturdays.",
-                "options": ["plays", "play", "playing", "are play"],
-                "answer": "play",
-                "explanation": "My brother and I = we, поэтому используется play без -s.",
+                "order": 20,
+                "section": 9,
+                "type": "choice",
+
+                "prompt":
+                    "Choose the correct pair.",
+
+                "options": [
+                    "He is tired. / He works hard.",
+                    "He tired. / He is works hard.",
+                    "He is tired. / He is work hard.",
+                    "He works tired. / He is hard.",
+                ],
+
+                "answer":
+                    "He is tired. / He works hard.",
+
+                "explanation":
+                    "TIRED — состояние с TO BE. "
+                    "WORKS — действие без IS.",
             },
 
         ]
 
-        for data in exercises:
+
+        # ================================================
+        # 10 FINAL TEST QUESTIONS
+        # ================================================
+
+        final_test = [
+
+            {
+                "order": 21,
+
+                "prompt":
+                    "I ___ to work every day.",
+
+                "options": [
+                    "go",
+                    "goes",
+                    "am go",
+                    "going",
+                ],
+
+                "answer":
+                    "go",
+
+                "explanation":
+                    "I → базовая форма GO.",
+            },
+
+
+            {
+                "order": 22,
+
+                "prompt":
+                    "My brother ___ to work every day.",
+
+                "options": [
+                    "go",
+                    "goes",
+                    "gos",
+                    "is go",
+                ],
+
+                "answer":
+                    "goes",
+
+                "explanation":
+                    "My brother = HE → GOES.",
+            },
+
+
+            {
+                "order": 23,
+
+                "prompt":
+                    "The children ___ English at school.",
+
+                "options": [
+                    "studies",
+                    "study",
+                    "studys",
+                    "are study",
+                ],
+
+                "answer":
+                    "study",
+
+                "explanation":
+                    "Children = THEY → STUDY.",
+            },
+
+
+            {
+                "order": 24,
+
+                "prompt":
+                    "Anna ___ English at university.",
+
+                "options": [
+                    "study",
+                    "studys",
+                    "studies",
+                    "is study",
+                ],
+
+                "answer":
+                    "studies",
+
+                "explanation":
+                    "Anna = SHE; STUDY → STUDIES.",
+            },
+
+
+            {
+                "order": 25,
+
+                "prompt":
+                    "My father ___ his car every weekend.",
+
+                "options": [
+                    "wash",
+                    "washs",
+                    "washes",
+                    "is wash",
+                ],
+
+                "answer":
+                    "washes",
+
+                "explanation":
+                    "WASH заканчивается на -sh → WASHES.",
+            },
+
+
+            {
+                "order": 26,
+
+                "prompt":
+                    "She ___ a new job.",
+
+                "options": [
+                    "have",
+                    "haves",
+                    "has",
+                    "is have",
+                ],
+
+                "answer":
+                    "has",
+
+                "explanation":
+                    "SHE → HAS.",
+            },
+
+
+            {
+                "order": 27,
+
+                "prompt":
+                    "Choose the correct sentence.",
+
+                "options": [
+                    "They usually eat lunch at one.",
+                    "They eat usually lunch at one.",
+                    "They are usually eat lunch at one.",
+                    "They usually eats lunch at one.",
+                ],
+
+                "answer":
+                    "They usually eat lunch at one.",
+
+                "explanation":
+                    "USUALLY стоит перед обычным глаголом; "
+                    "THEY → EAT.",
+            },
+
+
+            {
+                "order": 28,
+
+                "prompt":
+                    "The train ___ at 7:30 every morning.",
+
+                "options": [
+                    "leave",
+                    "leaves",
+                    "is leave",
+                    "leaving",
+                ],
+
+                "answer":
+                    "leaves",
+
+                "explanation":
+                    "Расписание выражается Present Simple. "
+                    "The train = IT → LEAVES.",
+            },
+
+
+            {
+                "order": 29,
+
+                "prompt":
+                    "Choose the correct sentence.",
+
+                "options": [
+                    "My parents lives in Almaty.",
+                    "My parents live in Almaty.",
+                    "My parents are live in Almaty.",
+                    "My parents living in Almaty.",
+                ],
+
+                "answer":
+                    "My parents live in Almaty.",
+
+                "explanation":
+                    "My parents = THEY → LIVE.",
+            },
+
+
+            {
+                "order": 30,
+
+                "prompt":
+                    "Choose the fully correct option.",
+
+                "options": [
+                    "She is a doctor and works at a hospital.",
+                    "She doctor and is works at a hospital.",
+                    "She is a doctor and is work at a hospital.",
+                    "She works a doctor and is at hospital work.",
+                ],
+
+                "answer":
+                    "She is a doctor and works at a hospital.",
+
+                "explanation":
+                    "Профессия требует IS, "
+                    "а WORKS — самостоятельный смысловой глагол.",
+            },
+
+        ]
+
+
+        valid_orders = []
+
+
+        for data in (
+            training
+            +
+            final_test
+        ):
+
+            valid_orders.append(
+                data["order"]
+            )
+
+
+            if data["order"] <= 20:
+
+                section = (
+                    section_objects[
+                        data["section"]
+                    ]
+                )
+
+            else:
+
+                section = None
+
 
             GrammarExercise.objects.update_or_create(
                 lesson=lesson,
                 order=data["order"],
+
                 defaults={
-                    "exercise_type": GrammarExercise.Type.CHOICE,
-                    "prompt": data["prompt"],
-                    "options": data["options"],
-                    "correct_answer": data["answer"],
-                    "explanation": data["explanation"],
-                    "is_published": True,
+                    "section":
+                        section,
+
+                    "exercise_type":
+                        data.get(
+                            "type",
+                            "choice",
+                        ),
+
+                    "prompt":
+                        data["prompt"],
+
+                    "options":
+                        data["options"],
+
+                    "correct_answer":
+                        data["answer"],
+
+                    "explanation":
+                        data["explanation"],
+
+                    "is_published":
+                        True,
                 },
             )
 
+
+        GrammarExercise.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__in=valid_orders,
+        ).delete()
+
+
+        GrammarLessonSection.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__in=[
+                item["order"]
+                for item in sections
+            ],
+        ).delete()
+
+
         self.stdout.write(
             self.style.SUCCESS(
-                "✅ A1 Lesson 11 seeded: "
-                "Present Simple с обычными глаголами"
+                "✅ Interactive A1 Lesson 11 seeded"
             )
         )
 
         self.stdout.write(
-            f"Sections: {lesson.sections.count()}"
+            f"Micro rules: "
+            f"{lesson.sections.count()}"
         )
 
         self.stdout.write(
-            f"Exercises: {lesson.exercises.count()}"
+            "Training exercises: "
+            f"{lesson.exercises.filter(section__isnull=False).count()}"
+        )
+
+        self.stdout.write(
+            "Final test: "
+            f"{lesson.exercises.filter(section__isnull=True).count()}"
         )

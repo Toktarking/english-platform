@@ -10,78 +10,102 @@ from grammar.models import (
 class Command(BaseCommand):
 
     help = (
-        "Create/update A1 Grammar Lesson 14: "
-        "Present Simple special questions."
+        "Create/update interactive A1 Grammar "
+        "Lesson 14: Present Simple WH-questions."
     )
+
 
     def handle(self, *args, **options):
 
-        lesson, _ = GrammarLesson.objects.update_or_create(
-            level="A1",
-            order=14,
-            defaults={
-                "title": (
-                    "Специальные вопросы "
-                    "в Present Simple"
-                ),
-                "slug": "present-simple-special-questions",
-                "theory_text": (
-                    "Wh-questions in Present Simple."
-                ),
-                "estimated_minutes": 30,
-                "pass_score": 70,
-                "xp_reward": 100,
-                "is_published": True,
-            },
+        lesson, _ = (
+            GrammarLesson.objects
+            .update_or_create(
+                level="A1",
+                order=14,
+
+                defaults={
+                    "title":
+                        "Специальные вопросы "
+                        "в Present Simple",
+
+                    "slug":
+                        "present-simple-special-questions",
+
+                    "theory_text":
+                        "Wh-questions in Present Simple.",
+
+                    "estimated_minutes":
+                        18,
+
+                    "pass_score":
+                        70,
+
+                    "xp_reward":
+                        100,
+
+                    "is_published":
+                        True,
+                },
+            )
         )
+
+
+        # ================================================
+        # 10 MICRO-RULES
+        # ================================================
 
         sections = [
 
             {
                 "order": 1,
-                "title": "Что такое специальный вопрос",
-                "body": """Специальный вопрос начинается с вопросительного слова и просит конкретную информацию.
 
-Например:
+                "title":
+                    "Что такое специальный вопрос?",
+
+                "body":
+                    """Специальный вопрос просит конкретную информацию.
 
 Where do you live?
-— Где ты живёшь?
+Где ты живёшь?
 
-What does she do?
-— Чем она занимается?
+What does she want?
+Что она хочет?
 
 Why do they study English?
-— Почему они изучают английский?
+Почему они изучают английский?
 
-На такой вопрос нельзя нормально ответить только:
+На такие вопросы обычно нельзя ответить только YES или NO.
 
-Yes.
+Нужно дать конкретную информацию:
 
-или:
+Where do you work?
 
-No.
-
-Нужно дать конкретную информацию.""",
+I work at a university.""",
             },
+
 
             {
                 "order": 2,
-                "title": "Основные вопросительные слова",
-                "body": """Основные вопросительные слова:
 
-where — где / куда;
+                "title":
+                    "Главные вопросительные слова",
 
-what — что / какой;
+                "body":
+                    """Основные WH-слова:
 
-when — когда;
+WHERE — где / куда
 
-why — почему;
+WHAT — что / какой
 
-how — как;
+WHEN — когда
 
-who — кто;
+WHY — почему
 
-which — который / какой из нескольких.
+HOW — как
+
+WHO — кто
+
+WHICH — какой из нескольких
 
 Примеры:
 
@@ -95,53 +119,23 @@ Why does he study English?
 
 How do you go to work?
 
-Who do you know?
-
 Which book do you want?""",
             },
 
+
             {
                 "order": 3,
-                "title": "HOW OFTEN, HOW MANY, HOW MUCH",
-                "body": """Полезные конструкции:
 
-HOW OFTEN = как часто
+                "title":
+                    "Главная формула",
 
-How often do you exercise?
+                "body":
+                    """С обычным смысловым глаголом:
 
-How often does she call you?
-
-HOW MANY = сколько с исчисляемыми существительными
-
-How many books do you have?
-
-How many students does she teach?
-
-HOW MUCH = сколько с неисчисляемыми существительными
-
-How much money do you need?
-
-How much water does he drink?
-
-Запомните:
-
-many → исчисляемые;
-
-much → неисчисляемые.""",
-            },
-
-            {
-                "order": 4,
-                "title": "Главная формула",
-                "body": """С обычным смысловым глаголом используется формула:
-
-Вопросительное слово
-+
-do / does
-+
-подлежащее
-+
-глагол?
+WH-word
++ DO / DOES
++ subject
++ base verb?
 
 Примеры:
 
@@ -153,307 +147,219 @@ Why do they work here?
 
 When does the shop open?
 
-С DO:
+С I / you / we / they:
 
-I;
-you;
-we;
-they;
-множественное число.
+DO
 
-С DOES:
+С he / she / it:
 
-he;
-she;
-it;
-один человек;
-один предмет.""",
+DOES.""",
             },
 
-            {
-                "order": 5,
-                "title": "После DOES глагол без -S",
-                "body": """После does основной глагол возвращается в начальную форму.
 
-Сравните:
+            {
+                "order": 4,
+
+                "title":
+                    "После DOES глагол без -S",
+
+                "body":
+                    """После DOES основной глагол возвращается в базовую форму.
 
 She works at a school.
 
 Where does she work?
 
-Неправильно:
+Не:
 
 Where does she works?
 
-Правильно:
-
-Where does she work?
-
-Другие примеры:
+Ещё:
 
 He lives in Astana.
-
-Where does he live?
+→ Where does he live?
 
 She studies English.
-
-What does she study?
+→ What does she study?
 
 The shop opens at nine.
+→ When does the shop open?
 
-When does the shop open?
-
-He has a car.
-
-What does he have?""",
+She has a car.
+→ What does she have?""",
             },
+
+
+            {
+                "order": 5,
+
+                "title":
+                    "HOW OFTEN, HOW MANY, HOW MUCH",
+
+                "body":
+                    """HOW OFTEN = как часто
+
+How often do you exercise?
+
+How often does she call you?
+
+HOW MANY = сколько с countable nouns:
+
+How many books do you have?
+
+How many students does she teach?
+
+HOW MUCH = сколько с uncountable nouns:
+
+How much money do you need?
+
+How much water does he drink?
+
+Запомни:
+
+many → countable
+
+much → uncountable.""",
+            },
+
 
             {
                 "order": 6,
-                "title": "Порядок слов",
-                "body": """Нельзя сохранять порядок обычного утверждения.
 
-Утверждение:
+                "title":
+                    "WHAT DO YOU DO?",
 
-You live in Astana.
-
-Неправильно:
-
-Where you live?
-
-Правильно:
-
-Where do you live?
-
-С he/she/it:
-
-She works at a school.
-
-Неправильно:
-
-Where she works?
-
-Правильно:
-
-Where does she work?
-
-После вопросительного слова нужен do или does, если это обычный глагол.""",
-            },
-
-            {
-                "order": 7,
-                "title": "WHAT DO YOU DO?",
-                "body": """Вопрос:
+                "body":
+                    """Вопрос:
 
 What do you do?
 
 обычно означает:
 
 Чем вы занимаетесь?
-
 Кем вы работаете?
 
-Ответы:
+Ответ:
 
 I am a teacher.
 
+или:
+
 I work at a university.
 
-I am an engineer.
-
-Не путайте:
+Не путай:
 
 What do you do?
-— Чем вы занимаетесь обычно?
+обычная деятельность
 
 What are you doing?
-— Что вы делаете прямо сейчас?
+что происходит прямо сейчас
 
-Второй вопрос относится к Present Continuous.""",
+Во втором случае уже используется Present Continuous.""",
             },
 
-            {
-                "order": 8,
-                "title": "WHO как объект",
-                "body": """Если who является объектом действия, do/does нужны.
-
-Пример:
-
-You know someone.
-
-Вопрос:
-
-Who do you know?
-
-Здесь:
-
-you — подлежащее;
-
-who — объект.
-
-Ещё примеры:
-
-Who does she call?
-
-Who do they visit?
-
-Who does he help?
-
-Формула остаётся обычной:
-
-Who + do/does + subject + verb?""",
-            },
 
             {
-                "order": 9,
-                "title": "WHO как подлежащее",
-                "body": """Если who само выполняет действие, do/does обычно не нужны.
+                "order": 7,
 
-Someone works here.
+                "title":
+                    "WHO: объект или подлежащее?",
 
-Вопрос:
+                "body":
+                    """Если WHO — объект действия, DO / DOES нужны.
+
+Who do you call?
+
+Подлежащее здесь YOU.
+
+Who does she visit?
+
+Подлежащее SHE.
+
+Но если WHO само выполняет действие, DO / DOES обычно не нужны:
+
+Who calls you?
 
 Who works here?
 
-Не:
-
-Who does work here?
-
-Сравните:
+Сравни:
 
 Who calls you?
-— Кто тебе звонит?
+Кто звонит тебе?
 
 Who do you call?
-— Кому ты звонишь?
-
-В первом случае who выполняет действие.
-
-Во втором действие выполняет you.""",
+Кому звонишь ты?""",
             },
 
+
             {
-                "order": 10,
-                "title": "WHAT как подлежащее",
-                "body": """Такое же правило работает с what.
+                "order": 8,
 
-Если what само выполняет действие, do/does не нужны.
+                "title":
+                    "WHAT тоже может быть подлежащим",
 
-Something makes this noise.
-
-Вопрос:
+                "body":
+                    """Если WHAT само выполняет действие, DO / DOES не нужны.
 
 What makes this noise?
 
-Не:
-
-What does make this noise?
-
-Сравните:
-
 What causes this problem?
-— Что вызывает проблему?
+
+Но если подлежащее уже есть:
 
 What do you buy?
-— Что ты покупаешь?
 
-В первом случае what — подлежащее.
+What does she need?
 
-Во втором подлежащее — you.""",
+Сравни:
+
+What makes this sound?
+
+WHAT выполняет действие.
+
+What do you hear?
+
+YOU выполняет действие.""",
             },
 
-            {
-                "order": 11,
-                "title": "Вопросы с предлогами",
-                "body": """В обычном разговорном английском предлог часто остаётся в конце вопроса.
 
-Примеры:
+            {
+                "order": 9,
+
+                "title":
+                    "Предлоги и WHAT / WHICH + noun",
+
+                "body":
+                    """В разговорном английском предлог часто остаётся в конце:
 
 Who do you work with?
 
-What do you think about?
+Who does she speak to?
 
-Where does she come from?
+Where does he come from?
 
-Who does he speak to?
-
-Более формально можно сказать:
-
-With whom do you work?
-
-To whom does he speak?
-
-Но для уровня A1 проще и естественнее использовать:
-
-Who do you work with?
-
-Who does he speak to?""",
-            },
-
-            {
-                "order": 12,
-                "title": "Другие вопросы с HOW",
-                "body": """HOW OLD:
-
-How old are you?
-
-How old is she?
-
-Здесь используется to be, поэтому do/does не нужны.
-
-HOW LONG:
-
-How long do you work every day?
-
-How long does the lesson last?
-
-HOW FAR:
-
-How far do you live from work?
-
-HOW WELL:
-
-How well do you speak English?
-
-How well does she know him?""",
-            },
-
-            {
-                "order": 13,
-                "title": "WHAT / WHICH + существительное",
-                "body": """Вопросительное слово может стоять вместе с существительным.
-
-WHAT:
+Также WH-слово может стоять с существительным:
 
 What language do you speak?
 
 What time does the lesson start?
 
-What books do they read?
-
-What music does she like?
-
-WHICH используется, когда выбор ограничен:
-
-Which book do you prefer?
+Which book do you want?
 
 Which bus does she take?
 
-Which answer is correct?
-
-Также:
-
-How many children do they have?
-
-How many lessons does she teach?""",
+WHICH обычно используется, когда выбор ограничен.""",
             },
 
-            {
-                "order": 14,
-                "title": "TO BE и специальные вопросы",
-                "body": """Если в предложении есть am/is/are, do и does не используются.
 
-Примеры:
+            {
+                "order": 10,
+
+                "title":
+                    "TO BE или DO / DOES?",
+
+                "body":
+                    """Если используется AM / IS / ARE, DO и DOES не нужны.
 
 Where are you?
 
@@ -463,350 +369,832 @@ What is his job?
 
 Who are they?
 
-Сравните:
-
-Where is she?
-— Где она?
+Но с обычным действием:
 
 Where does she work?
-— Где она работает?
 
-Неправильно:
+Why do they study English?
 
-Where does she be?
+Сравни:
 
-Where is she work?
+Where is she?
+Где она?
 
-Главный алгоритм:
+Where does she work?
+Где она работает?
 
-1. Выберите вопросительное слово.
-2. Определите подлежащее.
-3. Если обычный глагол — выберите do/does.
-4. После does верните глагол в начальную форму.
+Алгоритм:
 
-She works at a school.
-
-→ Where does she work?""",
+1. Выбери WH-word.
+2. Найди подлежащее.
+3. Если обычный глагол → DO / DOES.
+4. После DOES → base verb.
+5. Если TO BE → DO / DOES не нужны.""",
             },
 
         ]
 
+
+        section_objects = {}
+
+
         for data in sections:
 
-            GrammarLessonSection.objects.update_or_create(
-                lesson=lesson,
-                order=data["order"],
-                defaults={
-                    "title": data["title"],
-                    "body": data["body"],
-                },
+            section, _ = (
+                GrammarLessonSection.objects
+                .update_or_create(
+                    lesson=lesson,
+                    order=data["order"],
+
+                    defaults={
+                        "title":
+                            data["title"],
+
+                        "body":
+                            data["body"],
+                    },
+                )
             )
 
-        exercises = [
+            section_objects[
+                data["order"]
+            ] = section
+
+
+        # ================================================
+        # 20 TRAINING EXERCISES
+        # ================================================
+
+        training = [
 
             {
                 "order": 1,
-                "prompt": "___ do you work?",
+                "section": 1,
+                "type": "choice",
+
+                "prompt":
+                    "___ do you work?",
+
                 "options": [
                     "Where",
                     "Who",
                     "How many",
                     "Which one",
                 ],
-                "answer": "Where",
-                "explanation": "Чтобы спросить о месте работы, используется Where.",
+
+                "answer":
+                    "Where",
+
+                "explanation":
+                    "Чтобы спросить о месте, используется WHERE.",
             },
+
 
             {
                 "order": 2,
-                "prompt": "Where ___ your brother live?",
-                "options": ["do", "does", "is", "are"],
-                "answer": "does",
-                "explanation": "Your brother = he, поэтому используется does.",
+                "section": 1,
+                "type": "choice",
+
+                "prompt":
+                    "Why do you study English?",
+
+                "options": [
+                    "Yes, I do.",
+                    "Because I need it for work.",
+                    "At university.",
+                    "Every Monday.",
+                ],
+
+                "answer":
+                    "Because I need it for work.",
+
+                "explanation":
+                    "WHY спрашивает о причине.",
             },
+
 
             {
                 "order": 3,
-                "prompt": "What ___ your parents do?",
-                "options": ["does", "do", "are", "is"],
-                "answer": "do",
-                "explanation": "Your parents = they, поэтому используется do.",
+                "section": 2,
+                "type": "choice",
+
+                "prompt":
+                    "___ do they arrive?",
+
+                "options": [
+                    "When",
+                    "Who",
+                    "How many",
+                    "Which",
+                ],
+
+                "answer":
+                    "When",
+
+                "explanation":
+                    "WHEN спрашивает о времени.",
             },
+
 
             {
                 "order": 4,
-                "prompt": "What does your sister ___?",
+                "section": 2,
+                "type": "choice",
+
+                "prompt":
+                    "___ book do you want: the red one or the blue one?",
+
                 "options": [
-                    "teaches",
-                    "teach",
-                    "teaching",
-                    "taught",
+                    "Which",
+                    "Where",
+                    "Why",
+                    "Who",
                 ],
-                "answer": "teach",
-                "explanation": "После does основной глагол используется в начальной форме.",
+
+                "answer":
+                    "Which",
+
+                "explanation":
+                    "Есть ограниченный выбор, поэтому WHICH.",
             },
+
 
             {
                 "order": 5,
-                "prompt": "Why ___ he study English?",
-                "options": ["do", "does", "is", "are"],
-                "answer": "does",
-                "explanation": "He → does.",
+                "section": 3,
+                "type": "fill",
+
+                "prompt":
+                    "Where ___ your brother live?",
+
+                "options": [],
+
+                "answer":
+                    "does",
+
+                "explanation":
+                    "Your brother = HE → DOES.",
             },
+
 
             {
                 "order": 6,
-                "prompt": "When ___ the students arrive?",
-                "options": ["does", "do", "are", "is"],
-                "answer": "do",
-                "explanation": "Students = they, поэтому do.",
+                "section": 3,
+                "type": "choice",
+
+                "prompt":
+                    "What ___ your parents do?",
+
+                "options": [
+                    "does",
+                    "do",
+                    "are",
+                    "is",
+                ],
+
+                "answer":
+                    "do",
+
+                "explanation":
+                    "Your parents = THEY → DO.",
             },
+
 
             {
                 "order": 7,
-                "prompt": "How often ___ she call you?",
-                "options": ["do", "does", "is", "has"],
-                "answer": "does",
-                "explanation": "She → does, а основной глагол остаётся call.",
+                "section": 4,
+                "type": "choice",
+
+                "prompt":
+                    "What does your sister ___?",
+
+                "options": [
+                    "teaches",
+                    "teach",
+                    "teaching",
+                    "is teach",
+                ],
+
+                "answer":
+                    "teach",
+
+                "explanation":
+                    "После DOES используется базовая форма TEACH.",
             },
+
 
             {
                 "order": 8,
-                "prompt": "How many books ___ you have?",
-                "options": ["does", "do", "are", "is"],
-                "answer": "do",
-                "explanation": "You → do.",
+                "section": 4,
+                "type": "choice",
+
+                "prompt":
+                    "When does the shop ___?",
+
+                "options": [
+                    "opens",
+                    "open",
+                    "opening",
+                    "is open",
+                ],
+
+                "answer":
+                    "open",
+
+                "explanation":
+                    "OPENS → DOES ... OPEN?",
             },
+
 
             {
                 "order": 9,
-                "prompt": "How much water ___ he drink?",
-                "options": ["do", "does", "is", "has"],
-                "answer": "does",
-                "explanation": "He → does. Water неисчисляемое, поэтому how much.",
+                "section": 5,
+                "type": "choice",
+
+                "prompt":
+                    "___ do you exercise?",
+
+                "options": [
+                    "How often",
+                    "How much",
+                    "How many",
+                    "Which",
+                ],
+
+                "answer":
+                    "How often",
+
+                "explanation":
+                    "Спрашиваем о частоте действия.",
             },
+
 
             {
                 "order": 10,
-                "prompt": "Who ___ English at your school?",
+                "section": 5,
+                "type": "choice",
+
+                "prompt":
+                    "___ books do you have?",
+
                 "options": [
-                    "teach",
-                    "teaches",
-                    "does teach",
-                    "teaching",
+                    "How much",
+                    "How many",
+                    "How often",
+                    "How",
                 ],
-                "answer": "teaches",
-                "explanation": "Who здесь само выполняет действие, поэтому do/does не нужны.",
+
+                "answer":
+                    "How many",
+
+                "explanation":
+                    "BOOKS — countable plural → HOW MANY.",
             },
+
 
             {
                 "order": 11,
-                "prompt": "Who do you ___ with?",
+                "section": 5,
+                "type": "choice",
+
+                "prompt":
+                    "___ money does he need?",
+
                 "options": [
-                    "works",
-                    "work",
-                    "working",
-                    "worked",
+                    "How many",
+                    "How much",
+                    "How often",
+                    "Which",
                 ],
-                "answer": "work",
-                "explanation": "После do используется начальная форма work.",
+
+                "answer":
+                    "How much",
+
+                "explanation":
+                    "MONEY — uncountable → HOW MUCH.",
             },
+
 
             {
                 "order": 12,
-                "prompt": "What time does the lesson ___?",
+                "section": 6,
+                "type": "choice",
+
+                "prompt":
+                    "What do you do?",
+
                 "options": [
-                    "begins",
-                    "begin",
-                    "beginning",
-                    "began",
+                    "I am a teacher.",
+                    "I am doing my homework now.",
+                    "At eight o'clock.",
+                    "Yes, I do.",
                 ],
-                "answer": "begin",
-                "explanation": "После does основной глагол используется без -s.",
+
+                "answer":
+                    "I am a teacher.",
+
+                "explanation":
+                    "WHAT DO YOU DO? спрашивает об обычной деятельности или профессии.",
             },
+
 
             {
                 "order": 13,
-                "prompt": "Which bus ___ she take?",
-                "options": ["do", "does", "is", "has"],
-                "answer": "does",
-                "explanation": "She → does.",
+                "section": 7,
+                "type": "choice",
+
+                "prompt":
+                    "___ calls you every morning?",
+
+                "options": [
+                    "Who",
+                    "Who does",
+                    "Who do",
+                    "What do",
+                ],
+
+                "answer":
+                    "Who",
+
+                "explanation":
+                    "WHO само является подлежащим.",
             },
+
 
             {
                 "order": 14,
-                "prompt": "Why are you tired?",
+                "section": 7,
+                "type": "choice",
+
+                "prompt":
+                    "Who ___ you call every morning?",
+
                 "options": [
-                    "Because I work a lot.",
-                    "Yes, I am.",
-                    "No, I don't.",
-                    "At home.",
+                    "do",
+                    "does",
+                    "are",
+                    "is",
                 ],
-                "answer": "Because I work a lot.",
-                "explanation": "Why спрашивает о причине, поэтому нужен конкретный ответ.",
+
+                "answer":
+                    "do",
+
+                "explanation":
+                    "Подлежащее YOU, WHO здесь объект → DO.",
             },
+
 
             {
                 "order": 15,
-                "prompt": "Where does he work?",
+                "section": 8,
+                "type": "choice",
+
+                "prompt":
+                    "Choose the correct question.",
+
                 "options": [
-                    "Yes, he does.",
-                    "He works at a hospital.",
-                    "No, he doesn't.",
-                    "Because he needs money.",
+                    "What does make this noise?",
+                    "What makes this noise?",
+                    "What do makes this noise?",
+                    "What is make this noise?",
                 ],
-                "answer": "He works at a hospital.",
-                "explanation": "Where спрашивает о месте, а не требует yes/no.",
+
+                "answer":
+                    "What makes this noise?",
+
+                "explanation":
+                    "WHAT само выполняет действие, поэтому DOES не нужен.",
             },
+
 
             {
                 "order": 16,
-                "prompt": "Choose the correct question.",
+                "section": 8,
+                "type": "choice",
+
+                "prompt":
+                    "___ do you hear?",
+
                 "options": [
-                    "Where you live?",
-                    "Where do you live?",
-                    "Where are you live?",
-                    "Where does you live?",
+                    "What",
+                    "What does",
+                    "Who does",
+                    "Where is",
                 ],
-                "answer": "Where do you live?",
-                "explanation": "С обычным глаголом и you используется Where do you live?",
+
+                "answer":
+                    "What",
+
+                "explanation":
+                    "Подлежащее YOU → WHAT DO YOU HEAR?",
             },
+
 
             {
                 "order": 17,
-                "prompt": "Choose the correct question.",
+                "section": 9,
+                "type": "choice",
+
+                "prompt":
+                    "Choose the natural question.",
+
                 "options": [
-                    "Where does she works?",
-                    "Where she works?",
-                    "Where does she work?",
-                    "Where is she work?",
+                    "Who do you work with?",
+                    "Who you work with?",
+                    "Who does you work with?",
+                    "With who you do work?",
                 ],
-                "answer": "Where does she work?",
-                "explanation": "После does глагол используется в начальной форме work.",
+
+                "answer":
+                    "Who do you work with?",
+
+                "explanation":
+                    "В разговорном английском предлог WITH естественно остаётся в конце.",
             },
+
 
             {
                 "order": 18,
-                "prompt": "Choose the correct question.",
+                "section": 9,
+                "type": "choice",
+
+                "prompt":
+                    "___ language does she speak?",
+
                 "options": [
-                    "What do he do?",
-                    "What does he does?",
-                    "What does he do?",
-                    "What is he do?",
+                    "What",
+                    "Where",
+                    "Who",
+                    "How much",
                 ],
-                "answer": "What does he do?",
-                "explanation": "He → does, а основной глагол остаётся do.",
+
+                "answer":
+                    "What",
+
+                "explanation":
+                    "WHAT + noun: WHAT LANGUAGE.",
             },
+
 
             {
                 "order": 19,
-                "prompt": "Choose the correct question.",
-                "options": [
-                    "Why does they study English?",
-                    "Why do they study English?",
-                    "Why are they study English?",
-                    "Why do they studies English?",
-                ],
-                "answer": "Why do they study English?",
-                "explanation": "They → do + базовая форма study.",
-            },
+                "section": 10,
+                "type": "choice",
 
-            {
-                "order": 20,
-                "prompt": "Who ___ you every morning?",
-                "options": [
-                    "calls",
-                    "does call",
-                    "do call",
-                    "call",
-                ],
-                "answer": "calls",
-                "explanation": "Who является подлежащим и выполняет действие: Who calls you?",
-            },
+                "prompt":
+                    "Choose the correct question.",
 
-            {
-                "order": 21,
-                "prompt": "Who do you ___ every morning?",
-                "options": [
-                    "calls",
-                    "call",
-                    "calling",
-                    "does call",
-                ],
-                "answer": "call",
-                "explanation": "Здесь подлежащее — you, а who является объектом.",
-            },
-
-            {
-                "order": 22,
-                "prompt": "Choose the correct question about money.",
-                "options": [
-                    "How many money do you need?",
-                    "How much money do you need?",
-                    "How much money does you need?",
-                    "How many money does you need?",
-                ],
-                "answer": "How much money do you need?",
-                "explanation": "Money — неисчисляемое существительное, поэтому how much.",
-            },
-
-            {
-                "order": 23,
-                "prompt": "Choose the correct question.",
                 "options": [
                     "Where does she be?",
                     "Where is she?",
                     "Where does she is?",
                     "Where she is?",
                 ],
-                "answer": "Where is she?",
-                "explanation": "С глаголом to be do/does не используются.",
+
+                "answer":
+                    "Where is she?",
+
+                "explanation":
+                    "С TO BE DO / DOES не используются.",
             },
 
+
             {
-                "order": 24,
-                "prompt": (
-                    "She works at a school. "
-                    "Choose the question asking about the place."
-                ),
+                "order": 20,
+                "section": 10,
+                "type": "choice",
+
+                "prompt":
+                    "She works at a school. Which question asks about the place?",
+
                 "options": [
                     "What does she work?",
                     "Where does she work?",
                     "Where does she works?",
                     "Where is she work?",
                 ],
-                "answer": "Where does she work?",
-                "explanation": "Спрашиваем о месте: Where + does + she + work?",
+
+                "answer":
+                    "Where does she work?",
+
+                "explanation":
+                    "WORK — обычный глагол → WHERE DOES SHE WORK?",
             },
 
         ]
 
-        for data in exercises:
+
+        # ================================================
+        # 10 FINAL TEST QUESTIONS
+        # ================================================
+
+        final_test = [
+
+            {
+                "order": 21,
+
+                "prompt":
+                    "___ do you usually have lunch?",
+
+                "options": [
+                    "When",
+                    "Who",
+                    "How many",
+                    "Which one",
+                ],
+
+                "answer":
+                    "When",
+
+                "explanation":
+                    "WHEN спрашивает о времени.",
+            },
+
+
+            {
+                "order": 22,
+
+                "prompt":
+                    "Where ___ your parents work?",
+
+                "options": [
+                    "does",
+                    "do",
+                    "are",
+                    "is",
+                ],
+
+                "answer":
+                    "do",
+
+                "explanation":
+                    "Your parents = THEY → DO.",
+            },
+
+
+            {
+                "order": 23,
+
+                "prompt":
+                    "Why does Anna ___ English?",
+
+                "options": [
+                    "studies",
+                    "study",
+                    "studying",
+                    "is study",
+                ],
+
+                "answer":
+                    "study",
+
+                "explanation":
+                    "После DOES используется STUDY.",
+            },
+
+
+            {
+                "order": 24,
+
+                "prompt":
+                    "___ water do you drink every day?",
+
+                "options": [
+                    "How many",
+                    "How much",
+                    "How often",
+                    "Which",
+                ],
+
+                "answer":
+                    "How much",
+
+                "explanation":
+                    "WATER — uncountable → HOW MUCH.",
+            },
+
+
+            {
+                "order": 25,
+
+                "prompt":
+                    "___ students does she teach?",
+
+                "options": [
+                    "How much",
+                    "How many",
+                    "How often",
+                    "How",
+                ],
+
+                "answer":
+                    "How many",
+
+                "explanation":
+                    "STUDENTS — countable plural → HOW MANY.",
+            },
+
+
+            {
+                "order": 26,
+
+                "prompt":
+                    "Choose the correct question.",
+
+                "options": [
+                    "Who does work here?",
+                    "Who works here?",
+                    "Who do works here?",
+                    "Who is work here?",
+                ],
+
+                "answer":
+                    "Who works here?",
+
+                "explanation":
+                    "WHO является подлежащим, поэтому DO / DOES не нужны.",
+            },
+
+
+            {
+                "order": 27,
+
+                "prompt":
+                    "Choose the correct question.",
+
+                "options": [
+                    "Who do they visit?",
+                    "Who they visit?",
+                    "Who does they visit?",
+                    "Who are they visit?",
+                ],
+
+                "answer":
+                    "Who do they visit?",
+
+                "explanation":
+                    "THEY — подлежащее; WHO — объект → DO.",
+            },
+
+
+            {
+                "order": 28,
+
+                "prompt":
+                    "What time does the train ___?",
+
+                "options": [
+                    "leaves",
+                    "leave",
+                    "leaving",
+                    "is leave",
+                ],
+
+                "answer":
+                    "leave",
+
+                "explanation":
+                    "После DOES используется базовая форма LEAVE.",
+            },
+
+
+            {
+                "order": 29,
+
+                "prompt":
+                    "Choose the correct question.",
+
+                "options": [
+                    "Why does she tired?",
+                    "Why is she tired?",
+                    "Why do she tired?",
+                    "Why does she be tired?",
+                ],
+
+                "answer":
+                    "Why is she tired?",
+
+                "explanation":
+                    "TIRED используется с TO BE → WHY IS SHE TIRED?",
+            },
+
+
+            {
+                "order": 30,
+
+                "prompt":
+                    "Choose the fully correct pair.",
+
+                "options": [
+                    "Where is she? / Where does she work?",
+                    "Where does she be? / Where is she work?",
+                    "Where she is? / Where she works?",
+                    "Where does she is? / Where does she works?",
+                ],
+
+                "answer":
+                    "Where is she? / Where does she work?",
+
+                "explanation":
+                    "Местонахождение → TO BE; действие WORK → DOES + base verb.",
+            },
+
+        ]
+
+
+        valid_orders = []
+
+
+        for data in (
+            training
+            +
+            final_test
+        ):
+
+            valid_orders.append(
+                data["order"]
+            )
+
+
+            if data["order"] <= 20:
+
+                section = (
+                    section_objects[
+                        data["section"]
+                    ]
+                )
+
+            else:
+
+                section = None
+
 
             GrammarExercise.objects.update_or_create(
                 lesson=lesson,
                 order=data["order"],
+
                 defaults={
-                    "exercise_type": GrammarExercise.Type.CHOICE,
-                    "prompt": data["prompt"],
-                    "options": data["options"],
-                    "correct_answer": data["answer"],
-                    "explanation": data["explanation"],
-                    "is_published": True,
+                    "section":
+                        section,
+
+                    "exercise_type":
+                        data.get(
+                            "type",
+                            "choice",
+                        ),
+
+                    "prompt":
+                        data["prompt"],
+
+                    "options":
+                        data["options"],
+
+                    "correct_answer":
+                        data["answer"],
+
+                    "explanation":
+                        data["explanation"],
+
+                    "is_published":
+                        True,
                 },
             )
 
+
+        GrammarExercise.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__in=valid_orders,
+        ).delete()
+
+
+        GrammarLessonSection.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__in=[
+                item["order"]
+                for item in sections
+            ],
+        ).delete()
+
+
         self.stdout.write(
             self.style.SUCCESS(
-                "✅ A1 Lesson 14 seeded: "
-                "Специальные вопросы в Present Simple"
+                "✅ Interactive A1 Lesson 14 seeded"
             )
         )
 
         self.stdout.write(
-            f"Sections: {lesson.sections.count()}"
+            f"Micro rules: "
+            f"{lesson.sections.count()}"
         )
 
         self.stdout.write(
-            f"Exercises: {lesson.exercises.count()}"
+            "Training exercises: "
+            f"{lesson.exercises.filter(section__isnull=False).count()}"
+        )
+
+        self.stdout.write(
+            "Final test: "
+            f"{lesson.exercises.filter(section__isnull=True).count()}"
         )

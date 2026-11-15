@@ -10,62 +10,98 @@ from grammar.models import (
 class Command(BaseCommand):
 
     help = (
-        "Create/update A1 Grammar Lesson 20: "
-        "Can, Could and Be able to."
+        "Create/update interactive A1 Grammar "
+        "Lesson 20: CAN, COULD and BE ABLE TO."
     )
+
 
     def handle(self, *args, **options):
 
-        lesson, _ = GrammarLesson.objects.update_or_create(
-            level="A1",
-            order=20,
-            defaults={
-                "title": "CAN, COULD и BE ABLE TO",
-                "slug": "can-could-be-able-to",
-                "theory_text": (
-                    "Can, could and be able to."
-                ),
-                "estimated_minutes": 35,
-                "pass_score": 70,
-                "xp_reward": 100,
-                "is_published": True,
-            },
+        lesson, _ = (
+            GrammarLesson.objects
+            .update_or_create(
+                level="A1",
+                order=20,
+
+                defaults={
+                    "title":
+                        "CAN, COULD и BE ABLE TO",
+
+                    "slug":
+                        "can-could-be-able-to",
+
+                    "theory_text":
+                        "Can, could and be able to.",
+
+                    "estimated_minutes":
+                        19,
+
+                    "pass_score":
+                        70,
+
+                    "xp_reward":
+                        100,
+
+                    "is_published":
+                        True,
+                },
+            )
         )
+
+
+        # ================================================
+        # 10 MICRO-RULES
+        # ================================================
 
         sections = [
 
             {
                 "order": 1,
-                "title": "Что означает CAN",
-                "body": """CAN используется, когда мы говорим:
 
-об умении;
+                "title":
+                    "Что означает CAN?",
 
-о способности;
+                "body":
+                    """CAN используется, когда мы говорим об:
 
-о возможности;
+умении;
 
-о разрешении;
+способности;
 
-о просьбе.
+возможности;
 
-Примеры:
+разрешении;
+
+просьбе.
+
+Умение:
 
 I can swim.
 
 She can speak English.
 
+Возможность:
+
 We can meet tomorrow.
 
+Разрешение:
+
 Can I come in?
+
+Просьба:
 
 Can you help me?""",
             },
 
+
             {
                 "order": 2,
-                "title": "CAN не изменяется",
-                "body": """CAN имеет одну форму для всех лиц:
+
+                "title":
+                    "CAN одинаковый для всех",
+
+                "body":
+                    """CAN не изменяется по лицам.
 
 I can
 
@@ -81,35 +117,36 @@ we can
 
 they can
 
-Нельзя добавлять -s.
-
-Неправильно:
+Не:
 
 He cans drive.
 
-Правильно:
+А:
 
-He can drive.""",
+He can drive.
+
+Даже с HE / SHE / IT окончание -S к CAN не добавляется.""",
             },
+
 
             {
                 "order": 3,
-                "title": "После CAN глагол без TO",
-                "body": """Формула:
 
-Подлежащее + can + глагол
+                "title":
+                    "После CAN — глагол без TO",
 
-Примеры:
+                "body":
+                    """После CAN используется базовая форма глагола.
 
 I can swim.
 
 She can read.
 
-They can help.
-
 He can work.
 
-Неправильно:
+They can help.
+
+Не:
 
 I can to swim.
 
@@ -117,45 +154,100 @@ She can reads.
 
 He can working.
 
-После CAN используется базовая форма глагола.""",
+Формула:
+
+subject
++ CAN
++ base verb.""",
             },
+
 
             {
                 "order": 4,
-                "title": "CAN: умение и возможность",
-                "body": """CAN может показывать умение:
 
-I can swim.
+                "title":
+                    "CAN'T = не могу",
 
-She can use Excel.
+                "body":
+                    """Отрицание:
 
-He can cook.
+CANNOT
 
-They can speak English.
+или чаще:
 
-Также CAN может показывать возможность:
+CAN'T
 
-We can meet after work.
+I can't drive.
 
-You can call me tomorrow.
+He can't speak French.
 
-I can finish this today.
+We can't stay.
 
-She can come with us.
+They can't help us.
 
-Иногда CAN показывает общую возможность:
+После CAN'T тоже используется базовая форма.
 
-This road can be dangerous in winter.
+She can't come.
 
-People can change.""",
+Не:
+
+She can't to come.
+
+Не:
+
+She doesn't can come.""",
             },
+
 
             {
                 "order": 5,
-                "title": "CAN: разрешение и просьба",
-                "body": """Чтобы попросить разрешение:
 
-Can I + глагол?
+                "title":
+                    "Вопросы с CAN",
+
+                "body":
+                    """В вопросе CAN ставится перед подлежащим.
+
+Can you swim?
+
+Can she drive?
+
+Can they help?
+
+DO и DOES не нужны.
+
+Не:
+
+Do you can swim?
+
+Does she can drive?
+
+Краткие ответы:
+
+Can you swim?
+
+Yes, I can.
+
+No, I can't.
+
+Специальные вопросы:
+
+Where can I park?
+
+How can I help?
+
+When can she come?""",
+            },
+
+
+            {
+                "order": 6,
+
+                "title":
+                    "CAN для разрешения и просьбы",
+
+                "body":
+                    """Разрешение:
 
 Can I come in?
 
@@ -169,121 +261,26 @@ Yes, you can.
 
 No, you can't.
 
-Чтобы попросить другого человека:
-
-Can you + глагол?
+Просьба другому человеку:
 
 Can you help me?
 
-Can you open the door?
+Can you open the window?
 
-Can you repeat that?""",
+Can you repeat that?
+
+CAN здесь означает не только физическую способность, но и просьбу или разрешение.""",
             },
 
-            {
-                "order": 6,
-                "title": "CAN'T",
-                "body": """Отрицательные формы:
-
-cannot;
-
-can't.
-
-Формула:
-
-Подлежащее + can't + глагол
-
-Примеры:
-
-I can't drive.
-
-He can't speak French.
-
-We can't stay.
-
-They can't help us.
-
-После can't также используется глагол без to.
-
-Правильно:
-
-She can't come.
-
-Неправильно:
-
-She can't to come.""",
-            },
 
             {
                 "order": 7,
-                "title": "Вопросы с CAN",
-                "body": """В вопросе CAN ставится перед подлежащим.
 
-Формула:
+                "title":
+                    "COULD — способность в прошлом",
 
-Can + подлежащее + глагол?
-
-Примеры:
-
-Can you swim?
-
-Can she drive?
-
-Can they help?
-
-Краткие ответы:
-
-Yes, I can.
-
-No, I can't.
-
-Важно:
-
-DO и DOES не нужны.
-
-Неправильно:
-
-Do you can swim?
-
-Does she can drive?
-
-Правильно:
-
-Can you swim?
-
-Can she drive?""",
-            },
-
-            {
-                "order": 8,
-                "title": "Специальные вопросы с CAN",
-                "body": """Формула:
-
-Вопросительное слово + can + подлежащее + глагол?
-
-Примеры:
-
-What can you do?
-
-Where can we meet?
-
-When can she come?
-
-How can I help?
-
-Where can I park?
-
-How can I contact you?
-
-После can основной глагол остаётся в базовой форме.""",
-            },
-
-            {
-                "order": 9,
-                "title": "COULD — способность в прошлом",
-                "body": """COULD часто используется для способности в прошлом.
-
-Примеры:
+                "body":
+                    """COULD часто показывает общую способность в прошлом.
 
 I could swim when I was five.
 
@@ -291,27 +288,37 @@ She could read at the age of four.
 
 He could run very fast when he was young.
 
-They could speak English well.
+COULD тоже не изменяется:
 
-COULD не изменяется по лицам:
+I could
 
-I could;
+he could
 
-he could;
+they could
 
-they could.
+После COULD используется базовая форма без TO.
 
-После could используется глагол без to.""",
+Не:
+
+She could to read.
+
+А:
+
+She could read.""",
             },
 
+
             {
-                "order": 10,
-                "title": "COULDN'T и вопросы с COULD",
-                "body": """Отрицание:
+                "order": 8,
 
-could not = couldn't
+                "title":
+                    "COULDN'T и вопросы с COULD",
 
-Примеры:
+                "body":
+                    """Отрицание:
+
+COULD NOT
+→ COULDN'T
 
 I couldn't swim.
 
@@ -321,25 +328,26 @@ He couldn't come yesterday.
 
 Вопрос:
 
-Could + подлежащее + глагол?
-
 Could you swim when you were six?
 
 Could she read at that age?
 
-Ответы:
+Краткие ответы:
 
 Yes, I could.
 
 No, I couldn't.""",
             },
 
-            {
-                "order": 11,
-                "title": "COULD как вежливая просьба",
-                "body": """Could you...? звучит вежливее, чем Can you...?
 
-Сравните:
+            {
+                "order": 9,
+
+                "title":
+                    "COULD YOU...? — вежливая просьба",
+
+                "body":
+                    """COULD YOU...? часто звучит вежливее, чем CAN YOU...?
 
 Can you help me?
 
@@ -357,61 +365,38 @@ Could you send me the document?
 
 Важно:
 
-в просьбе COULD не обязательно относится к прошлому.
+COULD в такой просьбе не означает прошлое.
 
 Could you help me now?
 
 Это просьба в настоящем.""",
             },
 
+
             {
-                "order": 12,
-                "title": "BE ABLE TO",
-                "body": """BE ABLE TO означает:
+                "order": 10,
 
-быть способным;
+                "title":
+                    "BE ABLE TO и будущее",
 
-мочь;
+                "body":
+                    """BE ABLE TO означает «быть способным / суметь».
 
-суметь.
-
-Примеры:
-
-I am able to swim.
-
-She is able to solve this problem.
-
-They are able to help us.
-
-В настоящем времени CAN обычно звучит естественнее:
+В настоящем часто проще использовать CAN:
 
 I can swim.
 
-Но BE ABLE TO полезно, когда CAN нельзя поставить в нужную форму.""",
-            },
+Но для будущей способности используется:
 
-            {
-                "order": 13,
-                "title": "Будущее: WILL BE ABLE TO",
-                "body": """У CAN нет обычной формы будущего времени.
-
-Неправильно:
-
-I will can come.
-
-Правильно:
-
-I will be able to come.
-
-Формула:
-
-will be able to + глагол
-
-Примеры:
+WILL BE ABLE TO
 
 I will be able to help you tomorrow.
 
 She will be able to come next week.
+
+Не:
+
+I will can help.
 
 Отрицание:
 
@@ -421,356 +406,828 @@ I won't be able to come.
 
 Вопрос:
 
-Will + подлежащее + be able to + глагол?
+Will you be able to come?
 
-Will you be able to come?""",
-            },
+Для конкретного успешного результата в прошлом часто используется:
 
-            {
-                "order": 14,
-                "title": "CAN, COULD или BE ABLE TO",
-                "body": """Короткий алгоритм:
+was / were able to
 
-Настоящее умение:
+The door was locked, but we were able to open it.
 
-CAN
+Коротко:
 
-I can drive.
+сейчас → CAN
 
-Прошлое общее умение:
+общее умение в прошлом → COULD
 
-COULD
+будущая способность → WILL BE ABLE TO
 
-I could read when I was five.
-
-Будущая возможность:
-
-WILL BE ABLE TO
-
-I will be able to come tomorrow.
-
-Вежливая просьба:
-
-COULD YOU...?
-
-Could you help me?
-
-Конкретный успешный результат в прошлом часто выражается:
-
-was/were able to
-
-We were able to open the door.
-
-Главное правило:
-
-после can/could используется глагол без to.""",
+конкретный успех в прошлом → WAS / WERE ABLE TO.""",
             },
 
         ]
 
+
+        section_objects = {}
+
+
         for data in sections:
 
-            GrammarLessonSection.objects.update_or_create(
-                lesson=lesson,
-                order=data["order"],
-                defaults={
-                    "title": data["title"],
-                    "body": data["body"],
-                },
+            section, _ = (
+                GrammarLessonSection.objects
+                .update_or_create(
+                    lesson=lesson,
+                    order=data["order"],
+
+                    defaults={
+                        "title":
+                            data["title"],
+
+                        "body":
+                            data["body"],
+                    },
+                )
             )
 
-        exercises = [
+            section_objects[
+                data["order"]
+            ] = section
+
+
+        # ================================================
+        # 20 TRAINING EXERCISES
+        # ================================================
+
+        training = [
 
             {
                 "order": 1,
-                "prompt": "My brother ___ drive.",
-                "options": ["can", "cans", "is can", "does can"],
-                "answer": "can",
-                "explanation": "CAN не изменяется с he/she/it.",
+                "section": 1,
+                "type": "choice",
+
+                "prompt":
+                    "I ___ swim.",
+
+                "options": [
+                    "can",
+                    "cans",
+                    "am can",
+                    "do can",
+                ],
+
+                "answer":
+                    "can",
+
+                "explanation":
+                    "Для способности используется CAN.",
             },
+
 
             {
                 "order": 2,
-                "prompt": "They can ___ very fast.",
-                "options": ["runs", "run", "running", "to run"],
-                "answer": "run",
-                "explanation": "После can используется базовая форма без to.",
+                "section": 1,
+                "type": "choice",
+
+                "prompt":
+                    "We ___ meet tomorrow.",
+
+                "options": [
+                    "can",
+                    "are can",
+                    "cans",
+                    "do can",
+                ],
+
+                "answer":
+                    "can",
+
+                "explanation":
+                    "CAN может выражать возможность.",
             },
+
 
             {
                 "order": 3,
-                "prompt": "___ your child read?",
-                "options": ["Does can", "Can", "Is", "Do"],
-                "answer": "Can",
-                "explanation": "Модальный глагол сам ставится перед подлежащим.",
+                "section": 2,
+                "type": "choice",
+
+                "prompt":
+                    "My brother ___ drive.",
+
+                "options": [
+                    "can",
+                    "cans",
+                    "does can",
+                    "is can",
+                ],
+
+                "answer":
+                    "can",
+
+                "explanation":
+                    "CAN не получает -S с HE.",
             },
+
 
             {
                 "order": 4,
-                "prompt": "Can your child read? — No, he ___.",
+                "section": 2,
+                "type": "choice",
+
+                "prompt":
+                    "Choose the correct sentence.",
+
                 "options": [
-                    "doesn't can",
-                    "can't",
-                    "isn't can",
-                    "not can",
+                    "She cans cook.",
+                    "She can cook.",
+                    "She can cooks.",
+                    "She does can cook.",
                 ],
-                "answer": "can't",
-                "explanation": "Краткий отрицательный ответ: No, he can't.",
+
+                "answer":
+                    "She can cook.",
+
+                "explanation":
+                    "CAN имеет одну форму для всех лиц.",
             },
+
 
             {
                 "order": 5,
-                "prompt": "I ___ speak English when I was ten.",
+                "section": 3,
+                "type": "choice",
+
+                "prompt":
+                    "They can ___ very fast.",
+
                 "options": [
-                    "can",
-                    "could",
-                    "will be able",
-                    "am able",
+                    "runs",
+                    "run",
+                    "running",
+                    "to run",
                 ],
-                "answer": "could",
-                "explanation": "Способность в прошлом выражается через could.",
+
+                "answer":
+                    "run",
+
+                "explanation":
+                    "После CAN используется базовая форма RUN.",
             },
+
 
             {
                 "order": 6,
-                "prompt": "She ___ understand the teacher yesterday.",
-                "options": [
-                    "couldn't",
-                    "doesn't can",
-                    "can't",
-                    "not could",
-                ],
-                "answer": "couldn't",
-                "explanation": "Для невозможности в прошлом используется couldn't.",
+                "section": 3,
+                "type": "fill",
+
+                "prompt":
+                    "She can ___ English. (speak)",
+
+                "options": [],
+
+                "answer":
+                    "speak",
+
+                "explanation":
+                    "После CAN не используется TO или -S.",
             },
+
 
             {
                 "order": 7,
-                "prompt": "___ you open the window, please?",
-                "options": ["Could", "Do", "Are", "Does"],
-                "answer": "Could",
-                "explanation": "Could you...? — вежливая просьба.",
+                "section": 4,
+                "type": "choice",
+
+                "prompt":
+                    "He ___ speak French.",
+
+                "options": [
+                    "can't",
+                    "doesn't can",
+                    "isn't can",
+                    "not can",
+                ],
+
+                "answer":
+                    "can't",
+
+                "explanation":
+                    "Отрицательная форма CAN → CAN'T.",
             },
+
 
             {
                 "order": 8,
-                "prompt": "Could I ___ your phone?",
-                "options": ["uses", "use", "using", "to use"],
-                "answer": "use",
-                "explanation": "После could используется базовая форма use.",
+                "section": 4,
+                "type": "choice",
+
+                "prompt":
+                    "Choose the correct sentence.",
+
+                "options": [
+                    "She can't to come.",
+                    "She can't comes.",
+                    "She can't come.",
+                    "She doesn't can come.",
+                ],
+
+                "answer":
+                    "She can't come.",
+
+                "explanation":
+                    "CAN'T + базовая форма COME.",
             },
+
 
             {
                 "order": 9,
-                "prompt": "We will ___ finish the work tomorrow.",
+                "section": 5,
+                "type": "choice",
+
+                "prompt":
+                    "___ your child read?",
+
                 "options": [
-                    "can",
-                    "able to",
-                    "be able to",
-                    "could",
+                    "Does can",
+                    "Can",
+                    "Do",
+                    "Is",
                 ],
-                "answer": "be able to",
-                "explanation": "Будущая возможность: will be able to.",
+
+                "answer":
+                    "Can",
+
+                "explanation":
+                    "CAN сам ставится перед подлежащим.",
             },
+
 
             {
                 "order": 10,
-                "prompt": "Will she be able to ___?",
-                "options": ["comes", "come", "coming", "came"],
-                "answer": "come",
-                "explanation": "После be able to используется базовая форма глагола.",
+                "section": 5,
+                "type": "choice",
+
+                "prompt":
+                    "Can your child read?",
+
+                "options": [
+                    "Yes, he does.",
+                    "Yes, he is.",
+                    "Yes, he can.",
+                    "Yes, he reads can.",
+                ],
+
+                "answer":
+                    "Yes, he can.",
+
+                "explanation":
+                    "Вопрос с CAN → краткий ответ с CAN.",
             },
+
 
             {
                 "order": 11,
-                "prompt": "I won't be able to ___ the meeting.",
+                "section": 5,
+                "type": "build",
+
+                "prompt":
+                    "Собери правильный вопрос.",
+
                 "options": [
-                    "attends",
-                    "attending",
-                    "attend",
-                    "attended",
+                    "Where",
+                    "can",
+                    "I",
+                    "park",
                 ],
-                "answer": "attend",
-                "explanation": "Правильно: be able to attend.",
+
+                "answer":
+                    "Where can I park",
+
+                "explanation":
+                    "WH-word + CAN + subject + base verb.",
             },
+
 
             {
                 "order": 12,
-                "prompt": "___ you be able to help us tomorrow?",
-                "options": ["Can", "Will", "Do", "Are"],
-                "answer": "Will",
-                "explanation": "Вопрос в будущем: Will you be able to...?",
+                "section": 6,
+                "type": "choice",
+
+                "prompt":
+                    "___ I use your phone?",
+
+                "options": [
+                    "Can",
+                    "Do",
+                    "Am",
+                    "Does",
+                ],
+
+                "answer":
+                    "Can",
+
+                "explanation":
+                    "CAN I...? используется для просьбы о разрешении.",
             },
+
 
             {
                 "order": 13,
-                "prompt": "He ___ swim when he was four.",
-                "options": ["could", "can", "will can", "is able"],
-                "answer": "could",
-                "explanation": "Общая способность в прошлом → could.",
+                "section": 6,
+                "type": "choice",
+
+                "prompt":
+                    "___ you help me with this bag?",
+
+                "options": [
+                    "Can",
+                    "Are",
+                    "Do can",
+                    "Does",
+                ],
+
+                "answer":
+                    "Can",
+
+                "explanation":
+                    "CAN YOU...? — обычная просьба.",
             },
+
 
             {
                 "order": 14,
-                "prompt": "Can you help me?",
+                "section": 7,
+                "type": "choice",
+
+                "prompt":
+                    "I ___ swim when I was six.",
+
                 "options": [
-                    "Yes, I do.",
-                    "Yes, I am.",
-                    "Yes, I can.",
-                    "Yes, I help.",
+                    "can",
+                    "could",
+                    "will can",
+                    "am able",
                 ],
-                "answer": "Yes, I can.",
-                "explanation": "Вопрос с can требует краткий ответ с can.",
+
+                "answer":
+                    "could",
+
+                "explanation":
+                    "Общая способность в прошлом → COULD.",
             },
+
 
             {
                 "order": 15,
-                "prompt": "Could you speak more slowly?",
-                "options": [
-                    "Yes, of course.",
-                    "Yes, I could yesterday.",
-                    "No, I don't speak.",
-                    "Yes, I am.",
-                ],
-                "answer": "Yes, of course.",
-                "explanation": "Здесь could используется как вежливая просьба.",
-            },
+                "section": 7,
+                "type": "choice",
 
-            {
-                "order": 16,
-                "prompt": "Choose the correct sentence.",
-                "options": [
-                    "He cans swim.",
-                    "He can swims.",
-                    "He can swim.",
-                    "He can to swim.",
-                ],
-                "answer": "He can swim.",
-                "explanation": "CAN не получает -s, а основной глагол остаётся в базовой форме.",
-            },
+                "prompt":
+                    "Choose the correct sentence.",
 
-            {
-                "order": 17,
-                "prompt": "Choose the correct question.",
-                "options": [
-                    "Do you can speak English?",
-                    "Can you speak English?",
-                    "Are you can speak English?",
-                    "Does you can speak English?",
-                ],
-                "answer": "Can you speak English?",
-                "explanation": "Do/does с can не используются.",
-            },
-
-            {
-                "order": 18,
-                "prompt": "Choose the correct sentence.",
-                "options": [
-                    "I will can help you.",
-                    "I will be able to help you.",
-                    "I will able to help you.",
-                    "I can will help you.",
-                ],
-                "answer": "I will be able to help you.",
-                "explanation": "Для будущего используется will be able to.",
-            },
-
-            {
-                "order": 19,
-                "prompt": "Where ___ I park?",
-                "options": ["do can", "can", "am can", "does"],
-                "answer": "can",
-                "explanation": "Специальный вопрос: Where can I park?",
-            },
-
-            {
-                "order": 20,
-                "prompt": "She ___ read when she was five.",
-                "options": ["could", "can", "cans", "was can"],
-                "answer": "could",
-                "explanation": "Прошлая общая способность → could.",
-            },
-
-            {
-                "order": 21,
-                "prompt": "The door was locked, but we ___ open it.",
-                "options": [
-                    "were able to",
-                    "will be able to",
-                    "can to",
-                    "are able",
-                ],
-                "answer": "were able to",
-                "explanation": "Для конкретного успешного результата в прошлом подходит were able to.",
-            },
-
-            {
-                "order": 22,
-                "prompt": "Choose the more polite request.",
-                "options": [
-                    "Can you help me?",
-                    "Could you help me?",
-                    "Do you help me?",
-                    "Are you help me?",
-                ],
-                "answer": "Could you help me?",
-                "explanation": "Could you...? обычно звучит вежливее.",
-            },
-
-            {
-                "order": 23,
-                "prompt": "Choose the correct sentence.",
                 "options": [
                     "She could to read.",
                     "She could reads.",
                     "She could read.",
                     "She could reading.",
                 ],
-                "answer": "She could read.",
-                "explanation": "После could используется базовая форма без to.",
+
+                "answer":
+                    "She could read.",
+
+                "explanation":
+                    "После COULD используется базовая форма.",
             },
 
+
             {
-                "order": 24,
-                "prompt": "Which sentence talks about future ability?",
+                "order": 16,
+                "section": 8,
+                "type": "choice",
+
+                "prompt":
+                    "She ___ understand the question yesterday.",
+
                 "options": [
-                    "I can help you.",
-                    "I could help when I was younger.",
-                    "I will be able to help you tomorrow.",
-                    "I can helping you tomorrow.",
+                    "couldn't",
+                    "doesn't can",
+                    "can't",
+                    "not could",
                 ],
-                "answer": "I will be able to help you tomorrow.",
-                "explanation": "Будущая способность выражается через will be able to.",
+
+                "answer":
+                    "couldn't",
+
+                "explanation":
+                    "Неспособность в прошлом → COULDN'T.",
+            },
+
+
+            {
+                "order": 17,
+                "section": 8,
+                "type": "choice",
+
+                "prompt":
+                    "Could you swim when you were five?",
+
+                "options": [
+                    "Yes, I could.",
+                    "Yes, I can.",
+                    "Yes, I did.",
+                    "Yes, I was.",
+                ],
+
+                "answer":
+                    "Yes, I could.",
+
+                "explanation":
+                    "Вопрос с COULD → ответ с COULD.",
+            },
+
+
+            {
+                "order": 18,
+                "section": 9,
+                "type": "choice",
+
+                "prompt":
+                    "Choose the more polite request.",
+
+                "options": [
+                    "Can you open the window?",
+                    "Could you open the window?",
+                    "Do you open the window?",
+                    "Are you open the window?",
+                ],
+
+                "answer":
+                    "Could you open the window?",
+
+                "explanation":
+                    "COULD YOU...? обычно звучит вежливее.",
+            },
+
+
+            {
+                "order": 19,
+                "section": 10,
+                "type": "choice",
+
+                "prompt":
+                    "I ___ help you tomorrow.",
+
+                "options": [
+                    "will can",
+                    "will be able to",
+                    "will able to",
+                    "can will",
+                ],
+
+                "answer":
+                    "will be able to",
+
+                "explanation":
+                    "Будущая способность → WILL BE ABLE TO.",
+            },
+
+
+            {
+                "order": 20,
+                "section": 10,
+                "type": "choice",
+
+                "prompt":
+                    "The door was locked, but we ___ open it.",
+
+                "options": [
+                    "were able to",
+                    "will be able to",
+                    "can to",
+                    "are able to",
+                ],
+
+                "answer":
+                    "were able to",
+
+                "explanation":
+                    "Конкретный успешный результат в прошлом → WERE ABLE TO.",
             },
 
         ]
 
-        for data in exercises:
+
+        # ================================================
+        # 10 FINAL TEST QUESTIONS
+        # ================================================
+
+        final_test = [
+
+            {
+                "order": 21,
+
+                "prompt":
+                    "My sister ___ play the piano.",
+
+                "options": [
+                    "can",
+                    "cans",
+                    "does can",
+                    "is can",
+                ],
+
+                "answer":
+                    "can",
+
+                "explanation":
+                    "CAN не изменяется с SHE.",
+            },
+
+
+            {
+                "order": 22,
+
+                "prompt":
+                    "He can ___ very well.",
+
+                "options": [
+                    "cooks",
+                    "cook",
+                    "cooking",
+                    "to cook",
+                ],
+
+                "answer":
+                    "cook",
+
+                "explanation":
+                    "После CAN используется базовая форма.",
+            },
+
+
+            {
+                "order": 23,
+
+                "prompt":
+                    "Choose the correct negative sentence.",
+
+                "options": [
+                    "They don't can come.",
+                    "They can't come.",
+                    "They can't to come.",
+                    "They aren't can come.",
+                ],
+
+                "answer":
+                    "They can't come.",
+
+                "explanation":
+                    "Отрицание CAN → CAN'T + base verb.",
+            },
+
+
+            {
+                "order": 24,
+
+                "prompt":
+                    "___ she speak English?",
+
+                "options": [
+                    "Does can",
+                    "Can",
+                    "Does",
+                    "Is",
+                ],
+
+                "answer":
+                    "Can",
+
+                "explanation":
+                    "CAN ставится перед подлежащим без DO / DOES.",
+            },
+
+
+            {
+                "order": 25,
+
+                "prompt":
+                    "Can I sit here?",
+
+                "options": [
+                    "Yes, you can.",
+                    "Yes, you do.",
+                    "Yes, you are.",
+                    "Yes, you sit.",
+                ],
+
+                "answer":
+                    "Yes, you can.",
+
+                "explanation":
+                    "Вопрос о разрешении с CAN → ответ с CAN.",
+            },
+
+
+            {
+                "order": 26,
+
+                "prompt":
+                    "When he was young, he ___ run very fast.",
+
+                "options": [
+                    "could",
+                    "can",
+                    "cans",
+                    "will be able to",
+                ],
+
+                "answer":
+                    "could",
+
+                "explanation":
+                    "Общая способность в прошлом → COULD.",
+            },
+
+
+            {
+                "order": 27,
+
+                "prompt":
+                    "Choose the correct sentence.",
+
+                "options": [
+                    "She couldn't to understand me.",
+                    "She couldn't understands me.",
+                    "She couldn't understand me.",
+                    "She doesn't could understand me.",
+                ],
+
+                "answer":
+                    "She couldn't understand me.",
+
+                "explanation":
+                    "COULDN'T + базовая форма.",
+            },
+
+
+            {
+                "order": 28,
+
+                "prompt":
+                    "Which sentence is a polite request now?",
+
+                "options": [
+                    "Could you speak more slowly?",
+                    "Could you spoke more slowly?",
+                    "Do you could speak more slowly?",
+                    "Are you could speak more slowly?",
+                ],
+
+                "answer":
+                    "Could you speak more slowly?",
+
+                "explanation":
+                    "COULD YOU...? может выражать вежливую просьбу в настоящем.",
+            },
+
+
+            {
+                "order": 29,
+
+                "prompt":
+                    "Choose the sentence about future ability.",
+
+                "options": [
+                    "I can drive.",
+                    "I could drive when I was eighteen.",
+                    "I will be able to drive next month.",
+                    "I will can drive next month.",
+                ],
+
+                "answer":
+                    "I will be able to drive next month.",
+
+                "explanation":
+                    "Будущая способность → WILL BE ABLE TO.",
+            },
+
+
+            {
+                "order": 30,
+
+                "prompt":
+                    "Choose the fully correct set.",
+
+                "options": [
+                    "I can swim. / I could swim at five. / I will be able to swim again soon.",
+                    "I can to swim. / I could swam at five. / I will can swim soon.",
+                    "I cans swim. / I could to swim at five. / I will able to swim soon.",
+                    "I do can swim. / I was could swim at five. / I can will swim soon.",
+                ],
+
+                "answer":
+                    "I can swim. / I could swim at five. / I will be able to swim again soon.",
+
+                "explanation":
+                    "CAN — настоящее, COULD — прошлая способность, WILL BE ABLE TO — будущая способность.",
+            },
+
+        ]
+
+
+        valid_orders = []
+
+
+        for data in (
+            training
+            +
+            final_test
+        ):
+
+            valid_orders.append(
+                data["order"]
+            )
+
+
+            if data["order"] <= 20:
+
+                section = (
+                    section_objects[
+                        data["section"]
+                    ]
+                )
+
+            else:
+
+                section = None
+
 
             GrammarExercise.objects.update_or_create(
                 lesson=lesson,
                 order=data["order"],
+
                 defaults={
-                    "exercise_type": GrammarExercise.Type.CHOICE,
-                    "prompt": data["prompt"],
-                    "options": data["options"],
-                    "correct_answer": data["answer"],
-                    "explanation": data["explanation"],
-                    "is_published": True,
+                    "section":
+                        section,
+
+                    "exercise_type":
+                        data.get(
+                            "type",
+                            "choice",
+                        ),
+
+                    "prompt":
+                        data["prompt"],
+
+                    "options":
+                        data["options"],
+
+                    "correct_answer":
+                        data["answer"],
+
+                    "explanation":
+                        data["explanation"],
+
+                    "is_published":
+                        True,
                 },
             )
 
+
+        GrammarExercise.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__in=valid_orders,
+        ).delete()
+
+
+        GrammarLessonSection.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__in=[
+                item["order"]
+                for item in sections
+            ],
+        ).delete()
+
+
         self.stdout.write(
             self.style.SUCCESS(
-                "✅ A1 Lesson 20 seeded: "
-                "CAN, COULD и BE ABLE TO"
+                "✅ Interactive A1 Lesson 20 seeded"
             )
         )
 
         self.stdout.write(
-            f"Sections: {lesson.sections.count()}"
+            f"Micro rules: "
+            f"{lesson.sections.count()}"
         )
 
         self.stdout.write(
-            f"Exercises: {lesson.exercises.count()}"
+            "Training exercises: "
+            f"{lesson.exercises.filter(section__isnull=False).count()}"
+        )
+
+        self.stdout.write(
+            "Final test: "
+            f"{lesson.exercises.filter(section__isnull=True).count()}"
         )

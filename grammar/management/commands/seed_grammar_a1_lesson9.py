@@ -10,58 +10,89 @@ from grammar.models import (
 class Command(BaseCommand):
 
     help = (
-        "Create/update A1 Grammar Lesson 9: "
-        "Reflexive pronouns."
+        "Create/update interactive A1 Grammar "
+        "Lesson 9: Reflexive pronouns."
     )
+
 
     def handle(self, *args, **options):
 
-        lesson, _ = GrammarLesson.objects.update_or_create(
-            level="A1",
-            order=9,
-            defaults={
-                "title": "Возвратные местоимения",
-                "slug": "reflexive-pronouns",
-                "theory_text": "Reflexive pronouns.",
-                "estimated_minutes": 30,
-                "pass_score": 70,
-                "xp_reward": 100,
-                "is_published": True,
-            },
+        lesson, _ = (
+            GrammarLesson.objects
+            .update_or_create(
+                level="A1",
+                order=9,
+                defaults={
+                    "title":
+                        "Возвратные местоимения",
+
+                    "slug":
+                        "reflexive-pronouns",
+
+                    "theory_text":
+                        "Reflexive pronouns.",
+
+                    "estimated_minutes":
+                        15,
+
+                    "pass_score":
+                        70,
+
+                    "xp_reward":
+                        100,
+
+                    "is_published":
+                        True,
+                },
+            )
         )
+
+
+        # =================================================
+        # 9 MICRO-RULES
+        # =================================================
 
         sections = [
 
             {
                 "order": 1,
-                "title": "Что такое возвратные местоимения",
-                "body": """Возвратные местоимения показывают, что действие направлено обратно на того, кто его выполняет.
+                "title":
+                    "Когда нужен reflexive pronoun?",
 
-Сравните:
+                "body":
+                    """Возвратное местоимение используется, когда человек выполняет действие и это действие направлено на него же.
+
+Сравни:
 
 I see him.
-— Я вижу его.
+Я вижу его.
 
 I see myself in the mirror.
-— Я вижу себя в зеркале.
+Я вижу себя.
 
-В первом предложении действие направлено на другого человека.
+Marat cut him.
+Марат порезал другого мужчину.
 
-Во втором — на самого говорящего.
+Marat cut himself.
+Марат порезался сам.
 
 Главный вопрос:
 
-Кто выполняет действие?
+кто выполняет действие?
 
-И на кого направлено действие?
+и на кого направлено действие?
 
-Если это один и тот же человек, часто используется возвратное местоимение.""",
+Если это один и тот же человек — часто нужен reflexive pronoun.""",
             },
+
 
             {
                 "order": 2,
-                "title": "Основная таблица",
-                "body": """Личное местоимение → возвратная форма:
+                "title":
+                    "Главная таблица",
+
+                "body":
+                    """Формы нужно запомнить:
 
 I → myself
 
@@ -79,156 +110,106 @@ you → yourselves
 
 they → themselves
 
-Запомните:
+Обычно:
 
-единственное число часто заканчивается на -self;
+единственное число → -self
 
-множественное число — на -selves.""",
+множественное число → -selves
+
+Особенно запомни:
+
+yourself = один человек
+
+yourselves = несколько людей.""",
             },
+
 
             {
                 "order": 3,
-                "title": "Myself, yourself, himself, herself",
-                "body": """Myself используется с I:
+                "title":
+                    "Действие направлено на самого себя",
+
+                "body":
+                    """Примеры:
 
 I cut myself.
 
-I saw myself in the mirror.
+He hurt himself.
 
-I introduced myself.
-
-Yourself используется, когда обращаемся к одному человеку:
-
-Did you hurt yourself?
-
-You should look after yourself.
-
-Help yourself.
-
-Himself используется с he:
-
-He cut himself while cooking.
-
-He introduced himself.
-
-Herself используется с she:
-
-She taught herself English.
-
-She hurt herself.
-
-She prepared herself for the interview.""",
-            },
-
-            {
-                "order": 4,
-                "title": "Itself, ourselves, yourselves, themselves",
-                "body": """Itself используется с it:
+She looked at herself in the mirror.
 
 The cat cleaned itself.
 
-The door opened by itself.
-
-The machine turns itself off.
-
-Ourselves используется с we:
-
 We introduced ourselves.
 
-We enjoyed ourselves.
+They prepared themselves.
 
-We did the work ourselves.
+Форма всегда должна соответствовать подлежащему:
 
-Yourselves используется при обращении к нескольким людям:
+I → myself
 
-Please introduce yourselves.
+he → himself
 
-Did you enjoy yourselves?
+she → herself
 
-Themselves используется с they:
+we → ourselves
 
-They introduced themselves.
-
-The children dressed themselves.
-
-They did everything themselves.""",
+they → themselves.""",
             },
 
-            {
-                "order": 5,
-                "title": "Когда действие направлено на себя",
-                "body": """Сравните:
-
-Marat cut him.
-— Марат порезал другого мужчину.
-
-Marat cut himself.
-— Марат порезался сам.
-
-Aigul looked at her.
-— Айгуль посмотрела на другую женщину.
-
-Aigul looked at herself.
-— Айгуль посмотрела на себя.
-
-Простой алгоритм:
-
-1. Найдите подлежащее.
-2. Найдите объект действия.
-3. Если это один и тот же человек — используйте возвратное местоимение.""",
-            },
 
             {
-                "order": 6,
-                "title": "Частые конструкции",
-                "body": """Возвратные местоимения часто встречаются после глаголов:
+                "order": 4,
+                "title":
+                    "Частые конструкции",
 
-cut;
-hurt;
-burn;
-introduce;
-teach;
-prepare;
-blame;
-enjoy;
-help;
-look at.
+                "body":
+                    """Некоторые конструкции часто используются с reflexive pronouns:
 
-Полезные конструкции:
-
-introduce oneself = представиться
+introduce oneself
+представиться
 
 Let me introduce myself.
 
-teach oneself = научиться самостоятельно
+teach oneself
+научиться самостоятельно
 
 He taught himself English.
 
-enjoy oneself = хорошо проводить время
+enjoy oneself
+хорошо проводить время
 
-We enjoyed ourselves at the party.
+We enjoyed ourselves.
 
-help yourself = угощайся
+hurt oneself
+пораниться
+
+She hurt herself.
+
+help yourself
+угощайся / бери сам
 
 Help yourself to some cake.""",
             },
 
+
             {
-                "order": 7,
-                "title": "Значение «сам»",
-                "body": """Возвратное местоимение может не означать действие на себя.
+                "order": 5,
+                "title":
+                    "Reflexive pronoun может означать «сам»",
 
-Оно может просто усиливать значение:
+                "body":
+                    """Иногда действие не направлено на себя.
 
-сам;
-сама;
-сами;
-лично.
+Reflexive pronoun просто подчёркивает:
 
-Примеры:
+сам
+сама
+сами
+лично
 
 I did it myself.
-— Я сделал это сам.
+Я сделал это сам.
 
 She wrote the report herself.
 
@@ -236,488 +217,973 @@ The director himself spoke to us.
 
 We prepared the food ourselves.
 
-The children made the toys themselves.
+В таком значении форма часто стоит:
 
-Возвратная форма в этом случае подчёркивает, кто именно выполнил действие.""",
+после подлежащего
+
+или
+
+в конце предложения.
+
+I myself checked it.
+
+I checked it myself.""",
             },
 
-            {
-                "order": 8,
-                "title": "Где ставится усилительная форма",
-                "body": """Когда возвратное местоимение означает «сам», оно может стоять:
-
-после подлежащего;
-
-или в конце предложения.
-
-Сравните:
-
-I myself checked the document.
-
-I checked the document myself.
-
-Оба предложения означают:
-
-Я сам проверил документ.
-
-В разговорной речи вариант в конце предложения встречается особенно часто.""",
-            },
 
             {
-                "order": 9,
-                "title": "By myself",
-                "body": """Конструкция:
+                "order": 6,
+                "title":
+                    "BY MYSELF = самостоятельно",
 
-by + возвратное местоимение
-
-часто означает:
+                "body":
+                    """BY + reflexive pronoun часто означает:
 
 самостоятельно;
 без помощи;
 в одиночестве.
 
-Примеры:
-
 I live by myself.
-— Я живу один.
+Я живу один.
 
 She travelled by herself.
-— Она путешествовала одна.
+Она путешествовала одна.
 
 He fixed the computer by himself.
-— Он сам, без помощи, починил компьютер.
+Он починил компьютер без помощи.
 
-Сравните:
+Сравни:
 
 I did it myself.
-— Я сделал это сам.
+Я сделал это сам.
 
 I did it by myself.
-— Я сделал это самостоятельно, без помощи.""",
+Я сделал это самостоятельно, без помощи.""",
             },
 
-            {
-                "order": 10,
-                "title": "Когда возвратное местоимение не нужно",
-                "body": """В английском некоторые действия не требуют возвратного местоимения, хотя в русском часто звучат возвратно.
 
-Обычно говорят:
+            {
+                "order": 7,
+                "title":
+                    "Когда reflexive pronoun не нужен",
+
+                "body":
+                    """В английском некоторые действия обычно не требуют возвратного местоимения.
+
+Обычно говорим:
 
 I washed.
-— Я умылся.
 
 He dressed quickly.
-— Он быстро оделся.
 
 She feels tired.
-— Она чувствует себя уставшей.
 
 We met yesterday.
-— Мы встретились вчера.
 
-Неправильно:
+Не:
 
 I feel myself tired.
 
-Правильно:
+А:
 
 I feel tired.
 
-Неправильно:
+Не:
 
 We met ourselves yesterday.
 
-Правильно:
+А:
 
-We met yesterday.""",
+We met yesterday.
+
+Английская конструкция не всегда совпадает с русским «-ся».""",
             },
 
+
             {
-                "order": 11,
-                "title": "Themselves или each other",
-                "body": """Очень важно различать:
+                "order": 8,
+                "title":
+                    "THEMSELVES или EACH OTHER?",
 
-themselves = себя
+                "body":
+                    """THEMSELVES означает:
 
-each other = друг друга
+себя / сами себя.
 
-Сравните:
+EACH OTHER означает:
+
+друг друга.
+
+Сравни:
 
 They looked at themselves in the mirror.
-— Они посмотрели на себя.
+Они посмотрели на себя.
 
 They looked at each other.
-— Они посмотрели друг на друга.
-
-Ещё пример:
+Они посмотрели друг на друга.
 
 The children dressed themselves.
-— Дети оделись сами.
+Дети оделись сами.
 
 The children helped each other.
-— Дети помогли друг другу.""",
+Дети помогали друг другу.""",
             },
 
-            {
-                "order": 12,
-                "title": "Согласование с подлежащим",
-                "body": """Возвратное местоимение должно соответствовать подлежащему.
-
-Правильно:
-
-I hurt myself.
-
-He hurt himself.
-
-She hurt herself.
-
-We hurt ourselves.
-
-They hurt themselves.
-
-Неправильно:
-
-I hurt himself.
-
-She hurt myself.
-
-They hurt ourselves.
-
-Также:
-
-один человек → yourself
-
-несколько людей → yourselves
-
-Help yourself.
-
-Help yourselves.""",
-            },
 
             {
-                "order": 13,
-                "title": "Типичные ошибки",
-                "body": """Неправильно:
+                "order": 9,
+                "title":
+                    "Как быстро выбрать форму",
 
-I cut me.
+                "body":
+                    """Шаг 1.
 
-Правильно:
-
-I cut myself.
-
-Неправильно:
-
-Aigul introduced himself.
-
-Правильно:
-
-Aigul introduced herself.
-
-Неправильно:
-
-theirselves
-
-Правильно:
-
-themselves
-
-Неправильно:
-
-ourself
-
-Правильно:
-
-ourselves
-
-Неправильно:
-
-Myself did the work.
-
-Правильно:
-
-I did the work myself.""",
-            },
-
-            {
-                "order": 14,
-                "title": "Как быстро выбрать форму",
-                "body": """1. Найдите подлежащее.
+Найди подлежащее.
 
 She hurt ___.
 
-Подлежащее — she.
+Подлежащее → SHE.
 
-2. Проверьте, направлено ли действие на того же человека.
+Шаг 2.
 
-Если да:
+Действие направлено на неё же?
+
+Да:
 
 She hurt herself.
 
-Если на другого:
+Нет:
 
 She hurt him.
 
-3. Проверьте число.
+Шаг 3.
 
-Один человек:
+Проверь число:
 
-myself;
-yourself;
-himself;
-herself;
-itself.
+one person:
 
-Несколько:
+myself
+yourself
+himself
+herself
+itself
 
-ourselves;
-yourselves;
-themselves.
+plural:
 
-4. Если речь о «самостоятельно, без помощи»:
+ourselves
+yourselves
+themselves
 
-by myself;
-by yourself;
-by himself;
-by herself;
-by ourselves;
+Шаг 4.
+
+Если смысл «самостоятельно, без помощи»:
+
+by myself
+by yourself
+by himself
+by herself
+by ourselves
 by themselves.""",
             },
 
         ]
 
+
+        section_objects = {}
+
+
         for data in sections:
 
-            GrammarLessonSection.objects.update_or_create(
-                lesson=lesson,
-                order=data["order"],
-                defaults={
-                    "title": data["title"],
-                    "body": data["body"],
-                },
+            section, _ = (
+                GrammarLessonSection.objects
+                .update_or_create(
+                    lesson=lesson,
+                    order=data["order"],
+                    defaults={
+                        "title":
+                            data["title"],
+
+                        "body":
+                            data["body"],
+                    },
+                )
             )
 
-        exercises = [
+            section_objects[
+                data["order"]
+            ] = section
+
+
+        # =================================================
+        # 20 TRAINING EXERCISES
+        # =================================================
+
+        training = [
 
             {
                 "order": 1,
-                "prompt": "I saw ___ in the mirror.",
-                "options": ["me", "myself", "mine", "my"],
-                "answer": "myself",
-                "explanation": "Человек видит самого себя, поэтому используется myself.",
+                "section": 1,
+                "type": "choice",
+
+                "prompt":
+                    "I saw ___ in the mirror.",
+
+                "options": [
+                    "me",
+                    "myself",
+                    "mine",
+                    "my",
+                ],
+
+                "answer":
+                    "myself",
+
+                "explanation":
+                    "Говорящий видит самого себя.",
             },
+
 
             {
                 "order": 2,
-                "prompt": "He cut ___ while cooking.",
-                "options": ["him", "his", "himself", "he"],
-                "answer": "himself",
-                "explanation": "Он порезал сам себя: he → himself.",
+                "section": 1,
+                "type": "choice",
+
+                "prompt":
+                    "Marat cut ___ while cooking.",
+
+                "options": [
+                    "him",
+                    "his",
+                    "himself",
+                    "he",
+                ],
+
+                "answer":
+                    "himself",
+
+                "explanation":
+                    "Marat порезал самого себя.",
             },
+
 
             {
                 "order": 3,
-                "prompt": "She taught ___ to play the guitar.",
-                "options": ["her", "herself", "she", "hers"],
-                "answer": "herself",
-                "explanation": "Она самостоятельно научилась: teach oneself.",
+                "section": 2,
+                "type": "fill",
+
+                "prompt":
+                    "She hurt ___.",
+
+                "options": [],
+
+                "answer":
+                    "herself",
+
+                "explanation":
+                    "She → herself.",
             },
+
 
             {
                 "order": 4,
-                "prompt": "We enjoyed ___ at the party.",
-                "options": ["us", "our", "ourselves", "ours"],
-                "answer": "ourselves",
-                "explanation": "Устойчивая конструкция: enjoy oneself.",
+                "section": 2,
+                "type": "choice",
+
+                "prompt":
+                    "Please introduce ___. (one person)",
+
+                "options": [
+                    "yourself",
+                    "yourselves",
+                    "themselves",
+                    "ourselves",
+                ],
+
+                "answer":
+                    "yourself",
+
+                "explanation":
+                    "Обращение к одному человеку → YOURSELF.",
             },
+
 
             {
                 "order": 5,
-                "prompt": "Please introduce ___. (one person)",
-                "options": ["yourself", "yourselves", "himself", "themselves"],
-                "answer": "yourself",
-                "explanation": "Обращение к одному человеку: yourself.",
+                "section": 2,
+                "type": "choice",
+
+                "prompt":
+                    "Please introduce ___. (several people)",
+
+                "options": [
+                    "yourself",
+                    "yourselves",
+                    "himself",
+                    "herself",
+                ],
+
+                "answer":
+                    "yourselves",
+
+                "explanation":
+                    "Обращение к нескольким людям → YOURSELVES.",
             },
+
 
             {
                 "order": 6,
-                "prompt": "The children made the decorations ___.",
-                "options": ["itself", "himself", "themselves", "ourselves"],
-                "answer": "themselves",
-                "explanation": "Children — множественное число: themselves.",
+                "section": 3,
+                "type": "choice",
+
+                "prompt":
+                    "The cat cleaned ___.",
+
+                "options": [
+                    "itself",
+                    "himself",
+                    "themselves",
+                    "ourselves",
+                ],
+
+                "answer":
+                    "itself",
+
+                "explanation":
+                    "Cat здесь заменяется IT → ITSELF.",
             },
+
 
             {
                 "order": 7,
-                "prompt": "I repaired the chair ___.",
-                "options": ["myself", "me", "mine", "my"],
-                "answer": "myself",
-                "explanation": "Myself здесь означает «сам».",
+                "section": 3,
+                "type": "fill",
+
+                "prompt":
+                    "We looked at ___ in the photograph.",
+
+                "options": [],
+
+                "answer":
+                    "ourselves",
+
+                "explanation":
+                    "We → ourselves.",
             },
+
 
             {
                 "order": 8,
-                "prompt": "She lives by ___.",
-                "options": ["her", "herself", "hers", "she"],
-                "answer": "herself",
-                "explanation": "By herself означает «одна / самостоятельно».",
+                "section": 4,
+                "type": "choice",
+
+                "prompt":
+                    "We enjoyed ___ at the party.",
+
+                "options": [
+                    "us",
+                    "our",
+                    "ourselves",
+                    "ours",
+                ],
+
+                "answer":
+                    "ourselves",
+
+                "explanation":
+                    "Устойчивая конструкция: enjoy oneself.",
             },
+
 
             {
                 "order": 9,
-                "prompt": "The students helped ___ during the project.",
-                "options": ["themselves", "each other", "ourselves", "itself"],
-                "answer": "each other",
-                "explanation": "Студенты помогали друг другу, а не самим себе.",
+                "section": 4,
+                "type": "choice",
+
+                "prompt":
+                    "He taught ___ English.",
+
+                "options": [
+                    "him",
+                    "his",
+                    "himself",
+                    "he",
+                ],
+
+                "answer":
+                    "himself",
+
+                "explanation":
+                    "Teach oneself означает научиться самостоятельно.",
             },
+
 
             {
                 "order": 10,
-                "prompt": "I feel ___ today.",
-                "options": ["myself tired", "me tired", "tired", "myself tiring"],
-                "answer": "tired",
-                "explanation": "После feel в этом значении возвратное местоимение не нужно.",
+                "section": 4,
+                "type": "choice",
+
+                "prompt":
+                    "___ to some cake.",
+
+                "options": [
+                    "Help yourself",
+                    "Help you",
+                    "Help yours",
+                    "Help myself",
+                ],
+
+                "answer":
+                    "Help yourself",
+
+                "explanation":
+                    "Help yourself — устойчивое выражение «угощайся».",
             },
+
 
             {
                 "order": 11,
-                "prompt": "I introduced ___ to the new students.",
-                "options": ["me", "myself", "mine", "my"],
-                "answer": "myself",
-                "explanation": "I → myself.",
+                "section": 5,
+                "type": "choice",
+
+                "prompt":
+                    "I repaired the chair ___.",
+
+                "options": [
+                    "myself",
+                    "me",
+                    "mine",
+                    "my",
+                ],
+
+                "answer":
+                    "myself",
+
+                "explanation":
+                    "MYSELF здесь подчёркивает: «я сделал это сам».",
             },
+
 
             {
                 "order": 12,
-                "prompt": "Did you hurt ___? (one person)",
-                "options": ["yourselves", "yourself", "himself", "themselves"],
-                "answer": "yourself",
-                "explanation": "Обращение к одному человеку: yourself.",
+                "section": 5,
+                "type": "choice",
+
+                "prompt":
+                    "The director ___ checked the documents.",
+
+                "options": [
+                    "himself",
+                    "him",
+                    "his",
+                    "he",
+                ],
+
+                "answer":
+                    "himself",
+
+                "explanation":
+                    "HIMSELF подчёркивает: сам директор лично.",
             },
+
 
             {
                 "order": 13,
-                "prompt": "Marat looked at ___ in the mirror.",
-                "options": ["him", "his", "himself", "he"],
-                "answer": "himself",
-                "explanation": "Marat посмотрел на самого себя.",
+                "section": 6,
+                "type": "choice",
+
+                "prompt":
+                    "She travelled by ___.",
+
+                "options": [
+                    "her",
+                    "herself",
+                    "hers",
+                    "she",
+                ],
+
+                "answer":
+                    "herself",
+
+                "explanation":
+                    "BY HERSELF означает одна / самостоятельно.",
             },
+
 
             {
                 "order": 14,
-                "prompt": "Aigul prepared ___ for the examination.",
-                "options": ["her", "hers", "herself", "she"],
-                "answer": "herself",
-                "explanation": "Aigul = she → herself.",
+                "section": 6,
+                "type": "build",
+
+                "prompt":
+                    "Собери выражение «я сделал это самостоятельно».",
+
+                "options": [
+                    "I",
+                    "did",
+                    "it",
+                    "by",
+                    "myself",
+                ],
+
+                "answer":
+                    "I did it by myself",
+
+                "explanation":
+                    "BY MYSELF подчёркивает отсутствие помощи.",
             },
+
 
             {
                 "order": 15,
-                "prompt": "The cat cleaned ___.",
-                "options": ["itself", "himself", "themselves", "ourselves"],
-                "answer": "itself",
-                "explanation": "Cat здесь заменяется it → itself.",
+                "section": 7,
+                "type": "choice",
+
+                "prompt":
+                    "I feel ___ today.",
+
+                "options": [
+                    "myself tired",
+                    "me tired",
+                    "tired",
+                    "myself tiring",
+                ],
+
+                "answer":
+                    "tired",
+
+                "explanation":
+                    "После FEEL в таком значении reflexive pronoun не нужен.",
             },
+
 
             {
                 "order": 16,
-                "prompt": "We completed the project ___.",
-                "options": ["us", "our", "ourselves", "ours"],
-                "answer": "ourselves",
-                "explanation": "Ourselves здесь означает «сами».",
+                "section": 7,
+                "type": "choice",
+
+                "prompt":
+                    "Choose the correct sentence.",
+
+                "options": [
+                    "We met ourselves yesterday.",
+                    "We met yesterday.",
+                    "We met us yesterday.",
+                    "Ourselves met yesterday.",
+                ],
+
+                "answer":
+                    "We met yesterday.",
+
+                "explanation":
+                    "С MEET возвратное местоимение здесь не нужно.",
             },
+
 
             {
                 "order": 17,
-                "prompt": "Please make ___ comfortable. (several people)",
-                "options": ["yourself", "yourselves", "themselves", "ourselves"],
-                "answer": "yourselves",
-                "explanation": "Обращение к нескольким людям: yourselves.",
+                "section": 8,
+                "type": "choice",
+
+                "prompt":
+                    "The students helped ___ during the project.",
+
+                "options": [
+                    "themselves",
+                    "each other",
+                    "ourselves",
+                    "itself",
+                ],
+
+                "answer":
+                    "each other",
+
+                "explanation":
+                    "Студенты помогали друг другу.",
             },
+
 
             {
                 "order": 18,
-                "prompt": "The children dressed ___.",
-                "options": ["itself", "himself", "themselves", "yourselves"],
-                "answer": "themselves",
-                "explanation": "Children = they → themselves.",
+                "section": 8,
+                "type": "choice",
+
+                "prompt":
+                    "They looked at ___ in the mirror.",
+
+                "options": [
+                    "each other",
+                    "themselves",
+                    "himself",
+                    "ourselves",
+                ],
+
+                "answer":
+                    "themselves",
+
+                "explanation":
+                    "Они смотрели на самих себя.",
             },
+
 
             {
                 "order": 19,
-                "prompt": "She travelled by ___.",
-                "options": ["her", "herself", "hers", "she"],
-                "answer": "herself",
-                "explanation": "By herself означает «одна / самостоятельно».",
+                "section": 9,
+                "type": "choice",
+
+                "prompt":
+                    "Aigul prepared ___ for the interview.",
+
+                "options": [
+                    "her",
+                    "hers",
+                    "herself",
+                    "she",
+                ],
+
+                "answer":
+                    "herself",
+
+                "explanation":
+                    "Aigul = SHE → HERSELF.",
             },
+
 
             {
                 "order": 20,
-                "prompt": "The director ___ checked the documents.",
-                "options": ["himself", "him", "his", "he"],
-                "answer": "himself",
-                "explanation": "Himself здесь усиливает значение: сам директор.",
-            },
+                "section": 9,
+                "type": "choice",
 
-            {
-                "order": 21,
-                "prompt": "We looked at ___ in the photograph.",
-                "options": ["us", "ourselves", "our", "ours"],
-                "answer": "ourselves",
-                "explanation": "Мы посмотрели на самих себя.",
-            },
+                "prompt":
+                    "Choose the correct pair.",
 
-            {
-                "order": 22,
-                "prompt": "The two friends called ___ every day.",
-                "options": ["themselves", "each other", "itself", "himself"],
-                "answer": "each other",
-                "explanation": "Друзья звонили друг другу.",
-            },
+                "options": [
+                    "we → ourselves / they → themselves",
+                    "we → themselves / they → ourselves",
+                    "we → ourself / they → theirselves",
+                    "we → yourself / they → itself",
+                ],
 
-            {
-                "order": 23,
-                "prompt": "He feels ___ after the holiday.",
-                "options": ["himself better", "him better", "better", "himself well"],
-                "answer": "better",
-                "explanation": "После feel здесь возвратное местоимение не используется.",
-            },
+                "answer":
+                    "we → ourselves / they → themselves",
 
-            {
-                "order": 24,
-                "prompt": "The door closed by ___.",
-                "options": ["itself", "himself", "themselves", "herself"],
-                "answer": "itself",
-                "explanation": "By itself означает, что дверь закрылась сама.",
+                "explanation":
+                    "Правильные формы: WE → OURSELVES, THEY → THEMSELVES.",
             },
 
         ]
 
-        for data in exercises:
+
+        # =================================================
+        # 10 FINAL TEST QUESTIONS
+        # =================================================
+
+        final_test = [
+
+            {
+                "order": 21,
+
+                "prompt":
+                    "I introduced ___ to the new students.",
+
+                "options": [
+                    "me",
+                    "myself",
+                    "mine",
+                    "my",
+                ],
+
+                "answer":
+                    "myself",
+
+                "explanation":
+                    "I → myself.",
+            },
+
+
+            {
+                "order": 22,
+
+                "prompt":
+                    "Did you hurt ___? (one person)",
+
+                "options": [
+                    "yourself",
+                    "yourselves",
+                    "himself",
+                    "themselves",
+                ],
+
+                "answer":
+                    "yourself",
+
+                "explanation":
+                    "Один собеседник → YOURSELF.",
+            },
+
+
+            {
+                "order": 23,
+
+                "prompt":
+                    "The children dressed ___.",
+
+                "options": [
+                    "itself",
+                    "himself",
+                    "themselves",
+                    "yourself",
+                ],
+
+                "answer":
+                    "themselves",
+
+                "explanation":
+                    "Children = THEY → THEMSELVES.",
+            },
+
+
+            {
+                "order": 24,
+
+                "prompt":
+                    "She wrote the whole report ___.",
+
+                "options": [
+                    "herself",
+                    "her",
+                    "hers",
+                    "she",
+                ],
+
+                "answer":
+                    "herself",
+
+                "explanation":
+                    "HERSELF здесь означает «сама».",
+            },
+
+
+            {
+                "order": 25,
+
+                "prompt":
+                    "He fixed the computer by ___.",
+
+                "options": [
+                    "him",
+                    "his",
+                    "himself",
+                    "he",
+                ],
+
+                "answer":
+                    "himself",
+
+                "explanation":
+                    "BY HIMSELF означает самостоятельно, без помощи.",
+            },
+
+
+            {
+                "order": 26,
+
+                "prompt":
+                    "Choose the correct sentence.",
+
+                "options": [
+                    "She feels herself tired.",
+                    "She feels tired.",
+                    "She feels her tired.",
+                    "Herself feels tired.",
+                ],
+
+                "answer":
+                    "She feels tired.",
+
+                "explanation":
+                    "После FEEL в таком значении reflexive pronoun не нужен.",
+            },
+
+
+            {
+                "order": 27,
+
+                "prompt":
+                    "The two friends looked at ___.",
+
+                "options": [
+                    "themselves",
+                    "each other",
+                    "itself",
+                    "ourselves",
+                ],
+
+                "answer":
+                    "each other",
+
+                "explanation":
+                    "Два друга смотрели друг на друга.",
+            },
+
+
+            {
+                "order": 28,
+
+                "prompt":
+                    "The door opened by ___.",
+
+                "options": [
+                    "itself",
+                    "himself",
+                    "herself",
+                    "themselves",
+                ],
+
+                "answer":
+                    "itself",
+
+                "explanation":
+                    "BY ITSELF означает, что дверь открылась сама.",
+            },
+
+
+            {
+                "order": 29,
+
+                "prompt":
+                    "Please make ___ comfortable. (several people)",
+
+                "options": [
+                    "yourself",
+                    "yourselves",
+                    "ourselves",
+                    "itself",
+                ],
+
+                "answer":
+                    "yourselves",
+
+                "explanation":
+                    "Обращение к нескольким людям → YOURSELVES.",
+            },
+
+
+            {
+                "order": 30,
+
+                "prompt":
+                    "Choose the fully correct sentence.",
+
+                "options": [
+                    "They prepared themselves and then helped each other.",
+                    "They prepared each other and helped themselves each other.",
+                    "They prepared theirselves and helped themselves together.",
+                    "Them prepared themselves and helped each other.",
+                ],
+
+                "answer":
+                    "They prepared themselves and then helped each other.",
+
+                "explanation":
+                    "THEMSELVES означает себя, EACH OTHER — друг друга.",
+            },
+
+        ]
+
+
+        valid_orders = []
+
+
+        for data in (
+            training
+            +
+            final_test
+        ):
+
+            valid_orders.append(
+                data["order"]
+            )
+
+
+            if data["order"] <= 20:
+
+                section = (
+                    section_objects[
+                        data["section"]
+                    ]
+                )
+
+            else:
+
+                section = None
+
 
             GrammarExercise.objects.update_or_create(
                 lesson=lesson,
                 order=data["order"],
+
                 defaults={
-                    "exercise_type": GrammarExercise.Type.CHOICE,
-                    "prompt": data["prompt"],
-                    "options": data["options"],
-                    "correct_answer": data["answer"],
-                    "explanation": data["explanation"],
-                    "is_published": True,
+                    "section":
+                        section,
+
+                    "exercise_type":
+                        data.get(
+                            "type",
+                            "choice",
+                        ),
+
+                    "prompt":
+                        data["prompt"],
+
+                    "options":
+                        data["options"],
+
+                    "correct_answer":
+                        data["answer"],
+
+                    "explanation":
+                        data["explanation"],
+
+                    "is_published":
+                        True,
                 },
             )
 
+
+        GrammarExercise.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__in=valid_orders,
+        ).delete()
+
+
+        GrammarLessonSection.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__in=[
+                item["order"]
+                for item in sections
+            ],
+        ).delete()
+
+
         self.stdout.write(
             self.style.SUCCESS(
-                "✅ A1 Lesson 9 seeded: "
-                "Возвратные местоимения"
+                "✅ Interactive A1 Lesson 9 seeded"
             )
         )
 
         self.stdout.write(
-            f"Sections: {lesson.sections.count()}"
+            f"Micro rules: "
+            f"{lesson.sections.count()}"
         )
 
         self.stdout.write(
-            f"Exercises: {lesson.exercises.count()}"
+            "Training exercises: "
+            f"{lesson.exercises.filter(section__isnull=False).count()}"
+        )
+
+        self.stdout.write(
+            "Final test: "
+            f"{lesson.exercises.filter(section__isnull=True).count()}"
         )

@@ -115,6 +115,9 @@ def build_exam_question_ids(
         GrammarExercise.objects
         .filter(
             is_published=True,
+            exercise_type=(
+                GrammarExercise.Type.CHOICE
+            ),
             lesson__is_published=True,
             lesson__level="A1",
             lesson__order__range=(1, 60),

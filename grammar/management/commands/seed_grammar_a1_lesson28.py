@@ -10,68 +10,83 @@ from grammar.models import (
 class Command(BaseCommand):
 
     help = (
-        "Create/update A1 Grammar Lesson 28: "
-        "Past Continuous."
+        "Create/update interactive A1 Grammar "
+        "Lesson 28: Past Continuous."
     )
+
 
     def handle(self, *args, **options):
 
-        lesson, _ = GrammarLesson.objects.update_or_create(
-            level="A1",
-            order=28,
-            defaults={
-                "title": "Past Continuous",
-                "slug": "past-continuous",
-                "theory_text": "Past Continuous.",
-                "estimated_minutes": 40,
-                "pass_score": 70,
-                "xp_reward": 100,
-                "is_published": True,
-            },
+        lesson, _ = (
+            GrammarLesson.objects
+            .update_or_create(
+                level="A1",
+                order=28,
+
+                defaults={
+                    "title":
+                        "Past Continuous",
+
+                    "slug":
+                        "past-continuous",
+
+                    "theory_text":
+                        "Past Continuous.",
+
+                    "estimated_minutes":
+                        20,
+
+                    "pass_score":
+                        70,
+
+                    "xp_reward":
+                        100,
+
+                    "is_published":
+                        True,
+                },
+            )
         )
+
 
         sections = [
 
             {
                 "order": 1,
-                "title": "Что такое Past Continuous",
-                "body": """Past Continuous — прошедшее продолженное время.
 
-Оно используется, когда действие:
+                "title":
+                    "Что такое Past Continuous?",
 
-происходило в определённый момент в прошлом;
-
-длилось некоторое время;
-
-было в процессе, когда произошло другое действие;
-
-служило фоном для другого события;
-
-происходило одновременно с другим действием.
+                "body":
+                    """Past Continuous показывает действие, которое было в процессе в прошлом.
 
 Примеры:
 
 I was working at six yesterday.
 
-She was sleeping when I called.
+She was sleeping at midnight.
 
-They were playing while we were studying.""",
+They were playing football at that moment.
+
+Главная идея:
+
+мы смотрим не просто на факт действия,
+а на процесс в определённый момент прошлого.""",
             },
+
 
             {
                 "order": 2,
-                "title": "Основная формула",
-                "body": """Past Continuous состоит из:
 
-was / were
+                "title":
+                    "Главная формула",
 
-+
+                "body":
+                    """Past Continuous строится так:
 
-глагол-ing
-
-Формула:
-
-subject + was/were + verb-ing
+subject
++ WAS / WERE
++ verb-ing
 
 Примеры:
 
@@ -81,29 +96,44 @@ She was reading.
 
 They were playing.
 
-Главное правило:
+Без WAS / WERE время не строится.
 
-без was/were Past Continuous не строится.""",
+Не:
+
+I working.
+
+They playing.
+
+А:
+
+I was working.
+
+They were playing.""",
             },
+
 
             {
                 "order": 3,
-                "title": "WAS или WERE",
-                "body": """Используйте:
 
-I → was
+                "title":
+                    "WAS или WERE?",
 
-you → were
+                "body":
+                    """Используем:
 
-he → was
+I → WAS
 
-she → was
+he → WAS
 
-it → was
+she → WAS
 
-we → were
+it → WAS
 
-they → were
+you → WERE
+
+we → WERE
+
+they → WERE
 
 Примеры:
 
@@ -113,15 +143,22 @@ He was driving.
 
 She was cooking.
 
-We were waiting.
+You were waiting.
+
+We were studying.
 
 They were playing.""",
             },
 
+
             {
                 "order": 4,
-                "title": "Как добавить -ING",
-                "body": """Обычный случай:
+
+                "title":
+                    "Как образуется -ING?",
+
+                "body":
+                    """Обычный случай:
 
 work → working
 
@@ -129,7 +166,7 @@ read → reading
 
 play → playing
 
-Глагол на немую e:
+Немая E исчезает:
 
 write → writing
 
@@ -137,7 +174,7 @@ make → making
 
 come → coming
 
-Короткий глагол:
+Некоторые короткие глаголы удваивают согласную:
 
 sit → sitting
 
@@ -145,19 +182,24 @@ run → running
 
 swim → swimming
 
-Глагол на -ie:
+IE меняется на Y:
 
 lie → lying
 
-die → dying""",
+die → dying.""",
             },
+
 
             {
                 "order": 5,
-                "title": "Действие в конкретный момент прошлого",
-                "body": """Past Continuous показывает процесс в определённый момент прошлого.
 
-Примеры:
+                "title":
+                    "Процесс в конкретный момент прошлого",
+
+                "body":
+                    """Past Continuous часто отвечает на вопрос:
+
+Что происходило в тот момент?
 
 I was working at five yesterday.
 
@@ -165,159 +207,104 @@ She was sleeping at midnight.
 
 They were having dinner at seven.
 
-We were studying at that time.
-
 Частые выражения:
 
-at five yesterday;
+at five yesterday
 
-at midnight;
+at midnight
 
-at that moment;
+at that moment
 
-this time yesterday;
+this time yesterday
 
-all evening;
+from six to eight
 
-from six to eight.""",
+Сравни:
+
+I had dinner at seven.
+→ факт
+
+I was having dinner at seven.
+→ процесс в семь часов.""",
             },
+
 
             {
                 "order": 6,
-                "title": "Past Simple или Past Continuous",
-                "body": """Сравните:
 
-I had dinner at seven.
+                "title":
+                    "Длинное действие + короткое событие",
 
-Это завершённый факт.
+                "body":
+                    """Часто одно действие уже происходило, когда случилось другое.
 
-I was having dinner at seven.
+Длительный процесс:
 
-Это процесс в семь часов.
+Past Continuous
 
-Past Simple:
+Короткое событие:
 
-завершённое действие;
-
-короткое событие;
-
-факт.
-
-Past Continuous:
-
-процесс;
-
-фон;
-
-действие в конкретный момент прошлого.""",
-            },
-
-            {
-                "order": 7,
-                "title": "Длительное и короткое действие",
-                "body": """Часто одно действие было в процессе, когда произошло другое.
-
-Формула:
-
-Past Continuous + when + Past Simple
+Past Simple
 
 Пример:
 
 I was sleeping when you called.
 
-Длительное действие:
-
 was sleeping
-
-Короткое действие:
+→ процесс
 
 called
+→ короткое событие
 
-Ещё примеры:
+Ещё:
 
 She was cooking when the phone rang.
 
 We were driving home when the car stopped.""",
             },
 
+
             {
-                "order": 8,
-                "title": "WHEN",
-                "body": """WHEN означает «когда».
+                "order": 7,
 
-Часто после when стоит короткое завершённое действие в Past Simple.
+                "title":
+                    "WHEN или WHILE?",
 
-Примеры:
+                "body":
+                    """WHEN часто вводит короткое событие:
 
 I was reading when she came.
 
 He was sleeping when I called.
 
-They were walking when it began to snow.
-
-Порядок можно менять:
-
-I was sleeping when you called.
-
-When you called, I was sleeping.""",
-            },
-
-            {
-                "order": 9,
-                "title": "WHILE",
-                "body": """WHILE означает:
-
-пока;
-
-в то время как.
-
-Обычно после while идёт длительное действие.
-
-Примеры:
-
-While I was reading, she was cooking.
-
-They were playing while we were studying.
-
-He was listening to music while he was working.
-
-Если два действия происходили одновременно, часто используются два Past Continuous.""",
-            },
-
-            {
-                "order": 10,
-                "title": "WHEN или WHILE",
-                "body": """Простая схема:
-
-длительное действие → Past Continuous
-
-короткое действие → Past Simple
-
-WHEN часто вводит короткое событие:
-
-when she called;
-
-when he arrived.
-
 WHILE часто вводит длительный процесс:
 
-while I was working;
+She called while I was working.
 
-while they were studying.
+Если два действия происходили одновременно:
 
-Сравните:
+While I was reading,
+she was cooking.
 
-I was working when she called.
+They were playing
+while we were studying.
 
-She called while I was working.""",
+Коротко:
+
+WHEN → часто Past Simple
+
+WHILE → часто Past Continuous.""",
             },
 
-            {
-                "order": 11,
-                "title": "Фон для события",
-                "body": """Past Continuous часто описывает фон рассказа.
 
-Пример:
+            {
+                "order": 8,
+
+                "title":
+                    "Past Continuous как фон",
+
+                "body":
+                    """Past Continuous может описывать фон истории.
 
 The sun was shining.
 
@@ -329,33 +316,44 @@ Children were playing.
 
 Затем происходит главное событие:
 
-Suddenly, a car stopped near us.
+Suddenly, a car stopped.
 
-Past Continuous = фон.
+Здесь:
 
-Past Simple = главное завершённое событие.""",
+Past Continuous
+→ фон
+
+Past Simple
+→ главное завершённое событие.""",
             },
 
-            {
-                "order": 12,
-                "title": "Отрицание и вопросы",
-                "body": """Отрицание:
 
-subject + wasn't / weren't + verb-ing
+            {
+                "order": 9,
+
+                "title":
+                    "Отрицания и вопросы",
+
+                "body":
+                    """Отрицание:
+
+subject
++ wasn't / weren't
++ verb-ing
 
 I wasn't sleeping.
 
-She wasn't working.
-
-They weren't playing.
+They weren't waiting.
 
 Вопрос:
 
-Was/Were + subject + verb-ing?
+Was / Were
++ subject
++ verb-ing?
 
-Was she sleeping?
+Was she working?
 
-Were they waiting?
+Were they playing?
 
 Краткие ответы:
 
@@ -365,385 +363,865 @@ No, she wasn't.
 
 Yes, they were.
 
-No, they weren't.""",
-            },
+No, they weren't.
 
-            {
-                "order": 13,
-                "title": "Специальные вопросы",
-                "body": """Формула:
-
-Question word + was/were + subject + verb-ing?
-
-Примеры:
+Специальный вопрос:
 
 What were you doing?
 
-Where was she going?
-
-Why were they laughing?
-
-Who was he talking to?
-
-What was happening?
-
-Если who само выполняет действие:
-
-Who was calling?
-
-Who was knocking?""",
+Where was she going?""",
             },
 
+
             {
-                "order": 14,
-                "title": "Глаголы состояния и HAVE",
-                "body": """Некоторые глаголы состояния обычно не используются в Continuous:
+                "order": 10,
 
-know;
+                "title":
+                    "Stative verbs и HAVE",
 
-understand;
+                "body":
+                    """Некоторые глаголы состояния обычно не используются в Continuous.
 
-like;
+know
 
-want;
+understand
 
-need;
+like
 
-believe;
+want
 
-remember;
+need
 
-own.
+believe
 
-Правильно:
+Поэтому:
 
 I knew the answer.
-
-She understood the question.
 
 Не:
 
 I was knowing the answer.
 
-HAVE как действие:
+HAVE зависит от значения.
+
+Действие:
 
 I was having breakfast.
 
 She was having a shower.
 
-HAVE как владение:
+Владение:
 
 I had a car.
 
 Не:
 
-I was having a car.""",
+I was having a car.
+
+Главное:
+
+процесс → Past Continuous
+
+состояние → обычно Past Simple.""",
             },
 
         ]
+
+
+        section_objects = {}
+
 
         for data in sections:
 
-            GrammarLessonSection.objects.update_or_create(
-                lesson=lesson,
-                order=data["order"],
-                defaults={
-                    "title": data["title"],
-                    "body": data["body"],
-                },
+            section, _ = (
+                GrammarLessonSection.objects
+                .update_or_create(
+                    lesson=lesson,
+                    order=data["order"],
+
+                    defaults={
+                        "title":
+                            data["title"],
+
+                        "body":
+                            data["body"],
+                    },
+                )
             )
 
-        exercises = [
+            section_objects[
+                data["order"]
+            ] = section
+
+
+        training = [
 
             {
                 "order": 1,
-                "prompt": "I ___ reading at nine last night.",
-                "options": ["was", "were", "did", "am"],
-                "answer": "was",
-                "explanation": "I → was.",
+                "section": 1,
+                "type": "choice",
+
+                "prompt":
+                    "At nine last night, I ___ a book.",
+
+                "options": [
+                    "read",
+                    "was reading",
+                    "am reading",
+                    "did reading",
+                ],
+
+                "answer":
+                    "was reading",
+
+                "explanation":
+                    "Действие было в процессе в конкретный момент прошлого.",
             },
+
 
             {
                 "order": 2,
-                "prompt": "My parents ___ watching television.",
-                "options": ["was", "were", "did", "are"],
-                "answer": "were",
-                "explanation": "Parents = they, поэтому were.",
+                "section": 1,
+                "type": "choice",
+
+                "prompt":
+                    "This time yesterday, they ___ football.",
+
+                "options": [
+                    "played every day",
+                    "were playing",
+                    "are playing",
+                    "did playing",
+                ],
+
+                "answer":
+                    "were playing",
+
+                "explanation":
+                    "THIS TIME YESTERDAY → процесс в прошлом.",
             },
+
 
             {
                 "order": 3,
-                "prompt": "The child was ___.",
-                "options": ["cry", "cried", "crying", "cries"],
-                "answer": "crying",
-                "explanation": "Past Continuous: was + verb-ing.",
+                "section": 2,
+                "type": "choice",
+
+                "prompt":
+                    "Choose the correct sentence.",
+
+                "options": [
+                    "She working at six.",
+                    "She was working at six.",
+                    "She did working at six.",
+                    "She was work at six.",
+                ],
+
+                "answer":
+                    "She was working at six.",
+
+                "explanation":
+                    "Past Continuous = WAS + verb-ing.",
             },
+
 
             {
                 "order": 4,
-                "prompt": "We were ___ for the bus.",
-                "options": ["wait", "waited", "waiting", "waits"],
-                "answer": "waiting",
-                "explanation": "Were + waiting.",
+                "section": 2,
+                "type": "build",
+
+                "prompt":
+                    "Собери правильное предложение.",
+
+                "options": [
+                    "They",
+                    "were",
+                    "waiting",
+                    "for",
+                    "the",
+                    "bus",
+                ],
+
+                "answer":
+                    "They were waiting for the bus",
+
+                "explanation":
+                    "Правильная схема: THEY + WERE + WAITING.",
             },
+
 
             {
                 "order": 5,
-                "prompt": "She ___ cooking when I arrived.",
-                "options": ["was", "were", "did", "is"],
-                "answer": "was",
-                "explanation": "She → was cooking.",
+                "section": 3,
+                "type": "fill",
+
+                "prompt":
+                    "My brother ___ sleeping at midnight.",
+
+                "options": [],
+
+                "answer":
+                    "was",
+
+                "explanation":
+                    "My brother = HE → WAS.",
             },
+
 
             {
                 "order": 6,
-                "prompt": "They ___ playing when it started to rain.",
-                "options": ["was", "were", "did", "are"],
-                "answer": "were",
-                "explanation": "They → were playing.",
+                "section": 3,
+                "type": "choice",
+
+                "prompt":
+                    "My parents ___ watching TV.",
+
+                "options": [
+                    "was",
+                    "were",
+                    "did",
+                    "are",
+                ],
+
+                "answer":
+                    "were",
+
+                "explanation":
+                    "My parents = THEY → WERE.",
             },
+
 
             {
                 "order": 7,
-                "prompt": "While I was studying, my brother ___ television.",
+                "section": 4,
+                "type": "choice",
+
+                "prompt":
+                    "She was ___ an email.",
+
                 "options": [
-                    "watched",
-                    "was watching",
-                    "watches",
-                    "is watching",
+                    "writeing",
+                    "writing",
+                    "writting",
+                    "wrote",
                 ],
-                "answer": "was watching",
-                "explanation": "Два действия происходили одновременно.",
+
+                "answer":
+                    "writing",
+
+                "explanation":
+                    "WRITE → WRITING.",
             },
+
 
             {
                 "order": 8,
-                "prompt": "I ___ home when I saw the accident.",
+                "section": 4,
+                "type": "choice",
+
+                "prompt":
+                    "They were ___ in the park.",
+
                 "options": [
-                    "walked",
-                    "was walking",
-                    "walk",
-                    "am walking",
+                    "runing",
+                    "running",
+                    "ran",
+                    "run",
                 ],
-                "answer": "was walking",
-                "explanation": "Длительный процесс → Past Continuous; saw — короткое событие.",
+
+                "answer":
+                    "running",
+
+                "explanation":
+                    "RUN → RUNNING.",
             },
+
 
             {
                 "order": 9,
-                "prompt": "The phone rang while she ___ a shower.",
+                "section": 5,
+                "type": "choice",
+
+                "prompt":
+                    "At 8 p.m. yesterday, we ___ dinner.",
+
                 "options": [
-                    "had",
-                    "was having",
-                    "has",
-                    "is having",
+                    "had as a completed fact",
+                    "were having",
+                    "have",
+                    "are having",
                 ],
-                "answer": "was having",
-                "explanation": "Have a shower — действие в процессе.",
+
+                "answer":
+                    "were having",
+
+                "explanation":
+                    "Нас интересует процесс именно в 8 вечера.",
             },
+
 
             {
                 "order": 10,
-                "prompt": "___ you sleeping at midnight?",
-                "options": ["Did", "Was", "Were", "Are"],
-                "answer": "Were",
-                "explanation": "You → were: Were you sleeping?",
+                "section": 5,
+                "type": "choice",
+
+                "prompt":
+                    "Which sentence focuses on the process at seven?",
+
+                "options": [
+                    "I had dinner at seven.",
+                    "I was having dinner at seven.",
+                    "I have dinner at seven.",
+                    "I am having dinner at seven.",
+                ],
+
+                "answer":
+                    "I was having dinner at seven.",
+
+                "explanation":
+                    "Past Continuous показывает процесс в конкретный момент.",
             },
+
 
             {
                 "order": 11,
-                "prompt": "What ___ she doing?",
-                "options": ["was", "were", "did", "is"],
-                "answer": "was",
-                "explanation": "She → was.",
+                "section": 6,
+                "type": "choice",
+
+                "prompt":
+                    "I ___ when you called.",
+
+                "options": [
+                    "was sleeping",
+                    "slept every night",
+                    "am sleeping",
+                    "did sleeping",
+                ],
+
+                "answer":
+                    "was sleeping",
+
+                "explanation":
+                    "SLEEPING — длительный процесс; CALLED — короткое событие.",
             },
+
 
             {
                 "order": 12,
-                "prompt": "Where ___ they going?",
-                "options": ["was", "were", "did", "are"],
-                "answer": "were",
-                "explanation": "They → were.",
+                "section": 6,
+                "type": "choice",
+
+                "prompt":
+                    "She was cooking when the phone ___.",
+
+                "options": [
+                    "was ringing",
+                    "rang",
+                    "rings",
+                    "is ringing",
+                ],
+
+                "answer":
+                    "rang",
+
+                "explanation":
+                    "Короткое событие → Past Simple: RANG.",
             },
+
 
             {
                 "order": 13,
-                "prompt": "Who was he talking ___?",
-                "options": ["at", "to", "on", "in"],
-                "answer": "to",
-                "explanation": "Устойчивая конструкция: talk to someone.",
+                "section": 7,
+                "type": "choice",
+
+                "prompt":
+                    "___ I was studying, my brother was watching TV.",
+
+                "options": [
+                    "While",
+                    "Yesterday",
+                    "Ago",
+                    "Last",
+                ],
+
+                "answer":
+                    "While",
+
+                "explanation":
+                    "WHILE вводит длительный процесс.",
             },
+
 
             {
                 "order": 14,
-                "prompt": "I ___ the answer.",
+                "section": 7,
+                "type": "choice",
+
+                "prompt":
+                    "She called me ___ I was driving.",
+
                 "options": [
-                    "was knowing",
-                    "knew",
-                    "knowing",
-                    "did knew",
+                    "while",
+                    "ago",
+                    "last",
+                    "at",
                 ],
-                "answer": "knew",
-                "explanation": "Know — глагол состояния, поэтому Past Simple: knew.",
+
+                "answer":
+                    "while",
+
+                "explanation":
+                    "WHILE I WAS DRIVING описывает процесс.",
             },
+
 
             {
                 "order": 15,
-                "prompt": "Was she working?",
+                "section": 8,
+                "type": "choice",
+
+                "prompt":
+                    "The sun ___ and the birds were singing.",
+
                 "options": [
-                    "Yes, she did.",
-                    "Yes, she was.",
-                    "Yes, she were.",
-                    "Yes, she is.",
+                    "was shining",
+                    "shined suddenly once",
+                    "is shining",
+                    "did shining",
                 ],
-                "answer": "Yes, she was.",
-                "explanation": "Вопрос с was требует ответ с was.",
+
+                "answer":
+                    "was shining",
+
+                "explanation":
+                    "Это фон происходящего → Past Continuous.",
             },
+
 
             {
                 "order": 16,
-                "prompt": "Choose the correct sentence.",
+                "section": 8,
+                "type": "choice",
+
+                "prompt":
+                    "People were walking in the park when a car suddenly ___.",
+
                 "options": [
-                    "I were working.",
-                    "I was working.",
-                    "I did working.",
-                    "I was work.",
+                    "was stopping",
+                    "stopped",
+                    "stops",
+                    "is stopping",
                 ],
-                "answer": "I was working.",
-                "explanation": "I → was + verb-ing.",
+
+                "answer":
+                    "stopped",
+
+                "explanation":
+                    "Главное короткое событие → Past Simple.",
             },
+
 
             {
                 "order": 17,
-                "prompt": "Choose the correct sentence.",
+                "section": 9,
+                "type": "choice",
+
+                "prompt":
+                    "Choose the correct negative sentence.",
+
                 "options": [
-                    "They was playing.",
-                    "They were playing.",
-                    "They did playing.",
-                    "They were play.",
+                    "They didn't waiting.",
+                    "They weren't waiting.",
+                    "They weren't wait.",
+                    "They not were waiting.",
                 ],
-                "answer": "They were playing.",
-                "explanation": "They → were + playing.",
+
+                "answer":
+                    "They weren't waiting.",
+
+                "explanation":
+                    "Past Continuous negative = WEREN'T + verb-ing.",
             },
+
 
             {
                 "order": 18,
-                "prompt": "Choose the correct question.",
+                "section": 9,
+                "type": "choice",
+
+                "prompt":
+                    "___ you sleeping at midnight?",
+
                 "options": [
-                    "Did you working?",
-                    "Were you working?",
-                    "Was you working?",
-                    "Did you were working?",
+                    "Did",
+                    "Was",
+                    "Were",
+                    "Are",
                 ],
-                "answer": "Were you working?",
-                "explanation": "Past Continuous question: Were + subject + verb-ing?",
+
+                "answer":
+                    "Were",
+
+                "explanation":
+                    "YOU → WERE: WERE YOU SLEEPING?",
             },
+
 
             {
                 "order": 19,
-                "prompt": "I was sleeping when she ___.",
+                "section": 10,
+                "type": "choice",
+
+                "prompt":
+                    "Choose the correct sentence.",
+
                 "options": [
-                    "was calling",
-                    "called",
-                    "calls",
-                    "is calling",
+                    "I was knowing the answer.",
+                    "I knew the answer.",
+                    "I was know the answer.",
+                    "I did knew the answer.",
                 ],
-                "answer": "called",
-                "explanation": "Короткое завершённое действие → Past Simple.",
+
+                "answer":
+                    "I knew the answer.",
+
+                "explanation":
+                    "KNOW — stative verb; здесь нужен Past Simple.",
             },
+
 
             {
                 "order": 20,
-                "prompt": "While she was cooking, I ___ the table.",
-                "options": [
-                    "was setting",
-                    "set every day",
-                    "am setting",
-                    "did setting",
-                ],
-                "answer": "was setting",
-                "explanation": "Два параллельных процесса → Past Continuous.",
-            },
+                "section": 10,
+                "type": "choice",
 
-            {
-                "order": 21,
-                "prompt": "Which sentence describes a process at a specific past time?",
-                "options": [
-                    "I watched a film yesterday.",
-                    "I was watching a film at eight.",
-                    "I watch films every day.",
-                    "I am watching a film now.",
-                ],
-                "answer": "I was watching a film at eight.",
-                "explanation": "Действие было в процессе в конкретный момент прошлого.",
-            },
+                "prompt":
+                    "Choose the correct pair.",
 
-            {
-                "order": 22,
-                "prompt": "Choose the correct sentence about possession.",
                 "options": [
-                    "I was having a car.",
-                    "I had a car.",
-                    "I was have a car.",
-                    "I did having a car.",
+                    "I had a car. / I was having breakfast.",
+                    "I was having a car. / I had breakfast at that moment.",
+                    "I was have a car. / I was had breakfast.",
+                    "I had having a car. / I was have breakfast.",
                 ],
-                "answer": "I had a car.",
-                "explanation": "Have в значении владения обычно используется в Past Simple.",
-            },
 
-            {
-                "order": 23,
-                "prompt": "Choose the correct pair.",
-                "options": [
-                    "I had dinner at seven. / I was having dinner at seven.",
-                    "I was had dinner at seven. / I having dinner at seven.",
-                    "I did dinner at seven. / I were having dinner.",
-                    "I had dinner at seven. / I was have dinner at seven.",
-                ],
-                "answer": "I had dinner at seven. / I was having dinner at seven.",
-                "explanation": "Past Simple показывает факт; Past Continuous — процесс.",
-            },
+                "answer":
+                    "I had a car. / I was having breakfast.",
 
-            {
-                "order": 24,
-                "prompt": "Choose the correct sequence.",
-                "options": [
-                    "I was walking home when I saw an accident.",
-                    "I walked home when I was saw an accident.",
-                    "I was walk home when I saw an accident.",
-                    "I did walking home when I saw an accident.",
-                ],
-                "answer": "I was walking home when I saw an accident.",
-                "explanation": "Длительное действие — Past Continuous; короткое событие — Past Simple.",
+                "explanation":
+                    "Владение → HAD; действие HAVE BREAKFAST → WAS HAVING.",
             },
 
         ]
 
-        for data in exercises:
+
+        final_test = [
+
+            {
+                "order": 21,
+
+                "prompt":
+                    "At 10 p.m. yesterday, she ___ for the exam.",
+
+                "options": [
+                    "studied as a completed fact",
+                    "was studying",
+                    "is studying",
+                    "did studying",
+                ],
+
+                "answer":
+                    "was studying",
+
+                "explanation":
+                    "Конкретный момент прошлого + процесс → Past Continuous.",
+            },
+
+
+            {
+                "order": 22,
+
+                "prompt":
+                    "The children ___ outside when it started to rain.",
+
+                "options": [
+                    "were playing",
+                    "played every day",
+                    "are playing",
+                    "did playing",
+                ],
+
+                "answer":
+                    "were playing",
+
+                "explanation":
+                    "PLAYING — процесс; STARTED — короткое событие.",
+            },
+
+
+            {
+                "order": 23,
+
+                "prompt":
+                    "Choose the correct sentence.",
+
+                "options": [
+                    "He was drive home.",
+                    "He was driving home.",
+                    "He did driving home.",
+                    "He were driving home.",
+                ],
+
+                "answer":
+                    "He was driving home.",
+
+                "explanation":
+                    "HE → WAS + DRIVING.",
+            },
+
+
+            {
+                "order": 24,
+
+                "prompt":
+                    "We were ___ when you arrived.",
+
+                "options": [
+                    "writeing",
+                    "writing",
+                    "wrote",
+                    "write",
+                ],
+
+                "answer":
+                    "writing",
+
+                "explanation":
+                    "WRITE → WRITING.",
+            },
+
+
+            {
+                "order": 25,
+
+                "prompt":
+                    "I was walking home when I ___ the accident.",
+
+                "options": [
+                    "was seeing",
+                    "saw",
+                    "see",
+                    "am seeing",
+                ],
+
+                "answer":
+                    "saw",
+
+                "explanation":
+                    "SEE — короткое завершённое событие → SAW.",
+            },
+
+
+            {
+                "order": 26,
+
+                "prompt":
+                    "___ she was cooking, he was setting the table.",
+
+                "options": [
+                    "While",
+                    "Ago",
+                    "Last",
+                    "Yesterday",
+                ],
+
+                "answer":
+                    "While",
+
+                "explanation":
+                    "Два параллельных процесса удобно связывать через WHILE.",
+            },
+
+
+            {
+                "order": 27,
+
+                "prompt":
+                    "Choose the correct question.",
+
+                "options": [
+                    "Did they waiting?",
+                    "Were they waiting?",
+                    "Was they waiting?",
+                    "Did they were waiting?",
+                ],
+
+                "answer":
+                    "Were they waiting?",
+
+                "explanation":
+                    "Past Continuous question = WERE + THEY + WAITING.",
+            },
+
+
+            {
+                "order": 28,
+
+                "prompt":
+                    "What ___ you doing at eight yesterday?",
+
+                "options": [
+                    "did",
+                    "was",
+                    "were",
+                    "are",
+                ],
+
+                "answer":
+                    "were",
+
+                "explanation":
+                    "YOU → WERE: WHAT WERE YOU DOING?",
+            },
+
+
+            {
+                "order": 29,
+
+                "prompt":
+                    "Choose the correct sentence about possession.",
+
+                "options": [
+                    "She was having a new car.",
+                    "She had a new car.",
+                    "She was have a new car.",
+                    "She did having a new car.",
+                ],
+
+                "answer":
+                    "She had a new car.",
+
+                "explanation":
+                    "HAVE в значении владения обычно используется в Past Simple.",
+            },
+
+
+            {
+                "order": 30,
+
+                "prompt":
+                    "Choose the fully correct sequence.",
+
+                "options": [
+                    "I was driving when the phone rang. / While I was driving, she was sleeping.",
+                    "I drove when the phone was rang. / While I drove, she was sleeping now.",
+                    "I was drive when the phone rang. / While I was driving, she slept every moment.",
+                    "I did driving when the phone rang. / While I were driving, she was sleep.",
+                ],
+
+                "answer":
+                    "I was driving when the phone rang. / While I was driving, she was sleeping.",
+
+                "explanation":
+                    "WHEN связывает процесс с коротким событием; WHILE может связывать два параллельных процесса.",
+            },
+
+        ]
+
+
+        valid_orders = []
+
+
+        for data in (
+            training
+            +
+            final_test
+        ):
+
+            valid_orders.append(
+                data["order"]
+            )
+
+
+            if data["order"] <= 20:
+
+                section = (
+                    section_objects[
+                        data["section"]
+                    ]
+                )
+
+            else:
+
+                section = None
+
 
             GrammarExercise.objects.update_or_create(
                 lesson=lesson,
                 order=data["order"],
+
                 defaults={
-                    "exercise_type": GrammarExercise.Type.CHOICE,
-                    "prompt": data["prompt"],
-                    "options": data["options"],
-                    "correct_answer": data["answer"],
-                    "explanation": data["explanation"],
-                    "is_published": True,
+                    "section":
+                        section,
+
+                    "exercise_type":
+                        data.get(
+                            "type",
+                            "choice",
+                        ),
+
+                    "prompt":
+                        data["prompt"],
+
+                    "options":
+                        data["options"],
+
+                    "correct_answer":
+                        data["answer"],
+
+                    "explanation":
+                        data["explanation"],
+
+                    "is_published":
+                        True,
                 },
             )
 
+
+        GrammarExercise.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__in=valid_orders,
+        ).delete()
+
+
+        GrammarLessonSection.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__in=[
+                item["order"]
+                for item in sections
+            ],
+        ).delete()
+
+
         self.stdout.write(
             self.style.SUCCESS(
-                "✅ A1 Lesson 28 seeded: Past Continuous"
+                "✅ Interactive A1 Lesson 28 seeded"
             )
         )
 
         self.stdout.write(
-            f"Sections: {lesson.sections.count()}"
+            f"Micro rules: "
+            f"{lesson.sections.count()}"
         )
 
         self.stdout.write(
-            f"Exercises: {lesson.exercises.count()}"
+            "Training exercises: "
+            f"{lesson.exercises.filter(section__isnull=False).count()}"
+        )
+
+        self.stdout.write(
+            "Final test: "
+            f"{lesson.exercises.filter(section__isnull=True).count()}"
         )

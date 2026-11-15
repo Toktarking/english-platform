@@ -10,78 +10,96 @@ from grammar.models import (
 class Command(BaseCommand):
 
     help = (
-        "Create/update A1 Grammar Lesson 13: "
-        "Present Simple questions with DO and DOES."
+        "Create/update interactive A1 Grammar "
+        "Lesson 13: Present Simple questions."
     )
+
 
     def handle(self, *args, **options):
 
-        lesson, _ = GrammarLesson.objects.update_or_create(
-            level="A1",
-            order=13,
-            defaults={
-                "title": (
-                    "Вопросы в Present Simple: "
-                    "DO и DOES"
-                ),
-                "slug": "present-simple-questions",
-                "theory_text": (
-                    "Present Simple questions "
-                    "with do and does."
-                ),
-                "estimated_minutes": 30,
-                "pass_score": 70,
-                "xp_reward": 100,
-                "is_published": True,
-            },
+        lesson, _ = (
+            GrammarLesson.objects
+            .update_or_create(
+                level="A1",
+                order=13,
+
+                defaults={
+                    "title":
+                        "Вопросы в Present Simple: "
+                        "DO и DOES",
+
+                    "slug":
+                        "present-simple-questions",
+
+                    "theory_text":
+                        "Present Simple questions "
+                        "with do and does.",
+
+                    "estimated_minutes":
+                        16,
+
+                    "pass_score":
+                        70,
+
+                    "xp_reward":
+                        100,
+
+                    "is_published":
+                        True,
+                },
+            )
         )
+
+
+        # ================================================
+        # 9 MICRO-RULES
+        # ================================================
 
         sections = [
 
             {
                 "order": 1,
-                "title": "Как задать вопрос в Present Simple",
-                "body": """С обычными глаголами вопросы в Present Simple образуются с помощью:
 
-do;
+                "title":
+                    "Как задать вопрос в Present Simple?",
 
-does.
+                "body":
+                    """С обычными глаголами вопрос строится через DO или DOES.
 
-Сравните:
+Утверждение:
 
 You work here.
 
+Вопрос:
+
 Do you work here?
 
-She lives in Astana.
+Утверждение:
 
-Does she live in Astana?
+She works here.
+
+Вопрос:
+
+Does she work here?
 
 Главная формула:
 
-Do / Does + подлежащее + глагол?
+DO / DOES
++ subject
++ base verb?
 
-Важно:
-
-основной глагол после do/does используется в начальной форме.""",
+После DO и DOES основной глагол используется в базовой форме.""",
             },
+
 
             {
                 "order": 2,
-                "title": "Когда используется DO",
-                "body": """Do используется с:
 
-I;
+                "title":
+                    "I, YOU, WE, THEY → DO",
 
-you;
-
-we;
-
-they;
-
-подлежащими во множественном числе.
-
-Примеры:
+                "body":
+                    """С I, YOU, WE, THEY используется DO.
 
 Do I need this?
 
@@ -91,65 +109,27 @@ Do we have enough time?
 
 Do they speak English?
 
-Do the students understand the task?
+То же правило работает с множественным числом:
 
-Запомните:
+Do the students understand?
 
-I / you / we / they → DO.""",
+Do your parents live here?
+
+Главная схема:
+
+I / you / we / they
+→ DO.""",
             },
+
 
             {
                 "order": 3,
-                "title": "Вопросы с I, YOU, WE, THEY",
-                "body": """Примеры с I:
 
-Do I know you?
+                "title":
+                    "HE, SHE, IT → DOES",
 
-Do I need a ticket?
-
-Do I have to wait?
-
-С YOU:
-
-Do you live in Kazakhstan?
-
-Do you like coffee?
-
-Do you have children?
-
-С WE:
-
-Do we start now?
-
-Do we have a lesson today?
-
-С THEY:
-
-Do they work together?
-
-Do they study English?
-
-Do they have a car?""",
-            },
-
-            {
-                "order": 4,
-                "title": "Когда используется DOES",
-                "body": """Does используется с:
-
-he;
-
-she;
-
-it;
-
-одним человеком;
-
-одним предметом;
-
-одним животным.
-
-Примеры:
+                "body":
+                    """С HE, SHE, IT используется DOES.
 
 Does he work here?
 
@@ -157,111 +137,67 @@ Does she speak English?
 
 Does it work?
 
+То же правило с одним человеком или предметом:
+
 Does Marat live in Astana?
 
-Does the phone charge quickly?
+Does your sister drive?
 
-Запомните:
+Does the phone work?
 
-he / she / it → DOES.""",
+Главная схема:
+
+he / she / it
+→ DOES.""",
             },
 
-            {
-                "order": 5,
-                "title": "Вопросы с HE, SHE и IT",
-                "body": """С HE:
-
-Does he work at a university?
-
-Does he drive?
-
-Does he know the answer?
-
-Does he have a car?
-
-С SHE:
-
-Does she speak English?
-
-Does she live in Karaganda?
-
-Does she like coffee?
-
-Does she have children?
-
-С IT:
-
-Does it work?
-
-Does it open at nine?
-
-Does it cost much?
-
-Does it need electricity?""",
-            },
 
             {
-                "order": 6,
-                "title": "После DOES глагол без -S",
-                "body": """Это главное правило урока.
+                "order": 4,
 
-После does основной глагол используется в начальной форме.
+                "title":
+                    "После DOES глагол без -S",
 
-Сравните:
+                "body":
+                    """Это главное правило урока.
+
+Утверждение:
 
 She works here.
 
+Вопрос:
+
 Does she work here?
 
-Неправильно:
+Не:
 
 Does she works here?
 
-Правильно:
-
-Does she work here?
-
-Окончание -s уже находится в слове does.
+Окончание третьего лица уже находится в DOES.
 
 То же самое:
 
-He lives → Does he live?
+He lives
+→ Does he live?
 
-She watches → Does she watch?
+She watches
+→ Does she watch?
 
-He studies → Does he study?
+He studies
+→ Does he study?
 
-She has → Does she have?""",
+После DOES всегда базовая форма.""",
             },
 
+
             {
-                "order": 7,
-                "title": "DO / DOES с разными формами глагола",
-                "body": """Посмотрите, как глагол возвращается в начальную форму.
+                "order": 5,
 
-Утверждение:
+                "title":
+                    "HAS → DOES ... HAVE?",
 
-He lives in Astana.
-
-Вопрос:
-
-Does he live in Astana?
-
-Утверждение:
-
-She watches television.
-
-Вопрос:
-
-Does she watch television?
-
-Утверждение:
-
-He studies English.
-
-Вопрос:
-
-Does he study English?
+                "body":
+                    """HAVE ведёт себя как обычный глагол.
 
 Утверждение:
 
@@ -271,20 +207,33 @@ She has a car.
 
 Does she have a car?
 
-После does всегда:
+Не:
 
-live;
-watch;
-study;
-have.""",
+Does she has a car?
+
+Ещё примеры:
+
+Do you have children?
+
+Does he have a job?
+
+Do they have enough money?
+
+Запомни:
+
+HAS
+→ DOES ... HAVE?""",
             },
 
-            {
-                "order": 8,
-                "title": "Общие вопросы и краткие ответы",
-                "body": """Общий вопрос — это вопрос, на который можно ответить yes или no.
 
-С DO:
+            {
+                "order": 6,
+
+                "title":
+                    "Краткие ответы",
+
+                "body":
+                    """На общий вопрос можно ответить YES или NO.
 
 Do you work here?
 
@@ -310,97 +259,61 @@ Does he drive?
 
 Yes, he does.
 
-No, he doesn't.""",
+No, he doesn't.
+
+В кратком ответе основной глагол обычно не повторяется.""",
             },
 
+
             {
-                "order": 9,
-                "title": "Почему в ответе нет основного глагола",
-                "body": """В кратком ответе основной глагол обычно не повторяется.
+                "order": 7,
+
+                "title":
+                    "DO / DOES или IS / ARE?",
+
+                "body":
+                    """Если есть TO BE, DO и DOES не нужны.
+
+Профессия:
+
+She is a teacher.
 
 Вопрос:
 
-Do you speak English?
+Is she a teacher?
 
-Краткий ответ:
+Не:
 
-Yes, I do.
+Does she is a teacher?
+
+Но с обычным действием:
+
+She works here.
 
 Вопрос:
 
 Does she work here?
 
-Краткий ответ:
+Сравни:
 
-Yes, she does.
+Is he a doctor?
 
-Не нужно говорить:
+Does he work at a hospital?
 
-Yes, I speak English.
+Doctor — описание через TO BE.
 
-Такой полный ответ возможен, но краткий ответ строится через do/does.
-
-Важно:
-
-Do you work?
-
-Yes, I do.
-
-Не:
-
-Yes, I am.""",
+Work — действие через DOES.""",
             },
 
-            {
-                "order": 10,
-                "title": "Вопросы с HAVE и LIKE",
-                "body": """Have в Present Simple ведёт себя как обычный глагол.
-
-Примеры:
-
-Do you have a car?
-
-Does she have children?
-
-Do they have enough money?
-
-Does he have a job?
-
-Важно:
-
-Does she have...?
-
-Не:
-
-Does she has...?
-
-С LIKE:
-
-Do you like coffee?
-
-Does he like football?
-
-Does she like this book?
-
-Do they like their teacher?
-
-Краткие ответы:
-
-Yes, I do.
-
-No, I don't.
-
-Yes, she does.
-
-No, she doesn't.""",
-            },
 
             {
-                "order": 11,
-                "title": "Наречия частотности в вопросах",
-                "body": """Наречие частотности обычно ставится после подлежащего и перед основным глаголом.
+                "order": 8,
 
-Примеры:
+                "title":
+                    "Often, usually и ever в вопросах",
+
+                "body":
+                    """Наречие частотности обычно ставится после подлежащего и перед основным глаголом.
 
 Do you often read?
 
@@ -408,386 +321,875 @@ Does she usually work at home?
 
 Do they always come on time?
 
-Does he sometimes drive to work?
+Does he sometimes drive?
 
-Слово never редко используется в нейтральных вопросах.
-
-Вместо него часто используется ever:
+Для значения «когда-нибудь» часто используется EVER:
 
 Do you ever travel abroad?
 
-Ever означает:
+Does she ever cook at home?
 
-когда-нибудь.""",
+Схема:
+
+DO / DOES
++ subject
++ frequency word
++ base verb?""",
             },
 
-            {
-                "order": 12,
-                "title": "Существительное как подлежащее",
-                "body": """Если подлежащее — существительное, мысленно замените его местоимением.
-
-Your brother = he:
-
-Does your brother work here?
-
-Your parents = they:
-
-Do your parents live here?
-
-The phone = it:
-
-Does the phone work?
-
-The phones = they:
-
-Do the phones work?
-
-Это помогает быстро выбрать do или does.""",
-            },
 
             {
-                "order": 13,
-                "title": "TO BE или DO / DOES",
-                "body": """Если в предложении используется am/is/are, do и does не нужны.
+                "order": 9,
 
-Неправильно:
+                "title":
+                    "Как быстро построить вопрос",
 
-Does she is a teacher?
+                "body":
+                    """Шаг 1.
 
-Правильно:
+Найди подлежащее:
 
-Is she a teacher?
+My sister works here.
 
-Но если есть обычный смысловой глагол:
+My sister = SHE.
 
-Неправильно:
+Шаг 2.
 
-Is she work here?
-
-Правильно:
-
-Does she work here?
-
-Сравните:
-
-Is he a doctor?
-
-Does he work at a hospital?
-
-Doctor — профессия, поэтому to be.
-
-Work — действие, поэтому does.""",
-            },
-
-            {
-                "order": 14,
-                "title": "Как быстро построить вопрос",
-                "body": """Шаг 1. Найдите подлежащее.
-
-My sister works at a school.
-
-Подлежащее:
-
-my sister.
-
-My sister = she.
-
-Шаг 2. Выберите DOES.
+Выбери DOES:
 
 Does my sister...
 
-Шаг 3. Верните глагол в начальную форму.
+Шаг 3.
+
+Верни глагол в базовую форму:
 
 works → work
 
 Итог:
 
-Does my sister work at a school?
+Does my sister work here?
 
-С множественным числом:
+Другой пример:
 
 My parents live in Astana.
 
-My parents = they.
+My parents = THEY.
 
-Используем do:
+Используем DO:
 
 Do my parents live in Astana?
 
-Главное правило:
+Главная схема:
 
-I / you / we / they → DO
+I / you / we / they
+→ DO
 
-he / she / it → DOES
+he / she / it
+→ DOES
 
-После do/does → базовая форма глагола.""",
+после DO / DOES
+→ base verb.""",
             },
 
         ]
 
+
+        section_objects = {}
+
+
         for data in sections:
 
-            GrammarLessonSection.objects.update_or_create(
-                lesson=lesson,
-                order=data["order"],
-                defaults={
-                    "title": data["title"],
-                    "body": data["body"],
-                },
+            section, _ = (
+                GrammarLessonSection.objects
+                .update_or_create(
+                    lesson=lesson,
+                    order=data["order"],
+
+                    defaults={
+                        "title":
+                            data["title"],
+
+                        "body":
+                            data["body"],
+                    },
+                )
             )
 
-        exercises = [
+            section_objects[
+                data["order"]
+            ] = section
+
+
+        # ================================================
+        # 20 TRAINING EXERCISES
+        # ================================================
+
+        training = [
 
             {
                 "order": 1,
-                "prompt": "___ you speak English?",
-                "options": ["Does", "Do", "Are", "Is"],
-                "answer": "Do",
-                "explanation": "С you используется Do.",
+                "section": 1,
+                "type": "choice",
+
+                "prompt":
+                    "___ you speak English?",
+
+                "options": [
+                    "Does",
+                    "Do",
+                    "Are",
+                    "Is",
+                ],
+
+                "answer":
+                    "Do",
+
+                "explanation":
+                    "YOU → DO.",
             },
+
 
             {
                 "order": 2,
-                "prompt": "___ your wife speak English?",
-                "options": ["Do", "Does", "Is", "Are"],
-                "answer": "Does",
-                "explanation": "Your wife = she, поэтому Does.",
+                "section": 1,
+                "type": "choice",
+
+                "prompt":
+                    "___ she work here?",
+
+                "options": [
+                    "Do",
+                    "Does",
+                    "Is",
+                    "Are",
+                ],
+
+                "answer":
+                    "Does",
+
+                "explanation":
+                    "SHE → DOES.",
             },
+
 
             {
                 "order": 3,
-                "prompt": "Do they ___ in Karaganda?",
-                "options": ["lives", "live", "living", "lived"],
-                "answer": "live",
-                "explanation": "После do используется начальная форма live.",
+                "section": 2,
+                "type": "fill",
+
+                "prompt":
+                    "___ they live in Karaganda?",
+
+                "options": [],
+
+                "answer":
+                    "Do",
+
+                "explanation":
+                    "THEY → DO.",
             },
+
 
             {
                 "order": 4,
-                "prompt": "Does he ___ in Karaganda?",
-                "options": ["lives", "live", "living", "lived"],
-                "answer": "live",
-                "explanation": "После does окончание -s у основного глагола исчезает.",
+                "section": 2,
+                "type": "choice",
+
+                "prompt":
+                    "___ your parents work here?",
+
+                "options": [
+                    "Does",
+                    "Do",
+                    "Is",
+                    "Are",
+                ],
+
+                "answer":
+                    "Do",
+
+                "explanation":
+                    "Your parents = THEY → DO.",
             },
+
 
             {
                 "order": 5,
-                "prompt": "___ your parents work?",
-                "options": ["Does", "Do", "Are", "Is"],
-                "answer": "Do",
-                "explanation": "Your parents = they, поэтому Do.",
+                "section": 3,
+                "type": "fill",
+
+                "prompt":
+                    "___ your father drive?",
+
+                "options": [],
+
+                "answer":
+                    "Does",
+
+                "explanation":
+                    "Your father = HE → DOES.",
             },
+
 
             {
                 "order": 6,
-                "prompt": "___ your father work?",
-                "options": ["Do", "Does", "Is", "Are"],
-                "answer": "Does",
-                "explanation": "Your father = he, поэтому Does.",
+                "section": 3,
+                "type": "choice",
+
+                "prompt":
+                    "___ the phone work?",
+
+                "options": [
+                    "Do",
+                    "Does",
+                    "Is",
+                    "Are",
+                ],
+
+                "answer":
+                    "Does",
+
+                "explanation":
+                    "The phone = IT → DOES.",
             },
+
 
             {
                 "order": 7,
-                "prompt": "Does the lesson ___ at nine?",
-                "options": ["starts", "start", "starting", "started"],
-                "answer": "start",
-                "explanation": "После does используется базовая форма start.",
+                "section": 4,
+                "type": "choice",
+
+                "prompt":
+                    "Does he ___ in Astana?",
+
+                "options": [
+                    "lives",
+                    "live",
+                    "living",
+                    "is live",
+                ],
+
+                "answer":
+                    "live",
+
+                "explanation":
+                    "После DOES используется базовая форма LIVE.",
             },
+
 
             {
                 "order": 8,
-                "prompt": "Do the lessons ___ at nine?",
-                "options": ["starts", "start", "starting", "started"],
-                "answer": "start",
-                "explanation": "После do используется start.",
+                "section": 4,
+                "type": "choice",
+
+                "prompt":
+                    "Does she ___ TV every evening?",
+
+                "options": [
+                    "watches",
+                    "watch",
+                    "watching",
+                    "is watch",
+                ],
+
+                "answer":
+                    "watch",
+
+                "explanation":
+                    "WATCHES → DOES SHE WATCH?",
             },
+
 
             {
                 "order": 9,
-                "prompt": "Does she ___ television every day?",
-                "options": ["watches", "watch", "watching", "watched"],
-                "answer": "watch",
-                "explanation": "Watches → Does she watch...?",
+                "section": 4,
+                "type": "choice",
+
+                "prompt":
+                    "Does your brother ___ English?",
+
+                "options": [
+                    "studies",
+                    "study",
+                    "studys",
+                    "studying",
+                ],
+
+                "answer":
+                    "study",
+
+                "explanation":
+                    "STUDIES возвращается к STUDY.",
             },
+
 
             {
                 "order": 10,
-                "prompt": "Do they ___ television every day?",
-                "options": ["watches", "watch", "watching", "watched"],
-                "answer": "watch",
-                "explanation": "They → do + watch.",
+                "section": 5,
+                "type": "choice",
+
+                "prompt":
+                    "Does she ___ a car?",
+
+                "options": [
+                    "has",
+                    "have",
+                    "haves",
+                    "having",
+                ],
+
+                "answer":
+                    "have",
+
+                "explanation":
+                    "HAS → DOES ... HAVE?",
             },
+
 
             {
                 "order": 11,
-                "prompt": "Does your brother ___ English?",
-                "options": ["studies", "study", "studying", "studied"],
-                "answer": "study",
-                "explanation": "Studies возвращается к базовой форме study.",
+                "section": 5,
+                "type": "build",
+
+                "prompt":
+                    "Собери правильный вопрос.",
+
+                "options": [
+                    "Does",
+                    "he",
+                    "have",
+                    "a",
+                    "job",
+                ],
+
+                "answer":
+                    "Does he have a job",
+
+                "explanation":
+                    "После DOES используется HAVE.",
             },
+
 
             {
                 "order": 12,
-                "prompt": "Do you ___ a car?",
-                "options": ["has", "have", "having", "had"],
-                "answer": "have",
-                "explanation": "После do используется have.",
+                "section": 6,
+                "type": "choice",
+
+                "prompt":
+                    "Do you work here?",
+
+                "options": [
+                    "Yes, I do.",
+                    "Yes, I am.",
+                    "Yes, I does.",
+                    "Yes, I work do.",
+                ],
+
+                "answer":
+                    "Yes, I do.",
+
+                "explanation":
+                    "Вопрос с DO → краткий ответ YES, I DO.",
             },
+
 
             {
                 "order": 13,
-                "prompt": "Does she ___ a car?",
-                "options": ["has", "have", "having", "had"],
-                "answer": "have",
-                "explanation": "Правильно: Does she have...?, не Does she has...?",
-            },
+                "section": 6,
+                "type": "choice",
 
-            {
-                "order": 14,
-                "prompt": "Do the students understand the task?",
-                "options": [
-                    "Yes, they do.",
-                    "Yes, they are.",
-                    "Yes, they does.",
-                    "Yes, they understand do.",
-                ],
-                "answer": "Yes, they do.",
-                "explanation": "Вопрос с do требует краткий ответ Yes, they do.",
-            },
+                "prompt":
+                    "Does Marat live here?",
 
-            {
-                "order": 15,
-                "prompt": "Does Marat work here?",
                 "options": [
                     "No, he don't.",
                     "No, he isn't.",
                     "No, he doesn't.",
                     "No, he not.",
                 ],
-                "answer": "No, he doesn't.",
-                "explanation": "Marat = he, поэтому краткий ответ: No, he doesn't.",
+
+                "answer":
+                    "No, he doesn't.",
+
+                "explanation":
+                    "Marat = HE → NO, HE DOESN'T.",
             },
 
-            {
-                "order": 16,
-                "prompt": "Does she ___ coffee?",
-                "options": ["likes", "like", "liking", "liked"],
-                "answer": "like",
-                "explanation": "После does используется базовая форма like.",
-            },
 
             {
-                "order": 17,
-                "prompt": "___ the phone work?",
-                "options": ["Do", "Does", "Is", "Are"],
-                "answer": "Does",
-                "explanation": "The phone = it, поэтому Does.",
-            },
+                "order": 14,
+                "section": 6,
+                "type": "choice",
 
-            {
-                "order": 18,
-                "prompt": "___ the phones work?",
-                "options": ["Does", "Do", "Is", "Are"],
-                "answer": "Do",
-                "explanation": "The phones = they, поэтому Do.",
-            },
+                "prompt":
+                    "Do the students understand?",
 
-            {
-                "order": 19,
-                "prompt": "Does he usually ___ at home?",
-                "options": ["works", "work", "working", "worked"],
-                "answer": "work",
-                "explanation": "Usually стоит перед основным глаголом; после does используется work.",
-            },
-
-            {
-                "order": 20,
-                "prompt": "Do you ___ travel abroad?",
-                "options": ["never", "ever", "always not", "does"],
-                "answer": "ever",
-                "explanation": "В нейтральном вопросе «когда-нибудь» обычно передаётся словом ever.",
-            },
-
-            {
-                "order": 21,
-                "prompt": "Choose the correct question.",
                 "options": [
-                    "Does she works here?",
-                    "Do she work here?",
-                    "Does she work here?",
-                    "Is she work here?",
+                    "Yes, they do.",
+                    "Yes, they are.",
+                    "Yes, they does.",
+                    "Yes, them do.",
                 ],
-                "answer": "Does she work here?",
-                "explanation": "She → does, а основной глагол используется без -s.",
+
+                "answer":
+                    "Yes, they do.",
+
+                "explanation":
+                    "THE STUDENTS = THEY → YES, THEY DO.",
             },
 
-            {
-                "order": 22,
-                "prompt": "Choose the correct question.",
-                "options": [
-                    "Does they study English?",
-                    "Do they study English?",
-                    "Are they study English?",
-                    "Do they studies English?",
-                ],
-                "answer": "Do they study English?",
-                "explanation": "They → do + базовая форма study.",
-            },
 
             {
-                "order": 23,
-                "prompt": "Choose the correct question.",
+                "order": 15,
+                "section": 7,
+                "type": "choice",
+
+                "prompt":
+                    "Choose the correct question.",
+
                 "options": [
                     "Does she is a teacher?",
                     "Do she is a teacher?",
                     "Is she a teacher?",
                     "Does she be a teacher?",
                 ],
-                "answer": "Is she a teacher?",
-                "explanation": "С глаголом to be do/does не используются.",
+
+                "answer":
+                    "Is she a teacher?",
+
+                "explanation":
+                    "С TO BE вспомогательный DO / DOES не используется.",
             },
 
+
             {
-                "order": 24,
-                "prompt": "My sister works at a school. Choose the correct question.",
+                "order": 16,
+                "section": 7,
+                "type": "choice",
+
+                "prompt":
+                    "Choose the correct question about an action.",
+
+                "options": [
+                    "Is he work at a hospital?",
+                    "Does he work at a hospital?",
+                    "Does he works at a hospital?",
+                    "Do he work at a hospital?",
+                ],
+
+                "answer":
+                    "Does he work at a hospital?",
+
+                "explanation":
+                    "WORK — обычный глагол → DOES + WORK.",
+            },
+
+
+            {
+                "order": 17,
+                "section": 8,
+                "type": "choice",
+
+                "prompt":
+                    "Choose the correct question.",
+
+                "options": [
+                    "Do you often read?",
+                    "Do often you read?",
+                    "Are you often read?",
+                    "Does you often read?",
+                ],
+
+                "answer":
+                    "Do you often read?",
+
+                "explanation":
+                    "Правильный порядок: DO + YOU + OFTEN + READ.",
+            },
+
+
+            {
+                "order": 18,
+                "section": 8,
+                "type": "choice",
+
+                "prompt":
+                    "___ you ever travel abroad?",
+
+                "options": [
+                    "Does",
+                    "Do",
+                    "Are",
+                    "Is",
+                ],
+
+                "answer":
+                    "Do",
+
+                "explanation":
+                    "YOU → DO. EVER означает «когда-нибудь».",
+            },
+
+
+            {
+                "order": 19,
+                "section": 9,
+                "type": "choice",
+
+                "prompt":
+                    "My sister works at a school. Choose the correct question.",
+
                 "options": [
                     "Does my sister works at a school?",
                     "Do my sister work at a school?",
                     "Does my sister work at a school?",
                     "Is my sister work at a school?",
                 ],
-                "answer": "Does my sister work at a school?",
-                "explanation": "My sister = she → does, а works возвращается к work.",
+
+                "answer":
+                    "Does my sister work at a school?",
+
+                "explanation":
+                    "My sister = SHE → DOES + WORK.",
+            },
+
+
+            {
+                "order": 20,
+                "section": 9,
+                "type": "choice",
+
+                "prompt":
+                    "My parents live in Astana. Choose the correct question.",
+
+                "options": [
+                    "Does my parents live in Astana?",
+                    "Do my parents live in Astana?",
+                    "Are my parents live in Astana?",
+                    "Do my parents lives in Astana?",
+                ],
+
+                "answer":
+                    "Do my parents live in Astana?",
+
+                "explanation":
+                    "My parents = THEY → DO + LIVE.",
             },
 
         ]
 
-        for data in exercises:
+
+        # ================================================
+        # 10 FINAL TEST QUESTIONS
+        # ================================================
+
+        final_test = [
+
+            {
+                "order": 21,
+
+                "prompt":
+                    "___ you like coffee?",
+
+                "options": [
+                    "Do",
+                    "Does",
+                    "Are",
+                    "Is",
+                ],
+
+                "answer":
+                    "Do",
+
+                "explanation":
+                    "YOU → DO.",
+            },
+
+
+            {
+                "order": 22,
+
+                "prompt":
+                    "___ your brother play football?",
+
+                "options": [
+                    "Do",
+                    "Does",
+                    "Is",
+                    "Are",
+                ],
+
+                "answer":
+                    "Does",
+
+                "explanation":
+                    "Your brother = HE → DOES.",
+            },
+
+
+            {
+                "order": 23,
+
+                "prompt":
+                    "Does Anna ___ English?",
+
+                "options": [
+                    "speaks",
+                    "speak",
+                    "speaking",
+                    "is speak",
+                ],
+
+                "answer":
+                    "speak",
+
+                "explanation":
+                    "После DOES используется базовая форма SPEAK.",
+            },
+
+
+            {
+                "order": 24,
+
+                "prompt":
+                    "Does the lesson ___ at ten?",
+
+                "options": [
+                    "starts",
+                    "start",
+                    "starting",
+                    "is start",
+                ],
+
+                "answer":
+                    "start",
+
+                "explanation":
+                    "STARTS → DOES ... START?",
+            },
+
+
+            {
+                "order": 25,
+
+                "prompt":
+                    "Does your mother ___ a car?",
+
+                "options": [
+                    "has",
+                    "have",
+                    "haves",
+                    "having",
+                ],
+
+                "answer":
+                    "have",
+
+                "explanation":
+                    "HAS → DOES ... HAVE?",
+            },
+
+
+            {
+                "order": 26,
+
+                "prompt":
+                    "Do they work here?",
+
+                "options": [
+                    "No, they don't.",
+                    "No, they aren't.",
+                    "No, they doesn't.",
+                    "No, they not.",
+                ],
+
+                "answer":
+                    "No, they don't.",
+
+                "explanation":
+                    "Вопрос с DO → NO, THEY DON'T.",
+            },
+
+
+            {
+                "order": 27,
+
+                "prompt":
+                    "Does she study English?",
+
+                "options": [
+                    "Yes, she do.",
+                    "Yes, she is.",
+                    "Yes, she does.",
+                    "Yes, she studies does.",
+                ],
+
+                "answer":
+                    "Yes, she does.",
+
+                "explanation":
+                    "Вопрос с DOES → YES, SHE DOES.",
+            },
+
+
+            {
+                "order": 28,
+
+                "prompt":
+                    "Choose the correct question.",
+
+                "options": [
+                    "Does he is tired?",
+                    "Is he tired?",
+                    "Do he tired?",
+                    "Does he be tired?",
+                ],
+
+                "answer":
+                    "Is he tired?",
+
+                "explanation":
+                    "TIRED используется с TO BE → IS HE TIRED?",
+            },
+
+
+            {
+                "order": 29,
+
+                "prompt":
+                    "Choose the correct question.",
+
+                "options": [
+                    "Does she usually works at home?",
+                    "Does she usually work at home?",
+                    "Do she usually work at home?",
+                    "Is she usually work at home?",
+                ],
+
+                "answer":
+                    "Does she usually work at home?",
+
+                "explanation":
+                    "Правильный порядок: DOES + SHE + USUALLY + WORK.",
+            },
+
+
+            {
+                "order": 30,
+
+                "prompt":
+                    "Choose the fully correct pair.",
+
+                "options": [
+                    "Is she a teacher? / Does she work at a school?",
+                    "Does she a teacher? / Is she work at a school?",
+                    "Is she teacher? / Does she works at a school?",
+                    "Does she is a teacher? / Do she work at a school?",
+                ],
+
+                "answer":
+                    "Is she a teacher? / Does she work at a school?",
+
+                "explanation":
+                    "Профессия → TO BE; действие WORK → DOES + базовая форма.",
+            },
+
+        ]
+
+
+        valid_orders = []
+
+
+        for data in (
+            training
+            +
+            final_test
+        ):
+
+            valid_orders.append(
+                data["order"]
+            )
+
+
+            if data["order"] <= 20:
+
+                section = (
+                    section_objects[
+                        data["section"]
+                    ]
+                )
+
+            else:
+
+                section = None
+
 
             GrammarExercise.objects.update_or_create(
                 lesson=lesson,
                 order=data["order"],
+
                 defaults={
-                    "exercise_type": GrammarExercise.Type.CHOICE,
-                    "prompt": data["prompt"],
-                    "options": data["options"],
-                    "correct_answer": data["answer"],
-                    "explanation": data["explanation"],
-                    "is_published": True,
+                    "section":
+                        section,
+
+                    "exercise_type":
+                        data.get(
+                            "type",
+                            "choice",
+                        ),
+
+                    "prompt":
+                        data["prompt"],
+
+                    "options":
+                        data["options"],
+
+                    "correct_answer":
+                        data["answer"],
+
+                    "explanation":
+                        data["explanation"],
+
+                    "is_published":
+                        True,
                 },
             )
 
+
+        GrammarExercise.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__in=valid_orders,
+        ).delete()
+
+
+        GrammarLessonSection.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__in=[
+                item["order"]
+                for item in sections
+            ],
+        ).delete()
+
+
         self.stdout.write(
             self.style.SUCCESS(
-                "✅ A1 Lesson 13 seeded: "
-                "Вопросы в Present Simple — DO / DOES"
+                "✅ Interactive A1 Lesson 13 seeded"
             )
         )
 
         self.stdout.write(
-            f"Sections: {lesson.sections.count()}"
+            f"Micro rules: "
+            f"{lesson.sections.count()}"
         )
 
         self.stdout.write(
-            f"Exercises: {lesson.exercises.count()}"
+            "Training exercises: "
+            f"{lesson.exercises.filter(section__isnull=False).count()}"
+        )
+
+        self.stdout.write(
+            "Final test: "
+            f"{lesson.exercises.filter(section__isnull=True).count()}"
         )

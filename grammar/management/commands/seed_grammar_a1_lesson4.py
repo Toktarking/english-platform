@@ -10,1115 +10,1223 @@ from grammar.models import (
 class Command(BaseCommand):
 
     help = (
-        "Create/update A1 Grammar Lesson 4: "
-        "Countable and Uncountable Nouns."
+        "Create/update interactive "
+        "A1 Grammar Lesson 4."
     )
 
-    def handle(self, *args, **options):
+
+    def handle(
+        self,
+        *args,
+        **options,
+    ):
 
         lesson, _ = (
-            GrammarLesson.objects.update_or_create(
+            GrammarLesson.objects
+            .update_or_create(
                 level="A1",
                 order=4,
                 defaults={
-                    "title": (
-                        "Исчисляемые и неисчисляемые "
-                        "существительные"
-                    ),
-                    "slug": (
-                        "countable-uncountable-nouns"
-                    ),
-                    "theory_text": (
-                        "Countable and uncountable nouns."
-                    ),
-                    "estimated_minutes": 30,
-                    "pass_score": 70,
-                    "xp_reward": 100,
-                    "is_published": True,
+                    "title":
+                        "Исчисляемые и неисчисляемые существительные",
+
+                    "slug":
+                        "countable-uncountable-nouns",
+
+                    "theory_text":
+                        "Countable and uncountable nouns.",
+
+                    "estimated_minutes":
+                        18,
+
+                    "pass_score":
+                        70,
+
+                    "xp_reward":
+                        100,
+
+                    "is_published":
+                        True,
                 },
             )
         )
 
-        # ==================================================
-        # THEORY
-        # ==================================================
+
+        # =================================================
+        # 10 MICRO-RULES
+        # =================================================
 
         sections = [
 
             {
                 "order": 1,
-                "title": (
-                    "Исчисляемые и неисчисляемые "
-                    "существительные"
-                ),
-                "body": """Существительное — это слово, которое называет человека, животное, предмет, место, явление, чувство или понятие.
 
-Примеры:
+                "title":
+                    "Countable или uncountable?",
 
-teacher — учитель;
-cat — кошка;
-book — книга;
-city — город;
-rain — дождь;
-love — любовь;
-information — информация.
+                "body":
+                    """В английском существительные делятся на две важные группы.
 
-В английском языке существительные делятся на две важные группы:
+COUNTABLE — исчисляемые:
 
-1. countable nouns — исчисляемые;
-2. uncountable nouns — неисчисляемые.
+book
+chair
+student
+apple
 
-От этого зависит, какие артикли и слова количества можно использовать перед существительным.""",
+Их можно посчитать:
+
+one book
+two books
+three books
+
+UNCOUNTABLE — неисчисляемые:
+
+water
+money
+information
+advice
+
+Их обычно нельзя считать напрямую как отдельные предметы.
+
+От типа существительного зависит выбор артикля и слов количества.""",
             },
+
 
             {
                 "order": 2,
-                "title": "Исчисляемые существительные",
-                "body": """Исчисляемое существительное обозначает предмет, который можно посчитать отдельно.
 
-Например:
+                "title":
+                    "Исчисляемые существительные",
 
-one book;
-two books;
-three books.
+                "body":
+                    """Исчисляемые существительные имеют единственное и множественное число:
 
-Также:
+a book → books
+a car → cars
+an apple → apples
 
-a chair;
-two chairs;
+Один исчисляемый предмет обычно нельзя оставить без определителя.
 
-a student;
-five students;
-
-an apple;
-six apples.
-
-Если предмет можно посчитать как отдельные единицы, существительное обычно исчисляемое.
-
-Исчисляемые существительные имеют единственное и множественное число:
-
-a book → books;
-a car → cars;
-a student → students;
-an apple → apples.
-
-В единственном числе обычное исчисляемое существительное нельзя просто оставить без определителя.
-
-Неправильно:
+Нельзя:
 
 I have book.
 
-Правильно:
+Можно:
 
 I have a book.
 I have the book.
-I have my book.""",
+I have my book.
+
+С countable nouns используются:
+
+a / an
+many
+a few
+several.""",
             },
+
 
             {
                 "order": 3,
-                "title": "Как образуется множественное число",
-                "body": """Обычно к существительному добавляется -s:
 
-book → books;
-car → cars;
-student → students.
+                "title":
+                    "Как образовать множественное число",
 
-После некоторых окончаний часто добавляется -es:
+                "body":
+                    """Обычно добавляем -s:
 
-bus → buses;
-class → classes;
-dish → dishes;
-watch → watches;
-box → boxes;
-tomato → tomatoes.
+book → books
+car → cars
+student → students
+
+После некоторых окончаний добавляется -es:
+
+bus → buses
+class → classes
+dish → dishes
+watch → watches
+box → boxes
+tomato → tomatoes
 
 Если слово заканчивается на согласную + y:
 
-city → cities;
-baby → babies;
-country → countries.
+city → cities
+baby → babies
+country → countries
 
-Но после гласной + y просто добавляется -s:
+Но после гласной + y:
 
-boy → boys;
-toy → toys;
+boy → boys
+toy → toys
 day → days.""",
             },
 
+
             {
                 "order": 4,
-                "title": "Неправильное множественное число",
-                "body": """Некоторые существительные имеют особую форму множественного числа.
 
-man → men;
-woman → women;
-child → children;
-person → people;
-foot → feet;
-tooth → teeth;
-mouse → mice.
+                "title":
+                    "Неправильное множественное число",
 
-Неправильно:
+                "body":
+                    """Некоторые слова имеют особую форму:
 
-childs;
-womans.
+man → men
+woman → women
+child → children
+person → people
+foot → feet
+tooth → teeth
+mouse → mice
 
-Некоторые формы не меняются:
+Не говорим:
 
-one sheep → two sheep;
+childs
+womans
+
+Некоторые формы вообще не меняются:
+
+one sheep → two sheep
+
 one fish → five fish.""",
             },
 
+
             {
                 "order": 5,
-                "title": "Неисчисляемые существительные",
-                "body": """Неисчисляемое существительное обозначает то, что обычно не считают отдельными предметами.
 
-Это могут быть:
+                "title":
+                    "Неисчисляемые существительные",
 
-жидкости;
-вещества;
-материалы;
-абстрактные понятия;
-информация;
-деятельность.
-
-Примеры:
-
-water;
-milk;
-sugar;
-rice;
-money;
-information;
-advice;
-work;
-love;
-happiness.
-
-Нельзя сказать:
-
-one water;
-two informations;
-three advices.
-
-С неисчисляемыми существительными обычно нельзя использовать a/an.
-
-Неправильно:
-
-a water;
-a money;
-an information;
-an advice;
-a furniture.
-
-Правильно:
-
-water;
-money;
-information;
-advice;
-furniture.""",
-            },
-
-            {
-                "order": 6,
-                "title": (
-                    "У неисчисляемых обычно нет "
-                    "множественного числа"
-                ),
-                "body": """Обычно неисчисляемые существительные не имеют формы множественного числа.
-
-Неправильно:
-
-informations;
-advices;
-furnitures;
-moneys;
-knowledges.
-
-Правильно:
-
-information;
-advice;
-furniture;
-money;
-knowledge.
-
-Примеры:
-
-This information is useful.
-Her advice was helpful.
-The furniture is new.
-
-Обратите внимание: такие слова часто требуют глагол в единственном числе.
-
-The information is important.
-
-The news is good.
-
-Хотя news заканчивается на -s, грамматически это обычно единственное число.""",
-            },
-
-            {
-                "order": 7,
-                "title": (
-                    "Важные неисчисляемые слова"
-                ),
-                "body": """Особенно важно запомнить следующие неисчисляемые существительные:
-
-information;
-knowledge;
-news;
-advice;
-research;
-
-work;
-homework;
-housework;
-
-money;
-
-furniture;
-equipment;
-luggage;
-baggage.
-
-Примеры:
-
-I need some information.
-She has a lot of knowledge.
-The news is good.
-He gave me useful advice.
-The research is important.
-
-I have a lot of work.
-The teacher gave us homework.
-
-Но job — исчисляемое:
-
-a job;
-two jobs.
-
-Сравните:
-
-I have a lot of work.
-I have a new job.""",
-            },
-
-            {
-                "order": 8,
-                "title": "Еда и жидкости",
-                "body": """Многие продукты неисчисляемые:
-
-bread;
-rice;
-sugar;
-salt;
-cheese;
-meat;
-butter;
-food.
-
-Примеры:
-
-We need some bread.
-There is little sugar.
-I do not eat much meat.
-
-Но есть и исчисляемые продукты:
-
-an apple;
-a banana;
-an egg;
-a tomato;
-a sandwich.
-
-Жидкости обычно неисчисляемые:
-
-water;
-milk;
-coffee;
-tea;
-juice;
-oil.
-
-I drink water.
-She wants some coffee.
-There is a little milk in the fridge.
-
-В кафе можно услышать:
-
-two coffees;
-three teas.
-
-Это сокращённо означает две чашки кофе или три чашки чая.""",
-            },
-
-            {
-                "order": 9,
-                "title": (
-                    "Как считать неисчисляемые "
-                    "существительные"
-                ),
-                "body": """Само неисчисляемое существительное нельзя считать напрямую, но можно считать его порции, упаковки или части.
+                "body":
+                    """Uncountable nouns обычно нельзя считать напрямую.
 
 Например:
 
-a glass of water;
-two glasses of water;
+water
+milk
+money
+information
+advice
+furniture
+work
+knowledge
+music
+love
 
-a bottle of milk;
-three bottles of milk.
+С ними обычно нельзя использовать A / AN:
 
-Можно считать glass или bottle, а не water или milk.
+не:
+an information
+an advice
+a furniture
 
-Очень полезно выражение piece of:
+а:
 
-a piece of advice;
-two pieces of advice;
+information
+advice
+furniture
 
-a piece of information;
-three pieces of information;
+Также у них обычно нет обычной формы множественного числа:
 
-a piece of furniture;
-a piece of news.
+не:
+informations
+advices
+furnitures
 
-Другие примеры:
+а:
 
-a loaf of bread;
-a slice of bread;
-a cup of tea;
-a bowl of rice;
-a kilo of sugar;
-a bottle of oil;
-a bar of chocolate;
-a sheet of paper.""",
+information
+advice
+furniture.""",
             },
 
+
             {
-                "order": 10,
-                "title": (
-                    "Слова, которые могут быть "
-                    "исчисляемыми и неисчисляемыми"
-                ),
-                "body": """Некоторые слова могут быть и исчисляемыми, и неисчисляемыми — значение меняется.
+                "order": 6,
+
+                "title":
+                    "Information, news, homework и другие ловушки",
+
+                "body":
+                    """Особенно важно запомнить:
+
+information
+advice
+knowledge
+news
+research
+
+work
+homework
+housework
+
+money
+furniture
+equipment
+luggage
+baggage
+
+Они обычно неисчисляемые.
+
+Правильно:
+
+some information
+useful advice
+a lot of homework
+new furniture
+
+NEWS заканчивается на -s, но обычно требует глагол в единственном числе:
+
+The news is good.
+
+Не:
+
+The news are good.
+
+WORK обычно неисчисляемое:
+
+I have a lot of work.
+
+Но JOB — исчисляемое:
+
+I have a new job.
+She has two jobs.""",
+            },
+
+
+            {
+                "order": 7,
+
+                "title":
+                    "Еда, напитки и как их считать",
+
+                "body":
+                    """Многие продукты неисчисляемые:
+
+bread
+rice
+sugar
+salt
+cheese
+meat
+butter
+
+Жидкости тоже обычно неисчисляемые:
+
+water
+milk
+coffee
+tea
+juice
+oil
+
+Но можно считать упаковки, порции и части:
+
+a glass of water
+two bottles of milk
+
+a piece of advice
+three pieces of information
+
+a loaf of bread
+a slice of bread
+a cup of tea
+a bowl of rice
+a kilo of sugar
+a bottle of oil
+
+Мы считаем glass, bottle, piece, loaf — а не само неисчисляемое слово.""",
+            },
+
+
+            {
+                "order": 8,
+
+                "title":
+                    "Одно слово может быть countable и uncountable",
+
+                "body":
+                    """Иногда тип существительного зависит от значения.
 
 COFFEE
 
 I like coffee.
-— кофе как напиток вообще.
+кофе как напиток
 
 Two coffees, please.
-— две чашки кофе.
+две чашки кофе
 
 CHICKEN
 
 There is a chicken in the garden.
-— одна курица.
+одна курица
 
 We ate chicken for dinner.
-— куриное мясо.
+куриное мясо
 
 PAPER
 
 Paper is made from wood.
-— бумага как материал.
+материал
 
-I read a paper this morning.
-— статья, документ или газета.
+I read a paper.
+статья или документ
 
 HAIR
 
 Her hair is long.
-— волосы как масса.
+волосы как масса
 
-I found a hair on my jacket.
-— один волос.
+I found a hair.
+один волос
 
 EXPERIENCE
 
 She has a lot of experience.
-— опыт вообще.
+опыт
 
 It was an interesting experience.
-— отдельное событие.
-
-TIME
-
-I do not have much time.
-— время.
-
-I have visited London three times.
-— три раза.""",
+отдельное событие.""",
             },
 
-            {
-                "order": 11,
-                "title": "Many, much, a few и a little",
-                "body": """MANY используется с исчисляемыми существительными во множественном числе:
 
-many books;
-many students;
-many people.
+            {
+                "order": 9,
+
+                "title":
+                    "Many, much, a few, a little",
+
+                "body":
+                    """С COUNTABLE во множественном числе:
+
+many books
+many students
+
+a few friends
+a few chairs
+
+С UNCOUNTABLE:
+
+much money
+much time
+much information
+
+a little water
+a little time
+
+Сравни:
 
 How many students are there?
 
-MUCH используется с неисчисляемыми:
-
-much money;
-much time;
-much water;
-much information.
-
 How much money do you need?
 
-A FEW используется с исчисляемыми:
+A few означает «несколько».
 
-a few books;
-a few friends.
+A little означает «немного».
 
-A LITTLE используется с неисчисляемыми:
+Few и little без A обычно подчёркивают, что количества очень мало:
 
-a little water;
-a little time.
-
-Сравните:
-
-I have a few friends.
-We have a little time.""",
+few friends
+little time.""",
             },
 
+
             {
-                "order": 12,
-                "title": (
-                    "Few / little и слова для обеих групп"
-                ),
-                "body": """Few и little означают, что чего-то очень мало.
+                "order": 10,
 
-few books — мало книг;
-little water — мало воды.
+                "title":
+                    "Some, any и a lot of",
 
-A few / a little обычно звучат более положительно:
-
-a few books — несколько книг;
-a little water — немного воды.
-
-Некоторые слова подходят к обеим группам.
+                "body":
+                    """Некоторые слова подходят и к countable, и к uncountable nouns.
 
 A LOT OF:
 
-a lot of books;
-a lot of money.
+a lot of books
+a lot of money
 
 SOME:
 
-some books;
-some water;
-some information.
+some books
+some water
+some information
 
-ANY часто используется в вопросах и отрицаниях:
+ANY часто встречается в вопросах и отрицаниях:
 
 Do you have any books?
+
 Do you have any money?
 
-We do not have any chairs.
-There is not any milk.""",
-            },
+We don't have any chairs.
 
-            {
-                "order": 13,
-                "title": (
-                    "Как определить тип "
-                    "существительного"
-                ),
-                "body": """Задайте простой вопрос:
+There isn't any milk.
 
-Можно ли посчитать это как отдельные предметы?
+Главный алгоритм:
 
-Например:
+Можно посчитать отдельными единицами?
 
-one book;
-two books.
+Да → countable.
 
-Можно — значит book исчисляемое.
+Нет → обычно uncountable.
 
-Но нельзя нормально сказать:
+И не переводи буквально с русского:
 
-one information;
-two advices;
-three furnitures.
-
-Значит, information, advice и furniture — неисчисляемые.
-
-Важно не переводить буквально с русского.
-
-В русском мы говорим:
-
-советы;
-сведения;
-новости;
-деньги;
-мебель.
-
-Но в английском обычно:
-
-advice;
-information;
-news;
-money;
-furniture.
-
-Все эти слова неисчисляемые.""",
-            },
-
-            {
-                "order": 14,
-                "title": (
-                    "Главные правила и типичные ошибки"
-                ),
-                "body": """Запомните основные правила.
-
-ИСЧИСЛЯЕМЫЕ:
-
-можно посчитать;
-
-one book;
-two books;
-
-используются:
-
-a/an;
-many;
-a few.
-
-НЕИСЧИСЛЯЕМЫЕ:
-
-напрямую не считаются;
-
-water;
-money;
-information;
-
-обычно нельзя использовать a/an и множественное число;
-
-используются:
-
-much;
-a little.
-
-С ОБЕИМИ ГРУППАМИ:
-
-a lot of;
-some;
-any.
-
-Типичные ошибки:
-
-an information ❌
-some information ✅
-
-two advices ❌
-two pieces of advice ✅
-
-many money ❌
-much money / a lot of money ✅
-
-many furnitures ❌
-a lot of furniture ✅
-
-many homeworks ❌
-a lot of homework ✅
-
-The news are good. ❌
-The news is good. ✅""",
+советы → advice
+информация → information
+мебель → furniture
+домашняя работа → homework.""",
             },
 
         ]
 
 
+        section_objects = {}
+
+
         for data in sections:
 
-            GrammarLessonSection.objects.update_or_create(
-                lesson=lesson,
-                order=data["order"],
-                defaults={
-                    "title": data["title"],
-                    "body": data["body"],
-                },
+            section, _ = (
+                GrammarLessonSection.objects
+                .update_or_create(
+                    lesson=lesson,
+                    order=data["order"],
+
+                    defaults={
+                        "title":
+                            data["title"],
+
+                        "body":
+                            data["body"],
+                    },
+                )
             )
 
+            section_objects[
+                data["order"]
+            ] = section
 
-        # ==================================================
-        # PRACTICE — 24 QUESTIONS
-        # ==================================================
 
-        exercises = [
+        # =================================================
+        # 20 TRAINING EXERCISES
+        # =================================================
+
+        training = [
 
             {
                 "order": 1,
-                "prompt": (
-                    "Choose the countable noun."
-                ),
+                "section": 1,
+                "type": "choice",
+
+                "prompt":
+                    "Какое слово исчисляемое?",
+
                 "options": [
                     "information",
                     "advice",
                     "book",
                     "money",
                 ],
-                "answer": "book",
-                "explanation": (
-                    "Book можно посчитать: "
-                    "one book, two books."
-                ),
+
+                "answer":
+                    "book",
+
+                "explanation":
+                    "Book можно посчитать: one book, two books.",
             },
+
 
             {
                 "order": 2,
-                "prompt": (
-                    "Choose the uncountable noun."
-                ),
+                "section": 1,
+                "type": "choice",
+
+                "prompt":
+                    "Какое слово неисчисляемое?",
+
                 "options": [
                     "chair",
                     "student",
                     "apple",
                     "furniture",
                 ],
-                "answer": "furniture",
-                "explanation": (
-                    "Furniture обычно "
-                    "неисчисляемое."
-                ),
+
+                "answer":
+                    "furniture",
+
+                "explanation":
+                    "Furniture обычно неисчисляемое.",
             },
+
 
             {
                 "order": 3,
-                "prompt": (
-                    "I need ___ information."
-                ),
-                "options": [
-                    "an",
+                "section": 2,
+                "type": "fill",
+
+                "prompt":
+                    "I have ___ new book.",
+
+                "options": [],
+
+                "answer":
                     "a",
-                    "some",
-                    "many",
-                ],
-                "answer": "some",
-                "explanation": (
-                    "Information — неисчисляемое. "
-                    "Правильно: some information."
-                ),
+
+                "explanation":
+                    "Book — исчисляемое существительное в единственном числе.",
             },
+
 
             {
                 "order": 4,
-                "prompt": (
-                    "There are ___ students "
-                    "in the classroom."
-                ),
-                "options": [
-                    "much",
-                    "many",
-                    "little",
-                    "a little",
-                ],
-                "answer": "many",
-                "explanation": (
-                    "Students — исчисляемое "
-                    "существительное во "
-                    "множественном числе."
-                ),
-            },
+                "section": 3,
+                "type": "choice",
 
-            {
-                "order": 5,
-                "prompt": (
-                    "We do not have ___ money."
-                ),
-                "options": [
-                    "many",
-                    "a few",
-                    "much",
-                    "several",
-                ],
-                "answer": "much",
-                "explanation": (
-                    "Money — неисчисляемое, "
-                    "поэтому используется much."
-                ),
-            },
+                "prompt":
+                    "Выбери правильное множественное число: city → ?",
 
-            {
-                "order": 6,
-                "prompt": (
-                    "She gave me ___ useful advice."
-                ),
-                "options": [
-                    "an",
-                    "a",
-                    "some",
-                    "many",
-                ],
-                "answer": "some",
-                "explanation": (
-                    "Advice — неисчисляемое."
-                ),
-            },
-
-            {
-                "order": 7,
-                "prompt": (
-                    "I bought two ___ of bread."
-                ),
-                "options": [
-                    "breads",
-                    "loaf",
-                    "loaves",
-                    "breades",
-                ],
-                "answer": "loaves",
-                "explanation": (
-                    "Правильно: two loaves "
-                    "of bread."
-                ),
-            },
-
-            {
-                "order": 8,
-                "prompt": (
-                    "The news ___ surprising."
-                ),
-                "options": [
-                    "are",
-                    "were",
-                    "is",
-                    "have",
-                ],
-                "answer": "is",
-                "explanation": (
-                    "News обычно грамматически "
-                    "употребляется как "
-                    "единственное число."
-                ),
-            },
-
-            {
-                "order": 9,
-                "prompt": (
-                    "Choose the correct plural form."
-                ),
-                "options": [
-                    "childs",
-                    "childes",
-                    "children",
-                    "childrens",
-                ],
-                "answer": "children",
-                "explanation": (
-                    "Child имеет неправильную "
-                    "форму множественного числа: "
-                    "children."
-                ),
-            },
-
-            {
-                "order": 10,
-                "prompt": (
-                    "Choose the correct plural form "
-                    "of 'city'."
-                ),
                 "options": [
                     "citys",
                     "cities",
                     "cityes",
                     "citis",
                 ],
-                "answer": "cities",
-                "explanation": (
-                    "Согласная + y: "
-                    "y меняется на i + es."
-                ),
+
+                "answer":
+                    "cities",
+
+                "explanation":
+                    "После согласной + y: y меняется на i + es.",
             },
 
+
             {
-                "order": 11,
-                "prompt": (
-                    "We have ___ time "
-                    "before the lesson."
-                ),
+                "order": 5,
+                "section": 3,
+                "type": "choice",
+
+                "prompt":
+                    "Выбери правильное множественное число: box → ?",
+
                 "options": [
-                    "a few",
-                    "many",
-                    "a little",
-                    "several",
+                    "boxs",
+                    "boxes",
+                    "boxies",
+                    "boxen",
                 ],
-                "answer": "a little",
-                "explanation": (
-                    "Time в значении времени "
-                    "неисчисляемое."
-                ),
+
+                "answer":
+                    "boxes",
+
+                "explanation":
+                    "После -x обычно добавляется -es.",
             },
 
+
             {
-                "order": 12,
-                "prompt": (
-                    "She bought ___ new chairs."
-                ),
+                "order": 6,
+                "section": 4,
+                "type": "choice",
+
+                "prompt":
+                    "Выбери правильное множественное число: child → ?",
+
                 "options": [
-                    "a few",
-                    "a little",
-                    "much",
-                    "an",
+                    "childs",
+                    "childes",
+                    "children",
+                    "childrens",
                 ],
-                "answer": "a few",
-                "explanation": (
-                    "Chairs — исчисляемое "
-                    "во множественном числе."
-                ),
+
+                "answer":
+                    "children",
+
+                "explanation":
+                    "Child имеет неправильную форму children.",
             },
 
+
             {
-                "order": 13,
-                "prompt": (
-                    "The teacher gave us ___ homework."
-                ),
+                "order": 7,
+                "section": 4,
+                "type": "build",
+
+                "prompt":
+                    "Собери правильное выражение.",
+
                 "options": [
-                    "many",
-                    "an",
-                    "some",
-                    "a few",
+                    "two",
+                    "women",
                 ],
-                "answer": "some",
-                "explanation": (
-                    "Homework — неисчисляемое."
-                ),
+
+                "answer":
+                    "two women",
+
+                "explanation":
+                    "Woman → women.",
             },
 
+
             {
-                "order": 14,
-                "prompt": (
-                    "I heard ___ interesting news."
-                ),
+                "order": 8,
+                "section": 5,
+                "type": "choice",
+
+                "prompt":
+                    "I need ___ information.",
+
                 "options": [
                     "an",
                     "a",
                     "some",
                     "many",
                 ],
-                "answer": "some",
-                "explanation": (
-                    "News — неисчисляемое."
-                ),
+
+                "answer":
+                    "some",
+
+                "explanation":
+                    "Information неисчисляемое. Правильно: some information.",
             },
+
+
+            {
+                "order": 9,
+                "section": 5,
+                "type": "choice",
+
+                "prompt":
+                    "Выбери правильный вариант.",
+
+                "options": [
+                    "two advices",
+                    "an advice",
+                    "some advice",
+                    "many advice",
+                ],
+
+                "answer":
+                    "some advice",
+
+                "explanation":
+                    "Advice — неисчисляемое существительное.",
+            },
+
+
+            {
+                "order": 10,
+                "section": 6,
+                "type": "choice",
+
+                "prompt":
+                    "The news ___ good.",
+
+                "options": [
+                    "are",
+                    "is",
+                    "have",
+                    "were",
+                ],
+
+                "answer":
+                    "is",
+
+                "explanation":
+                    "News обычно грамматически используется как единственное число.",
+            },
+
+
+            {
+                "order": 11,
+                "section": 6,
+                "type": "choice",
+
+                "prompt":
+                    "The teacher gave us ___ homework.",
+
+                "options": [
+                    "many",
+                    "an",
+                    "some",
+                    "a few",
+                ],
+
+                "answer":
+                    "some",
+
+                "explanation":
+                    "Homework — неисчисляемое.",
+            },
+
+
+            {
+                "order": 12,
+                "section": 7,
+                "type": "choice",
+
+                "prompt":
+                    "I bought two ___ of bread.",
+
+                "options": [
+                    "breads",
+                    "loaves",
+                    "breades",
+                    "bread",
+                ],
+
+                "answer":
+                    "loaves",
+
+                "explanation":
+                    "Правильно: two loaves of bread.",
+            },
+
+
+            {
+                "order": 13,
+                "section": 7,
+                "type": "build",
+
+                "prompt":
+                    "Собери выражение «два совета».",
+
+                "options": [
+                    "two",
+                    "pieces",
+                    "of",
+                    "advice",
+                ],
+
+                "answer":
+                    "two pieces of advice",
+
+                "explanation":
+                    "Advice нельзя считать напрямую, поэтому используем pieces of advice.",
+            },
+
+
+            {
+                "order": 14,
+                "section": 8,
+                "type": "choice",
+
+                "prompt":
+                    "Какое предложение говорит о курином мясе?",
+
+                "options": [
+                    "There is a chicken in the garden.",
+                    "We ate chicken for dinner.",
+                    "Two chickens are outside.",
+                    "A chicken is near the house.",
+                ],
+
+                "answer":
+                    "We ate chicken for dinner.",
+
+                "explanation":
+                    "Chicken без артикля здесь означает мясо.",
+            },
+
 
             {
                 "order": 15,
-                "prompt": (
-                    "We need two ___ of information."
-                ),
+                "section": 8,
+                "type": "choice",
+
+                "prompt":
+                    "Какое предложение означает отдельное событие?",
+
                 "options": [
-                    "informations",
-                    "pieces",
-                    "advices",
-                    "information",
+                    "She has a lot of experience.",
+                    "It was an interesting experience.",
+                    "She has much experience.",
+                    "Experience is important.",
                 ],
-                "answer": "pieces",
-                "explanation": (
-                    "Правильно: two pieces "
-                    "of information."
-                ),
+
+                "answer":
+                    "It was an interesting experience.",
+
+                "explanation":
+                    "Experience может быть исчисляемым, когда означает отдельное переживание или событие.",
             },
+
 
             {
                 "order": 16,
-                "prompt": (
-                    "She has ___ experience "
-                    "as a teacher."
-                ),
+                "section": 9,
+                "type": "choice",
+
+                "prompt":
+                    "There are ___ students in the classroom.",
+
+                "options": [
+                    "much",
+                    "many",
+                    "little",
+                    "a little",
+                ],
+
+                "answer":
+                    "many",
+
+                "explanation":
+                    "Students — исчисляемое существительное во множественном числе.",
+            },
+
+
+            {
+                "order": 17,
+                "section": 9,
+                "type": "choice",
+
+                "prompt":
+                    "We don't have ___ time.",
+
+                "options": [
+                    "many",
+                    "much",
+                    "a few",
+                    "several",
+                ],
+
+                "answer":
+                    "much",
+
+                "explanation":
+                    "Time в значении времени — неисчисляемое.",
+            },
+
+
+            {
+                "order": 18,
+                "section": 9,
+                "type": "choice",
+
+                "prompt":
+                    "I have ___ friends here.",
+
+                "options": [
+                    "a few",
+                    "a little",
+                    "much",
+                    "an",
+                ],
+
+                "answer":
+                    "a few",
+
+                "explanation":
+                    "Friends — исчисляемое существительное во множественном числе.",
+            },
+
+
+            {
+                "order": 19,
+                "section": 9,
+                "type": "choice",
+
+                "prompt":
+                    "We have ___ water left.",
+
+                "options": [
+                    "a few",
+                    "a little",
+                    "many",
+                    "several",
+                ],
+
+                "answer":
+                    "a little",
+
+                "explanation":
+                    "Water — неисчисляемое.",
+            },
+
+
+            {
+                "order": 20,
+                "section": 10,
+                "type": "choice",
+
+                "prompt":
+                    "Какое выражение подходит и к books, и к money?",
+
+                "options": [
+                    "many",
+                    "much",
+                    "a few",
+                    "a lot of",
+                ],
+
+                "answer":
+                    "a lot of",
+
+                "explanation":
+                    "A lot of можно использовать и с countable, и с uncountable nouns.",
+            },
+
+        ]
+
+
+        # =================================================
+        # 10 FINAL TEST QUESTIONS
+        # =================================================
+
+        final_test = [
+
+            {
+                "order": 21,
+
+                "prompt":
+                    "Choose the countable noun.",
+
+                "options": [
+                    "equipment",
+                    "luggage",
+                    "job",
+                    "knowledge",
+                ],
+
+                "answer":
+                    "job",
+
+                "explanation":
+                    "Job можно посчитать: one job, two jobs.",
+            },
+
+
+            {
+                "order": 22,
+
+                "prompt":
+                    "Choose the correct plural form: baby → ?",
+
+                "options": [
+                    "babys",
+                    "babies",
+                    "babyes",
+                    "babyes",
+                ],
+
+                "answer":
+                    "babies",
+
+                "explanation":
+                    "После согласной + y: y меняется на i + es.",
+            },
+
+
+            {
+                "order": 23,
+
+                "prompt":
+                    "Choose the correct plural form: tooth → ?",
+
+                "options": [
+                    "tooths",
+                    "toothes",
+                    "teeth",
+                    "tooth",
+                ],
+
+                "answer":
+                    "teeth",
+
+                "explanation":
+                    "Tooth имеет неправильную форму множественного числа teeth.",
+            },
+
+
+            {
+                "order": 24,
+
+                "prompt":
+                    "Choose the correct sentence.",
+
+                "options": [
+                    "She gave me an advice.",
+                    "She gave me some advice.",
+                    "She gave me two advices.",
+                    "She gave me many advice.",
+                ],
+
+                "answer":
+                    "She gave me some advice.",
+
+                "explanation":
+                    "Advice — неисчисляемое существительное.",
+            },
+
+
+            {
+                "order": 25,
+
+                "prompt":
+                    "Choose the correct sentence.",
+
+                "options": [
+                    "The news are interesting.",
+                    "The news is interesting.",
+                    "The news have interesting.",
+                    "The news be interesting.",
+                ],
+
+                "answer":
+                    "The news is interesting.",
+
+                "explanation":
+                    "News обычно требует глагол в единственном числе.",
+            },
+
+
+            {
+                "order": 26,
+
+                "prompt":
+                    "We need three ___ of information.",
+
+                "options": [
+                    "informations",
+                    "pieces",
+                    "information",
+                    "advices",
+                ],
+
+                "answer":
+                    "pieces",
+
+                "explanation":
+                    "Правильно: three pieces of information.",
+            },
+
+
+            {
+                "order": 27,
+
+                "prompt":
+                    "She has ___ experience as a teacher.",
+
                 "options": [
                     "many",
                     "a lot of",
                     "a few",
                     "several",
                 ],
-                "answer": "a lot of",
-                "explanation": (
-                    "Experience в значении "
-                    "опыта обычно неисчисляемое."
-                ),
-            },
 
-            {
-                "order": 17,
-                "prompt": (
-                    "There are only ___ students "
-                    "in the room, but they are enough."
-                ),
-                "options": [
-                    "a little",
-                    "little",
-                    "a few",
-                    "much",
-                ],
-                "answer": "a few",
-                "explanation": (
-                    "Students — исчисляемое "
-                    "множественное число."
-                ),
-            },
-
-            {
-                "order": 18,
-                "prompt": (
-                    "Choose the correct sentence."
-                ),
-                "options": [
-                    "I need an information.",
-                    "I need an informations.",
-                    "I need some information.",
-                    "I need many information.",
-                ],
-                "answer": (
-                    "I need some information."
-                ),
-                "explanation": (
-                    "Information — неисчисляемое."
-                ),
-            },
-
-            {
-                "order": 19,
-                "prompt": (
-                    "Choose the correct sentence."
-                ),
-                "options": [
-                    "She gave me two advices.",
-                    "She gave me two pieces of advice.",
-                    "She gave me an advice.",
-                    "She gave me many advice.",
-                ],
-                "answer": (
-                    "She gave me two pieces of advice."
-                ),
-                "explanation": (
-                    "Advice нельзя считать напрямую. "
-                    "Используем pieces of advice."
-                ),
-            },
-
-            {
-                "order": 20,
-                "prompt": (
-                    "Choose the correct sentence."
-                ),
-                "options": [
-                    "We bought many furnitures.",
-                    "We bought a furniture.",
-                    "We bought a lot of furniture.",
-                    "We bought furnitures.",
-                ],
-                "answer": (
-                    "We bought a lot of furniture."
-                ),
-                "explanation": (
-                    "Furniture — неисчисляемое."
-                ),
-            },
-
-            {
-                "order": 21,
-                "prompt": (
-                    "Which sentence means "
-                    "'one separate event'?"
-                ),
-                "options": [
-                    "She has a lot of experience.",
-                    "It was an interesting experience.",
-                    "She has much experiences.",
-                    "She has an experience knowledge.",
-                ],
-                "answer": (
-                    "It was an interesting experience."
-                ),
-                "explanation": (
-                    "Experience может быть "
-                    "исчисляемым, когда означает "
-                    "отдельное событие."
-                ),
-            },
-
-            {
-                "order": 22,
-                "prompt": (
-                    "Which sentence is about "
-                    "chicken meat?"
-                ),
-                "options": [
-                    "There is a chicken in the garden.",
-                    "We ate chicken for dinner.",
-                    "There are two chickens outside.",
-                    "A chicken is walking near the house.",
-                ],
-                "answer": (
-                    "We ate chicken for dinner."
-                ),
-                "explanation": (
-                    "Chicken без артикля здесь "
-                    "означает куриное мясо."
-                ),
-            },
-
-            {
-                "order": 23,
-                "prompt": (
-                    "Choose the correct sentence."
-                ),
-                "options": [
-                    "He has many money.",
-                    "He has a few money.",
-                    "He has a lot of money.",
-                    "He has several money.",
-                ],
-                "answer": (
-                    "He has a lot of money."
-                ),
-                "explanation": (
-                    "Money — неисчисляемое. "
-                    "A lot of подходит."
-                ),
-            },
-
-            {
-                "order": 24,
-                "prompt": (
-                    "Which option works with BOTH "
-                    "countable and uncountable nouns?"
-                ),
-                "options": [
-                    "many",
-                    "much",
-                    "a few",
+                "answer":
                     "a lot of",
+
+                "explanation":
+                    "Experience в значении опыта обычно неисчисляемое.",
+            },
+
+
+            {
+                "order": 28,
+
+                "prompt":
+                    "How ___ students are there, and how ___ water do we need?",
+
+                "options": [
+                    "many / much",
+                    "much / many",
+                    "many / many",
+                    "much / much",
                 ],
-                "answer": "a lot of",
-                "explanation": (
-                    "A lot of можно использовать "
-                    "и с countable, и с "
-                    "uncountable nouns."
-                ),
+
+                "answer":
+                    "many / much",
+
+                "explanation":
+                    "Students — countable plural, water — uncountable.",
+            },
+
+
+            {
+                "order": 29,
+
+                "prompt":
+                    "Choose the correct pair.",
+
+                "options": [
+                    "a few chairs / a little milk",
+                    "a little chairs / a few milk",
+                    "much chairs / many milk",
+                    "an chairs / a milk",
+                ],
+
+                "answer":
+                    "a few chairs / a little milk",
+
+                "explanation":
+                    "A few используется с countable plural, a little — с uncountable.",
+            },
+
+
+            {
+                "order": 30,
+
+                "prompt":
+                    "Choose the fully correct sentence.",
+
+                "options": [
+                    "We bought a lot of furniture and some equipment.",
+                    "We bought many furnitures and an equipment.",
+                    "We bought a furniture and many equipments.",
+                    "We bought furnitures and an equipment.",
+                ],
+
+                "answer":
+                    "We bought a lot of furniture and some equipment.",
+
+                "explanation":
+                    "Furniture и equipment обычно неисчисляемые.",
             },
 
         ]
 
 
-        for data in exercises:
+        valid_orders = []
+
+
+        for data in (
+            training
+            +
+            final_test
+        ):
+
+            valid_orders.append(
+                data["order"]
+            )
+
+
+            if data["order"] <= 20:
+
+                section = (
+                    section_objects[
+                        data["section"]
+                    ]
+                )
+
+            else:
+
+                section = None
+
 
             GrammarExercise.objects.update_or_create(
                 lesson=lesson,
                 order=data["order"],
+
                 defaults={
+                    "section":
+                        section,
+
                     "exercise_type":
-                        GrammarExercise.Type.CHOICE,
+                        data.get(
+                            "type",
+                            "choice",
+                        ),
 
                     "prompt":
                         data["prompt"],
@@ -1138,18 +1246,40 @@ The news is good. ✅""",
             )
 
 
+        GrammarExercise.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__in=valid_orders,
+        ).delete()
+
+
+        GrammarLessonSection.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__in=[
+                section["order"]
+                for section in sections
+            ],
+        ).delete()
+
+
         self.stdout.write(
             self.style.SUCCESS(
-                "✅ A1 Lesson 4 seeded: "
-                "Исчисляемые и неисчисляемые "
-                "существительные"
+                "✅ Interactive A1 Lesson 4 seeded"
             )
         )
 
         self.stdout.write(
-            f"Sections: {lesson.sections.count()}"
+            f"Micro rules: "
+            f"{lesson.sections.count()}"
         )
 
         self.stdout.write(
-            f"Exercises: {lesson.exercises.count()}"
+            "Training exercises: "
+            f"{lesson.exercises.filter(section__isnull=False).count()}"
+        )
+
+        self.stdout.write(
+            "Final test: "
+            f"{lesson.exercises.filter(section__isnull=True).count()}"
         )
