@@ -345,6 +345,8 @@ def _spread_tasks_across_dates(
     tasks,
     dates,
     reference_task_count=None,
+    tasks_per_day=None,
+    reserved_counts=None,
 ):
 
     if not tasks:
@@ -358,29 +360,123 @@ def _spread_tasks_across_dates(
         ]
 
 
-    available_task_count = len(
-        tasks
-    )
-
-
-    # ВАЖНО:
-    # denominator может учитывать также
-    # пока скрытые будущие Lessons.
-    #
-    # Благодаря этому опубликованные Lessons
-    # не растягиваются на весь срок курса.
-    total_tasks = max(
-        available_task_count,
-        reference_task_count
-        or available_task_count,
-    )
-
-
     total_dates = len(
         dates
     )
 
     result = []
+
+
+    # =====================================================
+    # FIXED DAILY LIMIT
+    # =====================================================
+
+    if tasks_per_day:
+
+        reserved_counts = dict(
+            reserved_counts
+            or {}
+        )
+
+        date_index = 0
+
+
+        for task in tasks:
+
+            # Ищем первый день,
+            # где ещё есть место.
+            while (
+                date_index
+                <
+                total_dates
+            ):
+
+                current_date = (
+                    dates[
+                        date_index
+                    ]
+                )
+
+                used = (
+                    reserved_counts
+                    .get(
+                        current_date,
+                        0,
+                    )
+                )
+
+
+                if (
+                    used
+                    <
+                    tasks_per_day
+                ):
+
+                    break
+
+
+                date_index += 1
+
+
+            # Защитный fallback,
+            # если срок курса закончился.
+            if (
+                date_index
+                >=
+                total_dates
+            ):
+
+                date_index = (
+                    total_dates
+                    -
+                    1
+                )
+
+                current_date = (
+                    dates[
+                        date_index
+                    ]
+                )
+
+
+            result.append(
+                (
+                    task,
+                    current_date,
+                )
+            )
+
+
+            reserved_counts[
+                current_date
+            ] = (
+                reserved_counts
+                .get(
+                    current_date,
+                    0,
+                )
+                +
+                1
+            )
+
+
+        return result
+
+
+    # =====================================================
+    # NORMAL COURSE DISTRIBUTION
+    # =====================================================
+
+    available_task_count = len(
+        tasks
+    )
+
+
+    total_tasks = max(
+        available_task_count,
+        reference_task_count
+        or available_task_count,
+    )
 
 
     for index, task in enumerate(
@@ -394,6 +490,7 @@ def _spread_tasks_across_dates(
             /
             total_tasks
         )
+
 
         date_index = min(
             date_index,
@@ -412,6 +509,7 @@ def _spread_tasks_across_dates(
 
 
     return result
+
 
 
 def _build_remaining_task_sequence(
@@ -707,12 +805,53 @@ def sync_grammar_plan(
     )
 
 
+    reserved_counts = {}
+
+
+    # Если установлен фиксированный лимит,
+    # уже выполненные задания сегодня/в будущем
+    # тоже занимают место в дневном лимите.
+    if plan.daily_task_limit:
+
+        for scheduled_date in (
+            plan.items
+            .filter(
+                scheduled_date__gte=today,
+            )
+            .values_list(
+                "scheduled_date",
+                flat=True,
+            )
+        ):
+
+            reserved_counts[
+                scheduled_date
+            ] = (
+                reserved_counts
+                .get(
+                    scheduled_date,
+                    0,
+                )
+                +
+                1
+            )
+
+
     distribution = (
         _spread_tasks_across_dates(
             tasks=sequence,
             dates=dates,
+
             reference_task_count=(
                 full_remaining_task_count
+            ),
+
+            tasks_per_day=(
+                plan.daily_task_limit
+            ),
+
+            reserved_counts=(
+                reserved_counts
             ),
         )
     )
