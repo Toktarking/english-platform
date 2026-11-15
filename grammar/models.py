@@ -597,6 +597,14 @@ class GrammarStudyPlan(models.Model):
 
     exam_date = models.DateField()
 
+    # Если задано, Grammar распределяет
+    # именно столько заданий на один день.
+    # null = обычное распределение по сроку курса.
+    daily_task_limit = models.PositiveSmallIntegerField(
+        null=True,
+        blank=True,
+    )
+
     status = models.CharField(
         max_length=20,
         choices=Status.choices,

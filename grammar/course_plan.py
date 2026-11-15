@@ -280,9 +280,71 @@ def _date_range(
     ]
 
 
+def _count_full_remaining_tasks(
+    user,
+    level=GRAMMAR_LEVEL,
+):
+    """
+    Считает весь оставшийся объём Grammar A1,
+    включая временно скрытые Lessons.
+
+    Это нужно, чтобы скрытые Lessons 30–60
+    не растягивали готовые Lessons 1–29
+    на весь срок курса.
+    """
+
+    completed_lessons = (
+        get_completed_lesson_ids(
+            user=user,
+            level=level,
+        )
+    )
+
+    completed_practices = (
+        get_completed_practice_block_ids(
+            user=user,
+            level=level,
+        )
+    )
+
+
+    lesson_count = (
+        GrammarLesson.objects
+        .filter(
+            level=level,
+            order__range=(1, 60),
+        )
+        .exclude(
+            id__in=completed_lessons,
+        )
+        .count()
+    )
+
+
+    practice_count = (
+        GrammarBlock.objects
+        .filter(
+            level=level,
+            order__in=PRACTICE_BLOCK_ORDERS,
+        )
+        .exclude(
+            id__in=completed_practices,
+        )
+        .count()
+    )
+
+
+    return (
+        lesson_count
+        +
+        practice_count
+    )
+
+
 def _spread_tasks_across_dates(
     tasks,
     dates,
+    reference_task_count=None,
 ):
 
     if not tasks:
@@ -295,15 +357,31 @@ def _spread_tasks_across_dates(
             timezone.localdate()
         ]
 
-    total_tasks = len(
+
+    available_task_count = len(
         tasks
     )
+
+
+    # ВАЖНО:
+    # denominator может учитывать также
+    # пока скрытые будущие Lessons.
+    #
+    # Благодаря этому опубликованные Lessons
+    # не растягиваются на весь срок курса.
+    total_tasks = max(
+        available_task_count,
+        reference_task_count
+        or available_task_count,
+    )
+
 
     total_dates = len(
         dates
     )
 
     result = []
+
 
     for index, task in enumerate(
         tasks
@@ -322,6 +400,7 @@ def _spread_tasks_across_dates(
             total_dates - 1,
         )
 
+
         result.append(
             (
                 task,
@@ -330,6 +409,7 @@ def _spread_tasks_across_dates(
                 ],
             )
         )
+
 
     return result
 
@@ -619,10 +699,21 @@ def sync_grammar_plan(
     )
 
 
+    full_remaining_task_count = (
+        _count_full_remaining_tasks(
+            user=user,
+            level=level,
+        )
+    )
+
+
     distribution = (
         _spread_tasks_across_dates(
             tasks=sequence,
             dates=dates,
+            reference_task_count=(
+                full_remaining_task_count
+            ),
         )
     )
 
