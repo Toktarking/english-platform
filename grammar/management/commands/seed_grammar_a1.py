@@ -237,151 +237,102 @@ an umbrella""",
             ] = section
 
 
-        exercises = [
+        # =================================================
+        # TRAINING EXERCISES
+        # После каждого микро-правила.
+        # =================================================
+
+        training = [
 
             {
                 "order": 1,
+                "section": 2,
                 "prompt": "This is ___ book.",
-                "options": [
-                    "a",
-                    "an",
-                    "the",
-                    "—",
-                ],
+                "options": ["a", "an", "the", "—"],
                 "answer": "a",
-                "explanation": (
-                    "Book начинается с "
-                    "согласного звука."
-                ),
+                "explanation":
+                    "Book начинается с согласного звука.",
             },
 
             {
                 "order": 2,
+                "section": 3,
                 "prompt": "She has ___ apple.",
-                "options": [
-                    "a",
-                    "an",
-                    "some",
-                    "—",
-                ],
+                "options": ["a", "an", "some", "—"],
                 "answer": "an",
-                "explanation": (
-                    "Apple начинается с "
-                    "гласного звука."
-                ),
+                "explanation":
+                    "Apple начинается с гласного звука.",
             },
 
             {
                 "order": 3,
+                "section": 1,
                 "prompt": "He is ___ teacher.",
-                "options": [
-                    "a",
-                    "an",
-                    "some",
-                    "—",
-                ],
+                "options": ["a", "an", "some", "—"],
                 "answer": "a",
-                "explanation": (
-                    "Teacher — исчисляемое "
-                    "существительное в "
-                    "единственном числе."
-                ),
+                "explanation":
+                    "Teacher — один исчисляемый предмет.",
             },
 
             {
                 "order": 4,
-                "prompt": (
-                    "It is ___ interesting film."
-                ),
-                "options": [
-                    "a",
-                    "an",
-                    "some",
-                    "—",
-                ],
+                "section": 5,
+                "prompt":
+                    "It is ___ interesting film.",
+                "options": ["a", "an", "some", "—"],
                 "answer": "an",
-                "explanation": (
-                    "Interesting начинается "
-                    "с гласного звука."
-                ),
+                "explanation":
+                    "Interesting начинается с гласного звука.",
             },
 
             {
                 "order": 5,
-                "prompt": (
-                    "She studies at ___ university."
-                ),
-                "options": [
-                    "a",
-                    "an",
-                    "some",
-                    "—",
-                ],
+                "section": 4,
+                "prompt":
+                    "She studies at ___ university.",
+                "options": ["a", "an", "some", "—"],
                 "answer": "a",
-                "explanation": (
-                    "University начинается "
-                    "со звука /j/, похожего "
-                    "на русский «й»."
-                ),
+                "explanation":
+                    "University начинается со звука /j/.",
             },
 
             {
                 "order": 6,
+                "section": 4,
                 "prompt": "It takes ___ hour.",
-                "options": [
-                    "a",
-                    "an",
-                    "some",
-                    "—",
-                ],
+                "options": ["a", "an", "some", "—"],
                 "answer": "an",
-                "explanation": (
-                    "В hour буква h "
-                    "не произносится."
-                ),
+                "explanation":
+                    "В hour буква h не произносится.",
             },
 
             {
                 "order": 7,
-                "prompt": (
-                    "This is ___ useful book."
-                ),
-                "options": [
-                    "a",
-                    "an",
-                    "some",
-                    "—",
-                ],
+                "section": 5,
+                "prompt":
+                    "This is ___ useful book.",
+                "options": ["a", "an", "some", "—"],
                 "answer": "a",
-                "explanation": (
-                    "Useful начинается "
-                    "со звука /j/."
-                ),
+                "explanation":
+                    "Useful начинается со звука /j/.",
             },
 
             {
                 "order": 8,
-                "prompt": (
-                    "She is ___ English teacher."
-                ),
-                "options": [
-                    "a",
-                    "an",
-                    "some",
-                    "—",
-                ],
+                "section": 5,
+                "prompt":
+                    "She is ___ English teacher.",
+                "options": ["a", "an", "some", "—"],
                 "answer": "an",
-                "explanation": (
-                    "English начинается "
-                    "с гласного звука."
-                ),
+                "explanation":
+                    "English начинается с гласного звука.",
             },
 
             {
                 "order": 9,
-                "prompt": (
-                    "Choose the correct phrase."
-                ),
+                "section": 6,
+                "prompt":
+                    "Choose the correct phrase.",
                 "options": [
                     "an information",
                     "a information",
@@ -389,17 +340,15 @@ an umbrella""",
                     "an informations",
                 ],
                 "answer": "some information",
-                "explanation": (
-                    "Information — "
-                    "неисчисляемое существительное."
-                ),
+                "explanation":
+                    "Information — неисчисляемое существительное.",
             },
 
             {
                 "order": 10,
-                "prompt": (
-                    "Choose the correct phrase."
-                ),
+                "section": 7,
+                "prompt":
+                    "Choose the correct phrase.",
                 "options": [
                     "an European country",
                     "a European country",
@@ -407,32 +356,188 @@ an umbrella""",
                     "an European countries",
                 ],
                 "answer": "a European country",
-                "explanation": (
-                    "European начинается "
-                    "со звука /j/."
-                ),
+                "explanation":
+                    "European начинается со звука /j/.",
             },
 
         ]
 
-        for data in exercises:
+
+        # =================================================
+        # FINAL TEST
+        # 10 новых вопросов по всему уроку.
+        # =================================================
+
+        final_test = [
+
+            {
+                "order": 11,
+                "prompt":
+                    "I bought ___ new phone yesterday.",
+                "options": ["a", "an", "some", "—"],
+                "answer": "a",
+                "explanation":
+                    "New начинается с согласного звука.",
+            },
+
+            {
+                "order": 12,
+                "prompt":
+                    "She ate ___ orange after lunch.",
+                "options": ["a", "an", "some", "—"],
+                "answer": "an",
+                "explanation":
+                    "Orange начинается с гласного звука.",
+            },
+
+            {
+                "order": 13,
+                "prompt":
+                    "He is ___ honest person.",
+                "options": ["a", "an", "some", "—"],
+                "answer": "an",
+                "explanation":
+                    "В honest буква h не произносится.",
+            },
+
+            {
+                "order": 14,
+                "prompt":
+                    "She studies at ___ European university.",
+                "options": ["a", "an", "some", "—"],
+                "answer": "a",
+                "explanation":
+                    "European начинается со звука /j/.",
+            },
+
+            {
+                "order": 15,
+                "prompt":
+                    "We need ___ information about the course.",
+                "options": [
+                    "a",
+                    "an",
+                    "some",
+                    "an information",
+                ],
+                "answer": "some",
+                "explanation":
+                    "Information неисчисляемое.",
+            },
+
+            {
+                "order": 16,
+                "prompt":
+                    "She is ___ excellent doctor.",
+                "options": ["a", "an", "some", "—"],
+                "answer": "an",
+                "explanation":
+                    "Excellent начинается с гласного звука.",
+            },
+
+            {
+                "order": 17,
+                "prompt":
+                    "I saw ___ small dog near the house.",
+                "options": ["a", "an", "some", "—"],
+                "answer": "a",
+                "explanation":
+                    "Small начинается с согласного звука.",
+            },
+
+            {
+                "order": 18,
+                "prompt":
+                    "It was ___ unusual idea.",
+                "options": ["a", "an", "some", "—"],
+                "answer": "an",
+                "explanation":
+                    "Unusual начинается с гласного звука.",
+            },
+
+            {
+                "order": 19,
+                "prompt":
+                    "He waited for ___ hour.",
+                "options": ["a", "an", "some", "—"],
+                "answer": "an",
+                "explanation":
+                    "Hour начинается с гласного звука.",
+            },
+
+            {
+                "order": 20,
+                "prompt":
+                    "Choose the correct phrase.",
+                "options": [
+                    "a useful app",
+                    "an useful app",
+                    "a useful apps",
+                    "an useful apps",
+                ],
+                "answer": "a useful app",
+                "explanation":
+                    "Useful начинается со звука /j/.",
+            },
+
+        ]
+
+
+        all_exercises = (
+            training
+            +
+            final_test
+        )
+
+
+        for data in all_exercises:
+
+            if data["order"] <= 10:
+
+                section = (
+                    section_objects[
+                        data["section"]
+                    ]
+                )
+
+            else:
+
+                section = None
+
 
             GrammarExercise.objects.update_or_create(
                 lesson=lesson,
                 order=data["order"],
                 defaults={
-                    "exercise_type": (
-                        GrammarExercise.Type.CHOICE
-                    ),
-                    "prompt": data["prompt"],
-                    "options": data["options"],
-                    "correct_answer": data["answer"],
-                    "explanation": data[
-                        "explanation"
-                    ],
-                    "is_published": True,
+                    "section":
+                        section,
+
+                    "exercise_type":
+                        GrammarExercise.Type.CHOICE,
+
+                    "prompt":
+                        data["prompt"],
+
+                    "options":
+                        data["options"],
+
+                    "correct_answer":
+                        data["answer"],
+
+                    "explanation":
+                        data["explanation"],
+
+                    "is_published":
+                        True,
                 },
             )
+
+
+        GrammarExercise.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__range=(1, 20),
+        ).delete()
 
         self.stdout.write(
             self.style.SUCCESS(
