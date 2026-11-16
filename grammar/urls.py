@@ -71,6 +71,12 @@ urlpatterns = [
     ),
 
     path(
+        "<slug:slug>/study-progress/",
+        views.grammar_lesson_study_progress,
+        name="study_progress",
+    ),
+
+    path(
         "<slug:slug>/final/",
         views.grammar_final_test,
         name="final_test",

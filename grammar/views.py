@@ -1,7 +1,11 @@
+import json
+
 from datetime import date, timedelta
 
 from django.contrib.auth.decorators import login_required
+from django.db import transaction
 from django.db.models import Avg, Sum
+from django.http import JsonResponse
 from django.shortcuts import (
     get_object_or_404,
     redirect,
@@ -9,6 +13,7 @@ from django.shortcuts import (
 )
 from django.urls import reverse
 from django.utils import timezone
+from django.views.decorators.http import require_POST
 
 from .models import (
     GrammarAssessmentQuestion,
@@ -391,6 +396,36 @@ def grammar_lesson(request, slug):
         if exercise.section_id is None
     ]
 
+
+    # =====================================================
+    # RESUME INTERACTIVE LESSON
+    # =====================================================
+
+    training_exercises = [
+        exercise
+        for exercise in exercises
+        if exercise.section_id is not None
+    ]
+
+    training_step_count = (
+        len(sections)
+        +
+        len(training_exercises)
+    )
+
+
+    if training_step_count > 0:
+
+        saved_step_index = min(
+            progress.current_step_index,
+            training_step_count - 1,
+        )
+
+    else:
+
+        saved_step_index = 0
+
+
     start_with_final = (
         request.GET.get("final")
         == "1"
@@ -419,9 +454,38 @@ def grammar_lesson(request, slug):
             )
         )
 
+    # Если пользователь уже прошёл всю тренировку
+    # и вернулся позже с другого устройства,
+    # сразу продолжаем с Final Test.
+    if (
+        not attempt_result
+
+        and
+
+        progress.status
+        !=
+        GrammarLessonProgress.Status.COMPLETED
+
+        and
+
+        training_step_count > 0
+
+        and
+
+        progress.current_step_index
+        >=
+        training_step_count
+    ):
+
+        return redirect(
+            "grammar:final_test",
+            slug=lesson.slug,
+        )
+
+
     template_name = (
         "grammar/lesson_interactive.html"
-        if lesson.order in (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29)
+        if 1 <= lesson.order <= 45
         else
         "grammar/lesson.html"
     )
@@ -447,9 +511,170 @@ def grammar_lesson(request, slug):
             "final_test_exercises":
                 final_test_exercises,
 
+            "saved_step_index":
+                saved_step_index,
+
             "start_with_final":
                 start_with_final,
         },
+    )
+
+
+@login_required
+@require_POST
+@transaction.atomic
+def grammar_lesson_study_progress(
+    request,
+    slug,
+):
+
+    lesson = get_object_or_404(
+        GrammarLesson,
+        slug=slug,
+        is_published=True,
+    )
+
+
+    try:
+
+        data = json.loads(
+            request.body
+        )
+
+        requested_index = int(
+            data.get(
+                "current_step_index",
+                0,
+            )
+        )
+
+    except (
+        json.JSONDecodeError,
+        TypeError,
+        ValueError,
+    ):
+
+        return JsonResponse(
+            {
+                "success": False,
+                "error": "Invalid progress data.",
+            },
+            status=400,
+        )
+
+
+    section_count = (
+        lesson.sections.count()
+    )
+
+    training_exercise_count = (
+        lesson.exercises
+        .filter(
+            is_published=True,
+            section__isnull=False,
+        )
+        .count()
+    )
+
+
+    total_steps = (
+        section_count
+        +
+        training_exercise_count
+    )
+
+
+    if total_steps <= 0:
+
+        return JsonResponse(
+            {
+                "success": False,
+                "error": "Lesson has no training steps.",
+            },
+            status=400,
+        )
+
+
+    # total_steps разрешён как специальное значение:
+    # пользователь полностью прошёл training
+    # и следующим экраном должен быть Final Test.
+    requested_index = max(
+        0,
+        min(
+            requested_index,
+            total_steps,
+        ),
+    )
+
+
+    progress, _ = (
+        GrammarLessonProgress.objects
+        .select_for_update()
+        .get_or_create(
+            user=request.user,
+            lesson=lesson,
+        )
+    )
+
+
+    if (
+        progress.status
+        !=
+        GrammarLessonProgress.Status.COMPLETED
+    ):
+
+        # Прогресс не откатываем назад.
+        # Пользователь может нажимать "назад" для просмотра,
+        # но при новом входе продолжит с самой дальней точки.
+        progress.current_step_index = max(
+            progress.current_step_index,
+            requested_index,
+        )
+
+        progress.max_seen_step_index = max(
+            progress.max_seen_step_index,
+            requested_index,
+        )
+
+
+        if (
+            progress.status
+            ==
+            GrammarLessonProgress.Status.NOT_STARTED
+        ):
+
+            progress.status = (
+                GrammarLessonProgress.Status.IN_PROGRESS
+            )
+
+
+        if progress.started_at is None:
+
+            progress.started_at = (
+                timezone.now()
+            )
+
+
+        progress.save()
+
+
+    return JsonResponse(
+        {
+            "success": True,
+
+            "current_step_index":
+                progress.current_step_index,
+
+            "max_seen_step_index":
+                progress.max_seen_step_index,
+
+            "training_finished":
+                (
+                    progress.current_step_index
+                    >=
+                    total_steps
+                ),
+        }
     )
 
 

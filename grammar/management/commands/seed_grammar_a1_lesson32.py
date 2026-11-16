@@ -10,290 +10,297 @@ from grammar.models import (
 class Command(BaseCommand):
 
     help = (
-        "Create/update A1 Grammar Lesson 32: "
-        "Present Perfect Continuous."
+        "Create/update interactive A1 Grammar "
+        "Lesson 32: Present Perfect Continuous."
     )
+
 
     def handle(self, *args, **options):
 
-        lesson, _ = GrammarLesson.objects.update_or_create(
-            level="A1",
-            order=32,
-            defaults={
-                "title": "Present Perfect Continuous",
-                "slug": "present-perfect-continuous",
-                "theory_text": "Present Perfect Continuous.",
-                "estimated_minutes": 45,
-                "pass_score": 70,
-                "xp_reward": 100,
-                "is_published": True,
-            },
+        lesson, _ = (
+            GrammarLesson.objects.update_or_create(
+                level="A1",
+                order=32,
+
+                defaults={
+                    "title":
+                        "Present Perfect Continuous",
+
+                    "slug":
+                        "present-perfect-continuous",
+
+                    "theory_text":
+                        "Present Perfect Continuous.",
+
+                    "estimated_minutes":
+                        20,
+
+                    "pass_score":
+                        70,
+
+                    "xp_reward":
+                        100,
+
+                    "is_published":
+                        True,
+                },
+            )
         )
+
+
+        # =================================================
+        # 10 MICRO RULES
+        # =================================================
 
         sections = [
 
             {
                 "order": 1,
-                "title": "Что такое Present Perfect Continuous",
-                "body": """Present Perfect Continuous используется, когда действие:
+                "title":
+                    "Что показывает Present Perfect Continuous?",
 
-началось в прошлом;
-
-продолжалось некоторое время;
-
-продолжается сейчас;
-
-или только что закончилось, но результат заметен сейчас.
-
-Примеры:
+                "body":
+                    """Present Perfect Continuous показывает процесс,
+который начался раньше
+и связан с настоящим.
 
 I have been working for three hours.
 
+Я начал работать три часа назад
+и всё ещё работаю.
+
 She has been studying since morning.
 
-It has been raining.
+Она начала заниматься утром
+и продолжает сейчас.
 
 Главная идея:
 
-действие началось раньше и связано с настоящим.""",
+началось раньше
+→ длилось некоторое время
+→ связано с настоящим.""",
             },
+
 
             {
                 "order": 2,
-                "title": "Основная формула",
-                "body": """Формула:
+                "title":
+                    "Основная формула",
 
-subject + have/has + been + verb-ing
+                "body":
+                    """Формула:
+
+HAVE / HAS + BEEN + verb-ing
 
 Примеры:
 
 I have been working.
+
+We have been waiting.
 
 She has been reading.
 
-They have been waiting.
-
 He has been sleeping.
 
-Форма состоит из трёх частей:
+Важно сохранить все части:
 
-have/has;
+HAVE / HAS
 
-been;
++
 
-глагол с -ing.""",
+BEEN
+
++
+
+глагол с -ING.""",
             },
+
 
             {
                 "order": 3,
-                "title": "HAVE BEEN и HAS BEEN",
-                "body": """HAVE BEEN используется с:
+                "title":
+                    "HAVE BEEN или HAS BEEN?",
 
-I;
+                "body":
+                    """HAVE BEEN:
 
-you;
-
-we;
-
-they.
-
-Примеры:
+I
+you
+we
+they
 
 I have been working.
 
-We have been studying.
+They have been waiting.
 
-They have been talking.
+HAS BEEN:
 
-HAS BEEN используется с:
-
-he;
-
-she;
-
-it;
-
-одним человеком или предметом.
+he
+she
+it
 
 He has been working.
 
-She has been cooking.
+She has been studying.
 
 It has been raining.""",
             },
 
+
             {
                 "order": 4,
-                "title": "Как образуется -ING",
-                "body": """Обычный случай:
+                "title":
+                    "Как добавить -ING?",
+
+                "body":
+                    """Обычно просто добавляем -ING:
 
 work → working
-
 read → reading
-
 play → playing
 
-Глаголы на немую e:
+Если глагол заканчивается на немую E:
 
 write → writing
-
 make → making
 
-come → coming
-
-Короткие глаголы:
-
-sit → sitting
+У некоторых коротких глаголов
+последняя согласная удваивается:
 
 run → running
+sit → sitting
 
-swim → swimming
+IE меняется на Y:
 
-Глаголы на -ie:
-
-lie → lying
-
-die → dying""",
+lie → lying.""",
             },
+
 
             {
                 "order": 5,
-                "title": "Действие продолжается сейчас",
-                "body": """Present Perfect Continuous часто показывает действие, которое началось раньше и всё ещё продолжается.
+                "title":
+                    "Действие продолжается сейчас",
 
-Пример:
+                "body":
+                    """Это одно из главных применений времени.
 
-I have been working for three hours.
+I have been learning English
+for six months.
 
-Это значит:
+→ начал шесть месяцев назад
+и продолжаю сейчас.
 
-я начал работать три часа назад;
+We have been waiting
+for an hour.
 
-я всё ещё работаю.
+→ начали ждать час назад
+и всё ещё ждём.
 
-Другие примеры:
+She has been working
+since nine.
 
-She has been studying since morning.
-
-We have been waiting for an hour.
-
-He has been learning English for six months.""",
+→ работает с девяти до сих пор.""",
             },
+
 
             {
                 "order": 6,
-                "title": "FOR и SINCE",
-                "body": """FOR показывает продолжительность.
+                "title":
+                    "FOR и SINCE",
+
+                "body":
+                    """FOR показывает продолжительность:
 
 for two hours
+for three days
+for five years
 
-for five days
+I have been working
+for two hours.
 
-for ten years
-
-Пример:
-
-I have been working for two hours.
-
-SINCE показывает начальную точку.
+SINCE показывает начальную точку:
 
 since Monday
-
 since 2020
-
 since morning
-
 since five o'clock
 
-Пример:
+She has been studying
+since morning.
 
-She has been studying since morning.
+FOR = сколько времени
 
-Запомните:
-
-FOR = как долго
-
-SINCE = с какого момента""",
+SINCE = с какого момента.""",
             },
+
 
             {
                 "order": 7,
-                "title": "HOW LONG",
-                "body": """Чтобы спросить о продолжительности:
+                "title":
+                    "HOW LONG",
 
-How long have/has + subject + been + verb-ing?
+                "body":
+                    """Чтобы спросить,
+как долго продолжается действие:
 
-Примеры:
+HOW LONG + HAVE/HAS + subject
++ BEEN + verb-ing?
 
-How long have you been working?
+How long have you been waiting?
 
 How long has she been studying?
 
-How long have they been waiting?
+Ответ:
 
-Ответы:
+I have been waiting
+for twenty minutes.
 
-I have been working for three hours.
-
-She has been living here since 2022.""",
+She has been studying
+since eight o'clock.""",
             },
+
 
             {
                 "order": 8,
-                "title": "Действие только что закончилось",
-                "body": """Present Perfect Continuous может описывать действие, которое недавно закончилось, но результат заметен сейчас.
+                "title":
+                    "Процесс только что закончился",
 
-Примеры:
+                "body":
+                    """Действие может уже закончиться,
+но его результат виден сейчас.
 
-You are wet. Have you been walking in the rain?
+You are wet.
 
-She is tired because she has been working.
+Have you been walking in the rain?
 
-His eyes are red because he has been crying.
+Her eyes are red.
 
-The ground is wet because it has been raining.
+She has been crying.
 
-You are out of breath. Have you been running?""",
+The ground is wet.
+
+It has been raining.
+
+Здесь важен недавний процесс,
+который объясняет ситуацию сейчас.""",
             },
+
 
             {
                 "order": 9,
-                "title": "Акцент на процессе",
-                "body": """Present Perfect Continuous подчёркивает:
+                "title":
+                    "Отрицание и вопрос",
 
-процесс;
+                "body":
+                    """Отрицание:
 
-продолжительность;
-
-временную деятельность.
-
-Пример:
-
-I have been reading for two hours.
-
-Главное — процесс чтения и его длительность.
-
-She has been writing a report.
-
-Возможно, отчёт ещё не закончен.
-
-Действие может продолжаться и сейчас.""",
-            },
-
-            {
-                "order": 10,
-                "title": "Отрицание и вопросы",
-                "body": """Отрицание:
-
-subject + haven't/hasn't been + verb-ing
+HAVEN'T / HASN'T + BEEN + verb-ing
 
 I haven't been sleeping well.
 
 She hasn't been working recently.
 
 Вопрос:
-
-Have/Has + subject + been + verb-ing?
 
 Have you been working?
 
@@ -302,439 +309,855 @@ Has she been studying?
 Краткие ответы:
 
 Yes, I have.
-
 No, I haven't.
 
 Yes, she has.
-
 No, she hasn't.""",
             },
 
-            {
-                "order": 11,
-                "title": "Специальные вопросы",
-                "body": """Формула:
-
-Question word + have/has + subject + been + verb-ing?
-
-Примеры:
-
-What have you been doing?
-
-Where has she been working?
-
-Why have they been laughing?
-
-How long has he been waiting?
-
-Who have you been talking to?
-
-Если WHO само выполняет действие:
-
-Who has been using my computer?
-
-Who has been calling me?""",
-            },
 
             {
-                "order": 12,
-                "title": "Present Continuous и Present Perfect Continuous",
-                "body": """Present Continuous показывает действие сейчас:
+                "order": 10,
+                "title":
+                    "Глаголы состояния",
 
-I am working now.
-
-Present Perfect Continuous показывает, как долго действие продолжается:
-
-I have been working for three hours.
-
-Сравните:
-
-She is studying now.
-— она занимается сейчас.
-
-She has been studying since morning.
-— она занимается с утра до настоящего момента.""",
-            },
-
-            {
-                "order": 13,
-                "title": "Present Perfect или Present Perfect Continuous",
-                "body": """Present Perfect чаще подчёркивает:
-
-результат;
-
-количество;
-
-завершённость.
-
-I have written three emails.
-
-Present Perfect Continuous чаще подчёркивает:
-
-процесс;
-
-продолжительность.
-
-I have been writing emails for two hours.
-
-Сравните:
-
-She has cleaned the room.
-— комната убрана.
-
-She has been cleaning the room.
-— она занималась уборкой; возможно, ещё не закончила.""",
-            },
-
-            {
-                "order": 14,
-                "title": "Глаголы состояния и выбор времени",
-                "body": """Глаголы состояния обычно не используются в Continuous.
+                "body":
+                    """Некоторые глаголы обычно
+не используются в Continuous.
 
 Например:
 
-know;
+know
+understand
+like
+love
+want
+need
+believe
+own
 
-understand;
+Поэтому:
 
-like;
-
-want;
-
-need;
-
-believe;
-
-own.
-
-Правильно:
-
-I have known him for ten years.
+I have known him for years.
 
 Не:
 
 I have been knowing him.
 
-HAVE как владение:
-
 I have had this phone for two years.
 
 Не:
 
-I have been having this phone.
-
-Главное правило:
-
-важна длительность процесса → Present Perfect Continuous
-
-важен готовый результат или состояние → Present Perfect""",
+I have been having this phone
+в значении владения.""",
             },
 
         ]
 
+
+        section_objects = {}
+
+
         for data in sections:
 
-            GrammarLessonSection.objects.update_or_create(
-                lesson=lesson,
-                order=data["order"],
-                defaults={
-                    "title": data["title"],
-                    "body": data["body"],
-                },
+            section, _ = (
+                GrammarLessonSection.objects.update_or_create(
+                    lesson=lesson,
+                    order=data["order"],
+
+                    defaults={
+                        "title":
+                            data["title"],
+
+                        "body":
+                            data["body"],
+                    },
+                )
             )
 
-        exercises = [
+            section_objects[
+                data["order"]
+            ] = section
+
+
+        # =================================================
+        # 20 TRAINING EXERCISES
+        # =================================================
+
+        training = [
+
+            # SECTION 1
 
             {
                 "order": 1,
-                "prompt": "We ___ been waiting for an hour.",
-                "options": ["has", "have", "are", "did"],
-                "answer": "have",
-                "explanation": "We используется с have.",
+                "section": 1,
+                "type": "choice",
+
+                "prompt":
+                    "I ___ English for six months.",
+
+                "options": [
+                    "have been learning",
+                    "am learn since",
+                    "have learned yesterday",
+                    "been learning",
+                ],
+
+                "answer":
+                    "have been learning",
+
+                "explanation":
+                    "Действие началось раньше и продолжается сейчас.",
             },
 
             {
                 "order": 2,
-                "prompt": "My brother ___ been working since morning.",
-                "options": ["have", "has", "is", "does"],
-                "answer": "has",
-                "explanation": "My brother = he, поэтому has.",
+                "section": 1,
+                "type": "choice",
+
+                "prompt":
+                    "We ___ for the bus for thirty minutes.",
+
+                "options": [
+                    "have been waiting",
+                    "are waited",
+                    "have waiting",
+                    "waited since",
+                ],
+
+                "answer":
+                    "have been waiting",
+
+                "explanation":
+                    "FOR THIRTY MINUTES показывает длительный процесс.",
             },
+
+
+            # SECTION 2
 
             {
                 "order": 3,
-                "prompt": "The children have been ___ outside.",
-                "options": ["play", "played", "playing", "plays"],
-                "answer": "playing",
-                "explanation": "После been используется глагол с -ing.",
+                "section": 2,
+                "type": "build",
+
+                "prompt":
+                    "Собери правильную форму.",
+
+                "options": [
+                    "I",
+                    "have",
+                    "been",
+                    "working",
+                ],
+
+                "answer":
+                    "I have been working",
+
+                "explanation":
+                    "Формула: HAVE + BEEN + verb-ing.",
             },
 
             {
                 "order": 4,
-                "prompt": "She has been ___ English for six months.",
-                "options": ["learn", "learned", "learning", "learns"],
-                "answer": "learning",
-                "explanation": "Present Perfect Continuous: has been + verb-ing.",
+                "section": 2,
+                "type": "choice",
+
+                "prompt":
+                    "Choose the correct sentence.",
+
+                "options": [
+                    "She has been studying.",
+                    "She has studying.",
+                    "She been studying.",
+                    "She has been study.",
+                ],
+
+                "answer":
+                    "She has been studying.",
+
+                "explanation":
+                    "Нужны HAS + BEEN + STUDYING.",
             },
+
+
+            # SECTION 3
 
             {
                 "order": 5,
-                "prompt": "I have been living here ___ five years.",
-                "options": ["since", "for", "ago", "from"],
-                "answer": "for",
-                "explanation": "For показывает продолжительность.",
+                "section": 3,
+                "type": "choice",
+
+                "prompt":
+                    "My brother ___ been working all day.",
+
+                "options": [
+                    "has",
+                    "have",
+                    "is",
+                    "did",
+                ],
+
+                "answer":
+                    "has",
+
+                "explanation":
+                    "My brother = HE → HAS BEEN.",
             },
 
             {
                 "order": 6,
-                "prompt": "He has been sleeping ___ noon.",
-                "options": ["for", "since", "during", "ago"],
-                "answer": "since",
-                "explanation": "Noon — начальная точка, поэтому since.",
+                "section": 3,
+                "type": "choice",
+
+                "prompt":
+                    "The children ___ been playing outside.",
+
+                "options": [
+                    "have",
+                    "has",
+                    "are",
+                    "did",
+                ],
+
+                "answer":
+                    "have",
+
+                "explanation":
+                    "The children = THEY → HAVE BEEN.",
             },
+
+
+            # SECTION 4
 
             {
                 "order": 7,
-                "prompt": "___ they been working all day?",
-                "options": ["Did", "Have", "Are", "Do"],
-                "answer": "Have",
-                "explanation": "They → Have they been working?",
+                "section": 4,
+                "type": "fill",
+
+                "prompt":
+                    "write → ___",
+
+                "options": [],
+
+                "answer":
+                    "writing",
+
+                "explanation":
+                    "Убираем немую E и добавляем -ING.",
             },
 
             {
                 "order": 8,
-                "prompt": "___ she been crying?",
-                "options": ["Has", "Is", "Did", "Does"],
-                "answer": "Has",
-                "explanation": "She → Has she been crying?",
+                "section": 4,
+                "type": "choice",
+
+                "prompt":
+                    "Choose the correct -ING form of RUN.",
+
+                "options": [
+                    "running",
+                    "runing",
+                    "runeing",
+                    "runned",
+                ],
+
+                "answer":
+                    "running",
+
+                "explanation":
+                    "Последняя согласная удваивается: RUN → RUNNING.",
             },
+
+
+            # SECTION 5
 
             {
                 "order": 9,
-                "prompt": "How long ___ you been studying English?",
-                "options": ["has", "have", "are", "did"],
-                "answer": "have",
-                "explanation": "You используется с have.",
+                "section": 5,
+                "type": "choice",
+
+                "prompt":
+                    "She ___ since nine o'clock and is still at work.",
+
+                "options": [
+                    "has been working",
+                    "worked yesterday",
+                    "has work",
+                    "is worked",
+                ],
+
+                "answer":
+                    "has been working",
+
+                "explanation":
+                    "Работа началась раньше и продолжается сейчас.",
             },
 
             {
                 "order": 10,
-                "prompt": "Why ___ he been running?",
-                "options": ["have", "has", "is", "did"],
-                "answer": "has",
-                "explanation": "He используется с has.",
+                "section": 5,
+                "type": "choice",
+
+                "prompt":
+                    "They ___ for an hour and are still waiting.",
+
+                "options": [
+                    "have been waiting",
+                    "waited yesterday",
+                    "have waited one person",
+                    "are wait",
+                ],
+
+                "answer":
+                    "have been waiting",
+
+                "explanation":
+                    "Действие продолжается до настоящего момента.",
             },
+
+
+            # SECTION 6
 
             {
                 "order": 11,
-                "prompt": "I am tired because I ___ all day.",
+                "section": 6,
+                "type": "choice",
+
+                "prompt":
+                    "I have been studying ___ three hours.",
+
                 "options": [
-                    "worked yesterday",
-                    "have been working",
-                    "have worked five tasks",
-                    "was work",
+                    "for",
+                    "since",
+                    "ago",
+                    "last",
                 ],
-                "answer": "have been working",
-                "explanation": "Текущий результат вызван длительным процессом.",
+
+                "answer":
+                    "for",
+
+                "explanation":
+                    "THREE HOURS — продолжительность → FOR.",
             },
 
             {
                 "order": 12,
-                "prompt": "She ___ three emails.",
+                "section": 6,
+                "type": "choice",
+
+                "prompt":
+                    "She has been working ___ Monday.",
+
                 "options": [
-                    "has been writing for three",
-                    "has written",
-                    "has been written",
-                    "has write",
+                    "since",
+                    "for",
+                    "ago",
+                    "during",
                 ],
-                "answer": "has written",
-                "explanation": "Указано количество готовых писем → Present Perfect.",
+
+                "answer":
+                    "since",
+
+                "explanation":
+                    "MONDAY — начальная точка → SINCE.",
             },
+
+
+            # SECTION 7
 
             {
                 "order": 13,
-                "prompt": "She ___ emails for two hours.",
+                "section": 7,
+                "type": "choice",
+
+                "prompt":
+                    "How long ___ you been waiting?",
+
                 "options": [
-                    "has written five",
-                    "has been writing",
-                    "has been written",
-                    "wrote now",
+                    "have",
+                    "has",
+                    "did",
+                    "are",
                 ],
-                "answer": "has been writing",
-                "explanation": "For two hours подчёркивает длительность процесса.",
+
+                "answer":
+                    "have",
+
+                "explanation":
+                    "YOU → HAVE YOU BEEN WAITING?",
             },
 
             {
                 "order": 14,
-                "prompt": "I ___ him for ten years.",
+                "section": 7,
+                "type": "build",
+
+                "prompt":
+                    "Собери вопрос.",
+
                 "options": [
-                    "have been knowing",
-                    "have known",
-                    "knew and still know",
-                    "am knowing",
+                    "How",
+                    "long",
+                    "has",
+                    "she",
+                    "been",
+                    "studying",
                 ],
-                "answer": "have known",
-                "explanation": "Know — глагол состояния, поэтому используется Present Perfect.",
+
+                "answer":
+                    "How long has she been studying",
+
+                "explanation":
+                    "HOW LONG + HAS + SHE + BEEN + STUDYING.",
             },
+
+
+            # SECTION 8
 
             {
                 "order": 15,
-                "prompt": "Has it been raining?",
+                "section": 8,
+                "type": "choice",
+
+                "prompt":
+                    "The ground is wet because it ___.",
+
                 "options": [
-                    "Yes, it has.",
-                    "Yes, it is.",
-                    "Yes, it did.",
-                    "Yes, it was.",
+                    "has been raining",
+                    "has been rained",
+                    "has raining",
+                    "rained since",
                 ],
-                "answer": "Yes, it has.",
-                "explanation": "Краткий ответ повторяет has.",
+
+                "answer":
+                    "has been raining",
+
+                "explanation":
+                    "Мокрая земля — видимый результат недавнего дождя.",
             },
 
             {
                 "order": 16,
-                "prompt": "Choose the correct sentence.",
+                "section": 8,
+                "type": "choice",
+
+                "prompt":
+                    "You are out of breath. ___ you been running?",
+
                 "options": [
-                    "I have been worked.",
-                    "I have been working.",
-                    "I have working.",
-                    "I am been working.",
+                    "Have",
+                    "Did",
+                    "Are",
+                    "Do",
                 ],
-                "answer": "I have been working.",
-                "explanation": "Формула: have been + verb-ing.",
+
+                "answer":
+                    "Have",
+
+                "explanation":
+                    "Текущий результат объясняется недавним процессом.",
             },
+
+
+            # SECTION 9
 
             {
                 "order": 17,
-                "prompt": "Choose the correct sentence.",
+                "section": 9,
+                "type": "choice",
+
+                "prompt":
+                    "She ___ been sleeping well recently.",
+
                 "options": [
-                    "She has been work.",
-                    "She has been working.",
-                    "She has working.",
-                    "She been working.",
+                    "hasn't",
+                    "doesn't",
+                    "isn't",
+                    "didn't",
                 ],
-                "answer": "She has been working.",
-                "explanation": "Has been + working.",
+
+                "answer":
+                    "hasn't",
+
+                "explanation":
+                    "Отрицание: HASN'T BEEN + verb-ing.",
             },
 
             {
                 "order": 18,
-                "prompt": "Choose the correct question.",
+                "section": 9,
+                "type": "choice",
+
+                "prompt":
+                    "___ they been working all morning?",
+
                 "options": [
-                    "Did you been working?",
-                    "Have you been working?",
-                    "Have you been worked?",
-                    "Are you been working?",
+                    "Have",
+                    "Did",
+                    "Are",
+                    "Do",
                 ],
-                "answer": "Have you been working?",
-                "explanation": "Вопрос: Have + subject + been + verb-ing?",
+
+                "answer":
+                    "Have",
+
+                "explanation":
+                    "Вопрос: HAVE THEY BEEN WORKING?",
             },
+
+
+            # SECTION 10
 
             {
                 "order": 19,
-                "prompt": "The ground is wet because it ___.",
+                "section": 10,
+                "type": "choice",
+
+                "prompt":
+                    "I ___ him for ten years.",
+
                 "options": [
-                    "has been raining",
-                    "has rained three times",
-                    "was rain",
-                    "has been rained",
+                    "have known",
+                    "have been knowing",
+                    "am knowing",
+                    "have know",
                 ],
-                "answer": "has been raining",
-                "explanation": "Видимый результат сейчас связан с недавним процессом.",
+
+                "answer":
+                    "have known",
+
+                "explanation":
+                    "KNOW — глагол состояния.",
             },
 
             {
                 "order": 20,
-                "prompt": "Which sentence emphasizes a finished result?",
-                "options": [
-                    "I have been writing for two hours.",
-                    "I have written five pages.",
-                    "I am writing now.",
-                    "I was writing yesterday.",
-                ],
-                "answer": "I have written five pages.",
-                "explanation": "Количество готового результата → Present Perfect.",
-            },
+                "section": 10,
+                "type": "choice",
 
-            {
-                "order": 21,
-                "prompt": "Which sentence emphasizes duration?",
-                "options": [
-                    "She has cleaned the room.",
-                    "She has been cleaning the room for two hours.",
-                    "She cleaned the room yesterday.",
-                    "She is clean.",
-                ],
-                "answer": "She has been cleaning the room for two hours.",
-                "explanation": "For two hours подчёркивает длительность процесса.",
-            },
+                "prompt":
+                    "Choose the correct sentence about possession.",
 
-            {
-                "order": 22,
-                "prompt": "Choose the correct sentence with SINCE.",
                 "options": [
-                    "I have been working since three hours.",
-                    "I have been working since Monday.",
-                    "I have been working since two hours.",
-                    "I have been working for Monday.",
+                    "I have had this car for three years.",
+                    "I have been having this car for three years.",
+                    "I am having this car since 2023.",
+                    "I have been had this car.",
                 ],
-                "answer": "I have been working since Monday.",
-                "explanation": "Since используется с начальной точкой.",
-            },
 
-            {
-                "order": 23,
-                "prompt": "Choose the correct sentence about possession.",
-                "options": [
-                    "I have been having this phone for two years.",
-                    "I have had this phone for two years.",
-                    "I have been had this phone for two years.",
-                    "I am having this phone since two years.",
-                ],
-                "answer": "I have had this phone for two years.",
-                "explanation": "Have в значении владения обычно не используется в Continuous.",
-            },
+                "answer":
+                    "I have had this car for three years.",
 
-            {
-                "order": 24,
-                "prompt": "Choose the correct pair.",
-                "options": [
-                    "I have written five emails. / I have been writing for two hours.",
-                    "I have been written five emails. / I have writing for two hours.",
-                    "I have wrote five emails. / I have been wrote for two hours.",
-                    "I wrote five emails now. / I have been written for two hours.",
-                ],
-                "answer": "I have written five emails. / I have been writing for two hours.",
-                "explanation": "Количество результата → Present Perfect; длительность процесса → Present Perfect Continuous.",
+                "explanation":
+                    "HAVE в значении владения обычно не используется в Continuous.",
             },
 
         ]
 
-        for data in exercises:
+
+        # =================================================
+        # FINAL TEST — 10 NEW QUESTIONS
+        # =================================================
+
+        final_test = [
+
+            {
+                "order": 21,
+
+                "prompt":
+                    "We ___ for you since ten o'clock.",
+
+                "options": [
+                    "have been waiting",
+                    "have waiting",
+                    "are waited",
+                    "waited since",
+                ],
+
+                "answer":
+                    "have been waiting",
+
+                "explanation":
+                    "SINCE + продолжающийся процесс → Present Perfect Continuous.",
+            },
+
+            {
+                "order": 22,
+
+                "prompt":
+                    "Anna ___ English all afternoon.",
+
+                "options": [
+                    "has been studying",
+                    "has studied three languages",
+                    "has study",
+                    "is studied",
+                ],
+
+                "answer":
+                    "has been studying",
+
+                "explanation":
+                    "ALL AFTERNOON подчёркивает длительность процесса.",
+            },
+
+            {
+                "order": 23,
+
+                "prompt":
+                    "Choose the correct structure.",
+
+                "options": [
+                    "They have been working.",
+                    "They have working been.",
+                    "They been have working.",
+                    "They have been work.",
+                ],
+
+                "answer":
+                    "They have been working.",
+
+                "explanation":
+                    "HAVE + BEEN + verb-ing.",
+            },
+
+            {
+                "order": 24,
+
+                "prompt":
+                    "It ___ been snowing since morning.",
+
+                "options": [
+                    "has",
+                    "have",
+                    "is",
+                    "did",
+                ],
+
+                "answer":
+                    "has",
+
+                "explanation":
+                    "IT используется с HAS.",
+            },
+
+            {
+                "order": 25,
+
+                "prompt":
+                    "How long ___ he been learning English?",
+
+                "options": [
+                    "has",
+                    "have",
+                    "did",
+                    "is",
+                ],
+
+                "answer":
+                    "has",
+
+                "explanation":
+                    "HE → HAS HE BEEN LEARNING?",
+            },
+
+            {
+                "order": 26,
+
+                "prompt":
+                    "I have been working here ___ 2022.",
+
+                "options": [
+                    "since",
+                    "for",
+                    "ago",
+                    "last",
+                ],
+
+                "answer":
+                    "since",
+
+                "explanation":
+                    "2022 — начальная точка.",
+            },
+
+            {
+                "order": 27,
+
+                "prompt":
+                    "They have been travelling ___ two weeks.",
+
+                "options": [
+                    "for",
+                    "since",
+                    "ago",
+                    "from",
+                ],
+
+                "answer":
+                    "for",
+
+                "explanation":
+                    "TWO WEEKS — продолжительность.",
+            },
+
+            {
+                "order": 28,
+
+                "prompt":
+                    "Her eyes are red. She ___.",
+
+                "options": [
+                    "has been crying",
+                    "has been cried",
+                    "has crying",
+                    "cried since",
+                ],
+
+                "answer":
+                    "has been crying",
+
+                "explanation":
+                    "Видимый результат объясняется недавним процессом.",
+            },
+
+            {
+                "order": 29,
+
+                "prompt":
+                    "Choose the correct negative sentence.",
+
+                "options": [
+                    "I haven't been sleeping well.",
+                    "I don't been sleeping well.",
+                    "I haven't been sleep well.",
+                    "I am not been sleeping well.",
+                ],
+
+                "answer":
+                    "I haven't been sleeping well.",
+
+                "explanation":
+                    "HAVEN'T + BEEN + verb-ing.",
+            },
+
+            {
+                "order": 30,
+
+                "prompt":
+                    "Choose the fully correct sentence.",
+
+                "options": [
+                    "She has been working since Monday.",
+                    "She has been work since Monday.",
+                    "She have been working since Monday.",
+                    "She has working since Monday.",
+                ],
+
+                "answer":
+                    "She has been working since Monday.",
+
+                "explanation":
+                    "HAS + BEEN + WORKING + SINCE + начальная точка.",
+            },
+
+        ]
+
+
+        all_exercises = (
+            training
+            +
+            final_test
+        )
+
+
+        valid_orders = [
+            item["order"]
+            for item in all_exercises
+        ]
+
+
+        for data in all_exercises:
+
+            if data["order"] <= 20:
+
+                section = (
+                    section_objects[
+                        data["section"]
+                    ]
+                )
+
+            else:
+
+                section = None
+
 
             GrammarExercise.objects.update_or_create(
                 lesson=lesson,
                 order=data["order"],
+
                 defaults={
-                    "exercise_type": GrammarExercise.Type.CHOICE,
-                    "prompt": data["prompt"],
-                    "options": data["options"],
-                    "correct_answer": data["answer"],
-                    "explanation": data["explanation"],
-                    "is_published": True,
+                    "section":
+                        section,
+
+                    "exercise_type":
+                        data.get(
+                            "type",
+                            "choice",
+                        ),
+
+                    "prompt":
+                        data["prompt"],
+
+                    "options":
+                        data["options"],
+
+                    "correct_answer":
+                        data["answer"],
+
+                    "explanation":
+                        data["explanation"],
+
+                    "is_published":
+                        True,
                 },
             )
 
+
+        GrammarExercise.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__in=valid_orders,
+        ).delete()
+
+
+        GrammarLessonSection.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__in=[
+                item["order"]
+                for item in sections
+            ],
+        ).delete()
+
+
         self.stdout.write(
             self.style.SUCCESS(
-                "✅ A1 Lesson 32 seeded: "
-                "Present Perfect Continuous"
+                "✅ Interactive A1 Lesson 32 seeded"
             )
         )
 
         self.stdout.write(
-            f"Sections: {lesson.sections.count()}"
+            f"Micro rules: "
+            f"{lesson.sections.count()}"
         )
 
         self.stdout.write(
-            f"Exercises: {lesson.exercises.count()}"
+            "Training exercises: "
+            f"{lesson.exercises.filter(section__isnull=False).count()}"
+        )
+
+        self.stdout.write(
+            "Final test: "
+            f"{lesson.exercises.filter(section__isnull=True).count()}"
         )

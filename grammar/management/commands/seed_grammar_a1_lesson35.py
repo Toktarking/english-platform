@@ -10,39 +10,64 @@ from grammar.models import (
 class Command(BaseCommand):
 
     help = (
-        "Create/update A1 Grammar Lesson 35: "
-        "Past Perfect Continuous."
+        "Create/update interactive A1 Grammar "
+        "Lesson 35: Past Perfect Continuous."
     )
+
 
     def handle(self, *args, **options):
 
-        lesson, _ = GrammarLesson.objects.update_or_create(
-            level="A1",
-            order=35,
-            defaults={
-                "title": "Past Perfect Continuous",
-                "slug": "past-perfect-continuous",
-                "theory_text": (
-                    "Past Perfect Continuous: "
-                    "had been + verb-ing."
-                ),
-                "estimated_minutes": 45,
-                "pass_score": 70,
-                "xp_reward": 100,
-                "is_published": True,
-            },
+        lesson, _ = (
+            GrammarLesson.objects.update_or_create(
+                level="A1",
+                order=35,
+
+                defaults={
+                    "title":
+                        "Past Perfect Continuous",
+
+                    "slug":
+                        "past-perfect-continuous",
+
+                    "theory_text":
+                        "Past Perfect Continuous: "
+                        "HAD BEEN + verb-ing.",
+
+                    "estimated_minutes":
+                        20,
+
+                    "pass_score":
+                        70,
+
+                    "xp_reward":
+                        100,
+
+                    "is_published":
+                        True,
+                },
+            )
         )
+
+
+        # =================================================
+        # 10 MICRO RULES
+        # =================================================
 
         sections = [
 
             {
                 "order": 1,
-                "title": "Что такое Past Perfect Continuous",
-                "body": """Past Perfect Continuous показывает длительный процесс, который начался раньше другого момента в прошлом.
+                "title":
+                    "Процесс до момента в прошлом",
 
-Пример:
+                "body":
+                    """Past Perfect Continuous показывает процесс,
+который начался раньше
+и продолжался до другого момента
+в прошлом.
 
-I had been working for three hours before he arrived.
+I had been working for three hours
+before he arrived.
 
 Сначала:
 
@@ -56,17 +81,20 @@ I had been working for three hours before he arrived.
 
 Главная идея:
 
-процесс продолжался до другого события или момента в прошлом.""",
+длительный процесс
+→ до другого события в прошлом.""",
             },
+
 
             {
                 "order": 2,
-                "title": "Основная формула",
-                "body": """Формула:
+                "title":
+                    "Формула HAD BEEN + -ING",
 
-subject + had been + verb-ing
+                "body":
+                    """Формула:
 
-Примеры:
+HAD + BEEN + verb-ing
 
 I had been working.
 
@@ -74,217 +102,194 @@ She had been studying.
 
 They had been waiting.
 
-He had been sleeping.
+HAD BEEN одинаково
+для всех подлежащих:
 
-HAD BEEN одинаково используется со всеми подлежащими:
-
-I;
-
-you;
-
-he;
-
-she;
-
-it;
-
-we;
-
+I
+you
+he
+she
+it
+we
 they.""",
             },
 
+
             {
                 "order": 3,
-                "title": "Как образуется -ING",
-                "body": """Обычный случай:
+                "title":
+                    "Как образуется -ING",
+
+                "body":
+                    """Обычно добавляем -ING:
 
 work → working
-
 read → reading
-
 play → playing
 
-Глагол на немую e:
+Немая E исчезает:
 
 write → writing
-
 make → making
 
-come → coming
-
-Короткий глагол:
-
-sit → sitting
+Иногда согласная удваивается:
 
 run → running
+sit → sitting
 
-swim → swimming
+IE меняется на Y:
 
-Глагол на -ie:
-
-lie → lying
-
-die → dying""",
+lie → lying.""",
             },
+
 
             {
                 "order": 4,
-                "title": "Длительность до прошлого момента",
-                "body": """Past Perfect Continuous показывает, как долго действие продолжалось до другого момента прошлого.
+                "title":
+                    "FOR и SINCE",
 
-Примеры:
-
-I had been studying for two hours before the lesson started.
-
-She had been working all day before she went home.
-
-They had been waiting for an hour before the bus arrived.
-
-We had been travelling for ten hours before we reached the hotel.""",
-            },
-
-            {
-                "order": 5,
-                "title": "FOR и SINCE",
-                "body": """FOR показывает продолжительность.
+                "body":
+                    """FOR показывает продолжительность:
 
 for two hours
-
 for three days
-
 for five years
 
-Пример:
+I had been working
+for three hours.
 
-I had been working for three hours.
-
-SINCE показывает начальную точку.
+SINCE показывает начальную точку:
 
 since morning
-
 since Monday
+since 2020
 
-since 2019
-
-since five o'clock
-
-Пример:
-
-She had been working since morning.
-
-Запомните:
+She had been studying
+since morning.
 
 FOR = сколько времени
 
-SINCE = с какого момента""",
+SINCE = с какого момента.""",
             },
+
+
+            {
+                "order": 5,
+                "title":
+                    "BEFORE и WHEN",
+
+                "body":
+                    """Процесс происходил раньше,
+а потом произошло другое событие.
+
+I had been waiting
+before the bus arrived.
+
+I had been studying
+when she called.
+
+Позднее событие обычно стоит
+в Past Simple:
+
+arrived
+
+called
+
+started
+
+came.""",
+            },
+
 
             {
                 "order": 6,
-                "title": "HOW LONG",
-                "body": """Чтобы спросить о продолжительности:
+                "title":
+                    "BY THE TIME",
 
-How long had + subject + been + verb-ing?
+                "body":
+                    """BY THE TIME = к тому времени как.
 
-Примеры:
+By the time he arrived,
+I had been waiting
+for an hour.
 
-How long had you been working before he arrived?
+К его приходу
+процесс ожидания уже длился час.
 
-How long had she been studying before the exam?
+Ещё пример:
 
-How long had they been waiting?
-
-Ответ:
-
-I had been working for three hours.
-
-She had been living there since 2020.""",
+By the time the lesson started,
+we had been waiting
+for twenty minutes.""",
             },
+
 
             {
                 "order": 7,
-                "title": "Причина результата в прошлом",
-                "body": """Past Perfect Continuous может объяснять прошлое состояние.
+                "title":
+                    "Причина результата в прошлом",
 
-Пример:
+                "body":
+                    """Past Perfect Continuous
+может объяснять состояние в прошлом.
 
-She was tired because she had been working all day.
+She was tired because
+she had been working all day.
 
-Результат в прошлом:
+He was wet because
+he had been walking in the rain.
 
-she was tired
+Her eyes were red because
+she had been crying.
 
-Причина:
-
-she had been working all day
-
-Другие примеры:
-
-He was wet because he had been walking in the rain.
-
-Her eyes were red because she had been crying.
-
-The ground was wet because it had been raining.""",
+Процесс произошёл раньше
+и объясняет прошлый результат.""",
             },
+
 
             {
                 "order": 8,
-                "title": "BEFORE, WHEN и BY THE TIME",
-                "body": """BEFORE:
+                "title":
+                    "HOW LONG",
 
-I had been waiting for an hour before the bus arrived.
+                "body":
+                    """Чтобы спросить о длительности:
 
-WHEN:
+HOW LONG + HAD + subject
++ BEEN + verb-ing?
 
-I had been working for two hours when he arrived.
+How long had you been waiting?
 
-BY THE TIME:
+How long had she been studying
+before the exam?
 
-By the time he arrived, I had been waiting for an hour.
+Ответ:
 
-Во всех случаях:
+I had been waiting
+for an hour.
 
-длительный процесс начался раньше;
-
-позднее событие обычно стоит в Past Simple.""",
+She had been studying
+since morning.""",
             },
+
 
             {
                 "order": 9,
-                "title": "ALL DAY, ALL NIGHT, ALL WEEK",
-                "body": """Past Perfect Continuous часто используется с длительными периодами.
+                "title":
+                    "Отрицание и вопрос",
 
-Примеры:
+                "body":
+                    """Отрицание:
 
-She had been working all day.
-
-They had been travelling all night.
-
-It had been raining all week.
-
-We had been preparing for the exam all month.
-
-Такие выражения подчёркивают длительность процесса.""",
-            },
-
-            {
-                "order": 10,
-                "title": "Отрицание и вопросы",
-                "body": """Отрицание:
-
-subject + hadn't been + verb-ing
+HADN'T BEEN + verb-ing
 
 I hadn't been sleeping well.
 
 She hadn't been working.
 
-They hadn't been waiting long.
-
 Вопрос:
 
-Had + subject + been + verb-ing?
-
-Had you been working?
+Had you been waiting?
 
 Had she been studying?
 
@@ -299,612 +304,845 @@ Yes, she had.
 No, she hadn't.""",
             },
 
-            {
-                "order": 11,
-                "title": "Специальные вопросы",
-                "body": """Формула:
-
-Question word + had + subject + been + verb-ing?
-
-Примеры:
-
-What had you been doing?
-
-Where had she been working?
-
-Why had they been waiting?
-
-How long had he been sleeping?
-
-Who had she been talking to?
-
-Если WHO само выполняет действие:
-
-Who had been using my computer?
-
-Who had been calling you?""",
-            },
 
             {
-                "order": 12,
-                "title": "Past Continuous или Past Perfect Continuous",
-                "body": """Past Continuous показывает процесс в конкретный момент прошлого.
+                "order": 10,
+                "title":
+                    "Past Perfect или Continuous?",
 
-At six, I was working.
+                "body":
+                    """Past Perfect:
 
-Past Perfect Continuous показывает, как долго процесс уже продолжался к этому моменту.
+HAD + V3
 
-By six, I had been working for three hours.
-
-Сравните:
-
-At six, she was studying.
-— в шесть она занималась.
-
-By six, she had been studying for three hours.
-— к шести она занималась уже три часа.""",
-            },
-
-            {
-                "order": 13,
-                "title": "Past Perfect или Past Perfect Continuous",
-                "body": """Past Perfect:
-
-had + V3
-
-Подчёркивает:
-
-результат;
-
-завершённость;
-
-количество.
+Важен результат или количество.
 
 She had written five pages.
 
 Past Perfect Continuous:
 
-had been + verb-ing
+HAD BEEN + -ING
 
-Подчёркивает:
+Важен процесс или длительность.
 
-процесс;
-
-продолжительность;
-
-причину прошлого результата.
-
-She had been writing for two hours.
+She had been writing
+for two hours.
 
 Простое правило:
 
-Сколько сделано? → Past Perfect
+сколько сделано?
+→ Past Perfect
 
-Как долго? → Past Perfect Continuous""",
-            },
-
-            {
-                "order": 14,
-                "title": "Глаголы состояния и выбор времени",
-                "body": """Глаголы состояния обычно не используются в Continuous.
-
-Например:
-
-know;
-
-understand;
-
-like;
-
-want;
-
-need;
-
-believe;
-
-own;
-
-belong.
-
-Правильно:
-
-I had known him for ten years.
-
-Не:
-
-I had been knowing him.
-
-HAVE как владение:
-
-I had had that phone for two years.
-
-Главный алгоритм:
-
-важна длительность процесса → Past Perfect Continuous
-
-важен готовый результат или количество → Past Perfect
-
-глагол состояния → обычно Past Perfect""",
+как долго?
+→ Past Perfect Continuous.""",
             },
 
         ]
 
+
+        section_objects = {}
+
+
         for data in sections:
 
-            GrammarLessonSection.objects.update_or_create(
-                lesson=lesson,
-                order=data["order"],
-                defaults={
-                    "title": data["title"],
-                    "body": data["body"],
-                },
+            section, _ = (
+                GrammarLessonSection.objects.update_or_create(
+                    lesson=lesson,
+                    order=data["order"],
+
+                    defaults={
+                        "title":
+                            data["title"],
+
+                        "body":
+                            data["body"],
+                    },
+                )
             )
 
-        exercises = [
+            section_objects[
+                data["order"]
+            ] = section
+
+
+        # =================================================
+        # 20 TRAINING EXERCISES
+        # =================================================
+
+        training = [
+
+            # SECTION 1
 
             {
                 "order": 1,
-                "prompt": (
-                    "We ___ been waiting for an hour "
-                    "before the bus arrived."
-                ),
-                "options": ["have", "had", "were", "did"],
-                "answer": "had",
-                "explanation": (
-                    "Past Perfect Continuous использует had been."
-                ),
+                "section": 1,
+                "type": "choice",
+
+                "prompt":
+                    "I ___ for two hours before she arrived.",
+
+                "options": [
+                    "had been working",
+                    "have been working",
+                    "was worked",
+                    "had working",
+                ],
+
+                "answer":
+                    "had been working",
+
+                "explanation":
+                    "Процесс длился до другого события в прошлом.",
             },
 
             {
                 "order": 2,
-                "prompt": "My sister had been ___ all morning.",
+                "section": 1,
+                "type": "choice",
+
+                "prompt":
+                    "They ___ for an hour before the bus came.",
+
                 "options": [
-                    "study",
-                    "studied",
-                    "studying",
-                    "studies",
+                    "had been waiting",
+                    "have waited",
+                    "were waited",
+                    "had waited an hour once",
                 ],
-                "answer": "studying",
-                "explanation": (
-                    "После had been используется verb-ing."
-                ),
+
+                "answer":
+                    "had been waiting",
+
+                "explanation":
+                    "Ожидание продолжалось до приезда автобуса.",
             },
+
+
+            # SECTION 2
 
             {
                 "order": 3,
-                "prompt": (
-                    "They had been living there ___ ten years."
-                ),
+                "section": 2,
+                "type": "build",
+
+                "prompt":
+                    "Собери правильную форму.",
+
+                "options": [
+                    "She",
+                    "had",
+                    "been",
+                    "studying",
+                ],
+
+                "answer":
+                    "She had been studying",
+
+                "explanation":
+                    "Past Perfect Continuous = HAD BEEN + verb-ing.",
+            },
+
+            {
+                "order": 4,
+                "section": 2,
+                "type": "choice",
+
+                "prompt":
+                    "Choose the correct sentence.",
+
+                "options": [
+                    "We had been travelling.",
+                    "We had travelling.",
+                    "We had been travel.",
+                    "We were been travelling.",
+                ],
+
+                "answer":
+                    "We had been travelling.",
+
+                "explanation":
+                    "Нужны все три части: HAD + BEEN + TRAVELLING.",
+            },
+
+
+            # SECTION 3
+
+            {
+                "order": 5,
+                "section": 3,
+                "type": "fill",
+
+                "prompt":
+                    "write → ___",
+
+                "options": [],
+
+                "answer":
+                    "writing",
+
+                "explanation":
+                    "WRITE → WRITING: немая E исчезает.",
+            },
+
+            {
+                "order": 6,
+                "section": 3,
+                "type": "choice",
+
+                "prompt":
+                    "Choose the correct -ING form of RUN.",
+
+                "options": [
+                    "running",
+                    "runing",
+                    "runned",
+                    "runeing",
+                ],
+
+                "answer":
+                    "running",
+
+                "explanation":
+                    "RUN → RUNNING: согласная удваивается.",
+            },
+
+
+            # SECTION 4
+
+            {
+                "order": 7,
+                "section": 4,
+                "type": "choice",
+
+                "prompt":
+                    "She had been working ___ three hours.",
+
+                "options": [
+                    "for",
+                    "since",
+                    "ago",
+                    "last",
+                ],
+
+                "answer":
+                    "for",
+
+                "explanation":
+                    "THREE HOURS — продолжительность → FOR.",
+            },
+
+            {
+                "order": 8,
+                "section": 4,
+                "type": "choice",
+
+                "prompt":
+                    "He had been studying ___ morning.",
+
                 "options": [
                     "since",
                     "for",
                     "ago",
                     "during",
                 ],
-                "answer": "for",
-                "explanation": (
-                    "Ten years — продолжительность, поэтому for."
-                ),
-            },
 
-            {
-                "order": 4,
-                "prompt": (
-                    "He had been working there ___ 2019."
-                ),
-                "options": [
-                    "for",
+                "answer":
                     "since",
-                    "from",
-                    "ago",
-                ],
-                "answer": "since",
-                "explanation": (
-                    "2019 — начальная точка, поэтому since."
-                ),
+
+                "explanation":
+                    "MORNING — начальная точка → SINCE.",
             },
 
-            {
-                "order": 5,
-                "prompt": (
-                    "___ she been crying before you arrived?"
-                ),
-                "options": [
-                    "Did",
-                    "Had",
-                    "Was",
-                    "Has",
-                ],
-                "answer": "Had",
-                "explanation": (
-                    "Вопрос: Had + subject + been + verb-ing?"
-                ),
-            },
 
-            {
-                "order": 6,
-                "prompt": "How long ___ they been waiting?",
-                "options": [
-                    "did",
-                    "had",
-                    "were",
-                    "have",
-                ],
-                "answer": "had",
-                "explanation": (
-                    "Past Perfect Continuous question: "
-                    "How long had they been waiting?"
-                ),
-            },
-
-            {
-                "order": 7,
-                "prompt": (
-                    "The ground was wet because it ___."
-                ),
-                "options": [
-                    "rained yesterday",
-                    "had been raining",
-                    "has been raining",
-                    "was rain",
-                ],
-                "answer": "had been raining",
-                "explanation": (
-                    "Длительный предыдущий процесс объясняет "
-                    "результат в прошлом."
-                ),
-            },
-
-            {
-                "order": 8,
-                "prompt": (
-                    "She was tired because she ___ all night."
-                ),
-                "options": [
-                    "had been studying",
-                    "had studied five chapters only",
-                    "was study",
-                    "has studied",
-                ],
-                "answer": "had been studying",
-                "explanation": (
-                    "Усталость — результат длительного процесса."
-                ),
-            },
+            # SECTION 5
 
             {
                 "order": 9,
-                "prompt": (
-                    "He ___ three reports before the meeting."
-                ),
+                "section": 5,
+                "type": "choice",
+
+                "prompt":
+                    "We had been talking when the teacher ___.",
+
                 "options": [
-                    "had been writing",
-                    "had written",
-                    "had wrote",
-                    "was written",
+                    "entered",
+                    "had entered earlier for hours",
+                    "has entered",
+                    "enter",
                 ],
-                "answer": "had written",
-                "explanation": (
-                    "Three reports — количество готовых результатов, "
-                    "поэтому Past Perfect."
-                ),
+
+                "answer":
+                    "entered",
+
+                "explanation":
+                    "Позднее короткое событие → Past Simple.",
             },
 
             {
                 "order": 10,
-                "prompt": (
-                    "He ___ reports for four hours "
-                    "before the meeting."
-                ),
+                "section": 5,
+                "type": "choice",
+
+                "prompt":
+                    "She had been sleeping before the phone ___.",
+
                 "options": [
-                    "had written three",
-                    "had been writing",
-                    "was wrote",
-                    "wrote since",
+                    "rang",
+                    "had rang",
+                    "has rung",
+                    "ring",
                 ],
-                "answer": "had been writing",
-                "explanation": (
-                    "For four hours подчёркивает длительность процесса."
-                ),
+
+                "answer":
+                    "rang",
+
+                "explanation":
+                    "Звонок произошёл после длительного процесса.",
             },
+
+
+            # SECTION 6
 
             {
                 "order": 11,
-                "prompt": (
-                    "I ___ him for years before he moved."
-                ),
+                "section": 6,
+                "type": "choice",
+
+                "prompt":
+                    "By the time I arrived, they ___ for forty minutes.",
+
                 "options": [
-                    "had been knowing",
-                    "had known",
-                    "was knowing",
-                    "knew and still know now",
+                    "had been waiting",
+                    "have been waiting",
+                    "were waited",
+                    "had waiting",
                 ],
-                "answer": "had known",
-                "explanation": (
-                    "Know — глагол состояния, поэтому Past Perfect."
-                ),
+
+                "answer":
+                    "had been waiting",
+
+                "explanation":
+                    "К моменту приезда процесс длился уже 40 минут.",
             },
 
             {
                 "order": 12,
-                "prompt": "Had she been working?",
+                "section": 6,
+                "type": "choice",
+
+                "prompt":
+                    "By the time the exam started, we ___ for an hour.",
+
                 "options": [
-                    "Yes, she had.",
-                    "Yes, she did.",
-                    "Yes, she was.",
-                    "Yes, she has.",
+                    "had been studying",
+                    "have studied",
+                    "were study",
+                    "had studied one hour only",
                 ],
-                "answer": "Yes, she had.",
-                "explanation": (
-                    "Краткий ответ повторяет had."
-                ),
+
+                "answer":
+                    "had been studying",
+
+                "explanation":
+                    "Процесс подготовки длился до начала экзамена.",
             },
+
+
+            # SECTION 7
 
             {
                 "order": 13,
-                "prompt": "They hadn't been ___ long.",
+                "section": 7,
+                "type": "choice",
+
+                "prompt":
+                    "She was tired because she ___ all day.",
+
                 "options": [
-                    "wait",
-                    "waited",
-                    "waiting",
-                    "waits",
+                    "had been working",
+                    "has been working",
+                    "had worked five tasks",
+                    "was worked",
                 ],
-                "answer": "waiting",
-                "explanation": (
-                    "Hadn't been + verb-ing."
-                ),
+
+                "answer":
+                    "had been working",
+
+                "explanation":
+                    "Длительный процесс объясняет усталость в прошлом.",
             },
 
             {
                 "order": 14,
-                "prompt": (
-                    "By the time I arrived, "
-                    "he ___ for two hours."
-                ),
+                "section": 7,
+                "type": "choice",
+
+                "prompt":
+                    "His clothes were wet because he ___ in the rain.",
+
                 "options": [
-                    "had slept",
-                    "had been sleeping",
-                    "was slept",
-                    "has been sleeping",
+                    "had been walking",
+                    "has walked",
+                    "had walked one street",
+                    "was walked",
                 ],
-                "answer": "had been sleeping",
-                "explanation": (
-                    "Длительный процесс продолжался два часа "
-                    "до моего прихода."
-                ),
+
+                "answer":
+                    "had been walking",
+
+                "explanation":
+                    "Процесс объясняет видимый прошлый результат.",
             },
+
+
+            # SECTION 8
 
             {
                 "order": 15,
-                "prompt": (
-                    "She had ___ the room before the guests came."
-                ),
+                "section": 8,
+                "type": "choice",
+
+                "prompt":
+                    "How long ___ you been waiting before the doctor came?",
+
                 "options": [
-                    "been cleaning for two hours",
-                    "cleaned",
-                    "clean",
-                    "cleaning",
+                    "had",
+                    "have",
+                    "did",
+                    "were",
                 ],
-                "answer": "cleaned",
-                "explanation": (
-                    "Если важен готовый результат, используется "
-                    "Past Perfect: had cleaned."
-                ),
+
+                "answer":
+                    "had",
+
+                "explanation":
+                    "Вопрос: HOW LONG HAD YOU BEEN WAITING?",
             },
 
             {
                 "order": 16,
-                "prompt": "Choose the correct sentence.",
+                "section": 8,
+                "type": "build",
+
+                "prompt":
+                    "Собери вопрос.",
+
                 "options": [
-                    "I had been work for three hours.",
-                    "I had been working for three hours.",
-                    "I had working for three hours.",
-                    "I was been working for three hours.",
+                    "How",
+                    "long",
+                    "had",
+                    "she",
+                    "been",
+                    "working",
                 ],
-                "answer": (
-                    "I had been working for three hours."
-                ),
-                "explanation": (
-                    "Правильная формула: had been + verb-ing."
-                ),
+
+                "answer":
+                    "How long had she been working",
+
+                "explanation":
+                    "HOW LONG + HAD + subject + BEEN + verb-ing.",
             },
+
+
+            # SECTION 9
 
             {
                 "order": 17,
-                "prompt": "Choose the correct question.",
+                "section": 9,
+                "type": "choice",
+
+                "prompt":
+                    "They ___ been waiting long before the taxi arrived.",
+
                 "options": [
-                    "Did they been waiting?",
-                    "Had they been waiting?",
-                    "Were they been waiting?",
-                    "Had they been waited?",
+                    "hadn't",
+                    "didn't",
+                    "weren't",
+                    "haven't",
                 ],
-                "answer": "Had they been waiting?",
-                "explanation": (
-                    "Вопрос строится через Had."
-                ),
+
+                "answer":
+                    "hadn't",
+
+                "explanation":
+                    "Отрицание = HADN'T BEEN + verb-ing.",
             },
 
             {
                 "order": 18,
-                "prompt": (
-                    "By six, I ___ for four hours."
-                ),
+                "section": 9,
+                "type": "choice",
+
+                "prompt":
+                    "___ she been working before you called?",
+
                 "options": [
-                    "was working",
-                    "had been working",
-                    "have been working",
-                    "had worked four tasks",
+                    "Had",
+                    "Did",
+                    "Was",
+                    "Has",
                 ],
-                "answer": "had been working",
-                "explanation": (
-                    "By six + продолжительность до прошлого момента "
-                    "→ Past Perfect Continuous."
-                ),
+
+                "answer":
+                    "Had",
+
+                "explanation":
+                    "Вопрос Past Perfect Continuous начинается с HAD.",
             },
+
+
+            # SECTION 10
 
             {
                 "order": 19,
-                "prompt": (
-                    "At six, I ___."
-                ),
+                "section": 10,
+                "type": "choice",
+
+                "prompt":
+                    "She ___ five pages before lunch.",
+
                 "options": [
-                    "had been working for four hours necessarily",
-                    "was working",
-                    "have worked",
-                    "had working",
+                    "had written",
+                    "had been writing five pages for",
+                    "had wrote",
+                    "was written",
                 ],
-                "answer": "was working",
-                "explanation": (
-                    "At six показывает процесс именно в этот момент "
-                    "→ Past Continuous."
-                ),
+
+                "answer":
+                    "had written",
+
+                "explanation":
+                    "FIVE PAGES — количество результата → Past Perfect.",
             },
 
             {
                 "order": 20,
-                "prompt": (
-                    "How many emails had she ___ before lunch?"
-                ),
-                "options": [
-                    "been writing",
-                    "written",
-                    "wrote",
-                    "writing",
-                ],
-                "answer": "written",
-                "explanation": (
-                    "How many спрашивает количество завершённых "
-                    "результатов → Past Perfect."
-                ),
-            },
+                "section": 10,
+                "type": "choice",
 
-            {
-                "order": 21,
-                "prompt": (
-                    "How long had she ___ before lunch?"
-                ),
-                "options": [
-                    "written five emails",
-                    "been writing",
-                    "been written",
-                    "wrote",
-                ],
-                "answer": "been writing",
-                "explanation": (
-                    "How long спрашивает длительность процесса."
-                ),
-            },
+                "prompt":
+                    "She ___ for two hours before lunch.",
 
-            {
-                "order": 22,
-                "prompt": "Choose the correct sentence.",
                 "options": [
-                    "I had been knowing her for years.",
-                    "I had known her for years.",
-                    "I had knowing her for years.",
-                    "I was knowing her for years.",
+                    "had been writing",
+                    "had written two hours",
+                    "was wrote",
+                    "had writing",
                 ],
-                "answer": "I had known her for years.",
-                "explanation": (
-                    "Know — stative verb и обычно не используется "
-                    "в Continuous."
-                ),
-            },
 
-            {
-                "order": 23,
-                "prompt": (
-                    "Choose the correct pair."
-                ),
-                "options": [
-                    (
-                        "She had written five pages. / "
-                        "She had been writing for two hours."
-                    ),
-                    (
-                        "She had been writing five pages. / "
-                        "She had written for two hours."
-                    ),
-                    (
-                        "She had wrote five pages. / "
-                        "She had been wrote for two hours."
-                    ),
-                    (
-                        "She was written five pages. / "
-                        "She had writing for two hours."
-                    ),
-                ],
-                "answer": (
-                    "She had written five pages. / "
-                    "She had been writing for two hours."
-                ),
-                "explanation": (
-                    "Количество → Past Perfect; "
-                    "длительность → Past Perfect Continuous."
-                ),
-            },
+                "answer":
+                    "had been writing",
 
-            {
-                "order": 24,
-                "prompt": (
-                    "Choose the correct cause-and-result sentence."
-                ),
-                "options": [
-                    (
-                        "He was out of breath because "
-                        "he had been running."
-                    ),
-                    (
-                        "He was out of breath because "
-                        "he had been ran."
-                    ),
-                    (
-                        "He was out of breath because "
-                        "he did been running."
-                    ),
-                    (
-                        "He was out of breath because "
-                        "he had running."
-                    ),
-                ],
-                "answer": (
-                    "He was out of breath because "
-                    "he had been running."
-                ),
-                "explanation": (
-                    "Past Perfect Continuous объясняет причину "
-                    "прошлого результата."
-                ),
+                "explanation":
+                    "TWO HOURS — длительность → Past Perfect Continuous.",
             },
 
         ]
 
-        for data in exercises:
+
+        # =================================================
+        # FINAL TEST — 10 NEW QUESTIONS
+        # =================================================
+
+        final_test = [
+
+            {
+                "order": 21,
+
+                "prompt":
+                    "Tom was exhausted because he ___ all night.",
+
+                "options": [
+                    "had been driving",
+                    "has been driving",
+                    "had driven three cars",
+                    "was drove",
+                ],
+
+                "answer":
+                    "had been driving",
+
+                "explanation":
+                    "Длительный процесс объясняет прошлое состояние.",
+            },
+
+            {
+                "order": 22,
+
+                "prompt":
+                    "We ___ for two hours before the restaurant opened.",
+
+                "options": [
+                    "had been waiting",
+                    "have waited",
+                    "were waited",
+                    "had waited two people",
+                ],
+
+                "answer":
+                    "had been waiting",
+
+                "explanation":
+                    "FOR TWO HOURS → длительный процесс до прошлого события.",
+            },
+
+            {
+                "order": 23,
+
+                "prompt":
+                    "Choose the correct structure.",
+
+                "options": [
+                    "He had been studying.",
+                    "He had studying.",
+                    "He had been study.",
+                    "He was been studying.",
+                ],
+
+                "answer":
+                    "He had been studying.",
+
+                "explanation":
+                    "HAD + BEEN + verb-ing.",
+            },
+
+            {
+                "order": 24,
+
+                "prompt":
+                    "They had been living there ___ 2018.",
+
+                "options": [
+                    "since",
+                    "for",
+                    "ago",
+                    "last",
+                ],
+
+                "answer":
+                    "since",
+
+                "explanation":
+                    "2018 — начальная точка → SINCE.",
+            },
+
+            {
+                "order": 25,
+
+                "prompt":
+                    "She had been learning English ___ four years.",
+
+                "options": [
+                    "for",
+                    "since",
+                    "ago",
+                    "from",
+                ],
+
+                "answer":
+                    "for",
+
+                "explanation":
+                    "FOUR YEARS — продолжительность → FOR.",
+            },
+
+            {
+                "order": 26,
+
+                "prompt":
+                    "How long ___ they been travelling before they stopped?",
+
+                "options": [
+                    "had",
+                    "have",
+                    "were",
+                    "did",
+                ],
+
+                "answer":
+                    "had",
+
+                "explanation":
+                    "HOW LONG HAD THEY BEEN TRAVELLING?",
+            },
+
+            {
+                "order": 27,
+
+                "prompt":
+                    "The streets were wet because it ___.",
+
+                "options": [
+                    "had been raining",
+                    "has been raining",
+                    "had rained three streets",
+                    "was rain",
+                ],
+
+                "answer":
+                    "had been raining",
+
+                "explanation":
+                    "Недавний длительный процесс объясняет прошлый результат.",
+            },
+
+            {
+                "order": 28,
+
+                "prompt":
+                    "Choose the correct negative sentence.",
+
+                "options": [
+                    "I hadn't been sleeping well.",
+                    "I didn't been sleeping well.",
+                    "I hadn't been sleep well.",
+                    "I wasn't been sleeping well.",
+                ],
+
+                "answer":
+                    "I hadn't been sleeping well.",
+
+                "explanation":
+                    "HADN'T + BEEN + verb-ing.",
+            },
+
+            {
+                "order": 29,
+
+                "prompt":
+                    "Choose the correct pair.",
+
+                "options": [
+                    "He had written six emails. / He had been writing for three hours.",
+                    "He had been writing six emails. / He had written for three hours.",
+                    "He had wrote six emails. / He had been wrote for three hours.",
+                    "He was written six emails. / He had writing for three hours.",
+                ],
+
+                "answer":
+                    "He had written six emails. / He had been writing for three hours.",
+
+                "explanation":
+                    "Количество → Past Perfect; длительность → Past Perfect Continuous.",
+            },
+
+            {
+                "order": 30,
+
+                "prompt":
+                    "Choose the fully correct sentence.",
+
+                "options": [
+                    "By the time she arrived, I had been working for two hours.",
+                    "By the time she arrived, I have been working for two hours.",
+                    "By the time she had arrived, I had been work for two hours.",
+                    "By the time she arrives, I had working for two hours.",
+                ],
+
+                "answer":
+                    "By the time she arrived, I had been working for two hours.",
+
+                "explanation":
+                    "Длительный процесс до другого события в прошлом → Past Perfect Continuous.",
+            },
+
+        ]
+
+
+        all_exercises = (
+            training
+            +
+            final_test
+        )
+
+
+        valid_orders = [
+            item["order"]
+            for item in all_exercises
+        ]
+
+
+        for data in all_exercises:
+
+            if data["order"] <= 20:
+
+                section = (
+                    section_objects[
+                        data["section"]
+                    ]
+                )
+
+            else:
+
+                section = None
+
 
             GrammarExercise.objects.update_or_create(
                 lesson=lesson,
                 order=data["order"],
+
                 defaults={
-                    "exercise_type": GrammarExercise.Type.CHOICE,
-                    "prompt": data["prompt"],
-                    "options": data["options"],
-                    "correct_answer": data["answer"],
-                    "explanation": data["explanation"],
-                    "is_published": True,
+                    "section":
+                        section,
+
+                    "exercise_type":
+                        data.get(
+                            "type",
+                            "choice",
+                        ),
+
+                    "prompt":
+                        data["prompt"],
+
+                    "options":
+                        data["options"],
+
+                    "correct_answer":
+                        data["answer"],
+
+                    "explanation":
+                        data["explanation"],
+
+                    "is_published":
+                        True,
                 },
             )
 
+
+        GrammarExercise.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__in=valid_orders,
+        ).delete()
+
+
+        GrammarLessonSection.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__in=[
+                item["order"]
+                for item in sections
+            ],
+        ).delete()
+
+
         self.stdout.write(
             self.style.SUCCESS(
-                "✅ A1 Lesson 35 seeded: "
-                "Past Perfect Continuous"
+                "✅ Interactive A1 Lesson 35 seeded"
             )
         )
 
         self.stdout.write(
-            f"Sections: {lesson.sections.count()}"
+            f"Micro rules: "
+            f"{lesson.sections.count()}"
         )
 
         self.stdout.write(
-            f"Exercises: {lesson.exercises.count()}"
+            "Training exercises: "
+            f"{lesson.exercises.filter(section__isnull=False).count()}"
+        )
+
+        self.stdout.write(
+            "Final test: "
+            f"{lesson.exercises.filter(section__isnull=True).count()}"
         )

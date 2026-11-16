@@ -10,9 +10,10 @@ from grammar.models import (
 class Command(BaseCommand):
 
     help = (
-        "Create/update A1 Grammar Lesson 38: "
-        "Present Continuous for future arrangements."
+        "Create/update interactive A1 Grammar "
+        "Lesson 38: Present Continuous for future."
     )
+
 
     def handle(self, *args, **options):
 
@@ -25,165 +26,111 @@ class Command(BaseCommand):
                 "theory_text": (
                     "Present Continuous for future arrangements."
                 ),
-                "estimated_minutes": 40,
+                "estimated_minutes": 20,
                 "pass_score": 70,
                 "xp_reward": 100,
                 "is_published": True,
             },
         )
 
+
+        # =================================================
+        # 10 MICRO RULES
+        # =================================================
+
         sections = [
 
             {
                 "order": 1,
                 "title": "Present Continuous может говорить о будущем",
-                "body": """Present Continuous используется не только для действия, которое происходит сейчас.
+                "body": """Present Continuous используется
+не только для того, что происходит сейчас.
 
-Он также может описывать будущее, если действие:
-
-уже запланировано;
-
-согласовано с другим человеком;
-
-организовано;
-
-связано с конкретным временем или местом.
-
-Примеры:
+Он может говорить о будущем,
+если действие уже организовано.
 
 I am meeting my teacher tomorrow.
 
 We are flying to Astana on Friday.
 
-She is seeing the doctor at ten.""",
+She is seeing the doctor at ten.
+
+Главная идея:
+
+есть конкретный план
+или договорённость.""",
             },
 
             {
                 "order": 2,
-                "title": "Основная формула",
+                "title": "Формула",
                 "body": """Формула:
 
-subject + am/is/are + verb-ing + future time
+AM / IS / ARE + verb-ing
 
-Примеры:
-
-I am working tomorrow.
+I am meeting him tomorrow.
 
 She is coming tonight.
 
-We are leaving on Monday.
+They are leaving on Monday.
 
-They are meeting us at six.
+Форма та же,
+что и у обычного Present Continuous.
 
-Формы TO BE:
+Будущее значение показывает контекст:
 
-I → am
-
-he/she/it → is
-
-you/we/they → are""",
+tomorrow
+tonight
+next week
+on Monday
+at six.""",
             },
 
             {
                 "order": 3,
-                "title": "Почему это будущее",
-                "body": """Форма Present Continuous может быть одинаковой для настоящего и будущего.
+                "title": "Конкретная договорённость",
+                "body": """Present Continuous особенно подходит,
+когда встреча уже согласована.
 
-Сравните:
+I am meeting Marat at six.
 
-I am meeting my teacher now.
-— действие происходит сейчас.
+Это обычно значит:
 
-I am meeting my teacher tomorrow.
-— действие запланировано на будущее.
+время известно;
 
-Будущее значение показывает контекст:
+другой человек знает;
 
-tomorrow;
+встреча уже договорена.
 
-tonight;
+Ещё пример:
 
-next week;
-
-on Monday;
-
-at six;
-
-this weekend.""",
+We are having lunch
+with the manager tomorrow.""",
             },
 
             {
                 "order": 4,
-                "title": "Конкретная договорённость",
-                "body": """Present Continuous часто используется, когда план уже согласован.
-
-Пример:
-
-I am meeting Marat at six.
-
-Обычно это означает:
-
-встреча уже согласована;
-
-время известно;
-
-другой человек знает о встрече.
-
-Другие примеры:
-
-I am having lunch with my manager tomorrow.
-
-She is meeting her clients on Monday.
-
-They are playing football with us tonight.""",
-            },
-
-            {
-                "order": 5,
                 "title": "Назначенные встречи",
-                "body": """Present Continuous особенно часто используется для назначенных встреч.
-
-Примеры:
+                "body": """Часто используем Present Continuous
+для appointments.
 
 I am seeing the doctor tomorrow.
 
 She is meeting the dean at eleven.
 
-We are talking to the client this afternoon.
+He is seeing the dentist on Friday.
 
-He is having a lesson at five.
+Здесь SEE может означать:
 
-SEE в таком контексте означает встречу:
-
-I am seeing the dentist tomorrow.
-
-Это означает, что встреча со стоматологом уже назначена.""",
+встречаться с кем-то
+по назначению.""",
             },
 
             {
-                "order": 6,
+                "order": 5,
                 "title": "Поездки и организованные планы",
-                "body": """Present Continuous часто используется с глаголами движения:
-
-come;
-
-go;
-
-leave;
-
-arrive;
-
-fly;
-
-travel;
-
-drive;
-
-return;
-
-stay.
-
-Примеры:
+                "body": """Present Continuous часто используется
+с поездками.
 
 We are flying to Almaty tomorrow.
 
@@ -193,51 +140,44 @@ They are arriving at ten.
 
 I am staying at a hotel next week.
 
-Обычно уже есть конкретные детали: билеты, время, место или бронь.""",
+Обычно уже есть:
+
+билет;
+
+бронь;
+
+время;
+
+место.""",
             },
 
             {
-                "order": 7,
+                "order": 6,
                 "title": "Отрицание",
-                "body": """Отрицательная форма:
+                "body": """Отрицание:
 
-subject + am/is/are not + verb-ing
-
-Примеры:
+AM / IS / ARE + NOT + verb-ing
 
 I am not working tomorrow.
 
 She isn't coming tonight.
 
-We aren't travelling next week.
+They aren't travelling next week.
 
-They aren't meeting us on Monday.
-
-Сокращения:
-
-I'm not
-
-isn't
-
-aren't""",
+То есть отрицание строится
+через TO BE.""",
             },
 
             {
-                "order": 8,
-                "title": "Вопросы и краткие ответы",
-                "body": """Вопрос:
-
-Am/Is/Are + subject + verb-ing?
-
-Примеры:
+                "order": 7,
+                "title": "Вопросы",
+                "body": """В вопросе TO BE идёт первым.
 
 Are you working tomorrow?
 
 Is she coming tonight?
 
 Are they travelling next week?
-
-Is he meeting the manager?
 
 Краткие ответы:
 
@@ -247,213 +187,92 @@ No, I'm not.
 
 Yes, she is.
 
-No, she isn't.
+No, she isn't.""",
+            },
 
-Yes, they are.
+            {
+                "order": 8,
+                "title": "Present Continuous или GOING TO?",
+                "body": """BE GOING TO чаще показывает:
 
-No, they aren't.""",
+намерение;
+
+общий план.
+
+I'm going to visit the doctor
+next week.
+
+Present Continuous:
+
+конкретную договорённость.
+
+I'm seeing the doctor
+on Tuesday at ten.
+
+То есть:
+
+GOING TO → план
+
+Present Continuous → arrangement.""",
             },
 
             {
                 "order": 9,
-                "title": "Специальные вопросы",
-                "body": """Формула:
+                "title": "Present Continuous или WILL?",
+                "body": """WILL часто используется,
+если решение принято сейчас.
 
-Question word + am/is/are + subject + verb-ing?
+The phone is ringing.
 
-Примеры:
+I'll answer it.
 
-What are you doing tomorrow?
+Present Continuous показывает,
+что действие организовано заранее.
 
-Where is she staying?
+I'm meeting him tomorrow at ten.
 
-When are they leaving?
+Сравни:
 
-Who are you meeting?
+I'll call her now.
 
-Why is he coming?
-
-Вопрос:
-
-What are you doing tomorrow?
-
-часто означает:
-
-Какие у тебя планы на завтра?""",
+I'm calling her at six tomorrow.""",
             },
 
             {
                 "order": 10,
-                "title": "Present Continuous или BE GOING TO",
-                "body": """BE GOING TO показывает:
-
-намерение;
-
-общий план;
-
-решение, принятое заранее.
-
-Пример:
-
-I am going to visit the doctor next week.
-
-Present Continuous показывает:
-
-конкретную договорённость;
-
-назначенное время;
-
-организованный план.
-
-Пример:
-
-I am seeing the doctor on Tuesday at ten.
-
-Сравните:
-
-I'm going to meet Marat soon.
-
-I'm meeting Marat at six tomorrow.""",
-            },
-
-            {
-                "order": 11,
-                "title": "Present Continuous или WILL",
-                "body": """WILL используется для:
-
-спонтанного решения;
-
-обещания;
-
-предположения.
-
-Пример:
-
-I'll call her now.
-
-Present Continuous показывает заранее организованное действие.
-
-Пример:
-
-I'm calling her at six tomorrow.
-
-Сравните:
-
-I'll meet him tomorrow.
-— простое решение или обещание.
-
-I'm meeting him tomorrow at ten.
-— конкретная договорённость.""",
-            },
-
-            {
-                "order": 12,
-                "title": "Present Continuous или Present Simple",
-                "body": """Present Simple используется для официального расписания.
-
-Примеры:
+                "title": "Present Continuous или расписание?",
+                "body": """Present Simple используется
+для официального расписания.
 
 The train leaves at six.
 
 The lesson starts at nine.
 
-The plane arrives at ten.
+Present Continuous:
 
-Present Continuous используется для личного плана.
-
-Примеры:
+личный организованный план.
 
 We are taking the six o'clock train.
 
 I am attending the lesson tomorrow.
 
-She is flying on Monday.
+Коротко:
 
-Сравните:
+расписание → Present Simple
 
-The train leaves at six.
-— расписание.
-
-We are leaving at six.
-— наш план.""",
-            },
-
-            {
-                "order": 13,
-                "title": "Типичные ошибки",
-                "body": """Неправильно:
-
-I meeting him tomorrow.
-
-Правильно:
-
-I am meeting him tomorrow.
-
-Неправильно:
-
-She are coming tonight.
-
-Правильно:
-
-She is coming tonight.
-
-Неправильно:
-
-They are leave tomorrow.
-
-Правильно:
-
-They are leaving tomorrow.
-
-Неправильно:
-
-Do you meeting him tomorrow?
-
-Правильно:
-
-Are you meeting him tomorrow?""",
-            },
-
-            {
-                "order": 14,
-                "title": "Как выбрать форму будущего",
-                "body": """Шаг 1.
-
-Решение принято сейчас?
-
-→ WILL
-
-I'll answer the phone.
-
-Шаг 2.
-
-Есть намерение, но детали ещё не обязательно согласованы?
-
-→ BE GOING TO
-
-I'm going to look for a new job.
-
-Шаг 3.
-
-Есть конкретная договорённость?
-
-→ Present Continuous
-
-I'm meeting the manager at eleven.
-
-Шаг 4.
-
-Это официальное расписание?
-
-→ Present Simple
-
-The meeting starts at eleven.""",
+личный arrangement
+→ Present Continuous.""",
             },
 
         ]
 
+
+        section_objects = {}
+
+
         for data in sections:
-            GrammarLessonSection.objects.update_or_create(
+
+            section, _ = GrammarLessonSection.objects.update_or_create(
                 lesson=lesson,
                 order=data["order"],
                 defaults={
@@ -462,335 +281,592 @@ The meeting starts at eleven.""",
                 },
             )
 
-        exercises = [
+            section_objects[data["order"]] = section
 
+
+        # =================================================
+        # 20 TRAINING EXERCISES
+        # =================================================
+
+        training = [
+
+            # SECTION 1
             {
                 "order": 1,
-                "prompt": "We ___ having dinner with friends tonight.",
-                "options": ["am", "is", "are", "do"],
-                "answer": "are",
-                "explanation": "We используется с are.",
+                "section": 1,
+                "type": "choice",
+                "prompt":
+                    "We ___ having dinner with friends tonight.",
+                "options": [
+                    "are",
+                    "is",
+                    "am",
+                    "do",
+                ],
+                "answer":
+                    "are",
+                "explanation":
+                    "WE → ARE + verb-ing.",
             },
 
             {
                 "order": 2,
-                "prompt": "My sister ___ flying to Astana tomorrow.",
-                "options": ["am", "is", "are", "does"],
-                "answer": "is",
-                "explanation": "My sister = she, поэтому is.",
+                "section": 1,
+                "type": "choice",
+                "prompt":
+                    "My sister ___ flying to Astana tomorrow.",
+                "options": [
+                    "is",
+                    "am",
+                    "are",
+                    "does",
+                ],
+                "answer":
+                    "is",
+                "explanation":
+                    "MY SISTER = SHE → IS.",
             },
 
+
+            # SECTION 2
             {
                 "order": 3,
-                "prompt": "I am ___ the manager at ten.",
-                "options": ["meet", "met", "meeting", "meets"],
-                "answer": "meeting",
-                "explanation": "Present Continuous: am + verb-ing.",
+                "section": 2,
+                "type": "build",
+                "prompt":
+                    "Собери предложение о будущем.",
+                "options": [
+                    "I",
+                    "am",
+                    "meeting",
+                    "him",
+                    "tomorrow",
+                ],
+                "answer":
+                    "I am meeting him tomorrow",
+                "explanation":
+                    "AM + MEETING + future time.",
             },
 
             {
                 "order": 4,
-                "prompt": "They aren't ___ with us tomorrow.",
-                "options": ["come", "came", "coming", "comes"],
-                "answer": "coming",
-                "explanation": "После are not используется verb-ing.",
+                "section": 2,
+                "type": "choice",
+                "prompt":
+                    "They are ___ on Monday.",
+                "options": [
+                    "leaving",
+                    "leave",
+                    "left",
+                    "leaves",
+                ],
+                "answer":
+                    "leaving",
+                "explanation":
+                    "Present Continuous = ARE + verb-ing.",
             },
 
+
+            # SECTION 3
             {
                 "order": 5,
-                "prompt": "___ he working this weekend?",
-                "options": ["Does", "Is", "Will does", "Did"],
-                "answer": "Is",
-                "explanation": "Вопрос Present Continuous начинается с Is.",
+                "section": 3,
+                "type": "choice",
+                "prompt":
+                    "The meeting is confirmed. I ___ Marat at six.",
+                "options": [
+                    "am meeting",
+                    "meet every day",
+                    "will meeting",
+                    "am meet",
+                ],
+                "answer":
+                    "am meeting",
+                "explanation":
+                    "Конкретная договорённость → Present Continuous.",
             },
 
             {
                 "order": 6,
-                "prompt": "Are you meeting Marat?",
+                "section": 3,
+                "type": "choice",
+                "prompt":
+                    "We have a reservation. We ___ dinner at eight.",
                 "options": [
-                    "Yes, I am.",
-                    "Yes, I do.",
-                    "Yes, I will be.",
-                    "Yes, I have.",
+                    "are having",
+                    "have every day",
+                    "will having",
+                    "are have",
                 ],
-                "answer": "Yes, I am.",
-                "explanation": "Краткий ответ повторяет форму am.",
+                "answer":
+                    "are having",
+                "explanation":
+                    "Есть организованный план.",
             },
 
+
+            # SECTION 4
             {
                 "order": 7,
-                "prompt": "Where ___ she staying?",
-                "options": ["does", "is", "will", "has"],
-                "answer": "is",
-                "explanation": "Where is she staying?",
+                "section": 4,
+                "type": "choice",
+                "prompt":
+                    "I have an appointment. I ___ the doctor tomorrow.",
+                "options": [
+                    "am seeing",
+                    "see every day",
+                    "will see suddenly",
+                    "am see",
+                ],
+                "answer":
+                    "am seeing",
+                "explanation":
+                    "Назначенная встреча → Present Continuous.",
             },
 
             {
                 "order": 8,
-                "prompt": "When ___ they leaving?",
-                "options": ["are", "do", "will do", "did"],
-                "answer": "are",
-                "explanation": "When are they leaving?",
+                "section": 4,
+                "type": "choice",
+                "prompt":
+                    "She ___ the dentist at ten on Friday.",
+                "options": [
+                    "is seeing",
+                    "sees every day",
+                    "will seeing",
+                    "is see",
+                ],
+                "answer":
+                    "is seeing",
+                "explanation":
+                    "Есть конкретное назначенное время.",
             },
 
+
+            # SECTION 5
             {
                 "order": 9,
-                "prompt": "Who ___ coming tonight?",
-                "options": ["are", "is", "does", "will be to"],
-                "answer": "is",
-                "explanation": "Who как подлежащее обычно используется с is.",
+                "section": 5,
+                "type": "choice",
+                "prompt":
+                    "We bought the tickets. We ___ to Almaty tomorrow.",
+                "options": [
+                    "are flying",
+                    "fly every day",
+                    "will flying",
+                    "are fly",
+                ],
+                "answer":
+                    "are flying",
+                "explanation":
+                    "Поездка уже организована.",
             },
 
             {
                 "order": 10,
-                "prompt": (
-                    "I have an appointment. "
-                    "I ___ the doctor tomorrow."
-                ),
+                "section": 5,
+                "type": "choice",
+                "prompt":
+                    "Their flight is booked. They ___ at nine.",
                 "options": [
-                    "will see suddenly",
-                    "am seeing",
-                    "see every day",
-                    "am see",
+                    "are leaving",
+                    "leave every morning",
+                    "will leaving",
+                    "are leave",
                 ],
-                "answer": "am seeing",
-                "explanation": "Назначенная встреча → Present Continuous.",
+                "answer":
+                    "are leaving",
+                "explanation":
+                    "Есть конкретный организованный план.",
             },
 
+
+            # SECTION 6
             {
                 "order": 11,
-                "prompt": "The train ___ at seven.",
+                "section": 6,
+                "type": "choice",
+                "prompt":
+                    "She ___ coming tonight.",
                 "options": [
-                    "is leaving every day",
-                    "leaves",
-                    "leave",
-                    "will leaving",
+                    "isn't",
+                    "doesn't",
+                    "won't be to",
+                    "not is",
                 ],
-                "answer": "leaves",
-                "explanation": "Расписание → Present Simple.",
+                "answer":
+                    "isn't",
+                "explanation":
+                    "Отрицание Present Continuous → ISN'T + verb-ing.",
             },
 
             {
                 "order": 12,
-                "prompt": (
-                    "We ___ the seven o'clock train tomorrow."
-                ),
+                "section": 6,
+                "type": "choice",
+                "prompt":
+                    "Choose the correct negative sentence.",
                 "options": [
-                    "take every day",
-                    "are taking",
-                    "will to take",
-                    "taking",
+                    "We aren't working tomorrow.",
+                    "We don't working tomorrow.",
+                    "We aren't work tomorrow.",
+                    "We won't working tomorrow.",
                 ],
-                "answer": "are taking",
-                "explanation": "Личный организованный план → Present Continuous.",
+                "answer":
+                    "We aren't working tomorrow.",
+                "explanation":
+                    "ARE NOT + WORKING.",
             },
 
+
+            # SECTION 7
             {
                 "order": 13,
-                "prompt": "The phone is ringing. I ___ answer it.",
+                "section": 7,
+                "type": "choice",
+                "prompt":
+                    "___ you meeting the manager tomorrow?",
                 "options": [
-                    "am answering tomorrow",
-                    "will",
-                    "am going every day",
-                    "do",
+                    "Are",
+                    "Do",
+                    "Will",
+                    "Did",
                 ],
-                "answer": "will",
-                "explanation": "Спонтанное решение → will.",
+                "answer":
+                    "Are",
+                "explanation":
+                    "Вопрос начинается с ARE.",
             },
 
             {
                 "order": 14,
-                "prompt": (
-                    "I have decided to study abroad. "
-                    "I ___ apply next year."
-                ),
+                "section": 7,
+                "type": "choice",
+                "prompt":
+                    "Is Anna coming tonight?",
                 "options": [
-                    "am going to",
-                    "will suddenly",
-                    "am applying at this second only",
-                    "do",
+                    "Yes, she is.",
+                    "Yes, she does.",
+                    "Yes, she will be.",
+                    "Yes, she has.",
                 ],
-                "answer": "am going to",
-                "explanation": "Намерение, принятое заранее → be going to.",
+                "answer":
+                    "Yes, she is.",
+                "explanation":
+                    "Краткий ответ повторяет IS.",
             },
 
+
+            # SECTION 8
             {
                 "order": 15,
-                "prompt": (
-                    "The appointment is confirmed. "
-                    "I ___ the director at three."
-                ),
+                "section": 8,
+                "type": "choice",
+                "prompt":
+                    "I intend to visit the doctor next week, but no appointment is fixed yet.",
                 "options": [
-                    "am meeting",
-                    "will meet suddenly",
-                    "meet every day",
-                    "am going meet",
+                    "I'm going to visit the doctor.",
+                    "I'm seeing the doctor at ten.",
+                    "I saw the doctor.",
+                    "I'll seeing the doctor.",
                 ],
-                "answer": "am meeting",
-                "explanation": "Подтверждённая встреча → Present Continuous.",
+                "answer":
+                    "I'm going to visit the doctor.",
+                "explanation":
+                    "Есть намерение, но нет конкретной договорённости.",
             },
 
             {
                 "order": 16,
-                "prompt": "Choose the correct sentence.",
+                "section": 8,
+                "type": "choice",
+                "prompt":
+                    "The appointment is at 10:00 on Tuesday.",
                 "options": [
-                    "I meeting him tomorrow.",
-                    "I am meeting him tomorrow.",
-                    "I am meet him tomorrow.",
-                    "I do meeting him tomorrow.",
+                    "I'm seeing the doctor on Tuesday at ten.",
+                    "I'm going to see the doctor sometime.",
+                    "I will seeing the doctor.",
+                    "I see the doctor yesterday.",
                 ],
-                "answer": "I am meeting him tomorrow.",
-                "explanation": "Нужна форма am + verb-ing.",
+                "answer":
+                    "I'm seeing the doctor on Tuesday at ten.",
+                "explanation":
+                    "Конкретная договорённость → Present Continuous.",
             },
 
+
+            # SECTION 9
             {
                 "order": 17,
-                "prompt": "Choose the correct sentence.",
+                "section": 9,
+                "type": "choice",
+                "prompt":
+                    "The phone is ringing. I ___ it.",
                 "options": [
-                    "She are coming tonight.",
-                    "She is coming tonight.",
-                    "She is come tonight.",
-                    "She does coming tonight.",
+                    "will answer",
+                    "am answering tomorrow",
+                    "will answered",
+                    "am answer",
                 ],
-                "answer": "She is coming tonight.",
-                "explanation": "She → is + coming.",
+                "answer":
+                    "will answer",
+                "explanation":
+                    "Спонтанное решение → WILL.",
             },
 
             {
                 "order": 18,
-                "prompt": "Choose the correct question.",
+                "section": 9,
+                "type": "choice",
+                "prompt":
+                    "The call is scheduled for six. I ___ her at six.",
                 "options": [
-                    "Do you meeting him tomorrow?",
-                    "Are you meeting him tomorrow?",
-                    "Will you meeting him tomorrow?",
-                    "Are you meet him tomorrow?",
+                    "am calling",
+                    "will call suddenly",
+                    "call every day",
+                    "am call",
                 ],
-                "answer": "Are you meeting him tomorrow?",
-                "explanation": "Вопрос Present Continuous: Are + subject + verb-ing?",
+                "answer":
+                    "am calling",
+                "explanation":
+                    "Заранее организованное действие → Present Continuous.",
             },
 
+
+            # SECTION 10
             {
                 "order": 19,
-                "prompt": "Which sentence shows a concrete arrangement?",
+                "section": 10,
+                "type": "choice",
+                "prompt":
+                    "The train ___ at 7:30.",
                 "options": [
-                    "I'm going to meet Marat sometime soon.",
-                    "I'm meeting Marat at six tomorrow.",
-                    "I think I will meet Marat one day.",
-                    "I meet Marat every Friday.",
+                    "leaves",
+                    "is leave",
+                    "will leaving",
+                    "leaving",
                 ],
-                "answer": "I'm meeting Marat at six tomorrow.",
-                "explanation": "Есть конкретное время и договорённость.",
+                "answer":
+                    "leaves",
+                "explanation":
+                    "Официальное расписание → Present Simple.",
             },
 
             {
                 "order": 20,
-                "prompt": "Which sentence shows a general intention?",
+                "section": 10,
+                "type": "choice",
+                "prompt":
+                    "We have tickets for the 7:30 train. We ___ it tomorrow.",
                 "options": [
-                    "I'm meeting the manager at eleven.",
-                    "I'm going to look for a new job.",
-                    "The meeting starts at eleven.",
-                    "I'll answer the phone now.",
+                    "are taking",
+                    "take every day",
+                    "will taking",
+                    "are take",
                 ],
-                "answer": "I'm going to look for a new job.",
-                "explanation": "Намерение без конкретной договорённости → be going to.",
-            },
-
-            {
-                "order": 21,
-                "prompt": "Which sentence describes an official timetable?",
-                "options": [
-                    "We're leaving at six.",
-                    "The train leaves at six.",
-                    "We're going to leave sometime.",
-                    "We'll leave because I just decided.",
-                ],
-                "answer": "The train leaves at six.",
-                "explanation": "Официальное расписание → Present Simple.",
-            },
-
-            {
-                "order": 22,
-                "prompt": "Choose the correct negative sentence.",
-                "options": [
-                    "She doesn't coming tonight.",
-                    "She isn't coming tonight.",
-                    "She won't coming tonight.",
-                    "She not is come tonight.",
-                ],
-                "answer": "She isn't coming tonight.",
-                "explanation": "Present Continuous negative: is not + verb-ing.",
-            },
-
-            {
-                "order": 23,
-                "prompt": "Choose the best future-form pair.",
-                "options": [
-                    (
-                        "I'll answer the phone. / "
-                        "I'm meeting the manager at eleven."
-                    ),
-                    (
-                        "I'm answering suddenly the phone tomorrow. / "
-                        "I meet manager at eleven arrangement."
-                    ),
-                    (
-                        "I will answering the phone. / "
-                        "I'm meet the manager."
-                    ),
-                    (
-                        "I answer will the phone. / "
-                        "I am going meeting manager."
-                    ),
-                ],
-                "answer": (
-                    "I'll answer the phone. / "
-                    "I'm meeting the manager at eleven."
-                ),
-                "explanation": (
-                    "Will → решение сейчас; "
-                    "Present Continuous → конкретная договорённость."
-                ),
-            },
-
-            {
-                "order": 24,
-                "prompt": "Choose the fully correct comparison.",
-                "options": [
-                    (
-                        "I'm going to visit the doctor next week. / "
-                        "I'm seeing the doctor on Tuesday at ten."
-                    ),
-                    (
-                        "I'm going visit the doctor. / "
-                        "I'm see the doctor at ten."
-                    ),
-                    (
-                        "I will going to visit the doctor. / "
-                        "I'm seeing to doctor."
-                    ),
-                    (
-                        "I'm going to visiting the doctor. / "
-                        "I am see the doctor."
-                    ),
-                ],
-                "answer": (
-                    "I'm going to visit the doctor next week. / "
-                    "I'm seeing the doctor on Tuesday at ten."
-                ),
-                "explanation": (
-                    "Going to → намерение; "
-                    "Present Continuous → назначенная встреча."
-                ),
+                "answer":
+                    "are taking",
+                "explanation":
+                    "Это наш организованный план.",
             },
 
         ]
 
-        for data in exercises:
+
+        # =================================================
+        # FINAL TEST — 10 NEW QUESTIONS
+        # =================================================
+
+        final_test = [
+
+            {
+                "order": 21,
+                "prompt":
+                    "I ___ my supervisor tomorrow at eleven.",
+                "options": [
+                    "am meeting",
+                    "meet every day",
+                    "will meeting",
+                    "am meet",
+                ],
+                "answer":
+                    "am meeting",
+                "explanation":
+                    "Есть конкретная будущая договорённость.",
+            },
+
+            {
+                "order": 22,
+                "prompt":
+                    "They ___ to Dubai on Saturday. The tickets are booked.",
+                "options": [
+                    "are flying",
+                    "fly every Saturday",
+                    "will flying",
+                    "are fly",
+                ],
+                "answer":
+                    "are flying",
+                "explanation":
+                    "Организованная поездка → Present Continuous.",
+            },
+
+            {
+                "order": 23,
+                "prompt":
+                    "Choose the correct negative sentence.",
+                "options": [
+                    "He isn't working tomorrow.",
+                    "He doesn't working tomorrow.",
+                    "He isn't work tomorrow.",
+                    "He won't working tomorrow.",
+                ],
+                "answer":
+                    "He isn't working tomorrow.",
+                "explanation":
+                    "IS NOT + verb-ing.",
+            },
+
+            {
+                "order": 24,
+                "prompt":
+                    "Choose the correct question.",
+                "options": [
+                    "Are you seeing the dentist tomorrow?",
+                    "Do you seeing the dentist tomorrow?",
+                    "Will you seeing the dentist tomorrow?",
+                    "Are you see the dentist tomorrow?",
+                ],
+                "answer":
+                    "Are you seeing the dentist tomorrow?",
+                "explanation":
+                    "ARE + subject + verb-ing?",
+            },
+
+            {
+                "order": 25,
+                "prompt":
+                    "Which sentence shows a concrete arrangement?",
+                "options": [
+                    "I'm meeting Aida at five tomorrow.",
+                    "I'm going to meet Aida sometime.",
+                    "I think I will meet Aida one day.",
+                    "I meet Aida every Friday.",
+                ],
+                "answer":
+                    "I'm meeting Aida at five tomorrow.",
+                "explanation":
+                    "Конкретное время и договорённость → Present Continuous.",
+            },
+
+            {
+                "order": 26,
+                "prompt":
+                    "Which sentence shows a general intention?",
+                "options": [
+                    "I'm going to look for a new apartment.",
+                    "I'm meeting the landlord at three.",
+                    "The office opens at nine.",
+                    "I'll answer the phone.",
+                ],
+                "answer":
+                    "I'm going to look for a new apartment.",
+                "explanation":
+                    "Общее намерение → BE GOING TO.",
+            },
+
+            {
+                "order": 27,
+                "prompt":
+                    "Which sentence describes an official timetable?",
+                "options": [
+                    "The plane arrives at 18:20.",
+                    "We are arriving at the hotel at 19:00.",
+                    "I'm going to travel next month.",
+                    "I'll travel if I have time.",
+                ],
+                "answer":
+                    "The plane arrives at 18:20.",
+                "explanation":
+                    "Официальное расписание → Present Simple.",
+            },
+
+            {
+                "order": 28,
+                "prompt":
+                    "The decision is made right now. Which is best?",
+                "options": [
+                    "I'll carry your bag.",
+                    "I'm carrying your bag tomorrow at five.",
+                    "I carry your bag every day.",
+                    "I am going carrying your bag.",
+                ],
+                "answer":
+                    "I'll carry your bag.",
+                "explanation":
+                    "Решение в момент речи → WILL.",
+            },
+
+            {
+                "order": 29,
+                "prompt":
+                    "Choose the correct comparison.",
+                "options": [
+                    "I'm going to visit him next week. / I'm meeting him on Tuesday at four.",
+                    "I'm going visit him. / I'm meet him at four.",
+                    "I will going to visit him. / I'm meeting to him.",
+                    "I'm going to visiting him. / I meeting him.",
+                ],
+                "answer":
+                    "I'm going to visit him next week. / I'm meeting him on Tuesday at four.",
+                "explanation":
+                    "GOING TO → намерение; Present Continuous → конкретная договорённость.",
+            },
+
+            {
+                "order": 30,
+                "prompt":
+                    "Choose the fully correct pair.",
+                "options": [
+                    "The train leaves at six. / We are taking the six o'clock train.",
+                    "The train is leave at six. / We taking the train.",
+                    "The train will leaving at six. / We are take the train.",
+                    "The train leaving at six. / We will taking it.",
+                ],
+                "answer":
+                    "The train leaves at six. / We are taking the six o'clock train.",
+                "explanation":
+                    "Расписание → Present Simple; личный организованный план → Present Continuous.",
+            },
+
+        ]
+
+
+        all_exercises = training + final_test
+
+        valid_orders = [
+            item["order"]
+            for item in all_exercises
+        ]
+
+
+        for data in all_exercises:
+
+            if data["order"] <= 20:
+                section = section_objects[data["section"]]
+            else:
+                section = None
+
+
             GrammarExercise.objects.update_or_create(
                 lesson=lesson,
                 order=data["order"],
                 defaults={
-                    "exercise_type": GrammarExercise.Type.CHOICE,
+                    "section": section,
+                    "exercise_type": data.get(
+                        "type",
+                        "choice",
+                    ),
                     "prompt": data["prompt"],
                     "options": data["options"],
                     "correct_answer": data["answer"],
@@ -799,17 +875,40 @@ The meeting starts at eleven.""",
                 },
             )
 
+
+        GrammarExercise.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__in=valid_orders,
+        ).delete()
+
+
+        GrammarLessonSection.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__in=[
+                item["order"]
+                for item in sections
+            ],
+        ).delete()
+
+
         self.stdout.write(
             self.style.SUCCESS(
-                "✅ A1 Lesson 38 seeded: "
-                "Present Continuous for future"
+                "✅ Interactive A1 Lesson 38 seeded"
             )
         )
 
         self.stdout.write(
-            f"Sections: {lesson.sections.count()}"
+            f"Micro rules: {lesson.sections.count()}"
         )
 
         self.stdout.write(
-            f"Exercises: {lesson.exercises.count()}"
+            "Training exercises: "
+            f"{lesson.exercises.filter(section__isnull=False).count()}"
+        )
+
+        self.stdout.write(
+            "Final test: "
+            f"{lesson.exercises.filter(section__isnull=True).count()}"
         )

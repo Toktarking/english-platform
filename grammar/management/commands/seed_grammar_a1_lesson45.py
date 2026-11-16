@@ -10,9 +10,10 @@ from grammar.models import (
 class Command(BaseCommand):
 
     help = (
-        "Create/update A1 Grammar Lesson 45: "
-        "Adjectives ending in -ED and -ING."
+        "Create/update interactive A1 Grammar "
+        "Lesson 45: -ED and -ING adjectives."
     )
+
 
     def handle(self, *args, **options):
 
@@ -20,184 +21,162 @@ class Command(BaseCommand):
             level="A1",
             order=45,
             defaults={
-                "title": "Прилагательные на -ED и -ING",
-                "slug": "adjectives-ed-ing",
-                "theory_text": "Adjectives ending in -ED and -ING.",
-                "estimated_minutes": 40,
-                "pass_score": 70,
-                "xp_reward": 100,
-                "is_published": True,
+                "title":
+                    "Прилагательные на -ED и -ING",
+
+                "slug":
+                    "adjectives-ed-ing",
+
+                "theory_text":
+                    "Adjectives ending in -ED and -ING.",
+
+                "estimated_minutes":
+                    20,
+
+                "pass_score":
+                    70,
+
+                "xp_reward":
+                    100,
+
+                "is_published":
+                    True,
             },
         )
+
+
+        # =================================================
+        # 10 MICRO RULES
+        # =================================================
 
         sections = [
 
             {
                 "order": 1,
-                "title": "Главное различие",
-                "body": """В английском есть пары прилагательных:
+                "title":
+                    "-ED или -ING?",
 
-bored / boring
+                "body":
+                    """Главное правило:
 
-interested / interesting
+-ED описывает чувство.
 
-tired / tiring
+I am bored.
 
-excited / exciting
+She is interested.
 
-surprised / surprising
+They are excited.
 
-confused / confusing
+-ING описывает то,
+что вызывает чувство.
 
-Главное правило:
+The film is boring.
 
--ED описывает того, кто испытывает чувство.
+The book is interesting.
 
--ING описывает человека, предмет или ситуацию, которые вызывают это чувство.""",
+The trip is exciting.""",
             },
+
 
             {
                 "order": 2,
-                "title": "Форма на -ED",
-                "body": """Прилагательное на -ED показывает состояние или чувство.
+                "title":
+                    "BORED и BORING",
 
-Примеры:
+                "body":
+                    """BORED:
 
-I am bored.
-— Мне скучно.
-
-She is interested.
-— Она заинтересована.
-
-They are tired.
-— Они устали.
-
-He was surprised.
-— Он был удивлён.
-
-Главный вопрос:
-
-Что человек чувствует?
-
-Если описывается чувство, часто нужна форма на -ED.""",
-            },
-
-            {
-                "order": 3,
-                "title": "Форма на -ING",
-                "body": """Прилагательное на -ING показывает причину чувства.
-
-Примеры:
-
-The lesson is boring.
-— Урок скучный.
-
-The book is interesting.
-— Книга интересная.
-
-The journey was tiring.
-— Поездка была утомительной.
-
-The news was surprising.
-— Новость была удивительной.
-
-Главный вопрос:
-
-Что вызывает это чувство?
-
-Если что-то вызывает эмоцию, часто нужна форма на -ING.""",
-            },
-
-            {
-                "order": 4,
-                "title": "BORED и BORING",
-                "body": """BORED:
-
-испытывающий скуку.
+человеку скучно.
 
 I am bored.
 
-The children were bored.
+The children are bored.
 
 BORING:
 
-вызывающий скуку.
-
-The lesson is boring.
-
-It was a boring film.
-
-Сравните:
-
-I am bored.
-— Мне скучно.
+что-то вызывает скуку.
 
 The film is boring.
-— Фильм скучный.""",
+
+The lesson was boring.
+
+Коротко:
+
+bored → чувство
+
+boring → причина.""",
             },
 
-            {
-                "order": 5,
-                "title": "INTERESTED и INTERESTING",
-                "body": """INTERESTED:
 
-заинтересованный.
+            {
+                "order": 3,
+                "title":
+                    "INTERESTED и INTERESTING",
+
+                "body":
+                    """INTERESTED:
+
+человек испытывает интерес.
 
 I am interested in history.
 
-She is interested in learning English.
+She is interested in English.
 
 INTERESTING:
 
-интересный, вызывающий интерес.
+что-то вызывает интерес.
 
-This book is interesting.
+The book is interesting.
 
-It was an interesting discussion.
+It was an interesting lesson.
 
-Сравните:
+Запомни:
 
-I am interested in the book.
-
-The book is interesting.""",
+interested IN.""",
             },
 
-            {
-                "order": 6,
-                "title": "TIRED и TIRING",
-                "body": """TIRED:
 
-уставший.
+            {
+                "order": 4,
+                "title":
+                    "TIRED и TIRING",
+
+                "body":
+                    """TIRED:
+
+человек устал.
 
 I am tired.
 
 She looks tired.
 
-They were tired after work.
-
 TIRING:
 
-утомительный.
+что-то утомляет.
 
-The work is tiring.
+The journey was tiring.
 
-It was a tiring journey.
+This job is tiring.
 
-Сравните:
+Сравни:
 
-I am tired after the journey.
+I am tired.
 
-The journey was tiring.""",
+The work is tiring.""",
             },
 
+
             {
-                "order": 7,
-                "title": "EXCITED и SURPRISED",
-                "body": """EXCITED:
+                "order": 5,
+                "title":
+                    "EXCITED и EXCITING",
 
-человек испытывает волнение.
+                "body":
+                    """EXCITED:
 
-I am excited about the trip.
+человек чувствует волнение.
+
+We are excited about the trip.
 
 The children are excited.
 
@@ -207,694 +186,842 @@ EXCITING:
 
 The trip is exciting.
 
-It was an exciting match.
+It was an exciting game.
 
-SURPRISED:
+Запомни:
 
-I was surprised by the news.
+excited ABOUT.""",
+            },
+
+
+            {
+                "order": 6,
+                "title":
+                    "SURPRISED и SURPRISING",
+
+                "body":
+                    """SURPRISED:
+
+человек удивлён.
+
+I was surprised.
+
+She was surprised by the news.
 
 SURPRISING:
 
-The news was surprising.""",
+что-то удивляет.
+
+The result was surprising.
+
+The news was surprising.
+
+-ED → чувство
+
+-ING → причина.""",
             },
 
-            {
-                "order": 8,
-                "title": "CONFUSED и WORRIED",
-                "body": """CONFUSED:
 
-человек запутался.
+            {
+                "order": 7,
+                "title":
+                    "CONFUSED и CONFUSING",
+
+                "body":
+                    """CONFUSED:
+
+человек не понимает.
 
 The students are confused.
 
+I am confused.
+
 CONFUSING:
 
-что-то сбивает с толку.
+что-то трудно понять.
 
 The instructions are confusing.
 
-WORRIED:
+This question is confusing.
 
-человек обеспокоен.
+Сравни:
+
+I am confused.
+
+The question is confusing.""",
+            },
+
+
+            {
+                "order": 8,
+                "title":
+                    "WORRIED и WORRYING",
+
+                "body":
+                    """WORRIED:
+
+человек беспокоится.
 
 I am worried about the exam.
 
+She is worried about her son.
+
 WORRYING:
 
-ситуация вызывает беспокойство.
+что-то вызывает беспокойство.
 
-The results are worrying.""",
+The results are worrying.
+
+The situation is worrying.
+
+Запомни:
+
+worried ABOUT.""",
             },
+
 
             {
                 "order": 9,
-                "title": "FRIGHTENED, ANNOYED, DISAPPOINTED",
-                "body": """FRIGHTENED:
+                "title":
+                    "Люди тоже могут быть -ING",
 
-The child was frightened.
+                "body":
+                    """Человек может сам испытывать чувство:
 
-FRIGHTENING:
+He is bored.
 
-The noise was frightening.
+→ ему скучно.
 
-ANNOYED:
+Но человек может
+вызывать чувство у других:
 
-She is annoyed with him.
+He is boring.
 
-ANNOYING:
+→ он скучный.
 
-His behaviour is annoying.
+Сравни:
 
-DISAPPOINTED:
+The teacher is interested.
 
-I was disappointed with the result.
+→ учителю интересно.
 
-DISAPPOINTING:
+The teacher is interesting.
 
-The result was disappointing.""",
+→ учитель интересный.""",
             },
+
 
             {
                 "order": 10,
-                "title": "EMBARRASSED, AMAZED, RELAXED",
-                "body": """EMBARRASSED:
+                "title":
+                    "Как быстро выбрать",
 
-I felt embarrassed.
+                "body":
+                    """Задай вопрос:
 
-EMBARRASSING:
+КТО ЧУВСТВУЕТ?
 
-It was an embarrassing mistake.
-
-AMAZED:
-
-I was amazed by the view.
-
-AMAZING:
-
-The view was amazing.
-
-RELAXED:
-
-I feel relaxed.
-
-RELAXING:
-
-The music is relaxing.""",
-            },
-
-            {
-                "order": 11,
-                "title": "Не только люди могут быть на -ED",
-                "body": """Форма на -ED описывает того, кто способен испытывать чувство.
-
-Это может быть:
-
-человек;
-
-группа людей;
-
-животное.
-
-Примеры:
-
-The audience was excited.
-
-The team was disappointed.
-
-The dog was frightened.
-
-The children were bored.
-
-Главное — не слово «человек», а способность испытывать эмоцию.""",
-            },
-
-            {
-                "order": 12,
-                "title": "Люди тоже могут быть на -ING",
-                "body": """Человек может не только испытывать эмоцию, но и вызывать её у других.
-
-Сравните:
-
-He is bored.
-— Ему скучно.
-
-He is boring.
-— Он скучный.
-
-The teacher is interested.
-— Учитель сам заинтересован.
-
-The teacher is interesting.
-— Учитель интересный.
-
-She is annoyed.
-— Она раздражена.
-
-She is annoying.
-— Она раздражает других.""",
-            },
-
-            {
-                "order": 13,
-                "title": "Предлоги после -ED форм",
-                "body": """Частые конструкции:
-
-interested in
-
-I am interested in history.
-
-excited about
-
-She is excited about the trip.
-
-worried about
-
-He is worried about the exam.
-
-frightened of
-
-I am frightened of dogs.
-
-disappointed with / by / in
-
-I am disappointed with the service.
-
-surprised at / by
-
-She was surprised by his answer.""",
-            },
-
-            {
-                "order": 14,
-                "title": "Как выбрать -ED или -ING",
-                "body": """Задайте два вопроса.
-
-1. Кто испытывает чувство?
-
-Используйте -ED.
+→ -ED
 
 I am tired.
 
-She is interested.
+She is surprised.
 
-They are confused.
+They are excited.
 
-2. Кто или что вызывает чувство?
+ЧТО ВЫЗЫВАЕТ ЧУВСТВО?
 
-Используйте -ING.
+→ -ING
 
 The work is tiring.
 
-The book is interesting.
+The result is surprising.
 
-The instructions are confusing.
+The trip is exciting.
 
-Главное правило:
+Главное:
 
--ED = чувство
+-ED = feeling
 
--ING = причина чувства""",
+-ING = cause.""",
             },
 
         ]
 
+
+        section_objects = {}
+
+
         for data in sections:
-            GrammarLessonSection.objects.update_or_create(
+
+            section, _ = GrammarLessonSection.objects.update_or_create(
                 lesson=lesson,
                 order=data["order"],
                 defaults={
-                    "title": data["title"],
-                    "body": data["body"],
+                    "title":
+                        data["title"],
+
+                    "body":
+                        data["body"],
                 },
             )
 
-        exercises = [
+            section_objects[
+                data["order"]
+            ] = section
 
+
+        # =================================================
+        # 20 TRAINING EXERCISES
+        # =================================================
+
+        training = [
+
+            # SECTION 1
             {
                 "order": 1,
-                "prompt": "The film was so ___ that I fell asleep.",
+                "section": 1,
+                "type": "choice",
+                "prompt":
+                    "I am ___. There is nothing to do.",
                 "options": [
                     "bored",
                     "boring",
                     "bore",
                     "boredom",
                 ],
-                "answer": "boring",
-                "explanation": (
-                    "Фильм вызывает скуку → boring."
-                ),
+                "answer":
+                    "bored",
+                "explanation":
+                    "Человек испытывает чувство → BORED.",
             },
 
             {
                 "order": 2,
-                "prompt": "The children were ___ during the lesson.",
+                "section": 1,
+                "type": "choice",
+                "prompt":
+                    "This film is very ___.",
                 "options": [
                     "boring",
                     "bored",
                     "bore",
-                    "boringly",
+                    "boredly",
                 ],
-                "answer": "bored",
-                "explanation": (
-                    "Дети испытывали скуку → bored."
-                ),
+                "answer":
+                    "boring",
+                "explanation":
+                    "Фильм вызывает чувство → BORING.",
             },
 
+
+            # SECTION 2
             {
                 "order": 3,
-                "prompt": "I am very ___ in learning English.",
+                "section": 2,
+                "type": "choice",
+                "prompt":
+                    "The children were ___ during the lecture.",
                 "options": [
-                    "interesting",
-                    "interested",
-                    "interest",
-                    "interestingly",
+                    "bored",
+                    "boring",
+                    "bore",
+                    "boringly",
                 ],
-                "answer": "interested",
-                "explanation": (
-                    "Человек испытывает интерес → interested in."
-                ),
+                "answer":
+                    "bored",
+                "explanation":
+                    "Дети чувствовали скуку → BORED.",
             },
 
             {
                 "order": 4,
-                "prompt": "This is an ___ topic.",
+                "section": 2,
+                "type": "choice",
+                "prompt":
+                    "It was a ___ meeting.",
+                "options": [
+                    "boring",
+                    "bored",
+                    "boredom",
+                    "bore",
+                ],
+                "answer":
+                    "boring",
+                "explanation":
+                    "Встреча вызывает скуку → BORING.",
+            },
+
+
+            # SECTION 3
+            {
+                "order": 5,
+                "section": 3,
+                "type": "choice",
+                "prompt":
+                    "She is ___ in science.",
                 "options": [
                     "interested",
                     "interesting",
                     "interest",
-                    "interestedly",
+                    "interestingly",
                 ],
-                "answer": "interesting",
-                "explanation": (
-                    "Тема вызывает интерес → interesting."
-                ),
-            },
-
-            {
-                "order": 5,
-                "prompt": "We felt ___ after the long meeting.",
-                "options": [
-                    "tiring",
-                    "tired",
-                    "tire",
-                    "tiredly",
-                ],
-                "answer": "tired",
-                "explanation": (
-                    "Мы испытывали усталость → tired."
-                ),
+                "answer":
+                    "interested",
+                "explanation":
+                    "INTERESTED IN = заинтересован в.",
             },
 
             {
                 "order": 6,
-                "prompt": "It was a very ___ meeting.",
+                "section": 3,
+                "type": "choice",
+                "prompt":
+                    "This article is very ___.",
+                "options": [
+                    "interesting",
+                    "interested",
+                    "interest",
+                    "interestedly",
+                ],
+                "answer":
+                    "interesting",
+                "explanation":
+                    "Статья вызывает интерес → INTERESTING.",
+            },
+
+
+            # SECTION 4
+            {
+                "order": 7,
+                "section": 4,
+                "type": "choice",
+                "prompt":
+                    "I feel ___ after work.",
                 "options": [
                     "tired",
                     "tiring",
                     "tire",
-                    "tiredness",
+                    "tiredly",
                 ],
-                "answer": "tiring",
-                "explanation": (
-                    "Встреча вызвала усталость → tiring."
-                ),
-            },
-
-            {
-                "order": 7,
-                "prompt": "She was ___ by the news.",
-                "options": [
-                    "surprising",
-                    "surprised",
-                    "surprise",
-                    "surprisingly only",
-                ],
-                "answer": "surprised",
-                "explanation": (
-                    "Она испытала удивление → surprised."
-                ),
+                "answer":
+                    "tired",
+                "explanation":
+                    "Человек чувствует усталость → TIRED.",
             },
 
             {
                 "order": 8,
-                "prompt": "The news was ___.",
+                "section": 4,
+                "type": "choice",
+                "prompt":
+                    "The journey was very ___.",
                 "options": [
-                    "surprised",
-                    "surprising",
-                    "surprise",
-                    "surprisedly",
+                    "tiring",
+                    "tired",
+                    "tire",
+                    "tiredness",
                 ],
-                "answer": "surprising",
-                "explanation": (
-                    "Новость вызвала удивление → surprising."
-                ),
+                "answer":
+                    "tiring",
+                "explanation":
+                    "Поездка вызывает усталость → TIRING.",
             },
 
+
+            # SECTION 5
             {
                 "order": 9,
-                "prompt": "The instructions were very ___.",
+                "section": 5,
+                "type": "choice",
+                "prompt":
+                    "We are ___ about our holiday.",
                 "options": [
-                    "confused",
-                    "confusing",
-                    "confusion",
-                    "confusingly as an adjective",
+                    "excited",
+                    "exciting",
+                    "excite",
+                    "excitedly",
                 ],
-                "answer": "confusing",
-                "explanation": (
-                    "Инструкции сбивают с толку → confusing."
-                ),
+                "answer":
+                    "excited",
+                "explanation":
+                    "Люди испытывают волнение → EXCITED.",
             },
 
             {
                 "order": 10,
-                "prompt": "The students looked ___.",
+                "section": 5,
+                "type": "choice",
+                "prompt":
+                    "The match was really ___.",
                 "options": [
-                    "confusing",
-                    "confused",
-                    "confusion",
-                    "confuse",
+                    "exciting",
+                    "excited",
+                    "excitement",
+                    "excitedly",
                 ],
-                "answer": "confused",
-                "explanation": (
-                    "Студенты испытывали растерянность → confused."
-                ),
+                "answer":
+                    "exciting",
+                "explanation":
+                    "Матч вызывает волнение → EXCITING.",
             },
 
+
+            # SECTION 6
             {
                 "order": 11,
-                "prompt": "I am ___ about the exam.",
+                "section": 6,
+                "type": "choice",
+                "prompt":
+                    "She was ___ by the result.",
                 "options": [
-                    "worrying",
-                    "worried",
-                    "worry",
-                    "worriedly",
+                    "surprised",
+                    "surprising",
+                    "surprise",
+                    "surprisingly",
                 ],
-                "answer": "worried",
-                "explanation": (
-                    "Человек обеспокоен → worried about."
-                ),
+                "answer":
+                    "surprised",
+                "explanation":
+                    "Она испытала удивление → SURPRISED.",
             },
 
             {
                 "order": 12,
-                "prompt": "The results are ___.",
+                "section": 6,
+                "type": "choice",
+                "prompt":
+                    "The result was ___.",
+                "options": [
+                    "surprising",
+                    "surprised",
+                    "surprise",
+                    "surprisedly",
+                ],
+                "answer":
+                    "surprising",
+                "explanation":
+                    "Результат вызывает удивление → SURPRISING.",
+            },
+
+
+            # SECTION 7
+            {
+                "order": 13,
+                "section": 7,
+                "type": "choice",
+                "prompt":
+                    "The students look ___.",
+                "options": [
+                    "confused",
+                    "confusing",
+                    "confusion",
+                    "confuse",
+                ],
+                "answer":
+                    "confused",
+                "explanation":
+                    "Студенты испытывают состояние → CONFUSED.",
+            },
+
+            {
+                "order": 14,
+                "section": 7,
+                "type": "choice",
+                "prompt":
+                    "These instructions are ___.",
+                "options": [
+                    "confusing",
+                    "confused",
+                    "confusion",
+                    "confusedly",
+                ],
+                "answer":
+                    "confusing",
+                "explanation":
+                    "Инструкции вызывают растерянность → CONFUSING.",
+            },
+
+
+            # SECTION 8
+            {
+                "order": 15,
+                "section": 8,
+                "type": "choice",
+                "prompt":
+                    "I am ___ about tomorrow's exam.",
                 "options": [
                     "worried",
                     "worrying",
                     "worry",
                     "worriedly",
                 ],
-                "answer": "worrying",
-                "explanation": (
-                    "Результаты вызывают беспокойство → worrying."
-                ),
-            },
-
-            {
-                "order": 13,
-                "prompt": "The child was ___ by the noise.",
-                "options": [
-                    "frightening",
-                    "frightened",
-                    "frighten",
-                    "frighteningly",
-                ],
-                "answer": "frightened",
-                "explanation": (
-                    "Ребёнок испытал страх → frightened."
-                ),
-            },
-
-            {
-                "order": 14,
-                "prompt": "The noise was ___.",
-                "options": [
-                    "frightened",
-                    "frightening",
-                    "frighten",
-                    "frightenedly",
-                ],
-                "answer": "frightening",
-                "explanation": (
-                    "Шум вызывает страх → frightening."
-                ),
-            },
-
-            {
-                "order": 15,
-                "prompt": "It was an ___ situation.",
-                "options": [
-                    "embarrassed",
-                    "embarrassing",
-                    "embarrassment",
-                    "embarrass",
-                ],
-                "answer": "embarrassing",
-                "explanation": (
-                    "Ситуация вызывает смущение → embarrassing."
-                ),
+                "answer":
+                    "worried",
+                "explanation":
+                    "WORRIED ABOUT = беспокоиться о.",
             },
 
             {
                 "order": 16,
-                "prompt": "Choose the correct sentence.",
+                "section": 8,
+                "type": "choice",
+                "prompt":
+                    "The latest results are ___.",
                 "options": [
-                    "I am boring because there is nothing to do.",
-                    "I am bored because there is nothing to do.",
-                    "I am bore because there is nothing to do.",
-                    "I am boredom because there is nothing to do.",
+                    "worrying",
+                    "worried",
+                    "worry",
+                    "worries",
                 ],
-                "answer": (
-                    "I am bored because there is nothing to do."
-                ),
-                "explanation": (
-                    "Если человеку скучно, используется bored."
-                ),
+                "answer":
+                    "worrying",
+                "explanation":
+                    "Результаты вызывают беспокойство → WORRYING.",
             },
 
+
+            # SECTION 9
             {
                 "order": 17,
-                "prompt": "Choose the correct sentence.",
+                "section": 9,
+                "type": "choice",
+                "prompt":
+                    "He is ___. Nobody enjoys his stories.",
                 "options": [
-                    "The film is bored.",
-                    "The film is boring.",
-                    "The film is bore.",
-                    "The film is boredom.",
+                    "boring",
+                    "bored",
+                    "bore",
+                    "boredom",
                 ],
-                "answer": "The film is boring.",
-                "explanation": (
-                    "Фильм вызывает скуку → boring."
-                ),
+                "answer":
+                    "boring",
+                "explanation":
+                    "Человек может быть BORING, если вызывает скуку.",
             },
 
             {
                 "order": 18,
-                "prompt": "Choose the correct sentence.",
+                "section": 9,
+                "type": "choice",
+                "prompt":
+                    "The teacher is ___. Her lessons are excellent.",
                 "options": [
-                    "I am interesting in history.",
-                    "I am interested in history.",
-                    "I am interested at history.",
-                    "I am interesting about history.",
+                    "interesting",
+                    "interested",
+                    "interest",
+                    "interestedly",
                 ],
-                "answer": "I am interested in history.",
-                "explanation": (
-                    "Правильная конструкция: interested in."
-                ),
+                "answer":
+                    "interesting",
+                "explanation":
+                    "Учитель вызывает интерес → INTERESTING.",
             },
 
+
+            # SECTION 10
             {
                 "order": 19,
-                "prompt": "Choose the correct pair.",
+                "section": 10,
+                "type": "choice",
+                "prompt":
+                    "Choose the correct pair.",
                 "options": [
-                    (
-                        "We are excited about the trip. / "
-                        "The trip is exciting."
-                    ),
-                    (
-                        "We are exciting about the trip. / "
-                        "The trip is excited."
-                    ),
-                    (
-                        "We are excitement about the trip. / "
-                        "The trip is excite."
-                    ),
-                    (
-                        "We are excited in the trip. / "
-                        "The trip is excitingly."
-                    ),
+                    "I am tired. / The work is tiring.",
+                    "I am tiring. / The work is tired.",
+                    "I am tiredly. / The work is tire.",
+                    "I am tire. / The work is tiredly.",
                 ],
-                "answer": (
-                    "We are excited about the trip. / "
-                    "The trip is exciting."
-                ),
-                "explanation": (
-                    "Люди чувствуют → excited; "
-                    "поездка вызывает чувство → exciting."
-                ),
+                "answer":
+                    "I am tired. / The work is tiring.",
+                "explanation":
+                    "-ED = feeling; -ING = cause.",
             },
 
             {
                 "order": 20,
-                "prompt": "Choose the correct pair.",
+                "section": 10,
+                "type": "choice",
+                "prompt":
+                    "Choose the correct pair.",
                 "options": [
-                    (
-                        "The students are confused. / "
-                        "The instructions are confusing."
-                    ),
-                    (
-                        "The students are confusing. / "
-                        "The instructions are confused."
-                    ),
-                    (
-                        "The students are confusion. / "
-                        "The instructions confuse adjective."
-                    ),
-                    (
-                        "The students confuseding. / "
-                        "The instructions are confusedly."
-                    ),
+                    "She is excited. / The trip is exciting.",
+                    "She is exciting. / The trip is excited.",
+                    "She is excitement. / The trip is excite.",
+                    "She is excitedly. / The trip is excitement.",
                 ],
-                "answer": (
-                    "The students are confused. / "
-                    "The instructions are confusing."
-                ),
-                "explanation": (
-                    "Студенты испытывают состояние; "
-                    "инструкции вызывают его."
-                ),
-            },
-
-            {
-                "order": 21,
-                "prompt": (
-                    "The teacher is ___. "
-                    "His lessons always keep us interested."
-                ),
-                "options": [
-                    "interested",
-                    "interesting",
-                    "interest",
-                    "interestingly person",
-                ],
-                "answer": "interesting",
-                "explanation": (
-                    "Учитель вызывает интерес у других → interesting."
-                ),
-            },
-
-            {
-                "order": 22,
-                "prompt": (
-                    "The teacher is ___ in new teaching methods."
-                ),
-                "options": [
-                    "interesting",
-                    "interested",
-                    "interestingly",
-                    "interest",
-                ],
-                "answer": "interested",
-                "explanation": (
-                    "Учитель сам испытывает интерес → interested in."
-                ),
-            },
-
-            {
-                "order": 23,
-                "prompt": "Choose the correct preposition pair.",
-                "options": [
-                    (
-                        "interested in English / "
-                        "worried about the exam"
-                    ),
-                    (
-                        "interested about English / "
-                        "worried in the exam"
-                    ),
-                    (
-                        "interested at English / "
-                        "worried of the exam"
-                    ),
-                    (
-                        "interested on English / "
-                        "worried with exam"
-                    ),
-                ],
-                "answer": (
-                    "interested in English / "
-                    "worried about the exam"
-                ),
-                "explanation": (
-                    "Правильные сочетания: interested in, worried about."
-                ),
-            },
-
-            {
-                "order": 24,
-                "prompt": "Choose the fully correct sequence.",
-                "options": [
-                    (
-                        "bored → feeling / "
-                        "boring → cause / "
-                        "interested → feeling / "
-                        "interesting → cause"
-                    ),
-                    (
-                        "bored → cause / "
-                        "boring → feeling / "
-                        "interested → cause / "
-                        "interesting → feeling"
-                    ),
-                    (
-                        "bored → action / "
-                        "boring → person only / "
-                        "interested → verb only / "
-                        "interesting → tense"
-                    ),
-                    (
-                        "bored → future / "
-                        "boring → past / "
-                        "interested → present / "
-                        "interesting → continuous only"
-                    ),
-                ],
-                "answer": (
-                    "bored → feeling / "
-                    "boring → cause / "
-                    "interested → feeling / "
-                    "interesting → cause"
-                ),
-                "explanation": (
-                    "-ED = чувство; -ING = причина чувства."
-                ),
+                "answer":
+                    "She is excited. / The trip is exciting.",
+                "explanation":
+                    "Человек чувствует → EXCITED; причина → EXCITING.",
             },
 
         ]
 
-        for data in exercises:
+
+        # =================================================
+        # FINAL TEST — 10 NEW QUESTIONS
+        # =================================================
+
+        final_test = [
+
+            {
+                "order": 21,
+                "prompt":
+                    "I was ___ because the presentation lasted three hours.",
+                "options": [
+                    "bored",
+                    "boring",
+                    "bore",
+                    "boredom",
+                ],
+                "answer":
+                    "bored",
+                "explanation":
+                    "Человек испытывает скуку → BORED.",
+            },
+
+            {
+                "order": 22,
+                "prompt":
+                    "The presentation was extremely ___.",
+                "options": [
+                    "boring",
+                    "bored",
+                    "bore",
+                    "boredly",
+                ],
+                "answer":
+                    "boring",
+                "explanation":
+                    "Презентация вызывает скуку → BORING.",
+            },
+
+            {
+                "order": 23,
+                "prompt":
+                    "My brother is ___ in photography.",
+                "options": [
+                    "interested",
+                    "interesting",
+                    "interest",
+                    "interestingly",
+                ],
+                "answer":
+                    "interested",
+                "explanation":
+                    "INTERESTED IN.",
+            },
+
+            {
+                "order": 24,
+                "prompt":
+                    "It was an ___ documentary.",
+                "options": [
+                    "interesting",
+                    "interested",
+                    "interest",
+                    "interestedly",
+                ],
+                "answer":
+                    "interesting",
+                "explanation":
+                    "Документальный фильм вызывает интерес → INTERESTING.",
+            },
+
+            {
+                "order": 25,
+                "prompt":
+                    "After ten hours of driving, we were ___.",
+                "options": [
+                    "tired",
+                    "tiring",
+                    "tire",
+                    "tiredly",
+                ],
+                "answer":
+                    "tired",
+                "explanation":
+                    "Люди испытывают усталость → TIRED.",
+            },
+
+            {
+                "order": 26,
+                "prompt":
+                    "Driving for ten hours was ___.",
+                "options": [
+                    "tiring",
+                    "tired",
+                    "tire",
+                    "tiredness",
+                ],
+                "answer":
+                    "tiring",
+                "explanation":
+                    "Действие вызывает усталость → TIRING.",
+            },
+
+            {
+                "order": 27,
+                "prompt":
+                    "The children are ___ about the school trip.",
+                "options": [
+                    "excited",
+                    "exciting",
+                    "excitement",
+                    "excitedly",
+                ],
+                "answer":
+                    "excited",
+                "explanation":
+                    "Дети испытывают волнение → EXCITED.",
+            },
+
+            {
+                "order": 28,
+                "prompt":
+                    "The exam instructions were very ___.",
+                "options": [
+                    "confusing",
+                    "confused",
+                    "confusion",
+                    "confusedly",
+                ],
+                "answer":
+                    "confusing",
+                "explanation":
+                    "Инструкции вызывают растерянность → CONFUSING.",
+            },
+
+            {
+                "order": 29,
+                "prompt":
+                    "Choose the correct pair.",
+                "options": [
+                    "She was surprised by the news. / The news was surprising.",
+                    "She was surprising by the news. / The news was surprised.",
+                    "She was surprise by the news. / The news was surprisedly.",
+                    "She was surprisingly by the news. / The news was surprise.",
+                ],
+                "answer":
+                    "She was surprised by the news. / The news was surprising.",
+                "explanation":
+                    "SURPRISED = чувство; SURPRISING = причина.",
+            },
+
+            {
+                "order": 30,
+                "prompt":
+                    "Choose the fully correct sequence.",
+                "options": [
+                    "bored = feeling / boring = cause / interested = feeling / interesting = cause",
+                    "bored = cause / boring = feeling / interested = cause / interesting = feeling",
+                    "bored = past tense only / boring = present tense only / interested = verb / interesting = noun",
+                    "bored = action / boring = person only / interested = future / interesting = past",
+                ],
+                "answer":
+                    "bored = feeling / boring = cause / interested = feeling / interesting = cause",
+                "explanation":
+                    "Главное правило урока: -ED = feeling; -ING = cause.",
+            },
+
+        ]
+
+
+        all_exercises = (
+            training
+            +
+            final_test
+        )
+
+        valid_orders = [
+            item["order"]
+            for item in all_exercises
+        ]
+
+
+        for data in all_exercises:
+
+            if data["order"] <= 20:
+
+                section = (
+                    section_objects[
+                        data["section"]
+                    ]
+                )
+
+            else:
+
+                section = None
+
+
             GrammarExercise.objects.update_or_create(
                 lesson=lesson,
                 order=data["order"],
                 defaults={
-                    "exercise_type": GrammarExercise.Type.CHOICE,
-                    "prompt": data["prompt"],
-                    "options": data["options"],
-                    "correct_answer": data["answer"],
-                    "explanation": data["explanation"],
-                    "is_published": True,
+                    "section":
+                        section,
+
+                    "exercise_type":
+                        data.get(
+                            "type",
+                            "choice",
+                        ),
+
+                    "prompt":
+                        data["prompt"],
+
+                    "options":
+                        data["options"],
+
+                    "correct_answer":
+                        data["answer"],
+
+                    "explanation":
+                        data["explanation"],
+
+                    "is_published":
+                        True,
                 },
             )
 
+
+        # Remove old exercises
+        GrammarExercise.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__in=valid_orders,
+        ).delete()
+
+
+        # Remove old sections
+        GrammarLessonSection.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__in=[
+                item["order"]
+                for item in sections
+            ],
+        ).delete()
+
+
         self.stdout.write(
             self.style.SUCCESS(
-                "✅ A1 Lesson 45 seeded: -ED and -ING adjectives"
+                "✅ Interactive A1 Lesson 45 seeded"
             )
         )
 
         self.stdout.write(
-            f"Sections: {lesson.sections.count()}"
+            f"Micro rules: "
+            f"{lesson.sections.count()}"
         )
 
         self.stdout.write(
-            f"Exercises: {lesson.exercises.count()}"
+            "Training exercises: "
+            f"{lesson.exercises.filter(section__isnull=False).count()}"
+        )
+
+        self.stdout.write(
+            "Final test: "
+            f"{lesson.exercises.filter(section__isnull=True).count()}"
         )

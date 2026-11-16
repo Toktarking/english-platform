@@ -312,6 +312,16 @@ class GrammarLessonProgress(models.Model):
         default=0
     )
 
+    # Позиция пользователя внутри интерактивного урока.
+    # Хранится на сервере, поэтому работает между устройствами.
+    current_step_index = models.PositiveIntegerField(
+        default=0,
+    )
+
+    max_seen_step_index = models.PositiveIntegerField(
+        default=0,
+    )
+
     # Награда внутри Grammar.
     # Не связана с CommitmentLedgerEntry.
     xp_earned = models.PositiveIntegerField(

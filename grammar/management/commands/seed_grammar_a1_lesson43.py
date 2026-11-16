@@ -10,9 +10,10 @@ from grammar.models import (
 class Command(BaseCommand):
 
     help = (
-        "Create/update A1 Grammar Lesson 43: "
-        "Comparatives and Superlatives."
+        "Create/update interactive A1 Grammar "
+        "Lesson 43: Comparatives and Superlatives."
     )
+
 
     def handle(self, *args, **options):
 
@@ -20,98 +21,126 @@ class Command(BaseCommand):
             level="A1",
             order=43,
             defaults={
-                "title": "Степени сравнения прилагательных",
-                "slug": "comparatives-and-superlatives",
-                "theory_text": "Comparatives and Superlatives.",
-                "estimated_minutes": 45,
-                "pass_score": 70,
-                "xp_reward": 100,
-                "is_published": True,
+                "title":
+                    "Степени сравнения прилагательных",
+
+                "slug":
+                    "comparatives-and-superlatives",
+
+                "theory_text":
+                    "Comparatives and Superlatives.",
+
+                "estimated_minutes":
+                    20,
+
+                "pass_score":
+                    70,
+
+                "xp_reward":
+                    100,
+
+                "is_published":
+                    True,
             },
         )
+
+
+        # =================================================
+        # 10 MICRO RULES
+        # =================================================
 
         sections = [
 
             {
                 "order": 1,
-                "title": "Три формы прилагательного",
-                "body": """Прилагательное может использоваться в трёх формах:
+                "title":
+                    "Три формы прилагательного",
 
-обычная форма;
+                "body":
+                    """У прилагательного может быть
+три формы.
 
-сравнительная степень;
-
-превосходная степень.
-
-Пример:
+Обычная:
 
 tall
 
+Сравнительная:
+
 taller
+
+Превосходная:
 
 the tallest
 
 Ещё пример:
 
-interesting
+beautiful
 
-more interesting
+more beautiful
 
-the most interesting""",
+the most beautiful.""",
             },
+
 
             {
                 "order": 2,
-                "title": "Сравнительная степень",
-                "body": """Сравнительная степень используется, когда сравниваются два человека, предмета или ситуации.
+                "title":
+                    "Сравниваем два объекта",
 
-Примеры:
+                "body":
+                    """Comparative используется,
+когда сравниваем два объекта.
 
 Tom is taller than Jack.
 
-This book is more interesting than that one.
+This car is faster than mine.
 
 Today is colder than yesterday.
 
-После сравнительной степени часто используется THAN:
+После comparative часто стоит:
+
+THAN
 
 taller than
 
-faster than
+cheaper than
 
-more expensive than""",
+more interesting than.""",
             },
+
 
             {
                 "order": 3,
-                "title": "Короткие прилагательные: -ER",
-                "body": """К коротким прилагательным обычно добавляется -ER.
+                "title":
+                    "Короткие слова: -ER",
 
-Примеры:
+                "body":
+                    """К коротким прилагательным
+обычно добавляем -ER.
 
 tall → taller
 
 small → smaller
 
-long → longer
-
 fast → faster
 
 old → older
 
-Если прилагательное заканчивается на E:
+Если слово заканчивается на E:
 
 nice → nicer
 
-large → larger
-
-safe → safer""",
+large → larger.""",
             },
+
 
             {
                 "order": 4,
-                "title": "Удвоение согласной и Y → I",
-                "body": """В некоторых коротких прилагательных последняя согласная удваивается:
+                "title":
+                    "BIG → BIGGER, HAPPY → HAPPIER",
+
+                "body":
+                    """Иногда последняя согласная удваивается.
 
 big → bigger
 
@@ -119,9 +148,7 @@ hot → hotter
 
 thin → thinner
 
-fat → fatter
-
-Если прилагательное заканчивается на Y:
+Если слово заканчивается на Y:
 
 happy → happier
 
@@ -129,760 +156,827 @@ easy → easier
 
 busy → busier
 
-heavy → heavier""",
+Y меняется на I.""",
             },
+
 
             {
                 "order": 5,
-                "title": "Длинные прилагательные: MORE",
-                "body": """С длинными прилагательными обычно используется:
+                "title":
+                    "Длинные слова: MORE",
 
-more + adjective
-
-Примеры:
+                "body":
+                    """С длинными прилагательными
+обычно используем MORE.
 
 more beautiful
 
-more interesting
-
 more expensive
+
+more interesting
 
 more difficult
 
-more important
-
-Нельзя одновременно использовать MORE и -ER.
+Не используем одновременно
+MORE и -ER.
 
 Неправильно:
 
 more easier
 
-more cheaper
-
-more beautifuler
-
 Правильно:
 
-easier
-
-cheaper
-
-more beautiful""",
+easier.""",
             },
+
 
             {
                 "order": 6,
-                "title": "Превосходная степень",
-                "body": """Превосходная степень используется, когда один объект выделяется среди трёх и более.
+                "title":
+                    "Superlative: самый",
 
-Перед ней обычно используется THE.
+                "body":
+                    """Superlative показывает,
+что объект выделяется среди группы.
 
-Примеры:
+Tom is the tallest
+in the class.
 
-the tallest
+This is the most expensive car.
 
-the biggest
-
-the most beautiful
-
-the best
-
-Короткие прилагательные:
+Короткие слова:
 
 tall → the tallest
 
-fast → the fastest
-
 Длинные:
 
-beautiful → the most beautiful
+expensive
+→ the most expensive
 
-difficult → the most difficult""",
+Перед superlative обычно нужен THE.""",
             },
+
 
             {
                 "order": 7,
-                "title": "Правописание в превосходной степени",
-                "body": """Прилагательные на E:
+                "title":
+                    "Правописание Superlative",
 
-nice → the nicest
-
-large → the largest
-
-Удвоение согласной:
+                "body":
+                    """Правила похожи
+на comparative.
 
 big → the biggest
 
 hot → the hottest
 
-thin → the thinnest
-
-Прилагательные на Y:
-
 happy → the happiest
 
 easy → the easiest
 
-busy → the busiest
+nice → the nicest
 
-heavy → the heaviest""",
+То есть:
+
+-er → -est
+
+more → the most.""",
             },
+
 
             {
                 "order": 8,
-                "title": "Неправильные формы",
-                "body": """Некоторые формы нужно запомнить.
+                "title":
+                    "GOOD, BAD и другие исключения",
 
-good → better → the best
+                "body":
+                    """Некоторые формы нужно запомнить.
 
-bad → worse → the worst
+good
+→ better
+→ the best
 
-many/much → more → the most
+bad
+→ worse
+→ the worst
 
-little → less → the least
+many / much
+→ more
+→ the most
 
-far → farther/further → the farthest/the furthest
-
-Примеры:
-
-This book is better than that one.
-
-This is the worst result.
-
-She has more experience than me.""",
+little
+→ less
+→ the least.""",
             },
+
 
             {
                 "order": 9,
-                "title": "OLDER и ELDER",
-                "body": """OLDER используется для людей и предметов.
+                "title":
+                    "AS ... AS",
 
-My brother is older than me.
+                "body":
+                    """Если два объекта одинаковы:
 
-This building is older than that one.
-
-ELDER обычно используется только для членов семьи перед существительным.
-
-my elder brother
-
-her elder sister
-
-Но:
-
-He is older than me.
-
-Не:
-
-He is elder than me.""",
-            },
-
-            {
-                "order": 10,
-                "title": "IN, OF и усиление сравнения",
-                "body": """После превосходной степени:
-
-IN используется с местом или группой.
-
-the tallest in the class
-
-the biggest city in Kazakhstan
-
-OF используется с количеством или набором.
-
-the best of the three
-
-the most expensive of all
-
-Сравнительную степень можно усиливать:
-
-much better
-
-far more interesting
-
-a lot bigger
-
-much easier
-
-Для небольшой разницы:
-
-a little bigger
-
-slightly cheaper
-
-a bit colder""",
-            },
-
-            {
-                "order": 11,
-                "title": "AS...AS и NOT AS...AS",
-                "body": """Для равенства:
-
-as + adjective + as
+AS + adjective + AS
 
 She is as tall as her sister.
 
-This book is as interesting as that one.
+This phone is as expensive as mine.
 
-Для неравенства:
+Если не одинаковы:
 
-not as + adjective + as
+NOT AS ... AS
 
-This task is not as difficult as that one.
-
-My phone is not as expensive as yours.
-
-Также можно использовать:
-
-less + adjective
-
-This book is less interesting.""",
+This task is not as difficult
+as the last one.""",
             },
 
+
             {
-                "order": 12,
-                "title": "MORE, FEWER и LESS",
-                "body": """Для сравнения количества:
+                "order": 10,
+                "title":
+                    "LESS, FEWER и усиление",
 
-MORE:
+                "body":
+                    """LESS используется
+с неисчисляемыми словами.
 
-more books
+less time
 
-more money
+less money
 
-more time
-
-FEWER используется с исчисляемыми существительными:
+FEWER используется
+с исчисляемыми во множественном числе.
 
 fewer students
 
 fewer mistakes
 
-fewer cars
+Comparative можно усилить:
 
-LESS используется с неисчисляемыми:
+much better
 
-less water
+a lot bigger
 
-less money
-
-less time
-
-Примеры:
-
-This class has fewer students.
-
-I have less time today.""",
-            },
-
-            {
-                "order": 13,
-                "title": "Полезные конструкции",
-                "body": """THE MORE..., THE MORE...
-
-The more you study, the better you understand.
-
-The earlier we leave, the sooner we arrive.
-
-Постепенное изменение:
-
-bigger and bigger
-
-better and better
-
-more and more expensive
-
-ONE OF THE...
-
-one of the best students
-
-one of the largest cities
-
-После one of the нужен существительное во множественном числе.""",
-            },
-
-            {
-                "order": 14,
-                "title": "Как выбрать форму",
-                "body": """Сравниваются два объекта?
-
-→ comparative
-
-This car is faster than that one.
-
-Один объект выделяется среди группы?
-
-→ superlative
-
-This is the fastest car here.
-
-Короткое прилагательное?
-
-→ обычно -er / -est
-
-Длинное прилагательное?
-
-→ more / the most
-
-Неправильная форма?
-
-Запомните:
-
-good → better → the best
-
-bad → worse → the worst
-
-much/many → more → the most
-
-little → less → the least""",
+much easier.""",
             },
 
         ]
 
+
+        section_objects = {}
+
+
         for data in sections:
-            GrammarLessonSection.objects.update_or_create(
+
+            section, _ = GrammarLessonSection.objects.update_or_create(
                 lesson=lesson,
                 order=data["order"],
                 defaults={
-                    "title": data["title"],
-                    "body": data["body"],
+                    "title":
+                        data["title"],
+                    "body":
+                        data["body"],
                 },
             )
 
-        exercises = [
+            section_objects[data["order"]] = section
 
+
+        # =================================================
+        # 20 TRAINING EXERCISES
+        # =================================================
+
+        training = [
+
+            # SECTION 1
             {
                 "order": 1,
-                "prompt": "This car is ___ than mine.",
+                "section": 1,
+                "type": "choice",
+                "prompt":
+                    "Choose the comparative form of TALL.",
                 "options": [
-                    "fast",
-                    "faster",
-                    "fastest",
-                    "more faster",
+                    "taller",
+                    "tallest",
+                    "more tall",
+                    "the taller",
                 ],
-                "answer": "faster",
-                "explanation": (
-                    "Fast — короткое прилагательное, "
-                    "comparative: faster."
-                ),
+                "answer":
+                    "taller",
+                "explanation":
+                    "TALL → TALLER.",
             },
 
             {
                 "order": 2,
-                "prompt": "She is ___ person in the office.",
+                "section": 1,
+                "type": "choice",
+                "prompt":
+                    "Choose the superlative form of TALL.",
                 "options": [
-                    "friendly",
-                    "friendlier",
-                    "the friendliest",
-                    "the more friendly",
+                    "the tallest",
+                    "taller",
+                    "more tall",
+                    "the more taller",
                 ],
-                "answer": "the friendliest",
-                "explanation": (
-                    "Один человек выделяется среди группы → superlative."
-                ),
+                "answer":
+                    "the tallest",
+                "explanation":
+                    "TALL → TALLER → THE TALLEST.",
             },
 
+
+            # SECTION 2
             {
                 "order": 3,
-                "prompt": (
-                    "This exercise is ___ than the previous one."
-                ),
+                "section": 2,
+                "type": "choice",
+                "prompt":
+                    "My car is ___ than yours.",
                 "options": [
-                    "difficult",
-                    "difficulter",
-                    "more difficult",
-                    "the most difficult",
+                    "faster",
+                    "fastest",
+                    "the fast",
+                    "more fastest",
                 ],
-                "answer": "more difficult",
-                "explanation": (
-                    "Difficult — длинное прилагательное → more difficult."
-                ),
+                "answer":
+                    "faster",
+                "explanation":
+                    "Сравниваются два автомобиля → comparative.",
             },
 
             {
                 "order": 4,
-                "prompt": "That was ___ film of the year.",
+                "section": 2,
+                "type": "build",
+                "prompt":
+                    "Собери предложение.",
                 "options": [
-                    "more interesting",
-                    "the most interesting",
-                    "interestinger",
-                    "the interestingest",
+                    "This",
+                    "book",
+                    "is",
+                    "cheaper",
+                    "than",
+                    "that",
+                    "one",
                 ],
-                "answer": "the most interesting",
-                "explanation": (
-                    "Superlative длинного прилагательного: "
-                    "the most interesting."
-                ),
+                "answer":
+                    "This book is cheaper than that one",
+                "explanation":
+                    "Comparative часто используется с THAN.",
             },
 
+
+            # SECTION 3
             {
                 "order": 5,
-                "prompt": "My bag is ___ than yours.",
+                "section": 3,
+                "type": "choice",
+                "prompt":
+                    "This road is ___ than that one.",
                 "options": [
-                    "heavy",
-                    "heavier",
-                    "heaviest",
-                    "more heavy",
+                    "longer",
+                    "more long",
+                    "longest",
+                    "the longer",
                 ],
-                "answer": "heavier",
-                "explanation": (
-                    "Heavy → heavier: y меняется на i."
-                ),
+                "answer":
+                    "longer",
+                "explanation":
+                    "LONG — короткое прилагательное → LONGER.",
             },
 
             {
                 "order": 6,
-                "prompt": "This is ___ bag here.",
+                "section": 3,
+                "type": "choice",
+                "prompt":
+                    "This place is ___ than the other one.",
                 "options": [
-                    "heavier",
-                    "the heaviest",
-                    "more heavier",
-                    "heaviest than",
+                    "nicer",
+                    "niceer",
+                    "more nicer",
+                    "nicest",
                 ],
-                "answer": "the heaviest",
-                "explanation": (
-                    "Superlative: heavy → the heaviest."
-                ),
+                "answer":
+                    "nicer",
+                "explanation":
+                    "NICE заканчивается на E → NICER.",
             },
 
+
+            # SECTION 4
             {
                 "order": 7,
-                "prompt": "Today is ___ than Monday.",
+                "section": 4,
+                "type": "choice",
+                "prompt":
+                    "This house is ___ than ours.",
                 "options": [
-                    "busy",
-                    "busier",
-                    "busiest",
-                    "more busyer",
+                    "bigger",
+                    "biger",
+                    "more big",
+                    "biggest",
                 ],
-                "answer": "busier",
-                "explanation": (
-                    "Busy → busier."
-                ),
+                "answer":
+                    "bigger",
+                "explanation":
+                    "BIG → BIGGER.",
             },
 
             {
                 "order": 8,
-                "prompt": "He is ___ student in the class.",
+                "section": 4,
+                "type": "choice",
+                "prompt":
+                    "Today I am ___ than yesterday.",
                 "options": [
-                    "bad",
-                    "worse",
-                    "the worst",
-                    "the baddest",
+                    "happier",
+                    "happyer",
+                    "more happier",
+                    "happiest",
                 ],
-                "answer": "the worst",
-                "explanation": (
-                    "Bad → worse → the worst."
-                ),
+                "answer":
+                    "happier",
+                "explanation":
+                    "HAPPY → HAPPIER.",
             },
 
+
+            # SECTION 5
             {
                 "order": 9,
-                "prompt": "This answer is ___ than the first one.",
+                "section": 5,
+                "type": "choice",
+                "prompt":
+                    "This hotel is ___ than ours.",
                 "options": [
-                    "good",
-                    "better",
-                    "best",
-                    "more good",
+                    "more expensive",
+                    "expensiver",
+                    "more expensiver",
+                    "the most expensive",
                 ],
-                "answer": "better",
-                "explanation": (
-                    "Good → better."
-                ),
+                "answer":
+                    "more expensive",
+                "explanation":
+                    "EXPENSIVE → MORE EXPENSIVE.",
             },
 
             {
                 "order": 10,
-                "prompt": "She has ___ experience than me.",
+                "section": 5,
+                "type": "choice",
+                "prompt":
+                    "Choose the correct form.",
                 "options": [
-                    "many",
-                    "more",
-                    "most",
-                    "the more",
+                    "easier",
+                    "more easier",
+                    "more easyer",
+                    "easyer",
                 ],
-                "answer": "more",
-                "explanation": (
-                    "Much/many → more."
-                ),
+                "answer":
+                    "easier",
+                "explanation":
+                    "EASY → EASIER; нельзя MORE EASIER.",
             },
 
+
+            # SECTION 6
             {
                 "order": 11,
-                "prompt": "We have ___ time today.",
+                "section": 6,
+                "type": "choice",
+                "prompt":
+                    "He is ___ student in the class.",
                 "options": [
-                    "less",
-                    "least",
-                    "fewer",
-                    "the less",
+                    "the tallest",
+                    "taller",
+                    "more tall",
+                    "tallest than",
                 ],
-                "answer": "less",
-                "explanation": (
-                    "Time — неисчисляемое существительное → less."
-                ),
+                "answer":
+                    "the tallest",
+                "explanation":
+                    "Один человек выделяется из группы → superlative.",
             },
 
             {
                 "order": 12,
-                "prompt": "This class has ___ students.",
+                "section": 6,
+                "type": "choice",
+                "prompt":
+                    "This is ___ building in the city.",
                 "options": [
-                    "less",
-                    "fewer",
-                    "fewest than",
-                    "little",
+                    "the most beautiful",
+                    "more beautiful",
+                    "the beautifuler",
+                    "most beautiful than",
                 ],
-                "answer": "fewer",
-                "explanation": (
-                    "Students — исчисляемое множественное число → fewer."
-                ),
+                "answer":
+                    "the most beautiful",
+                "explanation":
+                    "Длинное adjective → THE MOST.",
             },
 
+
+            # SECTION 7
             {
                 "order": 13,
-                "prompt": "This room is not ___ large as that one.",
+                "section": 7,
+                "type": "choice",
+                "prompt":
+                    "Choose the correct superlative of BIG.",
                 "options": [
-                    "so",
-                    "as",
-                    "more",
-                    "than",
+                    "the biggest",
+                    "the bigest",
+                    "the most big",
+                    "bigger",
                 ],
-                "answer": "as",
-                "explanation": (
-                    "Конструкция: not as + adjective + as."
-                ),
+                "answer":
+                    "the biggest",
+                "explanation":
+                    "BIG → BIGGER → THE BIGGEST.",
             },
 
             {
                 "order": 14,
-                "prompt": (
-                    "The more you practise, the ___ you become."
-                ),
+                "section": 7,
+                "type": "choice",
+                "prompt":
+                    "Choose the correct superlative of EASY.",
                 "options": [
-                    "good",
-                    "better",
-                    "best",
-                    "more good",
+                    "the easiest",
+                    "the easyest",
+                    "the most easier",
+                    "easier",
                 ],
-                "answer": "better",
-                "explanation": (
-                    "The + comparative, the + comparative."
-                ),
+                "answer":
+                    "the easiest",
+                "explanation":
+                    "EASY → EASIER → THE EASIEST.",
             },
 
+
+            # SECTION 8
             {
                 "order": 15,
-                "prompt": (
-                    "This is one of the ___ places in the city."
-                ),
+                "section": 8,
+                "type": "choice",
+                "prompt":
+                    "This book is ___ than that one.",
                 "options": [
-                    "beautiful",
-                    "more beautiful",
-                    "most beautiful",
-                    "beautifullest",
+                    "better",
+                    "gooder",
+                    "more good",
+                    "the best",
                 ],
-                "answer": "most beautiful",
-                "explanation": (
-                    "One of the + superlative + plural noun."
-                ),
+                "answer":
+                    "better",
+                "explanation":
+                    "GOOD → BETTER.",
             },
 
             {
                 "order": 16,
-                "prompt": "Choose the correct form.",
+                "section": 8,
+                "type": "choice",
+                "prompt":
+                    "That was ___ result of the year.",
                 "options": [
-                    "more easier",
-                    "easier",
-                    "more easyer",
-                    "the easier than",
+                    "the worst",
+                    "worse",
+                    "the baddest",
+                    "more bad",
                 ],
-                "answer": "easier",
-                "explanation": (
-                    "Нельзя использовать more и -er одновременно."
-                ),
+                "answer":
+                    "the worst",
+                "explanation":
+                    "BAD → WORSE → THE WORST.",
             },
 
+
+            # SECTION 9
             {
                 "order": 17,
-                "prompt": "Choose the correct sentence.",
+                "section": 9,
+                "type": "choice",
+                "prompt":
+                    "She is ___ tall ___ her sister.",
                 "options": [
-                    "He is more taller than me.",
-                    "He is taller than me.",
-                    "He is tallest than me.",
-                    "He is taller that me.",
+                    "as / as",
+                    "more / than",
+                    "as / than",
+                    "so / than",
                 ],
-                "answer": "He is taller than me.",
-                "explanation": (
-                    "Comparative: taller + than."
-                ),
+                "answer":
+                    "as / as",
+                "explanation":
+                    "Равенство → AS + adjective + AS.",
             },
 
             {
                 "order": 18,
-                "prompt": "Choose the correct sentence.",
+                "section": 9,
+                "type": "choice",
+                "prompt":
+                    "This test is not ___ difficult ___ the last one.",
                 "options": [
-                    "She is tallest in the class.",
-                    "She is the tallest in the class.",
-                    "She is the most tallest in the class.",
-                    "She is taller in all class.",
+                    "as / as",
+                    "more / as",
+                    "as / than",
+                    "less / than as",
                 ],
-                "answer": "She is the tallest in the class.",
-                "explanation": (
-                    "Перед superlative обычно нужен the."
-                ),
+                "answer":
+                    "as / as",
+                "explanation":
+                    "NOT AS + adjective + AS.",
             },
 
+
+            # SECTION 10
             {
                 "order": 19,
-                "prompt": "Choose the correct irregular forms.",
+                "section": 10,
+                "type": "choice",
+                "prompt":
+                    "I have ___ time today than yesterday.",
                 "options": [
-                    "good → gooder → the goodest",
-                    "good → better → the best",
-                    "good → more good → the most good",
-                    "good → best → better",
+                    "less",
+                    "fewer",
+                    "few",
+                    "the least",
                 ],
-                "answer": "good → better → the best",
-                "explanation": "Это неправильная форма.",
+                "answer":
+                    "less",
+                "explanation":
+                    "TIME неисчисляемое → LESS.",
             },
 
             {
                 "order": 20,
-                "prompt": "Choose the correct sentence with ELDER/OLDER.",
+                "section": 10,
+                "type": "choice",
+                "prompt":
+                    "This class has ___ students than ours.",
                 "options": [
-                    "He is elder than me.",
-                    "He is older than me.",
-                    "This car is elder than mine.",
-                    "He is more elder than me.",
+                    "fewer",
+                    "less",
+                    "little",
+                    "the least",
                 ],
-                "answer": "He is older than me.",
-                "explanation": (
-                    "Older используется в сравнении с than."
-                ),
-            },
-
-            {
-                "order": 21,
-                "prompt": "Choose the correct sentence.",
-                "options": [
-                    "This book is much better.",
-                    "This book is very better.",
-                    "This book is more better.",
-                    "This book is much best.",
-                ],
-                "answer": "This book is much better.",
-                "explanation": (
-                    "Much может усиливать comparative."
-                ),
-            },
-
-            {
-                "order": 22,
-                "prompt": "Choose the correct equality sentence.",
-                "options": [
-                    "She is as tall than her sister.",
-                    "She is as tall as her sister.",
-                    "She is so taller as her sister.",
-                    "She is as taller as her sister.",
-                ],
-                "answer": "She is as tall as her sister.",
-                "explanation": (
-                    "Равенство: as + adjective + as."
-                ),
-            },
-
-            {
-                "order": 23,
-                "prompt": "Choose the correct IN/OF pair.",
-                "options": [
-                    (
-                        "the tallest in the class / "
-                        "the best of the three"
-                    ),
-                    (
-                        "the tallest of the class / "
-                        "the best in the three"
-                    ),
-                    (
-                        "the tallest at the class / "
-                        "the best from the three"
-                    ),
-                    (
-                        "the taller in class / "
-                        "the most best of three"
-                    ),
-                ],
-                "answer": (
-                    "the tallest in the class / "
-                    "the best of the three"
-                ),
-                "explanation": (
-                    "IN — место/группа; OF — набор или количество."
-                ),
-            },
-
-            {
-                "order": 24,
-                "prompt": "Choose the fully correct sequence.",
-                "options": [
-                    (
-                        "tall → taller → the tallest / "
-                        "beautiful → more beautiful → "
-                        "the most beautiful / "
-                        "bad → worse → the worst"
-                    ),
-                    (
-                        "tall → more taller → most tallest / "
-                        "beautiful → beautifuler → beautifulest / "
-                        "bad → badder → baddest"
-                    ),
-                    (
-                        "tall → tallest → taller / "
-                        "beautiful → most beautiful → more beautiful / "
-                        "bad → worst → worse"
-                    ),
-                    (
-                        "tall → more tall → the most tall / "
-                        "beautiful → beautifuller → "
-                        "the beautifullest / "
-                        "bad → more bad → most bad"
-                    ),
-                ],
-                "answer": (
-                    "tall → taller → the tallest / "
-                    "beautiful → more beautiful → "
-                    "the most beautiful / "
-                    "bad → worse → the worst"
-                ),
-                "explanation": (
-                    "Короткое adjective → -er/-est; "
-                    "длинное → more/the most; "
-                    "bad имеет неправильные формы."
-                ),
+                "answer":
+                    "fewer",
+                "explanation":
+                    "STUDENTS исчисляемое множественное → FEWER.",
             },
 
         ]
 
-        for data in exercises:
+
+        # =================================================
+        # FINAL TEST — 10 NEW QUESTIONS
+        # =================================================
+
+        final_test = [
+
+            {
+                "order": 21,
+                "prompt":
+                    "My new phone is ___ than my old one.",
+                "options": [
+                    "smaller",
+                    "smallest",
+                    "more smaller",
+                    "the small",
+                ],
+                "answer":
+                    "smaller",
+                "explanation":
+                    "SMALL → SMALLER.",
+            },
+
+            {
+                "order": 22,
+                "prompt":
+                    "This exam is ___ than the previous one.",
+                "options": [
+                    "more difficult",
+                    "difficulter",
+                    "the most difficult",
+                    "more difficulter",
+                ],
+                "answer":
+                    "more difficult",
+                "explanation":
+                    "DIFFICULT → MORE DIFFICULT.",
+            },
+
+            {
+                "order": 23,
+                "prompt":
+                    "Which is the correct form of HOT?",
+                "options": [
+                    "hotter",
+                    "hoter",
+                    "more hot",
+                    "the hotter than",
+                ],
+                "answer":
+                    "hotter",
+                "explanation":
+                    "HOT → HOTTER.",
+            },
+
+            {
+                "order": 24,
+                "prompt":
+                    "She is ___ person in our team.",
+                "options": [
+                    "the busiest",
+                    "busier",
+                    "the busyer",
+                    "the most busier",
+                ],
+                "answer":
+                    "the busiest",
+                "explanation":
+                    "BUSY → BUSIER → THE BUSIEST.",
+            },
+
+            {
+                "order": 25,
+                "prompt":
+                    "This restaurant is ___ in the area.",
+                "options": [
+                    "the most expensive",
+                    "more expensive",
+                    "the expensivest",
+                    "more expensiver",
+                ],
+                "answer":
+                    "the most expensive",
+                "explanation":
+                    "Superlative длинного adjective → THE MOST.",
+            },
+
+            {
+                "order": 26,
+                "prompt":
+                    "Her second result was ___ than the first.",
+                "options": [
+                    "worse",
+                    "badder",
+                    "the worst",
+                    "more bad",
+                ],
+                "answer":
+                    "worse",
+                "explanation":
+                    "BAD → WORSE.",
+            },
+
+            {
+                "order": 27,
+                "prompt":
+                    "This is ___ restaurant I've visited here.",
+                "options": [
+                    "the best",
+                    "better",
+                    "the goodest",
+                    "more good",
+                ],
+                "answer":
+                    "the best",
+                "explanation":
+                    "GOOD → BETTER → THE BEST.",
+            },
+
+            {
+                "order": 28,
+                "prompt":
+                    "My apartment is as ___ as yours.",
+                "options": [
+                    "large",
+                    "larger",
+                    "largest",
+                    "more large",
+                ],
+                "answer":
+                    "large",
+                "explanation":
+                    "AS ... AS использует обычную форму adjective.",
+            },
+
+            {
+                "order": 29,
+                "prompt":
+                    "Choose the correct comparison.",
+                "options": [
+                    "This car is much faster than mine. / We have fewer mistakes now.",
+                    "This car is very faster than mine. / We have less mistakes now.",
+                    "This car is more faster than mine. / We have fewer mistake now.",
+                    "This car is much fastest than mine. / We have little mistakes now.",
+                ],
+                "answer":
+                    "This car is much faster than mine. / We have fewer mistakes now.",
+                "explanation":
+                    "MUCH может усиливать comparative; FEWER используется с countable nouns.",
+            },
+
+            {
+                "order": 30,
+                "prompt":
+                    "Choose the fully correct sequence.",
+                "options": [
+                    "big → bigger → the biggest / beautiful → more beautiful → the most beautiful / good → better → the best",
+                    "big → biger → the bigest / beautiful → beautifuler → the beautifulest / good → gooder → the goodest",
+                    "big → more bigger → the most biggest / beautiful → most beautiful → more beautiful / good → best → better",
+                    "big → bigger → biggest than / beautiful → more beautifuler → most beautifulest / good → more good → most good",
+                ],
+                "answer":
+                    "big → bigger → the biggest / beautiful → more beautiful → the most beautiful / good → better → the best",
+                "explanation":
+                    "Короткие adjectives → -er/-est; длинные → more/the most; GOOD имеет неправильные формы.",
+            },
+
+        ]
+
+
+        all_exercises = training + final_test
+
+        valid_orders = [
+            item["order"]
+            for item in all_exercises
+        ]
+
+
+        for data in all_exercises:
+
+            if data["order"] <= 20:
+                section = section_objects[data["section"]]
+            else:
+                section = None
+
+
             GrammarExercise.objects.update_or_create(
                 lesson=lesson,
                 order=data["order"],
                 defaults={
-                    "exercise_type": GrammarExercise.Type.CHOICE,
+                    "section": section,
+
+                    "exercise_type": data.get(
+                        "type",
+                        "choice",
+                    ),
+
                     "prompt": data["prompt"],
+
                     "options": data["options"],
+
                     "correct_answer": data["answer"],
+
                     "explanation": data["explanation"],
+
                     "is_published": True,
                 },
             )
 
+
+        GrammarExercise.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__in=valid_orders,
+        ).delete()
+
+
+        GrammarLessonSection.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__in=[
+                item["order"]
+                for item in sections
+            ],
+        ).delete()
+
+
         self.stdout.write(
             self.style.SUCCESS(
-                "✅ A1 Lesson 43 seeded: "
-                "Comparatives and Superlatives"
+                "✅ Interactive A1 Lesson 43 seeded"
             )
         )
 
         self.stdout.write(
-            f"Sections: {lesson.sections.count()}"
+            f"Micro rules: {lesson.sections.count()}"
         )
 
         self.stdout.write(
-            f"Exercises: {lesson.exercises.count()}"
+            "Training exercises: "
+            f"{lesson.exercises.filter(section__isnull=False).count()}"
+        )
+
+        self.stdout.write(
+            "Final test: "
+            f"{lesson.exercises.filter(section__isnull=True).count()}"
         )

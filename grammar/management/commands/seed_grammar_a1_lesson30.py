@@ -10,744 +10,1149 @@ from grammar.models import (
 class Command(BaseCommand):
 
     help = (
-        "Create/update A1 Grammar Lesson 30: "
-        "Present Perfect."
+        "Create/update interactive A1 Grammar "
+        "Lesson 30: Present Perfect."
     )
+
 
     def handle(self, *args, **options):
 
-        lesson, _ = GrammarLesson.objects.update_or_create(
-            level="A1",
-            order=30,
-            defaults={
-                "title": (
-                    "Present Perfect: "
-                    "HAVE / HAS + третья форма глагола"
-                ),
-                "slug": "present-perfect",
-                "theory_text": "Present Perfect.",
-                "estimated_minutes": 45,
-                "pass_score": 70,
-                "xp_reward": 100,
-                "is_published": True,
-            },
+        lesson, _ = (
+            GrammarLesson.objects.update_or_create(
+                level="A1",
+                order=30,
+
+                defaults={
+                    "title":
+                        "Present Perfect: HAVE / HAS + третья форма",
+
+                    "slug":
+                        "present-perfect",
+
+                    "theory_text":
+                        "Present Perfect.",
+
+                    "estimated_minutes":
+                        20,
+
+                    "pass_score":
+                        70,
+
+                    "xp_reward":
+                        100,
+
+                    "is_published":
+                        True,
+                },
+            )
         )
+
+
+        # =================================================
+        # 10 MICRO RULES
+        # =================================================
 
         sections = [
 
             {
                 "order": 1,
-                "title": "Что такое Present Perfect",
-                "body": """Present Perfect используется, когда действие произошло в прошлом, но связано с настоящим.
+                "title":
+                    "Что показывает Present Perfect?",
 
-Нас может интересовать:
+                "body":
+                    """Present Perfect связывает прошлое с настоящим.
 
-результат сейчас;
-
-жизненный опыт;
-
-действие в ещё не закончившийся период;
-
-действие, которое началось в прошлом и продолжается сейчас;
-
-недавнее действие без точного времени.
-
-Примеры:
+Действие произошло раньше,
+но сейчас важен его результат или опыт.
 
 I have finished the report.
 
+Отчёт уже готов сейчас.
+
 She has lost her keys.
 
-They have visited London.""",
+Она потеряла ключи,
+и сейчас у неё их нет.
+
+Главная идея:
+
+прошлое действие
+→ результат важен сейчас.""",
             },
+
 
             {
                 "order": 2,
-                "title": "Основная формула",
-                "body": """Present Perfect состоит из:
+                "title":
+                    "HAVE или HAS?",
 
-have / has
+                "body":
+                    """Формула Present Perfect:
 
-+
-
-третья форма глагола
-
-Формула:
-
-subject + have/has + Past Participle
+HAVE / HAS + третья форма глагола
 
 HAVE:
 
 I
-
 you
-
 we
-
 they
 
 HAS:
 
 he
-
 she
-
 it
 
 Примеры:
 
-I have worked.
+I have finished.
+
+We have arrived.
 
 She has finished.
 
-They have gone.
-
-He has seen.""",
+He has arrived.""",
             },
+
 
             {
                 "order": 3,
-                "title": "Третья форма глагола",
-                "body": """Для Present Perfect нужна третья форма глагола.
+                "title":
+                    "Третья форма глагола",
 
-Примеры:
-
-work — worked — worked
-
-go — went — gone
-
-see — saw — seen
-
-write — wrote — written
+                "body":
+                    """После HAVE / HAS нужна третья форма глагола.
 
 У правильных глаголов:
 
-worked → worked
+work → worked → worked
+play → played → played
 
-played → played
+У неправильных:
 
-studied → studied
+go → went → gone
+see → saw → seen
+write → wrote → written
+eat → ate → eaten
+do → did → done
 
-У неправильных третью форму нужно запоминать:
-
-do → done
-
-eat → eaten
-
-take → taken
-
-speak → spoken
-
-know → known
-
-break → broken""",
-            },
-
-            {
-                "order": 4,
-                "title": "Не используйте вторую форму",
-                "body": """После have / has нельзя использовать Past Simple форму неправильного глагола.
-
-Неправильно:
-
-I have went.
-
-She has saw.
-
-They have wrote.
-
-Правильно:
+Важно:
 
 I have gone.
 
-She has seen.
+Не:
 
-They have written.
-
-Сравните:
-
-I went home.
-— Past Simple
-
-I have gone home.
-— Present Perfect""",
+I have went.""",
             },
 
-            {
-                "order": 5,
-                "title": "Результат сейчас",
-                "body": """Present Perfect часто показывает результат, который важен сейчас.
-
-Пример:
-
-I have lost my keys.
-
-Ключи были потеряны раньше, но результат важен сейчас: ключей нет.
-
-Другие примеры:
-
-She has broken her phone.
-
-We have finished the work.
-
-He has opened the window.
-
-They have left the office.
-
-Точное время действия здесь не важно.""",
-            },
 
             {
-                "order": 6,
-                "title": "Present Perfect или Past Simple",
-                "body": """Present Perfect обычно не используется с завершённым временем прошлого.
+                "order": 4,
+                "title":
+                    "Утверждение, отрицание и вопрос",
 
-Правильно:
+                "body":
+                    """Утверждение:
 
-I have seen this film.
+I have finished.
 
-Но:
+She has arrived.
 
-I saw this film yesterday.
-
-Неправильно:
-
-I have seen this film yesterday.
-
-Past Simple используется с:
-
-yesterday;
-
-last week;
-
-last year;
-
-two days ago;
-
-in 2020.
-
-Present Perfect используется, когда важен результат или опыт и точное время не называется.""",
-            },
-
-            {
-                "order": 7,
-                "title": "EVER и NEVER",
-                "body": """EVER означает «когда-нибудь».
-
-Часто используется в вопросах:
-
-Have you ever been to London?
-
-Has she ever tried sushi?
-
-NEVER означает «никогда».
-
-I have never been to London.
-
-She has never tried sushi.
-
-После never дополнительное not не нужно.
-
-Неправильно:
-
-I haven't never been there.
-
-Правильно:
-
-I have never been there.""",
-            },
-
-            {
-                "order": 8,
-                "title": "BEEN и GONE",
-                "body": """HAVE/HAS BEEN TO означает:
-
-человек был где-то и уже вернулся.
-
-I have been to London.
-
-HAVE/HAS GONE TO означает:
-
-человек ушёл или уехал и ещё не вернулся.
-
-She has gone to the shop.
-
-Сравните:
-
-Marat has been to Astana.
-— был и вернулся.
-
-Marat has gone to Astana.
-— уехал и сейчас ещё там или в пути.""",
-            },
-
-            {
-                "order": 9,
-                "title": "JUST, ALREADY и YET",
-                "body": """JUST = только что
-
-have/has + just + third form
-
-I have just finished.
-
-She has just arrived.
-
-ALREADY = уже
-
-have/has + already + third form
-
-I have already finished.
-
-She has already eaten.
-
-YET используется обычно в конце.
-
-В вопросах:
-
-Have you finished yet?
-
-В отрицаниях:
-
-I haven't finished yet.""",
-            },
-
-            {
-                "order": 10,
-                "title": "TODAY, THIS WEEK и SO FAR",
-                "body": """Present Perfect может использоваться, если период времени ещё продолжается.
-
-I have had two meetings today.
-
-She has called me three times this week.
-
-We have completed five tasks this month.
-
-They have travelled a lot this year.
-
-SO FAR означает:
-
-пока;
-
-до настоящего момента.
-
-We have completed five tasks so far.
-
-I have read three chapters so far.""",
-            },
-
-            {
-                "order": 11,
-                "title": "FOR и SINCE",
-                "body": """FOR показывает продолжительность:
-
-for two hours;
-
-for five years;
-
-for a long time.
-
-Пример:
-
-I have lived here for five years.
-
-SINCE показывает начальную точку:
-
-since Monday;
-
-since 2020;
-
-since childhood.
-
-Пример:
-
-I have lived here since 2020.
-
-Запомните:
-
-FOR = сколько времени
-
-SINCE = с какого момента""",
-            },
-
-            {
-                "order": 12,
-                "title": "HOW LONG",
-                "body": """Чтобы спросить о продолжительности:
-
-How long have/has...?
-
-Примеры:
-
-How long have you lived here?
-
-How long has she worked at the university?
-
-How long have they known each other?
-
-Ответы:
-
-I have lived here for five years.
-
-She has worked here since 2022.""",
-            },
-
-            {
-                "order": 13,
-                "title": "Отрицания и вопросы",
-                "body": """Отрицание:
-
-haven't / hasn't + third form
+Отрицание:
 
 I haven't finished.
 
 She hasn't arrived.
 
-He hasn't seen the film.
-
 Вопрос:
-
-Have/Has + subject + third form?
 
 Have you finished?
 
 Has she arrived?
 
-Has he seen the film?
-
-Краткие ответы:
+Короткий ответ:
 
 Yes, I have.
-
 No, I haven't.
 
 Yes, she has.
-
-No, she hasn't.
-
-Do и did здесь не используются.""",
+No, she hasn't.""",
             },
 
-            {
-                "order": 14,
-                "title": "Как выбрать Present Perfect",
-                "body": """Шаг 1.
 
-Указано точное завершённое время?
+            {
+                "order": 5,
+                "title":
+                    "Результат важен сейчас",
+
+                "body":
+                    """Present Perfect часто используется,
+когда мы видим результат сейчас.
+
+I have lost my phone.
+
+→ телефона сейчас нет.
+
+She has broken her glasses.
+
+→ очки сейчас сломаны.
+
+We have finished the work.
+
+→ работа сейчас готова.
+
+Точное время действия не важно.""",
+            },
+
+
+            {
+                "order": 6,
+                "title":
+                    "EVER и NEVER",
+
+                "body":
+                    """Present Perfect используется для жизненного опыта.
+
+EVER = когда-нибудь
+
+Have you ever been to London?
+
+Has she ever tried sushi?
+
+NEVER = никогда
+
+I have never been to London.
+
+She has never tried sushi.
+
+После NEVER дополнительное NOT не нужно.
+
+Правильно:
+
+I have never seen it.""",
+            },
+
+
+            {
+                "order": 7,
+                "title":
+                    "JUST, ALREADY и YET",
+
+                "body":
+                    """JUST = только что
+
+I have just finished.
+
+ALREADY = уже
+
+She has already eaten.
+
+JUST и ALREADY обычно стоят между
+HAVE / HAS и третьей формой.
+
+YET обычно стоит в конце.
+
+Have you finished yet?
+
+I haven't finished yet.""",
+            },
+
+
+            {
+                "order": 8,
+                "title":
+                    "BEEN или GONE?",
+
+                "body":
+                    """BEEN TO:
+
+человек был где-то и уже вернулся.
+
+Marat has been to Astana.
+
+→ Марат был в Астане и вернулся.
+
+GONE TO:
+
+человек ушёл или уехал
+и ещё не вернулся.
+
+Marat has gone to Astana.
+
+→ сейчас он ещё там или в пути.""",
+            },
+
+
+            {
+                "order": 9,
+                "title":
+                    "FOR, SINCE и HOW LONG",
+
+                "body":
+                    """Present Perfect может показывать действие,
+которое началось раньше и продолжается сейчас.
+
+FOR = сколько времени
+
+for two hours
+for five years
+
+I have lived here for five years.
+
+SINCE = с какого момента
+
+since Monday
+since 2020
+
+I have lived here since 2020.
+
+Вопрос:
+
+How long have you lived here?""",
+            },
+
+
+            {
+                "order": 10,
+                "title":
+                    "Present Perfect или Past Simple?",
+
+                "body":
+                    """Если указано завершённое время прошлого:
 
 yesterday
-
 last week
-
+two days ago
 in 2020
 
 → Past Simple
 
 I saw him yesterday.
 
-Шаг 2.
-
-Важен результат сейчас?
-
-→ Present Perfect
-
-I have lost my phone.
-
-Шаг 3.
-
-Это жизненный опыт?
+Если точное время не называется
+и важен результат или опыт:
 
 → Present Perfect
 
-I have been to Turkey.
+I have seen this film.
 
-Шаг 4.
+Сравни:
 
-Действие началось раньше и продолжается сейчас?
+I visited Turkey in 2024.
 
-→ Present Perfect + for/since
-
-I have lived here for five years.""",
+I have visited Turkey.""",
             },
 
         ]
 
+
+        section_objects = {}
+
+
         for data in sections:
 
-            GrammarLessonSection.objects.update_or_create(
-                lesson=lesson,
-                order=data["order"],
-                defaults={
-                    "title": data["title"],
-                    "body": data["body"],
-                },
+            section, _ = (
+                GrammarLessonSection.objects.update_or_create(
+                    lesson=lesson,
+                    order=data["order"],
+
+                    defaults={
+                        "title":
+                            data["title"],
+
+                        "body":
+                            data["body"],
+                    },
+                )
             )
 
-        exercises = [
+            section_objects[
+                data["order"]
+            ] = section
+
+
+        # =================================================
+        # 20 TRAINING EXERCISES
+        # 2 after every micro rule
+        # =================================================
+
+        training = [
+
+            # SECTION 1
 
             {
                 "order": 1,
-                "prompt": "We ___ completed the task.",
-                "options": ["has", "have", "did", "are"],
-                "answer": "have",
-                "explanation": "We используется с have.",
+                "section": 1,
+                "type": "choice",
+
+                "prompt":
+                    "I ___ finished the report.",
+
+                "options": [
+                    "have",
+                    "has",
+                    "did",
+                    "am",
+                ],
+
+                "answer":
+                    "have",
+
+                "explanation":
+                    "I используется с HAVE.",
             },
 
             {
                 "order": 2,
-                "prompt": "My sister ___ called me.",
-                "options": ["have", "has", "did", "is"],
-                "answer": "has",
-                "explanation": "My sister = she, поэтому has.",
+                "section": 1,
+                "type": "choice",
+
+                "prompt":
+                    "She has lost her keys. What is important now?",
+
+                "options": [
+                    "She does not have the keys now.",
+                    "We know exactly when she lost them.",
+                    "She loses them every day.",
+                    "She is losing them now.",
+                ],
+
+                "answer":
+                    "She does not have the keys now.",
+
+                "explanation":
+                    "Present Perfect показывает текущий результат.",
             },
+
+
+            # SECTION 2
 
             {
                 "order": 3,
-                "prompt": "They have ___ to London.",
-                "options": ["went", "been", "was", "be"],
-                "answer": "been",
-                "explanation": "Been — третья форма be.",
+                "section": 2,
+                "type": "choice",
+
+                "prompt":
+                    "My parents ___ arrived.",
+
+                "options": [
+                    "has",
+                    "have",
+                    "is",
+                    "did",
+                ],
+
+                "answer":
+                    "have",
+
+                "explanation":
+                    "Parents = THEY, поэтому HAVE.",
             },
 
             {
                 "order": 4,
-                "prompt": "He has ___ breakfast.",
-                "options": ["ate", "eaten", "eat", "eating"],
-                "answer": "eaten",
-                "explanation": "Eat — ate — eaten.",
+                "section": 2,
+                "type": "choice",
+
+                "prompt":
+                    "My sister ___ finished her work.",
+
+                "options": [
+                    "have",
+                    "has",
+                    "did",
+                    "are",
+                ],
+
+                "answer":
+                    "has",
+
+                "explanation":
+                    "My sister = SHE, поэтому HAS.",
             },
+
+
+            # SECTION 3
 
             {
                 "order": 5,
-                "prompt": "I have ___ the book.",
-                "options": ["read", "wrote", "reading", "reads"],
-                "answer": "read",
-                "explanation": "Третья форма read пишется так же: read.",
+                "section": 3,
+                "type": "fill",
+
+                "prompt":
+                    "go → went → ___",
+
+                "options": [],
+
+                "answer":
+                    "gone",
+
+                "explanation":
+                    "Третья форма GO — GONE.",
             },
 
             {
                 "order": 6,
-                "prompt": "She hasn't ___ yet.",
-                "options": ["came", "come", "coming", "comes"],
-                "answer": "come",
-                "explanation": "Come — came — come; нужна третья форма.",
+                "section": 3,
+                "type": "choice",
+
+                "prompt":
+                    "He has ___ the email.",
+
+                "options": [
+                    "wrote",
+                    "written",
+                    "write",
+                    "writing",
+                ],
+
+                "answer":
+                    "written",
+
+                "explanation":
+                    "WRITE → WROTE → WRITTEN.",
             },
+
+
+            # SECTION 4
 
             {
                 "order": 7,
-                "prompt": "Have you ever ___ sushi?",
-                "options": ["ate", "eaten", "eat", "eating"],
-                "answer": "eaten",
-                "explanation": "После have нужна третья форма eaten.",
+                "section": 4,
+                "type": "build",
+
+                "prompt":
+                    "Собери правильное предложение.",
+
+                "options": [
+                    "I",
+                    "have",
+                    "finished",
+                    "the",
+                    "task",
+                ],
+
+                "answer":
+                    "I have finished the task",
+
+                "explanation":
+                    "Утверждение: subject + HAVE/HAS + V3.",
             },
 
             {
                 "order": 8,
-                "prompt": "Has he ___ the report?",
-                "options": ["wrote", "written", "write", "writing"],
-                "answer": "written",
-                "explanation": "Write — wrote — written.",
+                "section": 4,
+                "type": "choice",
+
+                "prompt":
+                    "Choose the correct question.",
+
+                "options": [
+                    "Have you finished?",
+                    "Did you finished?",
+                    "Have you finish?",
+                    "Do you have finished?",
+                ],
+
+                "answer":
+                    "Have you finished?",
+
+                "explanation":
+                    "Вопрос: HAVE + subject + V3.",
             },
+
+
+            # SECTION 5
 
             {
                 "order": 9,
-                "prompt": "I have just ___ home.",
-                "options": ["came", "come", "coming", "comes"],
-                "answer": "come",
-                "explanation": "Have just + third form: come.",
+                "section": 5,
+                "type": "choice",
+
+                "prompt":
+                    "Anna can't use her phone because she ___ it.",
+
+                "options": [
+                    "has broken",
+                    "broke yesterday at 8",
+                    "breaks",
+                    "is break",
+                ],
+
+                "answer":
+                    "has broken",
+
+                "explanation":
+                    "Важен результат сейчас: телефон сломан.",
             },
 
             {
                 "order": 10,
-                "prompt": "They have already ___.",
-                "options": ["left", "leave", "leaving", "leaves"],
-                "answer": "left",
-                "explanation": "Leave — left — left.",
+                "section": 5,
+                "type": "choice",
+
+                "prompt":
+                    "We can go home now. We ___ the work.",
+
+                "options": [
+                    "have finished",
+                    "finish yesterday",
+                    "were finish",
+                    "has finished",
+                ],
+
+                "answer":
+                    "have finished",
+
+                "explanation":
+                    "Работа закончена, и результат важен сейчас.",
             },
+
+
+            # SECTION 6
 
             {
                 "order": 11,
-                "prompt": "She hasn't finished ___.",
-                "options": ["already", "yet", "just", "yesterday"],
-                "answer": "yet",
-                "explanation": "Yet обычно ставится в конце отрицательного предложения.",
+                "section": 6,
+                "type": "choice",
+
+                "prompt":
+                    "Have you ___ been to Italy?",
+
+                "options": [
+                    "ever",
+                    "never",
+                    "yesterday",
+                    "ago",
+                ],
+
+                "answer":
+                    "ever",
+
+                "explanation":
+                    "EVER используется в вопросах о жизненном опыте.",
             },
 
             {
                 "order": 12,
-                "prompt": "I have lived here ___ five years.",
-                "options": ["since", "for", "from", "during"],
-                "answer": "for",
-                "explanation": "For показывает продолжительность.",
+                "section": 6,
+                "type": "choice",
+
+                "prompt":
+                    "Choose the correct sentence.",
+
+                "options": [
+                    "I have never tried sushi.",
+                    "I haven't never tried sushi.",
+                    "I did never tried sushi.",
+                    "I have never try sushi.",
+                ],
+
+                "answer":
+                    "I have never tried sushi.",
+
+                "explanation":
+                    "NEVER уже имеет отрицательное значение.",
             },
+
+
+            # SECTION 7
 
             {
                 "order": 13,
-                "prompt": "She has worked here ___ 2022.",
-                "options": ["for", "since", "during", "ago"],
-                "answer": "since",
-                "explanation": "Since показывает начальную точку.",
+                "section": 7,
+                "type": "build",
+
+                "prompt":
+                    "Собери предложение с JUST.",
+
+                "options": [
+                    "She",
+                    "has",
+                    "just",
+                    "arrived",
+                ],
+
+                "answer":
+                    "She has just arrived",
+
+                "explanation":
+                    "JUST стоит между HAS и V3.",
             },
 
             {
                 "order": 14,
-                "prompt": "Have they arrived?",
+                "section": 7,
+                "type": "choice",
+
+                "prompt":
+                    "I haven't finished the report ___.",
+
                 "options": [
-                    "Yes, they did.",
-                    "Yes, they have.",
-                    "Yes, they are.",
-                    "Yes, they arrived have.",
+                    "yet",
+                    "already",
+                    "just",
+                    "yesterday",
                 ],
-                "answer": "Yes, they have.",
-                "explanation": "Вопрос с have требует краткого ответа с have.",
+
+                "answer":
+                    "yet",
+
+                "explanation":
+                    "YET обычно стоит в конце отрицательного предложения.",
             },
+
+
+            # SECTION 8
 
             {
                 "order": 15,
-                "prompt": "I ___ him yesterday.",
+                "section": 8,
+                "type": "choice",
+
+                "prompt":
+                    "Aruzhan is back home. She has ___ to Almaty.",
+
                 "options": [
-                    "have seen",
-                    "saw",
-                    "have saw",
-                    "seen",
+                    "been",
+                    "gone",
+                    "went",
+                    "going",
                 ],
-                "answer": "saw",
-                "explanation": "Yesterday требует Past Simple.",
+
+                "answer":
+                    "been",
+
+                "explanation":
+                    "BEEN TO означает: была там и вернулась.",
             },
 
             {
                 "order": 16,
-                "prompt": "Choose the correct sentence.",
+                "section": 8,
+                "type": "choice",
+
+                "prompt":
+                    "Dad isn't home. He has ___ to the shop.",
+
                 "options": [
-                    "I have went home.",
-                    "I have gone home.",
-                    "I have go home.",
-                    "I has gone home.",
+                    "gone",
+                    "been",
+                    "went",
+                    "go",
                 ],
-                "answer": "I have gone home.",
-                "explanation": "Go — went — gone; после have нужна третья форма.",
+
+                "answer":
+                    "gone",
+
+                "explanation":
+                    "GONE TO означает: ушёл и ещё не вернулся.",
             },
+
+
+            # SECTION 9
 
             {
                 "order": 17,
-                "prompt": "Choose the correct sentence.",
+                "section": 9,
+                "type": "choice",
+
+                "prompt":
+                    "I have lived here ___ five years.",
+
                 "options": [
-                    "She has saw the film.",
-                    "She has seen the film.",
-                    "She have seen the film.",
-                    "She has see the film.",
+                    "for",
+                    "since",
+                    "ago",
+                    "last",
                 ],
-                "answer": "She has seen the film.",
-                "explanation": "See — saw — seen.",
+
+                "answer":
+                    "for",
+
+                "explanation":
+                    "FOR показывает продолжительность.",
             },
 
             {
                 "order": 18,
-                "prompt": "Choose the correct sentence with NEVER.",
+                "section": 9,
+                "type": "choice",
+
+                "prompt":
+                    "She has worked here ___ 2022.",
+
                 "options": [
-                    "I haven't never been there.",
-                    "I have never been there.",
-                    "I never have been not there.",
-                    "I did never been there.",
+                    "since",
+                    "for",
+                    "ago",
+                    "during",
                 ],
-                "answer": "I have never been there.",
-                "explanation": "Never уже содержит отрицательное значение.",
+
+                "answer":
+                    "since",
+
+                "explanation":
+                    "SINCE показывает начальную точку.",
             },
+
+
+            # SECTION 10
 
             {
                 "order": 19,
-                "prompt": "Marat has ___ to Astana and is back now.",
-                "options": ["gone", "been", "went", "go"],
-                "answer": "been",
-                "explanation": "Been to означает, что человек был там и вернулся.",
+                "section": 10,
+                "type": "choice",
+
+                "prompt":
+                    "I ___ this film yesterday.",
+
+                "options": [
+                    "saw",
+                    "have seen",
+                    "have saw",
+                    "seen",
+                ],
+
+                "answer":
+                    "saw",
+
+                "explanation":
+                    "YESTERDAY → завершённое прошлое → Past Simple.",
             },
 
             {
                 "order": 20,
-                "prompt": "Marat has ___ to Astana and is still there.",
-                "options": ["been", "gone", "went", "going"],
-                "answer": "gone",
-                "explanation": "Gone to означает, что человек ещё не вернулся.",
-            },
+                "section": 10,
+                "type": "choice",
 
-            {
-                "order": 21,
-                "prompt": "Choose the correct word order.",
-                "options": [
-                    "She just has arrived.",
-                    "She has just arrived.",
-                    "She has arrived just has.",
-                    "She did just arrived.",
-                ],
-                "answer": "She has just arrived.",
-                "explanation": "Just обычно стоит между have/has и третьей формой.",
-            },
+                "prompt":
+                    "I ___ this film before.",
 
-            {
-                "order": 22,
-                "prompt": "Which sentence describes life experience?",
                 "options": [
-                    "I visited Turkey in 2024.",
-                    "I have visited Turkey.",
-                    "I am visiting Turkey yesterday.",
-                    "I have visited Turkey last year.",
+                    "have seen",
+                    "saw yesterday",
+                    "have saw",
+                    "am seeing",
                 ],
-                "answer": "I have visited Turkey.",
-                "explanation": "Без точного времени Present Perfect может описывать жизненный опыт.",
-            },
 
-            {
-                "order": 23,
-                "prompt": "Choose the correct question.",
-                "options": [
-                    "Did you finished yet?",
-                    "Have you finished yet?",
-                    "Do you have finished yet?",
-                    "Have you finish yet?",
-                ],
-                "answer": "Have you finished yet?",
-                "explanation": "Present Perfect question: Have + subject + third form?",
-            },
+                "answer":
+                    "have seen",
 
-            {
-                "order": 24,
-                "prompt": "Choose the correct pair.",
-                "options": [
-                    "I have seen him yesterday. / I saw him before.",
-                    "I saw him yesterday. / I have seen him before.",
-                    "I have saw him yesterday. / I seen him before.",
-                    "I saw him yesterday. / I have saw him before.",
-                ],
-                "answer": "I saw him yesterday. / I have seen him before.",
-                "explanation": "Yesterday → Past Simple; опыт без точного времени → Present Perfect.",
+                "explanation":
+                    "Опыт без точного времени → Present Perfect.",
             },
 
         ]
 
-        for data in exercises:
+
+        # =================================================
+        # FINAL TEST
+        # 10 NEW QUESTIONS
+        # =================================================
+
+        final_test = [
+
+            {
+                "order": 21,
+
+                "prompt":
+                    "Tom ___ already eaten.",
+
+                "options": [
+                    "has",
+                    "have",
+                    "did",
+                    "is",
+                ],
+
+                "answer":
+                    "has",
+
+                "explanation":
+                    "Tom = HE → HAS.",
+            },
+
+            {
+                "order": 22,
+
+                "prompt":
+                    "They have ___ the problem.",
+
+                "options": [
+                    "solved",
+                    "solve",
+                    "solving",
+                    "did solve",
+                ],
+
+                "answer":
+                    "solved",
+
+                "explanation":
+                    "После HAVE нужна третья форма.",
+            },
+
+            {
+                "order": 23,
+
+                "prompt":
+                    "Choose the correct negative sentence.",
+
+                "options": [
+                    "She hasn't finished yet.",
+                    "She doesn't finished yet.",
+                    "She hasn't finish yet.",
+                    "She didn't finished yet.",
+                ],
+
+                "answer":
+                    "She hasn't finished yet.",
+
+                "explanation":
+                    "Present Perfect negative = HASN'T + V3.",
+            },
+
+            {
+                "order": 24,
+
+                "prompt":
+                    "___ you ever seen snow in May?",
+
+                "options": [
+                    "Have",
+                    "Did",
+                    "Has",
+                    "Are",
+                ],
+
+                "answer":
+                    "Have",
+
+                "explanation":
+                    "YOU используется с HAVE.",
+            },
+
+            {
+                "order": 25,
+
+                "prompt":
+                    "Ali is still in Dubai. He has ___ there.",
+
+                "options": [
+                    "gone",
+                    "been",
+                    "went",
+                    "go",
+                ],
+
+                "answer":
+                    "gone",
+
+                "explanation":
+                    "Он ещё там → HAS GONE TO.",
+            },
+
+            {
+                "order": 26,
+
+                "prompt":
+                    "We have known each other ___ ten years.",
+
+                "options": [
+                    "for",
+                    "since",
+                    "ago",
+                    "last",
+                ],
+
+                "answer":
+                    "for",
+
+                "explanation":
+                    "TEN YEARS — продолжительность → FOR.",
+            },
+
+            {
+                "order": 27,
+
+                "prompt":
+                    "She has lived in Karaganda ___ 2020.",
+
+                "options": [
+                    "since",
+                    "for",
+                    "ago",
+                    "from",
+                ],
+
+                "answer":
+                    "since",
+
+                "explanation":
+                    "2020 — начальная точка → SINCE.",
+            },
+
+            {
+                "order": 28,
+
+                "prompt":
+                    "Choose the correct sentence.",
+
+                "options": [
+                    "I saw him last week.",
+                    "I have seen him last week.",
+                    "I have saw him last week.",
+                    "I seen him last week.",
+                ],
+
+                "answer":
+                    "I saw him last week.",
+
+                "explanation":
+                    "LAST WEEK требует Past Simple.",
+            },
+
+            {
+                "order": 29,
+
+                "prompt":
+                    "Choose the sentence about life experience.",
+
+                "options": [
+                    "I have visited Japan.",
+                    "I visited Japan in 2023.",
+                    "I am visiting Japan yesterday.",
+                    "I have visited Japan last year.",
+                ],
+
+                "answer":
+                    "I have visited Japan.",
+
+                "explanation":
+                    "Опыт без точного времени → Present Perfect.",
+            },
+
+            {
+                "order": 30,
+
+                "prompt":
+                    "Choose the fully correct sentence.",
+
+                "options": [
+                    "She has just finished her work.",
+                    "She just has finish her work.",
+                    "She has just finish her work.",
+                    "She did just finished her work.",
+                ],
+
+                "answer":
+                    "She has just finished her work.",
+
+                "explanation":
+                    "HAS + JUST + V3.",
+            },
+
+        ]
+
+
+        all_exercises = (
+            training
+            +
+            final_test
+        )
+
+
+        valid_orders = [
+            item["order"]
+            for item in all_exercises
+        ]
+
+
+        for data in all_exercises:
+
+            if data["order"] <= 20:
+
+                section = (
+                    section_objects[
+                        data["section"]
+                    ]
+                )
+
+            else:
+
+                section = None
+
 
             GrammarExercise.objects.update_or_create(
                 lesson=lesson,
                 order=data["order"],
+
                 defaults={
-                    "exercise_type": GrammarExercise.Type.CHOICE,
-                    "prompt": data["prompt"],
-                    "options": data["options"],
-                    "correct_answer": data["answer"],
-                    "explanation": data["explanation"],
-                    "is_published": True,
+                    "section":
+                        section,
+
+                    "exercise_type":
+                        data.get(
+                            "type",
+                            "choice",
+                        ),
+
+                    "prompt":
+                        data["prompt"],
+
+                    "options":
+                        data["options"],
+
+                    "correct_answer":
+                        data["answer"],
+
+                    "explanation":
+                        data["explanation"],
+
+                    "is_published":
+                        True,
                 },
             )
 
+
+        # Удаляем старые упражнения.
+        GrammarExercise.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__in=valid_orders,
+        ).delete()
+
+
+        # Удаляем старые секции 11–14.
+        GrammarLessonSection.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__in=[
+                item["order"]
+                for item in sections
+            ],
+        ).delete()
+
+
         self.stdout.write(
             self.style.SUCCESS(
-                "✅ A1 Lesson 30 seeded: Present Perfect"
+                "✅ Interactive A1 Lesson 30 seeded"
             )
         )
 
         self.stdout.write(
-            f"Sections: {lesson.sections.count()}"
+            f"Micro rules: "
+            f"{lesson.sections.count()}"
         )
 
         self.stdout.write(
-            f"Exercises: {lesson.exercises.count()}"
+            "Training exercises: "
+            f"{lesson.exercises.filter(section__isnull=False).count()}"
+        )
+
+        self.stdout.write(
+            "Final test: "
+            f"{lesson.exercises.filter(section__isnull=True).count()}"
         )

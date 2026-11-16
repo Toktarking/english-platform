@@ -23,8 +23,31 @@ from .models import (
 
 
 QUESTIONS_PER_LESSON = 2
+PRACTICE_4_QUESTIONS_PER_LESSON = 3
 PASS_SCORE = 70
 
+
+def _questions_per_lesson(
+    block,
+):
+
+    # Practice 6:
+    # 5 lessons × 4 = 20 questions
+    if block.order == 6:
+        return 4
+
+    # Practice 5:
+    # 5 lessons × 4 = 20 questions
+    if block.order == 5:
+        return 4
+
+    # Practice 4:
+    # 6 lessons × 3 = 18 questions
+    if block.order == 4:
+        return 3
+
+    # Practice 1–3
+    return QUESTIONS_PER_LESSON
 
 def _session_key(
     block_order,
@@ -71,6 +94,12 @@ def _build_question_ids(
 
     question_ids = []
 
+    questions_per_lesson = (
+        _questions_per_lesson(
+            block
+        )
+    )
+
 
     for lesson in (
         _get_block_lessons(
@@ -96,7 +125,7 @@ def _build_question_ids(
         if (
             len(pool)
             <
-            QUESTIONS_PER_LESSON
+            questions_per_lesson
         ):
 
             raise ValueError(
@@ -108,7 +137,7 @@ def _build_question_ids(
         question_ids.extend(
             random.sample(
                 pool,
-                QUESTIONS_PER_LESSON,
+                questions_per_lesson,
             )
         )
 
@@ -171,6 +200,9 @@ def block_practice(
         1,
         2,
         3,
+        4,
+        5,
+        6,
     }:
 
         return redirect(
@@ -231,10 +263,16 @@ def block_practice(
     )
 
 
+    questions_per_lesson = (
+        _questions_per_lesson(
+            block
+        )
+    )
+
     expected_total = (
         len(lessons)
         *
-        QUESTIONS_PER_LESSON
+        questions_per_lesson
     )
 
 
@@ -245,17 +283,39 @@ def block_practice(
     )
 
 
-    if (
+    new_requested = (
+        request.method
+        ==
+        "GET"
+
+        and
+
         request.GET.get(
             "new"
         )
         ==
         "1"
+    )
 
-        or
 
-        session_key
-        not in request.session
+    # Новый случайный набор создаём ТОЛЬКО на GET.
+    # POST обязан проверять тот же набор вопросов,
+    # который пользователь реально проходил.
+    if (
+        request.method
+        ==
+        "GET"
+
+        and
+
+        (
+            new_requested
+
+            or
+
+            session_key
+            not in request.session
+        )
     ):
 
         question_ids = (
@@ -273,6 +333,20 @@ def block_practice(
 
         request.session.modified = (
             True
+        )
+
+
+    # Если сессия исчезла во время теста,
+    # не проверяем ответы против нового набора.
+    if (
+        session_key
+        not in request.session
+    ):
+
+        return redirect(
+            request.path
+            +
+            "?new=1"
         )
 
 
@@ -497,7 +571,7 @@ def block_practice(
                 "mode":
                     "result",
 
-                "block":
+                "grammar_block":
                     block,
 
                 "correct":
@@ -530,7 +604,7 @@ def block_practice(
                     len(lessons),
 
                 "questions_per_lesson":
-                    QUESTIONS_PER_LESSON,
+                    questions_per_lesson,
 
                 "expected_total":
                     expected_total,
@@ -554,7 +628,7 @@ def block_practice(
             "mode":
                 "test",
 
-            "block":
+            "grammar_block":
                 block,
 
             "questions":
@@ -567,7 +641,7 @@ def block_practice(
                 len(lessons),
 
             "questions_per_lesson":
-                QUESTIONS_PER_LESSON,
+                questions_per_lesson,
 
             "expected_total":
                 expected_total,

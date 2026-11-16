@@ -10,9 +10,10 @@ from grammar.models import (
 class Command(BaseCommand):
 
     help = (
-        "Create/update A1 Grammar Lesson 44: "
-        "Adjectives and Adverbs."
+        "Create/update interactive A1 Grammar "
+        "Lesson 44: Adjectives and Adverbs."
     )
+
 
     def handle(self, *args, **options):
 
@@ -20,80 +21,76 @@ class Command(BaseCommand):
             level="A1",
             order=44,
             defaults={
-                "title": "Прилагательные и наречия",
-                "slug": "adjectives-and-adverbs",
-                "theory_text": "Adjectives and Adverbs.",
-                "estimated_minutes": 45,
-                "pass_score": 70,
-                "xp_reward": 100,
-                "is_published": True,
+                "title":
+                    "Прилагательные и наречия",
+
+                "slug":
+                    "adjectives-and-adverbs",
+
+                "theory_text":
+                    "Adjectives and Adverbs.",
+
+                "estimated_minutes":
+                    20,
+
+                "pass_score":
+                    70,
+
+                "xp_reward":
+                    100,
+
+                "is_published":
+                    True,
             },
         )
+
+
+        # =================================================
+        # 10 MICRO RULES
+        # =================================================
 
         sections = [
 
             {
                 "order": 1,
-                "title": "Прилагательное и наречие",
-                "body": """Прилагательное описывает человека, предмет, место или ситуацию.
+                "title":
+                    "Adjective или Adverb?",
 
-Примеры:
+                "body":
+                    """Adjective описывает
+человека или предмет.
+
+a careful driver
 
 a beautiful city
 
 a difficult task
 
-a careful driver
+Adverb обычно описывает действие.
 
-Наречие обычно описывает действие.
+drive carefully
 
-Примеры:
+speak quietly
 
-speak slowly
+work quickly
 
-work carefully
+Коротко:
 
-arrive early
+noun → adjective
 
-Главное различие:
-
-adjective → описывает существительное
-
-adverb → описывает действие""",
+verb → adverb.""",
             },
+
 
             {
                 "order": 2,
-                "title": "Сравните adjective и adverb",
-                "body": """Сравните:
+                "title":
+                    "CAREFUL → CAREFULLY",
 
-She is a careful driver.
+                "body":
+                    """Большинство наречий образуется:
 
-Careful описывает существительное driver.
-
-She drives carefully.
-
-Carefully описывает действие drives.
-
-Ещё пример:
-
-He is a slow worker.
-
-He works slowly.
-
-Quiet person → speaks quietly.
-
-Главный вопрос:
-
-что описывает слово — предмет или действие?""",
-            },
-
-            {
-                "order": 3,
-                "title": "Как образуются наречия",
-                "body": """Большинство наречий образуется:
-
-adjective + -ly
+adjective + LY
 
 slow → slowly
 
@@ -103,9 +100,23 @@ quick → quickly
 
 quiet → quietly
 
-polite → politely
+Пример:
 
-Если прилагательное заканчивается на Y:
+She is a careful driver.
+
+She drives carefully.""",
+            },
+
+
+            {
+                "order": 3,
+                "title":
+                    "Y меняется: EASY → EASILY",
+
+                "body":
+                    """Если adjective заканчивается на Y:
+
+Y часто меняется на I.
 
 easy → easily
 
@@ -115,51 +126,49 @@ angry → angrily
 
 heavy → heavily
 
-На -LE:
+Пример:
 
-simple → simply
+The task is easy.
 
-gentle → gently
-
-terrible → terribly""",
+She completed it easily.""",
             },
+
 
             {
                 "order": 4,
-                "title": "GOOD и WELL",
-                "body": """GOOD — прилагательное.
+                "title":
+                    "GOOD и WELL",
+
+                "body":
+                    """GOOD — adjective.
 
 She is a good teacher.
 
-This is a good idea.
-
 The food is good.
 
-WELL — наречие.
+WELL — обычно adverb.
 
 She teaches well.
 
 He speaks English well.
 
-They work well together.
-
-Сравните:
+Сравни:
 
 He is a good singer.
 
-He sings well.
-
-WELL также может быть прилагательным со значением «здоров»:
-
-I am well.""",
+He sings well.""",
             },
+
 
             {
                 "order": 5,
-                "title": "После TO BE — прилагательное",
-                "body": """После am/is/are для описания подлежащего обычно используется adjective.
+                "title":
+                    "После BE нужен adjective",
 
-Правильно:
+                "body":
+                    """После AM / IS / ARE
+обычно используем adjective,
+когда описываем подлежащее.
 
 She is happy.
 
@@ -167,21 +176,22 @@ He is tired.
 
 The room is quiet.
 
-They are careful.
-
-Неправильно:
+Не:
 
 She is happily.
 
-He is carefully.
-
-После TO BE мы обычно описываем состояние или качество подлежащего.""",
+He is carefully.""",
             },
+
 
             {
                 "order": 6,
-                "title": "LOOK, FEEL, SOUND, SMELL, TASTE",
-                "body": """После некоторых глаголов часто используется прилагательное:
+                "title":
+                    "LOOK, FEEL, SOUND, TASTE",
+
+                "body":
+                    """После некоторых глаголов
+часто используется adjective.
 
 look
 
@@ -193,12 +203,6 @@ smell
 
 taste
 
-seem
-
-become
-
-get
-
 Примеры:
 
 You look tired.
@@ -207,756 +211,787 @@ She feels nervous.
 
 That sounds interesting.
 
-The soup smells delicious.
-
-The cake tastes good.
-
-Важно:
-
-You look tired.
-
-Не:
-
-You look tiredly.""",
+The soup tastes good.""",
             },
+
 
             {
                 "order": 7,
-                "title": "LOOK и LOOK AT",
-                "body": """LOOK + adjective описывает внешний вид.
+                "title":
+                    "FAST, HARD, LATE, EARLY",
 
-She looked angry.
+                "body":
+                    """Некоторые adverbs
+не получают -LY.
 
-Она выглядела сердитой.
-
-LOOK AT + object + adverb описывает, как человек посмотрел.
-
-She looked at me angrily.
-
-Она сердито посмотрела на меня.
-
-Сравните:
-
-She looks beautiful.
-
-She looked at him angrily.""",
-            },
-
-            {
-                "order": 8,
-                "title": "FAST, HARD, LATE",
-                "body": """Некоторые наречия имеют ту же форму, что и прилагательное.
-
-FAST:
+fast:
 
 a fast car
 
 drive fast
 
-Не:
+hard:
 
-fastly
-
-HARD:
-
-a hard task
+a hard job
 
 work hard
 
-HARDLY имеет другое значение:
-
-hardly = едва, почти не
-
-He works hard.
-— работает усердно.
-
-He hardly works.
-— почти не работает.
-
-LATE:
+late:
 
 a late train
 
-arrive late""",
+arrive late
+
+early:
+
+an early meeting
+
+arrive early.""",
             },
+
+
+            {
+                "order": 8,
+                "title":
+                    "HARD и HARDLY",
+
+                "body":
+                    """HARD и HARDLY —
+не одно и то же.
+
+He works hard.
+
+→ он усердно работает.
+
+He hardly works.
+
+→ он почти не работает.
+
+То есть:
+
+hard = усердно
+
+hardly = едва / почти не.""",
+            },
+
 
             {
                 "order": 9,
-                "title": "LATE/LATELY, HIGH/HIGHLY",
-                "body": """LATE означает поздно.
+                "title":
+                    "TOO и ENOUGH",
 
-He arrived late.
+                "body":
+                    """TOO означает:
 
-LATELY означает в последнее время.
-
-I haven't seen him lately.
-
-HIGH — физически высоко.
-
-The bird flew high.
-
-HIGHLY — очень, высоко в переносном смысле.
-
-I highly recommend this book.
-
-a highly successful company
-
-Важно помнить, что добавление -ly иногда меняет значение слова.""",
-            },
-
-            {
-                "order": 10,
-                "title": "Наречия степени",
-                "body": """Наречия степени показывают, насколько сильно выражено качество.
-
-Частые слова:
-
-very
-
-really
-
-quite
-
-extremely
-
-too
-
-enough
-
-almost
-
-completely
-
-Примеры:
-
-very interesting
-
-really good
-
-extremely difficult
+слишком.
 
 too expensive
 
-too quickly
+too slowly
 
-ENOUGH ставится после adjective/adverb:
+ENOUGH после adjective/adverb:
 
 old enough
 
+fast enough
+
 quickly enough
 
-Но перед существительным:
+Но перед noun:
 
 enough time
 
-enough money""",
+enough money.""",
             },
 
+
             {
-                "order": 11,
-                "title": "SO и SUCH",
-                "body": """SO используется перед adjective или adverb.
+                "order": 10,
+                "title":
+                    "SO и SUCH",
+
+                "body":
+                    """SO используется
+перед adjective или adverb.
 
 so beautiful
 
-so difficult
+so quickly
 
-so slowly
+SUCH используется
+с существительным.
 
-Пример:
-
-The film was so interesting.
-
-SUCH используется с существительным.
-
-such a beautiful place
+such a beautiful city
 
 such an interesting book
 
-such a difficult question
-
-Сравните:
+Сравни:
 
 The book is so interesting.
 
 It is such an interesting book.""",
             },
 
-            {
-                "order": 12,
-                "title": "Наречия частоты",
-                "body": """Частые наречия частоты:
-
-always
-
-usually
-
-often
-
-sometimes
-
-rarely
-
-hardly ever
-
-never
-
-Перед смысловым глаголом:
-
-I often read.
-
-She usually arrives early.
-
-После TO BE:
-
-She is always busy.
-
-He is usually late.
-
-После вспомогательного глагола:
-
-I have never seen it.
-
-She can always help.""",
-            },
-
-            {
-                "order": 13,
-                "title": "Порядок наречий",
-                "body": """Наречие образа действия обычно ставится после глагола или дополнения.
-
-Правильно:
-
-She speaks English fluently.
-
-Менее естественно:
-
-She speaks fluently English.
-
-Часто используется порядок:
-
-manner + place + time
-
-Пример:
-
-She spoke quietly in the office yesterday.
-
-quietly — как
-
-in the office — где
-
-yesterday — когда""",
-            },
-
-            {
-                "order": 14,
-                "title": "Как выбрать форму",
-                "body": """Слово описывает существительное?
-
-→ adjective
-
-She is a careful driver.
-
-Слово описывает действие?
-
-→ adverb
-
-She drives carefully.
-
-После be, look, feel, sound, smell, taste?
-
-→ часто adjective
-
-The soup smells good.
-
-Это fast, hard, late или early?
-
-Форма наречия может совпадать с прилагательным:
-
-drive fast
-
-work hard
-
-arrive late
-
-get up early""",
-            },
-
         ]
 
+
+        section_objects = {}
+
+
         for data in sections:
-            GrammarLessonSection.objects.update_or_create(
+
+            section, _ = GrammarLessonSection.objects.update_or_create(
                 lesson=lesson,
                 order=data["order"],
                 defaults={
-                    "title": data["title"],
-                    "body": data["body"],
+                    "title":
+                        data["title"],
+                    "body":
+                        data["body"],
                 },
             )
 
-        exercises = [
+            section_objects[data["order"]] = section
 
+
+        # =================================================
+        # 20 TRAINING EXERCISES
+        # =================================================
+
+        training = [
+
+            # SECTION 1
             {
                 "order": 1,
-                "prompt": "He is a very ___ student.",
+                "section": 1,
+                "type": "choice",
+                "prompt":
+                    "He is a very ___ driver.",
                 "options": [
-                    "carefully",
                     "careful",
-                    "well",
-                    "slowly",
+                    "carefully",
+                    "care",
+                    "caringly",
                 ],
-                "answer": "careful",
-                "explanation": (
-                    "Student — существительное, поэтому нужен adjective."
-                ),
+                "answer":
+                    "careful",
+                "explanation":
+                    "DRIVER — noun, поэтому нужен adjective.",
             },
 
             {
                 "order": 2,
-                "prompt": "He studies very ___.",
+                "section": 1,
+                "type": "choice",
+                "prompt":
+                    "He drives very ___.",
                 "options": [
-                    "careful",
                     "carefully",
-                    "good",
+                    "careful",
+                    "care",
                     "carefulness",
                 ],
-                "answer": "carefully",
-                "explanation": (
-                    "Слово описывает действие studies → adverb."
-                ),
+                "answer":
+                    "carefully",
+                "explanation":
+                    "DRIVES — действие, поэтому нужен adverb.",
             },
 
+
+            # SECTION 2
             {
                 "order": 3,
-                "prompt": "She answered the question ___.",
+                "section": 2,
+                "type": "choice",
+                "prompt":
+                    "The baby is sleeping ___.",
                 "options": [
-                    "correct",
-                    "correctly",
-                    "correctness",
-                    "more correct",
+                    "quietly",
+                    "quiet",
+                    "quietness",
+                    "quieter",
                 ],
-                "answer": "correctly",
-                "explanation": (
-                    "Answered — действие, поэтому correctly."
-                ),
+                "answer":
+                    "quietly",
+                "explanation":
+                    "SLEEPING описывается наречием QUIETLY.",
             },
 
             {
                 "order": 4,
-                "prompt": "The answer was ___.",
+                "section": 2,
+                "type": "choice",
+                "prompt":
+                    "She answered the question ___.",
                 "options": [
                     "correctly",
                     "correct",
                     "correction",
                     "correcting",
                 ],
-                "answer": "correct",
-                "explanation": (
-                    "После was для описания answer нужен adjective."
-                ),
+                "answer":
+                    "correctly",
+                "explanation":
+                    "ANSWERED → действие → CORRECTLY.",
             },
 
+
+            # SECTION 3
             {
                 "order": 5,
-                "prompt": "The baby is sleeping ___.",
+                "section": 3,
+                "type": "choice",
+                "prompt":
+                    "She completed the task ___.",
                 "options": [
-                    "quiet",
-                    "quietly",
-                    "quietness",
-                    "quieter adjective only",
+                    "easily",
+                    "easy",
+                    "easyly",
+                    "easier",
                 ],
-                "answer": "quietly",
-                "explanation": (
-                    "Quietly описывает действие sleeping."
-                ),
+                "answer":
+                    "easily",
+                "explanation":
+                    "EASY → EASILY.",
             },
 
             {
                 "order": 6,
-                "prompt": "The room is very ___.",
+                "section": 3,
+                "type": "choice",
+                "prompt":
+                    "The children played ___.",
                 "options": [
-                    "quietly",
-                    "quiet",
-                    "quietness",
-                    "silence",
+                    "happily",
+                    "happy",
+                    "happyly",
+                    "happier",
                 ],
-                "answer": "quiet",
-                "explanation": (
-                    "После is используется adjective quiet."
-                ),
+                "answer":
+                    "happily",
+                "explanation":
+                    "HAPPY → HAPPILY.",
             },
 
+
+            # SECTION 4
             {
                 "order": 7,
-                "prompt": "She speaks French very ___.",
+                "section": 4,
+                "type": "choice",
+                "prompt":
+                    "She is a ___ teacher.",
                 "options": [
                     "good",
                     "well",
                     "goodly",
-                    "bestly",
+                    "betterly",
                 ],
-                "answer": "well",
-                "explanation": (
-                    "Good — adjective, well — adverb."
-                ),
+                "answer":
+                    "good",
+                "explanation":
+                    "TEACHER — noun → GOOD.",
             },
 
             {
                 "order": 8,
-                "prompt": "She is a ___ French teacher.",
+                "section": 4,
+                "type": "choice",
+                "prompt":
+                    "She teaches English very ___.",
                 "options": [
                     "well",
                     "good",
                     "goodly",
-                    "carefully",
+                    "bestly",
                 ],
-                "answer": "good",
-                "explanation": (
-                    "Teacher — существительное → good."
-                ),
+                "answer":
+                    "well",
+                "explanation":
+                    "TEACHES — действие → WELL.",
             },
 
+
+            # SECTION 5
             {
                 "order": 9,
-                "prompt": "You look ___ today.",
+                "section": 5,
+                "type": "choice",
+                "prompt":
+                    "The room is very ___.",
                 "options": [
-                    "happily",
-                    "happy",
-                    "happiness",
-                    "wellly",
+                    "quiet",
+                    "quietly",
+                    "quietness",
+                    "quieterly",
                 ],
-                "answer": "happy",
-                "explanation": (
-                    "После look для описания внешнего вида используется adjective."
-                ),
+                "answer":
+                    "quiet",
+                "explanation":
+                    "После IS для описания комнаты → adjective.",
             },
 
             {
                 "order": 10,
-                "prompt": "The children played ___.",
+                "section": 5,
+                "type": "choice",
+                "prompt":
+                    "She is ___.",
                 "options": [
                     "happy",
                     "happily",
                     "happiness",
-                    "happier adjective only",
+                    "happyly",
                 ],
-                "answer": "happily",
-                "explanation": (
-                    "Played — действие → happily."
-                ),
+                "answer":
+                    "happy",
+                "explanation":
+                    "После BE используется adjective.",
             },
 
+
+            # SECTION 6
             {
                 "order": 11,
-                "prompt": "He runs very ___.",
+                "section": 6,
+                "type": "choice",
+                "prompt":
+                    "You look ___ today.",
                 "options": [
-                    "fast",
-                    "fastly",
-                    "fasterly",
-                    "speed",
+                    "tired",
+                    "tiredly",
+                    "tiringly",
+                    "tire",
                 ],
-                "answer": "fast",
-                "explanation": (
-                    "Fast может быть наречием; fastly не используется."
-                ),
+                "answer":
+                    "tired",
+                "explanation":
+                    "LOOK + adjective.",
             },
 
             {
                 "order": 12,
-                "prompt": "She works ___.",
+                "section": 6,
+                "type": "choice",
+                "prompt":
+                    "The soup tastes ___.",
                 "options": [
-                    "hardly, meaning diligently",
-                    "hard",
-                    "hardily",
-                    "hardness",
+                    "delicious",
+                    "deliciously",
+                    "delightfully taste",
+                    "deliciousness",
                 ],
-                "answer": "hard",
-                "explanation": (
-                    "Work hard = работать усердно."
-                ),
+                "answer":
+                    "delicious",
+                "explanation":
+                    "После TASTE для описания качества → adjective.",
             },
 
+
+            # SECTION 7
             {
                 "order": 13,
-                "prompt": "I can ___ understand him.",
+                "section": 7,
+                "type": "choice",
+                "prompt":
+                    "He can run very ___.",
                 "options": [
-                    "hard",
-                    "hardly",
-                    "harder",
-                    "hardworking",
+                    "fast",
+                    "fastly",
+                    "fastness",
+                    "fasterly",
                 ],
-                "answer": "hardly",
-                "explanation": (
-                    "Hardly = едва, почти не."
-                ),
+                "answer":
+                    "fast",
+                "explanation":
+                    "FAST может быть и adjective, и adverb.",
             },
 
             {
                 "order": 14,
-                "prompt": "The food tastes ___.",
+                "section": 7,
+                "type": "choice",
+                "prompt":
+                    "She arrived ___.",
                 "options": [
-                    "wonderfully",
-                    "wonderful",
-                    "wonder",
-                    "wellly",
+                    "late",
+                    "lately",
+                    "lately yesterday",
+                    "latefully",
                 ],
-                "answer": "wonderful",
-                "explanation": (
-                    "После taste для описания качества используется adjective."
-                ),
+                "answer":
+                    "late",
+                "explanation":
+                    "ARRIVE LATE = прибыть поздно.",
             },
 
+
+            # SECTION 8
             {
                 "order": 15,
-                "prompt": "They completed the project ___.",
+                "section": 8,
+                "type": "choice",
+                "prompt":
+                    "She works very ___.",
                 "options": [
-                    "successful",
-                    "successfully",
-                    "success",
-                    "more success",
+                    "hard",
+                    "hardly",
+                    "hardly meaning diligently",
+                    "hardlyly",
                 ],
-                "answer": "successfully",
-                "explanation": (
-                    "Completed — действие → successfully."
-                ),
+                "answer":
+                    "hard",
+                "explanation":
+                    "WORK HARD = работать усердно.",
             },
 
             {
                 "order": 16,
-                "prompt": "Choose the correct sentence.",
+                "section": 8,
+                "type": "choice",
+                "prompt":
+                    "I can ___ hear you.",
                 "options": [
-                    "She speaks English good.",
-                    "She speaks English well.",
-                    "She speaks English goodly.",
-                    "She well speaks English good.",
+                    "hardly",
+                    "hard",
+                    "harder",
+                    "hardest",
                 ],
-                "answer": "She speaks English well.",
-                "explanation": (
-                    "Действие speaks описывается наречием well."
-                ),
+                "answer":
+                    "hardly",
+                "explanation":
+                    "HARDLY = едва / почти не.",
             },
 
+
+            # SECTION 9
             {
                 "order": 17,
-                "prompt": "Choose the correct sentence.",
+                "section": 9,
+                "type": "choice",
+                "prompt":
+                    "This bag is ___ heavy for me.",
                 "options": [
-                    "He is carefully.",
-                    "He is careful.",
-                    "He carefully is.",
-                    "He is carefulness.",
+                    "too",
+                    "enough",
+                    "very enough",
+                    "such",
                 ],
-                "answer": "He is careful.",
-                "explanation": (
-                    "После be для описания подлежащего нужен adjective."
-                ),
+                "answer":
+                    "too",
+                "explanation":
+                    "TOO HEAVY = слишком тяжёлый.",
             },
 
             {
                 "order": 18,
-                "prompt": "Choose the correct sentence.",
+                "section": 9,
+                "type": "choice",
+                "prompt":
+                    "He is old ___ to drive.",
                 "options": [
-                    "He drives careful.",
-                    "He drives carefully.",
-                    "He carefully driver.",
-                    "He drives carefulness.",
+                    "enough",
+                    "too",
+                    "very",
+                    "such",
                 ],
-                "answer": "He drives carefully.",
-                "explanation": (
-                    "Действие drives описывается adverb carefully."
-                ),
+                "answer":
+                    "enough",
+                "explanation":
+                    "Adjective + ENOUGH.",
             },
 
+
+            # SECTION 10
             {
                 "order": 19,
-                "prompt": "Choose the correct HARD/HARDLY pair.",
+                "section": 10,
+                "type": "choice",
+                "prompt":
+                    "The film was ___ interesting.",
                 "options": [
-                    (
-                        "She works hard. / "
-                        "She hardly works."
-                    ),
-                    (
-                        "She works hardly diligently. / "
-                        "She hard works."
-                    ),
-                    (
-                        "She works hardily. / "
-                        "She hardly means strongly."
-                    ),
-                    (
-                        "She works hardness. / "
-                        "She work hardly hard."
-                    ),
+                    "so",
+                    "such",
+                    "such an",
+                    "enough",
                 ],
-                "answer": (
-                    "She works hard. / "
-                    "She hardly works."
-                ),
-                "explanation": (
-                    "Hard = усердно; hardly = почти не."
-                ),
+                "answer":
+                    "so",
+                "explanation":
+                    "SO + adjective.",
             },
 
             {
                 "order": 20,
-                "prompt": "Choose the correct LATE/LATELY pair.",
+                "section": 10,
+                "type": "choice",
+                "prompt":
+                    "It was ___ interesting film.",
                 "options": [
-                    (
-                        "He arrived late. / "
-                        "I haven't seen him lately."
-                    ),
-                    (
-                        "He arrived lately yesterday. / "
-                        "I haven't seen him late recently."
-                    ),
-                    (
-                        "He late arrived. / "
-                        "I lately him see."
-                    ),
-                    (
-                        "He arrived latefully. / "
-                        "I haven't seen him latest."
-                    ),
+                    "such an",
+                    "so",
+                    "so an",
+                    "such",
                 ],
-                "answer": (
-                    "He arrived late. / "
-                    "I haven't seen him lately."
-                ),
-                "explanation": (
-                    "Late = поздно; lately = в последнее время."
-                ),
-            },
-
-            {
-                "order": 21,
-                "prompt": "Choose the correct sentence after LOOK.",
-                "options": [
-                    "You look beautifully.",
-                    "You look beautiful.",
-                    "You beautifully look.",
-                    "You look beauty.",
-                ],
-                "answer": "You look beautiful.",
-                "explanation": (
-                    "Look + adjective для описания внешнего вида."
-                ),
-            },
-
-            {
-                "order": 22,
-                "prompt": "Choose the correct word order.",
-                "options": [
-                    "She speaks fluently English.",
-                    "She speaks English fluently.",
-                    "She English fluently speaks always.",
-                    "She speaks English fluent.",
-                ],
-                "answer": "She speaks English fluently.",
-                "explanation": (
-                    "Если есть дополнение, adverb обычно ставится после него."
-                ),
-            },
-
-            {
-                "order": 23,
-                "prompt": "Choose the correct SO/SUCH pair.",
-                "options": [
-                    (
-                        "The book is so interesting. / "
-                        "It is such an interesting book."
-                    ),
-                    (
-                        "The book is such interesting. / "
-                        "It is so an interesting book."
-                    ),
-                    (
-                        "The book so is interesting. / "
-                        "It is such interesting."
-                    ),
-                    (
-                        "The book is so an interesting. / "
-                        "It is such interesting book."
-                    ),
-                ],
-                "answer": (
-                    "The book is so interesting. / "
-                    "It is such an interesting book."
-                ),
-                "explanation": (
-                    "SO + adjective; SUCH + a/an + adjective + noun."
-                ),
-            },
-
-            {
-                "order": 24,
-                "prompt": "Choose the fully correct sequence.",
-                "options": [
-                    (
-                        "careful → carefully / "
-                        "easy → easily / "
-                        "good → well / "
-                        "fast → fast / "
-                        "hard → hard"
-                    ),
-                    (
-                        "careful → carefuly / "
-                        "easy → easyly / "
-                        "good → goodly / "
-                        "fast → fastly / "
-                        "hard → hardly"
-                    ),
-                    (
-                        "careful → care / "
-                        "easy → easiness / "
-                        "good → bestly / "
-                        "fast → quickly fast / "
-                        "hard → hardily"
-                    ),
-                    (
-                        "careful → more careful adverb / "
-                        "easy → easilyly / "
-                        "good → wellly / "
-                        "fast → fastestly / "
-                        "hard → hardestly"
-                    ),
-                ],
-                "answer": (
-                    "careful → carefully / "
-                    "easy → easily / "
-                    "good → well / "
-                    "fast → fast / "
-                    "hard → hard"
-                ),
-                "explanation": (
-                    "Это основные формы adjective → adverb из урока."
-                ),
+                "answer":
+                    "such an",
+                "explanation":
+                    "SUCH + article + adjective + noun.",
             },
 
         ]
 
-        for data in exercises:
+
+        # =================================================
+        # FINAL TEST — 10 NEW QUESTIONS
+        # =================================================
+
+        final_test = [
+
+            {
+                "order": 21,
+                "prompt":
+                    "The manager spoke very ___.",
+                "options": [
+                    "clearly",
+                    "clear",
+                    "clearness",
+                    "clearer",
+                ],
+                "answer":
+                    "clearly",
+                "explanation":
+                    "SPOKE — действие → adverb.",
+            },
+
+            {
+                "order": 22,
+                "prompt":
+                    "This is a very ___ explanation.",
+                "options": [
+                    "clear",
+                    "clearly",
+                    "clearness",
+                    "clearly explained",
+                ],
+                "answer":
+                    "clear",
+                "explanation":
+                    "EXPLANATION — noun → adjective.",
+            },
+
+            {
+                "order": 23,
+                "prompt":
+                    "The students completed the test ___.",
+                "options": [
+                    "quickly",
+                    "quick",
+                    "quickness",
+                    "quicker adjective",
+                ],
+                "answer":
+                    "quickly",
+                "explanation":
+                    "COMPLETED → действие → QUICKLY.",
+            },
+
+            {
+                "order": 24,
+                "prompt":
+                    "The music sounds ___.",
+                "options": [
+                    "beautiful",
+                    "beautifully",
+                    "beauty",
+                    "beautifuller",
+                ],
+                "answer":
+                    "beautiful",
+                "explanation":
+                    "SOUND + adjective.",
+            },
+
+            {
+                "order": 25,
+                "prompt":
+                    "Choose the correct sentence.",
+                "options": [
+                    "He speaks English well.",
+                    "He speaks English good.",
+                    "He speaks English goodly.",
+                    "He well English speaks.",
+                ],
+                "answer":
+                    "He speaks English well.",
+                "explanation":
+                    "GOOD — adjective; WELL — adverb.",
+            },
+
+            {
+                "order": 26,
+                "prompt":
+                    "Choose the correct sentence.",
+                "options": [
+                    "They worked hard all day.",
+                    "They worked hardly all day.",
+                    "They hard worked all day.",
+                    "They worked hardily all day.",
+                ],
+                "answer":
+                    "They worked hard all day.",
+                "explanation":
+                    "WORK HARD = работать усердно.",
+            },
+
+            {
+                "order": 27,
+                "prompt":
+                    "The car isn't fast ___.",
+                "options": [
+                    "enough",
+                    "too",
+                    "such",
+                    "very enough",
+                ],
+                "answer":
+                    "enough",
+                "explanation":
+                    "Adjective + ENOUGH.",
+            },
+
+            {
+                "order": 28,
+                "prompt":
+                    "The task was ___ difficult for me.",
+                "options": [
+                    "too",
+                    "enough",
+                    "such a",
+                    "hardly",
+                ],
+                "answer":
+                    "too",
+                "explanation":
+                    "TOO DIFFICULT = слишком сложно.",
+            },
+
+            {
+                "order": 29,
+                "prompt":
+                    "Choose the correct SO / SUCH pair.",
+                "options": [
+                    "She is so friendly. / She is such a friendly person.",
+                    "She is such friendly. / She is so a friendly person.",
+                    "She is so a friendly. / She is such friendly person.",
+                    "She is such so friendly. / She is a so friendly person.",
+                ],
+                "answer":
+                    "She is so friendly. / She is such a friendly person.",
+                "explanation":
+                    "SO + adjective; SUCH + a/an + adjective + noun.",
+            },
+
+            {
+                "order": 30,
+                "prompt":
+                    "Choose the fully correct sequence.",
+                "options": [
+                    "careful → carefully / easy → easily / good → well / fast → fast / hard → hard",
+                    "careful → carefuly / easy → easyly / good → goodly / fast → fastly / hard → hardly",
+                    "careful → carely / easy → easilly / good → betterly / fast → quickly fast / hard → hardily",
+                    "careful → carefullyly / easy → easilyly / good → wellly / fast → fastestly / hard → hardestly",
+                ],
+                "answer":
+                    "careful → carefully / easy → easily / good → well / fast → fast / hard → hard",
+                "explanation":
+                    "Это правильные формы adjective → adverb.",
+            },
+
+        ]
+
+
+        all_exercises = training + final_test
+
+        valid_orders = [
+            item["order"]
+            for item in all_exercises
+        ]
+
+
+        for data in all_exercises:
+
+            if data["order"] <= 20:
+                section = section_objects[data["section"]]
+            else:
+                section = None
+
+
             GrammarExercise.objects.update_or_create(
                 lesson=lesson,
                 order=data["order"],
                 defaults={
-                    "exercise_type": GrammarExercise.Type.CHOICE,
-                    "prompt": data["prompt"],
-                    "options": data["options"],
-                    "correct_answer": data["answer"],
-                    "explanation": data["explanation"],
-                    "is_published": True,
+                    "section":
+                        section,
+
+                    "exercise_type":
+                        data.get(
+                            "type",
+                            "choice",
+                        ),
+
+                    "prompt":
+                        data["prompt"],
+
+                    "options":
+                        data["options"],
+
+                    "correct_answer":
+                        data["answer"],
+
+                    "explanation":
+                        data["explanation"],
+
+                    "is_published":
+                        True,
                 },
             )
 
+
+        GrammarExercise.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__in=valid_orders,
+        ).delete()
+
+
+        GrammarLessonSection.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__in=[
+                item["order"]
+                for item in sections
+            ],
+        ).delete()
+
+
         self.stdout.write(
             self.style.SUCCESS(
-                "✅ A1 Lesson 44 seeded: Adjectives and Adverbs"
+                "✅ Interactive A1 Lesson 44 seeded"
             )
         )
 
         self.stdout.write(
-            f"Sections: {lesson.sections.count()}"
+            f"Micro rules: "
+            f"{lesson.sections.count()}"
         )
 
         self.stdout.write(
-            f"Exercises: {lesson.exercises.count()}"
+            "Training exercises: "
+            f"{lesson.exercises.filter(section__isnull=False).count()}"
+        )
+
+        self.stdout.write(
+            "Final test: "
+            f"{lesson.exercises.filter(section__isnull=True).count()}"
         )

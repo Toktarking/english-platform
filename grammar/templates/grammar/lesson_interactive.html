@@ -958,7 +958,67 @@
         );
 
 
-    let current = 0;
+    const progressUrl =
+        "{% url 'grammar:study_progress' lesson.slug %}";
+
+
+    const csrfToken =
+        form.querySelector(
+            '[name="csrfmiddlewaretoken"]'
+        ).value;
+
+
+    let current = Math.min(
+        Math.max(
+            Number(
+                "{{ saved_step_index|default:0 }}"
+            )
+            ||
+            0,
+            0,
+        ),
+        Math.max(
+            steps.length - 1,
+            0,
+        ),
+    );
+
+
+    function saveProgress(
+        index
+    ) {
+
+        return fetch(
+            progressUrl,
+            {
+                method:
+                    "POST",
+
+                headers: {
+                    "Content-Type":
+                        "application/json",
+
+                    "X-CSRFToken":
+                        csrfToken,
+                },
+
+                body:
+                    JSON.stringify({
+                        current_step_index:
+                            index,
+                    }),
+
+                keepalive:
+                    true,
+            }
+        )
+        .catch(
+            function () {
+                // Не мешаем пользователю продолжать урок,
+                // даже если соединение временно пропало.
+            }
+        );
+    }
 
 
     function normalize(
@@ -1083,6 +1143,14 @@
 
 
         render();
+
+
+        saveProgress(
+            Math.min(
+                current + 1,
+                steps.length,
+            )
+        );
 
 
         return correct;
@@ -1694,6 +1762,10 @@
 
                 render();
 
+                saveProgress(
+                    current
+                );
+
                 window.scrollTo(
                     0,
                     0
@@ -1726,8 +1798,17 @@
             }
 
 
-            window.location.href =
-                "{% url 'grammar:final_test' lesson.slug %}";
+            saveProgress(
+                steps.length
+            )
+            .finally(
+                function () {
+
+                    window.location.href =
+                        "{% url 'grammar:final_test' lesson.slug %}";
+
+                }
+            );
         }
     );
 

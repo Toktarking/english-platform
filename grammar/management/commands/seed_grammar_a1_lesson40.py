@@ -10,9 +10,10 @@ from grammar.models import (
 class Command(BaseCommand):
 
     help = (
-        "Create/update A1 Grammar Lesson 40: "
-        "Modal verbs must, have to, should, may, might, need."
+        "Create/update interactive A1 Grammar "
+        "Lesson 40: modal verbs."
     )
+
 
     def handle(self, *args, **options):
 
@@ -28,140 +29,128 @@ class Command(BaseCommand):
                     "modal-verbs-must-have-to-should-"
                     "may-might-need"
                 ),
-                "theory_text": "Modal verbs and obligation.",
-                "estimated_minutes": 45,
+                "theory_text": (
+                    "Modal verbs and obligation."
+                ),
+                "estimated_minutes": 20,
                 "pass_score": 70,
                 "xp_reward": 100,
                 "is_published": True,
             },
         )
 
+
+        # =================================================
+        # 10 MICRO RULES
+        # =================================================
+
         sections = [
 
             {
                 "order": 1,
-                "title": "Что выражают модальные глаголы",
-                "body": """Модальные глаголы помогают выражать:
+                "title":
+                    "Что делают модальные глаголы?",
+
+                "body":
+                    """Модальные глаголы помогают выразить:
 
 обязанность;
-
-необходимость;
 
 совет;
 
 разрешение;
 
-вероятность;
-
 возможность;
-
-отсутствие необходимости;
 
 запрет.
 
-В этом уроке:
+Сегодня:
 
-must;
+MUST
+HAVE TO
+SHOULD
+MAY
+MIGHT
+NEED
 
-have to;
-
-should;
-
-may;
-
-might;
-
-need.
-
-После must, should, may и might используется первая форма глагола без TO.
+После MUST, SHOULD, MAY, MIGHT
+используется первая форма глагола:
 
 You must leave.
 
-She should study.
+She should rest.
 
-He may come.
-
-They might help.""",
+He may come.""",
             },
+
 
             {
                 "order": 2,
-                "title": "MUST — сильная обязанность",
-                "body": """MUST выражает:
+                "title":
+                    "MUST — сильная обязанность",
 
-сильную обязанность;
-
-необходимость;
-
-правило;
-
-приказ;
-
-настоятельное требование.
-
-Примеры:
+                "body":
+                    """MUST показывает сильную обязанность
+или важное правило.
 
 You must wear a seat belt.
 
 Students must arrive on time.
 
-I must finish this report today.
+I must finish this today.
 
-You must be careful.
-
-MUST не меняется по лицам:
+MUST не меняется:
 
 I must work.
 
 He must work.
 
-She must work.
-
 Не:
 
-He musts work.""",
+He musts work.
+
+После MUST нет TO.""",
             },
+
 
             {
                 "order": 3,
-                "title": "MUSTN'T — запрет",
-                "body": """MUST NOT сокращается до:
+                "title":
+                    "MUSTN'T — запрещено",
 
-mustn't
-
-И означает:
+                "body":
+                    """MUSTN'T означает:
 
 нельзя;
 
 запрещено.
 
-Примеры:
-
 You mustn't smoke here.
-
-Students mustn't use phones during the exam.
 
 You mustn't touch this button.
 
-Важно:
+Очень важно:
 
-MUSTN'T не означает «не нужно».
-
-Сравните:
+MUSTN'T ≠ DON'T HAVE TO
 
 You mustn't go.
-— тебе нельзя уходить.
+
+→ тебе нельзя уходить.
 
 You don't have to go.
-— тебе не нужно уходить.""",
+
+→ тебе необязательно уходить.""",
             },
+
 
             {
                 "order": 4,
-                "title": "HAVE TO — внешняя необходимость",
-                "body": """HAVE TO выражает обязанность из-за внешних обстоятельств.
+                "title":
+                    "HAVE TO — внешняя необходимость",
 
-Примеры:
+                "body":
+                    """HAVE TO показывает обязанность
+из-за правил или обстоятельств.
 
 I have to work tomorrow.
 
@@ -169,103 +158,62 @@ She has to wear a uniform.
 
 We have to leave early.
 
-They have to follow the rules.
-
 Формы:
 
-I/you/we/they → have to
+I / you / we / they
+→ have to
 
-he/she/it → has to
+he / she / it
+→ has to
 
-Пример:
+Причина обычно внешняя:
 
-I have to get up at six because my work starts at eight.
-
-Причина — расписание, а не личное решение.""",
-            },
-
-            {
-                "order": 5,
-                "title": "MUST или HAVE TO",
-                "body": """Оба выражают обязанность, но акцент различается.
-
-MUST:
-
-личное ощущение необходимости;
-
-требование говорящего;
-
-сильный приказ;
-
-правило.
-
-HAVE TO:
-
-внешняя необходимость;
+работа;
 
 расписание;
 
 закон;
 
-обстоятельства.
-
-Сравните:
-
-I must exercise more.
-— я сам считаю это необходимым.
-
-I have to wear a uniform at work.
-— это правило работы.""",
+правило.""",
             },
 
+
             {
-                "order": 6,
-                "title": "Прошлое и будущее: HAD TO и WILL HAVE TO",
-                "body": """У MUST нет обычной прошедшей формы.
+                "order": 5,
+                "title":
+                    "Прошлое и будущее: HAD TO / WILL HAVE TO",
 
-Для прошлого используется:
+                "body":
+                    """Для прошлого используем:
 
-had to
-
-Примеры:
+HAD TO
 
 I had to work yesterday.
 
 She had to leave early.
 
-They had to wait.
-
 Не:
 
-I musted work.
+musted.
 
-Для будущего часто используется:
+Для будущей необходимости:
 
-will have to
-
-Примеры:
+WILL HAVE TO
 
 I will have to work tomorrow.
 
-She will have to take an exam.
-
-They will have to move.""",
+They will have to wait.""",
             },
 
+
             {
-                "order": 7,
-                "title": "SHOULD — совет",
-                "body": """SHOULD выражает:
+                "order": 6,
+                "title":
+                    "SHOULD — совет",
 
-совет;
-
-рекомендацию;
-
-правильное действие;
-
-мягкую обязанность.
-
-Примеры:
+                "body":
+                    """SHOULD показывает совет
+или рекомендацию.
 
 You should rest.
 
@@ -273,11 +221,9 @@ She should study more.
 
 We should leave now.
 
-You should see a doctor.
-
 Отрицание:
 
-shouldn't
+SHOULDN'T
 
 You shouldn't smoke.
 
@@ -285,17 +231,21 @@ You shouldn't smoke.
 
 Should I call him?
 
-What should I do?
+MUST сильнее.
 
-MUST сильнее, чем SHOULD.""",
+SHOULD = совет.
+
+MUST = обязанность.""",
             },
 
-            {
-                "order": 8,
-                "title": "MAY и MIGHT — возможность",
-                "body": """MAY и MIGHT могут выражать вероятность.
 
-Примеры:
+            {
+                "order": 7,
+                "title":
+                    "MAY и MIGHT — возможно",
+
+                "body":
+                    """MAY и MIGHT показывают возможность.
 
 She may come later.
 
@@ -305,27 +255,30 @@ It may rain.
 
 They might not agree.
 
-Оба часто переводятся как:
+После MAY / MIGHT:
 
-«возможно».
+только base verb.
 
-MIGHT обычно может выражать немного меньшую уверенность.
+may come
 
-Сравните:
+might be
 
-She may come.
+Не:
 
-She might come.
+may comes
 
-Разница часто небольшая.""",
+might to come.""",
             },
 
-            {
-                "order": 9,
-                "title": "MAY — разрешение",
-                "body": """MAY также используется для вежливой просьбы о разрешении.
 
-Примеры:
+            {
+                "order": 8,
+                "title":
+                    "MAY — разрешение",
+
+                "body":
+                    """MAY также используется
+для вежливой просьбы о разрешении.
 
 May I come in?
 
@@ -333,53 +286,37 @@ May I ask a question?
 
 May I use your phone?
 
-May I leave early?
-
-MAY звучит более официально.
-
-CAN чаще используется в обычной разговорной речи:
+В разговорной речи часто используется CAN:
 
 Can I use your phone?
 
-May I use your phone?
-
-Оба варианта возможны, но стиль разный.""",
+MAY звучит немного формальнее.""",
             },
 
+
             {
-                "order": 10,
-                "title": "NEED и NEED TO",
-                "body": """NEED может быть обычным глаголом.
+                "order": 9,
+                "title":
+                    "NEED TO и отсутствие необходимости",
 
-Примеры:
-
-I need help.
-
-She needs more time.
-
-Также используется:
-
-need to + verb
+                "body":
+                    """NEED TO = нужно сделать.
 
 I need to work.
 
-You need to rest.
-
 She needs to call the doctor.
 
-They need to leave.
+Для he / she / it:
 
-Обратите внимание:
+NEEDS TO.
 
-he/she/it → needs to
+Отсутствие необходимости:
 
-I/you/we/they → need to""",
-            },
+don't need to
 
-            {
-                "order": 11,
-                "title": "DON'T NEED TO, DON'T HAVE TO и NEEDN'T",
-                "body": """Все эти формы могут выражать отсутствие необходимости.
+don't have to
+
+needn't
 
 You don't need to wait.
 
@@ -387,594 +324,724 @@ You don't have to wait.
 
 You needn't wait.
 
-Значение:
+Все означают:
 
-ждать необязательно.
-
-После NEEDN'T нет TO:
-
-Правильно:
-
-You needn't wait.
-
-Неправильно:
-
-You needn't to wait.
-
-В современном разговорном английском don't need to используется чаще.""",
+ждать необязательно.""",
             },
 
-            {
-                "order": 12,
-                "title": "Как строить вопросы",
-                "body": """С настоящими модальными глаголами DO/DOES не нужны.
-
-Правильно:
-
-Must I go?
-
-Should she call?
-
-May I come in?
-
-Не:
-
-Do I must go?
-
-Does she should call?
-
-Но HAVE TO — другая конструкция.
-
-С ней используются DO и DOES:
-
-Do you have to work?
-
-Does she have to wear a uniform?
-
-Важно:
-
-Does she have to work?
-
-Не:
-
-Does she has to work?""",
-            },
 
             {
-                "order": 13,
-                "title": "MAY/MIGHT + BE и HAVE",
-                "body": """После MAY и MIGHT используется первая форма.
+                "order": 10,
+                "title":
+                    "Как быстро выбрать форму",
 
-С BE:
-
-She may be tired.
-
-He might be at work.
-
-It might be dangerous.
-
-С HAVE:
-
-She may have the key.
-
-He might have enough money.
-
-We might have time.
-
-Для будущего:
-
-She might call later.
-
-They may move next year.
-
-Не нужно добавлять WILL:
-
-Неправильно:
-
-She may will come.
-
-Правильно:
-
-She may come.""",
-            },
-
-            {
-                "order": 14,
-                "title": "Как выбрать правильную форму",
-                "body": """Сильная обязанность или приказ?
+                "body":
+                    """Сильная обязанность?
 
 → MUST
 
-You must stop.
-
-Внешняя необходимость?
+Внешнее правило?
 
 → HAVE TO
-
-I have to wear a uniform.
 
 Совет?
 
 → SHOULD
 
-You should rest.
-
 Возможно?
 
 → MAY / MIGHT
 
-She may come.
+Разрешение?
+
+→ MAY
 
 Нет необходимости?
 
-→ DON'T HAVE TO / DON'T NEED TO / NEEDN'T
-
-You don't have to wait.
+→ DON'T HAVE TO
+→ DON'T NEED TO
+→ NEEDN'T
 
 Запрещено?
 
 → MUSTN'T
 
-You mustn't smoke here.
+Главное:
 
-Главное различие:
+MUSTN'T = нельзя.
 
-MUSTN'T = запрещено
-
-DON'T HAVE TO = необязательно""",
+DON'T HAVE TO = необязательно.""",
             },
 
         ]
 
+
+        section_objects = {}
+
+
         for data in sections:
-            GrammarLessonSection.objects.update_or_create(
-                lesson=lesson,
-                order=data["order"],
-                defaults={
-                    "title": data["title"],
-                    "body": data["body"],
-                },
+
+            section, _ = (
+                GrammarLessonSection.objects.update_or_create(
+                    lesson=lesson,
+                    order=data["order"],
+                    defaults={
+                        "title":
+                            data["title"],
+                        "body":
+                            data["body"],
+                    },
+                )
             )
 
-        exercises = [
+            section_objects[
+                data["order"]
+            ] = section
 
+
+        # =================================================
+        # 20 TRAINING EXERCISES
+        # =================================================
+
+        training = [
+
+            # SECTION 1
             {
                 "order": 1,
-                "prompt": "Students ___ arrive on time.",
+                "section": 1,
+                "type": "choice",
+                "prompt":
+                    "After MUST, which form is correct?",
                 "options": [
-                    "must",
-                    "might",
-                    "needn't",
-                    "may not perhaps",
+                    "go",
+                    "goes",
+                    "to go",
+                    "going",
                 ],
-                "answer": "must",
-                "explanation": (
-                    "Правило или сильная обязанность → must."
-                ),
+                "answer":
+                    "go",
+                "explanation":
+                    "После модального MUST используется base verb.",
             },
 
             {
                 "order": 2,
-                "prompt": (
-                    "You ___ use your phone during the exam."
-                ),
+                "section": 1,
+                "type": "choice",
+                "prompt":
+                    "Choose the correct sentence.",
                 "options": [
-                    "don't have to",
-                    "mustn't",
-                    "should",
-                    "may",
+                    "She should rest.",
+                    "She should rests.",
+                    "She should to rest.",
+                    "She should resting.",
                 ],
-                "answer": "mustn't",
-                "explanation": (
-                    "Запрет → mustn't."
-                ),
+                "answer":
+                    "She should rest.",
+                "explanation":
+                    "После SHOULD → base verb.",
             },
 
+
+            # SECTION 2
             {
                 "order": 3,
-                "prompt": (
-                    "I ___ get up early because "
-                    "my train leaves at seven."
-                ),
+                "section": 2,
+                "type": "choice",
+                "prompt":
+                    "Students ___ arrive on time.",
                 "options": [
-                    "have to",
+                    "must",
                     "might",
-                    "shouldn't",
-                    "may not",
+                    "needn't",
+                    "may",
                 ],
-                "answer": "have to",
-                "explanation": (
-                    "Расписание создаёт внешнюю необходимость."
-                ),
+                "answer":
+                    "must",
+                "explanation":
+                    "Сильное правило → MUST.",
             },
 
             {
                 "order": 4,
-                "prompt": (
-                    "She ___ work late today because "
-                    "there is an urgent task."
-                ),
+                "section": 2,
+                "type": "build",
+                "prompt":
+                    "Собери предложение.",
+                "options": [
+                    "You",
+                    "must",
+                    "be",
+                    "careful",
+                ],
+                "answer":
+                    "You must be careful",
+                "explanation":
+                    "После MUST используется BE, а не ARE.",
+            },
+
+
+            # SECTION 3
+            {
+                "order": 5,
+                "section": 3,
+                "type": "choice",
+                "prompt":
+                    "You ___ smoke here. It is prohibited.",
+                "options": [
+                    "mustn't",
+                    "don't have to",
+                    "should",
+                    "may",
+                ],
+                "answer":
+                    "mustn't",
+                "explanation":
+                    "Запрет → MUSTN'T.",
+            },
+
+            {
+                "order": 6,
+                "section": 3,
+                "type": "choice",
+                "prompt":
+                    "You ___ come tomorrow. It is optional.",
+                "options": [
+                    "don't have to",
+                    "mustn't",
+                    "must",
+                    "have to",
+                ],
+                "answer":
+                    "don't have to",
+                "explanation":
+                    "Необязательно → DON'T HAVE TO.",
+            },
+
+
+            # SECTION 4
+            {
+                "order": 7,
+                "section": 4,
+                "type": "choice",
+                "prompt":
+                    "I ___ wear a uniform at work.",
+                "options": [
+                    "have to",
+                    "has to",
+                    "musts",
+                    "should to",
+                ],
+                "answer":
+                    "have to",
+                "explanation":
+                    "I → HAVE TO.",
+            },
+
+            {
+                "order": 8,
+                "section": 4,
+                "type": "choice",
+                "prompt":
+                    "She ___ leave early because her train is at six.",
                 "options": [
                     "has to",
                     "have to",
                     "musts",
-                    "should to",
+                    "has",
                 ],
-                "answer": "has to",
-                "explanation": (
-                    "She → has to."
-                ),
+                "answer":
+                    "has to",
+                "explanation":
+                    "SHE → HAS TO.",
+            },
+
+
+            # SECTION 5
+            {
+                "order": 9,
+                "section": 5,
+                "type": "choice",
+                "prompt":
+                    "I ___ work late yesterday.",
+                "options": [
+                    "had to",
+                    "musted",
+                    "have to tomorrow",
+                    "shoulded",
+                ],
+                "answer":
+                    "had to",
+                "explanation":
+                    "Прошедшая необходимость → HAD TO.",
             },
 
             {
-                "order": 5,
-                "prompt": (
-                    "You have a headache. "
-                    "You ___ see a doctor."
-                ),
+                "order": 10,
+                "section": 5,
+                "type": "choice",
+                "prompt":
+                    "We ___ take another exam next month.",
+                "options": [
+                    "will have to",
+                    "will must",
+                    "will had to",
+                    "musted",
+                ],
+                "answer":
+                    "will have to",
+                "explanation":
+                    "Будущая необходимость → WILL HAVE TO.",
+            },
+
+
+            # SECTION 6
+            {
+                "order": 11,
+                "section": 6,
+                "type": "choice",
+                "prompt":
+                    "You look tired. You ___ rest.",
+                "options": [
+                    "should",
+                    "mustn't",
+                    "might not",
+                    "needn't",
+                ],
+                "answer":
+                    "should",
+                "explanation":
+                    "Это совет → SHOULD.",
+            },
+
+            {
+                "order": 12,
+                "section": 6,
+                "type": "choice",
+                "prompt":
+                    "You ___ stay up so late every night.",
+                "options": [
+                    "shouldn't",
+                    "must",
+                    "have to",
+                    "may",
+                ],
+                "answer":
+                    "shouldn't",
+                "explanation":
+                    "Совет не делать что-то → SHOULDN'T.",
+            },
+
+
+            # SECTION 7
+            {
+                "order": 13,
+                "section": 7,
+                "type": "choice",
+                "prompt":
+                    "She ___ come later, but I'm not sure.",
+                "options": [
+                    "might",
+                    "must",
+                    "has to",
+                    "should to",
+                ],
+                "answer":
+                    "might",
+                "explanation":
+                    "Неуверенная возможность → MIGHT.",
+            },
+
+            {
+                "order": 14,
+                "section": 7,
+                "type": "choice",
+                "prompt":
+                    "It ___ rain tonight.",
+                "options": [
+                    "may",
+                    "may to",
+                    "may rains",
+                    "may will",
+                ],
+                "answer":
+                    "may",
+                "explanation":
+                    "MAY + base verb.",
+            },
+
+
+            # SECTION 8
+            {
+                "order": 15,
+                "section": 8,
+                "type": "choice",
+                "prompt":
+                    "___ I come in?",
+                "options": [
+                    "May",
+                    "Do",
+                    "Am",
+                    "Must to",
+                ],
+                "answer":
+                    "May",
+                "explanation":
+                    "MAY I...? — вежливая просьба о разрешении.",
+            },
+
+            {
+                "order": 16,
+                "section": 8,
+                "type": "choice",
+                "prompt":
+                    "Choose the polite request for permission.",
+                "options": [
+                    "May I ask a question?",
+                    "Do I may ask a question?",
+                    "May I to ask a question?",
+                    "May I asks a question?",
+                ],
+                "answer":
+                    "May I ask a question?",
+                "explanation":
+                    "MAY + subject + base verb.",
+            },
+
+
+            # SECTION 9
+            {
+                "order": 17,
+                "section": 9,
+                "type": "choice",
+                "prompt":
+                    "She ___ call the doctor.",
+                "options": [
+                    "needs to",
+                    "need to",
+                    "needs call",
+                    "needn't to",
+                ],
+                "answer":
+                    "needs to",
+                "explanation":
+                    "SHE → NEEDS TO + verb.",
+            },
+
+            {
+                "order": 18,
+                "section": 9,
+                "type": "choice",
+                "prompt":
+                    "You ___ wait. You can leave now.",
+                "options": [
+                    "don't need to",
+                    "mustn't",
+                    "have to",
+                    "must",
+                ],
+                "answer":
+                    "don't need to",
+                "explanation":
+                    "Нет необходимости ждать.",
+            },
+
+
+            # SECTION 10
+            {
+                "order": 19,
+                "section": 10,
+                "type": "choice",
+                "prompt":
+                    "Which sentence means 'запрещено'?",
+                "options": [
+                    "You mustn't enter.",
+                    "You don't have to enter.",
+                    "You should enter.",
+                    "You may enter.",
+                ],
+                "answer":
+                    "You mustn't enter.",
+                "explanation":
+                    "MUSTN'T = запрещено.",
+            },
+
+            {
+                "order": 20,
+                "section": 10,
+                "type": "choice",
+                "prompt":
+                    "Which sentence means 'это необязательно'?",
+                "options": [
+                    "You don't have to do it.",
+                    "You mustn't do it.",
+                    "You must do it.",
+                    "You have to do it.",
+                ],
+                "answer":
+                    "You don't have to do it.",
+                "explanation":
+                    "DON'T HAVE TO = нет необходимости.",
+            },
+
+        ]
+
+
+        # =================================================
+        # FINAL TEST — 10 NEW QUESTIONS
+        # =================================================
+
+        final_test = [
+
+            {
+                "order": 21,
+                "prompt":
+                    "You ___ show your passport at the border.",
+                "options": [
+                    "must",
+                    "might",
+                    "needn't",
+                    "shouldn't",
+                ],
+                "answer":
+                    "must",
+                "explanation":
+                    "Обязательное правило → MUST.",
+            },
+
+            {
+                "order": 22,
+                "prompt":
+                    "Visitors ___ touch the paintings.",
+                "options": [
+                    "mustn't",
+                    "don't have to",
+                    "might",
+                    "should",
+                ],
+                "answer":
+                    "mustn't",
+                "explanation":
+                    "Запрет → MUSTN'T.",
+            },
+
+            {
+                "order": 23,
+                "prompt":
+                    "He ___ wear safety shoes at work because company rules require them.",
+                "options": [
+                    "has to",
+                    "have to",
+                    "musts",
+                    "may",
+                ],
+                "answer":
+                    "has to",
+                "explanation":
+                    "Внешнее правило + HE → HAS TO.",
+            },
+
+            {
+                "order": 24,
+                "prompt":
+                    "We ___ leave early yesterday because of the weather.",
+                "options": [
+                    "had to",
+                    "musted",
+                    "will have to",
+                    "have to tomorrow",
+                ],
+                "answer":
+                    "had to",
+                "explanation":
+                    "Прошедшая необходимость → HAD TO.",
+            },
+
+            {
+                "order": 25,
+                "prompt":
+                    "You have an exam tomorrow. You ___ go to bed early.",
                 "options": [
                     "should",
                     "mustn't",
                     "may not",
                     "needn't",
                 ],
-                "answer": "should",
-                "explanation": (
-                    "Это рекомендация → should."
-                ),
-            },
-
-            {
-                "order": 6,
-                "prompt": (
-                    "He ___ be at home, but I'm not sure."
-                ),
-                "options": [
-                    "must because it is certain",
-                    "might",
-                    "has to",
-                    "should to",
-                ],
-                "answer": "might",
-                "explanation": (
-                    "Неуверенная возможность → might."
-                ),
-            },
-
-            {
-                "order": 7,
-                "prompt": "___ I come in?",
-                "options": [
-                    "May",
-                    "Do",
-                    "Must to",
-                    "Am",
-                ],
-                "answer": "May",
-                "explanation": (
-                    "May I...? — вежливая просьба о разрешении."
-                ),
-            },
-
-            {
-                "order": 8,
-                "prompt": (
-                    "You ___ pay now. You can pay later."
-                ),
-                "options": [
-                    "mustn't",
-                    "don't have to",
-                    "have to",
+                "answer":
                     "should",
-                ],
-                "answer": "don't have to",
-                "explanation": (
-                    "Платить сейчас необязательно."
-                ),
+                "explanation":
+                    "Рекомендация → SHOULD.",
             },
 
             {
-                "order": 9,
-                "prompt": (
-                    "We ___ hurry. We have plenty of time."
-                ),
+                "order": 26,
+                "prompt":
+                    "I'm not sure, but Aida ___ be at the office.",
                 "options": [
+                    "might",
+                    "must to",
+                    "has to",
+                    "shoulds",
+                ],
+                "answer":
+                    "might",
+                "explanation":
+                    "Неуверенная возможность → MIGHT.",
+            },
+
+            {
+                "order": 27,
+                "prompt":
+                    "Choose the correct permission question.",
+                "options": [
+                    "May I use this chair?",
+                    "May I to use this chair?",
+                    "Do I may use this chair?",
+                    "May I uses this chair?",
+                ],
+                "answer":
+                    "May I use this chair?",
+                "explanation":
+                    "MAY + subject + base verb.",
+            },
+
+            {
+                "order": 28,
+                "prompt":
+                    "You ___ bring food. We already have enough.",
+                "options": [
+                    "don't need to",
                     "mustn't",
-                    "needn't",
                     "must",
                     "have to",
                 ],
-                "answer": "needn't",
-                "explanation": (
-                    "Нет необходимости торопиться."
-                ),
+                "answer":
+                    "don't need to",
+                "explanation":
+                    "Нет необходимости → DON'T NEED TO.",
             },
 
             {
-                "order": 10,
-                "prompt": (
-                    "She ___ tell anyone. It is a secret."
-                ),
+                "order": 29,
+                "prompt":
+                    "Choose the correct comparison.",
                 "options": [
-                    "mustn't",
-                    "doesn't have to",
-                    "might",
-                    "should",
+                    "You mustn't park here. / You don't have to come tomorrow.",
+                    "You don't have to park here. / You mustn't come tomorrow if it is optional.",
+                    "You mustn't to park here. / You don't have come tomorrow.",
+                    "You must parkn't here. / You don't must come tomorrow.",
                 ],
-                "answer": "mustn't",
-                "explanation": (
-                    "Разглашать секрет запрещено → mustn't."
-                ),
+                "answer":
+                    "You mustn't park here. / You don't have to come tomorrow.",
+                "explanation":
+                    "MUSTN'T = запрещено; DON'T HAVE TO = необязательно.",
             },
 
             {
-                "order": 11,
-                "prompt": "Does he ___ work on Saturdays?",
+                "order": 30,
+                "prompt":
+                    "Choose the fully correct set.",
                 "options": [
-                    "has to",
-                    "have to",
-                    "musts",
-                    "needs",
+                    "You must leave. / You should rest. / She may come. / We will have to wait.",
+                    "You must to leave. / You should to rest. / She may comes. / We will must wait.",
+                    "You must leaves. / You should resting. / She might to come. / We musted wait.",
+                    "You do must leave. / You shoulded rest. / She may will come. / We will had to wait.",
                 ],
-                "answer": "have to",
-                "explanation": (
-                    "После does используется have to."
-                ),
-            },
-
-            {
-                "order": 12,
-                "prompt": "I ___ work yesterday.",
-                "options": [
-                    "musted",
-                    "had to",
-                    "have to tomorrow",
-                    "shoulded",
-                ],
-                "answer": "had to",
-                "explanation": (
-                    "Прошедшая необходимость → had to."
-                ),
-            },
-
-            {
-                "order": 13,
-                "prompt": "We ___ work next weekend.",
-                "options": [
-                    "will have to",
-                    "will must",
-                    "musted",
-                    "will should",
-                ],
-                "answer": "will have to",
-                "explanation": (
-                    "Будущая необходимость → will have to."
-                ),
-            },
-
-            {
-                "order": 14,
-                "prompt": "Maybe she is tired.",
-                "options": [
-                    "She may be tired.",
-                    "She may tired.",
-                    "She maybe tired.",
-                    "She might is tired.",
-                ],
-                "answer": "She may be tired.",
-                "explanation": (
-                    "May + base form be."
-                ),
-            },
-
-            {
-                "order": 15,
-                "prompt": (
-                    "You ___ worry. Everything is fine."
-                ),
-                "options": [
-                    "shouldn't",
-                    "mustn't always",
-                    "have to",
-                    "may",
-                ],
-                "answer": "shouldn't",
-                "explanation": (
-                    "Совет не беспокоиться → shouldn't."
-                ),
-            },
-
-            {
-                "order": 16,
-                "prompt": "Choose the correct sentence.",
-                "options": [
-                    "I must to go.",
-                    "I must go.",
-                    "I must going.",
-                    "I must goes.",
-                ],
-                "answer": "I must go.",
-                "explanation": (
-                    "После must используется первая форма без to."
-                ),
-            },
-
-            {
-                "order": 17,
-                "prompt": "Choose the correct sentence.",
-                "options": [
-                    "He musts work.",
-                    "He must work.",
-                    "He must to work.",
-                    "He does must work.",
-                ],
-                "answer": "He must work.",
-                "explanation": (
-                    "Must не получает окончание -s."
-                ),
-            },
-
-            {
-                "order": 18,
-                "prompt": "Choose the correct question.",
-                "options": [
-                    "Does she should call?",
-                    "Should she call?",
-                    "Should she calls?",
-                    "Do she should call?",
-                ],
-                "answer": "Should she call?",
-                "explanation": (
-                    "С should вспомогательный do/does не нужен."
-                ),
-            },
-
-            {
-                "order": 19,
-                "prompt": (
-                    "Which sentence means 'парковаться запрещено'?"
-                ),
-                "options": [
-                    "You don't have to park here.",
-                    "You mustn't park here.",
-                    "You shouldn't to park here.",
-                    "You may park here.",
-                ],
-                "answer": "You mustn't park here.",
-                "explanation": (
-                    "Mustn't означает запрет."
-                ),
-            },
-
-            {
-                "order": 20,
-                "prompt": (
-                    "Which sentence means 'приходить необязательно'?"
-                ),
-                "options": [
-                    "You mustn't come.",
-                    "You don't have to come.",
-                    "You must come.",
-                    "You may not come because it is forbidden.",
-                ],
-                "answer": "You don't have to come.",
-                "explanation": (
-                    "Don't have to = отсутствует необходимость."
-                ),
-            },
-
-            {
-                "order": 21,
-                "prompt": "Choose the correct sentence with NEED.",
-                "options": [
-                    "She need to call the doctor.",
-                    "She needs to call the doctor.",
-                    "She needs call to doctor.",
-                    "She needn't to call the doctor.",
-                ],
-                "answer": "She needs to call the doctor.",
-                "explanation": (
-                    "Need как обычный глагол: she needs to + verb."
-                ),
-            },
-
-            {
-                "order": 22,
-                "prompt": "Choose the correct sentence with NEEDN'T.",
-                "options": [
-                    "You needn't to wait.",
-                    "You needn't wait.",
-                    "You don't need wait.",
-                    "You needn't waiting.",
-                ],
-                "answer": "You needn't wait.",
-                "explanation": (
-                    "После модального needn't TO не используется."
-                ),
-            },
-
-            {
-                "order": 23,
-                "prompt": "Choose the correct possibility sentence.",
-                "options": [
-                    "She may will come later.",
-                    "She might come later.",
-                    "She might comes later.",
-                    "She may to come later.",
-                ],
-                "answer": "She might come later.",
-                "explanation": (
-                    "После might используется первая форма без will и to."
-                ),
-            },
-
-            {
-                "order": 24,
-                "prompt": "Choose the fully correct comparison.",
-                "options": [
-                    (
-                        "You mustn't enter. / "
-                        "You don't have to enter. / "
-                        "You should rest. / "
-                        "She might come."
-                    ),
-                    (
-                        "You don't must enter. / "
-                        "You mustn't to enter. / "
-                        "You should to rest. / "
-                        "She might comes."
-                    ),
-                    (
-                        "You must not to enter. / "
-                        "You don't have enter. / "
-                        "You should resting. / "
-                        "She may will come."
-                    ),
-                    (
-                        "You musts enter. / "
-                        "You doesn't have to enter. / "
-                        "You shoulded rest. / "
-                        "She might to come."
-                    ),
-                ],
-                "answer": (
-                    "You mustn't enter. / "
-                    "You don't have to enter. / "
-                    "You should rest. / "
-                    "She might come."
-                ),
-                "explanation": (
-                    "Mustn't = запрет; don't have to = необязательно; "
-                    "should = совет; might = возможность."
-                ),
+                "answer":
+                    "You must leave. / You should rest. / She may come. / We will have to wait.",
+                "explanation":
+                    "После модальных глаголов используется base verb; будущая необходимость → WILL HAVE TO.",
             },
 
         ]
 
-        for data in exercises:
+
+        all_exercises = training + final_test
+
+
+        valid_orders = [
+            item["order"]
+            for item in all_exercises
+        ]
+
+
+        for data in all_exercises:
+
+            if data["order"] <= 20:
+                section = (
+                    section_objects[
+                        data["section"]
+                    ]
+                )
+            else:
+                section = None
+
+
             GrammarExercise.objects.update_or_create(
                 lesson=lesson,
                 order=data["order"],
                 defaults={
-                    "exercise_type": GrammarExercise.Type.CHOICE,
-                    "prompt": data["prompt"],
-                    "options": data["options"],
-                    "correct_answer": data["answer"],
-                    "explanation": data["explanation"],
-                    "is_published": True,
+                    "section":
+                        section,
+
+                    "exercise_type":
+                        data.get(
+                            "type",
+                            "choice",
+                        ),
+
+                    "prompt":
+                        data["prompt"],
+
+                    "options":
+                        data["options"],
+
+                    "correct_answer":
+                        data["answer"],
+
+                    "explanation":
+                        data["explanation"],
+
+                    "is_published":
+                        True,
                 },
             )
 
+
+        GrammarExercise.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__in=valid_orders,
+        ).delete()
+
+
+        GrammarLessonSection.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__in=[
+                item["order"]
+                for item in sections
+            ],
+        ).delete()
+
+
         self.stdout.write(
             self.style.SUCCESS(
-                "✅ A1 Lesson 40 seeded: Modal verbs"
+                "✅ Interactive A1 Lesson 40 seeded"
             )
         )
 
         self.stdout.write(
-            f"Sections: {lesson.sections.count()}"
+            f"Micro rules: "
+            f"{lesson.sections.count()}"
         )
 
         self.stdout.write(
-            f"Exercises: {lesson.exercises.count()}"
+            "Training exercises: "
+            f"{lesson.exercises.filter(section__isnull=False).count()}"
+        )
+
+        self.stdout.write(
+            "Final test: "
+            f"{lesson.exercises.filter(section__isnull=True).count()}"
         )

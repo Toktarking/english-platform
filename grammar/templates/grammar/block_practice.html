@@ -2,7 +2,7 @@
 
 
 {% block title %}
-Practice {{ block.order }}
+Practice {{ grammar_block.order }}
 {% endblock %}
 
 
@@ -339,7 +339,7 @@ Practice {{ block.order }}
     <div class="error-card">
 
         <div class="practice-kicker">
-            Practice {{ block.order }}
+            Practice {{ grammar_block.order }}
         </div>
 
         <h1 class="practice-title">
@@ -359,13 +359,13 @@ Practice {{ block.order }}
     <div class="practice-hero">
 
         <div class="practice-kicker">
-            Block {{ block.order }}
+            Block {{ grammar_block.order }}
             ·
-            {{ block.title }}
+            {{ grammar_block.title }}
         </div>
 
         <h1 class="practice-title">
-            Результат Practice {{ block.order }}
+            Результат Practice {{ grammar_block.order }}
         </h1>
 
     </div>
@@ -389,7 +389,7 @@ Practice {{ block.order }}
         {% if passed %}
 
             <div class="result-status passed">
-                Practice {{ block.order }} пройден
+                Practice {{ grammar_block.order }} пройден
             </div>
 
         {% else %}
@@ -515,19 +515,33 @@ Practice {{ block.order }}
 
     <div class="practice-actions">
 
-        <a
-            class="practice-button secondary"
-            href="{% url 'grammar:home' %}"
-        >
-            На главную
-        </a>
+        {% if passed %}
 
-        <a
-            class="practice-button"
-            href="{% url 'grammar:block_practice' block.order %}?new=1"
-        >
-            Пройти ещё раз
-        </a>
+            <a
+                class="practice-button"
+                href="{% url 'grammar:home' %}"
+                style="margin-left:auto;"
+            >
+                Продолжить →
+            </a>
+
+        {% else %}
+
+            <a
+                class="practice-button secondary"
+                href="{% url 'grammar:home' %}"
+            >
+                На главную
+            </a>
+
+            <a
+                class="practice-button"
+                href="{% url 'grammar:block_practice' grammar_block.order %}?new=1"
+            >
+                Пройти ещё раз
+            </a>
+
+        {% endif %}
 
     </div>
 
@@ -539,14 +553,14 @@ Practice {{ block.order }}
 
         <div class="practice-kicker">
 
-            Block {{ block.order }}
+            Block {{ grammar_block.order }}
             ·
-            {{ block.title }}
+            {{ grammar_block.title }}
 
         </div>
 
         <h1 class="practice-title">
-            Practice {{ block.order }}
+            Practice {{ grammar_block.order }}
         </h1>
 
         <div class="practice-subtitle">
@@ -587,6 +601,7 @@ Practice {{ block.order }}
 
     <form
         method="post"
+        action="{% url 'grammar:block_practice' grammar_block.order %}"
         id="blockPracticeForm"
     >
 

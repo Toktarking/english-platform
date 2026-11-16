@@ -23,6 +23,9 @@ PRACTICE_BLOCK_ORDERS = {
     1,
     2,
     3,
+    4,
+    5,
+    6,
 }
 
 PRACTICE_ESTIMATED_MINUTES = 20
@@ -958,11 +961,22 @@ def _serialize_plan_item(
             block.id
         )
 
+        practice_question_counts = {
+            1: 20,
+            2: 20,
+            3: 18,
+            4: 18,
+            5: 20,
+            6: 20,
+        }
+
         question_count = (
-            18
-            if block.order == 3
-            else 20
+            practice_question_counts.get(
+                block.order,
+                20,
+            )
         )
+
 
         return {
             "type":

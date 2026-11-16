@@ -10,9 +10,10 @@ from grammar.models import (
 class Command(BaseCommand):
 
     help = (
-        "Create/update A1 Grammar Lesson 42: "
-        "Infinitive and Gerund."
+        "Create/update interactive A1 Grammar "
+        "Lesson 42: Infinitive and Gerund."
     )
+
 
     def handle(self, *args, **options):
 
@@ -23,111 +24,63 @@ class Command(BaseCommand):
                 "title": "Инфинитив и герундий",
                 "slug": "infinitive-and-gerund",
                 "theory_text": "Infinitive and Gerund.",
-                "estimated_minutes": 50,
+                "estimated_minutes": 20,
                 "pass_score": 70,
                 "xp_reward": 100,
                 "is_published": True,
             },
         )
 
+
+        # =================================================
+        # 10 MICRO RULES
+        # =================================================
+
         sections = [
 
             {
                 "order": 1,
-                "title": "Инфинитив и герундий",
-                "body": """Инфинитив обычно имеет форму:
+                "title": "TO DO и DOING",
+                "body": """Есть две частые формы:
 
 to + verb
 
-Примеры:
-
 to work
-
 to study
-
-to read
-
 to travel
 
-I want to study.
-
-She decided to leave.
-
-Герундий имеет форму:
+и:
 
 verb-ing
 
-Примеры:
-
 working
-
 studying
-
-reading
-
 travelling
 
-I enjoy reading.
+Примеры:
 
-Swimming is good for your health.""",
+I want to study.
+
+I enjoy studying.""",
             },
 
             {
                 "order": 2,
-                "title": "Почему нужно знать разницу",
-                "body": """После одних глаголов используется инфинитив:
-
-want to go
-
-decide to stay
-
-hope to win
-
-После других используется герундий:
-
-enjoy reading
-
-avoid talking
-
-finish working
-
-Некоторые глаголы допускают обе формы.
-
-Иногда значение при этом меняется.
-
-Поэтому часто нужно запоминать не отдельный глагол, а конструкцию целиком.""",
-            },
-
-            {
-                "order": 3,
                 "title": "Глаголы + TO DO",
-                "body": """Частые глаголы с инфинитивом:
+                "body": """После некоторых глаголов
+используем TO + verb.
 
-want to do
+want to
 
-would like to do
+decide to
 
-decide to do
+plan to
 
-plan to do
+hope to
 
-hope to do
+promise to
 
-promise to do
-
-agree to do
-
-refuse to do
-
-learn to do
-
-manage to do
-
-fail to do
-
-expect to do
-
-need to do
+need to
 
 Примеры:
 
@@ -135,15 +88,14 @@ I want to learn English.
 
 She decided to leave.
 
-We plan to travel.
-
-He promised to help.""",
+We plan to travel.""",
             },
 
             {
-                "order": 4,
+                "order": 3,
                 "title": "Глаголы + DOING",
-                "body": """Частые глаголы с герундием:
+                "body": """После других глаголов
+используем verb-ing.
 
 enjoy doing
 
@@ -155,215 +107,131 @@ mind doing
 
 suggest doing
 
-consider doing
-
 keep doing
-
-practise doing
-
-miss doing
-
-stop doing
 
 Примеры:
 
 I enjoy reading.
 
-She finished cleaning.
+She finished working.
 
-He avoids talking about money.
+He avoids driving at night.""",
+            },
 
-I suggest taking a taxi.
+            {
+                "order": 4,
+                "title": "После предлога → DOING",
+                "body": """После предлога обычно
+используем verb-ing.
 
-Keep working.""",
+for helping
+
+without saying
+
+after finishing
+
+before leaving
+
+interested in learning
+
+Пример:
+
+Thank you for helping me.
+
+She left without saying goodbye.""",
             },
 
             {
                 "order": 5,
-                "title": "После предлога — герундий",
-                "body": """После предлога обычно используется verb-ing.
+                "title": "Инфинитив показывает цель",
+                "body": """TO + verb часто показывает:
 
-Примеры:
+зачем?
 
-Thank you for helping me.
+I went to the shop
+to buy bread.
 
-She left without saying goodbye.
+She called me
+to ask a question.
 
-He is interested in learning English.
+We study English
+to communicate.
 
-Before leaving, call me.
+То есть:
 
-After finishing the work, we went home.
-
-Важно:
-
-иногда TO является предлогом.
-
-Например:
-
-look forward to
-
-be used to
-
-get used to
-
-После такого TO также используется -ing:
-
-I look forward to seeing you.""",
+действие + цель → TO DO.""",
             },
 
             {
                 "order": 6,
-                "title": "Герундий как подлежащее",
-                "body": """Герундий может называть действие как процесс или занятие.
+                "title": "После модальных глаголов — без TO",
+                "body": """После CAN, MUST, SHOULD,
+MAY, MIGHT используется
+обычная форма глагола.
 
-Он может стоять в начале предложения.
+You can swim.
 
-Примеры:
+You must go.
 
-Reading is useful.
+You should rest.
 
-Swimming is good exercise.
+Не:
 
-Learning English takes time.
+can to swim
 
-Smoking is dangerous.
-
-Здесь действие рассматривается как понятие.""",
+must to go.""",
             },
 
             {
                 "order": 7,
-                "title": "Инфинитив для цели",
-                "body": """Инфинитив часто показывает цель действия.
+                "title": "STOP DOING и STOP TO DO",
+                "body": """STOP DOING:
 
-Пример:
+перестать делать действие.
 
-I went to the shop to buy bread.
+He stopped smoking.
 
-То есть:
+→ он бросил курить.
 
-я пошёл в магазин, чтобы купить хлеб.
+STOP TO DO:
 
-Другие примеры:
+остановиться,
+чтобы сделать другое действие.
 
-She called me to ask a question.
+He stopped to smoke.
 
-He went to the bank to withdraw money.
-
-We study English to communicate with foreigners.
-
-Не:
-
-I went to the shop for buy bread.""",
+→ он остановился,
+чтобы покурить.""",
             },
 
             {
                 "order": 8,
-                "title": "TO DO и FOR DOING",
-                "body": """Инфинитив часто показывает цель конкретного действия.
+                "title": "REMEMBER и FORGET",
+                "body": """REMEMBER TO DO:
 
-I went to the shop to buy bread.
+не забыть сделать.
 
-FOR + gerund может показывать назначение предмета.
+Remember to call her.
 
-This machine is for cutting paper.
+REMEMBER DOING:
 
-This brush is for cleaning shoes.
+помнить уже сделанное.
 
-Сравните:
+I remember calling her.
 
-I went to the shop to buy bread.
-— цель действия.
+FORGET TO DO:
 
-This knife is for cutting bread.
-— назначение предмета.""",
+забыть сделать.
+
+I forgot to call her.""",
             },
 
             {
                 "order": 9,
-                "title": "LIKE, LOVE, HATE, PREFER",
-                "body": """После некоторых глаголов возможны обе формы.
+                "title": "TRY TO DO и TRY DOING",
+                "body": """TRY TO DO:
 
-LIKE:
-
-I like reading.
-
-I like to check my email in the morning.
-
-LOVE:
-
-I love reading.
-
-I love to read before bed.
-
-HATE:
-
-She hates waiting.
-
-She hates to be late.
-
-PREFER:
-
-I prefer walking.
-
-I prefer to walk to work.
-
-Разница между формами иногда небольшая.""",
-            },
-
-            {
-                "order": 10,
-                "title": "STOP: форма меняет значение",
-                "body": """STOP DOING:
-
-прекратить действие.
-
-He stopped smoking.
-
-Он перестал курить.
-
-STOP TO DO:
-
-остановиться, чтобы выполнить другое действие.
-
-He stopped to smoke.
-
-Он остановился, чтобы покурить.
-
-Сравните:
-
-She stopped talking.
-— перестала говорить.
-
-She stopped to talk to her friend.
-— остановилась, чтобы поговорить.""",
-            },
-
-            {
-                "order": 11,
-                "title": "REMEMBER, FORGET и TRY",
-                "body": """REMEMBER DOING:
-
-помнить совершённое действие.
-
-I remember locking the door.
-
-REMEMBER TO DO:
-
-не забыть сделать действие.
-
-Remember to lock the door.
-
-FORGET TO DO:
-
-забыть выполнить действие.
-
-I forgot to call her.
-
-TRY TO DO:
-
-пытаться сделать.
+пытаться сделать что-то.
 
 I tried to open the door.
 
@@ -371,113 +239,54 @@ TRY DOING:
 
 попробовать способ.
 
-Try restarting the computer.""",
+The computer is slow.
+
+Try restarting it.
+
+То есть:
+
+TRY TO DO → попытка
+
+TRY DOING → эксперимент / способ.""",
             },
 
             {
-                "order": 12,
-                "title": "Инфинитив без TO",
-                "body": """После модальных глаголов используется глагол без TO:
+                "order": 10,
+                "title": "Как быстро выбрать форму",
+                "body": """want / decide / plan / hope
 
-can swim
+→ TO DO
 
-must go
+enjoy / finish / avoid / suggest
 
-should rest
+→ DOING
 
-may come
+после предлога
 
-После LET:
+→ DOING
 
-let + object + verb
+цель действия
 
-Let me help you.
+→ TO DO
 
-После MAKE в активном залоге:
+после modal
 
-make + object + verb
+→ verb без TO
 
-She made me apologise.
+stop / remember / try
 
-После HELP возможны обе формы:
-
-She helped me carry the bags.
-
-She helped me to carry the bags.""",
-            },
-
-            {
-                "order": 13,
-                "title": "Прилагательное + инфинитив",
-                "body": """После многих прилагательных используется инфинитив.
-
-Примеры:
-
-happy to help
-
-ready to start
-
-difficult to understand
-
-easy to use
-
-important to remember
-
-Также:
-
-too + adjective + to do
-
-The bag is too heavy to carry.
-
-adjective + enough + to do
-
-He is old enough to drive.
-
-enough + noun + to do
-
-We have enough time to finish.""",
-            },
-
-            {
-                "order": 14,
-                "title": "Объект + инфинитив и алгоритм выбора",
-                "body": """Частые модели:
-
-want someone to do
-
-I want you to help me.
-
-ask someone to do
-
-I asked him to come.
-
-tell someone to do
-
-She told me to sit down.
-
-advise someone to do
-
-The doctor advised me to rest.
-
-Как выбирать форму:
-
-после want/decide/hope → to do;
-
-после enjoy/finish/avoid → doing;
-
-после предлога → doing;
-
-для цели → to do;
-
-после модального глагола → verb без to;
-
-со stop, remember, forget, try значение может зависеть от формы.""",
+→ форма может менять значение.""",
             },
 
         ]
 
+
+        section_objects = {}
+
+
         for data in sections:
-            GrammarLessonSection.objects.update_or_create(
+
+            section, _ = GrammarLessonSection.objects.update_or_create(
                 lesson=lesson,
                 order=data["order"],
                 defaults={
@@ -486,387 +295,505 @@ The doctor advised me to rest.
                 },
             )
 
-        exercises = [
+            section_objects[data["order"]] = section
 
+
+        # =================================================
+        # 20 TRAINING EXERCISES
+        # =================================================
+
+        training = [
+
+            # SECTION 1
             {
                 "order": 1,
-                "prompt": "I hope ___ you soon.",
+                "section": 1,
+                "type": "choice",
+                "prompt": "I want ___ English.",
                 "options": [
-                    "seeing",
-                    "to see",
-                    "see to",
-                    "saw",
+                    "to learn",
+                    "learning",
+                    "learned",
+                    "to learning",
                 ],
-                "answer": "to see",
-                "explanation": "После hope используется to + verb.",
+                "answer": "to learn",
+                "explanation": "WANT → TO + verb.",
             },
 
             {
                 "order": 2,
-                "prompt": "She avoids ___ late.",
+                "section": 1,
+                "type": "choice",
+                "prompt": "I enjoy ___ English.",
                 "options": [
-                    "arrive",
-                    "to arrive",
-                    "arriving",
-                    "arrived",
+                    "learning",
+                    "to learn",
+                    "learn",
+                    "learned",
                 ],
-                "answer": "arriving",
-                "explanation": "После avoid используется gerund.",
+                "answer": "learning",
+                "explanation": "ENJOY → verb-ing.",
             },
 
+
+            # SECTION 2
             {
                 "order": 3,
-                "prompt": "We plan ___ next year.",
+                "section": 2,
+                "type": "choice",
+                "prompt": "She decided ___ home.",
                 "options": [
-                    "travel",
-                    "travelling only",
-                    "to travel",
-                    "travelled",
+                    "to go",
+                    "going",
+                    "go",
+                    "went",
                 ],
-                "answer": "to travel",
-                "explanation": "Plan to + verb.",
+                "answer": "to go",
+                "explanation": "DECIDE → TO DO.",
             },
 
             {
                 "order": 4,
-                "prompt": "He suggested ___ a taxi.",
+                "section": 2,
+                "type": "choice",
+                "prompt": "We plan ___ next year.",
                 "options": [
-                    "take",
-                    "to take",
-                    "taking",
-                    "took",
+                    "to travel",
+                    "travelling",
+                    "travelled",
+                    "travel to",
                 ],
-                "answer": "taking",
-                "explanation": "Suggest + verb-ing.",
+                "answer": "to travel",
+                "explanation": "PLAN → TO DO.",
             },
 
+
+            # SECTION 3
             {
                 "order": 5,
-                "prompt": "Do you mind ___ the window?",
+                "section": 3,
+                "type": "choice",
+                "prompt": "She finished ___ the report.",
                 "options": [
-                    "open",
-                    "to open",
-                    "opening",
-                    "opened",
+                    "writing",
+                    "to write",
+                    "write",
+                    "wrote",
                 ],
-                "answer": "opening",
-                "explanation": "Mind + verb-ing.",
+                "answer": "writing",
+                "explanation": "FINISH → DOING.",
             },
 
             {
                 "order": 6,
-                "prompt": "She promised ___ me.",
+                "section": 3,
+                "type": "choice",
+                "prompt": "He suggested ___ a taxi.",
                 "options": [
-                    "help",
-                    "helping",
-                    "to help",
-                    "helped",
+                    "taking",
+                    "to take",
+                    "take",
+                    "took",
                 ],
-                "answer": "to help",
-                "explanation": "Promise to + verb.",
+                "answer": "taking",
+                "explanation": "SUGGEST → DOING.",
             },
 
+
+            # SECTION 4
             {
                 "order": 7,
-                "prompt": "They kept ___.",
+                "section": 4,
+                "type": "choice",
+                "prompt": "Thank you for ___ me.",
                 "options": [
-                    "talk",
-                    "talking",
-                    "to talk only",
-                    "talked",
+                    "helping",
+                    "to help",
+                    "help",
+                    "helped",
                 ],
-                "answer": "talking",
-                "explanation": "Keep + verb-ing.",
+                "answer": "helping",
+                "explanation": "После FOR → verb-ing.",
             },
 
             {
                 "order": 8,
-                "prompt": "He refused ___ the document.",
+                "section": 4,
+                "type": "choice",
+                "prompt": "She left without ___ goodbye.",
                 "options": [
-                    "sign",
-                    "signing",
-                    "to sign",
-                    "signed",
+                    "saying",
+                    "to say",
+                    "say",
+                    "said",
                 ],
-                "answer": "to sign",
-                "explanation": "Refuse to + verb.",
+                "answer": "saying",
+                "explanation": "После WITHOUT → verb-ing.",
             },
 
+
+            # SECTION 5
             {
                 "order": 9,
-                "prompt": "I am interested in ___ English.",
+                "section": 5,
+                "type": "choice",
+                "prompt": "I went to the shop ___ some milk.",
                 "options": [
-                    "learn",
-                    "to learn",
-                    "learning",
-                    "learned",
+                    "to buy",
+                    "buying",
+                    "buy",
+                    "bought",
                 ],
-                "answer": "learning",
-                "explanation": "После предлога in используется gerund.",
+                "answer": "to buy",
+                "explanation": "Инфинитив показывает цель.",
             },
 
             {
                 "order": 10,
-                "prompt": "She left without ___ goodbye.",
+                "section": 5,
+                "type": "build",
+                "prompt": "Собери предложение с целью.",
                 "options": [
-                    "say",
-                    "to say",
-                    "saying",
-                    "said",
+                    "She",
+                    "called",
+                    "me",
+                    "to",
+                    "ask",
+                    "a",
+                    "question",
                 ],
-                "answer": "saying",
-                "explanation": "После without используется verb-ing.",
+                "answer": "She called me to ask a question",
+                "explanation": "TO ASK показывает цель звонка.",
             },
 
+
+            # SECTION 6
             {
                 "order": 11,
-                "prompt": "I called him ___ about the meeting.",
+                "section": 6,
+                "type": "choice",
+                "prompt": "You should ___ more.",
                 "options": [
-                    "asking",
-                    "to ask",
-                    "ask for",
-                    "asked",
+                    "rest",
+                    "to rest",
+                    "resting",
+                    "rested",
                 ],
-                "answer": "to ask",
-                "explanation": "Инфинитив показывает цель звонка.",
+                "answer": "rest",
+                "explanation": "После SHOULD → bare infinitive.",
             },
 
             {
                 "order": 12,
-                "prompt": "You can ___ here.",
+                "section": 6,
+                "type": "choice",
+                "prompt": "She can ___ very well.",
                 "options": [
-                    "to sit",
-                    "sitting",
-                    "sit",
-                    "sat",
+                    "swim",
+                    "to swim",
+                    "swimming",
+                    "swam",
                 ],
-                "answer": "sit",
-                "explanation": "После modal can используется verb без to.",
+                "answer": "swim",
+                "explanation": "После CAN → verb без TO.",
             },
 
+
+            # SECTION 7
             {
                 "order": 13,
-                "prompt": "The teacher made us ___ the task again.",
+                "section": 7,
+                "type": "choice",
+                "prompt": "He stopped smoking. What does it mean?",
                 "options": [
-                    "to do",
-                    "doing",
-                    "do",
-                    "did",
+                    "He quit smoking.",
+                    "He stopped in order to smoke.",
+                    "He forgot to smoke.",
+                    "He plans to smoke.",
                 ],
-                "answer": "do",
-                "explanation": "Make + object + bare infinitive.",
+                "answer": "He quit smoking.",
+                "explanation": "STOP DOING = прекратить действие.",
             },
 
             {
                 "order": 14,
-                "prompt": "I want you ___ me.",
+                "section": 7,
+                "type": "choice",
+                "prompt": "He stopped to drink some water. What does it mean?",
                 "options": [
-                    "help",
-                    "helping",
-                    "to help",
-                    "helped",
+                    "He stopped another action in order to drink water.",
+                    "He stopped drinking water forever.",
+                    "He forgot to drink water.",
+                    "He avoided drinking water.",
                 ],
-                "answer": "to help",
-                "explanation": "Want + object + to + verb.",
+                "answer": "He stopped another action in order to drink water.",
+                "explanation": "STOP TO DO = остановиться, чтобы сделать другое действие.",
             },
 
+
+            # SECTION 8
             {
                 "order": 15,
-                "prompt": "He is too tired ___.",
-                "options": [
-                    "working",
-                    "to work",
-                    "work to",
-                    "worked",
-                ],
-                "answer": "to work",
-                "explanation": "Too + adjective + to + verb.",
-            },
-
-            {
-                "order": 16,
-                "prompt": "Choose the correct sentence.",
-                "options": [
-                    "I enjoy to read.",
-                    "I enjoy reading.",
-                    "I enjoy read.",
-                    "I enjoying reading.",
-                ],
-                "answer": "I enjoy reading.",
-                "explanation": "Enjoy + gerund.",
-            },
-
-            {
-                "order": 17,
-                "prompt": "Choose the correct sentence.",
-                "options": [
-                    "She decided going home.",
-                    "She decided to go home.",
-                    "She decided go home.",
-                    "She decided to going home.",
-                ],
-                "answer": "She decided to go home.",
-                "explanation": "Decide to + verb.",
-            },
-
-            {
-                "order": 18,
-                "prompt": "Choose the correct sentence.",
-                "options": [
-                    "After to finish the work, we left.",
-                    "After finishing the work, we left.",
-                    "After finish the work, we left.",
-                    "After finished the work, we left.",
-                ],
-                "answer": "After finishing the work, we left.",
-                "explanation": "После предлога after используется gerund.",
-            },
-
-            {
-                "order": 19,
-                "prompt": (
-                    "He stopped smoking. What does it mean?"
-                ),
-                "options": [
-                    "He stopped in order to smoke.",
-                    "He stopped the habit of smoking.",
-                    "He plans to smoke.",
-                    "He forgot to smoke.",
-                ],
-                "answer": "He stopped the habit of smoking.",
-                "explanation": "Stop doing = прекратить действие.",
-            },
-
-            {
-                "order": 20,
-                "prompt": (
-                    "He stopped to smoke. What does it mean?"
-                ),
-                "options": [
-                    "He stopped smoking forever.",
-                    "He stopped another action in order to smoke.",
-                    "He forgot smoking.",
-                    "He avoided smoking.",
-                ],
-                "answer": (
-                    "He stopped another action in order to smoke."
-                ),
-                "explanation": (
-                    "Stop to do = остановиться, чтобы сделать другое действие."
-                ),
-            },
-
-            {
-                "order": 21,
+                "section": 8,
+                "type": "choice",
                 "prompt": "Remember ___ the door before you leave.",
                 "options": [
-                    "locking yesterday",
                     "to lock",
+                    "locking yesterday",
                     "lock to",
                     "locked",
                 ],
                 "answer": "to lock",
-                "explanation": (
-                    "Remember to do = не забыть выполнить действие."
-                ),
+                "explanation": "REMEMBER TO DO = не забыть сделать.",
             },
 
             {
-                "order": 22,
-                "prompt": (
-                    "The computer is slow. Try ___ it."
-                ),
+                "order": 16,
+                "section": 8,
+                "type": "choice",
+                "prompt": "I remember ___ him at the conference.",
                 "options": [
-                    "restart",
-                    "to restarted",
+                    "meeting",
+                    "to meet tomorrow",
+                    "meet",
+                    "met",
+                ],
+                "answer": "meeting",
+                "explanation": "REMEMBER DOING = помнить уже совершённое действие.",
+            },
+
+
+            # SECTION 9
+            {
+                "order": 17,
+                "section": 9,
+                "type": "choice",
+                "prompt": "I tried ___ the box, but it was too heavy.",
+                "options": [
+                    "to lift",
+                    "lifting as a method",
+                    "lifted",
+                    "to lifting",
+                ],
+                "answer": "to lift",
+                "explanation": "TRY TO DO = пытаться выполнить действие.",
+            },
+
+            {
+                "order": 18,
+                "section": 9,
+                "type": "choice",
+                "prompt": "The computer is slow. Try ___ it.",
+                "options": [
                     "restarting",
+                    "to restarted",
+                    "restart to",
                     "restarted",
                 ],
                 "answer": "restarting",
-                "explanation": (
-                    "Try doing = попробовать способ решения проблемы."
-                ),
+                "explanation": "TRY DOING = попробовать способ.",
+            },
+
+
+            # SECTION 10
+            {
+                "order": 19,
+                "section": 10,
+                "type": "choice",
+                "prompt": "Choose the correct sentence.",
+                "options": [
+                    "I hope to see you soon.",
+                    "I hope seeing you soon.",
+                    "I hope see to you soon.",
+                    "I hope to seeing you soon.",
+                ],
+                "answer": "I hope to see you soon.",
+                "explanation": "HOPE → TO DO.",
             },
 
             {
-                "order": 23,
-                "prompt": "Choose the correct pair.",
+                "order": 20,
+                "section": 10,
+                "type": "choice",
+                "prompt": "Choose the correct sentence.",
                 "options": [
-                    (
-                        "I went to the shop to buy bread. / "
-                        "This knife is for cutting bread."
-                    ),
-                    (
-                        "I went to the shop for buy bread. / "
-                        "This knife is to cutting bread."
-                    ),
-                    (
-                        "I went to shop buying bread purpose. / "
-                        "This knife is for cut bread."
-                    ),
-                    (
-                        "I went to the shop to buying bread. / "
-                        "This knife is for to cut bread."
-                    ),
+                    "She avoids driving at night.",
+                    "She avoids to drive at night.",
+                    "She avoids drive at night.",
+                    "She avoiding to drive at night.",
                 ],
-                "answer": (
-                    "I went to the shop to buy bread. / "
-                    "This knife is for cutting bread."
-                ),
-                "explanation": (
-                    "To do = цель действия; for doing = назначение."
-                ),
-            },
-
-            {
-                "order": 24,
-                "prompt": "Choose the fully correct sequence.",
-                "options": [
-                    (
-                        "I want to learn. / "
-                        "I enjoy learning. / "
-                        "Thank you for helping. / "
-                        "You should rest."
-                    ),
-                    (
-                        "I want learning. / "
-                        "I enjoy to learn. / "
-                        "Thank you for to help. / "
-                        "You should to rest."
-                    ),
-                    (
-                        "I want learn to. / "
-                        "I enjoy learn. / "
-                        "Thank you helping for. / "
-                        "You should resting."
-                    ),
-                    (
-                        "I wanting to learn. / "
-                        "I enjoy learned. / "
-                        "Thank you to helping. / "
-                        "You shoulded rest."
-                    ),
-                ],
-                "answer": (
-                    "I want to learn. / "
-                    "I enjoy learning. / "
-                    "Thank you for helping. / "
-                    "You should rest."
-                ),
-                "explanation": (
-                    "Want → to do; enjoy → doing; "
-                    "after preposition → doing; modal → bare infinitive."
-                ),
+                "answer": "She avoids driving at night.",
+                "explanation": "AVOID → DOING.",
             },
 
         ]
 
-        for data in exercises:
+
+        # =================================================
+        # FINAL TEST — 10 NEW QUESTIONS
+        # =================================================
+
+        final_test = [
+
+            {
+                "order": 21,
+                "prompt": "They hope ___ the match.",
+                "options": [
+                    "to win",
+                    "winning",
+                    "win to",
+                    "won",
+                ],
+                "answer": "to win",
+                "explanation": "HOPE → TO DO.",
+            },
+
+            {
+                "order": 22,
+                "prompt": "I don't mind ___ here.",
+                "options": [
+                    "waiting",
+                    "to wait",
+                    "wait",
+                    "waited",
+                ],
+                "answer": "waiting",
+                "explanation": "MIND → DOING.",
+            },
+
+            {
+                "order": 23,
+                "prompt": "After ___ dinner, we went for a walk.",
+                "options": [
+                    "finishing",
+                    "to finish",
+                    "finish",
+                    "finished",
+                ],
+                "answer": "finishing",
+                "explanation": "После AFTER → verb-ing.",
+            },
+
+            {
+                "order": 24,
+                "prompt": "He went to the bank ___ some money.",
+                "options": [
+                    "to withdraw",
+                    "withdrawing",
+                    "withdraw",
+                    "withdrew",
+                ],
+                "answer": "to withdraw",
+                "explanation": "TO + verb показывает цель.",
+            },
+
+            {
+                "order": 25,
+                "prompt": "You must ___ now.",
+                "options": [
+                    "leave",
+                    "to leave",
+                    "leaving",
+                    "left",
+                ],
+                "answer": "leave",
+                "explanation": "После MUST используется bare infinitive.",
+            },
+
+            {
+                "order": 26,
+                "prompt": "She stopped ___ because the doctor told her to.",
+                "options": [
+                    "smoking",
+                    "to smoke",
+                    "smoke",
+                    "smoked",
+                ],
+                "answer": "smoking",
+                "explanation": "STOP DOING = прекратить действие.",
+            },
+
+            {
+                "order": 27,
+                "prompt": "We stopped ___ a photo.",
+                "options": [
+                    "to take",
+                    "taking forever",
+                    "take",
+                    "took",
+                ],
+                "answer": "to take",
+                "explanation": "STOP TO DO = остановиться, чтобы сделать что-то.",
+            },
+
+            {
+                "order": 28,
+                "prompt": "Don't forget ___ me tonight.",
+                "options": [
+                    "to call",
+                    "calling yesterday",
+                    "call to",
+                    "called",
+                ],
+                "answer": "to call",
+                "explanation": "FORGET TO DO = забыть выполнить действие.",
+            },
+
+            {
+                "order": 29,
+                "prompt": "Choose the correct pair.",
+                "options": [
+                    "I want to learn English. / I enjoy learning English.",
+                    "I want learning English. / I enjoy to learn English.",
+                    "I want learn English. / I enjoy learn English.",
+                    "I want to learning English. / I enjoy learned English.",
+                ],
+                "answer": "I want to learn English. / I enjoy learning English.",
+                "explanation": "WANT → TO DO; ENJOY → DOING.",
+            },
+
+            {
+                "order": 30,
+                "prompt": "Choose the fully correct sequence.",
+                "options": [
+                    "She decided to leave. / He finished working. / Thank you for helping. / You should rest.",
+                    "She decided leaving. / He finished to work. / Thank you for to help. / You should to rest.",
+                    "She decided leave. / He finished work to. / Thank you helping for. / You should resting.",
+                    "She decided to leaving. / He finished worked. / Thank you to helping. / You shoulded rest.",
+                ],
+                "answer": "She decided to leave. / He finished working. / Thank you for helping. / You should rest.",
+                "explanation": "DECIDE → TO DO; FINISH → DOING; after preposition → DOING; modal → bare infinitive.",
+            },
+
+        ]
+
+
+        all_exercises = training + final_test
+
+        valid_orders = [
+            item["order"]
+            for item in all_exercises
+        ]
+
+
+        for data in all_exercises:
+
+            section = (
+                section_objects[data["section"]]
+                if data["order"] <= 20
+                else None
+            )
+
+
             GrammarExercise.objects.update_or_create(
                 lesson=lesson,
                 order=data["order"],
                 defaults={
-                    "exercise_type": GrammarExercise.Type.CHOICE,
+                    "section": section,
+                    "exercise_type": data.get(
+                        "type",
+                        "choice",
+                    ),
                     "prompt": data["prompt"],
                     "options": data["options"],
                     "correct_answer": data["answer"],
@@ -875,16 +802,40 @@ The doctor advised me to rest.
                 },
             )
 
+
+        GrammarExercise.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__in=valid_orders,
+        ).delete()
+
+
+        GrammarLessonSection.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__in=[
+                item["order"]
+                for item in sections
+            ],
+        ).delete()
+
+
         self.stdout.write(
             self.style.SUCCESS(
-                "✅ A1 Lesson 42 seeded: Infinitive and Gerund"
+                "✅ Interactive A1 Lesson 42 seeded"
             )
         )
 
         self.stdout.write(
-            f"Sections: {lesson.sections.count()}"
+            f"Micro rules: {lesson.sections.count()}"
         )
 
         self.stdout.write(
-            f"Exercises: {lesson.exercises.count()}"
+            "Training exercises: "
+            f"{lesson.exercises.filter(section__isnull=False).count()}"
+        )
+
+        self.stdout.write(
+            "Final test: "
+            f"{lesson.exercises.filter(section__isnull=True).count()}"
         )

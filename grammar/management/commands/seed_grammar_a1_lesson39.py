@@ -10,9 +10,10 @@ from grammar.models import (
 class Command(BaseCommand):
 
     help = (
-        "Create/update A1 Grammar Lesson 39: "
-        "Future Continuous and Future Perfect."
+        "Create/update interactive A1 Grammar "
+        "Lesson 39: Future Continuous and Future Perfect."
     )
+
 
     def handle(self, *args, **options):
 
@@ -20,198 +21,198 @@ class Command(BaseCommand):
             level="A1",
             order=39,
             defaults={
-                "title": "Future Continuous и Future Perfect",
-                "slug": "future-continuous-future-perfect",
-                "theory_text": (
-                    "Future Continuous and Future Perfect."
-                ),
-                "estimated_minutes": 45,
-                "pass_score": 70,
-                "xp_reward": 100,
-                "is_published": True,
+                "title":
+                    "Future Continuous и Future Perfect",
+
+                "slug":
+                    "future-continuous-future-perfect",
+
+                "theory_text":
+                    "Future Continuous and Future Perfect.",
+
+                "estimated_minutes":
+                    20,
+
+                "pass_score":
+                    70,
+
+                "xp_reward":
+                    100,
+
+                "is_published":
+                    True,
             },
         )
+
+
+        # =================================================
+        # 10 MICRO RULES
+        # =================================================
 
         sections = [
 
             {
                 "order": 1,
-                "title": "Future Continuous: процесс в будущем",
-                "body": """Future Continuous показывает действие, которое будет находиться в процессе в определённый момент будущего.
+                "title":
+                    "Future Continuous: процесс в будущем",
 
-Формула:
+                "body":
+                    """Future Continuous показывает процесс,
+который будет происходить
+в определённый момент будущего.
 
-subject + will be + verb-ing
+At six tomorrow,
+I will be working.
 
-Примеры:
+В шесть часов действие
+будет в процессе.
 
-I will be working at six tomorrow.
+Главная идея:
+
+что будет происходить
+в конкретный будущий момент?""",
+            },
+
+
+            {
+                "order": 2,
+                "title":
+                    "Формула WILL BE + -ING",
+
+                "body":
+                    """Формула:
+
+WILL + BE + verb-ing
+
+I will be working.
 
 She will be studying.
 
 They will be travelling.
 
-We will be waiting.
+После WILL всегда:
 
-Главное — не начало и не конец действия, а сам процесс в будущем.""",
+BE
+
+а затем:
+
+verb-ing.
+
+Не:
+
+will working
+
+will be work.""",
             },
 
-            {
-                "order": 2,
-                "title": "Когда используется Future Continuous",
-                "body": """Future Continuous часто используется с конкретным будущим моментом.
-
-Примеры:
-
-At eight tomorrow, I will be driving to work.
-
-This time next week, we will be staying in Astana.
-
-She will be taking her exam at ten.
-
-They will be having dinner at seven.
-
-Частые маркеры:
-
-at six tomorrow;
-
-this time tomorrow;
-
-this time next week;
-
-all day tomorrow;
-
-from five to seven.""",
-            },
 
             {
                 "order": 3,
-                "title": "Длительный процесс и естественное будущее",
-                "body": """Future Continuous может подчёркивать длительность:
+                "title":
+                    "Маркеры Future Continuous",
 
-I will be working all day.
+                "body":
+                    """Часто используются:
 
-She will be studying all evening.
+at six tomorrow
 
-They will be travelling for several hours.
+this time tomorrow
 
-Он также может описывать естественно ожидаемое действие:
+this time next week
 
-I will be seeing Marat tomorrow.
+all evening tomorrow
 
-She will be working in the office next week.
+Примеры:
 
-We will be staying at the same hotel.""",
+This time tomorrow,
+we will be flying to Astana.
+
+At ten,
+she will be taking her exam.""",
             },
+
 
             {
                 "order": 4,
-                "title": "Вежливые вопросы о планах",
-                "body": """Future Continuous часто используется для вежливых вопросов о планах.
+                "title":
+                    "Вежливый вопрос о планах",
 
-Примеры:
+                "body":
+                    """Future Continuous можно использовать,
+чтобы нейтрально спросить
+о чьих-то планах.
 
-Will you be using the car tonight?
+Will you be using
+the car tonight?
 
-Will you be coming to the meeting?
+Will you be coming
+to the meeting?
 
-Will you be staying for dinner?
+Will she be staying
+for dinner?
 
-Will you be working tomorrow?
-
-Сравните:
-
-Will you use the car tonight?
-— более прямой вопрос.
-
-Will you be using the car tonight?
-— более нейтральный и вежливый вопрос о планах.""",
+Это звучит мягче,
+чем прямой вопрос о решении.""",
             },
+
 
             {
                 "order": 5,
-                "title": "Отрицание и вопросы Future Continuous",
-                "body": """Отрицание:
+                "title":
+                    "Отрицание и вопросы",
 
-subject + won't be + verb-ing
+                "body":
+                    """Отрицание:
+
+WON'T BE + verb-ing
 
 I won't be working tomorrow.
 
-She won't be coming tonight.
-
 Вопрос:
 
-Will + subject + be + verb-ing?
+WILL + subject + BE + verb-ing?
 
 Will you be working?
 
-Will she be studying?
-
-Краткие ответы:
+Краткий ответ:
 
 Yes, I will.
 
-No, I won't.
-
-Специальный вопрос:
-
-What will you be doing at six?""",
+No, I won't.""",
             },
+
 
             {
                 "order": 6,
-                "title": "Future Simple или Future Continuous",
-                "body": """Future Simple часто показывает:
+                "title":
+                    "Future Perfect: результат к моменту",
 
-решение;
+                "body":
+                    """Future Perfect показывает,
+что действие уже завершится
+к определённому моменту будущего.
 
-обещание;
+By six,
+I will have finished the report.
 
-будущий факт;
-
-прогноз.
-
-I will call you at six.
-
-Future Continuous показывает процесс в конкретный момент:
-
-I will be working at six.
-
-Сравните:
-
-I will meet him tomorrow.
-— будущий факт.
-
-I will be meeting him tomorrow.
-— ожидаемая часть будущих событий.""",
-            },
-
-            {
-                "order": 7,
-                "title": "Что такое Future Perfect",
-                "body": """Future Perfect показывает действие, которое завершится к определённому моменту в будущем.
-
-Пример:
-
-I will have finished the report by six.
-
-Это означает:
-
-к шести отчёт уже будет готов.
+К шести отчёт уже будет готов.
 
 Главная идея:
 
-результат будет достигнут не позднее определённого будущего момента.""",
+что уже будет сделано
+к определённому сроку?""",
             },
 
+
             {
-                "order": 8,
-                "title": "Формула Future Perfect",
-                "body": """Формула:
+                "order": 7,
+                "title":
+                    "Формула WILL HAVE + V3",
 
-subject + will have + V3
+                "body":
+                    """Формула:
 
-Примеры:
+WILL + HAVE + V3
 
 I will have finished.
 
@@ -219,650 +220,764 @@ She will have arrived.
 
 They will have left.
 
-We will have completed the project.
+После WILL HAVE
+нужна третья форма.
 
-После WILL HAVE нужна третья форма глагола.
+go → gone
 
-Правильно:
+see → seen
 
-will have gone
-
-will have seen
-
-will have written
-
-Неправильно:
-
-will have went
-
-will have saw
-
-will have wrote""",
-            },
-
-            {
-                "order": 9,
-                "title": "BY и BY THE TIME",
-                "body": """BY показывает крайний срок:
-
-by six;
-
-by Monday;
-
-by next week;
-
-by the end of the year.
-
-Примеры:
-
-I will have finished by six.
-
-She will have returned by Monday.
-
-BY THE TIME означает:
-
-к тому времени как.
-
-Пример:
-
-By the time you arrive, I will have finished.
-
-Важно:
-
-после by the time для будущего используется Present Simple.
+write → written
 
 Не:
 
-By the time you will arrive...""",
+will have went
+
+will have wrote.""",
             },
+
+
+            {
+                "order": 8,
+                "title":
+                    "BY и BY THE TIME",
+
+                "body":
+                    """BY показывает крайний срок.
+
+by six
+
+by Friday
+
+by next week
+
+I will have finished
+by six.
+
+BY THE TIME:
+
+By the time you arrive,
+I will have finished.
+
+После BY THE TIME
+для будущего используем
+Present Simple:
+
+you arrive
+
+не:
+
+you will arrive.""",
+            },
+
+
+            {
+                "order": 9,
+                "title":
+                    "Количество к будущему сроку",
+
+                "body":
+                    """Future Perfect может показывать,
+сколько будет сделано
+к определённому моменту.
+
+By Friday,
+I will have written ten pages.
+
+By the end of the month,
+she will have read four books.
+
+То есть:
+
+готовый результат
+или количество
+→ Future Perfect.""",
+            },
+
 
             {
                 "order": 10,
-                "title": "Результат и количество к будущему моменту",
-                "body": """Future Perfect подчёркивает:
+                "title":
+                    "AT или BY?",
 
-завершённость;
+                "body":
+                    """Очень важное различие:
 
-готовый результат;
+AT → процесс в момент.
 
-количество к определённому моменту.
+At six,
+I will be writing the report.
 
-Примеры:
+BY → результат к моменту.
 
-By Friday, I will have written ten pages.
+By six,
+I will have written the report.
 
-By the end of the month, she will have read four books.
+Запомни:
 
-By next year, they will have visited five countries.
+AT → Future Continuous
 
-By the end of the course, we will have completed many lessons.""",
-            },
-
-            {
-                "order": 11,
-                "title": "Отрицание и вопросы Future Perfect",
-                "body": """Отрицание:
-
-subject + won't have + V3
-
-I won't have finished by six.
-
-She won't have arrived by then.
-
-Вопрос:
-
-Will + subject + have + V3?
-
-Will you have finished by six?
-
-Will she have arrived by Monday?
-
-Краткие ответы:
-
-Yes, I will.
-
-No, I won't.
-
-Специальный вопрос:
-
-How many pages will she have written by Friday?""",
-            },
-
-            {
-                "order": 12,
-                "title": "Future Continuous или Future Perfect",
-                "body": """Сравните:
-
-At six, I will be writing the report.
-
-Это процесс в шесть часов.
-
-By six, I will have written the report.
-
-Это готовый результат к шести.
-
-Главная подсказка:
-
-AT → что будет происходить в этот момент?
-
-BY → что уже будет завершено к этому моменту?
-
-Ещё пример:
-
-At eight, she will be cooking dinner.
-
-By eight, she will have cooked dinner.""",
-            },
-
-            {
-                "order": 13,
-                "title": "AT, UNTIL и BY",
-                "body": """AT показывает конкретный момент:
-
-At six, I will be studying.
-
-UNTIL показывает, до какого момента действие продолжается:
-
-I will be working until six.
-
-BY показывает крайний срок завершения:
-
-I will have finished by six.
-
-Сравните:
-
-I will work until six.
-— работа продолжается до шести.
-
-I will have finished by six.
-— не позднее шести работа уже закончится.""",
-            },
-
-            {
-                "order": 14,
-                "title": "Сравнение будущих времён",
-                "body": """Future Simple:
-
-will + V1
-
-I will write the report tomorrow.
-
-Future Continuous:
-
-will be + V-ing
-
-I will be writing the report at six.
-
-Future Perfect:
-
-will have + V3
-
-I will have written the report by six.
-
-Future Perfect Continuous:
-
-will have been + V-ing
-
-I will have been writing for three hours by six.
-
-Простое правило:
-
-будущий факт → Future Simple
-
-процесс в момент → Future Continuous
-
-готовый результат к моменту → Future Perfect
-
-длительность процесса к моменту → Future Perfect Continuous""",
+BY → Future Perfect.""",
             },
 
         ]
 
+
+        section_objects = {}
+
+
         for data in sections:
-            GrammarLessonSection.objects.update_or_create(
-                lesson=lesson,
-                order=data["order"],
-                defaults={
-                    "title": data["title"],
-                    "body": data["body"],
-                },
+
+            section, _ = (
+                GrammarLessonSection.objects.update_or_create(
+                    lesson=lesson,
+                    order=data["order"],
+                    defaults={
+                        "title":
+                            data["title"],
+                        "body":
+                            data["body"],
+                    },
+                )
             )
 
-        exercises = [
+            section_objects[
+                data["order"]
+            ] = section
 
+
+        # =================================================
+        # 20 TRAINING EXERCISES
+        # =================================================
+
+        training = [
+
+            # SECTION 1
             {
                 "order": 1,
-                "prompt": "This time tomorrow, I ___ on the train.",
-                "options": [
-                    "will be travelling",
-                    "will have travelled by then",
-                    "travel every day",
-                    "am travel",
-                ],
-                "answer": "will be travelling",
-                "explanation": (
-                    "This time tomorrow показывает процесс "
-                    "в конкретный будущий момент."
-                ),
-            },
-
-            {
-                "order": 2,
-                "prompt": "At eight, she ___ dinner.",
+                "section": 1,
+                "type": "choice",
+                "prompt":
+                    "At eight tomorrow, I ___ dinner.",
                 "options": [
                     "will be cooking",
                     "will have cooked by eight",
                     "will cooking",
-                    "cooks yesterday",
+                    "cook yesterday",
                 ],
-                "answer": "will be cooking",
-                "explanation": (
-                    "At eight → процесс в этот момент → "
-                    "Future Continuous."
-                ),
+                "answer":
+                    "will be cooking",
+                "explanation":
+                    "AT EIGHT → процесс в конкретный будущий момент.",
             },
 
             {
-                "order": 3,
-                "prompt": "By eight, she ___ dinner.",
+                "order": 2,
+                "section": 1,
+                "type": "choice",
+                "prompt":
+                    "This time tomorrow, we ___ to Almaty.",
                 "options": [
-                    "will be cooking at that moment",
-                    "will have cooked",
-                    "will has cooked",
-                    "is cooked",
+                    "will be travelling",
+                    "will have travelled by then",
+                    "will travelling",
+                    "travelled",
                 ],
-                "answer": "will have cooked",
-                "explanation": (
-                    "By eight → готовый результат к этому моменту."
-                ),
+                "answer":
+                    "will be travelling",
+                "explanation":
+                    "THIS TIME TOMORROW → Future Continuous.",
+            },
+
+
+            # SECTION 2
+            {
+                "order": 3,
+                "section": 2,
+                "type": "build",
+                "prompt":
+                    "Собери Future Continuous.",
+                "options": [
+                    "She",
+                    "will",
+                    "be",
+                    "studying",
+                ],
+                "answer":
+                    "She will be studying",
+                "explanation":
+                    "WILL + BE + verb-ing.",
             },
 
             {
                 "order": 4,
-                "prompt": "We ___ the project by Friday.",
+                "section": 2,
+                "type": "choice",
+                "prompt":
+                    "Choose the correct sentence.",
                 "options": [
-                    "will have completed",
-                    "will be completing at six only",
-                    "will has completed",
-                    "have complete",
+                    "They will be working.",
+                    "They will working.",
+                    "They will be work.",
+                    "They will been working.",
                 ],
-                "answer": "will have completed",
-                "explanation": (
-                    "Проект будет завершён к пятнице → Future Perfect."
-                ),
+                "answer":
+                    "They will be working.",
+                "explanation":
+                    "Future Continuous = WILL BE + verb-ing.",
             },
 
+
+            # SECTION 3
             {
                 "order": 5,
-                "prompt": "At ten tomorrow, they ___ the exam.",
+                "section": 3,
+                "type": "choice",
+                "prompt":
+                    "This time next week, she ___ in Dubai.",
                 "options": [
-                    "will be taking",
-                    "will have taken before ten",
-                    "will taking",
-                    "take yesterday",
+                    "will be staying",
+                    "will have stayed by then",
+                    "will staying",
+                    "stayed",
                 ],
-                "answer": "will be taking",
-                "explanation": (
-                    "At ten tomorrow → процесс в конкретный момент."
-                ),
+                "answer":
+                    "will be staying",
+                "explanation":
+                    "THIS TIME NEXT WEEK показывает процесс.",
             },
 
             {
                 "order": 6,
-                "prompt": "By ten tomorrow, they ___ the exam.",
+                "section": 3,
+                "type": "choice",
+                "prompt":
+                    "At ten tomorrow, they ___ the exam.",
                 "options": [
-                    "will be taking at ten",
-                    "will have completed",
-                    "will has complete",
-                    "are completed",
+                    "will be taking",
+                    "will have taken by ten",
+                    "will taking",
+                    "take yesterday",
                 ],
-                "answer": "will have completed",
-                "explanation": (
-                    "By ten → экзамен уже будет завершён."
-                ),
+                "answer":
+                    "will be taking",
+                "explanation":
+                    "AT TEN → действие будет происходить в этот момент.",
             },
 
+
+            # SECTION 4
             {
                 "order": 7,
-                "prompt": "___ you be using the car tonight?",
+                "section": 4,
+                "type": "choice",
+                "prompt":
+                    "___ you be using the car tonight?",
                 "options": [
-                    "Do",
                     "Will",
-                    "Are will",
+                    "Do",
+                    "Are",
                     "Have",
                 ],
-                "answer": "Will",
-                "explanation": (
-                    "Future Continuous question: "
-                    "Will + subject + be + verb-ing?"
-                ),
+                "answer":
+                    "Will",
+                "explanation":
+                    "Вопрос Future Continuous начинается с WILL.",
             },
 
             {
                 "order": 8,
-                "prompt": "Will she have arrived by Monday?",
+                "section": 4,
+                "type": "choice",
+                "prompt":
+                    "Choose the polite question about someone's plans.",
                 "options": [
-                    "Yes, she will.",
-                    "Yes, she has.",
-                    "Yes, she is.",
-                    "Yes, she does.",
+                    "Will you be coming to the meeting?",
+                    "Do you coming to the meeting?",
+                    "Will you coming to the meeting?",
+                    "Are you be coming to the meeting?",
                 ],
-                "answer": "Yes, she will.",
-                "explanation": (
-                    "Краткий ответ на вопрос с will: Yes, she will."
-                ),
+                "answer":
+                    "Will you be coming to the meeting?",
+                "explanation":
+                    "WILL + subject + BE + verb-ing.",
             },
 
+
+            # SECTION 5
             {
                 "order": 9,
-                "prompt": (
-                    "At this time next week, we ___ at a hotel."
-                ),
+                "section": 5,
+                "type": "choice",
+                "prompt":
+                    "She ___ be working tomorrow.",
                 "options": [
-                    "will be staying",
-                    "will have stayed by then only",
-                    "will staying",
-                    "are stay",
+                    "won't",
+                    "doesn't",
+                    "isn't will",
+                    "not will",
                 ],
-                "answer": "will be staying",
-                "explanation": (
-                    "This time next week → Future Continuous."
-                ),
+                "answer":
+                    "won't",
+                "explanation":
+                    "Отрицание → WON'T BE + verb-ing.",
             },
 
             {
                 "order": 10,
-                "prompt": "By next year, I ___ here for ten years.",
+                "section": 5,
+                "type": "choice",
+                "prompt":
+                    "Will he be studying at six?",
                 "options": [
-                    "will have lived",
-                    "will be living at that moment only",
-                    "will has lived",
-                    "have lived yesterday",
+                    "Yes, he will.",
+                    "Yes, he is.",
+                    "Yes, he does.",
+                    "Yes, he has.",
                 ],
-                "answer": "will have lived",
-                "explanation": (
-                    "К следующему году период проживания достигнет "
-                    "десяти лет."
-                ),
+                "answer":
+                    "Yes, he will.",
+                "explanation":
+                    "Краткий ответ повторяет WILL.",
             },
 
+
+            # SECTION 6
             {
                 "order": 11,
-                "prompt": (
-                    "How many pages ___ she ___ by Friday?"
-                ),
+                "section": 6,
+                "type": "choice",
+                "prompt":
+                    "By six, I ___ the report.",
                 "options": [
-                    "will / have written",
-                    "will / be writing",
-                    "does / write",
-                    "has / wrote",
+                    "will have finished",
+                    "will be finishing at six",
+                    "will has finished",
+                    "will have finish",
                 ],
-                "answer": "will / have written",
-                "explanation": (
-                    "How many + результат к сроку → Future Perfect."
-                ),
+                "answer":
+                    "will have finished",
+                "explanation":
+                    "BY SIX → готовый результат к сроку.",
             },
 
             {
                 "order": 12,
-                "prompt": "What ___ you be doing at six?",
-                "options": ["do", "will", "are", "have"],
-                "answer": "will",
-                "explanation": (
-                    "What will you be doing at six?"
-                ),
+                "section": 6,
+                "type": "choice",
+                "prompt":
+                    "By Monday, she ___ home.",
+                "options": [
+                    "will have returned",
+                    "will be returning at Monday",
+                    "will has returned",
+                    "will have return",
+                ],
+                "answer":
+                    "will have returned",
+                "explanation":
+                    "Действие завершится к понедельнику.",
             },
 
+
+            # SECTION 7
             {
                 "order": 13,
-                "prompt": "I will be working ___ six.",
-                "options": ["by", "at", "since", "ago"],
-                "answer": "at",
-                "explanation": (
-                    "AT показывает процесс в конкретный момент."
-                ),
+                "section": 7,
+                "type": "choice",
+                "prompt":
+                    "He will have ___ the email by then.",
+                "options": [
+                    "written",
+                    "wrote",
+                    "write",
+                    "writing",
+                ],
+                "answer":
+                    "written",
+                "explanation":
+                    "WRITE → WROTE → WRITTEN.",
             },
 
             {
                 "order": 14,
-                "prompt": "I will have finished ___ six.",
-                "options": ["at only", "by", "since", "for"],
-                "answer": "by",
-                "explanation": (
-                    "BY показывает крайний срок завершения."
-                ),
+                "section": 7,
+                "type": "fill",
+                "prompt":
+                    "go → went → ___",
+                "options": [],
+                "answer":
+                    "gone",
+                "explanation":
+                    "После WILL HAVE нужна V3: GONE.",
             },
 
+
+            # SECTION 8
             {
                 "order": 15,
-                "prompt": (
-                    "By the time you ___, "
-                    "I will have prepared dinner."
-                ),
+                "section": 8,
+                "type": "choice",
+                "prompt":
+                    "I will have finished the work ___ Friday.",
                 "options": [
-                    "will arrive",
-                    "arrive",
-                    "arrived",
-                    "arriving",
+                    "by",
+                    "at",
+                    "since",
+                    "for",
                 ],
-                "answer": "arrive",
-                "explanation": (
-                    "После by the time для будущего "
-                    "используется Present Simple."
-                ),
+                "answer":
+                    "by",
+                "explanation":
+                    "BY показывает крайний срок.",
             },
 
             {
                 "order": 16,
-                "prompt": "Choose the correct Future Continuous sentence.",
+                "section": 8,
+                "type": "choice",
+                "prompt":
+                    "By the time you ___, I will have finished.",
                 "options": [
-                    "I will be work at six.",
-                    "I will be working at six.",
-                    "I will working at six.",
-                    "I will have working at six.",
+                    "arrive",
+                    "will arrive",
+                    "arrived",
+                    "arriving",
                 ],
-                "answer": "I will be working at six.",
-                "explanation": (
-                    "Future Continuous: will be + verb-ing."
-                ),
+                "answer":
+                    "arrive",
+                "explanation":
+                    "После BY THE TIME → Present Simple.",
             },
 
+
+            # SECTION 9
             {
                 "order": 17,
-                "prompt": "Choose the correct Future Perfect sentence.",
+                "section": 9,
+                "type": "choice",
+                "prompt":
+                    "By Friday, she ___ ten pages.",
                 "options": [
-                    "I will have finish by six.",
-                    "I will have finished by six.",
-                    "I will has finished by six.",
-                    "I will be finished by six always.",
+                    "will have written",
+                    "will be writing at Friday",
+                    "will have wrote",
+                    "will writing",
                 ],
-                "answer": "I will have finished by six.",
-                "explanation": (
-                    "Future Perfect: will have + V3."
-                ),
+                "answer":
+                    "will have written",
+                "explanation":
+                    "TEN PAGES → количество готового результата.",
             },
 
             {
                 "order": 18,
-                "prompt": "Choose the correct sentence.",
+                "section": 9,
+                "type": "choice",
+                "prompt":
+                    "By next month, they ___ three projects.",
                 "options": [
-                    "He will have wrote the report.",
-                    "He will have written the report.",
-                    "He will have write the report.",
-                    "He will written the report.",
+                    "will have completed",
+                    "will be completing at that moment",
+                    "will has completed",
+                    "will complete yesterday",
                 ],
-                "answer": "He will have written the report.",
-                "explanation": (
-                    "Write → wrote → written; Future Perfect требует V3."
-                ),
+                "answer":
+                    "will have completed",
+                "explanation":
+                    "Количество завершённых результатов → Future Perfect.",
             },
 
+
+            # SECTION 10
             {
                 "order": 19,
-                "prompt": (
-                    "Which sentence emphasizes a process "
-                    "at six tomorrow?"
-                ),
+                "section": 10,
+                "type": "choice",
+                "prompt":
+                    "At six, I ___ the report.",
                 "options": [
-                    "I will have finished by six.",
-                    "I will be working at six.",
-                    "I will work yesterday.",
-                    "I have worked at six tomorrow.",
+                    "will be writing",
+                    "will have written by six",
+                    "will writing",
+                    "will have write",
                 ],
-                "answer": "I will be working at six.",
-                "explanation": (
-                    "Процесс в конкретный момент → Future Continuous."
-                ),
+                "answer":
+                    "will be writing",
+                "explanation":
+                    "AT SIX → процесс.",
             },
 
             {
                 "order": 20,
-                "prompt": (
-                    "Which sentence emphasizes a completed "
-                    "result by six?"
-                ),
+                "section": 10,
+                "type": "choice",
+                "prompt":
+                    "By six, I ___ the report.",
                 "options": [
-                    "I will be working at six.",
-                    "I will have finished by six.",
-                    "I will working until six.",
-                    "I am finished tomorrow.",
+                    "will have written",
+                    "will be writing at six",
+                    "will has written",
+                    "will have wrote",
                 ],
-                "answer": "I will have finished by six.",
-                "explanation": (
-                    "Готовый результат к моменту → Future Perfect."
-                ),
-            },
-
-            {
-                "order": 21,
-                "prompt": "Choose the correct pair.",
-                "options": [
-                    (
-                        "At six, I will be writing. / "
-                        "By six, I will have written the report."
-                    ),
-                    (
-                        "At six, I will have wrote. / "
-                        "By six, I will be writing always."
-                    ),
-                    (
-                        "At six, I will writing. / "
-                        "By six, I will has written."
-                    ),
-                    (
-                        "At six, I write yesterday. / "
-                        "By six, I have writing."
-                    ),
-                ],
-                "answer": (
-                    "At six, I will be writing. / "
-                    "By six, I will have written the report."
-                ),
-                "explanation": (
-                    "AT → процесс; BY → завершённый результат."
-                ),
-            },
-
-            {
-                "order": 22,
-                "prompt": (
-                    "Choose the correct sentence with UNTIL."
-                ),
-                "options": [
-                    "I will be working until six.",
-                    "I will have finished until six.",
-                    "I will working until six.",
-                    "I will have work until six.",
-                ],
-                "answer": "I will be working until six.",
-                "explanation": (
-                    "Until показывает, до какого момента "
-                    "продолжается действие."
-                ),
-            },
-
-            {
-                "order": 23,
-                "prompt": (
-                    "By six, I ___ for five hours."
-                ),
-                "options": [
-                    "will have been working",
-                    "will be worked",
-                    "will have working",
-                    "will has been working",
-                ],
-                "answer": "will have been working",
-                "explanation": (
-                    "Длительность процесса к будущему моменту → "
-                    "Future Perfect Continuous."
-                ),
-            },
-
-            {
-                "order": 24,
-                "prompt": "Choose the fully correct comparison.",
-                "options": [
-                    (
-                        "I will write tomorrow. / "
-                        "I will be writing at six. / "
-                        "I will have written it by six."
-                    ),
-                    (
-                        "I will wrote tomorrow. / "
-                        "I will working at six. / "
-                        "I will have wrote by six."
-                    ),
-                    (
-                        "I will be write tomorrow. / "
-                        "I have writing at six. / "
-                        "I will has written by six."
-                    ),
-                    (
-                        "I writing tomorrow. / "
-                        "I will been writing at six. / "
-                        "I have written tomorrow."
-                    ),
-                ],
-                "answer": (
-                    "I will write tomorrow. / "
-                    "I will be writing at six. / "
-                    "I will have written it by six."
-                ),
-                "explanation": (
-                    "Future Simple = факт; "
-                    "Future Continuous = процесс; "
-                    "Future Perfect = результат к моменту."
-                ),
+                "answer":
+                    "will have written",
+                "explanation":
+                    "BY SIX → результат.",
             },
 
         ]
 
-        for data in exercises:
+
+        # =================================================
+        # FINAL TEST — 10 NEW QUESTIONS
+        # =================================================
+
+        final_test = [
+
+            {
+                "order": 21,
+                "prompt":
+                    "At this time tomorrow, Tom ___ to work.",
+                "options": [
+                    "will be driving",
+                    "will have driven by then",
+                    "will driving",
+                    "drives yesterday",
+                ],
+                "answer":
+                    "will be driving",
+                "explanation":
+                    "Процесс в конкретный будущий момент → Future Continuous.",
+            },
+
+            {
+                "order": 22,
+                "prompt":
+                    "At nine tonight, we ___ dinner.",
+                "options": [
+                    "will be having",
+                    "will have had by nine",
+                    "will having",
+                    "have yesterday",
+                ],
+                "answer":
+                    "will be having",
+                "explanation":
+                    "AT NINE → процесс в этот момент.",
+            },
+
+            {
+                "order": 23,
+                "prompt":
+                    "Choose the correct Future Continuous question.",
+                "options": [
+                    "Will she be working tomorrow?",
+                    "Will she working tomorrow?",
+                    "Does she be working tomorrow?",
+                    "Will she be work tomorrow?",
+                ],
+                "answer":
+                    "Will she be working tomorrow?",
+                "explanation":
+                    "WILL + subject + BE + verb-ing.",
+            },
+
+            {
+                "order": 24,
+                "prompt":
+                    "By tomorrow morning, I ___ the presentation.",
+                "options": [
+                    "will have prepared",
+                    "will be preparing at morning",
+                    "will have prepare",
+                    "will has prepared",
+                ],
+                "answer":
+                    "will have prepared",
+                "explanation":
+                    "BY TOMORROW MORNING → результат к сроку.",
+            },
+
+            {
+                "order": 25,
+                "prompt":
+                    "By next year, she ___ university.",
+                "options": [
+                    "will have finished",
+                    "will be finishing at every moment",
+                    "will have finish",
+                    "will finished",
+                ],
+                "answer":
+                    "will have finished",
+                "explanation":
+                    "Завершённый результат к будущему сроку → Future Perfect.",
+            },
+
+            {
+                "order": 26,
+                "prompt":
+                    "Choose the correct form of SEE after WILL HAVE.",
+                "options": [
+                    "seen",
+                    "saw",
+                    "see",
+                    "seeing",
+                ],
+                "answer":
+                    "seen",
+                "explanation":
+                    "SEE → SAW → SEEN.",
+            },
+
+            {
+                "order": 27,
+                "prompt":
+                    "By the time the lesson ___, we will have finished the test.",
+                "options": [
+                    "ends",
+                    "will end",
+                    "ended yesterday",
+                    "ending",
+                ],
+                "answer":
+                    "ends",
+                "explanation":
+                    "После BY THE TIME для будущего → Present Simple.",
+            },
+
+            {
+                "order": 28,
+                "prompt":
+                    "How many books ___ she ___ by the end of the year?",
+                "options": [
+                    "will / have read",
+                    "will / be reading",
+                    "does / read",
+                    "has / read tomorrow",
+                ],
+                "answer":
+                    "will / have read",
+                "explanation":
+                    "Количество результата к сроку → Future Perfect.",
+            },
+
+            {
+                "order": 29,
+                "prompt":
+                    "Choose the correct comparison.",
+                "options": [
+                    "At seven, she will be cooking. / By seven, she will have cooked dinner.",
+                    "At seven, she will have cooking. / By seven, she will be cooked.",
+                    "At seven, she will cooking. / By seven, she will has cooked.",
+                    "At seven, she cooks yesterday. / By seven, she has cooking.",
+                ],
+                "answer":
+                    "At seven, she will be cooking. / By seven, she will have cooked dinner.",
+                "explanation":
+                    "AT → процесс; BY → готовый результат.",
+            },
+
+            {
+                "order": 30,
+                "prompt":
+                    "Choose the fully correct pair.",
+                "options": [
+                    "This time tomorrow, I will be flying. / By tomorrow evening, I will have arrived.",
+                    "This time tomorrow, I will flying. / By tomorrow evening, I will have arrive.",
+                    "This time tomorrow, I will have flying. / By tomorrow evening, I will arrived.",
+                    "This time tomorrow, I flying. / By tomorrow evening, I have arrived tomorrow.",
+                ],
+                "answer":
+                    "This time tomorrow, I will be flying. / By tomorrow evening, I will have arrived.",
+                "explanation":
+                    "Процесс → Future Continuous; результат к сроку → Future Perfect.",
+            },
+
+        ]
+
+
+        all_exercises = training + final_test
+
+        valid_orders = [
+            item["order"]
+            for item in all_exercises
+        ]
+
+
+        for data in all_exercises:
+
+            if data["order"] <= 20:
+                section = section_objects[data["section"]]
+            else:
+                section = None
+
+
             GrammarExercise.objects.update_or_create(
                 lesson=lesson,
                 order=data["order"],
                 defaults={
-                    "exercise_type": GrammarExercise.Type.CHOICE,
-                    "prompt": data["prompt"],
-                    "options": data["options"],
-                    "correct_answer": data["answer"],
-                    "explanation": data["explanation"],
-                    "is_published": True,
+                    "section":
+                        section,
+
+                    "exercise_type":
+                        data.get(
+                            "type",
+                            "choice",
+                        ),
+
+                    "prompt":
+                        data["prompt"],
+
+                    "options":
+                        data["options"],
+
+                    "correct_answer":
+                        data["answer"],
+
+                    "explanation":
+                        data["explanation"],
+
+                    "is_published":
+                        True,
                 },
             )
 
+
+        GrammarExercise.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__in=valid_orders,
+        ).delete()
+
+
+        GrammarLessonSection.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__in=[
+                item["order"]
+                for item in sections
+            ],
+        ).delete()
+
+
         self.stdout.write(
             self.style.SUCCESS(
-                "✅ A1 Lesson 39 seeded: "
-                "Future Continuous and Future Perfect"
+                "✅ Interactive A1 Lesson 39 seeded"
             )
         )
 
         self.stdout.write(
-            f"Sections: {lesson.sections.count()}"
+            f"Micro rules: {lesson.sections.count()}"
         )
 
         self.stdout.write(
-            f"Exercises: {lesson.exercises.count()}"
+            "Training exercises: "
+            f"{lesson.exercises.filter(section__isnull=False).count()}"
+        )
+
+        self.stdout.write(
+            "Final test: "
+            f"{lesson.exercises.filter(section__isnull=True).count()}"
         )

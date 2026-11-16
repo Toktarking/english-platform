@@ -10,158 +10,91 @@ from grammar.models import (
 class Command(BaseCommand):
 
     help = (
-        "Create/update A1 Grammar Lesson 31: "
-        "Present Perfect vs Past Simple."
+        "Create/update interactive A1 Grammar "
+        "Lesson 31: Present Perfect vs Past Simple."
     )
+
 
     def handle(self, *args, **options):
 
-        lesson, _ = GrammarLesson.objects.update_or_create(
-            level="A1",
-            order=31,
-            defaults={
-                "title": "Present Perfect и Past Simple",
-                "slug": "present-perfect-vs-past-simple",
-                "theory_text": (
-                    "Present Perfect vs Past Simple."
-                ),
-                "estimated_minutes": 40,
-                "pass_score": 70,
-                "xp_reward": 100,
-                "is_published": True,
-            },
+        lesson, _ = (
+            GrammarLesson.objects.update_or_create(
+                level="A1",
+                order=31,
+
+                defaults={
+                    "title":
+                        "Present Perfect и Past Simple",
+
+                    "slug":
+                        "present-perfect-vs-past-simple",
+
+                    "theory_text":
+                        "Present Perfect vs Past Simple.",
+
+                    "estimated_minutes":
+                        20,
+
+                    "pass_score":
+                        70,
+
+                    "xp_reward":
+                        100,
+
+                    "is_published":
+                        True,
+                },
+            )
         )
+
+
+        # =================================================
+        # 10 MICRO RULES
+        # =================================================
 
         sections = [
 
             {
                 "order": 1,
-                "title": "Главное различие",
-                "body": """Present Perfect и Past Simple могут говорить о прошлом, но смысл разный.
+                "title":
+                    "Главное различие",
 
-Present Perfect:
+                "body":
+                    """Оба времени говорят о прошлом.
 
-I have seen this film.
+Но Present Perfect связывает прошлое
+с настоящим:
 
-Важно, что у меня есть такой опыт сейчас.
+I have lost my keys.
 
-Past Simple:
+→ сейчас ключей нет.
 
-I saw this film yesterday.
+Past Simple говорит о завершённом
+событии в прошлом:
 
-Важно, когда именно это произошло.
+I lost my keys yesterday.
 
 Главный вопрос:
 
-важна связь с настоящим или конкретное завершённое прошлое?""",
+важен результат сейчас
+или завершённое прошлое?""",
             },
+
 
             {
                 "order": 2,
-                "title": "Когда нужен Present Perfect",
-                "body": """Present Perfect используется, когда:
+                "title":
+                    "Есть точное время? Past Simple",
 
-точное время не указано;
+                "body":
+                    """Если указано завершённое время прошлого,
+обычно нужен Past Simple.
 
-важен результат сейчас;
-
-речь идёт о жизненном опыте;
-
-период времени ещё не закончился;
-
-действие началось в прошлом и продолжается сейчас.
-
-Примеры:
-
-I have finished the report.
-
-She has lost her keys.
-
-They have visited London.
-
-We have lived here for five years.""",
-            },
-
-            {
-                "order": 3,
-                "title": "Когда нужен Past Simple",
-                "body": """Past Simple используется, когда:
-
-действие завершилось в прошлом;
-
-указано конкретное время;
-
-период уже закончился;
-
-события произошли одно за другим;
-
-речь идёт о завершённой ситуации.
-
-Примеры:
-
-I finished the report yesterday.
-
-She lost her keys last week.
-
-They visited London in 2024.
-
-We lived there for five years, but now we live elsewhere.""",
-            },
-
-            {
-                "order": 4,
-                "title": "Сравнение форм",
-                "body": """Present Perfect:
-
-have/has + третья форма
-
-I have worked.
-
-She has gone.
-
-They have seen.
-
-Past Simple:
-
-правильный глагол:
-
-worked
-
-played
-
-studied
-
-неправильный глагол:
-
-went
-
-saw
-
-wrote
-
-Не смешивайте вторую и третью формы.""",
-            },
-
-            {
-                "order": 5,
-                "title": "Конкретное время прошлого",
-                "body": """Если указано завершённое время прошлого, используйте Past Simple.
-
-Частые выражения:
-
-yesterday;
-
-last week;
-
-two days ago;
-
-in 2020;
-
-at six yesterday;
-
-when I was a child.
-
-Примеры:
+yesterday
+last week
+two days ago
+in 2020
+at six yesterday
 
 I saw him yesterday.
 
@@ -169,113 +102,149 @@ She arrived last week.
 
 They moved here in 2020.
 
-Неправильно:
+Не говорим:
 
 I have seen him yesterday.""",
             },
 
+
             {
-                "order": 6,
-                "title": "Результат сейчас",
-                "body": """Present Perfect показывает результат, связанный с настоящим.
+                "order": 3,
+                "title":
+                    "Нет точного времени? Present Perfect",
 
-I have lost my keys.
+                "body":
+                    """Если точное время не называется,
+а важен сам факт или результат:
 
-Сейчас ключей нет.
+Present Perfect.
 
-Past Simple сообщает о прошлом событии:
+I have finished the report.
 
-I lost my keys yesterday, but I found them later.
+She has seen this film.
 
-Сейчас проблема уже решена.
+We have visited London.
 
-Сравните:
+Нас интересует:
 
-She has broken her phone.
-— телефон сейчас сломан.
+что произошло,
 
-She broke her phone last year.
-— событие прошлого.""",
+а не когда именно.""",
             },
 
+
             {
-                "order": 7,
-                "title": "Жизненный опыт и детали",
-                "body": """Для жизненного опыта используйте Present Perfect.
+                "order": 4,
+                "title":
+                    "Результат сейчас",
+
+                "body":
+                    """Present Perfect показывает,
+что прошлое действие влияет на настоящее.
+
+She has broken her phone.
+
+→ телефон сейчас сломан.
+
+I have lost my wallet.
+
+→ кошелька сейчас нет.
+
+Past Simple:
+
+She broke her phone last year.
+
+Это просто событие прошлого.""",
+            },
+
+
+            {
+                "order": 5,
+                "title":
+                    "Жизненный опыт",
+
+                "body":
+                    """Когда спрашиваем об опыте жизни:
+
+Present Perfect.
+
+Have you ever been to Turkey?
+
+I have never tried sushi.
+
+She has visited Italy twice.
+
+Точное время не называется.
+
+Если появляется конкретная дата:
+
+I went to Turkey in 2024.
+
+→ Past Simple.""",
+            },
+
+
+            {
+                "order": 6,
+                "title":
+                    "Сначала опыт, потом детали",
+
+                "body":
+                    """Очень частая схема:
 
 Have you ever been to London?
 
-Yes, I have.
+→ Present Perfect: опыт.
 
-Когда начинаем спрашивать детали, переходим на Past Simple.
+Yes, I have.
 
 When did you go there?
 
+→ Past Simple: конкретная деталь.
+
 I went there in 2023.
 
-Схема:
+Запомни:
 
 опыт → Present Perfect
 
-детали → Past Simple""",
+детали → Past Simple.""",
             },
 
-            {
-                "order": 8,
-                "title": "EVER, NEVER, JUST, ALREADY, YET",
-                "body": """С Present Perfect часто используются:
-
-ever;
-
-never;
-
-just;
-
-already;
-
-yet.
-
-Примеры:
-
-Have you ever seen snow?
-
-I have never been to Paris.
-
-I have just finished.
-
-He has already eaten.
-
-She hasn't arrived yet.
-
-Для стандартных учебных заданий эти слова лучше связывать с Present Perfect.""",
-            },
 
             {
-                "order": 9,
-                "title": "TODAY, THIS WEEK, THIS YEAR",
-                "body": """Если период ещё продолжается, часто используется Present Perfect.
+                "order": 7,
+                "title":
+                    "TODAY, THIS WEEK, THIS YEAR",
+
+                "body":
+                    """Если период ещё продолжается,
+часто используется Present Perfect.
 
 I have had three meetings today.
 
-She has called me twice this week.
+She has called twice this week.
 
-They have travelled a lot this year.
-
-Если период завершён:
+Но завершённый период:
 
 I had three meetings yesterday.
 
-She called me twice last week.
+She called twice last week.
 
-They travelled a lot last year.
+Главное:
 
-Главное — закончился период или нет.""",
+период ещё идёт
+или уже закончился?""",
             },
 
+
             {
-                "order": 10,
-                "title": "FOR и SINCE",
-                "body": """Если ситуация продолжается сейчас:
+                "order": 8,
+                "title":
+                    "FOR и SINCE: продолжается или закончилось?",
+
+                "body":
+                    """Если ситуация продолжается сейчас:
 
 Present Perfect.
 
@@ -283,492 +252,875 @@ I have lived here for five years.
 
 She has worked here since 2021.
 
-Если ситуация уже закончилась:
+Если ситуация закончилась:
 
 Past Simple.
 
-I lived there for five years, but now I live in Astana.
+I lived there for five years,
+but now I live elsewhere.
 
-She worked there from 2018 to 2022.
-
-Сравните:
-
-I have lived here for five years.
-— всё ещё живу здесь.
-
-I lived there for five years.
-— уже не живу там.""",
+She worked there from 2018 to 2022.""",
             },
 
+
             {
-                "order": 11,
-                "title": "HOW LONG",
-                "body": """Если ситуация продолжается:
+                "order": 9,
+                "title":
+                    "HOW LONG",
+
+                "body":
+                    """Если ситуация продолжается:
 
 How long have you lived here?
 
-How long has she worked here?
+→ ты всё ещё здесь живёшь.
 
 Если ситуация завершена:
 
 How long did you live in London?
 
-How long did she work there?
+→ ты уже там не живёшь.
 
-Сравните:
+То же правило:
 
-How long have you lived here?
-— вы всё ещё здесь живёте.
+продолжается → Present Perfect
 
-How long did you live there?
-— вы там уже не живёте.""",
+закончилось → Past Simple.""",
             },
 
-            {
-                "order": 12,
-                "title": "BEEN, GONE и конкретная поездка",
-                "body": """Have been to:
-
-человек был где-то и вернулся.
-
-I have been to Astana.
-
-Have gone to:
-
-человек уехал и ещё не вернулся.
-
-She has gone to the shop.
-
-Если говорим о конкретной поездке:
-
-Past Simple.
-
-She went to Astana yesterday.
-
-They went to Turkey last summer.""",
-            },
 
             {
-                "order": 13,
-                "title": "Новости и детали",
-                "body": """Новость или результат часто сообщается в Present Perfect.
+                "order": 10,
+                "title":
+                    "Новость и подробности",
+
+                "body":
+                    """Новость часто сообщается
+в Present Perfect:
 
 I have lost my phone.
 
-She has got a new job.
-
-They have bought a house.
-
-После этого детали обычно идут в Past Simple:
-
-I have lost my phone.
+После этого детали идут в Past Simple:
 
 Where did you lose it?
 
 I lost it on the bus.
 
-Это очень типичная связка двух времён.""",
-            },
+Ещё пример:
 
-            {
-                "order": 14,
-                "title": "Как выбрать время",
-                "body": """Шаг 1.
+She has got a new job.
 
-Есть точное завершённое время?
+When did she start?
 
-→ Past Simple
-
-I saw him yesterday.
-
-Шаг 2.
-
-Важен результат сейчас?
-
-→ Present Perfect
-
-I have lost my phone.
-
-Шаг 3.
-
-Это жизненный опыт?
-
-→ Present Perfect
-
-Have you ever travelled abroad?
-
-Шаг 4.
-
-Действие продолжается сейчас?
-
-→ Present Perfect
-
-I have worked here since 2022.
-
-Шаг 5.
-
-Период завершён?
-
-→ Past Simple
-
-I worked there from 2020 to 2022.""",
+She started on Monday.""",
             },
 
         ]
 
+
+        section_objects = {}
+
+
         for data in sections:
 
-            GrammarLessonSection.objects.update_or_create(
-                lesson=lesson,
-                order=data["order"],
-                defaults={
-                    "title": data["title"],
-                    "body": data["body"],
-                },
+            section, _ = (
+                GrammarLessonSection.objects.update_or_create(
+                    lesson=lesson,
+                    order=data["order"],
+
+                    defaults={
+                        "title":
+                            data["title"],
+
+                        "body":
+                            data["body"],
+                    },
+                )
             )
 
-        exercises = [
+            section_objects[
+                data["order"]
+            ] = section
+
+
+        # =================================================
+        # 20 TRAINING EXERCISES
+        # =================================================
+
+        training = [
+
+            # 1
 
             {
                 "order": 1,
-                "prompt": "I ___ my keys. I can't open the door.",
+                "section": 1,
+                "type": "choice",
+
+                "prompt":
+                    "I ___ my keys. I can't open the door.",
+
                 "options": [
-                    "lost yesterday",
                     "have lost",
+                    "lost yesterday",
                     "have lose",
                     "did lost",
                 ],
-                "answer": "have lost",
-                "explanation": "Важен результат сейчас: ключей нет.",
+
+                "answer":
+                    "have lost",
+
+                "explanation":
+                    "Важен результат сейчас: ключей нет.",
             },
 
             {
                 "order": 2,
-                "prompt": "I ___ my keys yesterday, but I found them later.",
+                "section": 1,
+                "type": "choice",
+
+                "prompt":
+                    "I ___ my keys yesterday.",
+
                 "options": [
-                    "have lost",
                     "lost",
+                    "have lost",
                     "have lose",
                     "lose",
                 ],
-                "answer": "lost",
-                "explanation": "Yesterday — завершённое время прошлого.",
+
+                "answer":
+                    "lost",
+
+                "explanation":
+                    "YESTERDAY → завершённое прошлое.",
             },
+
+
+            # 2
 
             {
                 "order": 3,
-                "prompt": "She ___ to Turkey twice.",
+                "section": 2,
+                "type": "choice",
+
+                "prompt":
+                    "She ___ to Almaty last week.",
+
                 "options": [
-                    "went last year",
+                    "went",
+                    "has gone",
                     "has been",
-                    "has went",
-                    "was",
+                    "go",
                 ],
-                "answer": "has been",
-                "explanation": "Жизненный опыт без конкретного времени → Present Perfect.",
+
+                "answer":
+                    "went",
+
+                "explanation":
+                    "LAST WEEK требует Past Simple.",
             },
 
             {
                 "order": 4,
-                "prompt": "She ___ to Turkey last summer.",
-                "options": [
-                    "has been",
-                    "went",
-                    "has gone",
-                    "goes",
-                ],
-                "answer": "went",
-                "explanation": "Last summer — завершённый период → Past Simple.",
+                "section": 2,
+                "type": "fill",
+
+                "prompt":
+                    "I ___ him two days ago. (see)",
+
+                "options": [],
+
+                "answer":
+                    "saw",
+
+                "explanation":
+                    "TWO DAYS AGO → Past Simple → SAW.",
             },
+
+
+            # 3
 
             {
                 "order": 5,
-                "prompt": "___ you ever ___ sushi?",
+                "section": 3,
+                "type": "choice",
+
+                "prompt":
+                    "We ___ this film before.",
+
                 "options": [
-                    "Did / ate",
-                    "Have / eaten",
-                    "Have / ate",
-                    "Did / eaten",
+                    "have seen",
+                    "saw yesterday",
+                    "have saw",
+                    "see",
                 ],
-                "answer": "Have / eaten",
-                "explanation": "Жизненный опыт: Have + third form.",
+
+                "answer":
+                    "have seen",
+
+                "explanation":
+                    "BEFORE без точного времени → Present Perfect.",
             },
 
             {
                 "order": 6,
-                "prompt": "When ___ you ___ sushi for the first time?",
+                "section": 3,
+                "type": "choice",
+
+                "prompt":
+                    "She ___ the report. It's ready now.",
+
                 "options": [
-                    "have / eaten",
-                    "did / eat",
-                    "did / ate",
-                    "have / eat",
+                    "has finished",
+                    "finished yesterday at five",
+                    "has finish",
+                    "did finished",
                 ],
-                "answer": "did / eat",
-                "explanation": "Когда спрашиваем конкретные детали, используем Past Simple.",
+
+                "answer":
+                    "has finished",
+
+                "explanation":
+                    "Важен готовый результат сейчас.",
             },
+
+
+            # 4
 
             {
                 "order": 7,
-                "prompt": "We ___ here for ten years and we still live here.",
+                "section": 4,
+                "type": "choice",
+
+                "prompt":
+                    "My phone doesn't work. I ___ it.",
+
                 "options": [
-                    "lived",
-                    "have lived",
-                    "did live",
-                    "have living",
+                    "have broken",
+                    "broke it last year",
+                    "have broke",
+                    "break",
                 ],
-                "answer": "have lived",
-                "explanation": "Ситуация продолжается сейчас → Present Perfect.",
+
+                "answer":
+                    "have broken",
+
+                "explanation":
+                    "Телефон сейчас сломан → Present Perfect.",
             },
 
             {
                 "order": 8,
-                "prompt": "We ___ there for ten years, but now we live here.",
+                "section": 4,
+                "type": "choice",
+
+                "prompt":
+                    "She ___ her phone in 2023.",
+
                 "options": [
-                    "have lived",
-                    "lived",
-                    "have live",
-                    "living",
+                    "broke",
+                    "has broken",
+                    "has broke",
+                    "breaks",
                 ],
-                "answer": "lived",
-                "explanation": "Ситуация завершилась → Past Simple.",
+
+                "answer":
+                    "broke",
+
+                "explanation":
+                    "IN 2023 → конкретное завершённое прошлое.",
             },
+
+
+            # 5
 
             {
                 "order": 9,
-                "prompt": "He ___ three emails today.",
+                "section": 5,
+                "type": "choice",
+
+                "prompt":
+                    "___ you ever been to Dubai?",
+
                 "options": [
-                    "wrote yesterday",
-                    "has written",
-                    "has wrote",
-                    "did written",
+                    "Have",
+                    "Did",
+                    "Has",
+                    "Were",
                 ],
-                "answer": "has written",
-                "explanation": "Today рассматривается как незавершённый период.",
+
+                "answer":
+                    "Have",
+
+                "explanation":
+                    "Вопрос о жизненном опыте → HAVE YOU EVER...?",
             },
 
             {
                 "order": 10,
-                "prompt": "He ___ three emails yesterday.",
+                "section": 5,
+                "type": "choice",
+
+                "prompt":
+                    "I ___ to Dubai in 2024.",
+
                 "options": [
-                    "has written",
-                    "wrote",
-                    "has wrote",
-                    "writes",
+                    "went",
+                    "have been",
+                    "have gone",
+                    "go",
                 ],
-                "answer": "wrote",
-                "explanation": "Yesterday → Past Simple.",
+
+                "answer":
+                    "went",
+
+                "explanation":
+                    "IN 2024 → Past Simple.",
             },
+
+
+            # 6
 
             {
                 "order": 11,
-                "prompt": "She ___ yet.",
+                "section": 6,
+                "type": "choice",
+
+                "prompt":
+                    "Have you ever tried Korean food? — Yes. When ___ you try it?",
+
                 "options": [
-                    "didn't arrive yesterday",
-                    "hasn't arrived",
-                    "hasn't arrive",
-                    "not arrived",
+                    "did",
+                    "have",
+                    "has",
+                    "were",
                 ],
-                "answer": "hasn't arrived",
-                "explanation": "Yet в отрицании обычно используется с Present Perfect.",
+
+                "answer":
+                    "did",
+
+                "explanation":
+                    "После вопроса об опыте детали спрашиваем в Past Simple.",
             },
 
             {
                 "order": 12,
-                "prompt": "She ___ at six.",
+                "section": 6,
+                "type": "build",
+
+                "prompt":
+                    "Собери вопрос о конкретной поездке.",
+
                 "options": [
-                    "has arrived",
-                    "arrived",
-                    "has arrive",
-                    "arriving",
+                    "When",
+                    "did",
+                    "you",
+                    "go",
+                    "there",
                 ],
-                "answer": "arrived",
-                "explanation": "At six — конкретное завершённое время.",
+
+                "answer":
+                    "When did you go there",
+
+                "explanation":
+                    "Конкретная деталь прошлого → DID + base verb.",
             },
+
+
+            # 7
 
             {
                 "order": 13,
-                "prompt": "How long ___ you ___ here if you still live here?",
+                "section": 7,
+                "type": "choice",
+
+                "prompt":
+                    "I ___ three coffees today.",
+
                 "options": [
-                    "did / live",
-                    "have / lived",
-                    "have / live",
-                    "did / lived",
+                    "have had",
+                    "had yesterday",
+                    "have have",
+                    "did had",
                 ],
-                "answer": "have / lived",
-                "explanation": "Ситуация продолжается сейчас.",
+
+                "answer":
+                    "have had",
+
+                "explanation":
+                    "TODAY ещё продолжается → Present Perfect.",
             },
 
             {
                 "order": 14,
-                "prompt": "How long ___ you ___ in London if you no longer live there?",
+                "section": 7,
+                "type": "choice",
+
+                "prompt":
+                    "I ___ three coffees yesterday.",
+
                 "options": [
-                    "have / lived",
-                    "did / live",
-                    "did / lived",
-                    "have / live",
+                    "had",
+                    "have had",
+                    "have",
+                    "has had",
                 ],
-                "answer": "did / live",
-                "explanation": "Завершённая ситуация → Past Simple.",
+
+                "answer":
+                    "had",
+
+                "explanation":
+                    "YESTERDAY завершён → Past Simple.",
             },
+
+
+            # 8
 
             {
                 "order": 15,
-                "prompt": "I ___ him last week.",
+                "section": 8,
+                "type": "choice",
+
+                "prompt":
+                    "We ___ here for ten years and still live here.",
+
                 "options": [
-                    "have seen",
-                    "saw",
-                    "have saw",
-                    "seen",
+                    "have lived",
+                    "lived",
+                    "did live",
+                    "have living",
                 ],
-                "answer": "saw",
-                "explanation": "Last week требует Past Simple.",
+
+                "answer":
+                    "have lived",
+
+                "explanation":
+                    "Ситуация продолжается сейчас.",
             },
 
             {
                 "order": 16,
-                "prompt": "Choose the correct sentence.",
+                "section": 8,
+                "type": "choice",
+
+                "prompt":
+                    "We ___ there for ten years, but now we live elsewhere.",
+
                 "options": [
-                    "I have seen him yesterday.",
-                    "I saw him yesterday.",
-                    "I have saw him yesterday.",
-                    "I seen him yesterday.",
+                    "lived",
+                    "have lived",
+                    "have live",
+                    "living",
                 ],
-                "answer": "I saw him yesterday.",
-                "explanation": "Present Perfect обычно не используется с yesterday.",
+
+                "answer":
+                    "lived",
+
+                "explanation":
+                    "Ситуация завершилась → Past Simple.",
             },
+
+
+            # 9
 
             {
                 "order": 17,
-                "prompt": "Choose the sentence where the result is important now.",
+                "section": 9,
+                "type": "choice",
+
+                "prompt":
+                    "How long ___ you lived here?",
+
                 "options": [
-                    "She broke her phone last year.",
-                    "She has broken her phone.",
-                    "She did break her phone yesterday.",
-                    "She was breaking her phone last year.",
+                    "have",
+                    "did",
+                    "has",
+                    "were",
                 ],
-                "answer": "She has broken her phone.",
-                "explanation": "Present Perfect подчёркивает текущий результат.",
+
+                "answer":
+                    "have",
+
+                "explanation":
+                    "Человек всё ещё здесь живёт → Present Perfect.",
             },
 
             {
                 "order": 18,
-                "prompt": "Have you ever been to London? — Yes, I have. When ___ you ___ there?",
+                "section": 9,
+                "type": "choice",
+
+                "prompt":
+                    "How long ___ you live in London before moving away?",
+
                 "options": [
-                    "have / gone",
-                    "did / go",
-                    "did / went",
-                    "have / been",
+                    "did",
+                    "have",
+                    "has",
+                    "were",
                 ],
-                "answer": "did / go",
-                "explanation": "Сначала опыт — Present Perfect, затем детали — Past Simple.",
+
+                "answer":
+                    "did",
+
+                "explanation":
+                    "Период жизни в Лондоне закончился.",
             },
+
+
+            # 10
 
             {
                 "order": 19,
-                "prompt": "I ___ here since 2020.",
+                "section": 10,
+                "type": "choice",
+
+                "prompt":
+                    "I have lost my wallet. — Where ___ you lose it?",
+
                 "options": [
-                    "lived",
-                    "have lived",
-                    "did live",
-                    "was lived",
+                    "did",
+                    "have",
+                    "has",
+                    "do",
                 ],
-                "answer": "have lived",
-                "explanation": "Since + продолжающаяся ситуация → Present Perfect.",
+
+                "answer":
+                    "did",
+
+                "explanation":
+                    "Новость → Present Perfect; детали → Past Simple.",
             },
 
             {
                 "order": 20,
-                "prompt": "I ___ there from 2018 to 2022.",
-                "options": [
-                    "have lived",
-                    "lived",
-                    "have living",
-                    "live",
-                ],
-                "answer": "lived",
-                "explanation": "Период полностью завершён → Past Simple.",
-            },
+                "section": 10,
+                "type": "build",
 
-            {
-                "order": 21,
-                "prompt": "She has gone to the shop. What does it mean?",
-                "options": [
-                    "She went there last year.",
-                    "She is still there or on the way.",
-                    "She has been there and returned.",
-                    "She never went there.",
-                ],
-                "answer": "She is still there or on the way.",
-                "explanation": "Has gone to означает, что человек ещё не вернулся.",
-            },
+                "prompt":
+                    "Собери правильную последовательность.",
 
-            {
-                "order": 22,
-                "prompt": "Choose the correct pair.",
                 "options": [
-                    "I have finished the report. / I finished it at six.",
-                    "I finished the report. / I have finished it at six yesterday.",
-                    "I have finished yesterday. / I finished it already now.",
-                    "I have finish the report. / I finished it at six.",
+                    "I",
+                    "have",
+                    "lost",
+                    "my",
+                    "phone",
                 ],
-                "answer": "I have finished the report. / I finished it at six.",
-                "explanation": "Результат сейчас → Present Perfect; точное время → Past Simple.",
-            },
 
-            {
-                "order": 23,
-                "prompt": "Choose the correct news-and-detail sequence.",
-                "options": [
-                    "I lost my phone. Where have you lost it? I have lost it on the bus.",
-                    "I have lost my phone. Where did you lose it? I lost it on the bus.",
-                    "I have lost my phone yesterday. Where did you lose it?",
-                    "I lost my phone. Where did you lost it?",
-                ],
-                "answer": "I have lost my phone. Where did you lose it? I lost it on the bus.",
-                "explanation": "Новость → Present Perfect; детали завершённого события → Past Simple.",
-            },
+                "answer":
+                    "I have lost my phone",
 
-            {
-                "order": 24,
-                "prompt": "Choose the fully correct pair.",
-                "options": [
-                    "Have you seen this film? / When did you see it?",
-                    "Did you seen this film? / When have you saw it?",
-                    "Have you saw this film? / When did you saw it?",
-                    "Did you see this film? / When have you seen it yesterday?",
-                ],
-                "answer": "Have you seen this film? / When did you see it?",
-                "explanation": "Опыт → Present Perfect; конкретные детали → Past Simple.",
+                "explanation":
+                    "Новость о текущей проблеме → Present Perfect.",
             },
 
         ]
 
-        for data in exercises:
+
+        # =================================================
+        # FINAL TEST — 10 NEW QUESTIONS
+        # =================================================
+
+        final_test = [
+
+            {
+                "order": 21,
+
+                "prompt":
+                    "I ___ this book last month.",
+
+                "options": [
+                    "read",
+                    "have read",
+                    "have reading",
+                    "has read",
+                ],
+
+                "answer":
+                    "read",
+
+                "explanation":
+                    "LAST MONTH → Past Simple.",
+            },
+
+            {
+                "order": 22,
+
+                "prompt":
+                    "I ___ this book three times.",
+
+                "options": [
+                    "have read",
+                    "read last week",
+                    "have reading",
+                    "did read yesterday",
+                ],
+
+                "answer":
+                    "have read",
+
+                "explanation":
+                    "Опыт без конкретного времени → Present Perfect.",
+            },
+
+            {
+                "order": 23,
+
+                "prompt":
+                    "Sara ___ her homework, so she can relax now.",
+
+                "options": [
+                    "has finished",
+                    "finished yesterday",
+                    "has finish",
+                    "did finished",
+                ],
+
+                "answer":
+                    "has finished",
+
+                "explanation":
+                    "Важен результат сейчас.",
+            },
+
+            {
+                "order": 24,
+
+                "prompt":
+                    "Sara ___ her homework at 8 p.m.",
+
+                "options": [
+                    "finished",
+                    "has finished",
+                    "has finish",
+                    "finish",
+                ],
+
+                "answer":
+                    "finished",
+
+                "explanation":
+                    "AT 8 P.M. → конкретное прошлое.",
+            },
+
+            {
+                "order": 25,
+
+                "prompt":
+                    "Have you ever ___ a horse?",
+
+                "options": [
+                    "ridden",
+                    "rode",
+                    "ride",
+                    "riding",
+                ],
+
+                "answer":
+                    "ridden",
+
+                "explanation":
+                    "Present Perfect требует V3: RIDE → RODE → RIDDEN.",
+            },
+
+            {
+                "order": 26,
+
+                "prompt":
+                    "When ___ you ride a horse for the first time?",
+
+                "options": [
+                    "did",
+                    "have",
+                    "has",
+                    "are",
+                ],
+
+                "answer":
+                    "did",
+
+                "explanation":
+                    "Конкретная деталь прошлого → Past Simple.",
+            },
+
+            {
+                "order": 27,
+
+                "prompt":
+                    "He ___ at this company since 2021.",
+
+                "options": [
+                    "has worked",
+                    "worked",
+                    "did work",
+                    "has working",
+                ],
+
+                "answer":
+                    "has worked",
+
+                "explanation":
+                    "SINCE + продолжающаяся ситуация → Present Perfect.",
+            },
+
+            {
+                "order": 28,
+
+                "prompt":
+                    "He ___ there from 2018 to 2020.",
+
+                "options": [
+                    "worked",
+                    "has worked",
+                    "has working",
+                    "works",
+                ],
+
+                "answer":
+                    "worked",
+
+                "explanation":
+                    "2018–2020 — завершённый период.",
+            },
+
+            {
+                "order": 29,
+
+                "prompt":
+                    "Choose the correct pair.",
+
+                "options": [
+                    "I have seen her today. / I saw her yesterday.",
+                    "I saw her today. / I have seen her yesterday.",
+                    "I have saw her today. / I seen her yesterday.",
+                    "I seen her today. / I have saw her yesterday.",
+                ],
+
+                "answer":
+                    "I have seen her today. / I saw her yesterday.",
+
+                "explanation":
+                    "TODAY может быть незавершённым; YESTERDAY завершён.",
+            },
+
+            {
+                "order": 30,
+
+                "prompt":
+                    "Choose the correct news-and-detail sequence.",
+
+                "options": [
+                    "She has got a new job. When did she start?",
+                    "She got a new job. When has she started yesterday?",
+                    "She has got a new job yesterday. When did she start?",
+                    "She have got a new job. When did she started?",
+                ],
+
+                "answer":
+                    "She has got a new job. When did she start?",
+
+                "explanation":
+                    "Новость → Present Perfect; конкретная деталь → Past Simple.",
+            },
+
+        ]
+
+
+        all_exercises = (
+            training
+            +
+            final_test
+        )
+
+
+        valid_orders = [
+            item["order"]
+            for item in all_exercises
+        ]
+
+
+        for data in all_exercises:
+
+            if data["order"] <= 20:
+
+                section = (
+                    section_objects[
+                        data["section"]
+                    ]
+                )
+
+            else:
+
+                section = None
+
 
             GrammarExercise.objects.update_or_create(
                 lesson=lesson,
                 order=data["order"],
+
                 defaults={
-                    "exercise_type": GrammarExercise.Type.CHOICE,
-                    "prompt": data["prompt"],
-                    "options": data["options"],
-                    "correct_answer": data["answer"],
-                    "explanation": data["explanation"],
-                    "is_published": True,
+                    "section":
+                        section,
+
+                    "exercise_type":
+                        data.get(
+                            "type",
+                            "choice",
+                        ),
+
+                    "prompt":
+                        data["prompt"],
+
+                    "options":
+                        data["options"],
+
+                    "correct_answer":
+                        data["answer"],
+
+                    "explanation":
+                        data["explanation"],
+
+                    "is_published":
+                        True,
                 },
             )
 
+
+        GrammarExercise.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__in=valid_orders,
+        ).delete()
+
+
+        GrammarLessonSection.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__in=[
+                item["order"]
+                for item in sections
+            ],
+        ).delete()
+
+
         self.stdout.write(
             self.style.SUCCESS(
-                "✅ A1 Lesson 31 seeded: "
-                "Present Perfect vs Past Simple"
+                "✅ Interactive A1 Lesson 31 seeded"
             )
         )
 
         self.stdout.write(
-            f"Sections: {lesson.sections.count()}"
+            f"Micro rules: "
+            f"{lesson.sections.count()}"
         )
 
         self.stdout.write(
-            f"Exercises: {lesson.exercises.count()}"
+            "Training exercises: "
+            f"{lesson.exercises.filter(section__isnull=False).count()}"
+        )
+
+        self.stdout.write(
+            "Final test: "
+            f"{lesson.exercises.filter(section__isnull=True).count()}"
         )

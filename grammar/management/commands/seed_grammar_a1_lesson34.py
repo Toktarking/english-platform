@@ -9,34 +9,63 @@ from grammar.models import (
 
 class Command(BaseCommand):
 
-    help = "Create/update A1 Grammar Lesson 34: Past Perfect."
+    help = (
+        "Create/update interactive A1 Grammar "
+        "Lesson 34: Past Perfect."
+    )
+
 
     def handle(self, *args, **options):
 
-        lesson, _ = GrammarLesson.objects.update_or_create(
-            level="A1",
-            order=34,
-            defaults={
-                "title": "Past Perfect",
-                "slug": "past-perfect",
-                "theory_text": "Past Perfect: had + Past Participle.",
-                "estimated_minutes": 45,
-                "pass_score": 70,
-                "xp_reward": 100,
-                "is_published": True,
-            },
+        lesson, _ = (
+            GrammarLesson.objects.update_or_create(
+                level="A1",
+                order=34,
+
+                defaults={
+                    "title":
+                        "Past Perfect",
+
+                    "slug":
+                        "past-perfect",
+
+                    "theory_text":
+                        "Past Perfect: HAD + third form.",
+
+                    "estimated_minutes":
+                        20,
+
+                    "pass_score":
+                        70,
+
+                    "xp_reward":
+                        100,
+
+                    "is_published":
+                        True,
+                },
+            )
         )
+
+
+        # =================================================
+        # 10 MICRO RULES
+        # =================================================
 
         sections = [
 
             {
                 "order": 1,
-                "title": "Что такое Past Perfect",
-                "body": """Past Perfect показывает действие, которое произошло раньше другого действия или момента в прошлом.
+                "title":
+                    "Прошлое до прошлого",
 
-Пример:
+                "body":
+                    """Past Perfect показывает действие,
+которое произошло раньше другого
+действия в прошлом.
 
-I had finished the work before he arrived.
+I had finished the work
+before he arrived.
 
 Сначала:
 
@@ -48,19 +77,21 @@ he arrived.
 
 Главная схема:
 
-более раннее действие → Past Perfect
+раньше → Past Perfect
 
-более позднее действие → обычно Past Simple""",
+позже → Past Simple.""",
             },
+
 
             {
                 "order": 2,
-                "title": "Основная формула",
-                "body": """Формула Past Perfect:
+                "title":
+                    "Формула HAD + V3",
 
-subject + had + третья форма глагола
+                "body":
+                    """Формула Past Perfect:
 
-Примеры:
+HAD + третья форма глагола
 
 I had finished.
 
@@ -68,27 +99,33 @@ She had arrived.
 
 They had gone.
 
-He had written the report.
+HAD одинаков для всех:
 
-HAD одинаково используется со всеми подлежащими:
+I
+you
+he
+she
+it
+we
+they
 
-I, you, he, she, it, we, they.
-
-В Past Perfect нет отдельных have и has.""",
+Никаких HAVE или HAS
+в Past Perfect нет.""",
             },
+
 
             {
                 "order": 3,
-                "title": "Третья форма глагола",
-                "body": """После HAD используется третья форма глагола.
+                "title":
+                    "Нужна третья форма",
+
+                "body":
+                    """После HAD всегда используется V3.
 
 Правильные глаголы:
 
-work → worked → worked
-
-finish → finished → finished
-
-study → studied → studied
+finish → finished
+work → worked
 
 Неправильные:
 
@@ -100,168 +137,169 @@ write → wrote → written
 
 eat → ate → eaten
 
-take → took → taken
-
-Неправильно:
-
-had went
-
-had saw
-
-had wrote
-
 Правильно:
 
 had gone
 
 had seen
 
-had written""",
+had written
+
+Не:
+
+had went
+had saw
+had wrote.""",
             },
+
 
             {
                 "order": 4,
-                "title": "Два действия в прошлом",
-                "body": """Если в прошлом произошло два действия, Past Perfect помогает показать, какое случилось раньше.
+                "title":
+                    "Два события в прошлом",
 
-Пример:
+                "body":
+                    """Когда есть два события,
+Past Perfect показывает,
+какое произошло первым.
 
-When I arrived, they had already eaten.
+When I arrived,
+they had left.
 
 Порядок событий:
 
-1. Они поели.
-2. Я приехал.
+1. They left.
+2. I arrived.
 
-Хотя в предложении сначала говорится о моём приезде, форма had eaten показывает более раннее действие.
-
-Ещё пример:
-
-She had left before I called.""",
+Даже если в предложении
+ARRIVED стоит первым,
+форма HAD LEFT показывает,
+что уход произошёл раньше.""",
             },
+
 
             {
                 "order": 5,
-                "title": "BEFORE и AFTER",
-                "body": """BEFORE означает «до того как».
+                "title":
+                    "BEFORE и AFTER",
 
-I had finished the work before he arrived.
+                "body":
+                    """BEFORE = до того как.
 
-Порядок частей можно изменить:
+She had finished the report
+before she went home.
 
-Before he arrived, I had finished the work.
+AFTER = после того как.
 
-AFTER означает «после того как».
+After she had finished the report,
+she went home.
 
-After she had finished the report, she went home.
+В обоих случаях:
 
-Сначала:
+более раннее действие
+→ Past Perfect
 
-she had finished
-
-Потом:
-
-she went home
-
-Если порядок и так очевиден, Past Simple иногда тоже возможен:
-
-After she finished the report, she went home.""",
+более позднее
+→ Past Simple.""",
             },
+
 
             {
                 "order": 6,
-                "title": "WHEN и BY THE TIME",
-                "body": """WHEN:
+                "title":
+                    "BY THE TIME",
 
-When I arrived, they had already left.
+                "body":
+                    """BY THE TIME означает:
 
-Сначала они ушли.
+к тому времени как.
 
-Потом я приехал.
+By the time I arrived,
+the meeting had started.
 
-BY THE TIME означает:
+Сначала:
 
-«к тому времени как».
+the meeting started.
 
-Примеры:
+Потом:
 
-By the time I arrived, the meeting had started.
+I arrived.
 
-By the time we reached the airport, the plane had left.
+Ещё пример:
 
-By the time he was twenty, he had finished university.""",
+By the time we reached the airport,
+the plane had left.""",
             },
+
 
             {
                 "order": 7,
-                "title": "ALREADY, JUST, NEVER и YET",
-                "body": """ALREADY обычно ставится между had и третьей формой:
+                "title":
+                    "ALREADY, JUST и NEVER",
 
-I had already finished.
+                "body":
+                    """Эти слова часто используются
+с Past Perfect.
 
-She had already left.
+ALREADY:
+
+They had already eaten.
 
 JUST:
 
-She had just left when I called.
+She had just left
+when I called.
 
 NEVER:
 
-I had never seen snow before I moved there.
+I had never seen snow
+before that trip.
 
-После never дополнительное not не нужно.
-
-YET обычно используется в конце:
-
-She hadn't finished yet when I called.
-
-Had they arrived yet?""",
+ALREADY / JUST обычно стоят
+между HAD и V3.""",
             },
+
 
             {
                 "order": 8,
-                "title": "Отрицание",
-                "body": """Отрицание:
+                "title":
+                    "Отрицание",
 
-had not → hadn't
+                "body":
+                    """Отрицание:
 
-Формула:
+HAD NOT
 
-subject + hadn't + V3
+или
 
-Примеры:
+HADN'T
 
 I hadn't finished.
 
 She hadn't arrived.
 
-They hadn't gone home.
+They hadn't eaten.
 
-He hadn't seen the film.
-
-Важно:
-
-после hadn't также нужна третья форма.
-
-Не:
-
-hadn't went
+После HADN'T тоже нужна V3.
 
 Правильно:
 
-hadn't gone""",
+hadn't gone
+
+Не:
+
+hadn't went.""",
             },
+
 
             {
                 "order": 9,
-                "title": "Вопросы и краткие ответы",
-                "body": """В вопросе HAD ставится перед подлежащим.
+                "title":
+                    "Вопросы",
 
-Формула:
-
-Had + subject + V3?
-
-Примеры:
+                "body":
+                    """В вопросе HAD ставится
+перед подлежащим.
 
 Had you finished?
 
@@ -279,499 +317,845 @@ Yes, she had.
 
 No, she hadn't.
 
-DID не используется.
-
-Неправильно:
-
-Did she had finished?
-
-Правильно:
-
-Had she finished?""",
+DID здесь не нужен.""",
             },
+
 
             {
                 "order": 10,
-                "title": "Специальные вопросы",
-                "body": """Формула:
+                "title":
+                    "Когда Past Perfect не нужен?",
 
-Question word + had + subject + V3?
+                "body":
+                    """Не каждое прошлое действие
+нужно ставить в Past Perfect.
 
-Примеры:
+Если события просто идут
+одно за другим:
 
-What had you done?
+I woke up,
+had breakfast
+and went to work.
 
-Where had she gone?
+→ Past Simple.
 
-Why had they left?
+Past Perfect нужен,
+когда мы возвращаемся
+к более раннему событию:
 
-How many pages had he written?
-
-Who had she called?
-
-Если WHO само выполняет действие:
-
-Who had opened the door?
-
-Who had taken the documents?""",
-            },
-
-            {
-                "order": 11,
-                "title": "Past Perfect или Past Simple",
-                "body": """Сравните:
-
-When I arrived, she left.
-
-Это означает:
-
-я приехал → после этого она ушла.
-
-Но:
-
-When I arrived, she had left.
-
-Это означает:
-
-она ушла раньше → потом я приехал.
-
-Past Perfect показывает более раннее прошлое.
-
-Past Simple показывает более позднее событие или обычный завершённый факт.""",
-            },
-
-            {
-                "order": 12,
-                "title": "Когда Past Perfect не нужен",
-                "body": """Если события происходят одно за другим в естественном порядке, обычно достаточно Past Simple.
-
-Пример:
-
-I got up, washed my face, had breakfast and left home.
-
-Не нужно использовать Past Perfect для каждого действия.
-
-Но если рассказ возвращается к более раннему событию:
-
-I arrived at work late.
-
+I arrived late because
 I had missed the bus.
 
-Сначала я пропустил автобус.
-
-Потом опоздал на работу.""",
-            },
-
-            {
-                "order": 13,
-                "title": "Причина, косвенная речь и HAD BEEN",
-                "body": """Past Perfect может объяснять прошлый результат:
-
-She was tired because she had slept badly.
-
-He was hungry because he hadn't eaten breakfast.
-
-В косвенной речи:
-
-She said, “I finished the work.”
-
-→ She said that she had finished the work.
-
-Для глагола BE используется:
-
-had been
-
-She had been ill before the exam.
-
-He had been a teacher before he became a manager.""",
-            },
-
-            {
-                "order": 14,
-                "title": "Past Perfect и другие прошедшие времена",
-                "body": """Past Perfect:
-
-действие завершилось до другого момента прошлого.
-
-She had written the report before six.
-
-Past Continuous:
-
-процесс происходил в определённый момент.
-
-She was writing the report at six.
-
-Сравните:
-
-At six, she was writing the report.
-— в шесть процесс продолжался.
-
-By six, she had written the report.
-— к шести отчёт уже был готов.
-
-Главный алгоритм:
-
-найдите два события в прошлом;
-
-определите, какое произошло раньше;
-
-более раннее → Past Perfect;
-
-более позднее → Past Simple.""",
+Сначала пропустил автобус,
+потом опоздал.""",
             },
 
         ]
 
+
+        section_objects = {}
+
+
         for data in sections:
-            GrammarLessonSection.objects.update_or_create(
-                lesson=lesson,
-                order=data["order"],
-                defaults={
-                    "title": data["title"],
-                    "body": data["body"],
-                },
+
+            section, _ = (
+                GrammarLessonSection.objects
+                .update_or_create(
+                    lesson=lesson,
+                    order=data["order"],
+
+                    defaults={
+                        "title":
+                            data["title"],
+
+                        "body":
+                            data["body"],
+                    },
+                )
             )
 
-        exercises = [
+            section_objects[
+                data["order"]
+            ] = section
+
+
+        # =================================================
+        # 20 TRAINING EXERCISES
+        # =================================================
+
+        training = [
+
+            # SECTION 1
 
             {
                 "order": 1,
-                "prompt": "By the time I arrived, the lesson ___.",
+                "section": 1,
+                "type": "choice",
+
+                "prompt":
+                    "When I arrived, they ___ home.",
+
                 "options": [
-                    "started",
-                    "had started",
-                    "has started",
-                    "was start",
+                    "had gone",
+                    "went after me",
+                    "have gone",
+                    "had went",
                 ],
-                "answer": "had started",
-                "explanation": "Урок начался раньше моего прихода, поэтому Past Perfect.",
+
+                "answer":
+                    "had gone",
+
+                "explanation":
+                    "Они ушли раньше моего приезда.",
             },
 
             {
                 "order": 2,
-                "prompt": "She was tired because she ___ badly.",
+                "section": 1,
+                "type": "choice",
+
+                "prompt":
+                    "I was hungry because I ___ breakfast.",
+
                 "options": [
-                    "slept",
-                    "had slept",
-                    "has slept",
-                    "was slept",
+                    "hadn't eaten",
+                    "haven't eaten",
+                    "didn't ate",
+                    "hadn't ate",
                 ],
-                "answer": "had slept",
-                "explanation": "Плохой сон произошёл раньше состояния tired.",
+
+                "answer":
+                    "hadn't eaten",
+
+                "explanation":
+                    "Отсутствие завтрака произошло раньше состояния hungry.",
             },
+
+
+            # SECTION 2
 
             {
                 "order": 3,
-                "prompt": "They ___ before we came.",
+                "section": 2,
+                "type": "build",
+
+                "prompt":
+                    "Собери Past Perfect.",
+
                 "options": [
-                    "left",
-                    "had left",
-                    "have left",
-                    "did left",
+                    "She",
+                    "had",
+                    "finished",
+                    "the",
+                    "report",
                 ],
-                "answer": "had left",
-                "explanation": "Они ушли до нашего прихода.",
+
+                "answer":
+                    "She had finished the report",
+
+                "explanation":
+                    "Past Perfect = HAD + V3.",
             },
 
             {
                 "order": 4,
-                "prompt": "He had ___ the door.",
+                "section": 2,
+                "type": "choice",
+
+                "prompt":
+                    "Choose the correct sentence.",
+
                 "options": [
-                    "opened",
-                    "open",
-                    "opening",
-                    "opens",
+                    "They had arrived.",
+                    "They have arrived yesterday.",
+                    "They had arrive.",
+                    "They did had arrived.",
                 ],
-                "answer": "opened",
-                "explanation": "После had нужна третья форма; у regular verb open это opened.",
+
+                "answer":
+                    "They had arrived.",
+
+                "explanation":
+                    "HAD используется со всеми подлежащими.",
             },
+
+
+            # SECTION 3
 
             {
                 "order": 5,
-                "prompt": "I had never ___ that film before.",
-                "options": [
-                    "saw",
-                    "seen",
-                    "see",
-                    "seeing",
-                ],
-                "answer": "seen",
-                "explanation": "See → saw → seen; после had нужна третья форма.",
+                "section": 3,
+                "type": "fill",
+
+                "prompt":
+                    "go → went → ___",
+
+                "options": [],
+
+                "answer":
+                    "gone",
+
+                "explanation":
+                    "Третья форма GO — GONE.",
             },
 
             {
                 "order": 6,
-                "prompt": "She hadn't ___ breakfast.",
+                "section": 3,
+                "type": "choice",
+
+                "prompt":
+                    "She had ___ the message.",
+
                 "options": [
-                    "ate",
-                    "eaten",
-                    "eat",
-                    "eating",
+                    "seen",
+                    "saw",
+                    "see",
+                    "seeing",
                 ],
-                "answer": "eaten",
-                "explanation": "Eat → ate → eaten.",
+
+                "answer":
+                    "seen",
+
+                "explanation":
+                    "SEE → SAW → SEEN.",
             },
+
+
+            # SECTION 4
 
             {
                 "order": 7,
-                "prompt": "___ you finished before the manager arrived?",
+                "section": 4,
+                "type": "choice",
+
+                "prompt":
+                    "When we reached the station, the train ___.",
+
                 "options": [
-                    "Did",
-                    "Had",
-                    "Have",
-                    "Were",
+                    "had left",
+                    "has left",
+                    "leave",
+                    "had leave",
                 ],
-                "answer": "Had",
-                "explanation": "Past Perfect question: Had + subject + V3?",
+
+                "answer":
+                    "had left",
+
+                "explanation":
+                    "Поезд ушёл раньше нашего приезда.",
             },
 
             {
                 "order": 8,
-                "prompt": "Where had they ___ before they moved here?",
+                "section": 4,
+                "type": "choice",
+
+                "prompt":
+                    "When I entered the room, the lesson ___.",
+
                 "options": [
-                    "lived",
-                    "live",
-                    "living",
-                    "lives",
+                    "had started",
+                    "has started",
+                    "start",
+                    "had start",
                 ],
-                "answer": "lived",
-                "explanation": "После had используется третья форма lived.",
+
+                "answer":
+                    "had started",
+
+                "explanation":
+                    "Урок начался до того, как я вошёл.",
             },
+
+
+            # SECTION 5
 
             {
                 "order": 9,
-                "prompt": "When we reached the station, the train ___.",
+                "section": 5,
+                "type": "choice",
+
+                "prompt":
+                    "She had eaten before she ___ home.",
+
                 "options": [
-                    "left",
-                    "had left",
-                    "has left",
-                    "was leave",
+                    "went",
+                    "had went",
+                    "has gone",
+                    "go",
                 ],
-                "answer": "had left",
-                "explanation": "Поезд ушёл до того, как мы приехали.",
+
+                "answer":
+                    "went",
+
+                "explanation":
+                    "Более позднее действие обычно стоит в Past Simple.",
             },
 
             {
                 "order": 10,
-                "prompt": "After she ___ the report, she went home.",
+                "section": 5,
+                "type": "choice",
+
+                "prompt":
+                    "After he ___ the work, he left the office.",
+
                 "options": [
                     "had finished",
                     "has finished",
-                    "finishing",
-                    "did finished",
+                    "had finish",
+                    "finishes",
                 ],
-                "answer": "had finished",
-                "explanation": "Завершение отчёта произошло раньше ухода домой.",
+
+                "answer":
+                    "had finished",
+
+                "explanation":
+                    "Сначала закончил работу, потом ушёл.",
             },
+
+
+            # SECTION 6
 
             {
                 "order": 11,
-                "prompt": "He was hungry because he ___ lunch.",
+                "section": 6,
+                "type": "choice",
+
+                "prompt":
+                    "By the time we arrived, the film ___.",
+
                 "options": [
-                    "didn't eat earlier",
-                    "hadn't eaten",
-                    "hasn't eaten",
-                    "wasn't eating once",
+                    "had started",
+                    "started after us",
+                    "has started",
+                    "had start",
                 ],
-                "answer": "hadn't eaten",
-                "explanation": "Причина голода произошла раньше в прошлом.",
+
+                "answer":
+                    "had started",
+
+                "explanation":
+                    "BY THE TIME показывает действие, завершившееся раньше.",
             },
 
             {
                 "order": 12,
-                "prompt": "Had they seen the film?",
+                "section": 6,
+                "type": "choice",
+
+                "prompt":
+                    "By the time she called, I ___ the office.",
+
                 "options": [
-                    "Yes, they did.",
-                    "Yes, they had.",
-                    "Yes, they have.",
-                    "Yes, they were.",
+                    "had left",
+                    "have left",
+                    "leave",
+                    "had leave",
                 ],
-                "answer": "Yes, they had.",
-                "explanation": "Краткий ответ на вопрос с had использует had.",
+
+                "answer":
+                    "had left",
+
+                "explanation":
+                    "Уход произошёл до звонка.",
             },
+
+
+            # SECTION 7
 
             {
                 "order": 13,
-                "prompt": "By six o'clock, I ___ the work.",
+                "section": 7,
+                "type": "choice",
+
+                "prompt":
+                    "They had ___ eaten when we arrived.",
+
                 "options": [
-                    "was finishing",
-                    "had finished",
-                    "finished at that moment only",
-                    "have finished",
+                    "already",
+                    "ago",
+                    "last",
+                    "yesterday",
                 ],
-                "answer": "had finished",
-                "explanation": "By six означает завершение к этому моменту.",
+
+                "answer":
+                    "already",
+
+                "explanation":
+                    "ALREADY обычно стоит между HAD и V3.",
             },
 
             {
                 "order": 14,
-                "prompt": "At six o'clock, I ___ the work.",
+                "section": 7,
+                "type": "choice",
+
+                "prompt":
+                    "I had ___ seen the ocean before that trip.",
+
                 "options": [
-                    "had finished always",
-                    "was doing",
-                    "have done",
-                    "had do",
+                    "never",
+                    "ago",
+                    "last",
+                    "yet yesterday",
                 ],
-                "answer": "was doing",
-                "explanation": "At six подчёркивает процесс в конкретный момент.",
+
+                "answer":
+                    "never",
+
+                "explanation":
+                    "HAD NEVER SEEN = до того момента никогда не видел.",
             },
+
+
+            # SECTION 8
 
             {
                 "order": 15,
-                "prompt": "She said that she ___ the message.",
+                "section": 8,
+                "type": "choice",
+
+                "prompt":
+                    "He ___ finished the report when the manager came.",
+
                 "options": [
-                    "saw",
-                    "had seen",
-                    "has seen",
-                    "see",
+                    "hadn't",
+                    "didn't had",
+                    "hasn't",
+                    "wasn't",
                 ],
-                "answer": "had seen",
-                "explanation": "В косвенной речи более раннее действие может быть в Past Perfect.",
+
+                "answer":
+                    "hadn't",
+
+                "explanation":
+                    "Отрицание Past Perfect = HADN'T + V3.",
             },
 
             {
                 "order": 16,
-                "prompt": "Choose the correct sentence.",
+                "section": 8,
+                "type": "choice",
+
+                "prompt":
+                    "She hadn't ___ before the trip.",
+
                 "options": [
-                    "She had went home.",
-                    "She had gone home.",
-                    "She had go home.",
-                    "She did had gone home.",
+                    "flown",
+                    "flew",
+                    "fly",
+                    "flying",
                 ],
-                "answer": "She had gone home.",
-                "explanation": "Go → went → gone; после had нужна третья форма.",
+
+                "answer":
+                    "flown",
+
+                "explanation":
+                    "FLY → FLEW → FLOWN.",
             },
+
+
+            # SECTION 9
 
             {
                 "order": 17,
-                "prompt": "Choose the correct question.",
+                "section": 9,
+                "type": "choice",
+
+                "prompt":
+                    "___ they finished before you arrived?",
+
                 "options": [
-                    "Did she had left?",
-                    "Had she left?",
-                    "Had she leave?",
-                    "Did she left?",
+                    "Had",
+                    "Did",
+                    "Have",
+                    "Were",
                 ],
-                "answer": "Had she left?",
-                "explanation": "Вопрос Past Perfect: Had + subject + V3?",
+
+                "answer":
+                    "Had",
+
+                "explanation":
+                    "Вопрос Past Perfect начинается с HAD.",
             },
 
             {
                 "order": 18,
-                "prompt": "When I arrived, she ___. She was already gone.",
+                "section": 9,
+                "type": "choice",
+
+                "prompt":
+                    "Had she seen the film?",
+
                 "options": [
-                    "left",
-                    "had left",
-                    "has left",
-                    "was leaving after me",
+                    "Yes, she had.",
+                    "Yes, she did.",
+                    "Yes, she has.",
+                    "Yes, she was.",
                 ],
-                "answer": "had left",
-                "explanation": "Она ушла раньше моего приезда.",
+
+                "answer":
+                    "Yes, she had.",
+
+                "explanation":
+                    "Краткий ответ повторяет HAD.",
             },
+
+
+            # SECTION 10
 
             {
                 "order": 19,
-                "prompt": "When I arrived, she ___. I saw her walk out.",
+                "section": 10,
+                "type": "choice",
+
+                "prompt":
+                    "Choose the natural sequence.",
+
                 "options": [
-                    "had left before",
-                    "left",
-                    "has left",
-                    "had gone already",
+                    "I woke up, ate breakfast and left.",
+                    "I had woken up, had eaten and had left.",
+                    "I had wake up and went.",
+                    "I woke up, had ate and had went.",
                 ],
-                "answer": "left",
-                "explanation": "Здесь она ушла после моего приезда, поэтому Past Simple.",
+
+                "answer":
+                    "I woke up, ate breakfast and left.",
+
+                "explanation":
+                    "Обычная последовательность событий → Past Simple.",
             },
 
             {
                 "order": 20,
-                "prompt": "Choose the natural sequence.",
-                "options": [
-                    "I had got up, had washed my face and had gone to work.",
-                    "I got up, washed my face and went to work.",
-                    "I had get up, washed my face and went.",
-                    "I got up, had washed my face and had went to work.",
-                ],
-                "answer": "I got up, washed my face and went to work.",
-                "explanation": "Для обычной последовательности событий Past Simple достаточно.",
-            },
+                "section": 10,
+                "type": "choice",
 
-            {
-                "order": 21,
-                "prompt": "I arrived at work late because I ___ the bus.",
+                "prompt":
+                    "I was late because I ___ the bus.",
+
                 "options": [
-                    "missed later",
                     "had missed",
                     "have missed",
-                    "was missed",
+                    "missed later",
+                    "had miss",
                 ],
-                "answer": "had missed",
-                "explanation": "Сначала автобус был пропущен, потом человек опоздал.",
-            },
 
-            {
-                "order": 22,
-                "prompt": "Before the storm started, the weather ___ warm.",
-                "options": [
-                    "had been",
-                    "has been",
-                    "was been",
-                    "had be",
-                ],
-                "answer": "had been",
-                "explanation": "Past Perfect глагола be: had been.",
-            },
+                "answer":
+                    "had missed",
 
-            {
-                "order": 23,
-                "prompt": "Choose the correct pair.",
-                "options": [
-                    "At five, he was reading. / By five, he had read the book.",
-                    "At five, he had read. / By five, he was reading always.",
-                    "At five, he has read. / By five, he was read.",
-                    "At five, he did read. / By five, he had reading.",
-                ],
-                "answer": "At five, he was reading. / By five, he had read the book.",
-                "explanation": "AT показывает процесс в момент; BY — завершение к моменту.",
-            },
-
-            {
-                "order": 24,
-                "prompt": "Choose the correct event order.",
-                "options": [
-                    "The train had left before we arrived.",
-                    "The train has left before we arrived.",
-                    "The train had leave before we arrived.",
-                    "The train left before we had arrive.",
-                ],
-                "answer": "The train had left before we arrived.",
-                "explanation": "Более раннее действие → Past Perfect; более позднее → Past Simple.",
+                "explanation":
+                    "Автобус был пропущен раньше, чем человек опоздал.",
             },
 
         ]
 
-        for data in exercises:
+
+        # =================================================
+        # FINAL TEST — 10 NEW QUESTIONS
+        # =================================================
+
+        final_test = [
+
+            {
+                "order": 21,
+
+                "prompt":
+                    "When I got home, my family ___ dinner.",
+
+                "options": [
+                    "had already eaten",
+                    "has already eaten",
+                    "had already ate",
+                    "already eat",
+                ],
+
+                "answer":
+                    "had already eaten",
+
+                "explanation":
+                    "Ужин произошёл до возвращения домой.",
+            },
+
+            {
+                "order": 22,
+
+                "prompt":
+                    "She couldn't enter because she ___ her key.",
+
+                "options": [
+                    "had forgotten",
+                    "has forgotten",
+                    "had forgot",
+                    "forget",
+                ],
+
+                "answer":
+                    "had forgotten",
+
+                "explanation":
+                    "Ключ был забыт раньше возникшей проблемы.",
+            },
+
+            {
+                "order": 23,
+
+                "prompt":
+                    "Before we arrived, they ___ the room.",
+
+                "options": [
+                    "had cleaned",
+                    "have cleaned",
+                    "had clean",
+                    "cleaning",
+                ],
+
+                "answer":
+                    "had cleaned",
+
+                "explanation":
+                    "Уборка завершилась до нашего прихода.",
+            },
+
+            {
+                "order": 24,
+
+                "prompt":
+                    "By eight o'clock, he ___ the presentation.",
+
+                "options": [
+                    "had prepared",
+                    "was prepare",
+                    "has prepared",
+                    "had prepare",
+                ],
+
+                "answer":
+                    "had prepared",
+
+                "explanation":
+                    "BY EIGHT → действие было завершено к прошлому моменту.",
+            },
+
+            {
+                "order": 25,
+
+                "prompt":
+                    "Choose the correct negative sentence.",
+
+                "options": [
+                    "We hadn't seen the message.",
+                    "We didn't had seen the message.",
+                    "We hadn't saw the message.",
+                    "We haven't saw the message.",
+                ],
+
+                "answer":
+                    "We hadn't seen the message.",
+
+                "explanation":
+                    "HADN'T + V3.",
+            },
+
+            {
+                "order": 26,
+
+                "prompt":
+                    "Choose the correct question.",
+
+                "options": [
+                    "Had you met him before?",
+                    "Did you had met him before?",
+                    "Had you meet him before?",
+                    "Have you met him yesterday before?",
+                ],
+
+                "answer":
+                    "Had you met him before?",
+
+                "explanation":
+                    "HAD + subject + V3.",
+            },
+
+            {
+                "order": 27,
+
+                "prompt":
+                    "When the police arrived, the thief ___.",
+
+                "options": [
+                    "had escaped",
+                    "has escaped",
+                    "had escape",
+                    "escapes",
+                ],
+
+                "answer":
+                    "had escaped",
+
+                "explanation":
+                    "Побег произошёл раньше приезда полиции.",
+            },
+
+            {
+                "order": 28,
+
+                "prompt":
+                    "Which sentence means she left BEFORE I arrived?",
+
+                "options": [
+                    "When I arrived, she had left.",
+                    "When I arrived, she left.",
+                    "When I arrived, she leaves.",
+                    "When I had arrived, she has left.",
+                ],
+
+                "answer":
+                    "When I arrived, she had left.",
+
+                "explanation":
+                    "HAD LEFT показывает более раннее действие.",
+            },
+
+            {
+                "order": 29,
+
+                "prompt":
+                    "Choose the correct pair.",
+
+                "options": [
+                    "At six, he was working. / By six, he had finished.",
+                    "At six, he had working. / By six, he was finished.",
+                    "At six, he has worked. / By six, he had finish.",
+                    "At six, he worked now. / By six, he has finished.",
+                ],
+
+                "answer":
+                    "At six, he was working. / By six, he had finished.",
+
+                "explanation":
+                    "AT = процесс в момент; BY = результат к моменту.",
+            },
+
+            {
+                "order": 30,
+
+                "prompt":
+                    "Choose the fully correct sequence.",
+
+                "options": [
+                    "After she had finished the exam, she went home.",
+                    "After she has finished the exam, she went home.",
+                    "After she had finish the exam, she had went home.",
+                    "After she finished had the exam, she gone home.",
+                ],
+
+                "answer":
+                    "After she had finished the exam, she went home.",
+
+                "explanation":
+                    "Более раннее действие → Past Perfect; позднее → Past Simple.",
+            },
+
+        ]
+
+
+        all_exercises = (
+            training
+            +
+            final_test
+        )
+
+
+        valid_orders = [
+            item["order"]
+            for item in all_exercises
+        ]
+
+
+        for data in all_exercises:
+
+            if data["order"] <= 20:
+
+                section = (
+                    section_objects[
+                        data["section"]
+                    ]
+                )
+
+            else:
+
+                section = None
+
+
             GrammarExercise.objects.update_or_create(
                 lesson=lesson,
                 order=data["order"],
+
                 defaults={
-                    "exercise_type": GrammarExercise.Type.CHOICE,
-                    "prompt": data["prompt"],
-                    "options": data["options"],
-                    "correct_answer": data["answer"],
-                    "explanation": data["explanation"],
-                    "is_published": True,
+                    "section":
+                        section,
+
+                    "exercise_type":
+                        data.get(
+                            "type",
+                            "choice",
+                        ),
+
+                    "prompt":
+                        data["prompt"],
+
+                    "options":
+                        data["options"],
+
+                    "correct_answer":
+                        data["answer"],
+
+                    "explanation":
+                        data["explanation"],
+
+                    "is_published":
+                        True,
                 },
             )
 
+
+        GrammarExercise.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__in=valid_orders,
+        ).delete()
+
+
+        GrammarLessonSection.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__in=[
+                item["order"]
+                for item in sections
+            ],
+        ).delete()
+
+
         self.stdout.write(
             self.style.SUCCESS(
-                "✅ A1 Lesson 34 seeded: Past Perfect"
+                "✅ Interactive A1 Lesson 34 seeded"
             )
         )
 
         self.stdout.write(
-            f"Sections: {lesson.sections.count()}"
+            f"Micro rules: "
+            f"{lesson.sections.count()}"
         )
 
         self.stdout.write(
-            f"Exercises: {lesson.exercises.count()}"
+            "Training exercises: "
+            f"{lesson.exercises.filter(section__isnull=False).count()}"
+        )
+
+        self.stdout.write(
+            "Final test: "
+            f"{lesson.exercises.filter(section__isnull=True).count()}"
         )

@@ -10,59 +10,93 @@ from grammar.models import (
 class Command(BaseCommand):
 
     help = (
-        "Create/update A1 Grammar Lesson 37: "
-        "BE GOING TO."
+        "Create/update interactive A1 Grammar "
+        "Lesson 37: BE GOING TO."
     )
+
 
     def handle(self, *args, **options):
 
-        lesson, _ = GrammarLesson.objects.update_or_create(
-            level="A1",
-            order=37,
-            defaults={
-                "title": "BE GOING TO",
-                "slug": "be-going-to",
-                "theory_text": "BE GOING TO.",
-                "estimated_minutes": 40,
-                "pass_score": 70,
-                "xp_reward": 100,
-                "is_published": True,
-            },
+        lesson, _ = (
+            GrammarLesson.objects.update_or_create(
+                level="A1",
+                order=37,
+
+                defaults={
+                    "title":
+                        "BE GOING TO",
+
+                    "slug":
+                        "be-going-to",
+
+                    "theory_text":
+                        "BE GOING TO.",
+
+                    "estimated_minutes":
+                        20,
+
+                    "pass_score":
+                        70,
+
+                    "xp_reward":
+                        100,
+
+                    "is_published":
+                        True,
+                },
+            )
         )
+
+
+        # =================================================
+        # 10 MICRO RULES
+        # =================================================
 
         sections = [
 
             {
                 "order": 1,
-                "title": "Что означает BE GOING TO",
-                "body": """BE GOING TO используется, когда мы говорим:
+                "title":
+                    "Что означает BE GOING TO?",
 
-о заранее принятом плане;
-
-о намерении;
-
-о решении, которое было принято до момента речи;
-
-о прогнозе по очевидным признакам.
-
-Примеры:
+                "body":
+                    """BE GOING TO используется,
+когда решение о будущем
+уже существует.
 
 I am going to study tonight.
 
 She is going to buy a new phone.
 
+Также BE GOING TO используется
+для прогноза по видимым признакам:
+
 Look at those clouds.
-It is going to rain.""",
+
+It is going to rain.
+
+Главные идеи:
+
+план;
+
+намерение;
+
+видимый прогноз.""",
             },
+
 
             {
                 "order": 2,
-                "title": "Основная формула",
-                "body": """Формула:
+                "title":
+                    "Формула AM / IS / ARE + GOING TO",
 
-subject + am/is/are + going to + base verb
+                "body":
+                    """Формула:
 
-Примеры:
+subject
++ AM / IS / ARE
++ GOING TO
++ base verb
 
 I am going to work.
 
@@ -70,21 +104,24 @@ She is going to study.
 
 They are going to travel.
 
-We are going to buy a car.
+Запомни:
 
-Главное:
+I → am
 
-I → am going to
+he / she / it → is
 
-he/she/it → is going to
-
-you/we/they → are going to""",
+you / we / they → are.""",
             },
+
 
             {
                 "order": 3,
-                "title": "После GOING TO — первая форма",
-                "body": """После GOING TO используется основная форма глагола.
+                "title":
+                    "После GOING TO — первая форма",
+
+                "body":
+                    """После GOING TO
+используется основная форма глагола.
 
 Правильно:
 
@@ -106,159 +143,184 @@ going to studied
 
 going to buying
 
-going to to work
-
-Пример:
-
-She is going to work tomorrow.""",
+going to to work.""",
             },
+
 
             {
                 "order": 4,
-                "title": "Заранее принятый план",
-                "body": """BE GOING TO используется, если решение существовало до момента речи.
+                "title":
+                    "Заранее принятый план",
 
-Пример:
+                "body":
+                    """BE GOING TO подходит,
+если решение было принято
+до момента речи.
 
-I am going to visit my parents this weekend.
+I am going to visit
+my parents this weekend.
 
-Человек решил это заранее.
+She is going to start
+a new course.
 
-Другие примеры:
+They are going to travel
+next month.
 
-She is going to start a new course.
-
-We are going to renovate the apartment.
-
-They are going to travel next month.
-
-He is going to look for a new job.""",
+План уже существовал раньше.""",
             },
+
 
             {
                 "order": 5,
-                "title": "Намерение",
-                "body": """BE GOING TO также выражает намерение.
+                "title":
+                    "Намерение",
 
-Примеры:
+                "body":
+                    """BE GOING TO также показывает
+намерение.
 
 I am going to learn English.
 
-She is going to lose weight.
-
-They are going to save money.
+She is going to save money.
 
 He is going to stop smoking.
 
-Действие ещё может быть не организовано полностью.
+They are going to move abroad.
 
-Но решение или намерение уже существует.""",
+Не обязательно,
+что всё уже организовано.
+
+Главное:
+
+решение или намерение
+уже есть.""",
             },
+
 
             {
                 "order": 6,
-                "title": "Прогноз по видимым признакам",
-                "body": """BE GOING TO используется, когда есть очевидные признаки будущего события.
+                "title":
+                    "Прогноз по видимым признакам",
 
-Пример:
+                "body":
+                    """BE GOING TO используется,
+если уже видны признаки
+будущего события.
 
 Look at the clouds.
+
 It is going to rain.
 
-Другие примеры:
-
 Be careful!
+
 You are going to fall.
 
-That glass is going to break.
+The glass is moving.
 
-The baby is going to cry.
+It is going to fall.
 
-The car is moving too fast.
-It is going to crash.""",
+Есть видимое основание
+для прогноза.""",
             },
+
 
             {
                 "order": 7,
-                "title": "BE GOING TO или WILL",
-                "body": """WILL часто используется для спонтанного решения.
+                "title":
+                    "GOING TO или WILL?",
+
+                "body":
+                    """WILL:
+
+решение принято прямо сейчас.
 
 The phone is ringing.
+
 I'll answer it.
 
-BE GOING TO — для заранее принятого плана.
+GOING TO:
+
+решение было принято раньше.
 
 I'm going to call him tonight.
 
-Сравните:
+Сравни:
 
 I'll buy some bread.
-— решил сейчас.
 
-I'm going to buy some bread after work.
-— планировал заранее.""",
+→ решил сейчас.
+
+I'm going to buy some bread
+after work.
+
+→ уже планировал.""",
             },
+
 
             {
                 "order": 8,
-                "title": "Прогноз: WILL или GOING TO",
-                "body": """WILL часто используется для мнения.
+                "title":
+                    "Прогноз: WILL или GOING TO?",
+
+                "body":
+                    """Если это просто мнение:
+
+WILL.
 
 I think it will rain tomorrow.
 
-Это личное предположение.
+Если есть видимые признаки:
 
-BE GOING TO используется, если есть видимые признаки.
+BE GOING TO.
 
 Look at the sky.
+
 It is going to rain.
 
-Сравните:
+Коротко:
 
-I think she will win.
-— мнение.
+мнение → WILL
 
-She is playing much better.
-She is going to win.
-— есть основания для прогноза.""",
+доказательства сейчас
+→ GOING TO.""",
             },
+
 
             {
                 "order": 9,
-                "title": "Отрицание",
-                "body": """Отрицательная форма:
+                "title":
+                    "Отрицание",
 
-subject + am/is/are not going to + base verb
+                "body":
+                    """Отрицание строится через TO BE.
 
-Примеры:
-
-I am not going to work today.
+I am not going to work.
 
 She isn't going to come.
 
 They aren't going to travel.
 
-We aren't going to buy it.
+Формула:
 
-Отрицание может означать:
+AM / IS / ARE + NOT
++ GOING TO + base verb
 
-отказ от плана;
+Не используем DON'T:
 
-намерение не делать что-то;
+She doesn't going to come.
 
-прогноз отрицательного события.""",
+→ неправильно.""",
             },
+
 
             {
                 "order": 10,
-                "title": "Вопросы и краткие ответы",
-                "body": """В вопросе AM / IS / ARE ставится перед подлежащим.
+                "title":
+                    "Вопросы",
 
-Формула:
-
-Am/Is/Are + subject + going to + verb?
-
-Примеры:
+                "body":
+                    """В вопросе форма TO BE
+ставится перед подлежащим.
 
 Are you going to work?
 
@@ -279,496 +341,817 @@ Yes, they are.
 No, they aren't.""",
             },
 
-            {
-                "order": 11,
-                "title": "Специальные вопросы",
-                "body": """Формула:
-
-Question word + am/is/are + subject + going to + verb?
-
-Примеры:
-
-What are you going to do?
-
-Where is she going to stay?
-
-When are they going to arrive?
-
-Why is he going to leave?
-
-How are we going to solve this problem?
-
-WHO как подлежащее:
-
-Who is going to help us?""",
-            },
-
-            {
-                "order": 12,
-                "title": "GOING TO BE и GOING TO HAVE",
-                "body": """После GOING TO используется первая форма.
-
-С BE:
-
-It is going to be difficult.
-
-She is going to be busy.
-
-They are going to be late.
-
-Не:
-
-It is going to is difficult.
-
-С HAVE:
-
-We are going to have dinner.
-
-She is going to have a meeting.
-
-Не:
-
-She is going to has a meeting.""",
-            },
-
-            {
-                "order": 13,
-                "title": "GOING TO и другие формы будущего",
-                "body": """BE GOING TO:
-
-намерение или план.
-
-I'm going to visit my doctor next week.
-
-Present Continuous:
-
-конкретная договорённость.
-
-I'm seeing my doctor on Monday at ten.
-
-Present Simple:
-
-расписание.
-
-The train leaves at six.
-
-BE GOING TO:
-
-личный план.
-
-We are going to take the six o'clock train.""",
-            },
-
-            {
-                "order": 14,
-                "title": "Как выбрать BE GOING TO",
-                "body": """Шаг 1.
-
-План был принят раньше?
-
-→ BE GOING TO
-
-I'm going to start a new course.
-
-Шаг 2.
-
-Есть намерение?
-
-→ BE GOING TO
-
-She is going to learn to drive.
-
-Шаг 3.
-
-Есть видимые признаки?
-
-→ BE GOING TO
-
-Look at the baby.
-He is going to cry.
-
-Шаг 4.
-
-Решение принято прямо сейчас?
-
-→ WILL
-
-I'll answer the phone.
-
-Шаг 5.
-
-Это просто мнение?
-
-→ часто WILL
-
-I think they will win.""",
-            },
-
         ]
 
+
+        section_objects = {}
+
+
         for data in sections:
-            GrammarLessonSection.objects.update_or_create(
-                lesson=lesson,
-                order=data["order"],
-                defaults={
-                    "title": data["title"],
-                    "body": data["body"],
-                },
+
+            section, _ = (
+                GrammarLessonSection.objects
+                .update_or_create(
+                    lesson=lesson,
+                    order=data["order"],
+
+                    defaults={
+                        "title":
+                            data["title"],
+
+                        "body":
+                            data["body"],
+                    },
+                )
             )
 
-        exercises = [
+            section_objects[
+                data["order"]
+            ] = section
+
+
+        # =================================================
+        # 20 TRAINING EXERCISES
+        # =================================================
+
+        training = [
+
+            # SECTION 1
 
             {
                 "order": 1,
-                "prompt": "We ___ going to start soon.",
-                "options": ["is", "are", "am", "do"],
-                "answer": "are",
-                "explanation": "We используется с are.",
+                "section": 1,
+                "type": "choice",
+
+                "prompt":
+                    "I ___ going to study tonight.",
+
+                "options": [
+                    "am",
+                    "is",
+                    "are",
+                    "do",
+                ],
+
+                "answer":
+                    "am",
+
+                "explanation":
+                    "I → AM GOING TO.",
             },
 
             {
                 "order": 2,
-                "prompt": "My brother ___ going to buy a car.",
-                "options": ["am", "is", "are", "does"],
-                "answer": "is",
-                "explanation": "My brother = he, поэтому is.",
+                "section": 1,
+                "type": "choice",
+
+                "prompt":
+                    "She ___ going to buy a new laptop.",
+
+                "options": [
+                    "is",
+                    "am",
+                    "are",
+                    "does",
+                ],
+
+                "answer":
+                    "is",
+
+                "explanation":
+                    "SHE → IS GOING TO.",
             },
+
+
+            # SECTION 2
 
             {
                 "order": 3,
-                "prompt": "I am going to ___ English.",
+                "section": 2,
+                "type": "build",
+
+                "prompt":
+                    "Собери предложение.",
+
                 "options": [
-                    "study",
-                    "studied",
-                    "studying",
-                    "studies",
+                    "They",
+                    "are",
+                    "going",
+                    "to",
+                    "travel",
                 ],
-                "answer": "study",
-                "explanation": "После going to используется первая форма.",
+
+                "answer":
+                    "They are going to travel",
+
+                "explanation":
+                    "THEY → ARE GOING TO + base verb.",
             },
 
             {
                 "order": 4,
-                "prompt": "She isn't going to ___ tonight.",
+                "section": 2,
+                "type": "choice",
+
+                "prompt":
+                    "We ___ going to start soon.",
+
                 "options": [
-                    "works",
-                    "worked",
-                    "work",
-                    "working",
+                    "are",
+                    "is",
+                    "am",
+                    "do",
                 ],
-                "answer": "work",
-                "explanation": "После going to → base verb.",
+
+                "answer":
+                    "are",
+
+                "explanation":
+                    "WE используется с ARE.",
             },
+
+
+            # SECTION 3
 
             {
                 "order": 5,
-                "prompt": "___ you going to call him?",
-                "options": ["Do", "Are", "Will", "Did"],
-                "answer": "Are",
-                "explanation": "Вопрос строится через форму TO BE.",
+                "section": 3,
+                "type": "choice",
+
+                "prompt":
+                    "He is going to ___ English.",
+
+                "options": [
+                    "learn",
+                    "learns",
+                    "learned",
+                    "learning",
+                ],
+
+                "answer":
+                    "learn",
+
+                "explanation":
+                    "После GOING TO используется base verb.",
             },
 
             {
                 "order": 6,
-                "prompt": "Is she going to travel?",
+                "section": 3,
+                "type": "choice",
+
+                "prompt":
+                    "We are going to ___ dinner at seven.",
+
                 "options": [
-                    "Yes, she is.",
-                    "Yes, she does.",
-                    "Yes, she will.",
-                    "Yes, she has.",
+                    "have",
+                    "has",
+                    "had",
+                    "having",
                 ],
-                "answer": "Yes, she is.",
-                "explanation": "Краткий ответ повторяет форму is.",
+
+                "answer":
+                    "have",
+
+                "explanation":
+                    "После GOING TO → HAVE.",
             },
+
+
+            # SECTION 4
 
             {
                 "order": 7,
-                "prompt": "What ___ you going to do?",
-                "options": ["do", "are", "will", "did"],
-                "answer": "are",
-                "explanation": "What are you going to do?",
+                "section": 4,
+                "type": "choice",
+
+                "prompt":
+                    "I bought the tickets yesterday. We ___ travel next week.",
+
+                "options": [
+                    "are going to",
+                    "will suddenly",
+                    "did",
+                    "have",
+                ],
+
+                "answer":
+                    "are going to",
+
+                "explanation":
+                    "План был принят заранее.",
             },
 
             {
                 "order": 8,
-                "prompt": "Where ___ he going to stay?",
-                "options": ["does", "is", "will", "has"],
-                "answer": "is",
-                "explanation": "He → is.",
+                "section": 4,
+                "type": "choice",
+
+                "prompt":
+                    "She has already decided. She ___ start a new course.",
+
+                "options": [
+                    "is going to",
+                    "will just decide now",
+                    "does",
+                    "has",
+                ],
+
+                "answer":
+                    "is going to",
+
+                "explanation":
+                    "Решение уже принято → GOING TO.",
             },
+
+
+            # SECTION 5
 
             {
                 "order": 9,
-                "prompt": "Who ___ going to help us?",
+                "section": 5,
+                "type": "choice",
+
+                "prompt":
+                    "I ___ learn Spanish next year.",
+
                 "options": [
-                    "are",
-                    "is",
-                    "does",
-                    "will be to",
+                    "am going to",
+                    "am going learning",
+                    "will to",
+                    "do going to",
                 ],
-                "answer": "is",
-                "explanation": "Who как подлежащее обычно использует is.",
+
+                "answer":
+                    "am going to",
+
+                "explanation":
+                    "Намерение → BE GOING TO.",
             },
 
             {
                 "order": 10,
-                "prompt": "Look at that glass. It ___ fall.",
+                "section": 5,
+                "type": "choice",
+
+                "prompt":
+                    "He ___ stop smoking.",
+
                 "options": [
-                    "will think",
                     "is going to",
-                    "does",
-                    "has",
+                    "is going stopping",
+                    "does going to",
+                    "going to is",
                 ],
-                "answer": "is going to",
-                "explanation": "Есть очевидный признак будущего события.",
+
+                "answer":
+                    "is going to",
+
+                "explanation":
+                    "Существующее намерение → GOING TO.",
             },
+
+
+            # SECTION 6
 
             {
                 "order": 11,
-                "prompt": (
-                    "I have already decided. "
-                    "I ___ start a new course."
-                ),
+                "section": 6,
+                "type": "choice",
+
+                "prompt":
+                    "Look at those black clouds. It ___.",
+
                 "options": [
-                    "will suddenly",
-                    "am going to",
-                    "do",
-                    "have",
+                    "is going to rain",
+                    "will rain because I think only",
+                    "is going rain",
+                    "going to rains",
                 ],
-                "answer": "am going to",
-                "explanation": "Решение было принято заранее.",
+
+                "answer":
+                    "is going to rain",
+
+                "explanation":
+                    "Есть видимые признаки дождя.",
             },
 
             {
                 "order": 12,
-                "prompt": "The phone is ringing. I ___ answer it.",
+                "section": 6,
+                "type": "choice",
+
+                "prompt":
+                    "Be careful! You ___.",
+
                 "options": [
-                    "am going to yesterday",
-                    "will",
-                    "have",
-                    "did",
+                    "are going to fall",
+                    "will fell",
+                    "are going fall",
+                    "going to falls",
                 ],
-                "answer": "will",
-                "explanation": "Спонтанное решение → will.",
+
+                "answer":
+                    "are going to fall",
+
+                "explanation":
+                    "Видим непосредственную опасность.",
             },
+
+
+            # SECTION 7
 
             {
                 "order": 13,
-                "prompt": "I think they ___ win.",
+                "section": 7,
+                "type": "choice",
+
+                "prompt":
+                    "The phone is ringing. I ___ it.",
+
                 "options": [
-                    "are going to because I think only",
-                    "will",
-                    "do",
-                    "did",
+                    "will answer",
+                    "am going to answer because I planned yesterday",
+                    "will answered",
+                    "am answer",
                 ],
-                "answer": "will",
-                "explanation": "Прогноз основан на мнении → will.",
+
+                "answer":
+                    "will answer",
+
+                "explanation":
+                    "Решение принято прямо сейчас → WILL.",
             },
 
             {
                 "order": 14,
-                "prompt": "Be careful! You ___ fall.",
+                "section": 7,
+                "type": "choice",
+
+                "prompt":
+                    "I decided this morning. I ___ call him tonight.",
+
                 "options": [
-                    "will opinion",
-                    "are going to",
+                    "am going to",
+                    "will suddenly",
                     "do",
-                    "have",
+                    "am call",
                 ],
-                "answer": "are going to",
-                "explanation": "Есть очевидная непосредственная опасность.",
+
+                "answer":
+                    "am going to",
+
+                "explanation":
+                    "Решение принято заранее → GOING TO.",
             },
+
+
+            # SECTION 8
 
             {
                 "order": 15,
-                "prompt": "They aren't going to ___ the house.",
+                "section": 8,
+                "type": "choice",
+
+                "prompt":
+                    "I think our team ___ win.",
+
                 "options": [
-                    "sells",
-                    "sold",
-                    "sell",
-                    "selling",
+                    "will",
+                    "is going to because of opinion only",
+                    "does",
+                    "has",
                 ],
-                "answer": "sell",
-                "explanation": "После going to используется первая форма.",
+
+                "answer":
+                    "will",
+
+                "explanation":
+                    "Личное мнение → WILL.",
             },
 
             {
                 "order": 16,
-                "prompt": "Choose the correct sentence.",
+                "section": 8,
+                "type": "choice",
+
+                "prompt":
+                    "Look at the score. Our team is playing much better. They ___ win.",
+
                 "options": [
-                    "I going to study.",
-                    "I am going to study.",
-                    "I am going study.",
-                    "I am going to studying.",
+                    "are going to",
+                    "will opinion",
+                    "are going win",
+                    "going to wins",
                 ],
-                "answer": "I am going to study.",
-                "explanation": "Нужна форма am + going to + base verb.",
+
+                "answer":
+                    "are going to",
+
+                "explanation":
+                    "Есть текущие признаки → GOING TO.",
             },
+
+
+            # SECTION 9
 
             {
                 "order": 17,
-                "prompt": "Choose the correct sentence.",
+                "section": 9,
+                "type": "choice",
+
+                "prompt":
+                    "She ___ going to work tomorrow.",
+
                 "options": [
-                    "She are going to call.",
-                    "She is going to call.",
-                    "She is going to calls.",
-                    "She does going to call.",
+                    "isn't",
+                    "doesn't",
+                    "won't be to",
+                    "not is",
                 ],
-                "answer": "She is going to call.",
-                "explanation": "She → is going to + call.",
+
+                "answer":
+                    "isn't",
+
+                "explanation":
+                    "Отрицание строится через ISN'T.",
             },
 
             {
                 "order": 18,
-                "prompt": "Choose the correct negative sentence.",
+                "section": 9,
+                "type": "choice",
+
+                "prompt":
+                    "Choose the correct negative sentence.",
+
                 "options": [
-                    "She doesn't going to call.",
-                    "She isn't going to call.",
-                    "She not going to calls.",
-                    "She won't going to call.",
+                    "They aren't going to sell the house.",
+                    "They don't going to sell the house.",
+                    "They aren't going to selling the house.",
+                    "They won't going to sell the house.",
                 ],
-                "answer": "She isn't going to call.",
-                "explanation": "Отрицание строится через TO BE + not.",
+
+                "answer":
+                    "They aren't going to sell the house.",
+
+                "explanation":
+                    "ARE NOT + GOING TO + base verb.",
             },
+
+
+            # SECTION 10
 
             {
                 "order": 19,
-                "prompt": "Choose the correct question.",
+                "section": 10,
+                "type": "choice",
+
+                "prompt":
+                    "___ you going to call her?",
+
                 "options": [
-                    "Does she going to come?",
-                    "Is she going to come?",
-                    "Will she going to come?",
-                    "Is she going to comes?",
+                    "Are",
+                    "Do",
+                    "Will",
+                    "Did",
                 ],
-                "answer": "Is she going to come?",
-                "explanation": "Is + subject + going to + base verb?",
+
+                "answer":
+                    "Are",
+
+                "explanation":
+                    "Вопрос строится через форму TO BE.",
             },
 
             {
                 "order": 20,
-                "prompt": "Choose the correct sentence with BE.",
-                "options": [
-                    "It is going to is difficult.",
-                    "It is going to be difficult.",
-                    "It is going to being difficult.",
-                    "It going to be difficult.",
-                ],
-                "answer": "It is going to be difficult.",
-                "explanation": "После going to используется base form be.",
-            },
+                "section": 10,
+                "type": "choice",
 
-            {
-                "order": 21,
-                "prompt": "Choose the correct sentence with HAVE.",
-                "options": [
-                    "She is going to has a meeting.",
-                    "She is going to have a meeting.",
-                    "She is going to having a meeting.",
-                    "She going to have a meeting.",
-                ],
-                "answer": "She is going to have a meeting.",
-                "explanation": "После going to используется have.",
-            },
+                "prompt":
+                    "Is he going to come?",
 
-            {
-                "order": 22,
-                "prompt": "Which sentence describes an arrangement?",
                 "options": [
-                    "I'm going to see my doctor sometime next week.",
-                    "I'm seeing my doctor on Monday at ten.",
-                    "I think I will see my doctor.",
-                    "The doctor sees me yesterday.",
+                    "Yes, he is.",
+                    "Yes, he does.",
+                    "Yes, he will going.",
+                    "Yes, he has.",
                 ],
-                "answer": "I'm seeing my doctor on Monday at ten.",
-                "explanation": "Конкретная договорённость → Present Continuous.",
-            },
 
-            {
-                "order": 23,
-                "prompt": "Choose the best pair.",
-                "options": [
-                    (
-                        "The phone is ringing. I'll answer it. / "
-                        "I'm going to call him tonight."
-                    ),
-                    (
-                        "The phone is ringing. I'm going to yesterday answer it. / "
-                        "I will going to call him."
-                    ),
-                    (
-                        "The phone rings. I did answer tomorrow. / "
-                        "I'm going call him tonight."
-                    ),
-                    (
-                        "The phone is ringing. I will to answer. / "
-                        "I'm going to calling him."
-                    ),
-                ],
-                "answer": (
-                    "The phone is ringing. I'll answer it. / "
-                    "I'm going to call him tonight."
-                ),
-                "explanation": (
-                    "Will → спонтанное решение; "
-                    "going to → заранее принятый план."
-                ),
-            },
+                "answer":
+                    "Yes, he is.",
 
-            {
-                "order": 24,
-                "prompt": "Choose the correct prediction pair.",
-                "options": [
-                    (
-                        "I think it will rain. / "
-                        "Look at the clouds. It is going to rain."
-                    ),
-                    (
-                        "I think it is going to because opinion rain. / "
-                        "Look at the clouds. It will opinion rain."
-                    ),
-                    (
-                        "I think it will raining. / "
-                        "It is going to rains."
-                    ),
-                    (
-                        "I think it rains tomorrow yesterday. / "
-                        "It going to rain."
-                    ),
-                ],
-                "answer": (
-                    "I think it will rain. / "
-                    "Look at the clouds. It is going to rain."
-                ),
-                "explanation": (
-                    "Will → мнение; going to → видимые признаки."
-                ),
+                "explanation":
+                    "Краткий ответ повторяет IS.",
             },
 
         ]
 
-        for data in exercises:
+
+        # =================================================
+        # FINAL TEST — 10 NEW QUESTIONS
+        # =================================================
+
+        final_test = [
+
+            {
+                "order": 21,
+
+                "prompt":
+                    "My parents ___ going to visit us this weekend.",
+
+                "options": [
+                    "are",
+                    "is",
+                    "am",
+                    "do",
+                ],
+
+                "answer":
+                    "are",
+
+                "explanation":
+                    "MY PARENTS = THEY → ARE.",
+            },
+
+            {
+                "order": 22,
+
+                "prompt":
+                    "Anna is going to ___ a new job.",
+
+                "options": [
+                    "find",
+                    "finds",
+                    "found",
+                    "finding",
+                ],
+
+                "answer":
+                    "find",
+
+                "explanation":
+                    "После GOING TO используется base verb.",
+            },
+
+            {
+                "order": 23,
+
+                "prompt":
+                    "We have already made the decision. We ___ move next year.",
+
+                "options": [
+                    "are going to",
+                    "will suddenly",
+                    "are move",
+                    "did",
+                ],
+
+                "answer":
+                    "are going to",
+
+                "explanation":
+                    "Решение существовало заранее.",
+            },
+
+            {
+                "order": 24,
+
+                "prompt":
+                    "Look at that child near the edge! He ___.",
+
+                "options": [
+                    "is going to fall",
+                    "will fell",
+                    "is going fall",
+                    "going to falls",
+                ],
+
+                "answer":
+                    "is going to fall",
+
+                "explanation":
+                    "Есть очевидный признак будущего события.",
+            },
+
+            {
+                "order": 25,
+
+                "prompt":
+                    "The doorbell is ringing. — I ___ the door.",
+
+                "options": [
+                    "will open",
+                    "am going to because I planned it yesterday",
+                    "will opened",
+                    "am open",
+                ],
+
+                "answer":
+                    "will open",
+
+                "explanation":
+                    "Спонтанное решение → WILL.",
+            },
+
+            {
+                "order": 26,
+
+                "prompt":
+                    "I think she ___ pass the exam.",
+
+                "options": [
+                    "will",
+                    "is going to because no evidence is given",
+                    "does",
+                    "has",
+                ],
+
+                "answer":
+                    "will",
+
+                "explanation":
+                    "Личное мнение → WILL.",
+            },
+
+            {
+                "order": 27,
+
+                "prompt":
+                    "Choose the correct negative sentence.",
+
+                "options": [
+                    "I am not going to buy it.",
+                    "I don't going to buy it.",
+                    "I am not going to buying it.",
+                    "I won't going to buy it.",
+                ],
+
+                "answer":
+                    "I am not going to buy it.",
+
+                "explanation":
+                    "AM NOT + GOING TO + base verb.",
+            },
+
+            {
+                "order": 28,
+
+                "prompt":
+                    "Choose the correct question.",
+
+                "options": [
+                    "Are they going to travel?",
+                    "Do they going to travel?",
+                    "Will they going to travel?",
+                    "Are they going to travelling?",
+                ],
+
+                "answer":
+                    "Are they going to travel?",
+
+                "explanation":
+                    "ARE + subject + GOING TO + base verb?",
+            },
+
+            {
+                "order": 29,
+
+                "prompt":
+                    "Choose the correct pair.",
+
+                "options": [
+                    "I'll answer the phone. / I'm going to visit my parents this weekend.",
+                    "I'm going answer the phone. / I will going to visit my parents.",
+                    "I'll answered the phone. / I'm going to visiting my parents.",
+                    "I answer will the phone. / I going to visit my parents.",
+                ],
+
+                "answer":
+                    "I'll answer the phone. / I'm going to visit my parents this weekend.",
+
+                "explanation":
+                    "WILL → решение сейчас; GOING TO → заранее принятый план.",
+            },
+
+            {
+                "order": 30,
+
+                "prompt":
+                    "Choose the correct prediction pair.",
+
+                "options": [
+                    "I think it will rain. / Look at the clouds. It is going to rain.",
+                    "I think it is going to because opinion rain. / Look at the clouds. It will opinion rain.",
+                    "I think it will raining. / It is going to rains.",
+                    "I think it rains tomorrow. / It going to rain.",
+                ],
+
+                "answer":
+                    "I think it will rain. / Look at the clouds. It is going to rain.",
+
+                "explanation":
+                    "Мнение → WILL; видимые признаки → GOING TO.",
+            },
+
+        ]
+
+
+        all_exercises = (
+            training
+            +
+            final_test
+        )
+
+
+        valid_orders = [
+            item["order"]
+            for item in all_exercises
+        ]
+
+
+        for data in all_exercises:
+
+            if data["order"] <= 20:
+
+                section = (
+                    section_objects[
+                        data["section"]
+                    ]
+                )
+
+            else:
+
+                section = None
+
+
             GrammarExercise.objects.update_or_create(
                 lesson=lesson,
                 order=data["order"],
+
                 defaults={
-                    "exercise_type": GrammarExercise.Type.CHOICE,
-                    "prompt": data["prompt"],
-                    "options": data["options"],
-                    "correct_answer": data["answer"],
-                    "explanation": data["explanation"],
-                    "is_published": True,
+                    "section":
+                        section,
+
+                    "exercise_type":
+                        data.get(
+                            "type",
+                            "choice",
+                        ),
+
+                    "prompt":
+                        data["prompt"],
+
+                    "options":
+                        data["options"],
+
+                    "correct_answer":
+                        data["answer"],
+
+                    "explanation":
+                        data["explanation"],
+
+                    "is_published":
+                        True,
                 },
             )
 
+
+        GrammarExercise.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__in=valid_orders,
+        ).delete()
+
+
+        GrammarLessonSection.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__in=[
+                item["order"]
+                for item in sections
+            ],
+        ).delete()
+
+
         self.stdout.write(
             self.style.SUCCESS(
-                "✅ A1 Lesson 37 seeded: BE GOING TO"
+                "✅ Interactive A1 Lesson 37 seeded"
             )
         )
 
         self.stdout.write(
-            f"Sections: {lesson.sections.count()}"
+            f"Micro rules: "
+            f"{lesson.sections.count()}"
         )
 
         self.stdout.write(
-            f"Exercises: {lesson.exercises.count()}"
+            "Training exercises: "
+            f"{lesson.exercises.filter(section__isnull=False).count()}"
+        )
+
+        self.stdout.write(
+            "Final test: "
+            f"{lesson.exercises.filter(section__isnull=True).count()}"
         )

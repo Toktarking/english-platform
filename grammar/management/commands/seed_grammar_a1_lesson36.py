@@ -10,44 +10,61 @@ from grammar.models import (
 class Command(BaseCommand):
 
     help = (
-        "Create/update A1 Grammar Lesson 36: "
-        "Future Simple with WILL."
+        "Create/update interactive A1 Grammar "
+        "Lesson 36: Future Simple with WILL."
     )
+
 
     def handle(self, *args, **options):
 
-        lesson, _ = GrammarLesson.objects.update_or_create(
-            level="A1",
-            order=36,
-            defaults={
-                "title": "Future Simple с WILL",
-                "slug": "future-simple-will",
-                "theory_text": "Future Simple with WILL.",
-                "estimated_minutes": 40,
-                "pass_score": 70,
-                "xp_reward": 100,
-                "is_published": True,
-            },
+        lesson, _ = (
+            GrammarLesson.objects.update_or_create(
+                level="A1",
+                order=36,
+
+                defaults={
+                    "title":
+                        "Future Simple с WILL",
+
+                    "slug":
+                        "future-simple-will",
+
+                    "theory_text":
+                        "Future Simple with WILL.",
+
+                    "estimated_minutes":
+                        20,
+
+                    "pass_score":
+                        70,
+
+                    "xp_reward":
+                        100,
+
+                    "is_published":
+                        True,
+                },
+            )
         )
+
+
+        # =================================================
+        # 10 MICRO RULES
+        # =================================================
 
         sections = [
 
             {
                 "order": 1,
-                "title": "Что такое Future Simple",
-                "body": """Future Simple — простое будущее время.
+                "title":
+                    "Что такое Future Simple?",
 
-WILL часто используется, когда мы говорим:
+                "body":
+                    """Future Simple говорит о будущем.
 
-о будущем действии;
+Основной помощник:
 
-о спонтанном решении;
-
-об обещании;
-
-о предложении помощи;
-
-о предположении или прогнозе.
+WILL
 
 Примеры:
 
@@ -55,17 +72,29 @@ I will call you tomorrow.
 
 She will help us.
 
-I think it will rain.""",
+They will come later.
+
+WILL часто используется для:
+
+будущего действия;
+
+решения в момент речи;
+
+обещания;
+
+предположения.""",
             },
+
 
             {
                 "order": 2,
-                "title": "Основная формула",
-                "body": """Формула:
+                "title":
+                    "Формула WILL + глагол",
 
-subject + will + base verb
+                "body":
+                    """Формула:
 
-Примеры:
+subject + WILL + base verb
 
 I will work.
 
@@ -73,29 +102,28 @@ She will come.
 
 They will study.
 
-He will call.
+WILL одинаков для всех:
 
-WILL одинаково используется со всеми подлежащими:
+I
+you
+he
+she
+it
+we
+they
 
-I;
-
-you;
-
-he;
-
-she;
-
-it;
-
-we;
-
-they.""",
+После WILL не меняем глагол.""",
             },
+
 
             {
                 "order": 3,
-                "title": "После WILL — первая форма",
-                "body": """После WILL используется основная форма глагола.
+                "title":
+                    "После WILL — только первая форма",
+
+                "body":
+                    """После WILL используется
+основная форма глагола.
 
 Правильно:
 
@@ -105,9 +133,9 @@ will work
 
 will study
 
-will come
-
 will be
+
+will have
 
 Неправильно:
 
@@ -117,211 +145,104 @@ will worked
 
 will studying
 
-will to come
-
-Сокращение:
-
-I will → I'll
-
-she will → she'll
-
-they will → they'll""",
+will to go.""",
             },
+
 
             {
                 "order": 4,
-                "title": "Будущее действие и маркеры",
-                "body": """Future Simple может описывать будущее действие.
+                "title":
+                    "Спонтанное решение",
 
-Примеры:
-
-I will start work tomorrow.
-
-She will visit us next week.
-
-They will move next year.
-
-We will meet on Monday.
-
-Частые маркеры:
-
-tomorrow;
-
-next week;
-
-next month;
-
-next year;
-
-soon;
-
-later;
-
-in an hour;
-
-in two days;
-
-in the future.""",
-            },
-
-            {
-                "order": 5,
-                "title": "Спонтанное решение",
-                "body": """WILL часто используется, когда решение принимается прямо в момент речи.
-
-Пример:
+                "body":
+                    """WILL часто используется,
+когда решение принимается прямо сейчас.
 
 The phone is ringing.
 
 I'll answer it.
 
-Другие примеры:
+I'm thirsty.
 
-I'm thirsty. I'll get some water.
+I'll get some water.
 
-It is cold. I'll close the window.
+Someone is at the door.
 
-We don't have any bread. I'll buy some.
-
-Someone is at the door. I'll open it.
+I'll open it.
 
 Это не заранее подготовленный план.""",
             },
 
+
             {
-                "order": 6,
-                "title": "Обещания и предложение помощи",
-                "body": """WILL часто используется в обещаниях:
+                "order": 5,
+                "title":
+                    "Обещание и помощь",
+
+                "body":
+                    """WILL используется в обещаниях.
 
 I will help you.
 
 I won't tell anyone.
 
-I promise I will be careful.
+I promise I'll call you.
 
-I promise I won't be late.
-
-Также WILL используется, когда человек предлагает помощь:
+Также WILL подходит
+для предложения помощи.
 
 I'll carry your bag.
 
-I'll open the door.
-
 I'll explain the rule.
 
-I'll help you with the task.""",
+I'll open the window.""",
             },
+
+
+            {
+                "order": 6,
+                "title":
+                    "Прогноз и мнение",
+
+                "body":
+                    """WILL часто используется
+для прогноза или мнения.
+
+I think it will rain.
+
+She will probably come.
+
+I believe they will win.
+
+I'm sure he will understand.
+
+Полезные слова:
+
+I think
+
+probably
+
+maybe
+
+perhaps
+
+I'm sure.""",
+            },
+
 
             {
                 "order": 7,
-                "title": "Предположения и прогнозы",
-                "body": """WILL используется для мнения или предположения о будущем.
+                "title":
+                    "Отрицание WON'T",
 
-Примеры:
+                "body":
+                    """WILL NOT сокращается до:
 
-I think it will rain tomorrow.
-
-She will probably come.
-
-They will win the match.
-
-People will live longer in the future.
-
-Частые выражения:
-
-I think;
-
-I don't think;
-
-I believe;
-
-probably;
-
-perhaps;
-
-maybe;
-
-I'm sure;
-
-I hope.""",
-            },
-
-            {
-                "order": 8,
-                "title": "PROBABLY и I DON'T THINK",
-                "body": """В утвердительном предложении probably часто стоит после WILL:
-
-She will probably come.
-
-It will probably rain.
-
-В отрицательном:
-
-She probably won't come.
-
-They probably won't agree.
-
-Часто говорят:
-
-I don't think he will come.
-
-I don't think she will agree.
-
-Так обычно звучит естественнее, чем:
-
-I think he won't come.""",
-            },
-
-            {
-                "order": 9,
-                "title": "WILL BE и WILL HAVE",
-                "body": """После WILL глагол TO BE используется в форме:
-
-be
-
-Правильно:
-
-I will be at home.
-
-She will be busy.
-
-They will be ready.
-
-Неправильно:
-
-I will am
-
-She will is
-
-They will are
-
-С HAVE:
-
-I will have more time.
-
-She will have a meeting.
-
-Не:
-
-She will has a meeting.""",
-            },
-
-            {
-                "order": 10,
-                "title": "Отрицание с WON'T",
-                "body": """Отрицание:
-
-will not
-
-Сокращение:
-
-won't
+WON'T
 
 Формула:
 
-subject + won't + base verb
-
-Примеры:
+subject + WON'T + base verb
 
 I won't come.
 
@@ -329,29 +250,23 @@ She won't work tomorrow.
 
 They won't agree.
 
-It won't rain.
-
-После won't также используется первая форма.
+После WON'T тоже нужна
+первая форма глагола.
 
 Не:
 
-won't goes
-
-won't worked
-
-won't to come""",
+won't goes.""",
             },
 
+
             {
-                "order": 11,
-                "title": "Вопросы и краткие ответы",
-                "body": """В вопросе WILL ставится перед подлежащим.
+                "order": 8,
+                "title":
+                    "Вопросы с WILL",
 
-Формула:
-
-Will + subject + base verb?
-
-Примеры:
+                "body":
+                    """В вопросе WILL ставится
+перед подлежащим.
 
 Will you come?
 
@@ -367,431 +282,876 @@ No, I won't.
 
 Yes, she will.
 
-No, she won't.
-
-В положительном кратком ответе обычно не говорят:
-
-Yes, I'll.""",
+No, she won't.""",
             },
 
-            {
-                "order": 12,
-                "title": "Специальные вопросы и SHALL",
-                "body": """Специальный вопрос:
-
-Question word + will + subject + verb?
-
-Примеры:
-
-What will you do?
-
-Where will she go?
-
-When will they arrive?
-
-How will we get there?
-
-WHO как подлежащее:
-
-Who will help me?
-
-SHALL чаще используется с I и WE в предложениях:
-
-Shall I help you?
-
-Shall I open the window?
-
-Shall we start?
-
-Shall we go?""",
-            },
 
             {
-                "order": 13,
-                "title": "WHEN и IF: без WILL",
-                "body": """После WHEN, BEFORE, AFTER, UNTIL, AS SOON AS и IF в придаточной части для будущего обычно используется Present Simple.
+                "order": 9,
+                "title":
+                    "WHEN и IF: без WILL",
+
+                "body":
+                    """После WHEN и IF
+в придаточной части будущего
+обычно используем Present Simple.
 
 Правильно:
 
 I will call you when I arrive.
 
-If it rains, we will stay at home.
+If it rains,
+we will stay home.
 
-We will eat when she comes.
+Не:
 
-She will call me as soon as she arrives.
+when I will arrive
 
-Неправильно:
+if it will rain
 
-I will call you when I will arrive.
-
-If it will rain, we will stay at home.""",
+WILL остаётся в главной части.""",
             },
 
+
             {
-                "order": 14,
-                "title": "WILL или заранее подготовленный план",
-                "body": """Используйте WILL, если:
+                "order": 10,
+                "title":
+                    "WILL или заранее подготовленный план?",
+
+                "body":
+                    """WILL особенно подходит,
+если:
 
 решение принято сейчас;
 
 это обещание;
 
-это предложение помощи;
+это помощь;
 
-это мнение или прогноз.
-
-Примеры:
+это прогноз.
 
 I'll answer the phone.
 
-I will never tell anyone.
+I will help you.
 
-I'll help you.
+I think she will pass.
 
-I think she will pass the exam.
+Если план уже был подготовлен заранее,
+обычно используется BE GOING TO
+или Present Continuous.
 
-Если план был подготовлен заранее, обычно лучше BE GOING TO или Present Continuous.
-
-Пример:
-
-I am going to visit my parents this weekend.
-
-Подробно BE GOING TO — в следующем уроке.""",
+Эту разницу разберём дальше.""",
             },
 
         ]
 
+
+        section_objects = {}
+
+
         for data in sections:
-            GrammarLessonSection.objects.update_or_create(
-                lesson=lesson,
-                order=data["order"],
-                defaults={
-                    "title": data["title"],
-                    "body": data["body"],
-                },
+
+            section, _ = (
+                GrammarLessonSection.objects.update_or_create(
+                    lesson=lesson,
+                    order=data["order"],
+
+                    defaults={
+                        "title":
+                            data["title"],
+
+                        "body":
+                            data["body"],
+                    },
+                )
             )
 
-        exercises = [
+            section_objects[
+                data["order"]
+            ] = section
+
+
+        # =================================================
+        # 20 TRAINING EXERCISES
+        # =================================================
+
+        training = [
+
+            # SECTION 1
 
             {
                 "order": 1,
-                "prompt": "We ___ finish the project next week.",
-                "options": ["will", "are will", "do", "have"],
-                "answer": "will",
-                "explanation": "Future Simple: subject + will + base verb.",
+                "section": 1,
+                "type": "choice",
+
+                "prompt":
+                    "I ___ call you tomorrow.",
+
+                "options": [
+                    "will",
+                    "am will",
+                    "did",
+                    "have",
+                ],
+
+                "answer":
+                    "will",
+
+                "explanation":
+                    "Future Simple использует WILL.",
             },
 
             {
                 "order": 2,
-                "prompt": "My sister will ___ us tomorrow.",
+                "section": 1,
+                "type": "choice",
+
+                "prompt":
+                    "They ___ arrive later.",
+
                 "options": [
-                    "visits",
-                    "visited",
-                    "visit",
-                    "visiting",
+                    "will",
+                    "are will",
+                    "do",
+                    "have",
                 ],
-                "answer": "visit",
-                "explanation": "После will используется первая форма.",
+
+                "answer":
+                    "will",
+
+                "explanation":
+                    "Будущее действие → WILL.",
             },
+
+
+            # SECTION 2
 
             {
                 "order": 3,
-                "prompt": "I think they ___ win.",
-                "options": ["are", "will", "do", "have"],
-                "answer": "will",
-                "explanation": "Прогноз на основе мнения → will.",
+                "section": 2,
+                "type": "build",
+
+                "prompt":
+                    "Собери предложение.",
+
+                "options": [
+                    "She",
+                    "will",
+                    "help",
+                    "us",
+                ],
+
+                "answer":
+                    "She will help us",
+
+                "explanation":
+                    "subject + WILL + base verb.",
             },
 
             {
                 "order": 4,
-                "prompt": "He ___ be at home tonight.",
+                "section": 2,
+                "type": "choice",
+
+                "prompt":
+                    "Choose the correct sentence.",
+
+                "options": [
+                    "We will study tomorrow.",
+                    "We will studies tomorrow.",
+                    "We are will study tomorrow.",
+                    "We will studied tomorrow.",
+                ],
+
+                "answer":
+                    "We will study tomorrow.",
+
+                "explanation":
+                    "После WILL используется основная форма STUDY.",
+            },
+
+
+            # SECTION 3
+
+            {
+                "order": 5,
+                "section": 3,
+                "type": "choice",
+
+                "prompt":
+                    "My brother will ___ home soon.",
+
+                "options": [
+                    "come",
+                    "comes",
+                    "came",
+                    "coming",
+                ],
+
+                "answer":
+                    "come",
+
+                "explanation":
+                    "После WILL нужна первая форма COME.",
+            },
+
+            {
+                "order": 6,
+                "section": 3,
+                "type": "choice",
+
+                "prompt":
+                    "She will ___ busy tomorrow.",
+
+                "options": [
+                    "be",
+                    "is",
+                    "was",
+                    "being",
+                ],
+
+                "answer":
+                    "be",
+
+                "explanation":
+                    "После WILL используется BE.",
+            },
+
+
+            # SECTION 4
+
+            {
+                "order": 7,
+                "section": 4,
+                "type": "choice",
+
+                "prompt":
+                    "The phone is ringing. I ___ it.",
+
+                "options": [
+                    "will answer",
+                    "answered yesterday",
+                    "am answer",
+                    "will answered",
+                ],
+
+                "answer":
+                    "will answer",
+
+                "explanation":
+                    "Решение принято прямо сейчас.",
+            },
+
+            {
+                "order": 8,
+                "section": 4,
+                "type": "choice",
+
+                "prompt":
+                    "It's cold in here. I ___ the window.",
+
+                "options": [
+                    "will close",
+                    "closed tomorrow",
+                    "will closed",
+                    "am close",
+                ],
+
+                "answer":
+                    "will close",
+
+                "explanation":
+                    "Спонтанное решение → WILL.",
+            },
+
+
+            # SECTION 5
+
+            {
+                "order": 9,
+                "section": 5,
+                "type": "choice",
+
+                "prompt":
+                    "Don't worry. I ___ you.",
+
+                "options": [
+                    "will help",
+                    "helped tomorrow",
+                    "will helped",
+                    "am help",
+                ],
+
+                "answer":
+                    "will help",
+
+                "explanation":
+                    "Предложение помощи → WILL.",
+            },
+
+            {
+                "order": 10,
+                "section": 5,
+                "type": "choice",
+
+                "prompt":
+                    "I promise I ___ anyone.",
+
+                "options": [
+                    "won't tell",
+                    "don't told",
+                    "won't told",
+                    "am not tell",
+                ],
+
+                "answer":
+                    "won't tell",
+
+                "explanation":
+                    "Отрицательное обещание → WON'T + base verb.",
+            },
+
+
+            # SECTION 6
+
+            {
+                "order": 11,
+                "section": 6,
+                "type": "choice",
+
+                "prompt":
+                    "I think it ___ rain tomorrow.",
+
+                "options": [
+                    "will",
+                    "did",
+                    "has",
+                    "is rain",
+                ],
+
+                "answer":
+                    "will",
+
+                "explanation":
+                    "I THINK + прогноз → WILL.",
+            },
+
+            {
+                "order": 12,
+                "section": 6,
+                "type": "choice",
+
+                "prompt":
+                    "She will probably ___ the exam.",
+
+                "options": [
+                    "pass",
+                    "passes",
+                    "passed",
+                    "passing",
+                ],
+
+                "answer":
+                    "pass",
+
+                "explanation":
+                    "После WILL используется PASS.",
+            },
+
+
+            # SECTION 7
+
+            {
+                "order": 13,
+                "section": 7,
+                "type": "choice",
+
+                "prompt":
+                    "He ___ be late.",
+
                 "options": [
                     "won't",
                     "doesn't will",
                     "isn't will",
                     "not will",
                 ],
-                "answer": "won't",
-                "explanation": "Отрицательная форма Future Simple — won't.",
-            },
 
-            {
-                "order": 5,
-                "prompt": "___ she call us?",
-                "options": ["Does", "Is", "Will", "Has"],
-                "answer": "Will",
-                "explanation": "Вопрос Future Simple начинается с Will.",
-            },
-
-            {
-                "order": 6,
-                "prompt": "Will they come?",
-                "options": [
-                    "Yes, they do.",
-                    "Yes, they will.",
-                    "Yes, they are.",
-                    "Yes, they'll.",
-                ],
-                "answer": "Yes, they will.",
-                "explanation": "Краткий положительный ответ: Yes, they will.",
-            },
-
-            {
-                "order": 7,
-                "prompt": "The room is cold. I ___ close the window.",
-                "options": [
-                    "will",
-                    "closed",
-                    "am close",
-                    "have closed tomorrow",
-                ],
-                "answer": "will",
-                "explanation": "Решение принято прямо сейчас → will.",
-            },
-
-            {
-                "order": 8,
-                "prompt": "I promise I ___ tell anyone.",
-                "options": [
-                    "don't",
+                "answer":
                     "won't",
-                    "am not",
-                    "didn't",
-                ],
-                "answer": "won't",
-                "explanation": "Обещание в отрицательной форме → won't.",
-            },
 
-            {
-                "order": 9,
-                "prompt": "What ___ you do tomorrow?",
-                "options": ["do", "will", "are", "did"],
-                "answer": "will",
-                "explanation": "What will you do?",
-            },
-
-            {
-                "order": 10,
-                "prompt": "Where ___ they stay?",
-                "options": [
-                    "will",
-                    "do will",
-                    "are will",
-                    "did",
-                ],
-                "answer": "will",
-                "explanation": "Where will they stay?",
-            },
-
-            {
-                "order": 11,
-                "prompt": "Who ___ help us?",
-                "options": [
-                    "does will",
-                    "will",
-                    "is",
-                    "did",
-                ],
-                "answer": "will",
-                "explanation": "Who как подлежащее: Who will help us?",
-            },
-
-            {
-                "order": 12,
-                "prompt": "I will call you when I ___ home.",
-                "options": [
-                    "will get",
-                    "get",
-                    "got",
-                    "am get",
-                ],
-                "answer": "get",
-                "explanation": "После when для будущего используется Present Simple.",
-            },
-
-            {
-                "order": 13,
-                "prompt": "If it ___, we will stay home.",
-                "options": [
-                    "will rain",
-                    "rains",
-                    "rained",
-                    "raining",
-                ],
-                "answer": "rains",
-                "explanation": "После if в условной части используется Present Simple.",
+                "explanation":
+                    "Отрицание Future Simple = WON'T.",
             },
 
             {
                 "order": 14,
-                "prompt": "She will probably ___ late.",
+                "section": 7,
+                "type": "choice",
+
+                "prompt":
+                    "Choose the correct sentence.",
+
                 "options": [
-                    "arrives",
-                    "arrive",
-                    "arrived",
-                    "arriving",
+                    "They won't come.",
+                    "They won't comes.",
+                    "They don't will come.",
+                    "They won't came.",
                 ],
-                "answer": "arrive",
-                "explanation": "После will используется base form arrive.",
+
+                "answer":
+                    "They won't come.",
+
+                "explanation":
+                    "WON'T + base verb.",
             },
+
+
+            # SECTION 8
 
             {
                 "order": 15,
-                "prompt": "Shall we ___?",
+                "section": 8,
+                "type": "choice",
+
+                "prompt":
+                    "___ she call us later?",
+
                 "options": [
-                    "start",
-                    "started",
-                    "starting",
-                    "starts",
+                    "Will",
+                    "Does",
+                    "Is",
+                    "Has",
                 ],
-                "answer": "start",
-                "explanation": "После shall также используется первая форма.",
+
+                "answer":
+                    "Will",
+
+                "explanation":
+                    "Вопрос начинается с WILL.",
             },
 
             {
                 "order": 16,
-                "prompt": "Choose the correct sentence.",
+                "section": 8,
+                "type": "choice",
+
+                "prompt":
+                    "Will they come?",
+
                 "options": [
-                    "She will goes home.",
-                    "She will go home.",
-                    "She will to go home.",
-                    "She will went home.",
+                    "Yes, they will.",
+                    "Yes, they do.",
+                    "Yes, they are.",
+                    "Yes, they'll.",
                 ],
-                "answer": "She will go home.",
-                "explanation": "После will используется первая форма go.",
+
+                "answer":
+                    "Yes, they will.",
+
+                "explanation":
+                    "Краткий ответ: YES, THEY WILL.",
             },
+
+
+            # SECTION 9
 
             {
                 "order": 17,
-                "prompt": "Choose the correct sentence with TO BE.",
+                "section": 9,
+                "type": "choice",
+
+                "prompt":
+                    "I will call you when I ___ home.",
+
                 "options": [
-                    "She will is busy.",
-                    "She will be busy.",
-                    "She will being busy.",
-                    "She will was busy.",
+                    "get",
+                    "will get",
+                    "got",
+                    "getting",
                 ],
-                "answer": "She will be busy.",
-                "explanation": "После will используется be.",
+
+                "answer":
+                    "get",
+
+                "explanation":
+                    "После WHEN для будущего используется Present Simple.",
             },
 
             {
                 "order": 18,
-                "prompt": "Choose the correct sentence with HAVE.",
+                "section": 9,
+                "type": "choice",
+
+                "prompt":
+                    "If it ___ tomorrow, we will stay home.",
+
                 "options": [
-                    "She will has a meeting.",
-                    "She will have a meeting.",
-                    "She will having a meeting.",
-                    "She will had a meeting.",
+                    "rains",
+                    "will rain",
+                    "rain will",
+                    "rained yesterday",
                 ],
-                "answer": "She will have a meeting.",
-                "explanation": "После will используется первая форма have.",
+
+                "answer":
+                    "rains",
+
+                "explanation":
+                    "После IF → Present Simple.",
             },
+
+
+            # SECTION 10
 
             {
                 "order": 19,
-                "prompt": "The phone is ringing. I ___ it.",
+                "section": 10,
+                "type": "choice",
+
+                "prompt":
+                    "The doorbell is ringing. Which is the best response?",
+
                 "options": [
-                    "will answer",
-                    "answered tomorrow",
-                    "am answer",
-                    "will answered",
+                    "I'll open the door.",
+                    "I am going to open it; I planned this yesterday.",
+                    "I opened it tomorrow.",
+                    "I will opened it.",
                 ],
-                "answer": "will answer",
-                "explanation": "Спонтанное решение → will.",
+
+                "answer":
+                    "I'll open the door.",
+
+                "explanation":
+                    "Решение принято в момент речи → WILL.",
             },
 
             {
                 "order": 20,
-                "prompt": "Choose the best prediction.",
-                "options": [
-                    "I think she will pass the exam.",
-                    "I think she passes the exam tomorrow yesterday.",
-                    "I think she will passed the exam.",
-                    "I think she will to pass the exam.",
-                ],
-                "answer": "I think she will pass the exam.",
-                "explanation": "Мнение о будущем → will + base verb.",
-            },
+                "section": 10,
+                "type": "choice",
 
-            {
-                "order": 21,
-                "prompt": "Choose the correct sentence.",
-                "options": [
-                    "I will call you when I will arrive.",
-                    "I will call you when I arrive.",
-                    "I will call you when I arrived tomorrow.",
-                    "I will call you when I arriving.",
-                ],
-                "answer": "I will call you when I arrive.",
-                "explanation": "После when используется Present Simple.",
-            },
+                "prompt":
+                    "Which sentence is a prediction?",
 
-            {
-                "order": 22,
-                "prompt": "Choose the correct conditional sentence.",
                 "options": [
-                    "If it will rain, we will stay home.",
-                    "If it rains, we will stay home.",
-                    "If it raining, we stay will home.",
-                    "If it rained tomorrow, we will stays home.",
+                    "I think our team will win.",
+                    "I bought the tickets yesterday.",
+                    "I am meeting him at six; it is arranged.",
+                    "I visited them last week.",
                 ],
-                "answer": "If it rains, we will stay home.",
-                "explanation": "После if → Present Simple; главная часть → will.",
-            },
 
-            {
-                "order": 23,
-                "prompt": "Which sentence is a spontaneous decision?",
-                "options": [
-                    "I am going to visit my parents this weekend.",
-                    "The doorbell is ringing. I'll open the door.",
-                    "I am meeting Anna tomorrow at six.",
-                    "I bought the ticket yesterday.",
-                ],
-                "answer": "The doorbell is ringing. I'll open the door.",
-                "explanation": "Решение принято в момент речи.",
-            },
+                "answer":
+                    "I think our team will win.",
 
-            {
-                "order": 24,
-                "prompt": "Choose the fully correct pair.",
-                "options": [
-                    "Will she come? / No, she won't.",
-                    "Does she will come? / No, she doesn't will.",
-                    "Will she comes? / No, she willn't.",
-                    "Is she will come? / No, she isn't.",
-                ],
-                "answer": "Will she come? / No, she won't.",
-                "explanation": "Вопрос: Will + subject + verb; отрицательный ответ: won't.",
+                "explanation":
+                    "Мнение о будущем → WILL.",
             },
 
         ]
 
-        for data in exercises:
+
+        # =================================================
+        # FINAL TEST — 10 NEW QUESTIONS
+        # =================================================
+
+        final_test = [
+
+            {
+                "order": 21,
+
+                "prompt":
+                    "We ___ see you next week.",
+
+                "options": [
+                    "will",
+                    "are will",
+                    "did",
+                    "have",
+                ],
+
+                "answer":
+                    "will",
+
+                "explanation":
+                    "Future Simple = WILL + base verb.",
+            },
+
+            {
+                "order": 22,
+
+                "prompt":
+                    "He will ___ more time tomorrow.",
+
+                "options": [
+                    "have",
+                    "has",
+                    "had",
+                    "having",
+                ],
+
+                "answer":
+                    "have",
+
+                "explanation":
+                    "После WILL используется HAVE.",
+            },
+
+            {
+                "order": 23,
+
+                "prompt":
+                    "I forgot my pen. — Don't worry, I ___ you mine.",
+
+                "options": [
+                    "will lend",
+                    "lent tomorrow",
+                    "will lent",
+                    "am lend",
+                ],
+
+                "answer":
+                    "will lend",
+
+                "explanation":
+                    "Спонтанное предложение помощи → WILL.",
+            },
+
+            {
+                "order": 24,
+
+                "prompt":
+                    "I promise I ___ late.",
+
+                "options": [
+                    "won't be",
+                    "won't am",
+                    "don't will be",
+                    "won't was",
+                ],
+
+                "answer":
+                    "won't be",
+
+                "explanation":
+                    "WON'T + BE.",
+            },
+
+            {
+                "order": 25,
+
+                "prompt":
+                    "I believe people ___ live longer in the future.",
+
+                "options": [
+                    "will",
+                    "did",
+                    "are live",
+                    "have",
+                ],
+
+                "answer":
+                    "will",
+
+                "explanation":
+                    "BELIEVE + прогноз → WILL.",
+            },
+
+            {
+                "order": 26,
+
+                "prompt":
+                    "___ you help me with this bag?",
+
+                "options": [
+                    "Will",
+                    "Do will",
+                    "Are",
+                    "Did",
+                ],
+
+                "answer":
+                    "Will",
+
+                "explanation":
+                    "WILL ставится перед подлежащим.",
+            },
+
+            {
+                "order": 27,
+
+                "prompt":
+                    "Will Anna join us?",
+
+                "options": [
+                    "No, she won't.",
+                    "No, she doesn't will.",
+                    "No, she isn't.",
+                    "No, she won't joins.",
+                ],
+
+                "answer":
+                    "No, she won't.",
+
+                "explanation":
+                    "Краткий отрицательный ответ = WON'T.",
+            },
+
+            {
+                "order": 28,
+
+                "prompt":
+                    "Choose the correct sentence.",
+
+                "options": [
+                    "I'll text you when I arrive.",
+                    "I'll text you when I will arrive.",
+                    "I'll text you when I arrived tomorrow.",
+                    "I'll text you when I arriving.",
+                ],
+
+                "answer":
+                    "I'll text you when I arrive.",
+
+                "explanation":
+                    "После WHEN → Present Simple.",
+            },
+
+            {
+                "order": 29,
+
+                "prompt":
+                    "Choose the correct conditional sentence.",
+
+                "options": [
+                    "If she calls, I will tell her.",
+                    "If she will call, I will tell her.",
+                    "If she calls, I will tells her.",
+                    "If she called yesterday, I will told her.",
+                ],
+
+                "answer":
+                    "If she calls, I will tell her.",
+
+                "explanation":
+                    "IF + Present Simple; главная часть + WILL.",
+            },
+
+            {
+                "order": 30,
+
+                "prompt":
+                    "Choose the fully correct sentence.",
+
+                "options": [
+                    "I think she will probably come.",
+                    "I think she will probably comes.",
+                    "I think she probably will came.",
+                    "I think she will to come.",
+                ],
+
+                "answer":
+                    "I think she will probably come.",
+
+                "explanation":
+                    "WILL + probably + base verb.",
+            },
+
+        ]
+
+
+        all_exercises = (
+            training
+            +
+            final_test
+        )
+
+
+        valid_orders = [
+            item["order"]
+            for item in all_exercises
+        ]
+
+
+        for data in all_exercises:
+
+            if data["order"] <= 20:
+
+                section = (
+                    section_objects[
+                        data["section"]
+                    ]
+                )
+
+            else:
+
+                section = None
+
+
             GrammarExercise.objects.update_or_create(
                 lesson=lesson,
                 order=data["order"],
+
                 defaults={
-                    "exercise_type": GrammarExercise.Type.CHOICE,
-                    "prompt": data["prompt"],
-                    "options": data["options"],
-                    "correct_answer": data["answer"],
-                    "explanation": data["explanation"],
-                    "is_published": True,
+                    "section":
+                        section,
+
+                    "exercise_type":
+                        data.get(
+                            "type",
+                            "choice",
+                        ),
+
+                    "prompt":
+                        data["prompt"],
+
+                    "options":
+                        data["options"],
+
+                    "correct_answer":
+                        data["answer"],
+
+                    "explanation":
+                        data["explanation"],
+
+                    "is_published":
+                        True,
                 },
             )
 
+
+        GrammarExercise.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__in=valid_orders,
+        ).delete()
+
+
+        GrammarLessonSection.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__in=[
+                item["order"]
+                for item in sections
+            ],
+        ).delete()
+
+
         self.stdout.write(
             self.style.SUCCESS(
-                "✅ A1 Lesson 36 seeded: Future Simple with WILL"
+                "✅ Interactive A1 Lesson 36 seeded"
             )
         )
 
         self.stdout.write(
-            f"Sections: {lesson.sections.count()}"
+            f"Micro rules: "
+            f"{lesson.sections.count()}"
         )
 
         self.stdout.write(
-            f"Exercises: {lesson.exercises.count()}"
+            "Training exercises: "
+            f"{lesson.exercises.filter(section__isnull=False).count()}"
+        )
+
+        self.stdout.write(
+            "Final test: "
+            f"{lesson.exercises.filter(section__isnull=True).count()}"
         )
