@@ -10,9 +10,10 @@ from grammar.models import (
 class Command(BaseCommand):
 
     help = (
-        "Create/update A1 Grammar Lesson 53: "
-        "Question Tags."
+        "Create/update interactive A1 Grammar "
+        "Lesson 53: Question Tags."
     )
+
 
     def handle(self, *args, **options):
 
@@ -20,885 +21,981 @@ class Command(BaseCommand):
             level="A1",
             order=53,
             defaults={
-                "title": "Разделительные вопросы — Question Tags",
-                "slug": "question-tags",
-                "theory_text": (
+                "title":
+                    "Разделительные вопросы — Question Tags",
+
+                "slug":
+                    "question-tags",
+
+                "theory_text":
                     "Question Tags: auxiliary verbs, "
-                    "opposite polarity and special cases."
-                ),
-                "estimated_minutes": 45,
-                "pass_score": 70,
-                "xp_reward": 100,
-                "is_published": True,
+                    "opposite polarity and special cases.",
+
+                "estimated_minutes":
+                    20,
+
+                "pass_score":
+                    70,
+
+                "xp_reward":
+                    100,
+
+                "is_published":
+                    True,
             },
         )
+
+
+        # =================================================
+        # 10 MICRO RULES
+        # =================================================
 
         sections = [
 
             {
                 "order": 1,
-                "title": "Что такое Question Tag",
-                "body": """Разделительный вопрос состоит из двух частей:
+                "title":
+                    "Что такое Question Tag",
 
-1. основного предложения;
+                "body":
+                    """Question Tag — короткий вопрос
+в конце предложения.
 
-2. короткого вопроса в конце.
+You are tired,
+aren't you?
 
-Пример:
+He works here,
+doesn't he?
 
-You are tired, aren't you?
+Мы используем Question Tag,
+когда хотим:
 
-Такие вопросы используются, когда говорящий:
+проверить информацию;
 
-ожидает подтверждения;
+получить подтверждение;
 
-проверяет информацию;
-
-не уверен;
-
-поддерживает разговор.""",
+поддержать разговор.""",
             },
+
 
             {
                 "order": 2,
-                "title": "Главное правило",
-                "body": """Если основное предложение положительное:
+                "title":
+                    "Главное правило",
 
-→ хвостик отрицательный.
+                "body":
+                    """Positive sentence
+→ negative tag.
 
-She is ready, isn't she?
+She is ready,
+isn't she?
 
-You work here, don't you?
+Negative sentence
+→ positive tag.
 
-Если основное предложение отрицательное:
+She isn't ready,
+is she?
 
-→ хвостик положительный.
+Главное:
 
-She isn't ready, is she?
-
-You don't work here, do you?
-
-Главная схема:
-
-positive → negative tag
-
-negative → positive tag""",
+две части должны иметь
+противоположный знак.""",
             },
+
 
             {
                 "order": 3,
-                "title": "Как выбрать вспомогательный глагол",
-                "body": """В question tag нужно повторить вспомогательный или модальный глагол.
+                "title":
+                    "BE: IS, ARE, WAS, WERE",
 
-She is busy, isn't she?
+                "body":
+                    """С BE повторяем
+тот же глагол.
 
-They have finished, haven't they?
+She is tired,
+isn't she?
 
-He will come, won't he?
+They are ready,
+aren't they?
 
-She can swim, can't she?
+He wasn't at home,
+was he?
 
-Если в Present Simple или Past Simple вспомогательного глагола не видно:
+They weren't late,
+were they?
 
-work → do/does
-
-worked → did
-
-Примеры:
-
-He works here, doesn't he?
-
-They arrived, didn't they?""",
+DO здесь не нужен.""",
             },
+
 
             {
                 "order": 4,
-                "title": "TO BE: AM, IS, ARE, WAS, WERE",
-                "body": """С TO BE используется тот же глагол.
+                "title":
+                    "Present Simple",
 
-Present:
+                "body":
+                    """Если обычный глагол
+в Present Simple:
 
-She is at home, isn't she?
+I / you / we / they
+→ DO
 
-They are ready, aren't they?
+he / she / it
+→ DOES
 
-Отрицание:
+You work here,
+don't you?
 
-She isn't at home, is she?
+She works here,
+doesn't she?
 
-Past:
-
-She was tired, wasn't she?
-
-They were ready, weren't they?
-
-Отрицание:
-
-She wasn't tired, was she?
-
-They weren't ready, were they?""",
+He doesn't drive,
+does he?""",
             },
+
 
             {
                 "order": 5,
-                "title": "Особый случай I AM",
-                "body": """После:
+                "title":
+                    "Past Simple",
 
-I am...
+                "body":
+                    """В Past Simple используем:
 
-используется:
+DID
 
-aren't I?
+She arrived yesterday,
+didn't she?
 
-Примеры:
+They called you,
+didn't they?
 
-I am late, aren't I?
+He didn't come,
+did he?
 
-I am right, aren't I?
+Важно:
 
-Не:
-
-amn't I?
-
-После отрицания:
-
-I'm not late, am I?
-
-I'm not disturbing you, am I?""",
+в tag повторяем время,
+а не основной глагол.""",
             },
+
 
             {
                 "order": 6,
-                "title": "Present Simple и Past Simple",
-                "body": """Present Simple:
+                "title":
+                    "Perfect, Future и Modals",
 
-You work here, don't you?
+                "body":
+                    """Повторяем auxiliary
+или modal.
 
-She speaks English, doesn't she?
+You have finished,
+haven't you?
 
-Отрицание:
+She has left,
+hasn't she?
 
-You don't work here, do you?
+He will come,
+won't he?
 
-She doesn't speak English, does she?
+She can swim,
+can't she?
 
-Past Simple:
-
-You called him, didn't you?
-
-She arrived early, didn't she?
-
-Отрицание:
-
-You didn't call him, did you?
-
-She didn't arrive early, did she?""",
+We should leave,
+shouldn't we?""",
             },
+
 
             {
                 "order": 7,
-                "title": "Continuous, Perfect и Future",
-                "body": """Present Continuous:
+                "title":
+                    "Правильное pronoun",
 
-She is working, isn't she?
+                "body":
+                    """Имя или существительное
+заменяем местоимением.
 
-Past Continuous:
+Anna is here,
+isn't she?
 
-They were waiting, weren't they?
+Marat works here,
+doesn't he?
 
-Present Perfect:
+The students are ready,
+aren't they?
 
-You have finished, haven't you?
+This is your book,
+isn't it?
 
-She has called, hasn't she?
-
-Past Perfect:
-
-She had left, hadn't she?
-
-Future Simple:
-
-He will come, won't he?
-
-Отрицательные формы используют положительный tag.""",
+These are your keys,
+aren't they?""",
             },
+
 
             {
                 "order": 8,
-                "title": "Модальные глаголы",
-                "body": """С модальными глаголами повторяем сам modal.
+                "title":
+                    "Negative meaning",
 
-CAN:
-
-She can swim, can't she?
-
-He can't drive, can he?
-
-COULD:
-
-You could help, couldn't you?
-
-SHOULD:
-
-We should leave, shouldn't we?
-
-MUST:
-
-You must go, mustn't you?
-
-Modal в основной части определяет modal в хвостике.""",
-            },
-
-            {
-                "order": 9,
-                "title": "THERE, THIS, THAT, THESE, THOSE",
-                "body": """С THERE IS / THERE ARE слово THERE сохраняется.
-
-There is a problem, isn't there?
-
-There are many students, aren't there?
-
-THIS и THAT заменяются на IT.
-
-This is your book, isn't it?
-
-That was interesting, wasn't it?
-
-THESE и THOSE заменяются на THEY.
-
-These are your keys, aren't they?
-
-Those were expensive, weren't they?""",
-            },
-
-            {
-                "order": 10,
-                "title": "Someone, Nobody, Nothing",
-                "body": """После:
-
-someone
-
-somebody
-
-everyone
-
-everybody
-
-no one
-
-nobody
-
-обычно используется THEY.
-
-Someone called, didn't they?
-
-Nobody came, did they?
-
-После:
-
-something
-
-everything
-
-nothing
-
-используется IT.
-
-Nothing happened, did it?
-
-Everything is ready, isn't it?""",
-            },
-
-            {
-                "order": 11,
-                "title": "Слова с отрицательным значением",
-                "body": """Некоторые слова уже имеют отрицательное значение:
+                "body":
+                    """Некоторые слова уже
+имеют отрицательное значение.
 
 never
 
-rarely
+nobody
 
-seldom
+nothing
 
 hardly
 
-scarcely
+rarely
 
-barely
+Поэтому tag будет
+положительным.
 
-Поэтому хвостик будет положительным.
+He never calls,
+does he?
 
-He never calls, does he?
+Nobody came,
+did they?
 
-She rarely complains, does she?
-
-They hardly know us, do they?
-
-Также:
-
-Nobody called, did they?
-
-Nothing happened, did it?""",
+Nothing happened,
+did it?""",
             },
 
+
             {
-                "order": 12,
-                "title": "LITTLE, FEW, A LITTLE, A FEW",
-                "body": """LITTLE и FEW без артикля имеют отрицательное значение:
+                "order": 9,
+                "title":
+                    "I AM и LET'S",
 
-мало;
+                "body":
+                    """Есть два важных
+особых случая.
 
-почти нет.
+I am...
 
-Поэтому tag положительный:
+→ aren't I?
 
-He has little time, does he?
+I am late,
+aren't I?
 
-Few people understand this, do they?
+LET'S...
 
-A LITTLE и A FEW имеют положительное значение:
+→ shall we?
 
-немного;
+Let's start,
+shall we?
 
-несколько.
-
-Поэтому tag отрицательный:
-
-He has a little time, doesn't he?
-
-A few students passed, didn't they?""",
+Их лучше просто
+запомнить.""",
             },
 
+
             {
-                "order": 13,
-                "title": "Команды и LET'S",
-                "body": """После повелительного предложения часто используется:
+                "order": 10,
+                "title":
+                    "Commands",
+
+                "body":
+                    """После команды часто
+используем:
 
 will you?
 
-Open the door, will you?
+Open the door,
+will you?
 
-Wait here, will you?
+Wait here,
+will you?
 
-Don't be late, will you?
+Don't be late,
+will you?
 
-Более мягко:
+Алгоритм:
 
-would you?
-
-Close the window, would you?
-
-После LET'S используется:
-
-shall we?
-
-Let's go, shall we?
-
-Let's start, shall we?
-
-Не:
-
-Let's go, will we?""",
-            },
-
-            {
-                "order": 14,
-                "title": "Алгоритм Question Tag",
-                "body": """Шаг 1.
-
-Определите: предложение положительное или отрицательное.
-
-Шаг 2.
-
-Найдите вспомогательный или модальный глагол.
-
-Шаг 3.
-
-Сделайте противоположную форму:
-
-is → isn't
-
-doesn't → does
-
-will → won't
-
-can't → can
-
-Шаг 4.
-
-Замените подлежащее местоимением.
-
-Anna → she
-
-Marat → he
-
-students → they
-
-this → it
-
-Шаг 5.
-
-Проверьте особые случаи:
-
-I am → aren't I?
-
-Let's → shall we?
-
-приказ → will you?
-
-Nobody → they
-
-Nothing → it
-
-Never/rarely/hardly → положительный tag.""",
+1. Найди tense / auxiliary.
+2. Сделай opposite form.
+3. Выбери pronoun.""",
             },
 
         ]
 
+
+        section_objects = {}
+
+
         for data in sections:
-            GrammarLessonSection.objects.update_or_create(
+
+            section, _ = GrammarLessonSection.objects.update_or_create(
                 lesson=lesson,
                 order=data["order"],
                 defaults={
-                    "title": data["title"],
-                    "body": data["body"],
+                    "title":
+                        data["title"],
+
+                    "body":
+                        data["body"],
                 },
             )
 
-        exercises = [
+            section_objects[
+                data["order"]
+            ] = section
 
+
+        # =================================================
+        # 20 TRAINING EXERCISES
+        # =================================================
+
+        training = [
+
+            # SECTION 1
             {
                 "order": 1,
-                "prompt": "She is your sister, ___?",
+                "section": 1,
+                "type": "choice",
+                "prompt":
+                    "She is your teacher, ___?",
                 "options": [
-                    "is she",
                     "isn't she",
+                    "is she",
                     "doesn't she",
-                    "wasn't she",
+                    "aren't she",
                 ],
-                "answer": "isn't she",
-                "explanation": (
-                    "Положительное is → отрицательное isn't."
-                ),
+                "answer":
+                    "isn't she",
+                "explanation":
+                    "Positive IS → negative ISN'T.",
             },
 
             {
                 "order": 2,
-                "prompt": "They aren't at home, ___?",
+                "section": 1,
+                "type": "choice",
+                "prompt":
+                    "Which sentence contains a Question Tag?",
+                "options": [
+                    "You live here, don't you?",
+                    "Do you live here?",
+                    "Where do you live?",
+                    "Who lives here?",
+                ],
+                "answer":
+                    "You live here, don't you?",
+                "explanation":
+                    "Question Tag — короткий вопрос после основного предложения.",
+            },
+
+
+            # SECTION 2
+            {
+                "order": 3,
+                "section": 2,
+                "type": "choice",
+                "prompt":
+                    "They are ready, ___?",
                 "options": [
                     "aren't they",
                     "are they",
-                    "do they",
-                    "were they",
+                    "don't they",
+                    "weren't they",
                 ],
-                "answer": "are they",
-                "explanation": (
-                    "Отрицательное aren't → положительное are."
-                ),
-            },
-
-            {
-                "order": 3,
-                "prompt": "You like coffee, ___?",
-                "options": [
-                    "do you",
-                    "don't you",
-                    "aren't you",
-                    "didn't you",
-                ],
-                "answer": "don't you",
-                "explanation": (
-                    "Present Simple, you → don't you?"
-                ),
+                "answer":
+                    "aren't they",
+                "explanation":
+                    "Positive sentence → negative tag.",
             },
 
             {
                 "order": 4,
-                "prompt": "He doesn't drive, ___?",
+                "section": 2,
+                "type": "choice",
+                "prompt":
+                    "They aren't ready, ___?",
                 "options": [
-                    "doesn't he",
-                    "does he",
-                    "is he",
-                    "did he",
+                    "are they",
+                    "aren't they",
+                    "do they",
+                    "were they",
                 ],
-                "answer": "does he",
-                "explanation": (
-                    "Отрицательное doesn't → does."
-                ),
+                "answer":
+                    "are they",
+                "explanation":
+                    "Negative sentence → positive tag.",
+            },
+
+
+            # SECTION 3
+            {
+                "order": 5,
+                "section": 3,
+                "type": "choice",
+                "prompt":
+                    "She was tired, ___?",
+                "options": [
+                    "wasn't she",
+                    "didn't she",
+                    "was she",
+                    "isn't she",
+                ],
+                "answer":
+                    "wasn't she",
+                "explanation":
+                    "С WAS повторяем WAS.",
             },
 
             {
-                "order": 5,
-                "prompt": "She arrived yesterday, ___?",
+                "order": 6,
+                "section": 3,
+                "type": "choice",
+                "prompt":
+                    "They weren't at home, ___?",
+                "options": [
+                    "were they",
+                    "weren't they",
+                    "did they",
+                    "are they",
+                ],
+                "answer":
+                    "were they",
+                "explanation":
+                    "Negative WERE → positive WERE.",
+            },
+
+
+            # SECTION 4
+            {
+                "order": 7,
+                "section": 4,
+                "type": "choice",
+                "prompt":
+                    "You like coffee, ___?",
+                "options": [
+                    "don't you",
+                    "do you",
+                    "aren't you",
+                    "didn't you",
+                ],
+                "answer":
+                    "don't you",
+                "explanation":
+                    "Present Simple with YOU → DO.",
+            },
+
+            {
+                "order": 8,
+                "section": 4,
+                "type": "choice",
+                "prompt":
+                    "She doesn't work here, ___?",
+                "options": [
+                    "does she",
+                    "doesn't she",
+                    "is she",
+                    "did she",
+                ],
+                "answer":
+                    "does she",
+                "explanation":
+                    "Negative DOESN'T → positive DOES.",
+            },
+
+
+            # SECTION 5
+            {
+                "order": 9,
+                "section": 5,
+                "type": "choice",
+                "prompt":
+                    "He called yesterday, ___?",
+                "options": [
+                    "didn't he",
+                    "doesn't he",
+                    "wasn't he",
+                    "did he",
+                ],
+                "answer":
+                    "didn't he",
+                "explanation":
+                    "Past Simple → DID.",
+            },
+
+            {
+                "order": 10,
+                "section": 5,
+                "type": "choice",
+                "prompt":
+                    "They didn't come, ___?",
+                "options": [
+                    "did they",
+                    "didn't they",
+                    "do they",
+                    "were they",
+                ],
+                "answer":
+                    "did they",
+                "explanation":
+                    "Negative DIDN'T → positive DID.",
+            },
+
+
+            # SECTION 6
+            {
+                "order": 11,
+                "section": 6,
+                "type": "choice",
+                "prompt":
+                    "You have finished, ___?",
+                "options": [
+                    "haven't you",
+                    "don't you",
+                    "have you",
+                    "didn't you",
+                ],
+                "answer":
+                    "haven't you",
+                "explanation":
+                    "Present Perfect → HAVE.",
+            },
+
+            {
+                "order": 12,
+                "section": 6,
+                "type": "choice",
+                "prompt":
+                    "She can swim, ___?",
+                "options": [
+                    "can't she",
+                    "doesn't she",
+                    "can she",
+                    "isn't she",
+                ],
+                "answer":
+                    "can't she",
+                "explanation":
+                    "Modal CAN повторяется в tag.",
+            },
+
+
+            # SECTION 7
+            {
+                "order": 13,
+                "section": 7,
+                "type": "choice",
+                "prompt":
+                    "Anna is busy, ___?",
+                "options": [
+                    "isn't she",
+                    "isn't Anna",
+                    "doesn't she",
+                    "aren't she",
+                ],
+                "answer":
+                    "isn't she",
+                "explanation":
+                    "Anna → SHE.",
+            },
+
+            {
+                "order": 14,
+                "section": 7,
+                "type": "choice",
+                "prompt":
+                    "These are your books, ___?",
+                "options": [
+                    "aren't they",
+                    "aren't these",
+                    "isn't it",
+                    "are they",
+                ],
+                "answer":
+                    "aren't they",
+                "explanation":
+                    "THESE → THEY.",
+            },
+
+
+            # SECTION 8
+            {
+                "order": 15,
+                "section": 8,
+                "type": "choice",
+                "prompt":
+                    "He never calls, ___?",
+                "options": [
+                    "does he",
+                    "doesn't he",
+                    "is he",
+                    "did he",
+                ],
+                "answer":
+                    "does he",
+                "explanation":
+                    "NEVER имеет negative meaning → positive tag.",
+            },
+
+            {
+                "order": 16,
+                "section": 8,
+                "type": "choice",
+                "prompt":
+                    "Nobody came, ___?",
+                "options": [
+                    "did they",
+                    "didn't they",
+                    "did he",
+                    "does they",
+                ],
+                "answer":
+                    "did they",
+                "explanation":
+                    "NOBODY отрицательно по смыслу; pronoun → THEY.",
+            },
+
+
+            # SECTION 9
+            {
+                "order": 17,
+                "section": 9,
+                "type": "choice",
+                "prompt":
+                    "I am right, ___?",
+                "options": [
+                    "aren't I",
+                    "amn't I",
+                    "don't I",
+                    "isn't I",
+                ],
+                "answer":
+                    "aren't I",
+                "explanation":
+                    "Особый случай: I AM → AREN'T I.",
+            },
+
+            {
+                "order": 18,
+                "section": 9,
+                "type": "choice",
+                "prompt":
+                    "Let's go, ___?",
+                "options": [
+                    "shall we",
+                    "will we",
+                    "do we",
+                    "aren't we",
+                ],
+                "answer":
+                    "shall we",
+                "explanation":
+                    "LET'S → SHALL WE.",
+            },
+
+
+            # SECTION 10
+            {
+                "order": 19,
+                "section": 10,
+                "type": "choice",
+                "prompt":
+                    "Open the window, ___?",
+                "options": [
+                    "will you",
+                    "shall we",
+                    "do you",
+                    "aren't you",
+                ],
+                "answer":
+                    "will you",
+                "explanation":
+                    "После imperative часто используется WILL YOU.",
+            },
+
+            {
+                "order": 20,
+                "section": 10,
+                "type": "choice",
+                "prompt":
+                    "Don't be late, ___?",
+                "options": [
+                    "will you",
+                    "won't you",
+                    "do you",
+                    "shall we",
+                ],
+                "answer":
+                    "will you",
+                "explanation":
+                    "После команды, включая отрицательную, часто используем WILL YOU.",
+            },
+
+        ]
+
+
+        # =================================================
+        # FINAL TEST — 10 NEW QUESTIONS
+        # =================================================
+
+        final_test = [
+
+            {
+                "order": 21,
+                "prompt":
+                    "Tom is at home, ___?",
+                "options": [
+                    "isn't he",
+                    "doesn't he",
+                    "is he",
+                    "aren't he",
+                ],
+                "answer":
+                    "isn't he",
+                "explanation":
+                    "Tom → HE; positive IS → ISN'T.",
+            },
+
+            {
+                "order": 22,
+                "prompt":
+                    "You don't know him, ___?",
+                "options": [
+                    "do you",
+                    "don't you",
+                    "are you",
+                    "did you",
+                ],
+                "answer":
+                    "do you",
+                "explanation":
+                    "Negative DON'T → positive DO.",
+            },
+
+            {
+                "order": 23,
+                "prompt":
+                    "She went to work, ___?",
                 "options": [
                     "didn't she",
                     "doesn't she",
                     "wasn't she",
                     "did she",
                 ],
-                "answer": "didn't she",
-                "explanation": (
-                    "Past Simple → did; предложение положительное."
-                ),
-            },
-
-            {
-                "order": 6,
-                "prompt": "They haven't finished, ___?",
-                "options": [
-                    "haven't they",
-                    "have they",
-                    "do they",
-                    "did they",
-                ],
-                "answer": "have they",
-                "explanation": (
-                    "Отрицательный Present Perfect → have they?"
-                ),
-            },
-
-            {
-                "order": 7,
-                "prompt": "He can swim, ___?",
-                "options": [
-                    "can he",
-                    "can't he",
-                    "doesn't he",
-                    "isn't he",
-                ],
-                "answer": "can't he",
-                "explanation": (
-                    "Can повторяется в tag."
-                ),
-            },
-
-            {
-                "order": 8,
-                "prompt": "You won't be late, ___?",
-                "options": [
-                    "won't you",
-                    "will you",
-                    "do you",
-                    "are you",
-                ],
-                "answer": "will you",
-                "explanation": (
-                    "Won't → положительный will."
-                ),
-            },
-
-            {
-                "order": 9,
-                "prompt": "There is a problem, ___?",
-                "options": [
-                    "is it",
-                    "isn't it",
-                    "isn't there",
-                    "is there not it",
-                ],
-                "answer": "isn't there",
-                "explanation": (
-                    "После there is слово there сохраняется."
-                ),
-            },
-
-            {
-                "order": 10,
-                "prompt": "These are your keys, ___?",
-                "options": [
-                    "aren't these",
-                    "aren't they",
-                    "isn't it",
-                    "are they",
-                ],
-                "answer": "aren't they",
-                "explanation": (
-                    "These → they."
-                ),
-            },
-
-            {
-                "order": 11,
-                "prompt": "Someone called, ___?",
-                "options": [
-                    "didn't he",
-                    "didn't they",
-                    "did they",
-                    "wasn't it",
-                ],
-                "answer": "didn't they",
-                "explanation": (
-                    "Someone → they; положительное Past Simple → didn't."
-                ),
-            },
-
-            {
-                "order": 12,
-                "prompt": "Nobody knows, ___?",
-                "options": [
-                    "doesn't he",
-                    "do they",
-                    "don't they",
-                    "does nobody",
-                ],
-                "answer": "do they",
-                "explanation": (
-                    "Nobody отрицательно по смыслу → положительный tag."
-                ),
-            },
-
-            {
-                "order": 13,
-                "prompt": "Nothing is wrong, ___?",
-                "options": [
-                    "isn't it",
-                    "is it",
-                    "are they",
-                    "does it",
-                ],
-                "answer": "is it",
-                "explanation": (
-                    "Nothing → it и считается отрицательным."
-                ),
-            },
-
-            {
-                "order": 14,
-                "prompt": "He rarely goes out, ___?",
-                "options": [
-                    "doesn't he",
-                    "does he",
-                    "isn't he",
-                    "did he",
-                ],
-                "answer": "does he",
-                "explanation": (
-                    "Rarely имеет отрицательное значение → positive tag."
-                ),
-            },
-
-            {
-                "order": 15,
-                "prompt": "Open the window, ___?",
-                "options": [
-                    "shall we",
-                    "do you",
-                    "will you",
-                    "aren't you",
-                ],
-                "answer": "will you",
-                "explanation": (
-                    "После imperative часто используется will you?"
-                ),
-            },
-
-            {
-                "order": 16,
-                "prompt": "I am late, ___?",
-                "options": [
-                    "am I",
-                    "amn't I",
-                    "aren't I",
-                    "don't I",
-                ],
-                "answer": "aren't I",
-                "explanation": (
-                    "Особый случай: I am → aren't I?"
-                ),
-            },
-
-            {
-                "order": 17,
-                "prompt": "Let's start, ___?",
-                "options": [
-                    "will we",
-                    "do we",
-                    "shall we",
-                    "aren't we",
-                ],
-                "answer": "shall we",
-                "explanation": (
-                    "После Let's используется shall we?"
-                ),
-            },
-
-            {
-                "order": 18,
-                "prompt": "This is your book, ___?",
-                "options": [
-                    "isn't this",
-                    "isn't it",
-                    "doesn't it",
-                    "is it",
-                ],
-                "answer": "isn't it",
-                "explanation": (
-                    "This → it."
-                ),
-            },
-
-            {
-                "order": 19,
-                "prompt": "Everything is ready, ___?",
-                "options": [
-                    "aren't they",
-                    "isn't it",
-                    "is it",
-                    "doesn't it",
-                ],
-                "answer": "isn't it",
-                "explanation": (
-                    "Everything → it."
-                ),
-            },
-
-            {
-                "order": 20,
-                "prompt": "Few people understand this, ___?",
-                "options": [
-                    "don't they",
-                    "do they",
-                    "doesn't he",
-                    "did they",
-                ],
-                "answer": "do they",
-                "explanation": (
-                    "Few имеет отрицательное значение → positive tag."
-                ),
-            },
-
-            {
-                "order": 21,
-                "prompt": "A few students passed, ___?",
-                "options": [
-                    "did they",
-                    "didn't they",
-                    "do they",
-                    "weren't they",
-                ],
-                "answer": "didn't they",
-                "explanation": (
-                    "A few имеет положительное значение."
-                ),
-            },
-
-            {
-                "order": 22,
-                "prompt": "Choose the correct sentence.",
-                "options": [
-                    "He never calls, doesn't he?",
-                    "He never calls, does he?",
-                    "He never calls, isn't he?",
-                    "He never calls, did he?",
-                ],
-                "answer": "He never calls, does he?",
-                "explanation": (
-                    "Never отрицательно по смыслу → positive tag."
-                ),
-            },
-
-            {
-                "order": 23,
-                "prompt": "Choose the correct special-case pair.",
-                "options": [
-                    (
-                        "I am right, aren't I? / "
-                        "Let's go, shall we?"
-                    ),
-                    (
-                        "I am right, amn't I? / "
-                        "Let's go, will we?"
-                    ),
-                    (
-                        "I am right, don't I? / "
-                        "Let's go, do we?"
-                    ),
-                    (
-                        "I am right, isn't I? / "
-                        "Let's go, won't we?"
-                    ),
-                ],
-                "answer": (
-                    "I am right, aren't I? / "
-                    "Let's go, shall we?"
-                ),
-                "explanation": (
-                    "Это два основных особых случая."
-                ),
+                "answer":
+                    "didn't she",
+                "explanation":
+                    "WENT = Past Simple → DID.",
             },
 
             {
                 "order": 24,
-                "prompt": "Choose the fully correct sequence.",
+                "prompt":
+                    "They haven't arrived, ___?",
                 "options": [
-                    (
-                        "She is ready, isn't she? / "
-                        "He works here, doesn't he? / "
-                        "They came early, didn't they? / "
-                        "Nobody called, did they? / "
-                        "Nothing happened, did it?"
-                    ),
-                    (
-                        "She is ready, is she? / "
-                        "He works here, isn't he? / "
-                        "They came early, weren't they? / "
-                        "Nobody called, didn't they? / "
-                        "Nothing happened, didn't it?"
-                    ),
-                    (
-                        "She is ready, doesn't she? / "
-                        "He works here, don't he? / "
-                        "They came early, doesn't they? / "
-                        "Nobody called, was they? / "
-                        "Nothing happened, does it?"
-                    ),
-                    (
-                        "She is ready, aren't she? / "
-                        "He works here, does he? / "
-                        "They came early, do they? / "
-                        "Nobody called, don't they? / "
-                        "Nothing happened, wasn't it?"
-                    ),
+                    "have they",
+                    "haven't they",
+                    "do they",
+                    "did they",
                 ],
-                "answer": (
-                    "She is ready, isn't she? / "
-                    "He works here, doesn't he? / "
-                    "They came early, didn't they? / "
-                    "Nobody called, did they? / "
-                    "Nothing happened, did it?"
-                ),
-                "explanation": (
-                    "Нужно выбрать правильный auxiliary, "
-                    "противоположную форму и подходящее pronoun."
-                ),
+                "answer":
+                    "have they",
+                "explanation":
+                    "Negative HAVEN'T → positive HAVE.",
+            },
+
+            {
+                "order": 25,
+                "prompt":
+                    "He will help us, ___?",
+                "options": [
+                    "won't he",
+                    "will he",
+                    "doesn't he",
+                    "isn't he",
+                ],
+                "answer":
+                    "won't he",
+                "explanation":
+                    "Positive WILL → negative WON'T.",
+            },
+
+            {
+                "order": 26,
+                "prompt":
+                    "Marat can drive, ___?",
+                "options": [
+                    "can't he",
+                    "doesn't he",
+                    "can he",
+                    "isn't he",
+                ],
+                "answer":
+                    "can't he",
+                "explanation":
+                    "Marat → HE; CAN → CAN'T.",
+            },
+
+            {
+                "order": 27,
+                "prompt":
+                    "Nothing happened, ___?",
+                "options": [
+                    "did it",
+                    "didn't it",
+                    "did they",
+                    "does it",
+                ],
+                "answer":
+                    "did it",
+                "explanation":
+                    "NOTHING negative meaning; pronoun → IT.",
+            },
+
+            {
+                "order": 28,
+                "prompt":
+                    "This is your phone, ___?",
+                "options": [
+                    "isn't it",
+                    "isn't this",
+                    "doesn't it",
+                    "is it",
+                ],
+                "answer":
+                    "isn't it",
+                "explanation":
+                    "THIS → IT.",
+            },
+
+            {
+                "order": 29,
+                "prompt":
+                    "Choose the correct special-case pair.",
+                "options": [
+                    "I am late, aren't I? / Let's start, shall we?",
+                    "I am late, amn't I? / Let's start, will we?",
+                    "I am late, don't I? / Let's start, do we?",
+                    "I am late, isn't I? / Let's start, won't we?",
+                ],
+                "answer":
+                    "I am late, aren't I? / Let's start, shall we?",
+                "explanation":
+                    "I AM → AREN'T I; LET'S → SHALL WE.",
+            },
+
+            {
+                "order": 30,
+                "prompt":
+                    "Choose the fully correct sequence.",
+                "options": [
+                    "She is ready, isn't she? / He works here, doesn't he? / They came early, didn't they? / Nobody called, did they?",
+                    "She is ready, is she? / He works here, isn't he? / They came early, weren't they? / Nobody called, didn't they?",
+                    "She is ready, doesn't she? / He works here, don't he? / They came early, doesn't they? / Nobody called, was they?",
+                    "She is ready, aren't she? / He works here, does he? / They came early, do they? / Nobody called, don't they?",
+                ],
+                "answer":
+                    "She is ready, isn't she? / He works here, doesn't he? / They came early, didn't they? / Nobody called, did they?",
+                "explanation":
+                    "Нужно правильно выбрать auxiliary, opposite form и pronoun.",
             },
 
         ]
 
-        for data in exercises:
+
+        all_exercises = (
+            training
+            +
+            final_test
+        )
+
+        valid_orders = [
+            item["order"]
+            for item in all_exercises
+        ]
+
+
+        for data in all_exercises:
+
+            if data["order"] <= 20:
+
+                section = (
+                    section_objects[
+                        data["section"]
+                    ]
+                )
+
+            else:
+
+                section = None
+
+
             GrammarExercise.objects.update_or_create(
                 lesson=lesson,
                 order=data["order"],
                 defaults={
-                    "exercise_type": GrammarExercise.Type.CHOICE,
-                    "prompt": data["prompt"],
-                    "options": data["options"],
-                    "correct_answer": data["answer"],
-                    "explanation": data["explanation"],
-                    "is_published": True,
+                    "section":
+                        section,
+
+                    "exercise_type":
+                        data.get(
+                            "type",
+                            "choice",
+                        ),
+
+                    "prompt":
+                        data["prompt"],
+
+                    "options":
+                        data["options"],
+
+                    "correct_answer":
+                        data["answer"],
+
+                    "explanation":
+                        data["explanation"],
+
+                    "is_published":
+                        True,
                 },
             )
 
+
+        # Удаляем старые лишние упражнения
+        GrammarExercise.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__in=valid_orders,
+        ).delete()
+
+
+        # Удаляем старые Sections 11–14
+        GrammarLessonSection.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__in=[
+                item["order"]
+                for item in sections
+            ],
+        ).delete()
+
+
         self.stdout.write(
             self.style.SUCCESS(
-                "✅ A1 Lesson 53 seeded: Question Tags"
+                "✅ Interactive A1 Lesson 53 seeded"
             )
         )
 
         self.stdout.write(
-            f"Sections: {lesson.sections.count()}"
+            f"Micro rules: "
+            f"{lesson.sections.count()}"
         )
 
         self.stdout.write(
-            f"Exercises: {lesson.exercises.count()}"
+            "Training exercises: "
+            f"{lesson.exercises.filter(section__isnull=False).count()}"
+        )
+
+        self.stdout.write(
+            "Final test: "
+            f"{lesson.exercises.filter(section__isnull=True).count()}"
         )

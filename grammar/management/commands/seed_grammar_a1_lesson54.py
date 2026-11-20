@@ -10,9 +10,10 @@ from grammar.models import (
 class Command(BaseCommand):
 
     help = (
-        "Create/update A1 Grammar Lesson 54: "
-        "Relative Pronouns."
+        "Create/update interactive A1 Grammar "
+        "Lesson 54: Relative Pronouns."
     )
+
 
     def handle(self, *args, **options):
 
@@ -20,931 +21,970 @@ class Command(BaseCommand):
             level="A1",
             order=54,
             defaults={
-                "title": (
-                    "Относительные местоимения: "
-                    "who, which, that, whose"
-                ),
-                "slug": "relative-pronouns-who-which-that-whose",
-                "theory_text": (
-                    "Relative pronouns: who, which, that and whose."
-                ),
-                "estimated_minutes": 50,
-                "pass_score": 70,
-                "xp_reward": 100,
-                "is_published": True,
+                "title":
+                    "Относительные местоимения: who, which, that, whose",
+
+                "slug":
+                    "relative-pronouns-who-which-that-whose",
+
+                "theory_text":
+                    "Relative pronouns: who, which, that and whose.",
+
+                "estimated_minutes":
+                    20,
+
+                "pass_score":
+                    70,
+
+                "xp_reward":
+                    100,
+
+                "is_published":
+                    True,
             },
         )
+
+
+        # =================================================
+        # 10 MICRO RULES
+        # =================================================
 
         sections = [
 
             {
                 "order": 1,
-                "title": "Что такое относительные местоимения",
-                "body": """Относительные местоимения соединяют части предложения.
+                "title":
+                    "Что такое Relative Clause",
 
-Они помогают дать информацию о:
+                "body":
+                    """Relative Clause помогает
+добавить информацию
+о человеке или предмете.
 
-человеке;
+The man is my teacher.
 
-предмете;
-
-животном;
-
-владельце.
-
-Основные слова:
-
-who
-
-which
-
-that
-
-whose
-
-Пример:
-
-The woman lives next door.
-She is my teacher.
+He lives next door.
 
 Можно соединить:
 
-The woman who lives next door is my teacher.""",
+The man who lives
+next door is my teacher.
+
+WHO связывает
+две части предложения.""",
             },
+
 
             {
                 "order": 2,
-                "title": "WHO — для людей",
-                "body": """WHO используется для людей.
+                "title":
+                    "WHO — люди",
 
-Примеры:
+                "body":
+                    """WHO используем
+для людей.
 
-The man who called me is my uncle.
+The woman who works here
+is very kind.
 
-The woman who works here is very kind.
+The student who answered
+was correct.
 
-The students who study regularly get better results.
+The man who called me
+is my uncle.
 
-Если WHO выполняет действие, оно является подлежащим.
-
-The man who lives next door...
-
-WHO = человек, который живёт.""",
+WHO = который / которая /
+которые, если речь о людях.""",
             },
+
 
             {
                 "order": 3,
-                "title": "WHICH — для предметов и животных",
-                "body": """WHICH используется для предметов и животных.
+                "title":
+                    "WHICH — предметы",
 
-Примеры:
+                "body":
+                    """WHICH используем
+для предметов и животных.
 
-The book which is on the table is mine.
+The book which is
+on the table is mine.
 
-The car which broke down belongs to my brother.
+The car which broke down
+belongs to my brother.
 
-The dog which barked all night belongs to our neighbour.
+The dog which barked
+all night is ours.
 
-Если WHICH выполняет действие или находится в состоянии, оно является подлежащим.
-
-The phone which is on the desk...""",
+WHICH = который,
+если речь не о человеке.""",
             },
+
 
             {
                 "order": 4,
-                "title": "THAT — для людей и предметов",
-                "body": """THAT может использоваться и для людей, и для предметов.
+                "title":
+                    "THAT",
 
-Для людей:
+                "body":
+                    """THAT можно использовать
+для людей и предметов
+в defining clauses.
 
-The man that called me is my uncle.
+The man that called me...
+
+The book that I bought...
+
+Для людей часто естественнее WHO.
 
 Для предметов:
 
-The book that is on the table is mine.
+WHICH или THAT.
 
-Сравните:
-
-The woman who works here...
-
-The woman that works here...
-
-Для людей WHO часто звучит естественнее.
-
-Для предметов возможны:
-
-which
-
-that""",
+The phone that I bought
+is expensive.""",
             },
+
 
             {
                 "order": 5,
-                "title": "WHO / WHICH / THAT: главное правило",
-                "body": """Для людей:
+                "title":
+                    "WHOSE — принадлежность",
 
-who
-
-that
-
-Для предметов:
-
-which
-
-that
-
-Для животных:
-
-which
-
-that
-
-Примеры:
-
-The teacher who helped me was patient.
-
-The car which is outside is mine.
-
-The phone that I bought is expensive.
-
-Главный вопрос:
-
-о человеке или о предмете идёт речь?""",
-            },
-
-            {
-                "order": 6,
-                "title": "Relative pronoun как дополнение",
-                "body": """Относительное местоимение может быть дополнением.
-
-Пример:
-
-The man who I met was friendly.
-
-Кто выполняет действие?
-
-I met the man.
-
-Значит WHO — дополнение.
-
-Другие примеры:
-
-The book which I bought is interesting.
-
-The car that we bought is reliable.
-
-Если после relative pronoun уже есть другое подлежащее:
-
-who I...
-
-which I...
-
-that we...
-
-то relative pronoun часто является дополнением.""",
-            },
-
-            {
-                "order": 7,
-                "title": "Когда местоимение можно опустить",
-                "body": """В defining relative clause относительное местоимение можно опустить, если оно является дополнением.
-
-Правильно:
-
-The man who I met was friendly.
-
-The man I met was friendly.
-
-The book which I bought is interesting.
-
-The book I bought is interesting.
-
-The film that we watched was boring.
-
-The film we watched was boring.
-
-Но если relative pronoun является подлежащим, убрать его нельзя.""",
-            },
-
-            {
-                "order": 8,
-                "title": "Когда местоимение нельзя опускать",
-                "body": """Если relative pronoun выполняет действие, оно является подлежащим.
-
-Тогда его нельзя убрать.
-
-Правильно:
-
-The man who lives next door is a doctor.
-
-Нельзя:
-
-The man lives next door is a doctor.
-
-Правильно:
-
-The book which is on the table is mine.
-
-Правильно:
-
-The student who answered was correct.
-
-Подсказка:
-
-who + verb → обычно subject
-
-who + I/he/she/we/they → обычно object""",
-            },
-
-            {
-                "order": 9,
-                "title": "WHOSE — принадлежность",
-                "body": """WHOSE показывает принадлежность.
+                "body":
+                    """WHOSE показывает
+принадлежность.
 
 Значение:
 
-чей, чья, чьё, чьи
+чей / чья / чьи.
 
-Примеры:
+The woman whose car
+was stolen called the police.
 
-The woman whose car was stolen called the police.
+I know a student
+whose father is a doctor.
 
-I know a student whose father is a doctor.
-
-The man whose phone rang left the room.
-
-После WHOSE сразу идёт существительное:
+После WHOSE обычно
+сразу идёт noun:
 
 whose car
-
-whose brother
-
-whose house
-
-whose documents
-
-WHOSE может относиться также к организациям и предметам.""",
+whose father
+whose house""",
             },
+
+
+            {
+                "order": 6,
+                "title":
+                    "Relative Pronoun как Subject",
+
+                "body":
+                    """Relative pronoun может
+сам выполнять действие.
+
+The man who lives here...
+
+WHO = subject.
+
+The book which is
+on the table...
+
+WHICH = subject.
+
+Если после WHO / WHICH
+сразу идёт verb,
+relative pronoun обычно
+является subject.""",
+            },
+
+
+            {
+                "order": 7,
+                "title":
+                    "Relative Pronoun как Object",
+
+                "body":
+                    """Relative pronoun может
+быть object.
+
+The man who I met...
+
+I = subject.
+
+WHO = object.
+
+The book which I bought...
+
+I = subject.
+
+WHICH = object.
+
+Подсказка:
+
+who + I/he/she/we/they
+→ часто object.""",
+            },
+
+
+            {
+                "order": 8,
+                "title":
+                    "Когда можно убрать pronoun",
+
+                "body":
+                    """Если relative pronoun
+является object,
+его часто можно убрать.
+
+The man who I met...
+
+=
+
+The man I met...
+
+The book which I bought...
+
+=
+
+The book I bought...
+
+Но если pronoun = subject,
+убирать его нельзя.""",
+            },
+
+
+            {
+                "order": 9,
+                "title":
+                    "Defining и commas",
+
+                "body":
+                    """Defining clause даёт
+важную информацию.
+
+The man who lives next door
+is a doctor.
+
+Запятые обычно не нужны.
+
+Дополнительная информация:
+
+My brother,
+who lives in Astana,
+is a doctor.
+
+После запятых
+THAT не используем.
+
+Используем WHO или WHICH.""",
+            },
+
 
             {
                 "order": 10,
-                "title": "WHOSE и WHO'S",
-                "body": """Не путайте WHOSE и WHO'S.
+                "title":
+                    "Как выбрать слово",
 
-WHOSE:
+                "body":
+                    """Главная схема:
 
-чей?
+person
+→ WHO / THAT
 
-Whose book is this?
+thing
+→ WHICH / THAT
 
-WHO'S:
+possession
+→ WHOSE
 
-сокращение от who is или who has.
+После запятой:
 
-Who's that man?
+WHO / WHICH
 
-= Who is that man?
+не THAT.
 
-Who's finished the work?
+Если pronoun = object,
+его иногда можно убрать.
 
-= Who has finished the work?
-
-Пример:
-
-The girl whose bag is red...
-
-Не:
-
-The girl who's bag is red...""",
-            },
-
-            {
-                "order": 11,
-                "title": "Defining relative clauses",
-                "body": """Defining relative clause даёт необходимую информацию.
-
-Без неё непонятно, о каком человеке или предмете идёт речь.
-
-Пример:
-
-The student who got the highest score received a prize.
-
-Какой студент?
-
-Тот, который получил лучший результат.
-
-В defining clauses обычно нет запятых.
-
-Примеры:
-
-The man who lives next door is a doctor.
-
-The book that you gave me is interesting.""",
-            },
-
-            {
-                "order": 12,
-                "title": "Non-defining relative clauses",
-                "body": """Non-defining clause даёт дополнительную информацию.
-
-Пример:
-
-My brother, who lives in Astana, is a doctor.
-
-Мы уже знаем, о каком брате идёт речь.
-
-Часть:
-
-who lives in Astana
-
-просто добавляет информацию.
-
-В таких предложениях используются запятые.
-
-Важно:
-
-после запятой THAT не используется.
-
-Правильно:
-
-My brother, who lives in Astana, is a doctor.
-
-Не:
-
-My brother, that lives in Astana...""",
-            },
-
-            {
-                "order": 13,
-                "title": "WHERE, WHEN и предлоги",
-                "body": """WHERE используется для места:
-
-This is the house where I grew up.
-
-Также:
-
-This is the house that I grew up in.
-
-This is the house I grew up in.
-
-WHEN используется для времени:
-
-I remember the day when we first met.
-
-Также:
-
-I remember the day that we first met.
-
-С предлогом в разговорной речи:
-
-The person who I spoke to...
-
-В формальном стиле:
-
-The person to whom I spoke...
-
-После предлога THAT не используется.""",
-            },
-
-            {
-                "order": 14,
-                "title": "Как выбрать relative pronoun",
-                "body": """Речь идёт о человеке?
-
-→ who / that
-
-Речь идёт о предмете или животном?
-
-→ which / that
-
-Нужно показать принадлежность?
-
-→ whose
-
-Есть запятые?
-
-→ не используйте that
-
-Relative pronoun является дополнением в defining clause?
-
-→ его можно опустить
-
-Relative pronoun является подлежащим?
-
-→ его нельзя опустить
-
-Главные формы:
-
-who → люди
-
-which → предметы / животные
-
-that → люди / предметы в defining clauses
-
-whose → принадлежность""",
+Если pronoun = subject,
+убирать нельзя.""",
             },
 
         ]
 
+
+        section_objects = {}
+
+
         for data in sections:
-            GrammarLessonSection.objects.update_or_create(
+
+            section, _ = GrammarLessonSection.objects.update_or_create(
                 lesson=lesson,
                 order=data["order"],
                 defaults={
-                    "title": data["title"],
-                    "body": data["body"],
+                    "title":
+                        data["title"],
+
+                    "body":
+                        data["body"],
                 },
             )
 
-        exercises = [
+            section_objects[
+                data["order"]
+            ] = section
 
+
+        # =================================================
+        # 20 TRAINING EXERCISES
+        # =================================================
+
+        training = [
+
+            # SECTION 1
             {
                 "order": 1,
-                "prompt": (
-                    "The student ___ answered the question "
-                    "got a prize."
-                ),
+                "section": 1,
+                "type": "choice",
+                "prompt":
+                    "Choose the sentence with a Relative Clause.",
                 "options": [
-                    "which",
-                    "who",
-                    "whose answer he",
-                    "where",
+                    "The man who lives here is my teacher.",
+                    "The man lives here.",
+                    "Is the man your teacher?",
+                    "The man is very tall.",
                 ],
-                "answer": "who",
-                "explanation": (
-                    "Student = человек; WHO является подлежащим."
-                ),
+                "answer":
+                    "The man who lives here is my teacher.",
+                "explanation":
+                    "WHO соединяет информацию о человеке.",
             },
 
             {
                 "order": 2,
-                "prompt": (
-                    "The laptop ___ I use belongs "
-                    "to the university."
-                ),
+                "section": 1,
+                "type": "choice",
+                "prompt":
+                    "The woman ___ works here is my aunt.",
                 "options": [
                     "who",
                     "which",
-                    "whose",
                     "where",
+                    "when",
                 ],
-                "answer": "which",
-                "explanation": (
-                    "Laptop = предмет → which."
-                ),
+                "answer":
+                    "who",
+                "explanation":
+                    "Woman = человек → WHO.",
             },
 
+
+            # SECTION 2
             {
                 "order": 3,
-                "prompt": (
-                    "The woman ___ son studies with me "
-                    "is a doctor."
-                ),
+                "section": 2,
+                "type": "choice",
+                "prompt":
+                    "The student ___ answered first got a prize.",
                 "options": [
                     "who",
                     "which",
-                    "whose",
-                    "that she",
+                    "whose answer",
+                    "where",
                 ],
-                "answer": "whose",
-                "explanation": (
-                    "Нужно показать принадлежность: her son → whose son."
-                ),
+                "answer":
+                    "who",
+                "explanation":
+                    "Student = человек.",
             },
 
             {
                 "order": 4,
-                "prompt": (
-                    "This is the house ___ we bought last year."
-                ),
+                "section": 2,
+                "type": "choice",
+                "prompt":
+                    "The man ___ called me is my neighbour.",
                 "options": [
                     "who",
                     "which",
                     "whose",
-                    "where only as subject",
+                    "when",
                 ],
-                "answer": "which",
-                "explanation": (
-                    "House = предмет; which является дополнением."
-                ),
+                "answer":
+                    "who",
+                "explanation":
+                    "Man = человек → WHO.",
             },
 
+
+            # SECTION 3
             {
                 "order": 5,
-                "prompt": (
-                    "The teacher ___ helped me was very patient."
-                ),
+                "section": 3,
+                "type": "choice",
+                "prompt":
+                    "The book ___ is on the desk is mine.",
                 "options": [
-                    "who",
                     "which",
+                    "who",
                     "whose",
                     "where",
                 ],
-                "answer": "who",
-                "explanation": (
-                    "Teacher = человек, который выполняет действие."
-                ),
+                "answer":
+                    "which",
+                "explanation":
+                    "Book = предмет → WHICH.",
             },
 
             {
                 "order": 6,
-                "prompt": (
-                    "The film ___ we saw yesterday was excellent."
-                ),
+                "section": 3,
+                "type": "choice",
+                "prompt":
+                    "The car ___ broke down is very old.",
                 "options": [
+                    "which",
                     "who",
+                    "whose",
+                    "when",
+                ],
+                "answer":
+                    "which",
+                "explanation":
+                    "Car = предмет → WHICH.",
+            },
+
+
+            # SECTION 4
+            {
+                "order": 7,
+                "section": 4,
+                "type": "choice",
+                "prompt":
+                    "The phone ___ I bought is expensive.",
+                "options": [
                     "that",
+                    "who",
                     "whose",
                     "where",
                 ],
-                "answer": "that",
-                "explanation": (
-                    "Film = предмет; that возможно в defining clause."
-                ),
-            },
-
-            {
-                "order": 7,
-                "prompt": (
-                    "My uncle, ___ lives in London, "
-                    "is visiting us."
-                ),
-                "options": [
+                "answer":
                     "that",
-                    "who",
-                    "which",
-                    "whose house he",
-                ],
-                "answer": "who",
-                "explanation": (
-                    "Non-defining clause с человеком → who, не that."
-                ),
+                "explanation":
+                    "Для предмета в defining clause можно использовать THAT.",
             },
 
             {
                 "order": 8,
-                "prompt": (
-                    "The phone, ___ is only a year old, "
-                    "has stopped working."
-                ),
+                "section": 4,
+                "type": "choice",
+                "prompt":
+                    "The teacher ___ helped me was patient.",
                 "options": [
                     "that",
-                    "which",
-                    "who",
-                    "whose person",
+                    "where",
+                    "when",
+                    "whose teacher",
                 ],
-                "answer": "which",
-                "explanation": (
-                    "После запятой для предмета используется which."
-                ),
+                "answer":
+                    "that",
+                "explanation":
+                    "THAT может использоваться для человека в defining clause.",
             },
 
+
+            # SECTION 5
             {
                 "order": 9,
-                "prompt": (
-                    "The company ___ products are sold worldwide "
-                    "is very successful."
-                ),
+                "section": 5,
+                "type": "choice",
+                "prompt":
+                    "The girl ___ brother is my friend lives here.",
                 "options": [
+                    "whose",
                     "who",
                     "which",
-                    "whose",
-                    "that its",
+                    "that she",
                 ],
-                "answer": "whose",
-                "explanation": (
-                    "Products принадлежат company → whose products."
-                ),
+                "answer":
+                    "whose",
+                "explanation":
+                    "Brother принадлежит girl → WHOSE.",
             },
 
             {
                 "order": 10,
-                "prompt": (
-                    "The man ___ I called didn't answer."
-                ),
+                "section": 5,
+                "type": "choice",
+                "prompt":
+                    "The man ___ car is outside is my boss.",
                 "options": [
-                    "who",
                     "whose",
-                    "where",
+                    "who",
                     "which",
+                    "that",
                 ],
-                "answer": "who",
-                "explanation": (
-                    "Man = человек; WHO здесь дополнение."
-                ),
+                "answer":
+                    "whose",
+                "explanation":
+                    "Car принадлежит man → WHOSE CAR.",
             },
 
+
+            # SECTION 6
             {
                 "order": 11,
-                "prompt": (
-                    "The book ___ is on the shelf belongs to Anna."
-                ),
+                "section": 6,
+                "type": "choice",
+                "prompt":
+                    "In 'The woman who works here...', WHO is:",
                 "options": [
-                    "who",
-                    "which",
-                    "whose",
-                    "where",
+                    "the subject",
+                    "the object",
+                    "a possessive adjective",
+                    "an auxiliary verb",
                 ],
-                "answer": "which",
-                "explanation": (
-                    "Which является подлежащим: which is..."
-                ),
+                "answer":
+                    "the subject",
+                "explanation":
+                    "WHO само выполняет действие WORKS.",
             },
 
             {
                 "order": 12,
-                "prompt": (
-                    "The book ___ Anna gave me is very useful."
-                ),
+                "section": 6,
+                "type": "choice",
+                "prompt":
+                    "Which relative pronoun cannot be removed?",
                 "options": [
-                    "who",
-                    "which",
-                    "whose",
-                    "where",
+                    "The man who lives here...",
+                    "The man who I met...",
+                    "The book which I bought...",
+                    "The film that we watched...",
                 ],
-                "answer": "which",
-                "explanation": (
-                    "Anna — подлежащее, which — дополнение."
-                ),
+                "answer":
+                    "The man who lives here...",
+                "explanation":
+                    "WHO = subject, поэтому убрать его нельзя.",
             },
 
+
+            # SECTION 7
             {
                 "order": 13,
-                "prompt": "Everything ___ he said was true.",
+                "section": 7,
+                "type": "choice",
+                "prompt":
+                    "In 'The man who I met...', WHO is:",
                 "options": [
-                    "who",
-                    "that",
-                    "whose",
-                    "where",
+                    "the object",
+                    "the subject",
+                    "the main verb",
+                    "an auxiliary verb",
                 ],
-                "answer": "that",
-                "explanation": (
-                    "После everything часто используется that."
-                ),
+                "answer":
+                    "the object",
+                "explanation":
+                    "I выполняет действие MET; WHO = object.",
             },
 
             {
                 "order": 14,
-                "prompt": (
-                    "She is the only person ___ understands me."
-                ),
+                "section": 7,
+                "type": "choice",
+                "prompt":
+                    "The book which Anna bought was expensive. Who is the subject of BOUGHT?",
                 "options": [
-                    "who",
+                    "Anna",
                     "which",
-                    "whose",
-                    "where",
+                    "the book",
+                    "expensive",
                 ],
-                "answer": "who",
-                "explanation": (
-                    "Person = человек; who здесь звучит естественно."
-                ),
+                "answer":
+                    "Anna",
+                "explanation":
+                    "Anna выполняет действие, WHICH = object.",
             },
 
+
+            # SECTION 8
             {
                 "order": 15,
-                "prompt": "The chair on ___ I sat was broken.",
+                "section": 8,
+                "type": "choice",
+                "prompt":
+                    "Which sentence is correct?",
                 "options": [
-                    "who",
-                    "which",
-                    "that",
-                    "whose",
+                    "The film we watched was excellent.",
+                    "The film watched was excellent.",
+                    "The film who watched was excellent.",
+                    "The film we watched it was excellent.",
                 ],
-                "answer": "which",
-                "explanation": (
-                    "После предлога нельзя использовать that."
-                ),
+                "answer":
+                    "The film we watched was excellent.",
+                "explanation":
+                    "Object relative pronoun можно опустить.",
             },
 
             {
                 "order": 16,
-                "prompt": (
-                    "Which relative pronoun can be omitted?"
-                ),
+                "section": 8,
+                "type": "choice",
+                "prompt":
+                    "Which sentence is NOT correct?",
                 "options": [
-                    "The man who called me...",
-                    "The book which I bought...",
-                    "The student who answered...",
-                    "The car which stopped...",
+                    "The man lives next door is a doctor.",
+                    "The man who lives next door is a doctor.",
+                    "The book I bought is useful.",
+                    "The phone we ordered arrived.",
                 ],
-                "answer": "The book which I bought...",
-                "explanation": (
-                    "Which является дополнением: I bought the book."
-                ),
+                "answer":
+                    "The man lives next door is a doctor.",
+                "explanation":
+                    "WHO является subject и не может быть удалено.",
             },
 
+
+            # SECTION 9
             {
                 "order": 17,
-                "prompt": (
-                    "Which relative pronoun cannot be omitted?"
-                ),
+                "section": 9,
+                "type": "choice",
+                "prompt":
+                    "Choose the correct non-defining clause.",
                 "options": [
-                    "The film that we watched...",
-                    "The man who I called...",
-                    "The book which is on the table...",
-                    "The car that I bought...",
+                    "My sister, who lives in Astana, is a doctor.",
+                    "My sister, that lives in Astana, is a doctor.",
+                    "My sister which lives in Astana is a doctor.",
+                    "My sister, whose lives in Astana, is a doctor.",
                 ],
-                "answer": (
-                    "The book which is on the table..."
-                ),
-                "explanation": (
-                    "Which является подлежащим: which is..."
-                ),
+                "answer":
+                    "My sister, who lives in Astana, is a doctor.",
+                "explanation":
+                    "После запятых для человека используем WHO, не THAT.",
             },
 
             {
                 "order": 18,
-                "prompt": "Choose the correct sentence.",
+                "section": 9,
+                "type": "choice",
+                "prompt":
+                    "My car, ___ is ten years old, still works well.",
                 "options": [
-                    "The woman which works here is my aunt.",
-                    "The woman who works here is my aunt.",
-                    "The woman who she works here is my aunt.",
-                    "The woman whose works here is my aunt.",
+                    "which",
+                    "that",
+                    "who",
+                    "whose car",
                 ],
-                "answer": (
-                    "The woman who works here is my aunt."
-                ),
-                "explanation": (
-                    "Для человека используется who; лишнее she не нужно."
-                ),
+                "answer":
+                    "which",
+                "explanation":
+                    "После запятой для предмета → WHICH.",
             },
 
+
+            # SECTION 10
             {
                 "order": 19,
-                "prompt": "Choose the correct sentence.",
+                "section": 10,
+                "type": "choice",
+                "prompt":
+                    "Choose the correct pair.",
                 "options": [
-                    "The book who is on the table is mine.",
-                    "The book which is on the table is mine.",
-                    "The book whose is on the table is mine.",
-                    "The book which it is on the table is mine.",
+                    "person → who / thing → which",
+                    "person → which / thing → who",
+                    "person → where / thing → who",
+                    "person → when / thing → whose",
                 ],
-                "answer": (
-                    "The book which is on the table is mine."
-                ),
-                "explanation": (
-                    "Book = предмет → which."
-                ),
+                "answer":
+                    "person → who / thing → which",
+                "explanation":
+                    "WHO для людей; WHICH для предметов.",
             },
 
             {
                 "order": 20,
-                "prompt": "Choose the sentence without a redundant object.",
+                "section": 10,
+                "type": "choice",
+                "prompt":
+                    "Which word shows possession?",
                 "options": [
-                    "The phone that I bought it is expensive.",
-                    "The phone that I bought is expensive.",
-                    "The phone which I bought it was expensive.",
-                    "The phone who I bought is expensive.",
+                    "whose",
+                    "who",
+                    "which",
+                    "that",
                 ],
-                "answer": (
-                    "The phone that I bought is expensive."
-                ),
-                "explanation": (
-                    "That уже заменяет phone; второе it не нужно."
-                ),
-            },
-
-            {
-                "order": 21,
-                "prompt": "Choose the correct non-defining clause.",
-                "options": [
-                    (
-                        "My sister, that lives in Astana, "
-                        "is a doctor."
-                    ),
-                    (
-                        "My sister, who lives in Astana, "
-                        "is a doctor."
-                    ),
-                    (
-                        "My sister who, lives in Astana, "
-                        "is a doctor."
-                    ),
-                    (
-                        "My sister, which lives in Astana, "
-                        "is a doctor."
-                    ),
-                ],
-                "answer": (
-                    "My sister, who lives in Astana, "
-                    "is a doctor."
-                ),
-                "explanation": (
-                    "После запятых that не используется."
-                ),
-            },
-
-            {
-                "order": 22,
-                "prompt": "Choose the correct WHOSE sentence.",
-                "options": [
-                    "The girl who's father is a teacher is my friend.",
-                    "The girl whose father is a teacher is my friend.",
-                    "The girl who father is a teacher is my friend.",
-                    "The girl whose is father a teacher is my friend.",
-                ],
-                "answer": (
-                    "The girl whose father is a teacher is my friend."
-                ),
-                "explanation": (
-                    "Whose + noun показывает принадлежность."
-                ),
-            },
-
-            {
-                "order": 23,
-                "prompt": (
-                    "Choose the correct subject/object pair."
-                ),
-                "options": [
-                    (
-                        "The man who called me... = subject / "
-                        "The man who I called... = object"
-                    ),
-                    (
-                        "The man who called me... = object / "
-                        "The man who I called... = subject"
-                    ),
-                    (
-                        "Both are always subjects",
-                    ),
-                    (
-                        "Both are always objects",
-                    ),
-                ],
-                "answer": (
-                    "The man who called me... = subject / "
-                    "The man who I called... = object"
-                ),
-                "explanation": (
-                    "Who + verb → subject; who + I → object."
-                ),
-            },
-
-            {
-                "order": 24,
-                "prompt": "Choose the fully correct sequence.",
-                "options": [
-                    (
-                        "person → who / "
-                        "thing → which / "
-                        "person or thing in defining clause → that / "
-                        "possession → whose"
-                    ),
-                    (
-                        "person → which / "
-                        "thing → who / "
-                        "possession → that / "
-                        "after commas → that"
-                    ),
-                    (
-                        "person → whose only / "
-                        "thing → who / "
-                        "possession → which / "
-                        "after commas → that"
-                    ),
-                    (
-                        "person → where / "
-                        "thing → when / "
-                        "possession → who / "
-                        "after commas → that"
-                    ),
-                ],
-                "answer": (
-                    "person → who / "
-                    "thing → which / "
-                    "person or thing in defining clause → that / "
-                    "possession → whose"
-                ),
-                "explanation": (
-                    "Это основная система выбора relative pronouns."
-                ),
+                "answer":
+                    "whose",
+                "explanation":
+                    "WHOSE = чей / чья / чьи.",
             },
 
         ]
 
-        for data in exercises:
+
+        # =================================================
+        # FINAL TEST — 10 NEW QUESTIONS
+        # =================================================
+
+        final_test = [
+
+            {
+                "order": 21,
+                "prompt":
+                    "The doctor ___ treated me was very kind.",
+                "options": [
+                    "who",
+                    "which",
+                    "whose",
+                    "where",
+                ],
+                "answer":
+                    "who",
+                "explanation":
+                    "Doctor = человек → WHO.",
+            },
+
+            {
+                "order": 22,
+                "prompt":
+                    "The computer ___ is in my office is new.",
+                "options": [
+                    "which",
+                    "who",
+                    "whose",
+                    "when",
+                ],
+                "answer":
+                    "which",
+                "explanation":
+                    "Computer = предмет → WHICH.",
+            },
+
+            {
+                "order": 23,
+                "prompt":
+                    "The woman ___ daughter studies here is a teacher.",
+                "options": [
+                    "whose",
+                    "who",
+                    "which",
+                    "that she",
+                ],
+                "answer":
+                    "whose",
+                "explanation":
+                    "Daughter принадлежит woman → WHOSE.",
+            },
+
+            {
+                "order": 24,
+                "prompt":
+                    "The jacket ___ I bought yesterday is too small.",
+                "options": [
+                    "that",
+                    "who",
+                    "whose",
+                    "where",
+                ],
+                "answer":
+                    "that",
+                "explanation":
+                    "Jacket = предмет; THAT возможно в defining clause.",
+            },
+
+            {
+                "order": 25,
+                "prompt":
+                    "Which relative pronoun is the subject?",
+                "options": [
+                    "The woman who works here...",
+                    "The woman who I called...",
+                    "The book which I bought...",
+                    "The film that we watched...",
+                ],
+                "answer":
+                    "The woman who works here...",
+                "explanation":
+                    "WHO само выполняет действие WORKS.",
+            },
+
+            {
+                "order": 26,
+                "prompt":
+                    "Which sentence correctly omits the relative pronoun?",
+                "options": [
+                    "The man I met was friendly.",
+                    "The man lives here is friendly.",
+                    "The book is on the table is mine.",
+                    "The student answered was correct.",
+                ],
+                "answer":
+                    "The man I met was friendly.",
+                "explanation":
+                    "Relative pronoun был object, поэтому его можно убрать.",
+            },
+
+            {
+                "order": 27,
+                "prompt":
+                    "Choose the sentence without a redundant pronoun.",
+                "options": [
+                    "The phone that I bought is expensive.",
+                    "The phone that I bought it is expensive.",
+                    "The phone which I bought it is expensive.",
+                    "The phone who I bought is expensive.",
+                ],
+                "answer":
+                    "The phone that I bought is expensive.",
+                "explanation":
+                    "После THAT дополнительное IT не нужно.",
+            },
+
+            {
+                "order": 28,
+                "prompt":
+                    "My uncle, ___ lives in London, is visiting us.",
+                "options": [
+                    "who",
+                    "that",
+                    "which",
+                    "whose uncle",
+                ],
+                "answer":
+                    "who",
+                "explanation":
+                    "Non-defining clause + person → WHO.",
+            },
+
+            {
+                "order": 29,
+                "prompt":
+                    "Choose the correct WHOSE sentence.",
+                "options": [
+                    "The student whose laptop is broken is absent.",
+                    "The student who's laptop is broken is absent.",
+                    "The student who laptop is broken is absent.",
+                    "The student which laptop is broken is absent.",
+                ],
+                "answer":
+                    "The student whose laptop is broken is absent.",
+                "explanation":
+                    "WHOSE + noun показывает принадлежность.",
+            },
+
+            {
+                "order": 30,
+                "prompt":
+                    "Choose the fully correct sequence.",
+                "options": [
+                    "person → who / thing → which / defining person or thing → that / possession → whose",
+                    "person → which / thing → who / possession → that / after comma → that",
+                    "person → whose / thing → who / possession → which / subject pronoun can always be omitted",
+                    "person → where / thing → when / possession → who / after comma → that",
+                ],
+                "answer":
+                    "person → who / thing → which / defining person or thing → that / possession → whose",
+                "explanation":
+                    "Это основная система выбора Relative Pronouns.",
+            },
+
+        ]
+
+
+        all_exercises = (
+            training
+            +
+            final_test
+        )
+
+        valid_orders = [
+            item["order"]
+            for item in all_exercises
+        ]
+
+
+        for data in all_exercises:
+
+            if data["order"] <= 20:
+
+                section = (
+                    section_objects[
+                        data["section"]
+                    ]
+                )
+
+            else:
+
+                section = None
+
+
             GrammarExercise.objects.update_or_create(
                 lesson=lesson,
                 order=data["order"],
                 defaults={
-                    "exercise_type": GrammarExercise.Type.CHOICE,
-                    "prompt": data["prompt"],
-                    "options": data["options"],
-                    "correct_answer": data["answer"],
-                    "explanation": data["explanation"],
-                    "is_published": True,
+                    "section":
+                        section,
+
+                    "exercise_type":
+                        data.get(
+                            "type",
+                            "choice",
+                        ),
+
+                    "prompt":
+                        data["prompt"],
+
+                    "options":
+                        data["options"],
+
+                    "correct_answer":
+                        data["answer"],
+
+                    "explanation":
+                        data["explanation"],
+
+                    "is_published":
+                        True,
                 },
             )
 
+
+        GrammarExercise.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__in=valid_orders,
+        ).delete()
+
+
+        GrammarLessonSection.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__in=[
+                item["order"]
+                for item in sections
+            ],
+        ).delete()
+
+
         self.stdout.write(
             self.style.SUCCESS(
-                "✅ A1 Lesson 54 seeded: Relative Pronouns"
+                "✅ Interactive A1 Lesson 54 seeded"
             )
         )
 
         self.stdout.write(
-            f"Sections: {lesson.sections.count()}"
+            f"Micro rules: "
+            f"{lesson.sections.count()}"
         )
 
         self.stdout.write(
-            f"Exercises: {lesson.exercises.count()}"
+            "Training exercises: "
+            f"{lesson.exercises.filter(section__isnull=False).count()}"
+        )
+
+        self.stdout.write(
+            "Final test: "
+            f"{lesson.exercises.filter(section__isnull=True).count()}"
         )

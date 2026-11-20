@@ -10,9 +10,10 @@ from grammar.models import (
 class Command(BaseCommand):
 
     help = (
-        "Create/update A1 Grammar Lesson 55: "
-        "Word Formation."
+        "Create/update interactive A1 Grammar "
+        "Lesson 55: Word Formation."
     )
+
 
     def handle(self, *args, **options):
 
@@ -20,87 +21,242 @@ class Command(BaseCommand):
             level="A1",
             order=55,
             defaults={
-                "title": "Словообразование в английском языке",
-                "slug": "word-formation",
-                "theory_text": (
-                    "Word Formation: prefixes, suffixes "
-                    "and word families."
-                ),
-                "estimated_minutes": 50,
-                "pass_score": 70,
-                "xp_reward": 100,
-                "is_published": True,
+                "title":
+                    "Словообразование в английском языке",
+
+                "slug":
+                    "word-formation",
+
+                "theory_text":
+                    "Word Formation: nouns, adjectives, "
+                    "adverbs, prefixes and word families.",
+
+                "estimated_minutes":
+                    20,
+
+                "pass_score":
+                    70,
+
+                "xp_reward":
+                    100,
+
+                "is_published":
+                    True,
             },
         )
+
+
+        # =================================================
+        # 10 MICRO RULES
+        # =================================================
 
         sections = [
 
             {
                 "order": 1,
-                "title": "Что такое словообразование",
-                "body": """Словообразование — это образование новых слов.
+                "title":
+                    "Word Families",
 
-Основные способы:
+                "body":
+                    """Одно слово может иметь
+несколько форм.
 
-приставка;
+success — noun
 
-суффикс;
+successful — adjective
 
-изменение части речи;
+successfully — adverb
 
-соединение слов;
+succeed — verb
 
-изменение формы слова.
+Пример:
 
-Примеры:
+The project was a success.
 
-happy → unhappy
+It was successful.
 
-teach → teacher
+They completed it successfully.
 
-beauty → beautiful
-
-careful → carefully
-
-work + place → workplace
-
-Важно видеть не отдельное слово, а его word family.""",
+Главное — выбрать форму,
+которая нужна в предложении.""",
             },
+
 
             {
                 "order": 2,
-                "title": "Корень и семья слова",
-                "body": """Корень несёт основное значение слова.
+                "title":
+                    "Как узнать NOUN",
+
+                "body":
+                    """Noun часто стоит после:
+
+a / an / the
+
+my / your / his
+
+adjective
+
+preposition
 
 Примеры:
 
-help
+an important decision
 
-work
+economic development
 
-use
+a good education
 
-care
+После adjective часто
+нужно существительное.
 
-act
-
-Из одного корня можно получить разные части речи:
-
-act → action → active → actively → activity → actor
-
-success → succeed → success → successful → successfully
-
-Главная идея:
-
-одно значение может иметь несколько грамматических форм.""",
+DECIDE
+→ decision""",
             },
+
 
             {
                 "order": 3,
-                "title": "Отрицательные приставки",
-                "body": """Приставка ставится перед словом и меняет его значение.
+                "title":
+                    "Noun suffixes",
 
-Частые отрицательные приставки:
+                "body":
+                    """Частые окончания nouns:
+
+-tion
+
+-ment
+
+-ness
+
+-er
+
+-or
+
+-ity
+
+Примеры:
+
+educate → education
+
+develop → development
+
+happy → happiness
+
+teach → teacher
+
+act → actor
+
+possible → possibility""",
+            },
+
+
+            {
+                "order": 4,
+                "title":
+                    "Как узнать ADJECTIVE",
+
+                "body":
+                    """Adjective описывает noun.
+
+a successful company
+
+an important decision
+
+Adjective также часто
+стоит после BE.
+
+The task is difficult.
+
+The service was excellent.
+
+Подсказка:
+
+перед noun
+или после BE
+часто нужен adjective.""",
+            },
+
+
+            {
+                "order": 5,
+                "title":
+                    "Adjective suffixes",
+
+                "body":
+                    """Частые окончания adjectives:
+
+-ful
+
+-less
+
+-able
+
+-ous
+
+-al
+
+-ive
+
+-y
+
+Примеры:
+
+help → helpful
+
+care → careful
+
+use → useful
+
+danger → dangerous
+
+culture → cultural
+
+effect → effective
+
+rain → rainy""",
+            },
+
+
+            {
+                "order": 6,
+                "title":
+                    "Как узнать ADVERB",
+
+                "body":
+                    """Adverb описывает действие.
+
+She answered correctly.
+
+He worked carefully.
+
+They finished quickly.
+
+Часто:
+
+adjective + LY
+
+careful → carefully
+
+quick → quickly
+
+correct → correctly
+
+easy → easily
+
+Если слово описывает
+КАК выполнено действие,
+часто нужен adverb.""",
+            },
+
+
+            {
+                "order": 7,
+                "title":
+                    "Negative prefixes",
+
+                "body":
+                    """Чтобы сделать значение
+отрицательным, часто используем:
 
 un-
 
@@ -128,936 +284,764 @@ regular → irregular
 
 honest → dishonest
 
-Нельзя механически использовать UN- со всеми словами.
-
-Не:
-
-unpossible
-
-Правильно:
-
-impossible""",
+Форма зависит от слова.""",
             },
 
-            {
-                "order": 4,
-                "title": "RE-, MIS-, OVER-, UNDER-",
-                "body": """RE- означает «снова»:
-
-write → rewrite
-
-read → reread
-
-start → restart
-
-MIS- означает «неправильно»:
-
-understand → misunderstand
-
-spell → misspell
-
-calculate → miscalculate
-
-OVER- означает «слишком»:
-
-overwork
-
-overcook
-
-overestimate
-
-UNDER- означает «недостаточно»:
-
-underpay
-
-underestimate
-
-undercooked""",
-            },
-
-            {
-                "order": 5,
-                "title": "Суффиксы существительных",
-                "body": """Частые noun suffixes:
-
--er / -or
-
--ist
-
--ment
-
--tion / -sion
-
--ness
-
--ity
-
--ance / -ence
-
-Примеры:
-
-teach → teacher
-
-act → actor
-
-science → scientist
-
-develop → development
-
-decide → decision
-
-happy → happiness
-
-responsible → responsibility
-
-perform → performance
-
-Часто суффикс меняет часть речи.""",
-            },
-
-            {
-                "order": 6,
-                "title": "Суффиксы прилагательных",
-                "body": """Частые adjective suffixes:
-
--ful
-
--less
-
--ous
-
--al
-
--ive
-
--able / -ible
-
--y
-
-Примеры:
-
-care → careful
-
-help → helpful
-
-use → useful
-
-use → useless
-
-danger → dangerous
-
-culture → cultural
-
-effect → effective
-
-comfort → comfortable
-
-rain → rainy
-
-Перед существительным часто требуется adjective:
-
-a successful manager
-
-an important decision""",
-            },
-
-            {
-                "order": 7,
-                "title": "Суффиксы глаголов",
-                "body": """Частые verb suffixes:
-
--ize / -ise
-
--en
-
--ify
-
--ate
-
-Примеры:
-
-modern → modernize
-
-special → specialize
-
-wide → widen
-
-strong → strengthen
-
-simple → simplify
-
-clear → clarify
-
-active → activate
-
-motive → motivate
-
-После TO обычно нужен глагол:
-
-to improve
-
-to simplify
-
-to modernize""",
-            },
 
             {
                 "order": 8,
-                "title": "Наречия на -LY",
-                "body": """Большинство наречий образуется:
+                "title":
+                    "RE-, MIS-, OVER-, UNDER-",
 
-adjective + -ly
+                "body":
+                    """Другие полезные prefixes:
 
-slow → slowly
+RE- = снова
 
-careful → carefully
+write → rewrite
 
-quick → quickly
+MIS- = неправильно
 
-correct → correctly
+understand → misunderstand
 
-complete → completely
+OVER- = слишком
 
-Есть изменения написания:
+work → overwork
 
-happy → happily
+UNDER- = недостаточно
 
-easy → easily
+estimate → underestimate
 
-simple → simply
-
-terrible → terribly
-
-После глагола часто требуется adverb:
-
-She answered correctly.
-
-He worked carefully.""",
+Prefix обычно меняет
+значение слова.""",
             },
+
 
             {
                 "order": 9,
-                "title": "Как определить нужную часть речи",
-                "body": """Смотрите на позицию слова.
+                "title":
+                    "EMPLOY и SUCCESS",
 
-После артикля часто нужно существительное:
+                "body":
+                    """Полезные word families.
 
-a decision
+EMPLOY:
 
-Перед существительным часто нужно прилагательное:
+employ — verb
 
-an important decision
+employee — worker
 
-После TO BE часто нужно прилагательное:
+employer — company/person
 
-The task is difficult.
+employment — noun
 
-После обычного глагола часто нужно наречие:
+unemployed — adjective
 
-She answered correctly.
+SUCCESS:
 
-После TO часто нужен глагол:
+succeed — verb
 
-to improve
+success — noun
 
-Главный вопрос:
+successful — adjective
 
-какая часть речи нужна именно здесь?""",
+successfully — adverb""",
             },
+
 
             {
                 "order": 10,
-                "title": "Word family: SUCCESS",
-                "body": """Семья слова SUCCESS:
+                "title":
+                    "Алгоритм выбора",
 
-succeed — глагол
+                "body":
+                    """Шаг 1.
 
-success — существительное
-
-successful — прилагательное
-
-successfully — наречие
-
-unsuccessful — отрицательное прилагательное
-
-Сравните:
-
-She hopes to succeed.
-
-The project was a success.
-
-She is successful.
-
-She completed the task successfully.
-
-Контекст определяет нужную форму.""",
-            },
-
-            {
-                "order": 11,
-                "title": "Word family: EMPLOY и EDUCATE",
-                "body": """EMPLOY:
-
-employ — нанимать
-
-employer — работодатель
-
-employee — работник
-
-employment — занятость
-
-unemployed — безработный
-
-unemployment — безработица
-
-EDUCATE:
-
-educate — обучать
-
-education — образование
-
-educational — образовательный
-
-educator — педагог
-
-educated — образованный
-
-Важно различать значение и часть речи.""",
-            },
-
-            {
-                "order": 12,
-                "title": "Орфографические изменения",
-                "body": """При словообразовании написание может меняться.
-
-Y → I:
-
-happy → happiness
-
-easy → easily
-
-busy → business
-
-Конечная E иногда исчезает:
-
-create → creative
-
-fame → famous
-
-decide → decision
-
-Иногда согласная удваивается:
-
-begin → beginner
-
-run → runner
-
-swim → swimmer
-
-Некоторые формы нужно просто запомнить:
-
-strong → strength
-
-choose → choice
-
-die → death""",
-            },
-
-            {
-                "order": 13,
-                "title": "Compound words и conversion",
-                "body": """Compound words состоят из двух или более слов.
-
-Примеры:
-
-classroom
-
-workplace
-
-website
-
-airport
-
-bus stop
-
-post office
-
-Сложные прилагательные часто пишутся через дефис:
-
-well-known
-
-part-time
-
-user-friendly
-
-ten-year-old
-
-Conversion:
-
-слово меняет часть речи без изменения формы.
-
-work:
-
-I work every day.
-— verb
-
-I have a lot of work.
-— noun""",
-            },
-
-            {
-                "order": 14,
-                "title": "Алгоритм словообразования",
-                "body": """Шаг 1.
-
-Прочитайте всё предложение.
+Прочитай всё предложение.
 
 Шаг 2.
 
-Определите часть речи:
+Определи, что нужно:
 
-noun;
+noun?
 
-verb;
+adjective?
 
-adjective;
+adverb?
 
-adverb.
+verb?
 
 Шаг 3.
 
-Проверьте, нужно ли отрицательное значение.
+Проверь смысл:
+
+positive или negative?
 
 Шаг 4.
 
-Выберите подходящую приставку или суффикс.
+Выбери правильную форму.
 
-Шаг 5.
-
-Проверьте написание.
-
-Пример:
-
-She is a very ___ manager.
+She is a ___ manager.
 SUCCESS
 
-Перед manager нужен adjective:
+Нужен adjective:
 
-successful.
-
-She completed the project ___.
-SUCCESS
-
-После completed нужен adverb:
-
-successfully.""",
+successful.""",
             },
 
         ]
 
+
+        section_objects = {}
+
+
         for data in sections:
-            GrammarLessonSection.objects.update_or_create(
+
+            section, _ = GrammarLessonSection.objects.update_or_create(
                 lesson=lesson,
                 order=data["order"],
                 defaults={
-                    "title": data["title"],
-                    "body": data["body"],
+                    "title":
+                        data["title"],
+
+                    "body":
+                        data["body"],
                 },
             )
 
-        exercises = [
+            section_objects[
+                data["order"]
+            ] = section
 
+
+        # =================================================
+        # 20 TRAINING EXERCISES
+        # =================================================
+
+        training = [
+
+            # SECTION 1
             {
                 "order": 1,
-                "prompt": (
-                    "She gave a very ___ explanation. "
-                    "HELP"
-                ),
+                "section": 1,
+                "prompt":
+                    "Choose the adjective from the SUCCESS family.",
                 "options": [
-                    "help",
-                    "helpful",
-                    "helpfully",
-                    "helplessly",
+                    "successful",
+                    "success",
+                    "successfully",
+                    "succeed",
                 ],
-                "answer": "helpful",
-                "explanation": (
-                    "Перед существительным explanation нужен adjective."
-                ),
+                "answer":
+                    "successful",
+                "explanation":
+                    "SUCCESSFUL — adjective.",
             },
 
             {
                 "order": 2,
-                "prompt": (
-                    "He explained the rule ___. "
-                    "CLEAR"
-                ),
+                "section": 1,
+                "prompt":
+                    "Choose the adverb from the SUCCESS family.",
                 "options": [
-                    "clear",
-                    "clearly",
-                    "clearness",
-                    "clarify",
+                    "successfully",
+                    "successful",
+                    "success",
+                    "succeed",
                 ],
-                "answer": "clearly",
-                "explanation": (
-                    "Слово описывает действие explained → adverb."
-                ),
+                "answer":
+                    "successfully",
+                "explanation":
+                    "SUCCESSFULLY описывает действие.",
             },
 
+
+            # SECTION 2
             {
                 "order": 3,
-                "prompt": (
-                    "The country needs economic ___. "
-                    "DEVELOP"
-                ),
+                "section": 2,
+                "prompt":
+                    "They made an important ___. DECIDE",
                 "options": [
-                    "develop",
-                    "development",
-                    "developing only",
-                    "developer",
+                    "decision",
+                    "decide",
+                    "decisive",
+                    "decisively",
                 ],
-                "answer": "development",
-                "explanation": (
-                    "После adjective economic нужно существительное."
-                ),
+                "answer":
+                    "decision",
+                "explanation":
+                    "После AN IMPORTANT нужен noun.",
             },
 
             {
                 "order": 4,
-                "prompt": (
-                    "She is a highly ___ employee. "
-                    "RESPONSIBILITY"
-                ),
+                "section": 2,
+                "prompt":
+                    "The country needs economic ___. DEVELOP",
                 "options": [
-                    "responsibly",
-                    "responsible",
-                    "responsibility",
-                    "irresponsible in all contexts",
+                    "development",
+                    "develop",
+                    "developed",
+                    "developing",
                 ],
-                "answer": "responsible",
-                "explanation": (
-                    "Перед employee нужен adjective."
-                ),
+                "answer":
+                    "development",
+                "explanation":
+                    "ECONOMIC описывает noun DEVELOPMENT.",
             },
 
+
+            # SECTION 3
             {
                 "order": 5,
-                "prompt": (
-                    "The result was completely ___. "
-                    "EXPECT"
-                ),
+                "section": 3,
+                "prompt":
+                    "Choose the noun from TEACH.",
                 "options": [
-                    "expectedly",
-                    "unexpected",
-                    "expectation",
-                    "expect",
+                    "teacher",
+                    "teachingly",
+                    "teachful",
+                    "teachness",
                 ],
-                "answer": "unexpected",
-                "explanation": (
-                    "После was нужен adjective; по смыслу — unexpected."
-                ),
+                "answer":
+                    "teacher",
+                "explanation":
+                    "-ER может обозначать человека.",
             },
 
             {
                 "order": 6,
-                "prompt": (
-                    "They made an important ___. "
-                    "DECIDE"
-                ),
+                "section": 3,
+                "prompt":
+                    "Choose the noun from HAPPY.",
                 "options": [
-                    "decisive",
-                    "decision",
-                    "decide",
-                    "decisively",
+                    "happiness",
+                    "happily",
+                    "happy",
+                    "unhappy",
                 ],
-                "answer": "decision",
-                "explanation": (
-                    "После an important требуется существительное."
-                ),
+                "answer":
+                    "happiness",
+                "explanation":
+                    "HAPPY → HAPPINESS.",
             },
 
+
+            # SECTION 4
             {
                 "order": 7,
-                "prompt": (
-                    "The service was very ___. "
-                    "PROFESSION"
-                ),
+                "section": 4,
+                "prompt":
+                    "She is a very ___ employee. RESPONSIBILITY",
                 "options": [
-                    "professionally",
-                    "professional",
-                    "profession",
-                    "professor",
+                    "responsible",
+                    "responsibly",
+                    "responsibility",
+                    "response",
                 ],
-                "answer": "professional",
-                "explanation": (
-                    "После was very нужен adjective."
-                ),
+                "answer":
+                    "responsible",
+                "explanation":
+                    "Перед EMPLOYEE нужен adjective.",
             },
 
             {
                 "order": 8,
-                "prompt": (
-                    "He behaved ___. "
-                    "POLITE"
-                ),
+                "section": 4,
+                "prompt":
+                    "The new system is very ___. EFFECT",
                 "options": [
-                    "polite",
-                    "politely",
-                    "politeness",
-                    "impolite adjective only",
-                ],
-                "answer": "politely",
-                "explanation": (
-                    "Behaved описывается наречием."
-                ),
-            },
-
-            {
-                "order": 9,
-                "prompt": (
-                    "The new system is more ___. "
-                    "EFFECT"
-                ),
-                "options": [
-                    "effectively",
                     "effective",
+                    "effectively",
                     "effect",
                     "effectiveness",
                 ],
-                "answer": "effective",
-                "explanation": (
-                    "После is more нужен adjective."
-                ),
+                "answer":
+                    "effective",
+                "explanation":
+                    "После IS VERY нужен adjective.",
+            },
+
+
+            # SECTION 5
+            {
+                "order": 9,
+                "section": 5,
+                "prompt":
+                    "Choose the adjective from HELP.",
+                "options": [
+                    "helpful",
+                    "helpfully",
+                    "helper",
+                    "helpness",
+                ],
+                "answer":
+                    "helpful",
+                "explanation":
+                    "HELP + FUL → HELPFUL.",
             },
 
             {
                 "order": 10,
-                "prompt": (
-                    "She works for an international ___. "
-                    "ORGANIZE"
-                ),
+                "section": 5,
+                "prompt":
+                    "Choose the adjective from DANGER.",
                 "options": [
-                    "organized",
-                    "organization",
-                    "organizer",
-                    "organizational adjective only",
+                    "dangerous",
+                    "dangerously",
+                    "danger",
+                    "endanger",
                 ],
-                "answer": "organization",
-                "explanation": (
-                    "После an international требуется существительное."
-                ),
+                "answer":
+                    "dangerous",
+                "explanation":
+                    "DANGER + OUS → DANGEROUS.",
             },
 
+
+            # SECTION 6
             {
                 "order": 11,
-                "prompt": (
-                    "The instructions were ___. "
-                    "UNDERSTAND"
-                ),
+                "section": 6,
+                "prompt":
+                    "She answered the question ___. CORRECT",
                 "options": [
-                    "understandable",
-                    "understanding noun",
-                    "understandably only",
-                    "understoodly",
+                    "correctly",
+                    "correct",
+                    "correction",
+                    "incorrect",
                 ],
-                "answer": "understandable",
-                "explanation": (
-                    "-able образует adjective со значением возможности."
-                ),
+                "answer":
+                    "correctly",
+                "explanation":
+                    "Слово описывает действие ANSWERED.",
             },
 
             {
                 "order": 12,
-                "prompt": (
-                    "This behaviour is completely ___. "
-                    "ACCEPT"
-                ),
+                "section": 6,
+                "prompt":
+                    "He completed the work ___. CAREFUL",
                 "options": [
-                    "acceptable",
-                    "unacceptable",
-                    "acceptance",
-                    "acceptably",
+                    "carefully",
+                    "careful",
+                    "care",
+                    "careless",
                 ],
-                "answer": "unacceptable",
-                "explanation": (
-                    "Нужен adjective с отрицательным значением."
-                ),
+                "answer":
+                    "carefully",
+                "explanation":
+                    "Описываем, КАК он выполнил работу.",
             },
 
+
+            # SECTION 7
             {
                 "order": 13,
-                "prompt": (
-                    "He is currently ___. "
-                    "EMPLOY"
-                ),
+                "section": 7,
+                "prompt":
+                    "Choose the negative form of POSSIBLE.",
                 "options": [
-                    "employment",
-                    "unemployed",
-                    "employee",
-                    "employer",
+                    "impossible",
+                    "unpossible",
+                    "inpossible",
+                    "dispossible",
                 ],
-                "answer": "unemployed",
-                "explanation": (
-                    "После is currently нужен adjective: unemployed."
-                ),
+                "answer":
+                    "impossible",
+                "explanation":
+                    "POSSIBLE → IMPOSSIBLE.",
             },
 
             {
                 "order": 14,
-                "prompt": (
-                    "There has been a rise in ___. "
-                    "EMPLOY"
-                ),
+                "section": 7,
+                "prompt":
+                    "Choose the negative form of LEGAL.",
                 "options": [
-                    "unemployment",
-                    "unemployed",
-                    "employer",
-                    "employable adjective only",
+                    "illegal",
+                    "unlegal",
+                    "inlegal",
+                    "irlegal",
                 ],
-                "answer": "unemployment",
-                "explanation": (
-                    "После in требуется noun; по смыслу unemployment."
-                ),
+                "answer":
+                    "illegal",
+                "explanation":
+                    "LEGAL → ILLEGAL.",
             },
 
+
+            # SECTION 8
             {
                 "order": 15,
-                "prompt": (
-                    "She completed the task ___. "
-                    "EFFICIENT"
-                ),
+                "section": 8,
+                "prompt":
+                    "Which word means 'understand incorrectly'?",
                 "options": [
-                    "efficiency",
-                    "efficient",
-                    "efficiently",
-                    "inefficient adjective only",
+                    "misunderstand",
+                    "reunderstand",
+                    "overunderstand",
+                    "ununderstand",
                 ],
-                "answer": "efficiently",
-                "explanation": (
-                    "Completed описывается наречием."
-                ),
+                "answer":
+                    "misunderstand",
+                "explanation":
+                    "MIS- = неправильно.",
             },
 
             {
                 "order": 16,
-                "prompt": "Choose the correct negative form of POSSIBLE.",
+                "section": 8,
+                "prompt":
+                    "Which word means 'write again'?",
                 "options": [
-                    "unpossible",
-                    "impossible",
-                    "inpossible",
-                    "dispossible",
+                    "rewrite",
+                    "miswrite",
+                    "underwrite",
+                    "unwrite",
                 ],
-                "answer": "impossible",
-                "explanation": (
-                    "Перед p используется im-: impossible."
-                ),
+                "answer":
+                    "rewrite",
+                "explanation":
+                    "RE- = снова.",
             },
 
+
+            # SECTION 9
             {
                 "order": 17,
-                "prompt": "Choose the correct negative form of LEGAL.",
+                "section": 9,
+                "prompt":
+                    "A person who works for a company is an ___.",
                 "options": [
-                    "unlegal",
-                    "inlegal",
-                    "illegal",
-                    "dislegal",
+                    "employee",
+                    "employer",
+                    "employment",
+                    "unemployment",
                 ],
-                "answer": "illegal",
-                "explanation": (
-                    "Перед l используется il-."
-                ),
+                "answer":
+                    "employee",
+                "explanation":
+                    "EMPLOYEE = работник.",
             },
 
             {
                 "order": 18,
-                "prompt": "Choose the correct noun from IMPROVE.",
+                "section": 9,
+                "prompt":
+                    "She completed the project ___. SUCCESS",
                 "options": [
-                    "improval",
-                    "improvement",
-                    "improveness",
-                    "improvely",
+                    "successfully",
+                    "successful",
+                    "success",
+                    "succeed",
                 ],
-                "answer": "improvement",
-                "explanation": (
-                    "Improve → improvement."
-                ),
+                "answer":
+                    "successfully",
+                "explanation":
+                    "После COMPLETED нужна adverb form.",
             },
 
+
+            # SECTION 10
             {
                 "order": 19,
-                "prompt": "Choose the correct word family sequence.",
+                "section": 10,
+                "prompt":
+                    "She is a ___ manager. SUCCESS",
                 "options": [
-                    (
-                        "succeed → success → successful → successfully"
-                    ),
-                    (
-                        "success → succeedful → successfuly → succeeding"
-                    ),
-                    (
-                        "succeed → successfulnessly → success → succeedly"
-                    ),
-                    (
-                        "successful → successly → succeedment → succeeded"
-                    ),
+                    "successful",
+                    "successfully",
+                    "success",
+                    "succeed",
                 ],
-                "answer": (
-                    "succeed → success → successful → successfully"
-                ),
-                "explanation": (
-                    "Verb → noun → adjective → adverb."
-                ),
+                "answer":
+                    "successful",
+                "explanation":
+                    "Перед MANAGER нужен adjective.",
             },
 
             {
                 "order": 20,
-                "prompt": (
-                    "Which word means a person employed by a company?"
-                ),
+                "section": 10,
+                "prompt":
+                    "There was a big ___ in sales. IMPROVE",
                 "options": [
-                    "employment",
-                    "employer",
-                    "employee",
-                    "unemployment",
+                    "improvement",
+                    "improve",
+                    "improved",
+                    "improvingly",
                 ],
-                "answer": "employee",
-                "explanation": (
-                    "Employee = работник; employer = работодатель."
-                ),
-            },
-
-            {
-                "order": 21,
-                "prompt": "Choose the correct sentence.",
-                "options": [
-                    "She is a successfully manager.",
-                    "She is a successful manager.",
-                    "She is a successly manager.",
-                    "She is a success manager.",
-                ],
-                "answer": "She is a successful manager.",
-                "explanation": (
-                    "Перед manager нужен adjective successful."
-                ),
-            },
-
-            {
-                "order": 22,
-                "prompt": "Choose the correct sentence.",
-                "options": [
-                    "He completed the work successful.",
-                    "He completed the work successfully.",
-                    "He completed the work success.",
-                    "He completed the work successfulness.",
-                ],
-                "answer": (
-                    "He completed the work successfully."
-                ),
-                "explanation": (
-                    "После completed нужен adverb successfully."
-                ),
-            },
-
-            {
-                "order": 23,
-                "prompt": "Choose the correct spelling pair.",
-                "options": [
-                    (
-                        "happy → happiness / "
-                        "easy → easily"
-                    ),
-                    (
-                        "happy → happyness / "
-                        "easy → easyly"
-                    ),
-                    (
-                        "happy → happyness / "
-                        "easy → easynessly"
-                    ),
-                    (
-                        "happy → happyment / "
-                        "easy → easiful"
-                    ),
-                ],
-                "answer": (
-                    "happy → happiness / "
-                    "easy → easily"
-                ),
-                "explanation": (
-                    "Перед некоторыми suffixes конечная y меняется на i."
-                ),
-            },
-
-            {
-                "order": 24,
-                "prompt": "Choose the fully correct sequence.",
-                "options": [
-                    (
-                        "develop → development / "
-                        "success → successful / "
-                        "careful → carefully / "
-                        "simple → simplify / "
-                        "possible → impossible"
-                    ),
-                    (
-                        "develop → developement / "
-                        "success → successly / "
-                        "careful → carefulnessly / "
-                        "simple → simpleness verb / "
-                        "possible → unpossible"
-                    ),
-                    (
-                        "develop → developingly / "
-                        "success → succesfuly / "
-                        "careful → carely / "
-                        "simple → simpleness / "
-                        "possible → dispossible"
-                    ),
-                    (
-                        "develop → developerly / "
-                        "success → successment / "
-                        "careful → carefulful / "
-                        "simple → simplefyly / "
-                        "possible → inpossible"
-                    ),
-                ],
-                "answer": (
-                    "develop → development / "
-                    "success → successful / "
-                    "careful → carefully / "
-                    "simple → simplify / "
-                    "possible → impossible"
-                ),
-                "explanation": (
-                    "Нужно правильно определить часть речи, "
-                    "а затем выбрать suffix/prefix и написание."
-                ),
+                "answer":
+                    "improvement",
+                "explanation":
+                    "После A BIG нужен noun.",
             },
 
         ]
 
-        for data in exercises:
+
+        # =================================================
+        # FINAL TEST — 10 NEW QUESTIONS
+        # =================================================
+
+        final_test = [
+
+            {
+                "order": 21,
+                "prompt":
+                    "The company made a large ___. INVEST",
+                "options": [
+                    "investment",
+                    "invest",
+                    "investive",
+                    "investly",
+                ],
+                "answer":
+                    "investment",
+                "explanation":
+                    "После A LARGE нужен noun.",
+            },
+
+            {
+                "order": 22,
+                "prompt":
+                    "The instructions were very ___. HELP",
+                "options": [
+                    "helpful",
+                    "helpfully",
+                    "help",
+                    "helper",
+                ],
+                "answer":
+                    "helpful",
+                "explanation":
+                    "После WERE VERY нужен adjective.",
+            },
+
+            {
+                "order": 23,
+                "prompt":
+                    "He spoke very ___. QUIET",
+                "options": [
+                    "quietly",
+                    "quiet",
+                    "quietness",
+                    "unquiet",
+                ],
+                "answer":
+                    "quietly",
+                "explanation":
+                    "SPOKE описывается adverb.",
+            },
+
+            {
+                "order": 24,
+                "prompt":
+                    "Her ___ is very important to the team. CREATE",
+                "options": [
+                    "creativity",
+                    "creative",
+                    "creatively",
+                    "create",
+                ],
+                "answer":
+                    "creativity",
+                "explanation":
+                    "После HER нужен noun.",
+            },
+
+            {
+                "order": 25,
+                "prompt":
+                    "The answer was ___. CORRECT",
+                "options": [
+                    "incorrect",
+                    "incorrectly",
+                    "correction",
+                    "correctnessly",
+                ],
+                "answer":
+                    "incorrect",
+                "explanation":
+                    "После WAS нужен adjective; по смыслу — отрицательная форма.",
+            },
+
+            {
+                "order": 26,
+                "prompt":
+                    "The company wants to ___ its website. MODERN",
+                "options": [
+                    "modernize",
+                    "modernly",
+                    "modernity",
+                    "modernful",
+                ],
+                "answer":
+                    "modernize",
+                "explanation":
+                    "После TO нужен verb.",
+            },
+
+            {
+                "order": 27,
+                "prompt":
+                    "There is high ___ in this region. EMPLOY",
+                "options": [
+                    "unemployment",
+                    "unemployed",
+                    "employee",
+                    "employer",
+                ],
+                "answer":
+                    "unemployment",
+                "explanation":
+                    "Нужен noun; по смыслу — unemployment.",
+            },
+
+            {
+                "order": 28,
+                "prompt":
+                    "Choose the correct word family.",
+                "options": [
+                    "educate → education → educational",
+                    "educate → educately → educationful",
+                    "education → educateness → educationally noun",
+                    "educate → uneducatement → educatorly",
+                ],
+                "answer":
+                    "educate → education → educational",
+                "explanation":
+                    "Verb → noun → adjective.",
+            },
+
+            {
+                "order": 29,
+                "prompt":
+                    "Choose the correct negative pair.",
+                "options": [
+                    "possible → impossible / regular → irregular",
+                    "possible → unpossible / regular → inregular",
+                    "possible → dispossible / regular → unregular",
+                    "possible → inpossible / regular → disregular",
+                ],
+                "answer":
+                    "possible → impossible / regular → irregular",
+                "explanation":
+                    "Правильные формы: IMPOSSIBLE и IRREGULAR.",
+            },
+
+            {
+                "order": 30,
+                "prompt":
+                    "Choose the fully correct sequence.",
+                "options": [
+                    "develop → development / success → successful / careful → carefully / possible → impossible",
+                    "develop → developly / success → successfully adjective / careful → carement / possible → unpossible",
+                    "develop → developmentful / success → successly / careful → carefully noun / possible → inpossible",
+                    "develop → developness / success → succeedful / careful → carely / possible → dispossible",
+                ],
+                "answer":
+                    "develop → development / success → successful / careful → carefully / possible → impossible",
+                "explanation":
+                    "Нужно правильно определить noun, adjective, adverb и negative form.",
+            },
+
+        ]
+
+
+        all_exercises = (
+            training
+            +
+            final_test
+        )
+
+        valid_orders = [
+            item["order"]
+            for item in all_exercises
+        ]
+
+
+        for data in all_exercises:
+
+            if data["order"] <= 20:
+
+                section = (
+                    section_objects[
+                        data["section"]
+                    ]
+                )
+
+            else:
+
+                section = None
+
+
             GrammarExercise.objects.update_or_create(
                 lesson=lesson,
                 order=data["order"],
                 defaults={
-                    "exercise_type": GrammarExercise.Type.CHOICE,
-                    "prompt": data["prompt"],
-                    "options": data["options"],
-                    "correct_answer": data["answer"],
-                    "explanation": data["explanation"],
-                    "is_published": True,
+                    "section":
+                        section,
+
+                    "exercise_type":
+                        "choice",
+
+                    "prompt":
+                        data["prompt"],
+
+                    "options":
+                        data["options"],
+
+                    "correct_answer":
+                        data["answer"],
+
+                    "explanation":
+                        data["explanation"],
+
+                    "is_published":
+                        True,
                 },
             )
 
+
+        # Удаляем старые упражнения
+        GrammarExercise.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__in=valid_orders,
+        ).delete()
+
+
+        # Удаляем старые Sections 11–14
+        GrammarLessonSection.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__in=[
+                item["order"]
+                for item in sections
+            ],
+        ).delete()
+
+
         self.stdout.write(
             self.style.SUCCESS(
-                "✅ A1 Lesson 55 seeded: Word Formation"
+                "✅ Interactive A1 Lesson 55 seeded"
             )
         )
 
         self.stdout.write(
-            f"Sections: {lesson.sections.count()}"
+            f"Micro rules: "
+            f"{lesson.sections.count()}"
         )
 
         self.stdout.write(
-            f"Exercises: {lesson.exercises.count()}"
+            "Training exercises: "
+            f"{lesson.exercises.filter(section__isnull=False).count()}"
+        )
+
+        self.stdout.write(
+            "Final test: "
+            f"{lesson.exercises.filter(section__isnull=True).count()}"
         )

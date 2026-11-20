@@ -10,9 +10,10 @@ from grammar.models import (
 class Command(BaseCommand):
 
     help = (
-        "Create/update A1 Grammar Lesson 51: "
-        "Direct and Reported Speech."
+        "Create/update interactive A1 Grammar "
+        "Lesson 51: Direct and Reported Speech."
     )
+
 
     def handle(self, *args, **options):
 
@@ -20,53 +21,68 @@ class Command(BaseCommand):
             level="A1",
             order=51,
             defaults={
-                "title": "Прямая и косвенная речь",
-                "slug": "reported-speech",
-                "theory_text": (
+                "title":
+                    "Прямая и косвенная речь",
+
+                "slug":
+                    "reported-speech",
+
+                "theory_text":
                     "Direct and Reported Speech: "
-                    "statements, questions and commands."
-                ),
-                "estimated_minutes": 50,
-                "pass_score": 70,
-                "xp_reward": 100,
-                "is_published": True,
+                    "statements, questions and commands.",
+
+                "estimated_minutes":
+                    20,
+
+                "pass_score":
+                    70,
+
+                "xp_reward":
+                    100,
+
+                "is_published":
+                    True,
             },
         )
+
+
+        # =================================================
+        # 10 MICRO RULES
+        # =================================================
 
         sections = [
 
             {
                 "order": 1,
-                "title": "Прямая и косвенная речь",
-                "body": """Прямая речь передаёт точные слова человека.
+                "title":
+                    "Direct Speech и Reported Speech",
 
-Anna said, "I am tired."
+                "body":
+                    """Direct Speech передаёт
+точные слова человека.
 
-Косвенная речь передаёт смысл сказанного:
+Anna said:
+"I am tired."
 
-Anna said that she was tired.
+Reported Speech передаёт
+смысл этих слов.
 
-При переходе в косвенную речь могут меняться:
+Anna said that
+she was tired.
 
-местоимения;
-
-времена;
-
-слова времени и места;
-
-порядок слов;
-
-форма вопроса;
-
-форма команды.
-
-Кавычки в косвенной речи исчезают.""",
+Кавычки исчезают,
+а некоторые слова меняются.""",
             },
+
 
             {
                 "order": 2,
-                "title": "SAY, TELL и THAT",
-                "body": """SAY обычно используется без человека:
+                "title":
+                    "SAY и TELL",
+
+                "body":
+                    """SAY обычно используется
+без человека после глагола.
 
 He said that he was tired.
 
@@ -74,77 +90,82 @@ He said that he was tired.
 
 He said me...
 
-TELL требует человека:
+TELL требует человека.
 
-He told me that he was tired.
+He told me
+that he was tired.
 
 Не:
 
 He told that...
 
-Сравните:
+SAY + that
 
-He said that he was tired.
-
-He told me that he was tired.
-
-THAT часто можно опустить:
-
-She said that she was busy.
-
-She said she was busy.""",
+TELL + person + that""",
             },
+
 
             {
                 "order": 3,
-                "title": "Сдвиг времён: Present",
-                "body": """Если reporting verb стоит в прошлом, время часто сдвигается назад.
+                "title":
+                    "Present → Past",
 
-Present Simple → Past Simple
+                "body":
+                    """Если SAY стоит в прошлом,
+время часто сдвигается назад.
 
-"I work every day."
+Present Simple
+→ Past Simple
 
-→ He said that he worked every day.
+"I work here."
 
-Present Continuous → Past Continuous
+He said that
+he worked there.
 
-"I am working now."
+Present Continuous
+→ Past Continuous
 
-→ He said that he was working then.
+"I am working."
 
-Этот сдвиг называется:
-
-backshift.""",
+He said that
+he was working.""",
             },
+
 
             {
                 "order": 4,
-                "title": "Сдвиг времён: Past и Perfect",
-                "body": """Past Simple → Past Perfect
+                "title":
+                    "Past и Present Perfect",
 
-"I finished the work."
+                "body":
+                    """Past Simple
+часто становится Past Perfect.
 
-→ He said that he had finished the work.
+"I saw Anna."
 
-Present Perfect → Past Perfect
+He said that
+he had seen Anna.
+
+Present Perfect
+тоже становится Past Perfect.
 
 "I have finished."
 
-→ He said that he had finished.
+She said that
+she had finished.
 
-Past Continuous → Past Perfect Continuous
-
-"I was working."
-
-→ He said that he had been working.
-
-Past Perfect обычно не меняется.""",
+Past Perfect обычно
+не меняется.""",
             },
+
 
             {
                 "order": 5,
-                "title": "Модальные глаголы",
-                "body": """При обычном backshift:
+                "title":
+                    "WILL, CAN, MAY",
+
+                "body":
+                    """Частые изменения:
 
 will → would
 
@@ -152,73 +173,53 @@ can → could
 
 may → might
 
-must → часто had to
-
-Примеры:
-
 "I will call you."
 
-→ He said that he would call me.
+He said that
+he would call me.
 
 "I can swim."
 
-→ She said that she could swim.
-
-"I may come."
-
-→ She said that she might come.
-
-Should, could, might и would обычно не меняются.""",
+She said that
+she could swim.""",
             },
+
 
             {
                 "order": 6,
-                "title": "Когда время можно не менять",
-                "body": """Backshift нужен не всегда.
+                "title":
+                    "Местоимения",
 
-Если reporting verb стоит в настоящем:
+                "body":
+                    """Местоимения меняются
+по смыслу.
 
-She says, "I am tired."
+Ali said:
+"I am busy."
 
-→ She says that she is tired.
+Ali said that
+he was busy.
 
-Если сообщается общий факт:
+Sara said to me:
+"You are late."
 
-The teacher said, "Water boils at 100°C."
+Sara told me that
+I was late.
 
-→ The teacher said that water boils at 100°C.
+Нужно понимать:
 
-Если ситуация всё ещё актуальна, настоящее время иногда можно сохранить.""",
+кто говорит
+и кому.""",
             },
+
 
             {
                 "order": 7,
-                "title": "Изменение местоимений",
-                "body": """Местоимения меняются по смыслу.
+                "title":
+                    "NOW, TODAY, TOMORROW",
 
-Ali said, "I am busy."
-
-→ Ali said that he was busy.
-
-They said, "We are ready."
-
-→ They said that they were ready.
-
-She said to me, "You are late."
-
-→ She told me that I was late.
-
-He said, "My car is new."
-
-→ He said that his car was new.
-
-Важно понять: кто говорит и кому.""",
-            },
-
-            {
-                "order": 8,
-                "title": "Слова времени и места",
-                "body": """Частые изменения:
+                "body":
+                    """Частые изменения:
 
 now → then
 
@@ -228,749 +229,785 @@ yesterday → the day before
 
 tomorrow → the next day
 
-last week → the week before
-
-next week → the following week
-
-ago → before
-
 here → there
 
 this → that
 
-these → those
+"I'll call tomorrow."
 
-Пример:
-
-"I will call you tomorrow."
-
-→ She said that she would call me the next day.""",
+She said that
+she would call
+the next day.""",
             },
 
-            {
-                "order": 9,
-                "title": "Утверждения и отрицания",
-                "body": """Для утверждения:
-
-said that + sentence
-
-"I am tired."
-
-→ She said that she was tired.
-
-Если указываем человека:
-
-told + person + that + sentence
-
-→ She told me that she was tired.
-
-Отрицание сохраняет смысл:
-
-"I don't like coffee."
-
-→ He said that he didn't like coffee.
-
-"I won't come."
-
-→ He said that he wouldn't come.""",
-            },
 
             {
-                "order": 10,
-                "title": "Общие вопросы: IF / WHETHER",
-                "body": """Для вопросов Yes/No используются:
+                "order": 8,
+                "title":
+                    "Yes / No questions",
 
-if
+                "body":
+                    """Для вопросов без
+question word используем:
 
-whether
-
-Формула:
-
-asked + if/whether + прямой порядок слов
+ASKED + IF / WHETHER
 
 "Are you tired?"
 
-→ She asked if I was tired.
-
-"Did she call?"
-
-→ He asked whether she had called.
+She asked
+if I was tired.
 
 Важно:
 
-в косвенном вопросе нет вопросительного порядка слов.
+в Reported Speech
+обычный порядок слов.
 
 Не:
 
-She asked if was I tired.
+if was I tired
 
 Правильно:
 
-She asked if I was tired.""",
+if I was tired.""",
             },
 
+
             {
-                "order": 11,
-                "title": "Специальные вопросы",
-                "body": """Вопросительное слово сохраняется:
+                "order": 9,
+                "title":
+                    "WH-questions",
 
-what
-
-where
-
-when
-
-why
-
-who
-
-how
-
-Формула:
-
-asked + question word + прямой порядок слов
+                "body":
+                    """Question word сохраняется.
 
 "Where do you live?"
 
-→ She asked where I lived.
+She asked
+where I lived.
 
 "What are you doing?"
 
-→ He asked what I was doing.
+He asked
+what I was doing.
 
-Do, does и did в косвенном вопросе исчезают.""",
+DO / DOES / DID
+исчезают.
+
+После question word
+идёт обычный порядок слов.""",
             },
 
-            {
-                "order": 12,
-                "title": "Команды и просьбы",
-                "body": """Для приказов и просьб используется:
 
-tell/ask + person + to + V1
+            {
+                "order": 10,
+                "title":
+                    "Команды и просьбы",
+
+                "body":
+                    """Команда:
+
+TELL + person + TO + V1
 
 "Sit down."
 
-→ The teacher told us to sit down.
+The teacher told us
+to sit down.
+
+Просьба:
+
+ASK + person + TO + V1
 
 "Please help me."
 
-→ She asked me to help her.
+She asked me
+to help her.
 
-Отрицательная команда:
+Отрицание:
 
-tell/ask + person + not to + V1
+NOT TO + V1
 
-"Don't open the door."
+"Don't open it."
 
-→ He told me not to open the door.""",
-            },
-
-            {
-                "order": 13,
-                "title": "Другие reporting verbs",
-                "body": """Совет:
-
-"You should rest."
-
-→ The doctor advised me to rest.
-
-Предложение помощи:
-
-"I'll help you."
-
-→ He offered to help me.
-
-Обещание:
-
-"I'll call you."
-
-→ She promised to call me.
-
-Отказ:
-
-"I won't do it."
-
-→ He refused to do it.
-
-Предложение идеи:
-
-"Let's take a taxi."
-
-→ She suggested taking a taxi.
-
-После suggest обычно:
-
-doing
-
-или
-
-that + sentence.""",
-            },
-
-            {
-                "order": 14,
-                "title": "Алгоритм Reported Speech",
-                "body": """Шаг 1.
-
-Определите тип:
-
-утверждение;
-
-вопрос;
-
-приказ;
-
-просьба;
-
-совет;
-
-предложение.
-
-Шаг 2.
-
-Выберите reporting verb:
-
-said;
-
-told;
-
-asked;
-
-advised;
-
-promised;
-
-suggested.
-
-Шаг 3.
-
-Измените местоимения.
-
-Шаг 4.
-
-При необходимости сделайте backshift.
-
-Шаг 5.
-
-Измените слова времени и места.
-
-Шаг 6.
-
-Уберите кавычки.
-
-Самое важное:
-
-в косвенных вопросах используется прямой порядок слов.""",
+He told me
+not to open it.""",
             },
 
         ]
 
+
+        section_objects = {}
+
+
         for data in sections:
-            GrammarLessonSection.objects.update_or_create(
+
+            section, _ = GrammarLessonSection.objects.update_or_create(
                 lesson=lesson,
                 order=data["order"],
                 defaults={
-                    "title": data["title"],
-                    "body": data["body"],
+                    "title":
+                        data["title"],
+
+                    "body":
+                        data["body"],
                 },
             )
 
-        exercises = [
+            section_objects[
+                data["order"]
+            ] = section
 
+
+        # =================================================
+        # 20 TRAINING EXERCISES
+        # =================================================
+
+        training = [
+
+            # SECTION 1
             {
                 "order": 1,
-                "prompt": (
-                    '"I work in a bank," he said.'
-                ),
+                "section": 1,
+                "type": "choice",
+                "prompt":
+                    '"I am tired," Anna said. Choose Reported Speech.',
                 "options": [
-                    "He said that he worked in a bank.",
-                    "He said that he works yesterday.",
-                    "He told that he worked in a bank.",
-                    "He asked if he worked in a bank.",
+                    "Anna said that she was tired.",
+                    "Anna asked if she was tired.",
+                    "Anna told that she tired.",
+                    "Anna said that I was tired.",
                 ],
-                "answer": "He said that he worked in a bank.",
-                "explanation": (
-                    "Present Simple → Past Simple after said."
-                ),
+                "answer":
+                    "Anna said that she was tired.",
+                "explanation":
+                    "Direct Speech превращаем в Reported Speech без кавычек.",
             },
 
             {
                 "order": 2,
-                "prompt": (
-                    '"I am studying now," she said.'
-                ),
+                "section": 1,
+                "type": "choice",
+                "prompt":
+                    "Which sentence is Reported Speech?",
                 "options": [
-                    "She said that she was studying then.",
-                    "She said that she is studying yesterday.",
-                    "She told that she studied now.",
-                    "She asked if she studied.",
+                    "Tom said that he was busy.",
+                    'Tom said, "I am busy."',
+                    '"I am busy," Tom said.',
+                    '"Are you busy?" Tom asked.',
                 ],
-                "answer": (
-                    "She said that she was studying then."
-                ),
-                "explanation": (
-                    "Present Continuous → Past Continuous; "
-                    "now → then."
-                ),
+                "answer":
+                    "Tom said that he was busy.",
+                "explanation":
+                    "Reported Speech передаёт смысл без кавычек.",
             },
 
+
+            # SECTION 2
             {
                 "order": 3,
-                "prompt": (
-                    '"I saw him yesterday," he said.'
-                ),
+                "section": 2,
+                "type": "choice",
+                "prompt":
+                    "Choose the correct sentence with TELL.",
                 "options": [
-                    "He said that he saw him tomorrow.",
-                    (
-                        "He said that he had seen him "
-                        "the day before."
-                    ),
-                    "He told that he had saw him.",
-                    "He asked if he saw him.",
+                    "She told me that she was tired.",
+                    "She told that she was tired.",
+                    "She said me that she was tired.",
+                    "She told me she is tired yesterday.",
                 ],
-                "answer": (
-                    "He said that he had seen him "
-                    "the day before."
-                ),
-                "explanation": (
-                    "Past Simple → Past Perfect; "
-                    "yesterday → the day before."
-                ),
+                "answer":
+                    "She told me that she was tired.",
+                "explanation":
+                    "TELL требует объект: told me.",
             },
 
             {
                 "order": 4,
-                "prompt": '"I have finished," she said.',
+                "section": 2,
+                "type": "choice",
+                "prompt":
+                    "Choose the correct sentence with SAY.",
                 "options": [
-                    "She said that she had finished.",
-                    "She said that she has finished yesterday.",
-                    "She told that she finished now.",
-                    "She asked if she had finished.",
+                    "He said that he was busy.",
+                    "He said me that he was busy.",
+                    "He told that he was busy.",
+                    "He said me he busy.",
                 ],
-                "answer": "She said that she had finished.",
-                "explanation": (
-                    "Present Perfect → Past Perfect."
-                ),
+                "answer":
+                    "He said that he was busy.",
+                "explanation":
+                    "SAY обычно не требует человека сразу после глагола.",
             },
 
+
+            # SECTION 3
             {
                 "order": 5,
-                "prompt": (
-                    '"I will come tomorrow," he said.'
-                ),
+                "section": 3,
+                "type": "choice",
+                "prompt":
+                    '"I work at home," he said.',
                 "options": [
-                    (
-                        "He said that he would come "
-                        "the next day."
-                    ),
-                    "He said that he will come yesterday.",
-                    "He told that he would came.",
-                    "He asked if he came.",
+                    "He said that he worked at home.",
+                    "He said that he works yesterday.",
+                    "He told that he worked at home.",
+                    "He asked if he worked at home.",
                 ],
-                "answer": (
-                    "He said that he would come "
-                    "the next day."
-                ),
-                "explanation": (
-                    "Will → would; tomorrow → the next day."
-                ),
+                "answer":
+                    "He said that he worked at home.",
+                "explanation":
+                    "Present Simple → Past Simple.",
             },
 
             {
                 "order": 6,
-                "prompt": '"Can you swim?" she asked.',
+                "section": 3,
+                "type": "choice",
+                "prompt":
+                    '"I am studying," she said.',
                 "options": [
-                    "She asked can I swim.",
-                    "She asked if I could swim.",
-                    "She told me if I could swim.",
-                    "She said whether could I swim.",
+                    "She said that she was studying.",
+                    "She said that she studied now.",
+                    "She said that she is studied.",
+                    "She asked if she was study.",
                 ],
-                "answer": "She asked if I could swim.",
-                "explanation": (
-                    "Yes/No question → asked if; "
-                    "can → could; direct word order."
-                ),
+                "answer":
+                    "She said that she was studying.",
+                "explanation":
+                    "Present Continuous → Past Continuous.",
             },
 
+
+            # SECTION 4
             {
                 "order": 7,
-                "prompt": '"What are you doing?" he asked.',
+                "section": 4,
+                "type": "choice",
+                "prompt":
+                    '"I saw the film," he said.',
                 "options": [
-                    "He asked what was I doing.",
-                    "He asked what I was doing.",
-                    "He said what I did.",
-                    "He asked what did I do.",
+                    "He said that he had seen the film.",
+                    "He said that he had saw the film.",
+                    "He said that he has seen the film.",
+                    "He told that he had seen the film.",
                 ],
-                "answer": "He asked what I was doing.",
-                "explanation": (
-                    "Wh-word сохраняется, но порядок слов прямой."
-                ),
+                "answer":
+                    "He said that he had seen the film.",
+                "explanation":
+                    "Past Simple → Past Perfect; SEE → SEEN.",
             },
 
             {
                 "order": 8,
-                "prompt": '"Why did she leave?" he asked.',
+                "section": 4,
+                "type": "choice",
+                "prompt":
+                    '"I have finished the work," she said.',
                 "options": [
-                    "He asked why had she left.",
-                    "He asked why she had left.",
-                    "He said why she left.",
-                    "He asked why did she leave.",
+                    "She said that she had finished the work.",
+                    "She said that she has finish the work.",
+                    "She said that she finished tomorrow.",
+                    "She asked if she had finished the work.",
                 ],
-                "answer": "He asked why she had left.",
-                "explanation": (
-                    "Did исчезает; Past Simple → Past Perfect."
-                ),
+                "answer":
+                    "She said that she had finished the work.",
+                "explanation":
+                    "Present Perfect → Past Perfect.",
             },
 
+
+            # SECTION 5
             {
                 "order": 9,
-                "prompt": '"Please wait," she said.',
+                "section": 5,
+                "type": "choice",
+                "prompt":
+                    '"I will call you," he said.',
                 "options": [
-                    "She asked me to wait.",
-                    "She said me wait.",
-                    "She told that I waited.",
-                    "She asked if I waited.",
+                    "He said that he would call me.",
+                    "He said that he will called me.",
+                    "He told that he would call me.",
+                    "He said that he would called me.",
                 ],
-                "answer": "She asked me to wait.",
-                "explanation": (
-                    "Просьба: ask + person + to + V1."
-                ),
+                "answer":
+                    "He said that he would call me.",
+                "explanation":
+                    "WILL → WOULD.",
             },
 
             {
                 "order": 10,
-                "prompt": '"Don\'t touch it," he said.',
+                "section": 5,
+                "type": "choice",
+                "prompt":
+                    '"I can help you," she said.',
                 "options": [
-                    "He told me not to touch it.",
-                    "He said me don't touch it.",
-                    "He asked me to not touching it.",
-                    "He told that I didn't touch it.",
+                    "She said that she could help me.",
+                    "She said that she can helped me.",
+                    "She told that she could help me.",
+                    "She said that she could to help me.",
                 ],
-                "answer": "He told me not to touch it.",
-                "explanation": (
-                    "Отрицательная команда: "
-                    "tell + person + not to + V1."
-                ),
+                "answer":
+                    "She said that she could help me.",
+                "explanation":
+                    "CAN → COULD.",
             },
 
+
+            # SECTION 6
             {
                 "order": 11,
-                "prompt": (
-                    '"You should rest," the doctor said.'
-                ),
+                "section": 6,
+                "type": "choice",
+                "prompt":
+                    'Ali said, "I am hungry."',
                 "options": [
-                    "The doctor advised me to rest.",
-                    "The doctor said me to rest.",
-                    "The doctor asked if I rested.",
-                    "The doctor suggested to rest me.",
+                    "Ali said that he was hungry.",
+                    "Ali said that I was hungry.",
+                    "Ali told that he was hungry.",
+                    "Ali asked if he was hungry.",
                 ],
-                "answer": "The doctor advised me to rest.",
-                "explanation": (
-                    "Совет можно передать через advise + person + to."
-                ),
+                "answer":
+                    "Ali said that he was hungry.",
+                "explanation":
+                    "I относится к Ali, поэтому меняется на HE.",
             },
 
             {
                 "order": 12,
-                "prompt": '"I\'ll help you," he said.',
+                "section": 6,
+                "type": "choice",
+                "prompt":
+                    'Sara said to me, "You are late."',
                 "options": [
-                    "He offered to help me.",
-                    "He offered helping me to.",
-                    "He said me help.",
-                    "He asked if I helped.",
+                    "Sara told me that I was late.",
+                    "Sara said me that you were late.",
+                    "Sara told that I was late.",
+                    "Sara asked me if she was late.",
                 ],
-                "answer": "He offered to help me.",
-                "explanation": (
-                    "Предложение помощи → offered to help."
-                ),
+                "answer":
+                    "Sara told me that I was late.",
+                "explanation":
+                    "YOU относится к слушателю, поэтому здесь → I.",
             },
 
+
+            # SECTION 7
             {
                 "order": 13,
-                "prompt": '"I won\'t do it," he said.',
+                "section": 7,
+                "type": "choice",
+                "prompt":
+                    '"I will call you tomorrow," she said.',
                 "options": [
-                    "He refused to do it.",
-                    "He refused doing it.",
-                    "He said me not do it.",
-                    "He asked not to do it.",
+                    "She said that she would call me the next day.",
+                    "She said that she will call me yesterday.",
+                    "She told that she would call tomorrow.",
+                    "She said that she would called me the next day.",
                 ],
-                "answer": "He refused to do it.",
-                "explanation": (
-                    "Отказ → refuse + to + V1."
-                ),
+                "answer":
+                    "She said that she would call me the next day.",
+                "explanation":
+                    "WILL → WOULD; TOMORROW → THE NEXT DAY.",
             },
 
             {
                 "order": 14,
-                "prompt": '"Let\'s meet at six," she said.',
+                "section": 7,
+                "type": "choice",
+                "prompt":
+                    '"I saw him yesterday," he said.',
                 "options": [
-                    "She suggested meeting at six.",
-                    "She suggested to meet at six.",
-                    "She told meeting at six.",
-                    "She asked if meet at six.",
+                    "He said that he had seen him the day before.",
+                    "He said that he saw him the next day.",
+                    "He said that he had saw him yesterday.",
+                    "He asked if he had seen him tomorrow.",
                 ],
-                "answer": "She suggested meeting at six.",
-                "explanation": (
-                    "Suggest обычно используется с verb-ing."
-                ),
+                "answer":
+                    "He said that he had seen him the day before.",
+                "explanation":
+                    "YESTERDAY → THE DAY BEFORE.",
             },
 
+
+            # SECTION 8
             {
                 "order": 15,
-                "prompt": (
-                    '"Do you know the answer?" he asked.'
-                ),
+                "section": 8,
+                "type": "choice",
+                "prompt":
+                    '"Are you ready?" she asked.',
                 "options": [
-                    "He asked if I knew the answer.",
-                    "He asked did I know the answer.",
-                    "He told me if I know the answer.",
-                    "He said whether knew I the answer.",
+                    "She asked if I was ready.",
+                    "She asked if was I ready.",
+                    "She said if I was ready.",
+                    "She told me was I ready.",
                 ],
-                "answer": "He asked if I knew the answer.",
-                "explanation": (
-                    "Yes/No question → if + direct word order."
-                ),
+                "answer":
+                    "She asked if I was ready.",
+                "explanation":
+                    "Yes/No question → ASKED IF + обычный порядок слов.",
             },
 
             {
                 "order": 16,
-                "prompt": "Choose the correct SAY/TELL sentence.",
+                "section": 8,
+                "type": "choice",
+                "prompt":
+                    '"Did Tom call?" he asked.',
                 "options": [
-                    "He said me that he was tired.",
-                    "He told me that he was tired.",
-                    "He told that he was tired.",
-                    "He said me he tired.",
+                    "He asked whether Tom had called.",
+                    "He asked whether had Tom called.",
+                    "He said whether Tom called.",
+                    "He asked did Tom call.",
                 ],
-                "answer": "He told me that he was tired.",
-                "explanation": (
-                    "Tell требует человека: told me."
-                ),
+                "answer":
+                    "He asked whether Tom had called.",
+                "explanation":
+                    "DID исчезает; Past Simple → Past Perfect.",
             },
 
+
+            # SECTION 9
             {
                 "order": 17,
-                "prompt": "Choose the correct sentence with SAY.",
+                "section": 9,
+                "type": "choice",
+                "prompt":
+                    '"Where do you live?" she asked.',
                 "options": [
-                    "She said that she was busy.",
-                    "She said me that she was busy.",
-                    "She told that she was busy.",
-                    "She said to that she busy.",
+                    "She asked where I lived.",
+                    "She asked where did I live.",
+                    "She asked where do I live.",
+                    "She said where I lived.",
                 ],
-                "answer": "She said that she was busy.",
-                "explanation": (
-                    "Say обычно не требует объекта person."
-                ),
+                "answer":
+                    "She asked where I lived.",
+                "explanation":
+                    "WH-word сохраняется, но порядок слов становится обычным.",
             },
 
             {
                 "order": 18,
-                "prompt": (
-                    "Choose the correct indirect question."
-                ),
+                "section": 9,
+                "type": "choice",
+                "prompt":
+                    '"What are you doing?" he asked.',
                 "options": [
-                    "Can you tell me where is the bank?",
-                    "Can you tell me where the bank is?",
-                    "Can you tell me where does the bank be?",
-                    "Can you tell me where the bank does is?",
+                    "He asked what I was doing.",
+                    "He asked what was I doing.",
+                    "He asked what did I do.",
+                    "He said what I was doing.",
                 ],
-                "answer": (
-                    "Can you tell me where the bank is?"
-                ),
-                "explanation": (
-                    "В косвенном вопросе используется прямой порядок слов."
-                ),
+                "answer":
+                    "He asked what I was doing.",
+                "explanation":
+                    "После WHAT используется subject + verb.",
             },
 
+
+            # SECTION 10
             {
                 "order": 19,
-                "prompt": (
-                    '"I can help," she said.'
-                ),
+                "section": 10,
+                "type": "choice",
+                "prompt":
+                    '"Please wait here," she said.',
                 "options": [
-                    "She said that she could help.",
-                    "She said that she can helped.",
-                    "She told that she could help.",
-                    "She said that she could to help.",
+                    "She asked me to wait there.",
+                    "She said me wait there.",
+                    "She asked if I waited there.",
+                    "She told that I wait here.",
                 ],
-                "answer": "She said that she could help.",
-                "explanation": (
-                    "Can → could."
-                ),
+                "answer":
+                    "She asked me to wait there.",
+                "explanation":
+                    "Просьба → ASK + person + TO + V1.",
             },
 
             {
                 "order": 20,
-                "prompt": (
-                    '"I may come," he said.'
-                ),
+                "section": 10,
+                "type": "choice",
+                "prompt":
+                    '"Don\'t open the door," he said.',
                 "options": [
-                    "He said that he might come.",
-                    "He said that he may came.",
-                    "He told that he might to come.",
-                    "He asked that he might come.",
+                    "He told me not to open the door.",
+                    "He told me don't open the door.",
+                    "He said me not open the door.",
+                    "He asked if I didn't open the door.",
                 ],
-                "answer": "He said that he might come.",
-                "explanation": (
-                    "May → might."
-                ),
-            },
-
-            {
-                "order": 21,
-                "prompt": (
-                    "Choose the correct time-word changes."
-                ),
-                "options": [
-                    (
-                        "now → then / "
-                        "yesterday → the day before / "
-                        "tomorrow → the next day"
-                    ),
-                    (
-                        "now → tomorrow / "
-                        "yesterday → next day / "
-                        "tomorrow → before"
-                    ),
-                    (
-                        "now → there / "
-                        "yesterday → then / "
-                        "tomorrow → ago"
-                    ),
-                    (
-                        "now → that / "
-                        "yesterday → here / "
-                        "tomorrow → those"
-                    ),
-                ],
-                "answer": (
-                    "now → then / "
-                    "yesterday → the day before / "
-                    "tomorrow → the next day"
-                ),
-                "explanation": (
-                    "Это стандартные изменения слов времени."
-                ),
-            },
-
-            {
-                "order": 22,
-                "prompt": (
-                    '"I am tired," Anna said.'
-                ),
-                "options": [
-                    "Anna said that she was tired.",
-                    "Anna said that I was tired.",
-                    "Anna told that she was tired.",
-                    "Anna asked if she tired.",
-                ],
-                "answer": "Anna said that she was tired.",
-                "explanation": (
-                    "I меняется на she по смыслу; am → was."
-                ),
-            },
-
-            {
-                "order": 23,
-                "prompt": (
-                    "Choose the correct command/request pair."
-                ),
-                "options": [
-                    (
-                        "He told me to wait. / "
-                        "She asked me not to be late."
-                    ),
-                    (
-                        "He told me that wait. / "
-                        "She asked me don't be late."
-                    ),
-                    (
-                        "He said me to wait. / "
-                        "She asked that I not late."
-                    ),
-                    (
-                        "He told to me wait. / "
-                        "She asked me to not late."
-                    ),
-                ],
-                "answer": (
-                    "He told me to wait. / "
-                    "She asked me not to be late."
-                ),
-                "explanation": (
-                    "Command/request: person + to V1; "
-                    "negative: person + not to V1."
-                ),
-            },
-
-            {
-                "order": 24,
-                "prompt": "Choose the fully correct sequence.",
-                "options": [
-                    (
-                        "She said that she was tired. / "
-                        "He asked if I was ready. / "
-                        "She asked where I lived. / "
-                        "He told me not to leave."
-                    ),
-                    (
-                        "She said me that she was tired. / "
-                        "He asked was I ready. / "
-                        "She asked where did I live. / "
-                        "He told me don't leave."
-                    ),
-                    (
-                        "She told that she was tired. / "
-                        "He asked if was I ready. / "
-                        "She asked where do I live. / "
-                        "He said me not leave."
-                    ),
-                    (
-                        "She said that she is tired yesterday. / "
-                        "He told if I ready. / "
-                        "She asked where I did live. / "
-                        "He told that not to leave."
-                    ),
-                ],
-                "answer": (
-                    "She said that she was tired. / "
-                    "He asked if I was ready. / "
-                    "She asked where I lived. / "
-                    "He told me not to leave."
-                ),
-                "explanation": (
-                    "Утверждение → said that; "
-                    "Yes/No question → asked if; "
-                    "Wh-question → direct word order; "
-                    "negative command → told + person + not to."
-                ),
+                "answer":
+                    "He told me not to open the door.",
+                "explanation":
+                    "Отрицательная команда → NOT TO + V1.",
             },
 
         ]
 
-        for data in exercises:
+
+        # =================================================
+        # FINAL TEST — 10 NEW QUESTIONS
+        # =================================================
+
+        final_test = [
+
+            {
+                "order": 21,
+                "prompt":
+                    '"I live in London," Kate said.',
+                "options": [
+                    "Kate said that she lived in London.",
+                    "Kate told that she lived in London.",
+                    "Kate said that I lived in London.",
+                    "Kate asked if she lived in London.",
+                ],
+                "answer":
+                    "Kate said that she lived in London.",
+                "explanation":
+                    "Present Simple → Past Simple; I → SHE.",
+            },
+
+            {
+                "order": 22,
+                "prompt":
+                    '"I am watching TV now," Ben said.',
+                "options": [
+                    "Ben said that he was watching TV then.",
+                    "Ben said that he watched TV tomorrow.",
+                    "Ben told that he was watching TV now.",
+                    "Ben asked if he watched TV then.",
+                ],
+                "answer":
+                    "Ben said that he was watching TV then.",
+                "explanation":
+                    "Present Continuous → Past Continuous; NOW → THEN.",
+            },
+
+            {
+                "order": 23,
+                "prompt":
+                    '"I may visit you tomorrow," Lisa said.',
+                "options": [
+                    "Lisa said that she might visit me the next day.",
+                    "Lisa said that she may visited me tomorrow.",
+                    "Lisa told that she might visit me the next day.",
+                    "Lisa said that she might visited me the next day.",
+                ],
+                "answer":
+                    "Lisa said that she might visit me the next day.",
+                "explanation":
+                    "MAY → MIGHT; TOMORROW → THE NEXT DAY.",
+            },
+
+            {
+                "order": 24,
+                "prompt":
+                    '"We finished the project," they said.',
+                "options": [
+                    "They said that they had finished the project.",
+                    "They said that we had finished the project.",
+                    "They told that they finished the project.",
+                    "They asked if they had finished the project.",
+                ],
+                "answer":
+                    "They said that they had finished the project.",
+                "explanation":
+                    "Past Simple → Past Perfect; WE → THEY.",
+            },
+
+            {
+                "order": 25,
+                "prompt":
+                    '"Can you drive?" Tom asked me.',
+                "options": [
+                    "Tom asked me if I could drive.",
+                    "Tom asked me could I drive.",
+                    "Tom told me if I can drive.",
+                    "Tom said whether could I drive.",
+                ],
+                "answer":
+                    "Tom asked me if I could drive.",
+                "explanation":
+                    "Yes/No question → IF; CAN → COULD.",
+            },
+
+            {
+                "order": 26,
+                "prompt":
+                    '"Why are you laughing?" she asked.',
+                "options": [
+                    "She asked why I was laughing.",
+                    "She asked why was I laughing.",
+                    "She asked why did I laugh.",
+                    "She said why I was laughing.",
+                ],
+                "answer":
+                    "She asked why I was laughing.",
+                "explanation":
+                    "WHY сохраняется, далее обычный порядок слов.",
+            },
+
+            {
+                "order": 27,
+                "prompt":
+                    '"Please close the window," the teacher said.',
+                "options": [
+                    "The teacher asked me to close the window.",
+                    "The teacher asked me close the window.",
+                    "The teacher said me to close the window.",
+                    "The teacher asked if I closed the window.",
+                ],
+                "answer":
+                    "The teacher asked me to close the window.",
+                "explanation":
+                    "Просьба → ASK + person + TO + V1.",
+            },
+
+            {
+                "order": 28,
+                "prompt":
+                    '"Don\'t be late," my mother said.',
+                "options": [
+                    "My mother told me not to be late.",
+                    "My mother told me don't be late.",
+                    "My mother said me not to be late.",
+                    "My mother asked if I wasn't late.",
+                ],
+                "answer":
+                    "My mother told me not to be late.",
+                "explanation":
+                    "Отрицательная команда → TOLD + person + NOT TO.",
+            },
+
+            {
+                "order": 29,
+                "prompt":
+                    "Choose the correct SAY / TELL pair.",
+                "options": [
+                    "He said that he was tired. / He told me that he was tired.",
+                    "He said me that he was tired. / He told that he was tired.",
+                    "He told that he was tired. / He said me he was tired.",
+                    "He said to that he was tired. / He told me he tired.",
+                ],
+                "answer":
+                    "He said that he was tired. / He told me that he was tired.",
+                "explanation":
+                    "SAY без объекта; TELL + person.",
+            },
+
+            {
+                "order": 30,
+                "prompt":
+                    "Choose the fully correct sequence.",
+                "options": [
+                    "She said that she was busy. / He asked if I was ready. / She asked where I lived. / He told me not to leave.",
+                    "She said me that she was busy. / He asked was I ready. / She asked where did I live. / He told me don't leave.",
+                    "She told that she was busy. / He asked if was I ready. / She asked where do I live. / He said me not leave.",
+                    "She said that she busy. / He told if I ready. / She asked where I did live. / He told that not to leave.",
+                ],
+                "answer":
+                    "She said that she was busy. / He asked if I was ready. / She asked where I lived. / He told me not to leave.",
+                "explanation":
+                    "Statement → said that; Yes/No → asked if; WH-question → normal word order; command → told + person + not to.",
+            },
+
+        ]
+
+
+        all_exercises = (
+            training
+            +
+            final_test
+        )
+
+        valid_orders = [
+            item["order"]
+            for item in all_exercises
+        ]
+
+
+        for data in all_exercises:
+
+            if data["order"] <= 20:
+
+                section = (
+                    section_objects[
+                        data["section"]
+                    ]
+                )
+
+            else:
+
+                section = None
+
+
             GrammarExercise.objects.update_or_create(
                 lesson=lesson,
                 order=data["order"],
                 defaults={
-                    "exercise_type": GrammarExercise.Type.CHOICE,
-                    "prompt": data["prompt"],
-                    "options": data["options"],
-                    "correct_answer": data["answer"],
-                    "explanation": data["explanation"],
-                    "is_published": True,
+                    "section":
+                        section,
+
+                    "exercise_type":
+                        data.get(
+                            "type",
+                            "choice",
+                        ),
+
+                    "prompt":
+                        data["prompt"],
+
+                    "options":
+                        data["options"],
+
+                    "correct_answer":
+                        data["answer"],
+
+                    "explanation":
+                        data["explanation"],
+
+                    "is_published":
+                        True,
                 },
             )
 
+
+        # Удаляем старые лишние упражнения
+        GrammarExercise.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__in=valid_orders,
+        ).delete()
+
+
+        # Удаляем старые Sections 11–14
+        GrammarLessonSection.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__in=[
+                item["order"]
+                for item in sections
+            ],
+        ).delete()
+
+
         self.stdout.write(
             self.style.SUCCESS(
-                "✅ A1 Lesson 51 seeded: Reported Speech"
+                "✅ Interactive A1 Lesson 51 seeded"
             )
         )
 
         self.stdout.write(
-            f"Sections: {lesson.sections.count()}"
+            f"Micro rules: "
+            f"{lesson.sections.count()}"
         )
 
         self.stdout.write(
-            f"Exercises: {lesson.exercises.count()}"
+            "Training exercises: "
+            f"{lesson.exercises.filter(section__isnull=False).count()}"
+        )
+
+        self.stdout.write(
+            "Final test: "
+            f"{lesson.exercises.filter(section__isnull=True).count()}"
         )

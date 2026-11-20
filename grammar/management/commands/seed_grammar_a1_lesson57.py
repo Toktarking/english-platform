@@ -10,9 +10,10 @@ from grammar.models import (
 class Command(BaseCommand):
 
     help = (
-        "Create/update A1 Grammar Lesson 57: "
-        "Possessive Case."
+        "Create/update interactive A1 Grammar "
+        "Lesson 57: Possessive Case."
     )
+
 
     def handle(self, *args, **options):
 
@@ -20,113 +21,101 @@ class Command(BaseCommand):
             level="A1",
             order=57,
             defaults={
-                "title": "Притяжательный падеж существительных",
-                "slug": "possessive-case",
-                "theory_text": (
-                    "Possessive Case: 's, apostrophe, of "
-                    "and double possessive."
-                ),
-                "estimated_minutes": 45,
-                "pass_score": 70,
-                "xp_reward": 100,
-                "is_published": True,
+                "title":
+                    "Притяжательный падеж существительных",
+
+                "slug":
+                    "possessive-case",
+
+                "theory_text":
+                    "Possessive Case: 's, apostrophe, "
+                    "of and ownership.",
+
+                "estimated_minutes":
+                    20,
+
+                "pass_score":
+                    70,
+
+                "xp_reward":
+                    100,
+
+                "is_published":
+                    True,
             },
         )
+
+
+        # =================================================
+        # 10 MICRO RULES
+        # =================================================
 
         sections = [
 
             {
                 "order": 1,
-                "title": "Что такое притяжательный падеж",
-                "body": """Притяжательный падеж показывает:
+                "title":
+                    "Один владелец: 'S",
 
-кому принадлежит предмет;
+                "body":
+                    """Чтобы показать принадлежность,
+обычно используем:
 
-с кем или с чем он связан.
-
-Обычно используется:
-
-'s
-
-Примеры:
-
-Tom's car
-
-Anna's book
-
-the teacher's desk
-
-my brother's phone
-
-Главная схема:
-
-owner + 's + thing""",
-            },
-
-            {
-                "order": 2,
-                "title": "Один владелец: 'S",
-                "body": """Если владелец стоит в единственном числе, обычно добавляется:
-
-'s
-
-Примеры:
-
-the girl's bag
-
-the student's notebook
-
-the doctor's office
-
-my father's car
-
-Порядок слов:
-
-сначала владелец;
-
-потом предмет.
-
-Правильно:
+owner + 's + thing
 
 Anna's phone
 
-Не:
+Tom's car
 
-the phone's Anna""",
+the teacher's desk
+
+my brother's laptop
+
+Сначала идёт владелец,
+потом предмет.""",
             },
 
+
             {
-                "order": 3,
-                "title": "Множественное число на -S",
-                "body": """Если plural noun уже заканчивается на -s, добавляется только апостроф:
+                "order": 2,
+                "title":
+                    "Plural на -S",
 
-'
+                "body":
+                    """Если владельцев несколько
+и plural уже заканчивается на -s,
+добавляем только apostrophe.
 
-Примеры:
+students → students'
 
 the students' books
+
+teachers → teachers'
 
 the teachers' room
 
-my parents' house
+parents → parents'
 
-the workers' uniforms
-
-Сравните:
-
-the student's book
-— книга одного студента
-
-the students' books
-— книги студентов""",
+my parents' house""",
             },
 
-            {
-                "order": 4,
-                "title": "Неправильное множественное число",
-                "body": """Если plural noun НЕ заканчивается на -s, используется:
 
-'s
+            {
+                "order": 3,
+                "title":
+                    "Irregular Plural",
+
+                "body":
+                    """Если plural НЕ заканчивается
+на -s, добавляем 's.
+
+children → children's
+
+men → men's
+
+women → women's
+
+people → people's
 
 Примеры:
 
@@ -134,95 +123,81 @@ children's toys
 
 men's clothes
 
-women's shoes
-
-people's opinions
-
-Важно:
-
-children уже plural.
-
-Поэтому:
-
-children's
-
-Не:
-
-childrens'
-
-То же правило:
-
-men's
-
-women's
-
-people's""",
+women's shoes""",
             },
 
-            {
-                "order": 5,
-                "title": "Имена на S",
-                "body": """С именами, которые заканчиваются на S, встречаются два варианта:
-
-James's car
-
-James' car
-
-В современном английском часто используется:
-
-James's
-
-Пример:
-
-James's office is on the second floor.
-
-Для учебных заданий удобно ориентироваться на:
-
-name + 's
-
-если инструкция не требует другого варианта.""",
-            },
 
             {
-                "order": 6,
-                "title": "Общая и раздельная принадлежность",
-                "body": """Если один предмет принадлежит двум людям вместе, 's ставится только у последнего имени.
+                "order": 4,
+                "title":
+                    "Общая принадлежность",
+
+                "body":
+                    """Если один предмет
+принадлежит двум людям вместе,
+'s ставим только у последнего.
 
 Tom and Anna's house
 
 = один общий дом.
 
-Если у каждого свой предмет:
+Jack and Emma's office
+
+= один общий офис.
+
+Важно:
+
+один общий предмет
+→ possessive только у последнего.""",
+            },
+
+
+            {
+                "order": 5,
+                "title":
+                    "Раздельная принадлежность",
+
+                "body":
+                    """Если у каждого человека
+свой предмет,
+'s ставим у каждого имени.
 
 Tom's and Anna's cars
 
-= у Тома своя машина и у Анны своя.
-
-Сравните:
-
-Jack and Emma's office
-— один общий офис
+= две разные машины.
 
 Jack's and Emma's offices
-— два разных офиса""",
+
+= два разных офиса.
+
+Сравни:
+
+Tom and Anna's house
+— общий дом
+
+Tom's and Anna's houses
+— разные дома""",
             },
 
+
             {
-                "order": 7,
-                "title": "Люди, животные, организации, страны и время",
-                "body": """'S особенно естественно используется с:
+                "order": 6,
+                "title":
+                    "Люди, страны и время",
 
-людьми;
+                "body":
+                    """'S особенно естественно
+используется с:
 
-животными;
+людьми
 
-организациями;
+животными
 
-странами;
+организациями
 
-городами;
+странами
 
-временем.
+временем
 
 Примеры:
 
@@ -234,19 +209,20 @@ the company's policy
 
 Kazakhstan's economy
 
-London's museums
-
 today's meeting
 
-tomorrow's lesson
-
-next year's budget""",
+tomorrow's lesson""",
             },
 
+
             {
-                "order": 8,
-                "title": "Периоды времени и расстояние",
-                "body": """Possessive form используется с периодами времени.
+                "order": 7,
+                "title":
+                    "Time expressions",
+
+                "body":
+                    """Possessive используется
+с периодами времени.
 
 Один период:
 
@@ -256,7 +232,7 @@ a week's holiday
 
 an hour's drive
 
-Несколько периодов:
+Несколько:
 
 two days' work
 
@@ -264,31 +240,19 @@ three weeks' holiday
 
 ten minutes' walk
 
-two hours' journey
-
-Если plural уже заканчивается на -s:
-
-ставится только апостроф.""",
+Если plural заканчивается на -s,
+ставим только apostrophe.""",
             },
 
+
             {
-                "order": 9,
-                "title": "Конструкция OF",
-                "body": """OF часто используется с:
+                "order": 8,
+                "title":
+                    "OF",
 
-предметами;
-
-частями вещей;
-
-абстрактными понятиями;
-
-длинными конструкциями.
-
-Формула:
-
-thing + of + owner
-
-Примеры:
+                "body":
+                    """С предметами и их частями
+часто используем OF.
 
 the door of the house
 
@@ -298,51 +262,23 @@ the title of the article
 
 the end of the road
 
-С человеком чаще естественнее:
-
-Anna's phone
-
-С частью предмета:
-
-the cover of the book""",
-            },
-
-            {
-                "order": 10,
-                "title": "'S или OF",
-                "body": """С людьми обычно выбирайте 's:
+С человеком обычно естественнее:
 
 my brother's car
 
 а не:
 
-the car of my brother
-
-С предметами часто используется OF:
-
-the door of the car
-
-the roof of the building
-
-С организациями и странами возможны оба варианта:
-
-the company's policy
-
-the policy of the company
-
-Kazakhstan's economy
-
-the economy of Kazakhstan""",
+the car of my brother""",
             },
 
+
             {
-                "order": 11,
-                "title": "A FRIEND OF MINE",
-                "body": """Конструкция:
+                "order": 9,
+                "title":
+                    "A friend of mine",
 
-a/an + noun + of + possessive pronoun
-
-Примеры:
+                "body":
+                    """Можно использовать:
 
 a friend of mine
 
@@ -352,579 +288,698 @@ a neighbour of ours
 
 a student of his
 
-A friend of mine означает:
+A friend of mine
+означает:
 
 один из моих друзей.
 
-Сравните:
+Также:
 
-my friend
-— мой друг
+a friend of Tom's
 
-a friend of mine
-— один из моих друзей
-
-Также возможно:
-
-a friend of Tom's""",
+one of Tom's friends.""",
             },
 
-            {
-                "order": 12,
-                "title": "Существительное можно не повторять",
-                "body": """Если предмет уже понятен, существительное после possessive form можно не повторять.
 
-Примеры:
+            {
+                "order": 10,
+                "title":
+                    "Когда noun можно убрать",
+
+                "body":
+                    """Если предмет уже понятен,
+noun можно не повторять.
 
 This book is Anna's.
 
 That car is my brother's.
 
-Is this pen yours or Kate's?
+Is this pen yours
+or Kate's?
 
-Также можно опустить название места:
+Также:
 
 at the doctor's
 
-at the dentist's
-
 at my parents'
 
-Пример:
-
-We are staying at my parents'.
+We are staying
+at my parents'.
 
 = у моих родителей дома.""",
             },
 
-            {
-                "order": 13,
-                "title": "Составные формы и артикль",
-                "body": """Если владелец состоит из нескольких слов, 's ставится в конце всей группы.
-
-Примеры:
-
-my older brother's car
-
-my mother-in-law's house
-
-John Smith's office
-
-someone else's bag
-
-После possessive form перед предметом артикль не нужен.
-
-Правильно:
-
-my brother's car
-
-Anna's phone
-
-Неправильно:
-
-my brother's the car
-
-Anna's the phone""",
-            },
-
-            {
-                "order": 14,
-                "title": "Как выбрать форму",
-                "body": """Один владелец?
-
-→ 's
-
-the girl's bag
-
-Plural на -s?
-
-→ только '
-
-the girls' bags
-
-Irregular plural?
-
-→ 's
-
-the children's bags
-
-Один общий предмет у двух людей?
-
-→ 's только у последнего
-
-Tom and Anna's house
-
-У каждого свой предмет?
-
-→ 's у каждого
-
-Tom's and Anna's cars
-
-Предмет или часть предмета?
-
-→ часто OF
-
-the roof of the building
-
-Один из группы?
-
-→ a friend of mine""",
-            },
-
         ]
 
+
+        section_objects = {}
+
+
         for data in sections:
-            GrammarLessonSection.objects.update_or_create(
+
+            section, _ = GrammarLessonSection.objects.update_or_create(
                 lesson=lesson,
                 order=data["order"],
                 defaults={
-                    "title": data["title"],
-                    "body": data["body"],
+                    "title":
+                        data["title"],
+
+                    "body":
+                        data["body"],
                 },
             )
 
-        exercises = [
+            section_objects[
+                data["order"]
+            ] = section
 
+
+        # =================================================
+        # 20 TRAINING EXERCISES
+        # =================================================
+
+        training = [
+
+            # SECTION 1
             {
                 "order": 1,
-                "prompt": "This is the ___ office.",
+                "section": 1,
+                "prompt":
+                    "This is the ___ office.",
                 "options": [
-                    "manager",
                     "manager's",
+                    "manager",
                     "managers",
                     "managers's",
                 ],
-                "answer": "manager's",
-                "explanation": (
-                    "Один владелец → 's."
-                ),
+                "answer":
+                    "manager's",
+                "explanation":
+                    "Один владелец → 's.",
             },
 
             {
                 "order": 2,
-                "prompt": (
-                    "The ___ uniforms are new. "
-                    "Речь о нескольких работниках."
-                ),
+                "section": 1,
+                "prompt":
+                    "Choose the correct phrase.",
                 "options": [
-                    "worker's",
-                    "workers'",
-                    "workers's",
-                    "worker",
+                    "Anna's phone",
+                    "Anna phone's",
+                    "the phone's Anna",
+                    "Annas phone",
                 ],
-                "answer": "workers'",
-                "explanation": (
-                    "Plural workers уже заканчивается на -s → только apostrophe."
-                ),
+                "answer":
+                    "Anna's phone",
+                "explanation":
+                    "Owner + 's + thing.",
             },
 
+
+            # SECTION 2
             {
                 "order": 3,
-                "prompt": "The ___ clothes are upstairs.",
+                "section": 2,
+                "prompt":
+                    "The ___ books are on the table. Several students own them.",
                 "options": [
-                    "mens",
-                    "men's",
-                    "mens'",
-                    "men",
+                    "students'",
+                    "student's",
+                    "students's",
+                    "students",
                 ],
-                "answer": "men's",
-                "explanation": (
-                    "Men — irregular plural → добавляем 's."
-                ),
+                "answer":
+                    "students'",
+                "explanation":
+                    "Plural на -s → только apostrophe.",
             },
 
             {
                 "order": 4,
-                "prompt": (
-                    "We visited ___ house. "
-                    "Один общий дом Джека и Эммы."
-                ),
+                "section": 2,
+                "prompt":
+                    "This is my ___ house.",
                 "options": [
-                    "Jack's and Emma's",
-                    "Jack and Emma's",
-                    "Jacks and Emma",
-                    "Jack and Emmas'",
+                    "parents'",
+                    "parent's",
+                    "parents's",
+                    "parents",
                 ],
-                "answer": "Jack and Emma's",
-                "explanation": (
-                    "Общая принадлежность → 's только у последнего имени."
-                ),
+                "answer":
+                    "parents'",
+                "explanation":
+                    "Parents = plural ending in -s.",
             },
 
+
+            # SECTION 3
             {
                 "order": 5,
-                "prompt": (
-                    "These are ___ offices. "
-                    "У Анны и Марии разные офисы."
-                ),
+                "section": 3,
+                "prompt":
+                    "These are the ___ toys.",
                 "options": [
-                    "Anna and Maria's",
-                    "Anna's and Maria's",
-                    "Annas' and Maria",
-                    "Anna's and Maria",
+                    "children's",
+                    "childrens'",
+                    "childrens's",
+                    "children",
                 ],
-                "answer": "Anna's and Maria's",
-                "explanation": (
-                    "Раздельная принадлежность → 's у каждого имени."
-                ),
+                "answer":
+                    "children's",
+                "explanation":
+                    "CHILDREN — irregular plural → 's.",
             },
 
             {
                 "order": 6,
-                "prompt": "The ___ decision was unexpected.",
+                "section": 3,
+                "prompt":
+                    "The ___ clothes are upstairs.",
                 "options": [
-                    "company",
-                    "company's",
-                    "companies",
-                    "companys'",
+                    "men's",
+                    "mens'",
+                    "mens's",
+                    "men",
                 ],
-                "answer": "company's",
-                "explanation": (
-                    "Одна компания → company's decision."
-                ),
+                "answer":
+                    "men's",
+                "explanation":
+                    "MEN не заканчивается на -s → MEN'S.",
             },
 
+
+            # SECTION 4
             {
                 "order": 7,
-                "prompt": "The ___ population is growing.",
+                "section": 4,
+                "prompt":
+                    "Jack and Emma have one house together.",
                 "options": [
-                    "city's",
-                    "citys",
-                    "cities",
-                    "city'",
+                    "Jack and Emma's house",
+                    "Jack's and Emma's house",
+                    "Jack and Emmas' house",
+                    "Jacks' and Emma house",
                 ],
-                "answer": "city's",
-                "explanation": (
-                    "Один город → city's."
-                ),
+                "answer":
+                    "Jack and Emma's house",
+                "explanation":
+                    "Общий предмет → 's только у последнего имени.",
             },
 
             {
                 "order": 8,
-                "prompt": "Tomorrow's lesson means:",
+                "section": 4,
+                "prompt":
+                    "Tom and Sara share one office.",
                 "options": [
-                    "урок вчера",
-                    "сегодняшний урок",
-                    "завтрашний урок",
-                    "недельный урок",
+                    "Tom and Sara's office",
+                    "Tom's and Sara's office",
+                    "Tom and Saras office",
+                    "Tom's and Sara office",
                 ],
-                "answer": "завтрашний урок",
-                "explanation": (
-                    "Tomorrow's = относящийся к завтрашнему дню."
-                ),
+                "answer":
+                    "Tom and Sara's office",
+                "explanation":
+                    "Один общий офис → possessive только у Sara.",
             },
 
+
+            # SECTION 5
             {
                 "order": 9,
-                "prompt": "A friend of ___ works here.",
+                "section": 5,
+                "prompt":
+                    "Tom and Anna each have their own car.",
                 "options": [
-                    "my",
-                    "mine",
-                    "me",
-                    "I",
+                    "Tom's and Anna's cars",
+                    "Tom and Anna's cars",
+                    "Tom's and Anna cars",
+                    "Tom and Annas' cars",
                 ],
-                "answer": "mine",
-                "explanation": (
-                    "Правильная конструкция: a friend of mine."
-                ),
+                "answer":
+                    "Tom's and Anna's cars",
+                "explanation":
+                    "Раздельная принадлежность → 's у каждого.",
             },
 
             {
                 "order": 10,
-                "prompt": "The title ___ the article is unclear.",
+                "section": 5,
+                "prompt":
+                    "Jack and Emma each have a separate office.",
                 "options": [
-                    "'s",
-                    "of",
-                    "from",
-                    "for",
+                    "Jack's and Emma's offices",
+                    "Jack and Emma's offices",
+                    "Jack's and Emma offices",
+                    "Jack and Emmas' offices",
                 ],
-                "answer": "of",
-                "explanation": (
-                    "С частью/элементом предмета естественно: the title of the article."
-                ),
+                "answer":
+                    "Jack's and Emma's offices",
+                "explanation":
+                    "У каждого свой офис.",
             },
 
+
+            # SECTION 6
             {
                 "order": 11,
-                "prompt": "This is ___ bag.",
+                "section": 6,
+                "prompt":
+                    "The ___ policy has changed. One company.",
                 "options": [
-                    "someone else's",
-                    "someone's else",
-                    "someone else",
-                    "someones else's",
+                    "company's",
+                    "companies'",
+                    "company",
+                    "companys'",
                 ],
-                "answer": "someone else's",
-                "explanation": (
-                    "'s ставится в конце всей группы: someone else's."
-                ),
+                "answer":
+                    "company's",
+                "explanation":
+                    "Одна организация → COMPANY'S.",
             },
 
             {
                 "order": 12,
-                "prompt": "The ___ website has been updated.",
+                "section": 6,
+                "prompt":
+                    "___ meeting starts at 10 a.m.",
                 "options": [
-                    "university's",
-                    "universities",
-                    "universitys'",
-                    "university",
+                    "Today's",
+                    "Todays",
+                    "Today'",
+                    "Todays'",
                 ],
-                "answer": "university's",
-                "explanation": (
-                    "Организация может использовать possessive 's."
-                ),
+                "answer":
+                    "Today's",
+                "explanation":
+                    "TODAY'S = сегодняшний.",
             },
 
+
+            # SECTION 7
             {
                 "order": 13,
-                "prompt": "We need two ___ work.",
+                "section": 7,
+                "prompt":
+                    "It is a two ___ journey.",
                 "options": [
-                    "days",
-                    "day's",
-                    "days'",
-                    "days's",
+                    "hours'",
+                    "hour's",
+                    "hours's",
+                    "hour",
                 ],
-                "answer": "days'",
-                "explanation": (
-                    "Two days → plural ending in -s → days' work."
-                ),
+                "answer":
+                    "hours'",
+                "explanation":
+                    "Two hours = plural ending in -s → HOURS'.",
             },
 
             {
                 "order": 14,
-                "prompt": "This book is ___.",
+                "section": 7,
+                "prompt":
+                    "It's only ten ___ walk.",
                 "options": [
-                    "Anna",
-                    "Annas",
-                    "Anna's",
-                    "Annas'",
+                    "minutes'",
+                    "minute's",
+                    "minutes's",
+                    "minutes",
                 ],
-                "answer": "Anna's",
-                "explanation": (
-                    "Существительное book можно не повторять: This book is Anna's."
-                ),
+                "answer":
+                    "minutes'",
+                "explanation":
+                    "Ten minutes → MINUTES'.",
             },
 
+
+            # SECTION 8
             {
                 "order": 15,
-                "prompt": "We are staying at my ___ tonight.",
+                "section": 8,
+                "prompt":
+                    "Choose the natural phrase.",
                 "options": [
-                    "parents",
-                    "parents'",
-                    "parent",
-                    "parents's",
+                    "the roof of the building",
+                    "the building's of roof",
+                    "the roof's the building",
+                    "the building of roof",
                 ],
-                "answer": "parents'",
-                "explanation": (
-                    "At my parents' = у моих родителей дома."
-                ),
+                "answer":
+                    "the roof of the building",
+                "explanation":
+                    "Для части предмета естественно использовать OF.",
             },
 
             {
                 "order": 16,
-                "prompt": "Choose the correct plural possessive.",
+                "section": 8,
+                "prompt":
+                    "Choose the more natural phrase for a person.",
                 "options": [
-                    "the student's books",
-                    "the students' books",
-                    "the students's books",
-                    "the student books' all",
+                    "my brother's car",
+                    "the car of my brother",
+                    "my brother car's",
+                    "the brother of my car",
                 ],
-                "answer": "the students' books",
-                "explanation": (
-                    "Если владельцев несколько и plural заканчивается на -s → apostrophe."
-                ),
+                "answer":
+                    "my brother's car",
+                "explanation":
+                    "С людьми обычно используем 's.",
             },
 
+
+            # SECTION 9
             {
                 "order": 17,
-                "prompt": "Choose the correct irregular plural possessive.",
+                "section": 9,
+                "prompt":
+                    "A friend of ___ lives in London.",
                 "options": [
-                    "the childrens' toys",
-                    "the children's toys",
-                    "the childrens's toys",
-                    "the children toys'",
+                    "mine",
+                    "my",
+                    "me",
+                    "I",
                 ],
-                "answer": "the children's toys",
-                "explanation": (
-                    "Children не заканчивается на -s → children's."
-                ),
+                "answer":
+                    "mine",
+                "explanation":
+                    "Правильная форма: A FRIEND OF MINE.",
             },
 
             {
                 "order": 18,
-                "prompt": "Choose the correct common ownership form.",
+                "section": 9,
+                "prompt":
+                    "Choose the correct phrase.",
                 "options": [
-                    "Tom's and Anna's house",
-                    "Tom and Anna's house",
-                    "Tom and Annas house",
-                    "Toms' and Anna house",
+                    "a colleague of hers",
+                    "a colleague of her",
+                    "a hers colleague",
+                    "a colleague hers",
                 ],
-                "answer": "Tom and Anna's house",
-                "explanation": (
-                    "Один общий дом → 's только у последнего."
-                ),
+                "answer":
+                    "a colleague of hers",
+                "explanation":
+                    "OF + possessive pronoun.",
             },
 
+
+            # SECTION 10
             {
                 "order": 19,
-                "prompt": "Choose the correct separate ownership form.",
+                "section": 10,
+                "prompt":
+                    "This book belongs to Anna. This book is ___.",
                 "options": [
-                    "Tom and Anna's cars",
-                    "Tom's and Anna's cars",
-                    "Tom and Annas' cars",
-                    "Tom's and Anna cars",
+                    "Anna's",
+                    "Anna",
+                    "Annas",
+                    "Annas'",
                 ],
-                "answer": "Tom's and Anna's cars",
-                "explanation": (
-                    "У каждого своя машина → 's у каждого."
-                ),
+                "answer":
+                    "Anna's",
+                "explanation":
+                    "После possessive form noun можно не повторять.",
             },
 
             {
                 "order": 20,
-                "prompt": "Choose the more natural phrase for a person.",
+                "section": 10,
+                "prompt":
+                    "We are staying at my ___ tonight.",
                 "options": [
-                    "the car of my brother",
-                    "my brother's car",
-                    "my brother car's",
-                    "the brother of my car",
+                    "parents'",
+                    "parents",
+                    "parents's",
+                    "parent",
                 ],
-                "answer": "my brother's car",
-                "explanation": (
-                    "С людьми обычно естественнее 's."
-                ),
-            },
-
-            {
-                "order": 21,
-                "prompt": "Choose the natural OF construction.",
-                "options": [
-                    "the building's of roof",
-                    "the roof of the building",
-                    "the roof's the building",
-                    "the building of roof",
-                ],
-                "answer": "the roof of the building",
-                "explanation": (
-                    "Для части предмета естественна конструкция OF."
-                ),
-            },
-
-            {
-                "order": 22,
-                "prompt": "Choose the correct time expression.",
-                "options": [
-                    "ten minute's walk",
-                    "ten minutes' walk",
-                    "ten minutes's walk",
-                    "ten minute walk's",
-                ],
-                "answer": "ten minutes' walk",
-                "explanation": (
-                    "Plural minutes заканчивается на -s → только apostrophe."
-                ),
-            },
-
-            {
-                "order": 23,
-                "prompt": "Choose the correct double possessive pair.",
-                "options": [
-                    (
-                        "my friend / "
-                        "a friend of mine"
-                    ),
-                    (
-                        "my friend / "
-                        "a friend of my"
-                    ),
-                    (
-                        "mine friend / "
-                        "a friend of me"
-                    ),
-                    (
-                        "my friend / "
-                        "a mine's friend"
-                    ),
-                ],
-                "answer": (
-                    "my friend / "
-                    "a friend of mine"
-                ),
-                "explanation": (
-                    "A friend of mine = один из моих друзей."
-                ),
-            },
-
-            {
-                "order": 24,
-                "prompt": "Choose the fully correct sequence.",
-                "options": [
-                    (
-                        "one owner → student's / "
-                        "plural on -s → students' / "
-                        "irregular plural → children's / "
-                        "shared ownership → Tom and Anna's / "
-                        "part of a thing → of"
-                    ),
-                    (
-                        "one owner → student' / "
-                        "plural on -s → students's / "
-                        "irregular plural → childrens' / "
-                        "shared ownership → Tom's and Anna's / "
-                        "part of a thing → to"
-                    ),
-                    (
-                        "one owner → students / "
-                        "plural on -s → student's / "
-                        "irregular plural → children' / "
-                        "shared ownership → Tom and Annas / "
-                        "part of a thing → from"
-                    ),
-                    (
-                        "one owner → student / "
-                        "plural on -s → students / "
-                        "irregular plural → childrens / "
-                        "shared ownership → Tom's Anna / "
-                        "part of a thing → for"
-                    ),
-                ],
-                "answer": (
-                    "one owner → student's / "
-                    "plural on -s → students' / "
-                    "irregular plural → children's / "
-                    "shared ownership → Tom and Anna's / "
-                    "part of a thing → of"
-                ),
-                "explanation": (
-                    "Это основная система выбора possessive form."
-                ),
+                "answer":
+                    "parents'",
+                "explanation":
+                    "AT MY PARENTS' = у родителей дома.",
             },
 
         ]
 
-        for data in exercises:
+
+        # =================================================
+        # FINAL TEST — 10 NEW QUESTIONS
+        # =================================================
+
+        final_test = [
+
+            {
+                "order": 21,
+                "prompt":
+                    "This is my ___ laptop. One sister.",
+                "options": [
+                    "sister's",
+                    "sisters'",
+                    "sister",
+                    "sisters's",
+                ],
+                "answer":
+                    "sister's",
+                "explanation":
+                    "Один владелец → 's.",
+            },
+
+            {
+                "order": 22,
+                "prompt":
+                    "The ___ classroom is on the second floor. Several teachers use it.",
+                "options": [
+                    "teachers'",
+                    "teacher's",
+                    "teachers's",
+                    "teachers",
+                ],
+                "answer":
+                    "teachers'",
+                "explanation":
+                    "Plural teachers → TEACHERS'.",
+            },
+
+            {
+                "order": 23,
+                "prompt":
+                    "The ___ playground is new.",
+                "options": [
+                    "children's",
+                    "childrens'",
+                    "childrens's",
+                    "children",
+                ],
+                "answer":
+                    "children's",
+                "explanation":
+                    "CHILDREN = irregular plural → 's.",
+            },
+
+            {
+                "order": 24,
+                "prompt":
+                    "Ali and Dana share one apartment.",
+                "options": [
+                    "Ali and Dana's apartment",
+                    "Ali's and Dana's apartment",
+                    "Ali and Danas' apartment",
+                    "Ali's and Dana apartment",
+                ],
+                "answer":
+                    "Ali and Dana's apartment",
+                "explanation":
+                    "Общая принадлежность → 's у последнего.",
+            },
+
+            {
+                "order": 25,
+                "prompt":
+                    "Ali and Dana each have their own phone.",
+                "options": [
+                    "Ali's and Dana's phones",
+                    "Ali and Dana's phones",
+                    "Ali's and Dana phones",
+                    "Ali and Danas' phones",
+                ],
+                "answer":
+                    "Ali's and Dana's phones",
+                "explanation":
+                    "Раздельная принадлежность → 's у каждого.",
+            },
+
+            {
+                "order": 26,
+                "prompt":
+                    "Choose the correct time expression.",
+                "options": [
+                    "three days' work",
+                    "three day's work",
+                    "three days's work",
+                    "three day work's",
+                ],
+                "answer":
+                    "three days' work",
+                "explanation":
+                    "Plural DAYS заканчивается на -s.",
+            },
+
+            {
+                "order": 27,
+                "prompt":
+                    "Choose the natural OF construction.",
+                "options": [
+                    "the end of the road",
+                    "the road's of end",
+                    "the end's the road",
+                    "the road of end",
+                ],
+                "answer":
+                    "the end of the road",
+                "explanation":
+                    "Для части/элемента предмета часто используем OF.",
+            },
+
+            {
+                "order": 28,
+                "prompt":
+                    "One of my neighbours = ___.",
+                "options": [
+                    "a neighbour of mine",
+                    "a neighbour of my",
+                    "mine neighbour",
+                    "a neighbour of me",
+                ],
+                "answer":
+                    "a neighbour of mine",
+                "explanation":
+                    "Double possessive: A NEIGHBOUR OF MINE.",
+            },
+
+            {
+                "order": 29,
+                "prompt":
+                    "Choose the correct possessive without repeating the noun.",
+                "options": [
+                    "That car is Peter's.",
+                    "That car is Peter.",
+                    "That car is Peters.",
+                    "That car is Peters'.",
+                ],
+                "answer":
+                    "That car is Peter's.",
+                "explanation":
+                    "Предмет уже назван, поэтому CAR можно не повторять.",
+            },
+
+            {
+                "order": 30,
+                "prompt":
+                    "Choose the fully correct sequence.",
+                "options": [
+                    "one owner → student's / plural on -s → students' / irregular plural → children's / shared ownership → Tom and Anna's / part of a thing → of",
+                    "one owner → student' / plural on -s → students's / irregular plural → childrens' / shared ownership → Tom's and Anna's / part of a thing → to",
+                    "one owner → students / plural on -s → student's / irregular plural → children' / shared ownership → Tom and Annas / part of a thing → from",
+                    "one owner → student / plural on -s → students / irregular plural → childrens / shared ownership → Tom's Anna / part of a thing → for",
+                ],
+                "answer":
+                    "one owner → student's / plural on -s → students' / irregular plural → children's / shared ownership → Tom and Anna's / part of a thing → of",
+                "explanation":
+                    "Это основная система Possessive Case.",
+            },
+
+        ]
+
+
+        all_exercises = (
+            training
+            +
+            final_test
+        )
+
+        valid_orders = [
+            item["order"]
+            for item in all_exercises
+        ]
+
+
+        for data in all_exercises:
+
+            if data["order"] <= 20:
+
+                section = (
+                    section_objects[
+                        data["section"]
+                    ]
+                )
+
+            else:
+
+                section = None
+
+
             GrammarExercise.objects.update_or_create(
                 lesson=lesson,
                 order=data["order"],
                 defaults={
-                    "exercise_type": GrammarExercise.Type.CHOICE,
-                    "prompt": data["prompt"],
-                    "options": data["options"],
-                    "correct_answer": data["answer"],
-                    "explanation": data["explanation"],
-                    "is_published": True,
+                    "section":
+                        section,
+
+                    "exercise_type":
+                        "choice",
+
+                    "prompt":
+                        data["prompt"],
+
+                    "options":
+                        data["options"],
+
+                    "correct_answer":
+                        data["answer"],
+
+                    "explanation":
+                        data["explanation"],
+
+                    "is_published":
+                        True,
                 },
             )
 
+
+        GrammarExercise.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__in=valid_orders,
+        ).delete()
+
+
+        GrammarLessonSection.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__in=[
+                item["order"]
+                for item in sections
+            ],
+        ).delete()
+
+
         self.stdout.write(
             self.style.SUCCESS(
-                "✅ A1 Lesson 57 seeded: Possessive Case"
+                "✅ Interactive A1 Lesson 57 seeded"
             )
         )
 
         self.stdout.write(
-            f"Sections: {lesson.sections.count()}"
+            f"Micro rules: "
+            f"{lesson.sections.count()}"
         )
 
         self.stdout.write(
-            f"Exercises: {lesson.exercises.count()}"
+            "Training exercises: "
+            f"{lesson.exercises.filter(section__isnull=False).count()}"
+        )
+
+        self.stdout.write(
+            "Final test: "
+            f"{lesson.exercises.filter(section__isnull=True).count()}"
         )

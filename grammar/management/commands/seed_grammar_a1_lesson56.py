@@ -10,9 +10,10 @@ from grammar.models import (
 class Command(BaseCommand):
 
     help = (
-        "Create/update A1 Grammar Lesson 56: "
-        "Comparative Structures."
+        "Create/update interactive A1 Grammar "
+        "Lesson 56: Comparative Structures."
     )
+
 
     def handle(self, *args, **options):
 
@@ -20,170 +21,135 @@ class Command(BaseCommand):
             level="A1",
             order=56,
             defaults={
-                "title": (
-                    "Сравнительные конструкции: "
-                    "as…as, too, enough, so, such"
-                ),
-                "slug": "comparative-structures-as-too-enough-so-such",
-                "theory_text": (
+                "title":
+                    "Сравнительные конструкции: as…as, too, enough, so, such",
+
+                "slug":
+                    "comparative-structures-as-too-enough-so-such",
+
+                "theory_text":
                     "Comparative structures: as...as, too, "
-                    "enough, so and such."
-                ),
-                "estimated_minutes": 50,
-                "pass_score": 70,
-                "xp_reward": 100,
-                "is_published": True,
+                    "enough, so and such.",
+
+                "estimated_minutes":
+                    20,
+
+                "pass_score":
+                    70,
+
+                "xp_reward":
+                    100,
+
+                "is_published":
+                    True,
             },
         )
+
+
+        # =================================================
+        # 10 MICRO RULES
+        # =================================================
 
         sections = [
 
             {
                 "order": 1,
-                "title": "AS…AS — равенство",
-                "body": """Конструкция AS…AS показывает равенство.
+                "title":
+                    "AS…AS",
 
-Формула:
+                "body":
+                    """AS…AS показывает равенство.
 
 as + adjective + as
 
-Примеры:
-
 She is as tall as her sister.
 
-This book is as interesting as that one.
+This car is as fast as mine.
 
-My car is as fast as yours.
+С adverb:
 
-С наречием:
+He works as carefully as Anna.
 
-as + adverb + as
+Важно:
 
-She speaks as clearly as her teacher.
+после AS используется
+обычная форма adjective.
 
-He works as carefully as his colleague.""",
+Не:
+
+as taller as
+
+Правильно:
+
+as tall as""",
             },
+
 
             {
                 "order": 2,
-                "title": "NOT AS…AS — неравенство",
-                "body": """NOT AS…AS означает:
+                "title":
+                    "NOT AS…AS",
 
-не такой… как;
+                "body":
+                    """NOT AS…AS показывает,
+что два объекта не равны.
 
-не настолько… как.
+This room is not
+as large as that one.
 
-Формула:
-
-not as + adjective/adverb + as
-
-Примеры:
-
-This room is not as large as that one.
-
-My phone is not as expensive as yours.
-
-He doesn't work as quickly as she does.
-
-Сравните:
+My phone is not
+as expensive as yours.
 
 Tom is taller than Jack.
 
-Jack is not as tall as Tom.""",
+=
+
+Jack is not
+as tall as Tom.""",
             },
+
 
             {
                 "order": 3,
-                "title": "AS MUCH, AS MANY, AS LITTLE, AS FEW",
-                "body": """С неисчисляемыми существительными:
+                "title":
+                    "AS MUCH / AS MANY",
 
-as much + noun + as
+                "body":
+                    """С quantity:
 
-I don't have as much time as you.
+AS MUCH + uncountable noun
 
-С исчисляемыми:
+as much time as
 
-as many + plural noun + as
+as much money as
 
-She has as many books as I do.
+AS MANY + plural noun
 
-Малое количество:
+as many books as
 
-as little + uncountable noun + as
+as many students as
 
-as few + plural noun + as
+Пример:
 
-Try to use as little sugar as possible.
+I don't have
+as much time as you.
 
-Try to make as few mistakes as possible.""",
+She has as many books
+as her brother.""",
             },
+
 
             {
                 "order": 4,
-                "title": "AS…AS POSSIBLE и TWICE AS…AS",
-                "body": """AS…AS POSSIBLE означает:
+                "title":
+                    "TOO",
 
-как можно…
-
-Примеры:
-
-Come as soon as possible.
-
-Speak as clearly as possible.
-
-Finish as quickly as possible.
-
-Для сравнения во сколько раз:
-
-twice as + adjective + as
-
-This house is twice as big as ours.
-
-three times as + adjective + as
-
-This building is three times as tall as that one.""",
-            },
-
-            {
-                "order": 5,
-                "title": "THE SAME AS и DIFFERENT FROM",
-                "body": """THE SAME AS означает:
-
-такой же, как;
-
-то же самое, что.
-
-My phone is the same as yours.
-
-She has the same bag as me.
-
-DIFFERENT FROM означает:
-
-отличающийся от.
-
-My opinion is different from yours.
-
-This book is different from the first one.
-
-Для учебных заданий лучше использовать:
-
-different from""",
-            },
-
-            {
-                "order": 6,
-                "title": "TOO — слишком",
-                "body": """TOO означает:
+                "body":
+                    """TOO означает:
 
 слишком.
 
-Обычно оно показывает чрезмерность и проблему.
-
-Формула:
-
 too + adjective/adverb
-
-Примеры:
 
 too expensive
 
@@ -191,77 +157,53 @@ too difficult
 
 too quickly
 
-too late
+Пример:
 
-Сравните:
+The coffee is too hot.
 
-The coffee is very hot.
-— очень горячий.
+TOO часто показывает,
+что есть проблема.
 
-The coffee is too hot to drink.
-— слишком горячий, чтобы пить.""",
+The coffee is too hot
+to drink.""",
             },
 
-            {
-                "order": 7,
-                "title": "TOO + TO / FOR",
-                "body": """Формула:
-
-too + adjective + to + V1
-
-Примеры:
-
-The box is too heavy to carry.
-
-He is too tired to work.
-
-She is too young to drive.
-
-С человеком:
-
-too + adjective + for + person
-
-This task is too difficult for me.
-
-The shoes are too small for him.
-
-Too часто означает, что действие невозможно или проблематично.""",
-            },
 
             {
-                "order": 8,
-                "title": "TOO MUCH, TOO MANY, TOO LITTLE, TOO FEW",
-                "body": """TOO MUCH используется с неисчисляемыми:
+                "order": 5,
+                "title":
+                    "TOO MUCH / TOO MANY",
 
-too much money
+                "body":
+                    """TOO MUCH:
+
+с uncountable nouns.
 
 too much work
 
+too much money
+
 too much information
 
-TOO MANY — с исчисляемыми во множественном числе:
+TOO MANY:
+
+с plural countable nouns.
 
 too many people
 
 too many mistakes
 
-TOO LITTLE — слишком мало неисчисляемого:
-
-too little time
-
-TOO FEW — слишком мало исчисляемого:
-
-too few students""",
+too many questions""",
             },
 
+
             {
-                "order": 9,
-                "title": "ENOUGH — достаточно",
-                "body": """ENOUGH означает:
+                "order": 6,
+                "title":
+                    "ENOUGH",
 
-достаточно.
-
-Позиция зависит от части речи.
+                "body":
+                    """ENOUGH = достаточно.
 
 После adjective:
 
@@ -270,12 +212,6 @@ old enough
 strong enough
 
 warm enough
-
-После adverb:
-
-quickly enough
-
-clearly enough
 
 Перед noun:
 
@@ -289,77 +225,47 @@ enough chairs
 
 old enough
 
-не:
+Не:
 
 enough old""",
             },
 
-            {
-                "order": 10,
-                "title": "ENOUGH + TO / FOR",
-                "body": """Формула:
 
-adjective/adverb + enough + to + V1
+            {
+                "order": 7,
+                "title":
+                    "TOO / ENOUGH + TO",
+
+                "body":
+                    """Формулы:
+
+too + adjective + to + V1
+
+enough + noun
+
+adjective + enough + to + V1
 
 Примеры:
 
-He is old enough to drive.
+The box is too heavy
+to carry.
 
-She spoke clearly enough to be understood.
+He is old enough
+to drive.
 
-The room is large enough to hold fifty people.
-
-С FOR:
-
-There is enough food for everyone.
-
-This task is easy enough for beginners.
-
-We have enough money for the trip.""",
+We have enough money
+to travel.""",
             },
 
-            {
-                "order": 11,
-                "title": "TOO и ENOUGH",
-                "body": """TOO показывает чрезмерность.
-
-ENOUGH показывает достаточность.
-
-Сравните:
-
-The box is too heavy to carry.
-
-The box is not light enough to carry.
-
-He is too young to drive.
-
-He is not old enough to drive.
-
-Часто можно преобразовать:
-
-too expensive
-
-→ not cheap enough
-
-too difficult
-
-→ not easy enough
-
-too weak
-
-→ not strong enough""",
-            },
 
             {
-                "order": 12,
-                "title": "SO и SO…THAT",
-                "body": """SO используется перед adjective или adverb.
+                "order": 8,
+                "title":
+                    "SO",
 
-Формула:
-
-so + adjective/adverb
-
-Примеры:
+                "body":
+                    """SO усиливает adjective
+или adverb.
 
 so beautiful
 
@@ -369,55 +275,54 @@ so quickly
 
 SO…THAT показывает результат.
 
-Формула:
+The film was so boring
+that I fell asleep.
 
-so + adjective/adverb + that + result
-
-The film was so boring that I fell asleep.
-
-She was so tired that she couldn't work.
-
-Также:
-
-so much + uncountable noun
-
-so many + plural noun""",
+She was so tired
+that she couldn't work.""",
             },
 
+
             {
-                "order": 13,
-                "title": "SUCH и SUCH…THAT",
-                "body": """SUCH используется перед существительным или noun phrase.
+                "order": 9,
+                "title":
+                    "SUCH",
 
-Singular countable:
-
-such + a/an + adjective + noun
+                "body":
+                    """SUCH используется
+с noun phrase.
 
 such a beautiful city
 
 such an interesting book
 
-Plural:
-
-such + adjective + plural noun
-
 such friendly people
-
-Uncountable:
-
-such + adjective + uncountable noun
 
 such useful information
 
-SUCH…THAT:
+SO:
 
-It was such a boring film that I fell asleep.""",
+so beautiful
+
+SUCH:
+
+such a beautiful city
+
+Главное:
+
+SO + adjective/adverb
+
+SUCH + noun phrase""",
             },
 
+
             {
-                "order": 14,
-                "title": "Как выбрать конструкцию",
-                "body": """Нужно показать равенство?
+                "order": 10,
+                "title":
+                    "Как выбрать конструкцию",
+
+                "body":
+                    """Равенство?
 
 → as…as
 
@@ -425,566 +330,678 @@ It was such a boring film that I fell asleep.""",
 
 → not as…as
 
-Качество чрезмерное и создаёт проблему?
+Слишком?
 
 → too
 
-Качества или количества достаточно?
+Достаточно?
 
 → enough
 
-Нужно усилить adjective/adverb?
+Усиливаем adjective/adverb?
 
 → so
 
-Нужно усилить noun phrase?
+Усиливаем noun phrase?
 
 → such
 
-Нужно показать результат?
+Результат?
 
-→ so…that / such…that
-
-Главное:
-
-so + adjective/adverb
-
-such + noun phrase""",
+→ so…that / such…that""",
             },
 
         ]
 
+
+        section_objects = {}
+
+
         for data in sections:
-            GrammarLessonSection.objects.update_or_create(
+
+            section, _ = GrammarLessonSection.objects.update_or_create(
                 lesson=lesson,
                 order=data["order"],
                 defaults={
-                    "title": data["title"],
-                    "body": data["body"],
+                    "title":
+                        data["title"],
+
+                    "body":
+                        data["body"],
                 },
             )
 
-        exercises = [
+            section_objects[
+                data["order"]
+            ] = section
 
+
+        # =================================================
+        # 20 TRAINING EXERCISES
+        # =================================================
+
+        training = [
+
+            # SECTION 1
             {
                 "order": 1,
-                "prompt": (
-                    "My brother is ___ tall as my father."
-                ),
+                "section": 1,
+                "prompt":
+                    "My brother is ___ tall as my father.",
                 "options": [
                     "as",
-                    "so that",
                     "too",
+                    "such",
                     "enough",
                 ],
-                "answer": "as",
-                "explanation": (
-                    "Равенство → as + adjective + as."
-                ),
+                "answer":
+                    "as",
+                "explanation":
+                    "Равенство → AS + adjective + AS.",
             },
 
             {
                 "order": 2,
-                "prompt": (
-                    "This book is not ___ interesting "
-                    "as the first one."
-                ),
+                "section": 1,
+                "prompt":
+                    "Choose the correct sentence.",
                 "options": [
-                    "too",
-                    "as",
-                    "enough",
-                    "such",
+                    "She is as tall as her sister.",
+                    "She is as taller as her sister.",
+                    "She is as tall than her sister.",
+                    "She is so tall as her sister.",
                 ],
-                "answer": "as",
-                "explanation": (
-                    "Неравенство → not as...as."
-                ),
+                "answer":
+                    "She is as tall as her sister.",
+                "explanation":
+                    "После AS используется обычная форма adjective.",
             },
 
+
+            # SECTION 2
             {
                 "order": 3,
-                "prompt": (
-                    "She doesn't have ___ much experience "
-                    "as her colleague."
-                ),
+                "section": 2,
+                "prompt":
+                    "This book is not ___ interesting as that one.",
                 "options": [
-                    "too",
-                    "so",
                     "as",
+                    "too",
+                    "such",
                     "enough",
                 ],
-                "answer": "as",
-                "explanation": (
-                    "Experience неисчисляемое → as much...as."
-                ),
+                "answer":
+                    "as",
+                "explanation":
+                    "NOT AS + adjective + AS.",
             },
 
             {
                 "order": 4,
-                "prompt": (
-                    "He has twice ___ many clients as last year."
-                ),
+                "section": 2,
+                "prompt":
+                    "Tom is taller than Ben. Choose the equal meaning.",
                 "options": [
-                    "so",
-                    "too",
-                    "as",
-                    "enough",
+                    "Ben is not as tall as Tom.",
+                    "Ben is as tall as Tom.",
+                    "Ben is too tall as Tom.",
+                    "Ben is so tall as Tom.",
                 ],
-                "answer": "as",
-                "explanation": (
-                    "Формула: twice as many...as."
-                ),
+                "answer":
+                    "Ben is not as tall as Tom.",
+                "explanation":
+                    "NOT AS…AS показывает неравенство.",
             },
 
+
+            # SECTION 3
             {
                 "order": 5,
-                "prompt": "The coffee is ___ hot to drink.",
+                "section": 3,
+                "prompt":
+                    "I don't have ___ much time as you.",
                 "options": [
-                    "very",
+                    "as",
                     "too",
-                    "such",
+                    "so",
                     "enough",
                 ],
-                "answer": "too",
-                "explanation": (
-                    "Слишком горячий, чтобы пить → too."
-                ),
+                "answer":
+                    "as",
+                "explanation":
+                    "TIME = uncountable → AS MUCH.",
             },
 
             {
                 "order": 6,
-                "prompt": "The room is warm ___.",
+                "section": 3,
+                "prompt":
+                    "She has ___ many books as her sister.",
                 "options": [
+                    "as",
                     "too",
-                    "enough",
-                    "so a",
                     "such",
+                    "enough",
                 ],
-                "answer": "enough",
-                "explanation": (
-                    "После adjective: warm enough."
-                ),
+                "answer":
+                    "as",
+                "explanation":
+                    "BOOKS = countable plural → AS MANY.",
             },
 
+
+            # SECTION 4
             {
                 "order": 7,
-                "prompt": (
-                    "We don't have ___ chairs for everyone."
-                ),
+                "section": 4,
+                "prompt":
+                    "The coffee is ___ hot to drink.",
                 "options": [
                     "too",
                     "enough",
-                    "so",
                     "such",
+                    "as",
                 ],
-                "answer": "enough",
-                "explanation": (
-                    "Перед существительным: enough chairs."
-                ),
+                "answer":
+                    "too",
+                "explanation":
+                    "TOO HOT = слишком горячий.",
             },
 
             {
                 "order": 8,
-                "prompt": (
-                    "The film was ___ boring that I fell asleep."
-                ),
+                "section": 4,
+                "prompt":
+                    "This task is ___ difficult for me.",
                 "options": [
-                    "such",
-                    "so",
-                    "too much",
+                    "too",
                     "enough",
+                    "as",
+                    "such a",
                 ],
-                "answer": "so",
-                "explanation": (
-                    "SO + adjective + THAT."
-                ),
+                "answer":
+                    "too",
+                "explanation":
+                    "TOO + adjective показывает чрезмерность.",
             },
 
+
+            # SECTION 5
             {
                 "order": 9,
-                "prompt": (
-                    "It was ___ boring film that I fell asleep."
-                ),
+                "section": 5,
+                "prompt":
+                    "I have ___ much work today.",
                 "options": [
-                    "so a",
+                    "too",
+                    "too many",
                     "such a",
-                    "too a",
-                    "enough a",
+                    "enough many",
                 ],
-                "answer": "such a",
-                "explanation": (
-                    "SUCH + a + adjective + singular noun."
-                ),
+                "answer":
+                    "too",
+                "explanation":
+                    "WORK = uncountable → TOO MUCH.",
             },
 
             {
                 "order": 10,
-                "prompt": "She gave me ___ useful advice.",
+                "section": 5,
+                "prompt":
+                    "There are ___ many people here.",
                 "options": [
-                    "such",
+                    "too",
+                    "too much",
+                    "enough of",
                     "such a",
-                    "so",
-                    "too many",
                 ],
-                "answer": "such",
-                "explanation": (
-                    "Advice неисчисляемое → such useful advice."
-                ),
+                "answer":
+                    "too",
+                "explanation":
+                    "PEOPLE = plural countable → TOO MANY.",
             },
 
+
+            # SECTION 6
             {
                 "order": 11,
-                "prompt": (
-                    "There were ___ many questions "
-                    "that we couldn't answer them all."
-                ),
+                "section": 6,
+                "prompt":
+                    "The room is warm ___.",
                 "options": [
-                    "such",
-                    "so",
                     "enough",
-                    "as",
+                    "too",
+                    "such",
+                    "so a",
                 ],
-                "answer": "so",
-                "explanation": (
-                    "Формула: so many + plural noun + that."
-                ),
+                "answer":
+                    "enough",
+                "explanation":
+                    "После adjective → WARM ENOUGH.",
             },
 
             {
                 "order": 12,
-                "prompt": "I have ___ much work to do today.",
+                "section": 6,
+                "prompt":
+                    "We have ___ chairs for everyone.",
                 "options": [
+                    "enough",
                     "too",
-                    "too many",
-                    "enough many",
-                    "such a",
+                    "so",
+                    "such",
                 ],
-                "answer": "too",
-                "explanation": (
-                    "Work неисчисляемое → too much work."
-                ),
+                "answer":
+                    "enough",
+                "explanation":
+                    "Перед noun → ENOUGH CHAIRS.",
             },
 
+
+            # SECTION 7
             {
                 "order": 13,
-                "prompt": (
-                    "There are ___ few students in the class."
-                ),
+                "section": 7,
+                "prompt":
+                    "He is ___ young to drive.",
                 "options": [
                     "too",
-                    "too much",
-                    "such a",
-                    "enough of",
+                    "enough",
+                    "such",
+                    "as",
                 ],
-                "answer": "too",
-                "explanation": (
-                    "Too few + plural noun."
-                ),
+                "answer":
+                    "too",
+                "explanation":
+                    "TOO + adjective + TO + V1.",
             },
 
             {
                 "order": 14,
-                "prompt": "He didn't speak clearly ___.",
+                "section": 7,
+                "prompt":
+                    "He is old ___ to drive.",
                 "options": [
-                    "too",
                     "enough",
-                    "so that",
+                    "too",
                     "such",
+                    "so",
                 ],
-                "answer": "enough",
-                "explanation": (
-                    "После adverb: clearly enough."
-                ),
+                "answer":
+                    "enough",
+                "explanation":
+                    "Adjective + ENOUGH + TO + V1.",
             },
 
+
+            # SECTION 8
             {
                 "order": 15,
-                "prompt": "This phone is the same ___ mine.",
+                "section": 8,
+                "prompt":
+                    "The film was ___ boring that I fell asleep.",
                 "options": [
-                    "than",
-                    "as",
-                    "from",
-                    "like as",
+                    "so",
+                    "such",
+                    "too",
+                    "enough",
                 ],
-                "answer": "as",
-                "explanation": (
-                    "Правильная конструкция: the same as."
-                ),
+                "answer":
+                    "so",
+                "explanation":
+                    "SO + adjective + THAT.",
             },
 
             {
                 "order": 16,
-                "prompt": "Choose the correct sentence.",
+                "section": 8,
+                "prompt":
+                    "She was ___ tired that she couldn't work.",
                 "options": [
-                    "She is as taller as her sister.",
-                    "She is as tall as her sister.",
-                    "She is as tall than her sister.",
-                    "She is so tall as her sister equality.",
+                    "so",
+                    "such a",
+                    "too much",
+                    "enough",
                 ],
-                "answer": "She is as tall as her sister.",
-                "explanation": (
-                    "После as используется обычная форма adjective."
-                ),
+                "answer":
+                    "so",
+                "explanation":
+                    "SO усиливает adjective TIRED.",
             },
 
+
+            # SECTION 9
             {
                 "order": 17,
-                "prompt": "Choose the correct ENOUGH sentence.",
+                "section": 9,
+                "prompt":
+                    "It was ___ interesting book.",
                 "options": [
-                    "He is enough old to drive.",
-                    "He is old enough to drive.",
-                    "He is old enough driving.",
-                    "He enough is old to drive.",
+                    "such an",
+                    "so an",
+                    "too an",
+                    "enough an",
                 ],
-                "answer": "He is old enough to drive.",
-                "explanation": (
-                    "Adjective + enough + to + V1."
-                ),
+                "answer":
+                    "such an",
+                "explanation":
+                    "SUCH + AN + adjective + singular noun.",
             },
 
             {
                 "order": 18,
-                "prompt": "Choose the correct sentence with TOO.",
+                "section": 9,
+                "prompt":
+                    "They are ___ friendly people.",
                 "options": [
-                    "The box is too heavy to carry.",
-                    "The box is heavy too carry.",
-                    "The box is too heavy carrying.",
-                    "The box is enough heavy to carry.",
+                    "such",
+                    "so",
+                    "such a",
+                    "too",
                 ],
-                "answer": "The box is too heavy to carry.",
-                "explanation": (
-                    "Too + adjective + to + V1."
-                ),
+                "answer":
+                    "such",
+                "explanation":
+                    "Plural noun phrase → SUCH FRIENDLY PEOPLE.",
             },
 
+
+            # SECTION 10
             {
                 "order": 19,
-                "prompt": "Choose the correct SO/SUCH pair.",
+                "section": 10,
+                "prompt":
+                    "Choose the correct pair.",
                 "options": [
-                    (
-                        "The city is so beautiful. / "
-                        "It is such a beautiful city."
-                    ),
-                    (
-                        "The city is such beautiful. / "
-                        "It is so a beautiful city."
-                    ),
-                    (
-                        "The city is so a beautiful. / "
-                        "It is such beautiful city."
-                    ),
-                    (
-                        "The city is suchly beautiful. / "
-                        "It is so beautiful a city only basic."
-                    ),
+                    "so beautiful / such a beautiful city",
+                    "such beautiful / so a beautiful city",
+                    "so a beautiful / such beautiful city",
+                    "too beautiful / enough a city",
                 ],
-                "answer": (
-                    "The city is so beautiful. / "
-                    "It is such a beautiful city."
-                ),
-                "explanation": (
-                    "SO + adjective; SUCH + noun phrase."
-                ),
+                "answer":
+                    "so beautiful / such a beautiful city",
+                "explanation":
+                    "SO + adjective; SUCH + noun phrase.",
             },
 
             {
                 "order": 20,
-                "prompt": "Choose the correct MUCH/MANY pair.",
+                "section": 10,
+                "prompt":
+                    "Choose the correct TOO / ENOUGH pair.",
                 "options": [
-                    (
-                        "too much money / "
-                        "too many books"
-                    ),
-                    (
-                        "too many money / "
-                        "too much books"
-                    ),
-                    (
-                        "too much students / "
-                        "too many information"
-                    ),
-                    (
-                        "too many work / "
-                        "too much people"
-                    ),
+                    "too young to drive / old enough to drive",
+                    "enough young to drive / too old enough",
+                    "too young driving / enough old to drive",
+                    "too enough young / old to enough drive",
                 ],
-                "answer": (
-                    "too much money / "
-                    "too many books"
-                ),
-                "explanation": (
-                    "Much → uncountable; many → countable plural."
-                ),
-            },
-
-            {
-                "order": 21,
-                "prompt": (
-                    "Choose the correct transformation."
-                ),
-                "options": [
-                    (
-                        "He is too young to drive. → "
-                        "He is not old enough to drive."
-                    ),
-                    (
-                        "He is too young to drive. → "
-                        "He is enough old not to drive."
-                    ),
-                    (
-                        "He is too young to drive. → "
-                        "He is not too old enough."
-                    ),
-                    (
-                        "He is too young to drive. → "
-                        "He has not enough old."
-                    ),
-                ],
-                "answer": (
-                    "He is too young to drive. → "
-                    "He is not old enough to drive."
-                ),
-                "explanation": (
-                    "Too + adjective можно передать через "
-                    "not + opposite adjective + enough."
-                ),
-            },
-
-            {
-                "order": 22,
-                "prompt": (
-                    "Choose the correct AS MUCH / AS MANY pair."
-                ),
-                "options": [
-                    (
-                        "as much time as / "
-                        "as many books as"
-                    ),
-                    (
-                        "as many time as / "
-                        "as much books as"
-                    ),
-                    (
-                        "as much students as / "
-                        "as many money as"
-                    ),
-                    (
-                        "as many information as / "
-                        "as much people as"
-                    ),
-                ],
-                "answer": (
-                    "as much time as / "
-                    "as many books as"
-                ),
-                "explanation": (
-                    "Much → uncountable; many → countable."
-                ),
-            },
-
-            {
-                "order": 23,
-                "prompt": (
-                    "Choose the correct result pair."
-                ),
-                "options": [
-                    (
-                        "The film was so boring that I fell asleep. / "
-                        "It was such a boring film that I fell asleep."
-                    ),
-                    (
-                        "The film was such boring that I fell asleep. / "
-                        "It was so a boring film that I fell asleep."
-                    ),
-                    (
-                        "The film was so boring film that I fell asleep. / "
-                        "It was such boring a film that I fell asleep."
-                    ),
-                    (
-                        "The film was too boring that I fell asleep. / "
-                        "It was enough boring film that I fell asleep."
-                    ),
-                ],
-                "answer": (
-                    "The film was so boring that I fell asleep. / "
-                    "It was such a boring film that I fell asleep."
-                ),
-                "explanation": (
-                    "SO относится к adjective; SUCH — к noun phrase."
-                ),
-            },
-
-            {
-                "order": 24,
-                "prompt": "Choose the fully correct sequence.",
-                "options": [
-                    (
-                        "equality → as...as / "
-                        "excess → too / "
-                        "sufficiency → enough / "
-                        "adjective/adverb emphasis → so / "
-                        "noun phrase emphasis → such"
-                    ),
-                    (
-                        "equality → too / "
-                        "excess → enough / "
-                        "sufficiency → such / "
-                        "adjective → as many / "
-                        "noun → so"
-                    ),
-                    (
-                        "equality → such / "
-                        "excess → as...as / "
-                        "sufficiency → too / "
-                        "adjective → such / "
-                        "noun → enough adjective"
-                    ),
-                    (
-                        "equality → enough / "
-                        "excess → so / "
-                        "sufficiency → too / "
-                        "adjective → such a / "
-                        "noun → as...as"
-                    ),
-                ],
-                "answer": (
-                    "equality → as...as / "
-                    "excess → too / "
-                    "sufficiency → enough / "
-                    "adjective/adverb emphasis → so / "
-                    "noun phrase emphasis → such"
-                ),
-                "explanation": (
-                    "Это основная система выбора конструкций урока."
-                ),
+                "answer":
+                    "too young to drive / old enough to drive",
+                "explanation":
+                    "TOO + adjective + TO; adjective + ENOUGH + TO.",
             },
 
         ]
 
-        for data in exercises:
+
+        # =================================================
+        # FINAL TEST — 10 NEW QUESTIONS
+        # =================================================
+
+        final_test = [
+
+            {
+                "order": 21,
+                "prompt":
+                    "This laptop is ___ expensive as mine.",
+                "options": [
+                    "as",
+                    "too",
+                    "such",
+                    "enough",
+                ],
+                "answer":
+                    "as",
+                "explanation":
+                    "AS + adjective + AS.",
+            },
+
+            {
+                "order": 22,
+                "prompt":
+                    "My car is not ___ fast as yours.",
+                "options": [
+                    "as",
+                    "too",
+                    "so a",
+                    "enough",
+                ],
+                "answer":
+                    "as",
+                "explanation":
+                    "NOT AS…AS.",
+            },
+
+            {
+                "order": 23,
+                "prompt":
+                    "There are ___ many mistakes in this report.",
+                "options": [
+                    "too",
+                    "too much",
+                    "enough of",
+                    "such a",
+                ],
+                "answer":
+                    "too",
+                "explanation":
+                    "MISTAKES = plural → TOO MANY.",
+            },
+
+            {
+                "order": 24,
+                "prompt":
+                    "We don't have ___ money for the trip.",
+                "options": [
+                    "enough",
+                    "too many",
+                    "such",
+                    "as many",
+                ],
+                "answer":
+                    "enough",
+                "explanation":
+                    "ENOUGH ставится перед noun.",
+            },
+
+            {
+                "order": 25,
+                "prompt":
+                    "The bag is ___ heavy for the child to carry.",
+                "options": [
+                    "too",
+                    "enough",
+                    "such",
+                    "as",
+                ],
+                "answer":
+                    "too",
+                "explanation":
+                    "TOO показывает чрезмерность.",
+            },
+
+            {
+                "order": 26,
+                "prompt":
+                    "She is experienced ___ to manage the team.",
+                "options": [
+                    "enough",
+                    "too",
+                    "such",
+                    "as",
+                ],
+                "answer":
+                    "enough",
+                "explanation":
+                    "Adjective + ENOUGH + TO.",
+            },
+
+            {
+                "order": 27,
+                "prompt":
+                    "The test was ___ difficult that many students failed.",
+                "options": [
+                    "so",
+                    "such",
+                    "too much",
+                    "enough",
+                ],
+                "answer":
+                    "so",
+                "explanation":
+                    "SO + adjective + THAT.",
+            },
+
+            {
+                "order": 28,
+                "prompt":
+                    "It was ___ difficult test that many students failed.",
+                "options": [
+                    "such a",
+                    "so",
+                    "too a",
+                    "enough a",
+                ],
+                "answer":
+                    "such a",
+                "explanation":
+                    "SUCH + A + adjective + noun + THAT.",
+            },
+
+            {
+                "order": 29,
+                "prompt":
+                    "Choose the correct MUCH / MANY pair.",
+                "options": [
+                    "as much time as / as many students as",
+                    "as many time as / as much students as",
+                    "too many information / too much people",
+                    "enough many money / too much books",
+                ],
+                "answer":
+                    "as much time as / as many students as",
+                "explanation":
+                    "MUCH → uncountable; MANY → plural countable.",
+            },
+
+            {
+                "order": 30,
+                "prompt":
+                    "Choose the fully correct sequence.",
+                "options": [
+                    "equality → as...as / excess → too / sufficiency → enough / adjective emphasis → so / noun phrase emphasis → such",
+                    "equality → too / excess → enough / sufficiency → such / adjective emphasis → as / noun phrase emphasis → so",
+                    "equality → such / excess → as...as / sufficiency → too / adjective emphasis → such / noun phrase emphasis → enough",
+                    "equality → enough / excess → so / sufficiency → too / adjective emphasis → such a / noun phrase emphasis → as...as",
+                ],
+                "answer":
+                    "equality → as...as / excess → too / sufficiency → enough / adjective emphasis → so / noun phrase emphasis → such",
+                "explanation":
+                    "Это основная система конструкций урока.",
+            },
+
+        ]
+
+
+        all_exercises = (
+            training
+            +
+            final_test
+        )
+
+        valid_orders = [
+            item["order"]
+            for item in all_exercises
+        ]
+
+
+        for data in all_exercises:
+
+            if data["order"] <= 20:
+
+                section = (
+                    section_objects[
+                        data["section"]
+                    ]
+                )
+
+            else:
+
+                section = None
+
+
             GrammarExercise.objects.update_or_create(
                 lesson=lesson,
                 order=data["order"],
                 defaults={
-                    "exercise_type": GrammarExercise.Type.CHOICE,
-                    "prompt": data["prompt"],
-                    "options": data["options"],
-                    "correct_answer": data["answer"],
-                    "explanation": data["explanation"],
-                    "is_published": True,
+                    "section":
+                        section,
+
+                    "exercise_type":
+                        "choice",
+
+                    "prompt":
+                        data["prompt"],
+
+                    "options":
+                        data["options"],
+
+                    "correct_answer":
+                        data["answer"],
+
+                    "explanation":
+                        data["explanation"],
+
+                    "is_published":
+                        True,
                 },
             )
 
+
+        GrammarExercise.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__in=valid_orders,
+        ).delete()
+
+
+        GrammarLessonSection.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__in=[
+                item["order"]
+                for item in sections
+            ],
+        ).delete()
+
+
         self.stdout.write(
             self.style.SUCCESS(
-                "✅ A1 Lesson 56 seeded: Comparative Structures"
+                "✅ Interactive A1 Lesson 56 seeded"
             )
         )
 
         self.stdout.write(
-            f"Sections: {lesson.sections.count()}"
+            f"Micro rules: "
+            f"{lesson.sections.count()}"
         )
 
         self.stdout.write(
-            f"Exercises: {lesson.exercises.count()}"
+            "Training exercises: "
+            f"{lesson.exercises.filter(section__isnull=False).count()}"
+        )
+
+        self.stdout.write(
+            "Final test: "
+            f"{lesson.exercises.filter(section__isnull=True).count()}"
         )

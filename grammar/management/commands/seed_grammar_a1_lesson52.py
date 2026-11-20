@@ -10,9 +10,10 @@ from grammar.models import (
 class Command(BaseCommand):
 
     help = (
-        "Create/update A1 Grammar Lesson 52: "
-        "Types of Questions."
+        "Create/update interactive A1 Grammar "
+        "Lesson 52: Types of Questions."
     )
+
 
     def handle(self, *args, **options):
 
@@ -20,47 +21,45 @@ class Command(BaseCommand):
             level="A1",
             order=52,
             defaults={
-                "title": "Типы вопросов в английском языке",
-                "slug": "types-of-questions",
-                "theory_text": (
+                "title":
+                    "Типы вопросов в английском языке",
+
+                "slug":
+                    "types-of-questions",
+
+                "theory_text":
                     "General, special, alternative, subject, "
-                    "tag and indirect questions."
-                ),
-                "estimated_minutes": 50,
-                "pass_score": 70,
-                "xp_reward": 100,
-                "is_published": True,
+                    "tag and indirect questions.",
+
+                "estimated_minutes":
+                    20,
+
+                "pass_score":
+                    70,
+
+                "xp_reward":
+                    100,
+
+                "is_published":
+                    True,
             },
         )
+
+
+        # =================================================
+        # 10 MICRO RULES
+        # =================================================
 
         sections = [
 
             {
                 "order": 1,
-                "title": "Основные типы вопросов",
-                "body": """В английском языке есть несколько основных типов вопросов:
+                "title":
+                    "General Questions",
 
-1. Общий вопрос.
-
-2. Специальный вопрос.
-
-3. Альтернативный вопрос.
-
-4. Вопрос к подлежащему.
-
-5. Разделительный вопрос.
-
-6. Косвенный вопрос.
-
-Главное — сначала понять, какую информацию мы хотим получить, а затем выбрать правильную структуру.""",
-            },
-
-            {
-                "order": 2,
-                "title": "Общий вопрос",
-                "body": """Общий вопрос требует ответа Yes или No.
-
-Примеры:
+                "body":
+                    """General Question требует
+ответа Yes или No.
 
 Are you tired?
 
@@ -74,33 +73,24 @@ Will he come?
 
 Can you swim?
 
-Структура зависит от глагола и времени.
+Главное:
 
-С TO BE:
-
-Are you ready?
-
-Was she at home?
-
-Со смысловым глаголом:
-
-Do you work?
-
-Did she call?""",
+вспомогательный глагол
+ставится перед subject.""",
             },
 
+
             {
-                "order": 3,
-                "title": "DO, DOES и DID",
-                "body": """Present Simple:
+                "order": 2,
+                "title":
+                    "DO, DOES, DID",
 
-Do/Does + subject + V1?
+                "body":
+                    """Present Simple:
 
-Do you work here?
+DO / DOES + subject + V1?
 
-Does she speak English?
-
-После DOES используется первая форма:
+Do you work?
 
 Does she work?
 
@@ -110,855 +100,930 @@ Does she works?
 
 Past Simple:
 
-Did + subject + V1?
+DID + subject + V1?
 
-Did she go?
-
-Did he write?
+Did he go?
 
 Не:
 
-Did she went?
-
-Did he wrote?""",
+Did he went?""",
             },
 
+
             {
-                "order": 4,
-                "title": "Вопросы в других временах",
-                "body": """Present Continuous:
+                "order": 3,
+                "title":
+                    "BE и другие auxiliaries",
 
-Am/Is/Are + subject + verb-ing?
+                "body":
+                    """С глаголом BE
+DO не нужен.
 
-Are you working?
+Are you ready?
 
-Past Continuous:
+Was she at home?
 
-Was/Were + subject + verb-ing?
+Другие примеры:
 
-Were they waiting?
-
-Present Perfect:
-
-Have/Has + subject + V3?
+Are they working?
 
 Have you finished?
 
-Future Simple:
-
-Will + subject + V1?
-
 Will she come?
 
-Modal:
+Can he swim?
 
-Can/Should/Must + subject + V1?
-
-Can you swim?
-
-Should we leave?""",
+Auxiliary просто ставится
+перед subject.""",
             },
+
+
+            {
+                "order": 4,
+                "title":
+                    "Special Questions",
+
+                "body":
+                    """Special Question начинается
+с question word.
+
+WHAT
+
+WHERE
+
+WHEN
+
+WHY
+
+WHO
+
+HOW
+
+Формула:
+
+Question word
++ auxiliary
++ subject
++ verb?
+
+Where do you live?
+
+Why did she leave?""",
+            },
+
 
             {
                 "order": 5,
-                "title": "Специальный вопрос",
-                "body": """Специальный вопрос начинается с вопросительного слова и требует развёрнутого ответа.
+                "title":
+                    "HOW и сочетания",
 
-Частые слова:
-
-what
-
-where
-
-when
-
-why
-
-who
-
-whose
-
-which
-
-how
-
-Общая формула:
-
-Question word + auxiliary + subject + main verb?
-
-Примеры:
-
-Where do you live?
-
-What does she want?
-
-When did they arrive?
-
-Why are you laughing?""",
-            },
-
-            {
-                "order": 6,
-                "title": "WHAT, WHERE, WHEN, WHY",
-                "body": """WHAT:
-
-What do you want?
-
-What time is it?
-
-WHERE:
-
-Where do you live?
-
-Where did they go?
-
-WHEN:
-
-When does the lesson start?
-
-When will they come?
-
-WHY:
-
-Why are you tired?
-
-Why did she leave?
-
-На WHY часто отвечают с BECAUSE:
-
-Why are you tired?
-
-Because I worked late.""",
-            },
-
-            {
-                "order": 7,
-                "title": "WHO, WHOSE и WHICH",
-                "body": """WHO:
-
-кто? кого? кому?
-
-Who is she?
-
-Who did you call?
-
-WHOSE:
-
-чей?
-
-Whose book is this?
-
-Whose phone is ringing?
-
-WHICH:
-
-какой из ограниченного выбора?
-
-Which dress do you prefer, the red one or the blue one?
-
-WHAT используется при широком выборе:
-
-What music do you like?
-
-WHICH — когда варианты ограничены.""",
-            },
-
-            {
-                "order": 8,
-                "title": "HOW и его сочетания",
-                "body": """HOW означает:
-
-как?
+                "body":
+                    """HOW = как?
 
 How are you?
 
-How does it work?
+Частые формы:
 
-Частые сочетания:
+How old?
 
-how old — сколько лет;
+How much?
 
-how much — сколько с неисчисляемыми;
+How many?
 
-how many — сколько с исчисляемыми;
+How often?
 
-how often — как часто;
+How long?
 
-how long — как долго;
-
-how far — как далеко;
-
-how fast — как быстро.
+How far?
 
 Примеры:
-
-How much money do you need?
 
 How many students are there?
 
-How often do you exercise?""",
+How often do you exercise?
+
+How long does it take?""",
             },
 
+
             {
-                "order": 9,
-                "title": "Альтернативный вопрос",
-                "body": """Альтернативный вопрос предлагает выбор.
+                "order": 6,
+                "title":
+                    "Alternative Questions",
 
-Используется OR.
+                "body":
+                    """Alternative Question
+предлагает выбор.
 
-Примеры:
+Используем OR.
 
-Do you want tea or coffee?
+Do you want
+tea or coffee?
 
-Is she at home or at work?
+Will you go
+by bus or by train?
 
-Will you go by bus or by train?
-
-Did he call or send a message?
-
-На такой вопрос обычно нельзя ответить только Yes или No.
-
-Ответ:
+Ответ обычно не Yes / No.
 
 Tea, please.
 
-By train.
-
-She is at work.""",
+By train.""",
             },
 
+
             {
-                "order": 10,
-                "title": "Вопрос к подлежащему",
-                "body": """Вопрос к подлежащему спрашивает:
+                "order": 7,
+                "title":
+                    "Subject Questions",
 
-кто выполняет действие?
+                "body":
+                    """Subject Question спрашивает:
 
-Примеры:
+КТО выполняет действие?
 
 Who called you?
 
 Who lives here?
 
-Who broke the window?
-
 What happened?
 
 Главное правило:
 
-обычно НЕ используются do, does, did.
-
-Правильно:
-
-Who called you?
-
-Who works here?
-
-Неправильно:
-
-Who did call you?
-
-Who does work here?""",
-            },
-
-            {
-                "order": 11,
-                "title": "Вопрос к дополнению",
-                "body": """Если спрашиваем не исполнителя, а объект действия, используется обычная вопросительная структура.
-
-Сравните:
-
-Who called you?
-
-Кто позвонил тебе?
-
-WHO = подлежащее.
-
-Who did you call?
-
-Кому позвонил ты?
-
-YOU = подлежащее, WHO = объект.
-
-Ещё пример:
-
-Who saw Anna?
-
-Who did Anna see?""",
-            },
-
-            {
-                "order": 12,
-                "title": "Разделительный вопрос",
-                "body": """Разделительный вопрос состоит из:
-
-утверждения;
-
-короткого вопроса в конце.
-
-Пример:
-
-You are tired, aren't you?
-
-You work here, don't you?
-
-She can swim, can't she?
-
-Эта конструкция используется, когда говорящий просит подтверждение.
-
-Основное правило:
-
-положительное предложение → отрицательный хвост.
-
-Отрицательное предложение → положительный хвост.""",
-            },
-
-            {
-                "order": 13,
-                "title": "Косвенный вопрос",
-                "body": """Косвенный вопрос является частью более длинной и часто более вежливой фразы.
-
-Примеры:
-
-Can you tell me where the bank is?
-
-Do you know when the lesson starts?
-
-Could you explain how this works?
-
-Главное правило:
-
-используется ПРЯМОЙ порядок слов.
-
-Прямой вопрос:
-
-Where is the bank?
-
-Косвенный:
-
-Can you tell me where the bank is?
+обычно НЕ используем
+do / does / did.
 
 Не:
 
-Can you tell me where is the bank?""",
+Who did call you?
+
+Правильно:
+
+Who called you?""",
             },
 
+
             {
-                "order": 14,
-                "title": "Как построить вопрос",
-                "body": """Шаг 1.
+                "order": 8,
+                "title":
+                    "Subject vs Object Question",
 
-Определите глагол:
+                "body":
+                    """Сравни:
 
-TO BE;
+Who called Anna?
 
-смысловой;
+WHO = subject.
 
-модальный;
+Кто позвонил Анне?
 
-вспомогательный.
+Who did Anna call?
 
-Шаг 2.
+ANNA = subject.
 
-Определите время.
+WHO = object.
 
-Шаг 3.
+Кому позвонила Анна?
 
-Выберите вспомогательный глагол:
+Если WHO — object,
+нужна обычная
+question structure.""",
+            },
 
-do / does / did;
 
-have / has;
+            {
+                "order": 9,
+                "title":
+                    "Tag Questions",
 
-will;
+                "body":
+                    """Tag Question просит
+подтверждение.
 
-can;
+You are tired,
+aren't you?
 
-is / are / was / were.
+She works here,
+doesn't she?
 
-Шаг 4.
+He can't swim,
+can he?
 
-Если нужен question word — поставьте его в начало.
+Правило:
 
-Шаг 5.
+positive sentence
+→ negative tag
 
-Проверьте, спрашиваете ли вы подлежащее.
+negative sentence
+→ positive tag.""",
+            },
 
-Если да, do/does/did обычно не нужны.
 
-Шаг 6.
+            {
+                "order": 10,
+                "title":
+                    "Indirect Questions",
 
-Если вопрос косвенный — используйте прямой порядок слов.""",
+                "body":
+                    """Indirect Question звучит
+более вежливо.
+
+Direct:
+
+Where is the bank?
+
+Indirect:
+
+Can you tell me
+where the bank is?
+
+Важно:
+
+после introductory phrase
+используем обычный порядок слов.
+
+Не:
+
+where is the bank
+
+Правильно:
+
+where the bank is.""",
             },
 
         ]
 
+
+        section_objects = {}
+
+
         for data in sections:
-            GrammarLessonSection.objects.update_or_create(
+
+            section, _ = GrammarLessonSection.objects.update_or_create(
                 lesson=lesson,
                 order=data["order"],
                 defaults={
-                    "title": data["title"],
-                    "body": data["body"],
+                    "title":
+                        data["title"],
+
+                    "body":
+                        data["body"],
                 },
             )
 
-        exercises = [
+            section_objects[
+                data["order"]
+            ] = section
 
+
+        # =================================================
+        # 20 TRAINING EXERCISES
+        # =================================================
+
+        training = [
+
+            # SECTION 1
             {
                 "order": 1,
-                "prompt": "___ she at home?",
+                "section": 1,
+                "type": "choice",
+                "prompt":
+                    "Choose the correct Yes/No question.",
                 "options": [
-                    "Does",
-                    "Is",
-                    "Do",
-                    "Did",
+                    "Do you work here?",
+                    "You work here?",
+                    "Where do you work?",
+                    "Who works here?",
                 ],
-                "answer": "Is",
-                "explanation": (
-                    "С TO BE вспомогательный do не нужен."
-                ),
+                "answer":
+                    "Do you work here?",
+                "explanation":
+                    "General Question → auxiliary before subject.",
             },
 
             {
                 "order": 2,
-                "prompt": "Where ___ they live?",
+                "section": 1,
+                "type": "choice",
+                "prompt":
+                    "___ she at home?",
                 "options": [
-                    "do",
-                    "are",
-                    "does",
-                    "did live now",
+                    "Is",
+                    "Does",
+                    "Do",
+                    "Did",
                 ],
-                "answer": "do",
-                "explanation": (
-                    "Present Simple, they → do."
-                ),
+                "answer":
+                    "Is",
+                "explanation":
+                    "С BE дополнительный DO не нужен.",
             },
 
+
+            # SECTION 2
             {
                 "order": 3,
-                "prompt": "What ___ he want?",
+                "section": 2,
+                "type": "choice",
+                "prompt":
+                    "___ she speak English?",
                 "options": [
-                    "do",
-                    "does",
-                    "is",
-                    "did yesterday only",
+                    "Does",
+                    "Do",
+                    "Is",
+                    "Did yesterday",
                 ],
-                "answer": "does",
-                "explanation": (
-                    "Present Simple, he → does + V1."
-                ),
+                "answer":
+                    "Does",
+                "explanation":
+                    "Present Simple, SHE → DOES.",
             },
 
             {
                 "order": 4,
-                "prompt": "Why ___ she leave yesterday?",
+                "section": 2,
+                "type": "choice",
+                "prompt":
+                    "Did he ___ to work yesterday?",
                 "options": [
-                    "does",
-                    "did",
-                    "is",
-                    "has every day",
+                    "go",
+                    "went",
+                    "gone",
+                    "goes",
                 ],
-                "answer": "did",
-                "explanation": (
-                    "Yesterday → Past Simple → did."
-                ),
+                "answer":
+                    "go",
+                "explanation":
+                    "После DID используется V1.",
             },
 
+
+            # SECTION 3
             {
                 "order": 5,
-                "prompt": "___ you finished the work?",
+                "section": 3,
+                "type": "choice",
+                "prompt":
+                    "___ they working now?",
                 "options": [
-                    "Do",
-                    "Have",
                     "Are",
-                    "Did finish already",
+                    "Do",
+                    "Did",
+                    "Have work",
                 ],
-                "answer": "Have",
-                "explanation": (
-                    "Present Perfect: Have + subject + V3."
-                ),
+                "answer":
+                    "Are",
+                "explanation":
+                    "Present Continuous → ARE + subject + verb-ing.",
             },
 
             {
                 "order": 6,
-                "prompt": "When ___ they arrive?",
+                "section": 3,
+                "type": "choice",
+                "prompt":
+                    "___ you finished the task?",
                 "options": [
-                    "will",
-                    "do tomorrow",
-                    "are every day",
-                    "did future",
+                    "Have",
+                    "Do",
+                    "Are",
+                    "Did finish",
                 ],
-                "answer": "will",
-                "explanation": (
-                    "Future Simple question: will + subject + V1."
-                ),
+                "answer":
+                    "Have",
+                "explanation":
+                    "Present Perfect → HAVE + subject + V3.",
             },
 
+
+            # SECTION 4
             {
                 "order": 7,
-                "prompt": "___ you swim?",
+                "section": 4,
+                "type": "choice",
+                "prompt":
+                    "Where ___ you live?",
                 "options": [
-                    "Can",
-                    "Do can",
-                    "Are can",
-                    "Can to",
+                    "do",
+                    "are",
+                    "does",
+                    "is",
                 ],
-                "answer": "Can",
-                "explanation": (
-                    "Modal question: Can + subject + V1?"
-                ),
+                "answer":
+                    "do",
+                "explanation":
+                    "WHERE + DO + YOU + V1.",
             },
 
             {
                 "order": 8,
-                "prompt": "Who ___ the window?",
+                "section": 4,
+                "type": "choice",
+                "prompt":
+                    "Why ___ she leave yesterday?",
                 "options": [
-                    "did break",
-                    "broke",
-                    "break did",
-                    "was break",
+                    "did",
+                    "does",
+                    "is",
+                    "has",
                 ],
-                "answer": "broke",
-                "explanation": (
-                    "Вопрос к подлежащему: did не нужен."
-                ),
+                "answer":
+                    "did",
+                "explanation":
+                    "Yesterday → Past Simple → DID.",
             },
 
+
+            # SECTION 5
             {
                 "order": 9,
-                "prompt": "Who did she ___?",
+                "section": 5,
+                "type": "choice",
+                "prompt":
+                    "___ students are in the class?",
                 "options": [
-                    "called",
-                    "call",
-                    "calls",
-                    "calling",
+                    "How many",
+                    "How much",
+                    "How long",
+                    "How often",
                 ],
-                "answer": "call",
-                "explanation": (
-                    "После did используется V1."
-                ),
+                "answer":
+                    "How many",
+                "explanation":
+                    "Students = countable plural → HOW MANY.",
             },
 
             {
                 "order": 10,
-                "prompt": (
-                    "Do you want the red one ___ the blue one?"
-                ),
+                "section": 5,
+                "type": "choice",
+                "prompt":
+                    "___ do you exercise?",
                 "options": [
-                    "and",
-                    "or",
-                    "because",
-                    "so",
+                    "How often",
+                    "How many",
+                    "How far money",
+                    "How much times",
                 ],
-                "answer": "or",
-                "explanation": (
-                    "Альтернативный вопрос использует or."
-                ),
+                "answer":
+                    "How often",
+                "explanation":
+                    "HOW OFTEN = как часто.",
             },
 
+
+            # SECTION 6
             {
                 "order": 11,
-                "prompt": "___ book is this?",
+                "section": 6,
+                "type": "choice",
+                "prompt":
+                    "Do you want tea ___ coffee?",
                 "options": [
-                    "Who",
-                    "Whose",
-                    "Which person",
-                    "How",
+                    "or",
+                    "and",
+                    "because",
+                    "but",
                 ],
-                "answer": "Whose",
-                "explanation": (
-                    "Whose = чей?"
-                ),
+                "answer":
+                    "or",
+                "explanation":
+                    "Alternative Question использует OR.",
             },
 
             {
                 "order": 12,
-                "prompt": "___ do you exercise?",
+                "section": 6,
+                "type": "choice",
+                "prompt":
+                    "Which is an Alternative Question?",
                 "options": [
-                    "How often",
-                    "How much students",
-                    "How many time",
-                    "What often",
+                    "Will you go by bus or by train?",
+                    "Will you go by bus?",
+                    "Where will you go?",
+                    "Who will go?",
                 ],
-                "answer": "How often",
-                "explanation": (
-                    "How often = как часто."
-                ),
+                "answer":
+                    "Will you go by bus or by train?",
+                "explanation":
+                    "В вопросе предлагаются два варианта.",
             },
 
+
+            # SECTION 7
             {
                 "order": 13,
-                "prompt": "How ___ does the journey take?",
+                "section": 7,
+                "type": "choice",
+                "prompt":
+                    "___ called you last night?",
                 "options": [
-                    "much",
-                    "many",
-                    "long",
-                    "far time",
+                    "Who",
+                    "Who did",
+                    "Who does",
+                    "Who was do",
                 ],
-                "answer": "long",
-                "explanation": (
-                    "How long = как долго."
-                ),
+                "answer":
+                    "Who",
+                "explanation":
+                    "WHO = subject, поэтому DID не нужен.",
             },
 
             {
                 "order": 14,
-                "prompt": (
-                    "Can you tell me when the lesson ___?"
-                ),
+                "section": 7,
+                "type": "choice",
+                "prompt":
+                    "Choose the correct Subject Question.",
                 "options": [
-                    "does start",
-                    "starts",
-                    "start does",
-                    "is start",
+                    "Who broke the window?",
+                    "Who did break the window?",
+                    "Who did she call?",
+                    "Who does she know?",
                 ],
-                "answer": "starts",
-                "explanation": (
-                    "В косвенном вопросе прямой порядок слов."
-                ),
+                "answer":
+                    "Who broke the window?",
+                "explanation":
+                    "WHO выполняет действие.",
             },
 
+
+            # SECTION 8
             {
                 "order": 15,
-                "prompt": "Do you know if she ___?",
+                "section": 8,
+                "type": "choice",
+                "prompt":
+                    "Which is an Object Question?",
                 "options": [
-                    "has arrived",
-                    "has she arrived",
-                    "did arrive she",
-                    "arrived has",
+                    "Who did Anna call?",
+                    "Who called Anna?",
+                    "Who arrived?",
+                    "What happened?",
                 ],
-                "answer": "has arrived",
-                "explanation": (
-                    "Indirect Yes/No question: if + direct word order."
-                ),
+                "answer":
+                    "Who did Anna call?",
+                "explanation":
+                    "Anna = subject, WHO = object.",
             },
 
             {
                 "order": 16,
-                "prompt": "Choose the correct Present Simple question.",
+                "section": 8,
+                "type": "choice",
+                "prompt":
+                    "Choose the Subject Question.",
                 "options": [
-                    "Where she works?",
-                    "Where does she work?",
-                    "Where does she works?",
-                    "Where she does work?",
+                    "Who saw Tom?",
+                    "Who did Tom see?",
+                    "Who does Tom know?",
+                    "Who did Tom call?",
                 ],
-                "answer": "Where does she work?",
-                "explanation": (
-                    "Does + subject + V1."
-                ),
+                "answer":
+                    "Who saw Tom?",
+                "explanation":
+                    "WHO само выполняет действие SEE.",
             },
 
+
+            # SECTION 9
             {
                 "order": 17,
-                "prompt": "Choose the correct Past Simple question.",
+                "section": 9,
+                "type": "choice",
+                "prompt":
+                    "You are tired, ___?",
                 "options": [
-                    "When did he arrived?",
-                    "When did he arrive?",
-                    "When he did arrive?",
-                    "When does he arrived?",
+                    "aren't you",
+                    "don't you",
+                    "are you",
+                    "isn't she",
                 ],
-                "answer": "When did he arrive?",
-                "explanation": (
-                    "После did используется V1."
-                ),
+                "answer":
+                    "aren't you",
+                "explanation":
+                    "Positive ARE → negative AREN'T.",
             },
 
             {
                 "order": 18,
-                "prompt": (
-                    "Which sentence is a subject question?"
-                ),
+                "section": 9,
+                "type": "choice",
+                "prompt":
+                    "He doesn't work here, ___?",
                 "options": [
-                    "Who called Anna?",
-                    "Who did Anna call?",
-                    "Who does Anna call?",
-                    "Who is Anna calling?",
+                    "does he",
+                    "doesn't he",
+                    "is he",
+                    "did he",
                 ],
-                "answer": "Who called Anna?",
-                "explanation": (
-                    "WHO выполняет действие → subject question."
-                ),
+                "answer":
+                    "does he",
+                "explanation":
+                    "Negative statement → positive tag.",
             },
 
+
+            # SECTION 10
             {
                 "order": 19,
-                "prompt": (
-                    "Which sentence is an object question?"
-                ),
+                "section": 10,
+                "type": "choice",
+                "prompt":
+                    "Can you tell me where the bank ___?",
                 "options": [
-                    "Who called Anna?",
-                    "Who did Anna call?",
-                    "Who arrived?",
-                    "What happened?",
+                    "is",
+                    "is it",
+                    "does be",
+                    "does it is",
                 ],
-                "answer": "Who did Anna call?",
-                "explanation": (
-                    "Anna — подлежащее, WHO — объект."
-                ),
+                "answer":
+                    "is",
+                "explanation":
+                    "Indirect Question → обычный порядок слов.",
             },
 
             {
                 "order": 20,
-                "prompt": "Choose the correct indirect question.",
+                "section": 10,
+                "type": "choice",
+                "prompt":
+                    "Do you know when the lesson ___?",
                 "options": [
-                    "Can you tell me where is the bank?",
-                    "Can you tell me where the bank is?",
-                    "Can you tell me where does the bank is?",
-                    "Can you tell me where the bank does be?",
+                    "starts",
+                    "does start",
+                    "start does",
+                    "is start",
                 ],
-                "answer": (
-                    "Can you tell me where the bank is?"
-                ),
-                "explanation": (
-                    "После introductory phrase используется прямой порядок."
-                ),
-            },
-
-            {
-                "order": 21,
-                "prompt": "Choose the correct HOW MUCH / HOW MANY pair.",
-                "options": [
-                    (
-                        "How much money? / "
-                        "How many students?"
-                    ),
-                    (
-                        "How many money? / "
-                        "How much students?"
-                    ),
-                    (
-                        "How much students? / "
-                        "How many water?"
-                    ),
-                    (
-                        "How many time? / "
-                        "How much books?"
-                    ),
-                ],
-                "answer": (
-                    "How much money? / "
-                    "How many students?"
-                ),
-                "explanation": (
-                    "Much → uncountable; many → countable plural."
-                ),
-            },
-
-            {
-                "order": 22,
-                "prompt": "Choose the correct WHAT / WHICH pair.",
-                "options": [
-                    (
-                        "What music do you like? / "
-                        "Which dress do you prefer, "
-                        "the red one or the blue one?"
-                    ),
-                    (
-                        "Which music in the world do you like? / "
-                        "What dress, red or blue?"
-                    ),
-                    (
-                        "What of two dresses do you prefer? / "
-                        "Which music generally do you like?"
-                    ),
-                    (
-                        "What one red or blue? / "
-                        "Which all music do you like?"
-                    ),
-                ],
-                "answer": (
-                    "What music do you like? / "
-                    "Which dress do you prefer, "
-                    "the red one or the blue one?"
-                ),
-                "explanation": (
-                    "What = широкий выбор; Which = ограниченный выбор."
-                ),
-            },
-
-            {
-                "order": 23,
-                "prompt": "Choose the correct tag question.",
-                "options": [
-                    "You are tired, aren't you?",
-                    "You are tired, don't you?",
-                    "You are tired, are you not tired?",
-                    "You are tired, isn't she?",
-                ],
-                "answer": "You are tired, aren't you?",
-                "explanation": (
-                    "Положительное предложение → отрицательный tag."
-                ),
-            },
-
-            {
-                "order": 24,
-                "prompt": "Choose the fully correct sequence.",
-                "options": [
-                    (
-                        "Do you work here? / "
-                        "Where do you work? / "
-                        "Who works here? / "
-                        "Can you tell me where you work?"
-                    ),
-                    (
-                        "Do you work here? / "
-                        "Where you work? / "
-                        "Who does work here? / "
-                        "Can you tell me where do you work?"
-                    ),
-                    (
-                        "Are you work here? / "
-                        "Where does you work? / "
-                        "Who do works here? / "
-                        "Can you tell me where are you work?"
-                    ),
-                    (
-                        "Does you work here? / "
-                        "Where did you works? / "
-                        "Who did works here? / "
-                        "Can you tell me where does you work?"
-                    ),
-                ],
-                "answer": (
-                    "Do you work here? / "
-                    "Where do you work? / "
-                    "Who works here? / "
-                    "Can you tell me where you work?"
-                ),
-                "explanation": (
-                    "General → Do...?; special → Where do...?; "
-                    "subject question → no do; indirect → direct order."
-                ),
+                "answer":
+                    "starts",
+                "explanation":
+                    "После introductory phrase не используем question order.",
             },
 
         ]
 
-        for data in exercises:
+
+        # =================================================
+        # FINAL TEST — 10 NEW QUESTIONS
+        # =================================================
+
+        final_test = [
+
+            {
+                "order": 21,
+                "prompt":
+                    "Choose the correct Present Simple question.",
+                "options": [
+                    "Does he work here?",
+                    "Does he works here?",
+                    "He does work here?",
+                    "Is he work here?",
+                ],
+                "answer":
+                    "Does he work here?",
+                "explanation":
+                    "DOES + subject + V1.",
+            },
+
+            {
+                "order": 22,
+                "prompt":
+                    "Choose the correct Past Simple question.",
+                "options": [
+                    "When did they arrive?",
+                    "When did they arrived?",
+                    "When they did arrive?",
+                    "When do they arrived?",
+                ],
+                "answer":
+                    "When did they arrive?",
+                "explanation":
+                    "DID + subject + V1.",
+            },
+
+            {
+                "order": 23,
+                "prompt":
+                    "___ money do you need?",
+                "options": [
+                    "How much",
+                    "How many",
+                    "How often",
+                    "How old",
+                ],
+                "answer":
+                    "How much",
+                "explanation":
+                    "Money = uncountable → HOW MUCH.",
+            },
+
+            {
+                "order": 24,
+                "prompt":
+                    "Choose the Alternative Question.",
+                "options": [
+                    "Do you prefer coffee or tea?",
+                    "Do you prefer coffee?",
+                    "What do you prefer?",
+                    "Who prefers coffee?",
+                ],
+                "answer":
+                    "Do you prefer coffee or tea?",
+                "explanation":
+                    "Alternative Question предлагает выбор через OR.",
+            },
+
+            {
+                "order": 25,
+                "prompt":
+                    "Choose the Subject Question.",
+                "options": [
+                    "Who opened the door?",
+                    "Who did you call?",
+                    "Who does she know?",
+                    "Who did they invite?",
+                ],
+                "answer":
+                    "Who opened the door?",
+                "explanation":
+                    "WHO само выполняет действие.",
+            },
+
+            {
+                "order": 26,
+                "prompt":
+                    "Choose the Object Question.",
+                "options": [
+                    "Who did Peter invite?",
+                    "Who invited Peter?",
+                    "Who arrived first?",
+                    "What happened?",
+                ],
+                "answer":
+                    "Who did Peter invite?",
+                "explanation":
+                    "Peter = subject; WHO = object.",
+            },
+
+            {
+                "order": 27,
+                "prompt":
+                    "She can drive, ___?",
+                "options": [
+                    "can't she",
+                    "doesn't she",
+                    "can she",
+                    "isn't she",
+                ],
+                "answer":
+                    "can't she",
+                "explanation":
+                    "Positive CAN → negative CAN'T.",
+            },
+
+            {
+                "order": 28,
+                "prompt":
+                    "They aren't ready, ___?",
+                "options": [
+                    "are they",
+                    "aren't they",
+                    "do they",
+                    "were they",
+                ],
+                "answer":
+                    "are they",
+                "explanation":
+                    "Negative statement → positive tag.",
+            },
+
+            {
+                "order": 29,
+                "prompt":
+                    "Choose the correct indirect question.",
+                "options": [
+                    "Could you tell me where she lives?",
+                    "Could you tell me where does she live?",
+                    "Could you tell me where she does live?",
+                    "Could you tell me where lives she?",
+                ],
+                "answer":
+                    "Could you tell me where she lives?",
+                "explanation":
+                    "Indirect Question → subject + verb.",
+            },
+
+            {
+                "order": 30,
+                "prompt":
+                    "Choose the fully correct sequence.",
+                "options": [
+                    "Do you work here? / Where do you work? / Who works here? / Can you tell me where you work?",
+                    "Do you work here? / Where you work? / Who does work here? / Can you tell me where do you work?",
+                    "Are you work here? / Where does you work? / Who do works here? / Can you tell me where are you work?",
+                    "Does you work here? / Where did you works? / Who did works here? / Can you tell me where does you work?",
+                ],
+                "answer":
+                    "Do you work here? / Where do you work? / Who works here? / Can you tell me where you work?",
+                "explanation":
+                    "General → DO; Special → question word + DO; Subject → no DO; Indirect → normal word order.",
+            },
+
+        ]
+
+
+        all_exercises = (
+            training
+            +
+            final_test
+        )
+
+        valid_orders = [
+            item["order"]
+            for item in all_exercises
+        ]
+
+
+        for data in all_exercises:
+
+            if data["order"] <= 20:
+
+                section = (
+                    section_objects[
+                        data["section"]
+                    ]
+                )
+
+            else:
+
+                section = None
+
+
             GrammarExercise.objects.update_or_create(
                 lesson=lesson,
                 order=data["order"],
                 defaults={
-                    "exercise_type": GrammarExercise.Type.CHOICE,
-                    "prompt": data["prompt"],
-                    "options": data["options"],
-                    "correct_answer": data["answer"],
-                    "explanation": data["explanation"],
-                    "is_published": True,
+                    "section":
+                        section,
+
+                    "exercise_type":
+                        data.get(
+                            "type",
+                            "choice",
+                        ),
+
+                    "prompt":
+                        data["prompt"],
+
+                    "options":
+                        data["options"],
+
+                    "correct_answer":
+                        data["answer"],
+
+                    "explanation":
+                        data["explanation"],
+
+                    "is_published":
+                        True,
                 },
             )
 
+
+        GrammarExercise.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__in=valid_orders,
+        ).delete()
+
+
+        GrammarLessonSection.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__in=[
+                item["order"]
+                for item in sections
+            ],
+        ).delete()
+
+
         self.stdout.write(
             self.style.SUCCESS(
-                "✅ A1 Lesson 52 seeded: Types of Questions"
+                "✅ Interactive A1 Lesson 52 seeded"
             )
         )
 
         self.stdout.write(
-            f"Sections: {lesson.sections.count()}"
+            f"Micro rules: "
+            f"{lesson.sections.count()}"
         )
 
         self.stdout.write(
-            f"Exercises: {lesson.exercises.count()}"
+            "Training exercises: "
+            f"{lesson.exercises.filter(section__isnull=False).count()}"
+        )
+
+        self.stdout.write(
+            "Final test: "
+            f"{lesson.exercises.filter(section__isnull=True).count()}"
         )
