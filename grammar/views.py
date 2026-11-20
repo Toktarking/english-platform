@@ -485,7 +485,7 @@ def grammar_lesson(request, slug):
 
     template_name = (
         "grammar/lesson_interactive.html"
-        if 1 <= lesson.order <= 45
+        if 1 <= lesson.order <= 50
         else
         "grammar/lesson.html"
     )

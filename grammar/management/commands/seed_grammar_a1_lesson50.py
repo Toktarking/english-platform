@@ -10,9 +10,10 @@ from grammar.models import (
 class Command(BaseCommand):
 
     help = (
-        "Create/update A1 Grammar Lesson 50: "
-        "Wish and If only."
+        "Create/update interactive A1 Grammar "
+        "Lesson 50: Wish / If only."
     )
+
 
     def handle(self, *args, **options):
 
@@ -20,59 +21,69 @@ class Command(BaseCommand):
             level="A1",
             order=50,
             defaults={
-                "title": "Wish / If only",
-                "slug": "wish-if-only",
-                "theory_text": (
+                "title":
+                    "Wish / If only",
+
+                "slug":
+                    "wish-if-only",
+
+                "theory_text":
                     "Wish and If only: wishes, regrets "
-                    "and unreal situations."
-                ),
-                "estimated_minutes": 45,
-                "pass_score": 70,
-                "xp_reward": 100,
-                "is_published": True,
+                    "and unreal situations.",
+
+                "estimated_minutes":
+                    20,
+
+                "pass_score":
+                    70,
+
+                "xp_reward":
+                    100,
+
+                "is_published":
+                    True,
             },
         )
+
+
+        # =================================================
+        # 10 MICRO RULES
+        # =================================================
 
         sections = [
 
             {
                 "order": 1,
-                "title": "Что означают WISH и IF ONLY",
-                "body": """WISH и IF ONLY используются, когда человек хочет, чтобы ситуация была другой.
+                "title":
+                    "Что означают WISH и IF ONLY",
 
-Они могут выражать:
-
-сожаление о настоящем;
-
-сожаление о прошлом;
-
-сильное желание;
-
-мечту;
-
-желание изменить поведение;
-
-недовольство ситуацией.
-
-Примеры:
+                "body":
+                    """WISH и IF ONLY используем,
+когда хотим,
+чтобы ситуация была другой.
 
 I wish I had more time.
 
 If only I had more time!
 
-IF ONLY обычно звучит сильнее и эмоциональнее.""",
+IF ONLY обычно звучит
+сильнее и эмоциональнее.
+
+Обе конструкции говорят
+о неудовлетворённости ситуацией.""",
             },
+
 
             {
                 "order": 2,
-                "title": "WISH о настоящем",
-                "body": """Если хочется изменить настоящую ситуацию, после WISH используется Past Simple.
+                "title":
+                    "WISH о настоящем",
 
-Формула:
+                "body":
+                    """Если хотим изменить
+ситуацию сейчас:
 
-wish + subject + Past Simple
-
-Пример:
+WISH + Past Simple
 
 I wish I had more money.
 
@@ -80,51 +91,43 @@ I wish I had more money.
 
 I don't have much money.
 
-Ещё примеры:
+She wishes she lived closer.
 
-I wish I lived near the sea.
-
-She wishes she spoke English better.
-
-He wishes he knew the answer.
-
-Past Simple здесь не означает прошлое.
-
-Он показывает нереальность настоящей ситуации.""",
+He wishes he knew the answer.""",
             },
+
 
             {
                 "order": 3,
-                "title": "WERE после WISH",
-                "body": """С глаголом TO BE в стандартном английском часто используется WERE.
+                "title":
+                    "WISH + WERE",
 
-Примеры:
+                "body":
+                    """С глаголом BE
+в гипотетических ситуациях
+часто используем WERE.
 
 I wish I were taller.
 
 She wishes she were here.
 
-He wishes he were younger.
-
 We wish it were warmer.
 
-В разговорной речи можно услышать:
-
-I wish I was taller.
-
-Но в учебных заданиях безопаснее использовать WERE.""",
+В учебных заданиях
+лучше использовать WERE.""",
             },
+
 
             {
                 "order": 4,
-                "title": "IF ONLY о настоящем",
-                "body": """IF ONLY использует ту же грамматику, что и WISH.
+                "title":
+                    "IF ONLY о настоящем",
 
-Для настоящего:
+                "body":
+                    """IF ONLY использует
+ту же грамматику.
 
-If only + Past Simple
-
-Примеры:
+IF ONLY + Past Simple
 
 If only I had more time!
 
@@ -132,770 +135,827 @@ If only she lived closer!
 
 If only we knew the answer!
 
-If only it were warmer!
-
-IF ONLY обычно выражает более сильное сожаление или желание.""",
+IF ONLY выражает
+сильное желание или сожаление.""",
             },
+
 
             {
                 "order": 5,
-                "title": "WISH + COULD",
-                "body": """WISH + COULD используется, когда человек хочет иметь способность или возможность, которой сейчас нет.
+                "title":
+                    "WISH + COULD",
 
-Формула:
+                "body":
+                    """Если хотим иметь
+способность или возможность:
 
-wish + subject + could + V1
-
-Примеры:
+WISH + COULD + V1
 
 I wish I could drive.
 
 She wishes she could speak French.
 
-We wish we could travel more often.
-
-He wishes he could help us.
+We wish we could travel more.
 
 Реальность:
 
-I wish I could swim.
-
-= I can't swim.""",
+I can't drive.""",
             },
+
 
             {
                 "order": 6,
-                "title": "WISH о прошлом",
-                "body": """Если человек сожалеет о прошлом, используется Past Perfect.
+                "title":
+                    "WISH о прошлом",
 
-Формула:
+                "body":
+                    """Если сожалеем о прошлом:
 
-wish + subject + had + V3
-
-Пример:
+WISH + HAD + V3
 
 I wish I had studied harder.
 
-Это значит:
+Реальность:
 
-я учился недостаточно;
+I didn't study enough.
 
-прошлое уже нельзя изменить;
+She wishes she had accepted the job.
 
-я об этом сожалею.
-
-Ещё примеры:
-
-She wishes she had accepted the offer.
-
-We wish we had left earlier.
-
-I wish I had known about the meeting.""",
+We wish we had left earlier.""",
             },
+
 
             {
                 "order": 7,
-                "title": "HADN'T и IF ONLY о прошлом",
-                "body": """Если человек сожалеет о совершённом действии:
+                "title":
+                    "HADN'T + V3",
 
-wish + hadn't + V3
+                "body":
+                    """Если сожалеем
+о совершённом действии:
 
-Примеры:
+WISH + HADN'T + V3
 
 I wish I hadn't said that.
 
-She wishes she hadn't left her job.
+She wishes she hadn't left.
 
-We wish we hadn't spent so much money.
+If only I hadn't forgotten my passport!
 
-IF ONLY использует ту же модель:
-
-If only I had known!
-
-If only we had left earlier!
-
-If only I hadn't forgotten my passport!""",
+Прошлое уже нельзя изменить.""",
             },
+
 
             {
                 "order": 8,
-                "title": "WISH + WOULD",
-                "body": """WISH + WOULD используется, когда хочется изменить:
+                "title":
+                    "WISH + WOULD",
 
-чужое поведение;
+                "body":
+                    """Если хотим,
+чтобы кто-то или что-то изменилось:
 
-внешнюю ситуацию;
+WISH + WOULD + V1
 
-работу предмета;
-
-ситуацию в будущем.
-
-Формула:
-
-wish + subject + would + V1
-
-Примеры:
-
-I wish you would listen to me.
+I wish you would listen.
 
 We wish the rain would stop.
 
 He wishes the bus would come.
 
-I wish the computer would work properly.
-
-Эта конструкция часто выражает раздражение.""",
+Часто это выражает
+раздражение или недовольство.""",
             },
+
 
             {
                 "order": 9,
-                "title": "Когда WOULD не подходит",
-                "body": """WISH + WOULD обычно не используется для собственного контролируемого решения.
+                "title":
+                    "WISH и HOPE",
 
-Неестественно:
-
-I wish I would study more.
-
-Лучше:
-
-I wish I studied more.
-
-Или:
-
-I wish I could study more.
-
-WISH + WOULD обычно означает:
-
-я хочу, чтобы кто-то или что-то изменилось,
-
-но я не контролирую это напрямую.""",
-            },
-
-            {
-                "order": 10,
-                "title": "WISH и HOPE",
-                "body": """HOPE используется для реальной возможности.
+                "body":
+                    """HOPE = реальная надежда.
 
 I hope she comes tomorrow.
 
 I hope I pass the exam.
 
-We hope the weather will improve.
-
-WISH используется для нереальной или неудовлетворительной ситуации.
+WISH = ситуация не такая,
+как нам хочется.
 
 I wish she were here.
 
 I wish I had passed the exam.
 
-We wish the weather were better.
+HOPE → возможно
 
-Сравните:
-
-I hope I pass the exam.
-— экзамен ещё впереди.
-
-I wish I had passed the exam.
-— экзамен уже был.""",
+WISH → нереальность / сожаление.""",
             },
 
-            {
-                "order": 11,
-                "title": "Четыре основные модели WISH",
-                "body": """1. Нереальное настоящее:
-
-wish + Past Simple
-
-I wish I knew.
-
-2. Сожаление о прошлом:
-
-wish + Past Perfect
-
-I wish I had known.
-
-3. Желание изменить поведение:
-
-wish + would + V1
-
-I wish he would listen.
-
-4. Отсутствие способности:
-
-wish + could + V1
-
-I wish I could help.""",
-            },
 
             {
-                "order": 12,
-                "title": "WISH и условные предложения",
-                "body": """WISH связан с Second Conditional.
+                "order": 10,
+                "title":
+                    "Как быстро выбрать форму",
 
-If I had more money, I would travel.
+                "body":
+                    """Хочу изменить настоящее:
 
-I wish I had more money.
+WISH + Past Simple
 
-В обоих случаях HAD описывает нереальное настоящее.
+Сожалею о прошлом:
 
-WISH также связан с Third Conditional.
+WISH + HAD + V3
 
-If I had studied more, I would have passed.
+Хочу изменить поведение:
 
-I wish I had studied more.
+WISH + WOULD
 
-Оба предложения относятся к нереальному прошлому.""",
-            },
+Нет способности:
 
-            {
-                "order": 13,
-                "title": "Типичные ошибки",
-                "body": """Неправильно:
+WISH + COULD
 
-I wish I know the answer.
+Реальная надежда:
 
-Правильно:
-
-I wish I knew the answer.
-
-Неправильно:
-
-I wish I have more money.
-
-Правильно:
-
-I wish I had more money.
-
-Неправильно:
-
-I wish I studied harder last year.
-
-Правильно:
-
-I wish I had studied harder last year.
-
-Неправильно:
-
-I wish I had went earlier.
-
-Правильно:
-
-I wish I had gone earlier.""",
-            },
-
-            {
-                "order": 14,
-                "title": "Как выбрать форму",
-                "body": """Хотите изменить настоящее?
-
-→ wish + Past Simple
-
-I wish I had more time.
-
-Сожалеете о прошлом?
-
-→ wish + Past Perfect
-
-I wish I had studied harder.
-
-Хотите изменить чьё-то поведение?
-
-→ wish + would
-
-I wish he would listen.
-
-Хотите иметь способность или возможность?
-
-→ wish + could
-
-I wish I could drive.
-
-Это реальная надежда на будущее?
-
-→ HOPE
-
-I hope she comes tomorrow.""",
+HOPE.""",
             },
 
         ]
 
+
+        section_objects = {}
+
+
         for data in sections:
-            GrammarLessonSection.objects.update_or_create(
+
+            section, _ = GrammarLessonSection.objects.update_or_create(
                 lesson=lesson,
                 order=data["order"],
                 defaults={
-                    "title": data["title"],
-                    "body": data["body"],
+                    "title":
+                        data["title"],
+
+                    "body":
+                        data["body"],
                 },
             )
 
-        exercises = [
+            section_objects[
+                data["order"]
+            ] = section
 
+
+        # =================================================
+        # 20 TRAINING EXERCISES
+        # =================================================
+
+        training = [
+
+            # SECTION 1
             {
                 "order": 1,
-                "prompt": "I wish I ___ taller.",
+                "section": 1,
+                "type": "choice",
+                "prompt":
+                    "Which sentence expresses dissatisfaction with the present?",
                 "options": [
-                    "am",
-                    "were",
-                    "will be",
-                    "had been yesterday only",
+                    "I wish I had more free time.",
+                    "I hope I have free time tomorrow.",
+                    "I had free time yesterday.",
+                    "I will have free time next week.",
                 ],
-                "answer": "were",
-                "explanation": (
-                    "Нереальное настоящее с be → wish + were."
-                ),
+                "answer":
+                    "I wish I had more free time.",
+                "explanation":
+                    "WISH говорит о ситуации, которую хотим изменить.",
             },
 
             {
                 "order": 2,
-                "prompt": (
-                    "She wishes she ___ closer to work."
-                ),
+                "section": 1,
+                "type": "choice",
+                "prompt":
+                    "Which is stronger and more emotional?",
                 "options": [
-                    "lives",
-                    "lived",
-                    "will live",
-                    "would have lived",
+                    "If only I had more time!",
+                    "I have more time.",
+                    "I will have more time.",
+                    "I had more time yesterday.",
                 ],
-                "answer": "lived",
-                "explanation": (
-                    "Желание изменить настоящее → Past Simple."
-                ),
+                "answer":
+                    "If only I had more time!",
+                "explanation":
+                    "IF ONLY обычно эмоциональнее WISH.",
             },
 
+
+            # SECTION 2
             {
                 "order": 3,
-                "prompt": "We wish we ___ more money.",
+                "section": 2,
+                "type": "choice",
+                "prompt":
+                    "I wish I ___ more money.",
                 "options": [
-                    "have",
                     "had",
+                    "have",
                     "will have",
-                    "had had last year only",
+                    "would have tomorrow",
                 ],
-                "answer": "had",
-                "explanation": (
-                    "Нереальная ситуация сейчас → wish + Past Simple."
-                ),
+                "answer":
+                    "had",
+                "explanation":
+                    "Нереальное настоящее → Past Simple.",
             },
 
             {
                 "order": 4,
-                "prompt": "He wishes he ___ the answer.",
+                "section": 2,
+                "type": "choice",
+                "prompt":
+                    "She wishes she ___ closer to work.",
                 "options": [
-                    "knows",
-                    "knew",
-                    "will know",
-                    "had know",
+                    "lived",
+                    "lives",
+                    "will live",
+                    "had lived yesterday",
                 ],
-                "answer": "knew",
-                "explanation": (
-                    "Сейчас он не знает ответа → knew."
-                ),
+                "answer":
+                    "lived",
+                "explanation":
+                    "WISH о настоящем → Past Simple.",
             },
 
+
+            # SECTION 3
             {
                 "order": 5,
-                "prompt": (
-                    "I wish I ___ the job last year."
-                ),
+                "section": 3,
+                "type": "choice",
+                "prompt":
+                    "I wish I ___ taller.",
                 "options": [
-                    "accepted",
-                    "had accepted",
-                    "would accept",
-                    "accept",
+                    "were",
+                    "am",
+                    "will be",
+                    "would be tomorrow",
                 ],
-                "answer": "had accepted",
-                "explanation": (
-                    "Сожаление о прошлом → Past Perfect."
-                ),
+                "answer":
+                    "were",
+                "explanation":
+                    "Гипотетическое BE → WERE.",
             },
 
             {
                 "order": 6,
-                "prompt": (
-                    "She wishes she ___ so much money."
-                ),
+                "section": 3,
+                "type": "choice",
+                "prompt":
+                    "She wishes she ___ here now.",
                 "options": [
-                    "didn't spend",
-                    "hadn't spent",
-                    "wouldn't spend yesterday",
-                    "doesn't spend",
+                    "were",
+                    "is",
+                    "will be",
+                    "had been yesterday",
                 ],
-                "answer": "hadn't spent",
-                "explanation": (
-                    "Сожаление о совершённом прошлом действии."
-                ),
+                "answer":
+                    "were",
+                "explanation":
+                    "WISH о настоящем → WERE.",
             },
 
+
+            # SECTION 4
             {
                 "order": 7,
-                "prompt": (
-                    "We wish we ___ the tickets earlier."
-                ),
+                "section": 4,
+                "type": "choice",
+                "prompt":
+                    "If only we ___ the answer!",
                 "options": [
-                    "booked",
-                    "had booked",
-                    "would book",
-                    "book",
+                    "knew",
+                    "know",
+                    "will know",
+                    "had known yesterday only",
                 ],
-                "answer": "had booked",
-                "explanation": (
-                    "Прошлое уже нельзя изменить → had booked."
-                ),
+                "answer":
+                    "knew",
+                "explanation":
+                    "IF ONLY о настоящем → Past Simple.",
             },
 
             {
                 "order": 8,
-                "prompt": (
-                    "I wish he ___ me more carefully."
-                ),
+                "section": 4,
+                "type": "build",
+                "prompt":
+                    "Собери сильное желание.",
                 "options": [
-                    "listens to",
-                    "would listen to",
-                    "had listened every day",
-                    "will listen to",
+                    "If",
+                    "only",
+                    "I",
+                    "had",
+                    "more",
+                    "time",
                 ],
-                "answer": "would listen to",
-                "explanation": (
-                    "Желание изменить чужое поведение → would."
-                ),
+                "answer":
+                    "If only I had more time",
+                "explanation":
+                    "IF ONLY + Past Simple.",
             },
 
+
+            # SECTION 5
             {
                 "order": 9,
-                "prompt": (
-                    "She wishes her neighbours ___ quieter."
-                ),
+                "section": 5,
+                "type": "choice",
+                "prompt":
+                    "I wish I ___ drive.",
                 "options": [
-                    "are",
-                    "would be",
-                    "had been yesterday only",
-                    "will being",
+                    "could",
+                    "can",
+                    "will can",
+                    "could to",
                 ],
-                "answer": "would be",
-                "explanation": (
-                    "Хотим изменить поведение/ситуацию."
-                ),
+                "answer":
+                    "could",
+                "explanation":
+                    "Нет способности сейчас → WISH + COULD.",
             },
 
             {
                 "order": 10,
-                "prompt": "I wish the rain ___.",
+                "section": 5,
+                "type": "choice",
+                "prompt":
+                    "She wishes she ___ speak Spanish.",
                 "options": [
-                    "stops",
-                    "would stop",
-                    "had stopped every day",
-                    "will stop",
-                ],
-                "answer": "would stop",
-                "explanation": (
-                    "Внешняя неприятная ситуация → wish + would."
-                ),
-            },
-
-            {
-                "order": 11,
-                "prompt": "He wishes he ___ speak Spanish.",
-                "options": [
-                    "can",
                     "could",
-                    "will can",
+                    "can",
+                    "will could",
                     "could to",
                 ],
-                "answer": "could",
-                "explanation": (
-                    "Отсутствие способности → wish + could."
-                ),
+                "answer":
+                    "could",
+                "explanation":
+                    "WISH + COULD + base verb.",
+            },
+
+
+            # SECTION 6
+            {
+                "order": 11,
+                "section": 6,
+                "type": "choice",
+                "prompt":
+                    "I wish I ___ harder last year.",
+                "options": [
+                    "had studied",
+                    "studied",
+                    "would study",
+                    "study",
+                ],
+                "answer":
+                    "had studied",
+                "explanation":
+                    "Сожаление о прошлом → HAD + V3.",
             },
 
             {
                 "order": 12,
-                "prompt": "If only we ___ longer!",
+                "section": 6,
+                "type": "choice",
+                "prompt":
+                    "We wish we ___ earlier.",
                 "options": [
-                    "can stay",
-                    "could stay",
-                    "will stay",
-                    "had staying",
+                    "had left",
+                    "left",
+                    "would leave",
+                    "have left",
                 ],
-                "answer": "could stay",
-                "explanation": (
-                    "Сильное желание иметь возможность → could."
-                ),
+                "answer":
+                    "had left",
+                "explanation":
+                    "Прошлое уже нельзя изменить → Past Perfect.",
             },
 
+
+            # SECTION 7
             {
                 "order": 13,
-                "prompt": (
-                    "I hope the weather ___ tomorrow."
-                ),
+                "section": 7,
+                "type": "choice",
+                "prompt":
+                    "I wish I ___ that message.",
                 "options": [
-                    "improved",
-                    "improves",
-                    "had improved",
-                    "would improve because of regret",
+                    "hadn't sent",
+                    "didn't send",
+                    "wouldn't send",
+                    "don't send",
                 ],
-                "answer": "improves",
-                "explanation": (
-                    "Реальная надежда на будущее → hope."
-                ),
+                "answer":
+                    "hadn't sent",
+                "explanation":
+                    "Сожаление о совершённом прошлом действии.",
             },
 
             {
                 "order": 14,
-                "prompt": (
-                    "I wish the weather ___ better now."
-                ),
+                "section": 7,
+                "type": "choice",
+                "prompt":
+                    "If only she ___ her passport!",
                 "options": [
-                    "is",
-                    "were",
-                    "will be",
-                    "had been yesterday",
+                    "hadn't forgotten",
+                    "didn't forget",
+                    "wouldn't forget yesterday",
+                    "doesn't forget",
                 ],
-                "answer": "were",
-                "explanation": (
-                    "Нереальная ситуация сейчас → wish + were."
-                ),
+                "answer":
+                    "hadn't forgotten",
+                "explanation":
+                    "IF ONLY + HADN'T + V3.",
             },
 
+
+            # SECTION 8
             {
                 "order": 15,
-                "prompt": "If only I ___ that mistake!",
+                "section": 8,
+                "type": "choice",
+                "prompt":
+                    "I wish you ___ to me.",
                 "options": [
-                    "didn't make",
-                    "hadn't made",
-                    "wouldn't make yesterday",
-                    "don't make",
+                    "would listen",
+                    "will listen",
+                    "listened yesterday only",
+                    "would listened",
                 ],
-                "answer": "hadn't made",
-                "explanation": (
-                    "Сильное сожаление о прошлом → had not + V3."
-                ),
+                "answer":
+                    "would listen",
+                "explanation":
+                    "Хотим изменить чужое поведение → WOULD.",
             },
 
             {
                 "order": 16,
-                "prompt": "Choose the correct sentence.",
+                "section": 8,
+                "type": "choice",
+                "prompt":
+                    "We wish the rain ___.",
                 "options": [
-                    "I wish I know the answer.",
-                    "I wish I knew the answer.",
-                    "I wish I will know the answer.",
-                    "I wish I knowing the answer.",
+                    "would stop",
+                    "will stop",
+                    "stopped yesterday",
+                    "would stopped",
                 ],
-                "answer": "I wish I knew the answer.",
-                "explanation": (
-                    "Нереальное настоящее → Past Simple."
-                ),
+                "answer":
+                    "would stop",
+                "explanation":
+                    "Хотим изменить внешнюю ситуацию → WISH + WOULD.",
             },
 
+
+            # SECTION 9
             {
                 "order": 17,
-                "prompt": "Choose the correct sentence.",
+                "section": 9,
+                "type": "choice",
+                "prompt":
+                    "Which sentence expresses a real future hope?",
                 "options": [
-                    "I wish I have more time.",
-                    "I wish I had more time.",
-                    "I wish I will have more time.",
-                    "I wish I would have more time.",
+                    "I hope I pass the exam.",
+                    "I wish I had passed the exam.",
+                    "I wish I knew the answer.",
+                    "If only I had studied more.",
                 ],
-                "answer": "I wish I had more time.",
-                "explanation": (
-                    "Для неудовлетворительной ситуации сейчас → had."
-                ),
+                "answer":
+                    "I hope I pass the exam.",
+                "explanation":
+                    "HOPE = реальная будущая возможность.",
             },
 
             {
                 "order": 18,
-                "prompt": "Choose the correct regret about the past.",
+                "section": 9,
+                "type": "choice",
+                "prompt":
+                    "Which sentence expresses regret about the past?",
                 "options": [
-                    "I wish I studied harder last year.",
-                    "I wish I had studied harder last year.",
-                    "I wish I would study harder last year.",
-                    "I wish I study harder last year.",
+                    "I wish I had passed the exam.",
+                    "I hope I pass the exam.",
+                    "I will pass the exam.",
+                    "I pass exams every year.",
                 ],
-                "answer": (
-                    "I wish I had studied harder last year."
-                ),
-                "explanation": (
-                    "Сожаление о прошлом → Past Perfect."
-                ),
+                "answer":
+                    "I wish I had passed the exam.",
+                "explanation":
+                    "WISH + Past Perfect = сожаление.",
             },
 
+
+            # SECTION 10
             {
                 "order": 19,
-                "prompt": "Choose the correct V3 form.",
+                "section": 10,
+                "type": "choice",
+                "prompt":
+                    "Which form is used for present dissatisfaction?",
                 "options": [
-                    "I wish I had went earlier.",
-                    "I wish I had gone earlier.",
-                    "I wish I had go earlier.",
-                    "I wish I went earlier yesterday regret.",
+                    "wish + Past Simple",
+                    "wish + will",
+                    "wish + Present Simple",
+                    "wish + Future Perfect",
                 ],
-                "answer": "I wish I had gone earlier.",
-                "explanation": (
-                    "Go → went → gone; после had нужен V3."
-                ),
+                "answer":
+                    "wish + Past Simple",
+                "explanation":
+                    "Настоящее → WISH + Past Simple.",
             },
 
             {
                 "order": 20,
-                "prompt": "Which sentence expresses a real hope?",
+                "section": 10,
+                "type": "choice",
+                "prompt":
+                    "Which form is used for past regret?",
                 "options": [
-                    "I hope she comes tomorrow.",
-                    "I wish she were here now.",
-                    "I wish she had come yesterday.",
-                    "If only she were here!",
+                    "wish + had + V3",
+                    "wish + Present Simple",
+                    "wish + will + V1",
+                    "wish + am/is/are",
                 ],
-                "answer": "I hope she comes tomorrow.",
-                "explanation": (
-                    "Hope используется для реальной будущей возможности."
-                ),
-            },
-
-            {
-                "order": 21,
-                "prompt": (
-                    "Which sentence expresses irritation "
-                    "about someone's behaviour?"
-                ),
-                "options": [
-                    "I wish you would stop shouting.",
-                    "I wish you stopped yesterday.",
-                    "I hope you shouted.",
-                    "I wish I had shouted.",
-                ],
-                "answer": "I wish you would stop shouting.",
-                "explanation": (
-                    "Wish + would часто выражает раздражение."
-                ),
-            },
-
-            {
-                "order": 22,
-                "prompt": "Choose the correct present/past pair.",
-                "options": [
-                    (
-                        "I wish I knew the answer. / "
-                        "I wish I had known the answer."
-                    ),
-                    (
-                        "I wish I know the answer. / "
-                        "I wish I knew the answer yesterday."
-                    ),
-                    (
-                        "I wish I will know the answer. / "
-                        "I wish I had knew the answer."
-                    ),
-                    (
-                        "I wish I knowing the answer. / "
-                        "I wish I would known the answer."
-                    ),
-                ],
-                "answer": (
-                    "I wish I knew the answer. / "
-                    "I wish I had known the answer."
-                ),
-                "explanation": (
-                    "Knew = нереальное настоящее; "
-                    "had known = сожаление о прошлом."
-                ),
-            },
-
-            {
-                "order": 23,
-                "prompt": "Choose the correct WISH/HOPE pair.",
-                "options": [
-                    (
-                        "I wish she were here now. / "
-                        "I hope she comes tomorrow."
-                    ),
-                    (
-                        "I wish she will be here now. / "
-                        "I hope she were here tomorrow."
-                    ),
-                    (
-                        "I wish she is here now. / "
-                        "I hope she had come tomorrow."
-                    ),
-                    (
-                        "I wish she comes now. / "
-                        "I hope she would came tomorrow."
-                    ),
-                ],
-                "answer": (
-                    "I wish she were here now. / "
-                    "I hope she comes tomorrow."
-                ),
-                "explanation": (
-                    "Wish = нереальная ситуация; "
-                    "hope = реальная будущая надежда."
-                ),
-            },
-
-            {
-                "order": 24,
-                "prompt": "Choose the fully correct sequence.",
-                "options": [
-                    (
-                        "I wish I had more time. / "
-                        "I wish I had studied harder. / "
-                        "I wish he would listen. / "
-                        "I wish I could drive."
-                    ),
-                    (
-                        "I wish I have more time. / "
-                        "I wish I studied harder yesterday. / "
-                        "I wish he will listen. / "
-                        "I wish I can drive."
-                    ),
-                    (
-                        "I wish I would have more time. / "
-                        "I wish I had study harder. / "
-                        "I wish he would listens. / "
-                        "I wish I could to drive."
-                    ),
-                    (
-                        "I wish I had had more time now. / "
-                        "I wish I will study harder yesterday. / "
-                        "I wish he listened tomorrow would. / "
-                        "I wish I can to drive."
-                    ),
-                ],
-                "answer": (
-                    "I wish I had more time. / "
-                    "I wish I had studied harder. / "
-                    "I wish he would listen. / "
-                    "I wish I could drive."
-                ),
-                "explanation": (
-                    "Present → Past Simple; past regret → Past Perfect; "
-                    "behaviour → would; ability → could."
-                ),
+                "answer":
+                    "wish + had + V3",
+                "explanation":
+                    "Прошлое сожаление → Past Perfect.",
             },
 
         ]
 
-        for data in exercises:
+
+        # =================================================
+        # FINAL TEST — 10 NEW QUESTIONS
+        # =================================================
+
+        final_test = [
+
+            {
+                "order": 21,
+                "prompt":
+                    "I wish my apartment ___ bigger.",
+                "options": [
+                    "were",
+                    "is",
+                    "will be",
+                    "would have been yesterday",
+                ],
+                "answer":
+                    "were",
+                "explanation":
+                    "Нереальное настоящее → WERE.",
+            },
+
+            {
+                "order": 22,
+                "prompt":
+                    "He wishes he ___ more free time.",
+                "options": [
+                    "had",
+                    "has",
+                    "will have",
+                    "would have tomorrow",
+                ],
+                "answer":
+                    "had",
+                "explanation":
+                    "WISH о настоящем → Past Simple.",
+            },
+
+            {
+                "order": 23,
+                "prompt":
+                    "I wish I ___ play the piano.",
+                "options": [
+                    "could",
+                    "can",
+                    "will can",
+                    "could to",
+                ],
+                "answer":
+                    "could",
+                "explanation":
+                    "Нет способности → WISH + COULD.",
+            },
+
+            {
+                "order": 24,
+                "prompt":
+                    "She wishes she ___ the offer last month.",
+                "options": [
+                    "had accepted",
+                    "accepted",
+                    "would accept",
+                    "accepts",
+                ],
+                "answer":
+                    "had accepted",
+                "explanation":
+                    "Сожаление о прошлом → HAD + V3.",
+            },
+
+            {
+                "order": 25,
+                "prompt":
+                    "If only we ___ so much money!",
+                "options": [
+                    "hadn't spent",
+                    "didn't spend",
+                    "wouldn't spend yesterday",
+                    "don't spend",
+                ],
+                "answer":
+                    "hadn't spent",
+                "explanation":
+                    "Past regret → HADN'T + V3.",
+            },
+
+            {
+                "order": 26,
+                "prompt":
+                    "I wish my neighbours ___ so much noise.",
+                "options": [
+                    "wouldn't make",
+                    "won't make",
+                    "didn't made",
+                    "wouldn't made",
+                ],
+                "answer":
+                    "wouldn't make",
+                "explanation":
+                    "Хотим изменить чужое поведение → WISH + WOULD.",
+            },
+
+            {
+                "order": 27,
+                "prompt":
+                    "Choose the correct sentence.",
+                "options": [
+                    "I wish I knew the answer.",
+                    "I wish I know the answer.",
+                    "I wish I will know the answer.",
+                    "I wish I knowing the answer.",
+                ],
+                "answer":
+                    "I wish I knew the answer.",
+                "explanation":
+                    "Настоящее нереальное состояние → Past Simple.",
+            },
+
+            {
+                "order": 28,
+                "prompt":
+                    "Choose the correct past regret.",
+                "options": [
+                    "I wish I had gone earlier.",
+                    "I wish I had went earlier.",
+                    "I wish I went earlier yesterday regret.",
+                    "I wish I would go earlier yesterday.",
+                ],
+                "answer":
+                    "I wish I had gone earlier.",
+                "explanation":
+                    "GO → GONE; после HAD нужен V3.",
+            },
+
+            {
+                "order": 29,
+                "prompt":
+                    "Choose the correct WISH / HOPE pair.",
+                "options": [
+                    "I wish she were here now. / I hope she comes tomorrow.",
+                    "I wish she is here now. / I hope she were here tomorrow.",
+                    "I wish she will be here now. / I hope she had come tomorrow.",
+                    "I wish she comes now. / I hope she would came tomorrow.",
+                ],
+                "answer":
+                    "I wish she were here now. / I hope she comes tomorrow.",
+                "explanation":
+                    "WISH = нереальная ситуация; HOPE = реальная надежда.",
+            },
+
+            {
+                "order": 30,
+                "prompt":
+                    "Choose the fully correct sequence.",
+                "options": [
+                    "I wish I had more time. / I wish I had studied harder. / I wish he would listen. / I wish I could drive.",
+                    "I wish I have more time. / I wish I studied harder yesterday. / I wish he will listen. / I wish I can drive.",
+                    "I wish I would have more time. / I wish I had study harder. / I wish he would listens. / I wish I could to drive.",
+                    "I wish I had had more time now. / I wish I will study harder yesterday. / I wish he listened tomorrow would. / I wish I can to drive.",
+                ],
+                "answer":
+                    "I wish I had more time. / I wish I had studied harder. / I wish he would listen. / I wish I could drive.",
+                "explanation":
+                    "Present → Past Simple; past regret → Past Perfect; behaviour → WOULD; ability → COULD.",
+            },
+
+        ]
+
+
+        all_exercises = (
+            training
+            +
+            final_test
+        )
+
+        valid_orders = [
+            item["order"]
+            for item in all_exercises
+        ]
+
+
+        for data in all_exercises:
+
+            if data["order"] <= 20:
+
+                section = (
+                    section_objects[
+                        data["section"]
+                    ]
+                )
+
+            else:
+
+                section = None
+
+
             GrammarExercise.objects.update_or_create(
                 lesson=lesson,
                 order=data["order"],
                 defaults={
-                    "exercise_type": GrammarExercise.Type.CHOICE,
-                    "prompt": data["prompt"],
-                    "options": data["options"],
-                    "correct_answer": data["answer"],
-                    "explanation": data["explanation"],
-                    "is_published": True,
+                    "section":
+                        section,
+
+                    "exercise_type":
+                        data.get(
+                            "type",
+                            "choice",
+                        ),
+
+                    "prompt":
+                        data["prompt"],
+
+                    "options":
+                        data["options"],
+
+                    "correct_answer":
+                        data["answer"],
+
+                    "explanation":
+                        data["explanation"],
+
+                    "is_published":
+                        True,
                 },
             )
 
+
+        GrammarExercise.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__in=valid_orders,
+        ).delete()
+
+
+        GrammarLessonSection.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__in=[
+                item["order"]
+                for item in sections
+            ],
+        ).delete()
+
+
         self.stdout.write(
             self.style.SUCCESS(
-                "✅ A1 Lesson 50 seeded: Wish / If only"
+                "✅ Interactive A1 Lesson 50 seeded"
             )
         )
 
         self.stdout.write(
-            f"Sections: {lesson.sections.count()}"
+            f"Micro rules: "
+            f"{lesson.sections.count()}"
         )
 
         self.stdout.write(
-            f"Exercises: {lesson.exercises.count()}"
+            "Training exercises: "
+            f"{lesson.exercises.filter(section__isnull=False).count()}"
+        )
+
+        self.stdout.write(
+            "Final test: "
+            f"{lesson.exercises.filter(section__isnull=True).count()}"
         )

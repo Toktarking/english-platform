@@ -10,9 +10,10 @@ from grammar.models import (
 class Command(BaseCommand):
 
     help = (
-        "Create/update A1 Grammar Lesson 47: "
-        "First Conditional."
+        "Create/update interactive A1 Grammar "
+        "Lesson 47: First Conditional."
     )
+
 
     def handle(self, *args, **options):
 
@@ -20,836 +21,950 @@ class Command(BaseCommand):
             level="A1",
             order=47,
             defaults={
-                "title": "First Conditional",
-                "slug": "first-conditional",
-                "theory_text": (
+                "title":
+                    "First Conditional",
+
+                "slug":
+                    "first-conditional",
+
+                "theory_text":
                     "First Conditional: "
-                    "If + Present Simple, will + V1."
-                ),
-                "estimated_minutes": 45,
-                "pass_score": 70,
-                "xp_reward": 100,
-                "is_published": True,
+                    "If + Present Simple, will + V1.",
+
+                "estimated_minutes":
+                    20,
+
+                "pass_score":
+                    70,
+
+                "xp_reward":
+                    100,
+
+                "is_published":
+                    True,
             },
         )
+
+
+        # =================================================
+        # 10 MICRO RULES
+        # =================================================
 
         sections = [
 
             {
                 "order": 1,
-                "title": "Что такое First Conditional",
-                "body": """First Conditional используется, когда мы говорим о реальной возможности в будущем.
+                "title":
+                    "Когда нужен First Conditional",
 
-Он может выражать:
+                "body":
+                    """First Conditional используем,
+когда говорим о реальной
+возможности в будущем.
 
-вероятный результат;
+If it rains tomorrow,
+we will stay home.
 
-предупреждение;
+Дождь возможен,
+но не гарантирован.
 
-обещание;
-
-предложение;
-
-план, зависящий от условия.
-
-Пример:
-
-If it rains tomorrow, we will stay at home.
-
-Дождь возможен, но не гарантирован.
-
-Результат зависит от условия.""",
+Результат зависит
+от условия.""",
             },
+
 
             {
                 "order": 2,
-                "title": "Основная формула",
-                "body": """Главная формула:
+                "title":
+                    "Главная формула",
 
-If + Present Simple, will + V1
+                "body":
+                    """Основная схема:
 
-Пример:
+IF + Present Simple,
+WILL + V1
 
-If I finish early, I will call you.
+If I have time,
+I will help you.
 
 Условие:
 
-If I finish early
+I have time
 
 Результат:
 
-I will call you
-
-Важно:
-
-после IF используется Present Simple, хотя смысл относится к будущему.""",
+I will help you.""",
             },
+
 
             {
                 "order": 3,
-                "title": "После IF нет WILL",
-                "body": """Главное правило First Conditional:
+                "title":
+                    "После IF нет WILL",
 
-после IF обычно не используется WILL.
-
-Неправильно:
-
-If I will finish early, I will call you.
+                "body":
+                    """После IF обычно
+не используем WILL.
 
 Правильно:
 
-If I finish early, I will call you.
+If she comes,
+we will start.
 
-Ещё пример:
+Неправильно:
 
-If she comes tomorrow, we will talk.
+If she will come,
+we will start.
 
-Не:
-
-If she will come tomorrow...""",
+Хотя речь о будущем,
+после IF нужен
+Present Simple.""",
             },
+
 
             {
                 "order": 4,
-                "title": "Утверждение и отрицание",
-                "body": """Утверждение:
+                "title":
+                    "Отрицание",
 
-If + Present Simple, will + V1
+                "body":
+                    """Отрицание в условии:
 
-If she studies, she will pass.
+If you don't hurry,
+you will be late.
 
-Отрицание в условии:
-
-If you don't hurry, you will miss the bus.
-
-If she doesn't study, she will fail.
+If she doesn't study,
+she will fail.
 
 Отрицание в результате:
 
-If it rains, we won't go out.
+If it rains,
+we won't go out.
 
-If she is tired, she won't come.
-
-WILL NOT сокращается:
-
-won't""",
+WILL NOT = WON'T.""",
             },
+
 
             {
                 "order": 5,
-                "title": "Порядок частей",
-                "body": """Если IF-часть стоит первой, ставится запятая:
+                "title":
+                    "Порядок частей",
 
-If it rains, we will stay at home.
+                "body":
+                    """Если IF-часть первая:
 
-Если результат стоит первым:
+If it rains,
+we will stay home.
 
-We will stay at home if it rains.
+Ставим запятую.
 
-Запятая обычно не нужна.
+Если результат первый:
 
-Сравните:
+We will stay home
+if it rains.
 
-If I finish early, I will call you.
-
-I will call you if I finish early.
-
-Смысл одинаковый.""",
+Запятая обычно
+не нужна.""",
             },
+
 
             {
                 "order": 6,
-                "title": "Вопросы в First Conditional",
-                "body": """Можно задавать вопросы о результате.
+                "title":
+                    "CAN, MAY, MIGHT",
 
-Примеры:
+                "body":
+                    """В результате можно использовать
+не только WILL.
 
-What will you do if it rains?
+If you finish early,
+you can go home.
 
-Will you stay home if you feel ill?
+If it rains,
+we may stay home.
 
-Will she come if we invite her?
+If we leave late,
+we might miss the train.
 
-What will happen if they lose?
+Не говорим:
 
-Формула специального вопроса:
+will can
 
-Question word + will + subject + V1 + if + Present Simple?""",
+will might.""",
             },
+
 
             {
                 "order": 7,
-                "title": "CAN, MAY, MIGHT вместо WILL",
-                "body": """В результате можно использовать не только WILL.
+                "title":
+                    "SHOULD, MUST и команда",
 
-CAN:
+                "body":
+                    """Можно давать совет:
 
-If you finish early, you can go home.
+If you feel tired,
+you should rest.
 
-MAY:
+Необходимость:
 
-If it rains, we may stay at home.
+If you feel worse,
+you must see a doctor.
 
-MIGHT:
+Команда:
 
-If we leave late, we might miss the train.
-
-Might обычно показывает менее уверенную возможность.
-
-Важно:
-
-не говорим will can или will might.""",
+If you see Anna,
+tell her to call me.""",
             },
+
 
             {
                 "order": 8,
-                "title": "MUST, SHOULD и Imperative",
-                "body": """В результате можно использовать MUST:
+                "title":
+                    "UNLESS = IF NOT",
 
-If you feel worse, you must see a doctor.
-
-SHOULD:
-
-If you feel tired, you should rest.
-
-Также возможен Imperative:
-
-If you see Anna, tell her to call me.
-
-If you feel tired, take a break.
-
-If the door is locked, use the side entrance.
-
-Такие конструкции выражают правило, совет или инструкцию.""",
-            },
-
-            {
-                "order": 9,
-                "title": "UNLESS",
-                "body": """UNLESS означает:
+                "body":
+                    """UNLESS означает:
 
 если не.
 
-Пример:
+Unless you hurry,
+you will miss the bus.
 
-Unless you hurry, you will miss the bus.
+То же самое:
 
-Это равно:
+If you don't hurry,
+you will miss the bus.
 
-If you don't hurry, you will miss the bus.
-
-Важно:
-
-не используйте двойное отрицание.
-
-Неправильно:
-
-Unless you don't hurry...
-
-Правильно:
-
-Unless you hurry...""",
+После UNLESS
+не нужно второе отрицание.""",
             },
+
+
+            {
+                "order": 9,
+                "title":
+                    "WHEN, AFTER, AS SOON AS",
+
+                "body":
+                    """После WHEN, AFTER,
+BEFORE, AS SOON AS, UNTIL
+для будущего тоже обычно
+используем Present Simple.
+
+I will call you
+when I arrive.
+
+We will eat
+after she comes.
+
+I will tell you
+as soon as I know.""",
+            },
+
 
             {
                 "order": 10,
-                "title": "WHEN и IF",
-                "body": """WHEN используется, если говорящий ожидает, что событие произойдёт.
+                "title":
+                    "Zero vs First Conditional",
 
-When she arrives, we will start.
+                "body":
+                    """Zero Conditional:
 
-IF используется, если событие возможно, но не гарантировано.
+общая закономерность.
 
-If she arrives early, we will start sooner.
+If I drink coffee at night,
+I can't sleep.
 
-Сравните:
+First Conditional:
 
-When I finish work, I will call you.
+конкретная будущая ситуация.
 
-If I finish work early, I will call you.""",
-            },
+If I drink coffee tonight,
+I won't sleep.
 
-            {
-                "order": 11,
-                "title": "AFTER, BEFORE, AS SOON AS, UNTIL",
-                "body": """После when, after, before, as soon as и until для будущего тоже обычно не используется WILL.
+ZERO = всегда / обычно
 
-Правильно:
-
-I will call you when I arrive.
-
-We will eat after she comes.
-
-I will finish this before I leave.
-
-I will tell you as soon as I know.
-
-We will wait until he arrives.
-
-Не:
-
-when I will arrive
-
-after she will come""",
-            },
-
-            {
-                "order": 12,
-                "title": "Предупреждения, обещания и планы",
-                "body": """First Conditional часто используется для предупреждений:
-
-If you drive too fast, you will have an accident.
-
-Для обещаний:
-
-If you help me, I will help you.
-
-Для предложений:
-
-If you are tired, I will drive.
-
-Для планов:
-
-If the weather is good, we will go to the park.
-
-Во всех случаях результат зависит от условия.""",
-            },
-
-            {
-                "order": 13,
-                "title": "First Conditional и Zero Conditional",
-                "body": """Zero Conditional описывает общий факт:
-
-If you heat ice, it melts.
-
-First Conditional описывает конкретную будущую ситуацию:
-
-If you leave this ice in the sun, it will melt.
-
-Сравните:
-
-If I drink coffee at night, I can't sleep.
-— обычная реакция.
-
-If I drink coffee tonight, I won't sleep.
-— конкретная ситуация сегодня.""",
-            },
-
-            {
-                "order": 14,
-                "title": "Как выбрать First Conditional",
-                "body": """Задайте три вопроса.
-
-1. Ситуация относится к будущему?
-
-2. Она реальна или возможна?
-
-3. Результат зависит от условия?
-
-Если да:
-
-используйте First Conditional.
-
-Основная формула:
-
-If + Present Simple, will + V1
-
-Пример:
-
-If I have time, I will help you.
-
-Также в результате возможны:
-
-can;
-
-may;
-
-might;
-
-must;
-
-should;
-
-imperative.""",
+FIRST = возможное будущее.""",
             },
 
         ]
 
+
+        section_objects = {}
+
+
         for data in sections:
-            GrammarLessonSection.objects.update_or_create(
+
+            section, _ = GrammarLessonSection.objects.update_or_create(
                 lesson=lesson,
                 order=data["order"],
                 defaults={
-                    "title": data["title"],
-                    "body": data["body"],
+                    "title":
+                        data["title"],
+
+                    "body":
+                        data["body"],
                 },
             )
 
-        exercises = [
+            section_objects[
+                data["order"]
+            ] = section
 
+
+        # =================================================
+        # 20 TRAINING EXERCISES
+        # =================================================
+
+        training = [
+
+            # SECTION 1
             {
                 "order": 1,
-                "prompt": "If I ___ time, I will help you.",
+                "section": 1,
+                "type": "choice",
+                "prompt":
+                    "Which sentence describes a real future possibility?",
+                "options": [
+                    "If it rains tomorrow, we will stay home.",
+                    "If it rains, the ground gets wet.",
+                    "If it rained yesterday, we stayed home.",
+                    "If it had rained, we would have stayed home.",
+                ],
+                "answer":
+                    "If it rains tomorrow, we will stay home.",
+                "explanation":
+                    "Конкретная возможная ситуация в будущем → First Conditional.",
+            },
+
+            {
+                "order": 2,
+                "section": 1,
+                "type": "choice",
+                "prompt":
+                    "First Conditional usually talks about...",
+                "options": [
+                    "a possible future result",
+                    "a general scientific fact only",
+                    "an impossible past event",
+                    "a completed action yesterday",
+                ],
+                "answer":
+                    "a possible future result",
+                "explanation":
+                    "First Conditional описывает реальную возможность в будущем.",
+            },
+
+
+            # SECTION 2
+            {
+                "order": 3,
+                "section": 2,
+                "type": "choice",
+                "prompt":
+                    "If I ___ time, I will call you.",
                 "options": [
                     "have",
                     "will have",
                     "had",
                     "having",
                 ],
-                "answer": "have",
-                "explanation": (
-                    "После if используется Present Simple."
-                ),
-            },
-
-            {
-                "order": 2,
-                "prompt": (
-                    "If she ___ early, we will start at once."
-                ),
-                "options": [
-                    "arrive",
-                    "arrives",
-                    "will arrive",
-                    "arrived",
-                ],
-                "answer": "arrives",
-                "explanation": (
-                    "She → arrives; после if нет will."
-                ),
-            },
-
-            {
-                "order": 3,
-                "prompt": (
-                    "If they don't leave now, they ___ late."
-                ),
-                "options": [
-                    "are always",
-                    "will be",
-                    "were",
-                    "will being",
-                ],
-                "answer": "will be",
-                "explanation": (
-                    "Результат будущего → will be."
-                ),
+                "answer":
+                    "have",
+                "explanation":
+                    "После IF → Present Simple.",
             },
 
             {
                 "order": 4,
-                "prompt": (
-                    "If he studies hard, he ___ the exam."
-                ),
+                "section": 2,
+                "type": "choice",
+                "prompt":
+                    "If she studies hard, she ___ the exam.",
                 "options": [
-                    "passes every year",
                     "will pass",
-                    "passed",
-                    "will passing",
+                    "passes every time",
+                    "will passed",
+                    "passing",
                 ],
-                "answer": "will pass",
-                "explanation": (
-                    "Вероятный будущий результат → will + V1."
-                ),
+                "answer":
+                    "will pass",
+                "explanation":
+                    "Результат → WILL + V1.",
             },
 
+
+            # SECTION 3
             {
                 "order": 5,
-                "prompt": "If it is sunny, we ___ to the park.",
+                "section": 3,
+                "type": "choice",
+                "prompt":
+                    "If he ___ tomorrow, we will talk.",
                 "options": [
-                    "will go",
-                    "went",
-                    "goes",
-                    "will going",
+                    "comes",
+                    "will come",
+                    "came",
+                    "coming",
                 ],
-                "answer": "will go",
-                "explanation": (
-                    "Will + base verb: will go."
-                ),
+                "answer":
+                    "comes",
+                "explanation":
+                    "После IF не используем WILL.",
             },
 
             {
                 "order": 6,
-                "prompt": (
-                    "If you don't wear a coat, you ___ cold."
-                ),
+                "section": 3,
+                "type": "choice",
+                "prompt":
+                    "Choose the correct sentence.",
                 "options": [
-                    "will get",
-                    "got",
-                    "get yesterday",
-                    "will getting",
+                    "If she calls, I will answer.",
+                    "If she will call, I will answer.",
+                    "If she calling, I will answer.",
+                    "If she calls, I will answering.",
                 ],
-                "answer": "will get",
-                "explanation": (
-                    "Предупреждение о будущем → will get."
-                ),
+                "answer":
+                    "If she calls, I will answer.",
+                "explanation":
+                    "IF + Present Simple, WILL + V1.",
             },
 
+
+            # SECTION 4
             {
                 "order": 7,
-                "prompt": (
-                    "If she calls, I ___ her the news."
-                ),
+                "section": 4,
+                "type": "choice",
+                "prompt":
+                    "If you ___ now, you will miss the bus.",
                 "options": [
-                    "tell yesterday",
-                    "will tell",
-                    "told",
-                    "will told",
+                    "don't leave",
+                    "won't leave",
+                    "doesn't leave",
+                    "not leave",
                 ],
-                "answer": "will tell",
-                "explanation": (
-                    "Will + V1: will tell."
-                ),
+                "answer":
+                    "don't leave",
+                "explanation":
+                    "YOU → DON'T + base verb.",
             },
 
             {
                 "order": 8,
-                "prompt": (
-                    "If you finish the task, you ___ leave."
-                ),
+                "section": 4,
+                "type": "choice",
+                "prompt":
+                    "If it rains, we ___ go to the park.",
+                "options": [
+                    "won't",
+                    "don't will",
+                    "not will",
+                    "willn't",
+                ],
+                "answer":
+                    "won't",
+                "explanation":
+                    "WILL NOT → WON'T.",
+            },
+
+
+            # SECTION 5
+            {
+                "order": 9,
+                "section": 5,
+                "type": "build",
+                "prompt":
+                    "Собери First Conditional.",
+                "options": [
+                    "If",
+                    "I",
+                    "finish",
+                    "early",
+                    "I",
+                    "will",
+                    "call",
+                    "you",
+                ],
+                "answer":
+                    "If I finish early I will call you",
+                "explanation":
+                    "IF + Present Simple → WILL + V1.",
+            },
+
+            {
+                "order": 10,
+                "section": 5,
+                "type": "choice",
+                "prompt":
+                    "Choose the correct reversed order.",
+                "options": [
+                    "I will call you if I finish early.",
+                    "I will call you, if I will finish early.",
+                    "I call you if I will finish early.",
+                    "I will calling you if I finish early.",
+                ],
+                "answer":
+                    "I will call you if I finish early.",
+                "explanation":
+                    "Если IF-часть стоит второй, запятая обычно не нужна.",
+            },
+
+
+            # SECTION 6
+            {
+                "order": 11,
+                "section": 6,
+                "type": "choice",
+                "prompt":
+                    "If you finish early, you ___ go home.",
                 "options": [
                     "can",
                     "will can",
                     "can to",
                     "will able",
                 ],
-                "answer": "can",
-                "explanation": (
-                    "После if-clause в результате можно использовать can."
-                ),
-            },
-
-            {
-                "order": 9,
-                "prompt": (
-                    "If he feels worse, he ___ see a doctor."
-                ),
-                "options": [
-                    "must",
-                    "will must",
-                    "must to",
-                    "musts",
-                ],
-                "answer": "must",
-                "explanation": (
-                    "Необходимость → must + V1."
-                ),
-            },
-
-            {
-                "order": 10,
-                "prompt": "If you are tired, ___.",
-                "options": [
-                    "rest",
-                    "will resting",
-                    "rested",
-                    "to rest",
-                ],
-                "answer": "rest",
-                "explanation": (
-                    "В результате возможен imperative."
-                ),
-            },
-
-            {
-                "order": 11,
-                "prompt": (
-                    "I will call you as soon as I ___ the answer."
-                ),
-                "options": [
-                    "will know",
-                    "know",
-                    "knew",
-                    "knowing",
-                ],
-                "answer": "know",
-                "explanation": (
-                    "После as soon as для будущего используется Present Simple."
-                ),
+                "answer":
+                    "can",
+                "explanation":
+                    "В результате можно использовать CAN.",
             },
 
             {
                 "order": 12,
-                "prompt": "We will wait until she ___.",
+                "section": 6,
+                "type": "choice",
+                "prompt":
+                    "If we leave late, we ___ miss the train.",
                 "options": [
-                    "will arrive",
-                    "arrives",
-                    "arrived",
-                    "arriving",
+                    "might",
+                    "will might",
+                    "might to",
+                    "mights",
                 ],
-                "answer": "arrives",
-                "explanation": (
-                    "После until используется Present Simple."
-                ),
+                "answer":
+                    "might",
+                "explanation":
+                    "MIGHT выражает возможный результат.",
             },
 
+
+            # SECTION 7
             {
                 "order": 13,
-                "prompt": (
-                    "Unless you ___, you will not improve."
-                ),
+                "section": 7,
+                "type": "choice",
+                "prompt":
+                    "If you feel tired, you ___ rest.",
                 "options": [
-                    "practise",
-                    "will practise",
-                    "practised",
-                    "practising",
+                    "should",
+                    "should to",
+                    "will should",
+                    "shoulds",
                 ],
-                "answer": "practise",
-                "explanation": (
-                    "Unless + Present Simple."
-                ),
+                "answer":
+                    "should",
+                "explanation":
+                    "В результате можно использовать SHOULD.",
             },
 
             {
                 "order": 14,
-                "prompt": (
-                    "What will you do if you ___ the bus?"
-                ),
+                "section": 7,
+                "type": "choice",
+                "prompt":
+                    "If you see Anna, ___ her to call me.",
                 "options": [
-                    "miss",
-                    "will miss",
-                    "missed",
-                    "missing",
+                    "tell",
+                    "to tell",
+                    "telling",
+                    "will telling",
                 ],
-                "answer": "miss",
-                "explanation": (
-                    "После if используется Present Simple."
-                ),
+                "answer":
+                    "tell",
+                "explanation":
+                    "В результате возможен imperative.",
             },
 
+
+            # SECTION 8
             {
                 "order": 15,
-                "prompt": (
-                    "If the weather improves, we ___ go out."
-                ),
+                "section": 8,
+                "type": "choice",
+                "prompt":
+                    "___ you hurry, you will miss the train.",
                 "options": [
-                    "might",
-                    "might to",
-                    "will might",
-                    "mights",
+                    "Unless",
+                    "Unless not",
+                    "If not will",
+                    "Will unless",
                 ],
-                "answer": "might",
-                "explanation": (
-                    "Might + V1 выражает менее уверенную возможность."
-                ),
+                "answer":
+                    "Unless",
+                "explanation":
+                    "UNLESS = IF NOT.",
             },
 
             {
                 "order": 16,
-                "prompt": "Choose the correct sentence.",
+                "section": 8,
+                "type": "choice",
+                "prompt":
+                    "Choose the same meaning: If you don't study, you will fail.",
                 "options": [
-                    "If she will come, we will start.",
-                    "If she comes, we will start.",
-                    "If she coming, we will start.",
-                    "If she came tomorrow, we will start.",
+                    "Unless you study, you will fail.",
+                    "Unless you don't study, you will fail.",
+                    "Unless you will study, you will fail.",
+                    "Unless studying, you fail yesterday.",
                 ],
-                "answer": "If she comes, we will start.",
-                "explanation": (
-                    "После if в First Conditional нет will."
-                ),
+                "answer":
+                    "Unless you study, you will fail.",
+                "explanation":
+                    "После UNLESS не добавляем ещё одно отрицание.",
             },
 
+
+            # SECTION 9
             {
                 "order": 17,
-                "prompt": "Choose the correct sentence.",
+                "section": 9,
+                "type": "choice",
+                "prompt":
+                    "I will call you when I ___.",
                 "options": [
-                    "If he call, I will answer.",
-                    "If he calls, I will answer.",
-                    "If he will calls, I answer.",
-                    "If he calling, I will answer.",
+                    "arrive",
+                    "will arrive",
+                    "arrived",
+                    "will arriving",
                 ],
-                "answer": "If he calls, I will answer.",
-                "explanation": (
-                    "He → calls в Present Simple."
-                ),
+                "answer":
+                    "arrive",
+                "explanation":
+                    "После WHEN для будущего → Present Simple.",
             },
 
             {
                 "order": 18,
-                "prompt": "Choose the correct negative sentence.",
+                "section": 9,
+                "type": "choice",
+                "prompt":
+                    "We will start as soon as she ___.",
                 "options": [
-                    "If she doesn't studies, she will fail.",
-                    "If she doesn't study, she will fail.",
-                    "If she won't study, she will fail.",
-                    "If she not study, she will fail.",
+                    "comes",
+                    "will come",
+                    "came",
+                    "coming",
                 ],
-                "answer": (
-                    "If she doesn't study, she will fail."
-                ),
-                "explanation": (
-                    "После doesn't используется base verb."
-                ),
+                "answer":
+                    "comes",
+                "explanation":
+                    "После AS SOON AS → Present Simple.",
             },
 
+
+            # SECTION 10
             {
                 "order": 19,
-                "prompt": "Choose the correct sentence with UNLESS.",
+                "section": 10,
+                "type": "choice",
+                "prompt":
+                    "Which is Zero Conditional?",
                 "options": [
-                    "Unless you don't hurry, you will be late.",
-                    "Unless you hurry, you will be late.",
-                    "Unless you will hurry, you will be late.",
-                    "Unless not hurry, you will be late.",
+                    "If people don't sleep enough, they feel tired.",
+                    "If I don't sleep tonight, I will be tired tomorrow.",
+                    "If I had slept more, I wouldn't be tired.",
+                    "If I sleep tomorrow, I slept better.",
                 ],
-                "answer": (
-                    "Unless you hurry, you will be late."
-                ),
-                "explanation": (
-                    "Unless уже содержит отрицательное значение."
-                ),
+                "answer":
+                    "If people don't sleep enough, they feel tired.",
+                "explanation":
+                    "Общая закономерность → Zero Conditional.",
             },
 
             {
                 "order": 20,
-                "prompt": "Choose the correct sentence with WHEN.",
+                "section": 10,
+                "type": "choice",
+                "prompt":
+                    "Which is First Conditional?",
                 "options": [
-                    "I will call you when I will arrive.",
-                    "I will call you when I arrive.",
-                    "I call you when I will arrive tomorrow.",
-                    "I will calling you when I arrive.",
+                    "If I don't sleep tonight, I will be tired tomorrow.",
+                    "If people don't sleep, they feel tired.",
+                    "When I don't sleep enough, I feel bad.",
+                    "If I didn't sleep yesterday, I was tired.",
                 ],
-                "answer": (
-                    "I will call you when I arrive."
-                ),
-                "explanation": (
-                    "После when для будущего используется Present Simple."
-                ),
-            },
-
-            {
-                "order": 21,
-                "prompt": (
-                    "Which sentence is Zero Conditional?"
-                ),
-                "options": [
-                    "If you heat ice, it melts.",
-                    "If you leave this ice in the sun, it will melt.",
-                    "If you heated the ice, it melted yesterday.",
-                    "If you will heat ice, it melts.",
-                ],
-                "answer": "If you heat ice, it melts.",
-                "explanation": (
-                    "Общий факт → Zero Conditional."
-                ),
-            },
-
-            {
-                "order": 22,
-                "prompt": (
-                    "Which sentence is First Conditional?"
-                ),
-                "options": [
-                    "If I drink coffee at night, I can't sleep.",
-                    "If I drink coffee tonight, I won't sleep.",
-                    "If I drank coffee yesterday, I couldn't sleep.",
-                    "When I drink coffee, I feel awake.",
-                ],
-                "answer": (
-                    "If I drink coffee tonight, I won't sleep."
-                ),
-                "explanation": (
-                    "Конкретная возможная ситуация в будущем."
-                ),
-            },
-
-            {
-                "order": 23,
-                "prompt": (
-                    "Choose the correct future time-clause pair."
-                ),
-                "options": [
-                    (
-                        "I will call you when I arrive. / "
-                        "We will start as soon as she comes."
-                    ),
-                    (
-                        "I will call you when I will arrive. / "
-                        "We will start as soon as she will come."
-                    ),
-                    (
-                        "I call you when I will arrive. / "
-                        "We starting when she comes."
-                    ),
-                    (
-                        "I will calling when I arrive. / "
-                        "We will start as soon as she coming."
-                    ),
-                ],
-                "answer": (
-                    "I will call you when I arrive. / "
-                    "We will start as soon as she comes."
-                ),
-                "explanation": (
-                    "После when/as soon as используется Present Simple."
-                ),
-            },
-
-            {
-                "order": 24,
-                "prompt": "Choose the fully correct sequence.",
-                "options": [
-                    (
-                        "If I have time, I will help you. / "
-                        "If you finish, you can leave. / "
-                        "If you feel tired, you should rest. / "
-                        "If you see Anna, tell her."
-                    ),
-                    (
-                        "If I will have time, I will help you. / "
-                        "If you finish, you will can leave. / "
-                        "If you feel tired, you will should rest. / "
-                        "If you see Anna, to tell her."
-                    ),
-                    (
-                        "If I had time tomorrow, I will help. / "
-                        "If you finishing, can leave. / "
-                        "If you feel tired, should to rest. / "
-                        "If Anna, telling her."
-                    ),
-                    (
-                        "If I have time, I will to help. / "
-                        "If you finish, can to leave. / "
-                        "If you feels tired, you should rests. / "
-                        "If you see Anna, will tell imperative."
-                    ),
-                ],
-                "answer": (
-                    "If I have time, I will help you. / "
-                    "If you finish, you can leave. / "
-                    "If you feel tired, you should rest. / "
-                    "If you see Anna, tell her."
-                ),
-                "explanation": (
-                    "В результате First Conditional возможны "
-                    "will, can, should и imperative."
-                ),
+                "answer":
+                    "If I don't sleep tonight, I will be tired tomorrow.",
+                "explanation":
+                    "Конкретное возможное будущее → First Conditional.",
             },
 
         ]
 
-        for data in exercises:
+
+        # =================================================
+        # FINAL TEST — 10 NEW QUESTIONS
+        # =================================================
+
+        final_test = [
+
+            {
+                "order": 21,
+                "prompt":
+                    "If the weather ___ good tomorrow, we will go hiking.",
+                "options": [
+                    "is",
+                    "will be",
+                    "was",
+                    "being",
+                ],
+                "answer":
+                    "is",
+                "explanation":
+                    "После IF → Present Simple.",
+            },
+
+            {
+                "order": 22,
+                "prompt":
+                    "If my train is late, I ___ you.",
+                "options": [
+                    "will text",
+                    "texted",
+                    "will texting",
+                    "will texts",
+                ],
+                "answer":
+                    "will text",
+                "explanation":
+                    "Будущий результат → WILL + V1.",
+            },
+
+            {
+                "order": 23,
+                "prompt":
+                    "If she ___ the job, she will move to London.",
+                "options": [
+                    "gets",
+                    "will get",
+                    "got",
+                    "getting",
+                ],
+                "answer":
+                    "gets",
+                "explanation":
+                    "SHE → GETS после IF.",
+            },
+
+            {
+                "order": 24,
+                "prompt":
+                    "If we don't book now, we ___ a room.",
+                "options": [
+                    "might not get",
+                    "will might not get",
+                    "might not to get",
+                    "not might gets",
+                ],
+                "answer":
+                    "might not get",
+                "explanation":
+                    "MIGHT + base verb может выражать возможный результат.",
+            },
+
+            {
+                "order": 25,
+                "prompt":
+                    "If your temperature gets higher, you ___ call a doctor.",
+                "options": [
+                    "should",
+                    "will should",
+                    "should to",
+                    "shoulds",
+                ],
+                "answer":
+                    "should",
+                "explanation":
+                    "SHOULD выражает совет.",
+            },
+
+            {
+                "order": 26,
+                "prompt":
+                    "___ you leave now, you will be late.",
+                "options": [
+                    "Unless",
+                    "Unless not",
+                    "If won't",
+                    "Will unless",
+                ],
+                "answer":
+                    "Unless",
+                "explanation":
+                    "UNLESS = IF NOT.",
+            },
+
+            {
+                "order": 27,
+                "prompt":
+                    "I will send you the file as soon as I ___ it.",
+                "options": [
+                    "finish",
+                    "will finish",
+                    "finished",
+                    "will finished",
+                ],
+                "answer":
+                    "finish",
+                "explanation":
+                    "После AS SOON AS → Present Simple.",
+            },
+
+            {
+                "order": 28,
+                "prompt":
+                    "Choose the correct sentence.",
+                "options": [
+                    "If he arrives early, we will have time for coffee.",
+                    "If he will arrive early, we will have time for coffee.",
+                    "If he arrive early, we will have time for coffee.",
+                    "If he arrives early, we will having time for coffee.",
+                ],
+                "answer":
+                    "If he arrives early, we will have time for coffee.",
+                "explanation":
+                    "HE → ARRIVES; результат → WILL HAVE.",
+            },
+
+            {
+                "order": 29,
+                "prompt":
+                    "Choose the correct future time-clause pair.",
+                "options": [
+                    "I'll call when I arrive. / We'll eat after she comes.",
+                    "I'll call when I will arrive. / We'll eat after she will come.",
+                    "I'll call when I arriving. / We'll eat after she come yesterday.",
+                    "I'll calling when I arrive. / We'll ate after she comes.",
+                ],
+                "answer":
+                    "I'll call when I arrive. / We'll eat after she comes.",
+                "explanation":
+                    "После WHEN и AFTER для будущего используется Present Simple.",
+            },
+
+            {
+                "order": 30,
+                "prompt":
+                    "Choose the fully correct sequence.",
+                "options": [
+                    "If I have time, I will help. / If you finish, you can leave. / Unless you hurry, you will be late.",
+                    "If I will have time, I will help. / If you finish, you will can leave. / Unless you don't hurry, you will be late.",
+                    "If I had time tomorrow, I will help. / If you finishing, can leave. / Unless you will hurry, you will be late.",
+                    "If I have time, I will to help. / If you finish, can to leave. / Unless hurry, you will late.",
+                ],
+                "answer":
+                    "If I have time, I will help. / If you finish, you can leave. / Unless you hurry, you will be late.",
+                "explanation":
+                    "First Conditional: Present Simple after IF/UNLESS; result can use WILL or CAN.",
+            },
+
+        ]
+
+
+        all_exercises = (
+            training
+            +
+            final_test
+        )
+
+        valid_orders = [
+            item["order"]
+            for item in all_exercises
+        ]
+
+
+        for data in all_exercises:
+
+            if data["order"] <= 20:
+
+                section = (
+                    section_objects[
+                        data["section"]
+                    ]
+                )
+
+            else:
+
+                section = None
+
+
             GrammarExercise.objects.update_or_create(
                 lesson=lesson,
                 order=data["order"],
                 defaults={
-                    "exercise_type": GrammarExercise.Type.CHOICE,
-                    "prompt": data["prompt"],
-                    "options": data["options"],
-                    "correct_answer": data["answer"],
-                    "explanation": data["explanation"],
-                    "is_published": True,
+                    "section":
+                        section,
+
+                    "exercise_type":
+                        data.get(
+                            "type",
+                            "choice",
+                        ),
+
+                    "prompt":
+                        data["prompt"],
+
+                    "options":
+                        data["options"],
+
+                    "correct_answer":
+                        data["answer"],
+
+                    "explanation":
+                        data["explanation"],
+
+                    "is_published":
+                        True,
                 },
             )
 
+
+        GrammarExercise.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__in=valid_orders,
+        ).delete()
+
+
+        GrammarLessonSection.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__in=[
+                item["order"]
+                for item in sections
+            ],
+        ).delete()
+
+
         self.stdout.write(
             self.style.SUCCESS(
-                "✅ A1 Lesson 47 seeded: First Conditional"
+                "✅ Interactive A1 Lesson 47 seeded"
             )
         )
 
         self.stdout.write(
-            f"Sections: {lesson.sections.count()}"
+            f"Micro rules: "
+            f"{lesson.sections.count()}"
         )
 
         self.stdout.write(
-            f"Exercises: {lesson.exercises.count()}"
+            "Training exercises: "
+            f"{lesson.exercises.filter(section__isnull=False).count()}"
+        )
+
+        self.stdout.write(
+            "Final test: "
+            f"{lesson.exercises.filter(section__isnull=True).count()}"
         )

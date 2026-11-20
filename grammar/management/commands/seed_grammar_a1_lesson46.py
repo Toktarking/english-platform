@@ -10,9 +10,10 @@ from grammar.models import (
 class Command(BaseCommand):
 
     help = (
-        "Create/update A1 Grammar Lesson 46: "
-        "Zero Conditional."
+        "Create/update interactive A1 Grammar "
+        "Lesson 46: Zero Conditional."
     )
+
 
     def handle(self, *args, **options):
 
@@ -20,812 +21,957 @@ class Command(BaseCommand):
             level="A1",
             order=46,
             defaults={
-                "title": "Zero Conditional",
-                "slug": "zero-conditional",
-                "theory_text": (
+                "title":
+                    "Zero Conditional",
+
+                "slug":
+                    "zero-conditional",
+
+                "theory_text":
                     "Zero Conditional: "
-                    "If + Present Simple, Present Simple."
-                ),
-                "estimated_minutes": 40,
-                "pass_score": 70,
-                "xp_reward": 100,
-                "is_published": True,
+                    "If + Present Simple, Present Simple.",
+
+                "estimated_minutes":
+                    20,
+
+                "pass_score":
+                    70,
+
+                "xp_reward":
+                    100,
+
+                "is_published":
+                    True,
             },
         )
+
+
+        # =================================================
+        # 10 MICRO RULES
+        # =================================================
 
         sections = [
 
             {
                 "order": 1,
-                "title": "Что такое Zero Conditional",
-                "body": """Zero Conditional используется для:
+                "title":
+                    "Когда нужен Zero Conditional",
 
-общеизвестных фактов;
+                "body":
+                    """Zero Conditional используем,
+когда результат происходит
+всегда или обычно.
 
-законов природы;
+Это может быть:
 
-правил;
+факт
 
-постоянных закономерностей;
+правило
 
-привычных результатов.
+закономерность
+
+привычная реакция
 
 Пример:
 
-If you heat water, it boils.
-
-Это не прогноз.
-
-Это факт, который происходит всегда или обычно.""",
+If you heat water,
+it boils.""",
             },
+
 
             {
                 "order": 2,
-                "title": "Основная формула",
-                "body": """Основная схема:
+                "title":
+                    "Главная формула",
 
-If + Present Simple, Present Simple
+                "body":
+                    """Основная схема:
 
-Пример:
+IF + Present Simple,
+Present Simple
 
-If you heat water, it boils.
+If you heat water,
+it boils.
 
 Условие:
 
-If you heat water
+you heat water
 
 Результат:
 
 it boils
 
-Обе части обычно стоят в Present Simple.""",
+Обе части обычно
+стоят в Present Simple.""",
             },
+
 
             {
                 "order": 3,
-                "title": "Общие факты и законы природы",
-                "body": """Zero Conditional часто используется для научных и природных фактов.
+                "title":
+                    "Факты и законы природы",
 
-Примеры:
+                "body":
+                    """Zero Conditional часто
+описывает факты.
 
-If water reaches 100°C, it boils.
+If water reaches 100°C,
+it boils.
 
-If temperatures fall below zero, water freezes.
+If water freezes,
+it becomes ice.
 
-If plants don't get sunlight, they die.
+If plants don't get water,
+they die.
 
-If you drop an object, it falls.
+Это не прогноз.
 
-Если условие выполняется, результат закономерен.""",
+Это закономерность.""",
             },
+
 
             {
                 "order": 4,
-                "title": "Привычки и повторяющиеся ситуации",
-                "body": """Zero Conditional может описывать регулярную личную реакцию.
+                "title":
+                    "Привычные ситуации",
 
-Примеры:
+                "body":
+                    """Можно описывать
+повторяющуюся личную реакцию.
 
-If I drink coffee late, I can't sleep.
+If I drink coffee late,
+I can't sleep.
 
-If she misses breakfast, she gets hungry.
+If she skips breakfast,
+she gets hungry.
 
-If we leave home late, we take a taxi.
+If he feels stressed,
+he goes for a walk.
 
-If he feels stressed, he goes for a walk.
-
-Речь идёт не об одном случае, а о повторяющейся ситуации.""",
+Речь идёт о том,
+что происходит обычно.""",
             },
+
 
             {
                 "order": 5,
-                "title": "Правила и инструкции",
-                "body": """Zero Conditional подходит для правил и работы устройств.
+                "title":
+                    "Правила и инструкции",
 
-Примеры:
+                "body":
+                    """Zero Conditional подходит
+для правил и устройств.
 
-If you press this button, the computer turns on.
+If you press this button,
+the machine starts.
 
-If you click here, the file opens.
+If the battery is empty,
+the phone turns off.
 
-If students arrive late, the teacher marks them absent.
-
-If the battery is empty, the phone turns off.
-
-Такие предложения описывают стандартный результат.""",
+If students arrive late,
+the teacher marks them absent.""",
             },
+
 
             {
                 "order": 6,
-                "title": "IF и WHEN",
-                "body": """В Zero Conditional IF часто можно заменить на WHEN.
+                "title":
+                    "IF и WHEN",
 
-If I drink coffee at night, I can't sleep.
+                "body":
+                    """В Zero Conditional
+IF часто можно заменить на WHEN.
 
-When I drink coffee at night, I can't sleep.
+If I drink coffee late,
+I can't sleep.
 
-IF:
+When I drink coffee late,
+I can't sleep.
 
-если это происходит.
+IF = если это происходит
 
-WHEN:
-
-когда это происходит.
-
-При регулярной закономерности разница часто небольшая.""",
+WHEN = когда это происходит.""",
             },
+
 
             {
                 "order": 7,
-                "title": "Порядок частей и запятая",
-                "body": """Если IF-часть стоит первой, обычно используется запятая:
+                "title":
+                    "He / She / It → -S",
 
-If you heat water, it boils.
+                "body":
+                    """В Present Simple
+не забывай -S.
 
-Если результат стоит первым:
+If she drinks coffee,
+she sleeps badly.
 
-Water boils if you heat it.
+If it rains,
+the road gets wet.
 
-Запятая обычно не нужна.
+Не:
 
-Сравните:
-
-If I am tired, I go to bed early.
-
-I go to bed early if I am tired.""",
-            },
-
-            {
-                "order": 8,
-                "title": "Present Simple после IF",
-                "body": """В IF-части используется Present Simple.
-
-I/you/we/they:
-
-If you exercise, you feel better.
-
-He/she/it:
-
-If she drinks coffee, she sleeps badly.
-
-Не забывайте -s / -es:
-
-If it rains, the road gets wet.
+If she drink...
 
 Не:
 
 If it rain...""",
             },
 
+
             {
-                "order": 9,
-                "title": "Отрицание",
-                "body": """Для отрицания используются don't и doesn't.
+                "order": 8,
+                "title":
+                    "Отрицание",
 
-Примеры:
+                "body":
+                    """Используем:
 
-If I don't sleep enough, I feel tired.
+DON'T + verb
 
-If you don't water plants, they die.
+DOESN'T + verb
 
-If she doesn't eat breakfast, she gets hungry.
+If I don't sleep enough,
+I feel tired.
 
-Если подлежащее he/she/it:
+If she doesn't eat,
+she gets hungry.
 
-doesn't + base verb
-
-Не:
-
-If he don't eat...""",
+После DOESN'T
+глагол без -S.""",
             },
 
+
             {
-                "order": 10,
-                "title": "Модальные глаголы и Imperative",
-                "body": """Результат не всегда обязан быть только Present Simple.
+                "order": 9,
+                "title":
+                    "CAN, MUST и команда",
 
-Можно использовать CAN:
+                "body":
+                    """В результате можно использовать
+не только Present Simple.
 
-If the weather is clear, you can see the mountains.
+CAN:
+
+If the sky is clear,
+you can see the mountains.
 
 MUST:
 
-If the alarm rings, you must leave the building.
-
-SHOULD:
-
-If you feel tired, you should rest.
+If the alarm rings,
+you must leave.
 
 Imperative:
 
-If you don't understand, ask the teacher.
-
-Основное условие всё равно остаётся:
-
-If + Present Simple""",
+If you don't understand,
+ask the teacher.""",
             },
 
-            {
-                "order": 11,
-                "title": "UNLESS",
-                "body": """UNLESS означает:
-
-если не.
-
-Пример:
-
-Plants die unless they get water.
-
-Это значит:
-
-Plants die if they don't get water.
-
-Важно:
-
-после UNLESS не нужно второе отрицание.
-
-Неправильно:
-
-Unless plants don't get water...
-
-Правильно:
-
-Unless plants get water...""",
-            },
 
             {
-                "order": 12,
-                "title": "Zero Conditional и First Conditional",
-                "body": """Zero Conditional:
+                "order": 10,
+                "title":
+                    "Zero vs First Conditional",
 
-общий факт или регулярная закономерность.
+                "body":
+                    """Zero Conditional:
 
-If you don't water plants, they die.
+общий факт или привычка.
+
+If I drink coffee at night,
+I can't sleep.
 
 First Conditional:
 
 конкретная будущая ситуация.
 
-If you don't water this plant, it will die.
+If I drink coffee tonight,
+I won't sleep.
 
-Сравните:
+ZERO = всегда / обычно
 
-If I drink coffee at night, I can't sleep.
-— моя обычная реакция.
-
-If I drink coffee tonight, I won't sleep.
-— конкретная ситуация сегодня.""",
-            },
-
-            {
-                "order": 13,
-                "title": "Типичные ошибки",
-                "body": """Неправильно:
-
-If you will heat water, it will boil.
-
-Правильно:
-
-If you heat water, it boils.
-
-Неправильно:
-
-If she drink coffee, she sleeps badly.
-
-Правильно:
-
-If she drinks coffee, she sleeps badly.
-
-Неправильно:
-
-Unless you don't study, you fail.
-
-Правильно:
-
-Unless you study, you fail.""",
-            },
-
-            {
-                "order": 14,
-                "title": "Как выбрать Zero Conditional",
-                "body": """Используйте Zero Conditional, если:
-
-это общий факт;
-
-это закон природы;
-
-это регулярная личная реакция;
-
-это правило;
-
-это инструкция;
-
-результат происходит всегда или обычно.
-
-Главная формула:
-
-If + Present Simple, Present Simple
-
-Пример:
-
-If water freezes, it becomes ice.""",
+FIRST = конкретное будущее.""",
             },
 
         ]
 
+
+        section_objects = {}
+
+
         for data in sections:
-            GrammarLessonSection.objects.update_or_create(
+
+            section, _ = GrammarLessonSection.objects.update_or_create(
                 lesson=lesson,
                 order=data["order"],
                 defaults={
-                    "title": data["title"],
-                    "body": data["body"],
+                    "title":
+                        data["title"],
+
+                    "body":
+                        data["body"],
                 },
             )
 
-        exercises = [
+            section_objects[
+                data["order"]
+            ] = section
 
+
+        # =================================================
+        # 20 TRAINING EXERCISES
+        # =================================================
+
+        training = [
+
+            # SECTION 1
             {
                 "order": 1,
-                "prompt": "If water reaches 100°C, it ___.",
+                "section": 1,
+                "type": "choice",
+                "prompt":
+                    "Which sentence describes a general fact?",
                 "options": [
-                    "boils",
-                    "will boil tomorrow",
-                    "boiled",
-                    "is boiling every time",
+                    "If you heat ice, it melts.",
+                    "If you heat this ice tomorrow, it will melt.",
+                    "If you heated the ice yesterday, it melted.",
+                    "If you will heat ice, it melts.",
                 ],
-                "answer": "boils",
-                "explanation": (
-                    "Общий факт → Present Simple."
-                ),
+                "answer":
+                    "If you heat ice, it melts.",
+                "explanation":
+                    "Общий факт → Zero Conditional.",
             },
 
             {
                 "order": 2,
-                "prompt": "If you ___ ice, it melts.",
+                "section": 1,
+                "type": "choice",
+                "prompt":
+                    "Zero Conditional usually describes...",
+                "options": [
+                    "facts and regular results",
+                    "imaginary past situations",
+                    "one future plan only",
+                    "finished actions yesterday",
+                ],
+                "answer":
+                    "facts and regular results",
+                "explanation":
+                    "Zero Conditional = facts, rules, habits.",
+            },
+
+
+            # SECTION 2
+            {
+                "order": 3,
+                "section": 2,
+                "type": "choice",
+                "prompt":
+                    "If you ___ water, it boils.",
                 "options": [
                     "heat",
                     "will heat",
                     "heated",
-                    "are heating tomorrow",
+                    "are heat",
                 ],
-                "answer": "heat",
-                "explanation": (
-                    "После if в Zero Conditional используется Present Simple."
-                ),
-            },
-
-            {
-                "order": 3,
-                "prompt": (
-                    "If she doesn't eat breakfast, "
-                    "she ___ hungry."
-                ),
-                "options": [
-                    "gets",
-                    "will get only tomorrow",
-                    "got",
-                    "getting",
-                ],
-                "answer": "gets",
-                "explanation": (
-                    "Регулярный результат → gets."
-                ),
+                "answer":
+                    "heat",
+                "explanation":
+                    "После IF → Present Simple.",
             },
 
             {
                 "order": 4,
-                "prompt": (
-                    "If people ___ enough sleep, "
-                    "they feel tired."
-                ),
+                "section": 2,
+                "type": "choice",
+                "prompt":
+                    "If water reaches 100°C, it ___.",
                 "options": [
-                    "don't get",
-                    "won't get",
-                    "didn't get",
-                    "not getting",
+                    "boils",
+                    "will boil tomorrow",
+                    "boiled",
+                    "boiling",
                 ],
-                "answer": "don't get",
-                "explanation": (
-                    "Present Simple negative: don't get."
-                ),
+                "answer":
+                    "boils",
+                "explanation":
+                    "Результат общего факта → Present Simple.",
             },
 
+
+            # SECTION 3
             {
                 "order": 5,
-                "prompt": "If I ___ stressed, I go for a walk.",
+                "section": 3,
+                "type": "choice",
+                "prompt":
+                    "If plants don't get water, they ___.",
                 "options": [
-                    "feel",
-                    "will feel",
-                    "felt",
-                    "feeling",
+                    "die",
+                    "will die only tomorrow",
+                    "died yesterday",
+                    "dying",
                 ],
-                "answer": "feel",
-                "explanation": (
-                    "Повторяющаяся личная реакция → Present Simple."
-                ),
+                "answer":
+                    "die",
+                "explanation":
+                    "Это закономерность → Present Simple.",
             },
 
             {
                 "order": 6,
-                "prompt": (
-                    "If the battery is empty, "
-                    "the phone ___ off."
-                ),
+                "section": 3,
+                "type": "choice",
+                "prompt":
+                    "If water freezes, it ___ ice.",
                 "options": [
-                    "turns",
-                    "will turn tomorrow",
-                    "turned",
-                    "turning",
+                    "becomes",
+                    "will become someday",
+                    "became yesterday",
+                    "becoming",
                 ],
-                "answer": "turns",
-                "explanation": (
-                    "Обычный результат работы устройства."
-                ),
+                "answer":
+                    "becomes",
+                "explanation":
+                    "Научный факт → Present Simple.",
             },
 
+
+            # SECTION 4
             {
                 "order": 7,
-                "prompt": (
-                    "If you press this button, "
-                    "the machine ___."
-                ),
+                "section": 4,
+                "type": "choice",
+                "prompt":
+                    "If I drink coffee late, I ___ sleep.",
                 "options": [
-                    "starts",
-                    "will starting",
-                    "started",
-                    "start with he",
+                    "can't",
+                    "won't only tonight",
+                    "didn't",
+                    "not can",
                 ],
-                "answer": "starts",
-                "explanation": (
-                    "Machine = it, поэтому starts."
-                ),
+                "answer":
+                    "can't",
+                "explanation":
+                    "Регулярная личная реакция.",
             },
 
             {
                 "order": 8,
-                "prompt": (
-                    "If students arrive late, "
-                    "the teacher ___ them absent."
-                ),
+                "section": 4,
+                "type": "choice",
+                "prompt":
+                    "If she skips breakfast, she ___ hungry.",
                 "options": [
-                    "marks",
-                    "will mark only tomorrow",
-                    "marked",
-                    "marking",
+                    "gets",
+                    "will get tomorrow only",
+                    "got",
+                    "getting",
                 ],
-                "answer": "marks",
-                "explanation": (
-                    "Правило организации → Zero Conditional."
-                ),
+                "answer":
+                    "gets",
+                "explanation":
+                    "Повторяющийся результат → GETS.",
             },
 
+
+            # SECTION 5
             {
                 "order": 9,
-                "prompt": (
-                    "If you don't understand, ___ the teacher."
-                ),
+                "section": 5,
+                "type": "choice",
+                "prompt":
+                    "If you press this button, the machine ___.",
                 "options": [
-                    "ask",
-                    "will ask yourself",
-                    "asking",
-                    "asked",
+                    "starts",
+                    "will starting",
+                    "started",
+                    "start",
                 ],
-                "answer": "ask",
-                "explanation": (
-                    "После условия возможен imperative."
-                ),
+                "answer":
+                    "starts",
+                "explanation":
+                    "MACHINE = it → STARTS.",
             },
 
             {
                 "order": 10,
-                "prompt": (
-                    "If the alarm rings, "
-                    "you ___ leave the building."
-                ),
+                "section": 5,
+                "type": "build",
+                "prompt":
+                    "Собери правило работы устройства.",
+                "options": [
+                    "If",
+                    "the",
+                    "battery",
+                    "is",
+                    "empty",
+                    "the",
+                    "phone",
+                    "turns",
+                    "off",
+                ],
+                "answer":
+                    "If the battery is empty the phone turns off",
+                "explanation":
+                    "Стандартный результат → Zero Conditional.",
+            },
+
+
+            # SECTION 6
+            {
+                "order": 11,
+                "section": 6,
+                "type": "choice",
+                "prompt":
+                    "___ I drink coffee late, I can't sleep.",
+                "options": [
+                    "When",
+                    "Will",
+                    "Would",
+                    "Did",
+                ],
+                "answer":
+                    "When",
+                "explanation":
+                    "В регулярной ситуации WHEN возможно вместо IF.",
+            },
+
+            {
+                "order": 12,
+                "section": 6,
+                "type": "choice",
+                "prompt":
+                    "Choose the correct pair.",
+                "options": [
+                    "If I feel tired, I rest. / When I feel tired, I rest.",
+                    "If I will feel tired, I rest. / When I will feel tired, I rest.",
+                    "If I felt tired every time, I rest. / When I feeling tired, I rest.",
+                    "If tired, I will always rested. / When tired, I resting.",
+                ],
+                "answer":
+                    "If I feel tired, I rest. / When I feel tired, I rest.",
+                "explanation":
+                    "IF и WHEN могут описывать регулярный результат.",
+            },
+
+
+            # SECTION 7
+            {
+                "order": 13,
+                "section": 7,
+                "type": "choice",
+                "prompt":
+                    "If she ___ coffee late, she sleeps badly.",
+                "options": [
+                    "drinks",
+                    "drink",
+                    "will drink",
+                    "drinking",
+                ],
+                "answer":
+                    "drinks",
+                "explanation":
+                    "SHE → DRINKS.",
+            },
+
+            {
+                "order": 14,
+                "section": 7,
+                "type": "choice",
+                "prompt":
+                    "If it ___, the road gets wet.",
+                "options": [
+                    "rains",
+                    "rain",
+                    "will rain",
+                    "raining",
+                ],
+                "answer":
+                    "rains",
+                "explanation":
+                    "IT → RAINS.",
+            },
+
+
+            # SECTION 8
+            {
+                "order": 15,
+                "section": 8,
+                "type": "choice",
+                "prompt":
+                    "If I ___ enough, I feel tired.",
+                "options": [
+                    "don't sleep",
+                    "won't sleep",
+                    "doesn't sleep",
+                    "not sleep",
+                ],
+                "answer":
+                    "don't sleep",
+                "explanation":
+                    "I → DON'T + base verb.",
+            },
+
+            {
+                "order": 16,
+                "section": 8,
+                "type": "choice",
+                "prompt":
+                    "If he ___ breakfast, he gets hungry.",
+                "options": [
+                    "doesn't eat",
+                    "don't eats",
+                    "doesn't eats",
+                    "won't eat always",
+                ],
+                "answer":
+                    "doesn't eat",
+                "explanation":
+                    "HE → DOESN'T + base verb.",
+            },
+
+
+            # SECTION 9
+            {
+                "order": 17,
+                "section": 9,
+                "type": "choice",
+                "prompt":
+                    "If the alarm rings, you ___ leave.",
                 "options": [
                     "must",
                     "must to",
                     "will must",
                     "musts",
                 ],
-                "answer": "must",
-                "explanation": (
-                    "В результате можно использовать modal must."
-                ),
-            },
-
-            {
-                "order": 11,
-                "prompt": (
-                    "If the weather is clear, "
-                    "you ___ see the mountains."
-                ),
-                "options": [
-                    "can",
-                    "can to",
-                    "will can",
-                    "could yesterday",
-                ],
-                "answer": "can",
-                "explanation": (
-                    "Modal can возможен в результате."
-                ),
-            },
-
-            {
-                "order": 12,
-                "prompt": (
-                    "Plants die ___ they don't get water."
-                ),
-                "options": [
-                    "if",
-                    "will",
-                    "would",
-                    "because will",
-                ],
-                "answer": "if",
-                "explanation": (
-                    "If вводит условие."
-                ),
-            },
-
-            {
-                "order": 13,
-                "prompt": "Plants die ___ they get water.",
-                "options": [
-                    "unless",
-                    "unless not",
-                    "if not they",
-                    "will unless",
-                ],
-                "answer": "unless",
-                "explanation": (
-                    "Unless = if ... not."
-                ),
-            },
-
-            {
-                "order": 14,
-                "prompt": (
-                    "What ___ if you press this button?"
-                ),
-                "options": [
-                    "happens",
-                    "will happens always",
-                    "happen does",
-                    "happened every day",
-                ],
-                "answer": "happens",
-                "explanation": (
-                    "Частая модель: What happens if...?"
-                ),
-            },
-
-            {
-                "order": 15,
-                "prompt": (
-                    "What do you do if you ___ tired?"
-                ),
-                "options": [
-                    "feel",
-                    "will feel",
-                    "felt",
-                    "feeling",
-                ],
-                "answer": "feel",
-                "explanation": (
-                    "Вопрос о привычной реакции → Present Simple."
-                ),
-            },
-
-            {
-                "order": 16,
-                "prompt": "Choose the correct Zero Conditional sentence.",
-                "options": [
-                    "If you heat water, it boils.",
-                    "If you will heat water, it will boil.",
-                    "If you heated water, it boils tomorrow.",
-                    "If you heating water, it boil.",
-                ],
-                "answer": "If you heat water, it boils.",
-                "explanation": (
-                    "Базовая формула: Present Simple + Present Simple."
-                ),
-            },
-
-            {
-                "order": 17,
-                "prompt": "Choose the correct sentence.",
-                "options": [
-                    "If she drink coffee, she sleeps badly.",
-                    "If she drinks coffee, she sleeps badly.",
-                    "If she will drink coffee, she sleeps badly.",
-                    "If she drinks coffee, she will always slept badly.",
-                ],
-                "answer": (
-                    "If she drinks coffee, she sleeps badly."
-                ),
-                "explanation": (
-                    "She → drinks; регулярный результат → sleeps."
-                ),
+                "answer":
+                    "must",
+                "explanation":
+                    "В результате можно использовать MUST.",
             },
 
             {
                 "order": 18,
-                "prompt": "Choose the correct sentence with UNLESS.",
+                "section": 9,
+                "type": "choice",
+                "prompt":
+                    "If you don't understand, ___ the teacher.",
                 "options": [
-                    "Unless you don't study, you fail.",
-                    "Unless you study, you fail.",
-                    "Unless you will study, you fail.",
-                    "Unless not you study, you fail.",
+                    "ask",
+                    "to ask",
+                    "asking",
+                    "asked",
                 ],
-                "answer": "Unless you study, you fail.",
-                "explanation": (
-                    "После unless двойное отрицание не используется."
-                ),
+                "answer":
+                    "ask",
+                "explanation":
+                    "В результате возможен imperative.",
             },
 
+
+            # SECTION 10
             {
                 "order": 19,
-                "prompt": (
-                    "Which sentence describes a general fact?"
-                ),
+                "section": 10,
+                "type": "choice",
+                "prompt":
+                    "Which is Zero Conditional?",
                 "options": [
-                    "If you don't water plants, they die.",
-                    "If you don't water this plant, it will die.",
-                    "If you didn't water it, it died yesterday.",
-                    "If you water it tomorrow, it will grow.",
+                    "If people don't sleep enough, they feel tired.",
+                    "If I don't sleep tonight, I'll be tired tomorrow.",
+                    "If I had slept more, I wouldn't be tired.",
+                    "If I sleep tomorrow, I slept better.",
                 ],
-                "answer": (
-                    "If you don't water plants, they die."
-                ),
-                "explanation": (
-                    "Общий факт → Zero Conditional."
-                ),
+                "answer":
+                    "If people don't sleep enough, they feel tired.",
+                "explanation":
+                    "Общая закономерность → Zero Conditional.",
             },
 
             {
                 "order": 20,
-                "prompt": (
-                    "Which sentence describes a specific future situation?"
-                ),
+                "section": 10,
+                "type": "choice",
+                "prompt":
+                    "Which sentence describes one future situation?",
                 "options": [
-                    "If I drink coffee at night, I can't sleep.",
                     "If I drink coffee tonight, I won't sleep.",
-                    "When I drink coffee, I can't sleep.",
-                    "If people don't sleep, they get tired.",
+                    "If I drink coffee at night, I can't sleep.",
+                    "When I drink coffee late, I can't sleep.",
+                    "If people drink coffee late, they may sleep badly.",
                 ],
-                "answer": (
-                    "If I drink coffee tonight, I won't sleep."
-                ),
-                "explanation": (
-                    "Конкретная будущая ситуация → First Conditional."
-                ),
-            },
-
-            {
-                "order": 21,
-                "prompt": "Choose the correct punctuation.",
-                "options": [
-                    "If it rains, the ground gets wet.",
-                    "If it rains the ground, gets wet.",
-                    "The ground gets wet, if it rains.",
-                    "If, it rains the ground gets wet.",
-                ],
-                "answer": "If it rains, the ground gets wet.",
-                "explanation": (
-                    "Когда if-clause стоит первой, ставится запятая."
-                ),
-            },
-
-            {
-                "order": 22,
-                "prompt": "Choose the correct reversed order.",
-                "options": [
-                    "Water boils if you heat it.",
-                    "Water boils, if you heat it.",
-                    "Water will boil always if you will heat it.",
-                    "Water boil if you heats it.",
-                ],
-                "answer": "Water boils if you heat it.",
-                "explanation": (
-                    "Если if-clause стоит второй, запятая обычно не нужна."
-                ),
-            },
-
-            {
-                "order": 23,
-                "prompt": "Choose the correct IF/WHEN pair.",
-                "options": [
-                    (
-                        "If I drink coffee late, I can't sleep. / "
-                        "When I drink coffee late, I can't sleep."
-                    ),
-                    (
-                        "If I will drink coffee late, I can't sleep. / "
-                        "When I will drink coffee late, I can't sleep."
-                    ),
-                    (
-                        "If I drank coffee late every day, I can't sleep. / "
-                        "When I drinking coffee, I can't sleep."
-                    ),
-                    (
-                        "If coffee late, I can't sleep. / "
-                        "When coffee late, I can't sleep."
-                    ),
-                ],
-                "answer": (
-                    "If I drink coffee late, I can't sleep. / "
-                    "When I drink coffee late, I can't sleep."
-                ),
-                "explanation": (
-                    "В Zero Conditional if и when часто оба возможны."
-                ),
-            },
-
-            {
-                "order": 24,
-                "prompt": "Choose the fully correct sequence.",
-                "options": [
-                    (
-                        "If water freezes, it becomes ice. / "
-                        "If you feel tired, rest. / "
-                        "If the alarm rings, you must leave."
-                    ),
-                    (
-                        "If water will freeze, it will becomes ice. / "
-                        "If you feel tired, to rest. / "
-                        "If alarm rings, you must to leave."
-                    ),
-                    (
-                        "If water froze, it becomes ice always. / "
-                        "If you feeling tired, rest. / "
-                        "If the alarm will ring, leave."
-                    ),
-                    (
-                        "If water freezing, it become ice. / "
-                        "If you feels tired, resting. / "
-                        "If the alarm rings, you musts leave."
-                    ),
-                ],
-                "answer": (
-                    "If water freezes, it becomes ice. / "
-                    "If you feel tired, rest. / "
-                    "If the alarm rings, you must leave."
-                ),
-                "explanation": (
-                    "Zero Conditional может иметь Present Simple, "
-                    "imperative или modal в результате."
-                ),
+                "answer":
+                    "If I drink coffee tonight, I won't sleep.",
+                "explanation":
+                    "TONIGHT + WILL → конкретное будущее.",
             },
 
         ]
 
-        for data in exercises:
+
+        # =================================================
+        # FINAL TEST — 10 NEW QUESTIONS
+        # =================================================
+
+        final_test = [
+
+            {
+                "order": 21,
+                "prompt":
+                    "If you mix blue and yellow, you ___ green.",
+                "options": [
+                    "get",
+                    "will get tomorrow",
+                    "got yesterday",
+                    "getting",
+                ],
+                "answer":
+                    "get",
+                "explanation":
+                    "Общий факт → Present Simple.",
+            },
+
+            {
+                "order": 22,
+                "prompt":
+                    "If metal gets very hot, it ___.",
+                "options": [
+                    "expands",
+                    "will expands",
+                    "expanded",
+                    "expanding",
+                ],
+                "answer":
+                    "expands",
+                "explanation":
+                    "Общая закономерность → EXPANDS.",
+            },
+
+            {
+                "order": 23,
+                "prompt":
+                    "If my phone battery is low, I ___ it.",
+                "options": [
+                    "charge",
+                    "will charge only tomorrow",
+                    "charged yesterday",
+                    "charging",
+                ],
+                "answer":
+                    "charge",
+                "explanation":
+                    "Привычная реакция → Present Simple.",
+            },
+
+            {
+                "order": 24,
+                "prompt":
+                    "If she ___ enough water, she gets a headache.",
+                "options": [
+                    "doesn't drink",
+                    "don't drink",
+                    "doesn't drinks",
+                    "won't drink always",
+                ],
+                "answer":
+                    "doesn't drink",
+                "explanation":
+                    "SHE → DOESN'T + DRINK.",
+            },
+
+            {
+                "order": 25,
+                "prompt":
+                    "If the weather is clear, you ___ see the mountains.",
+                "options": [
+                    "can",
+                    "can to",
+                    "will can",
+                    "cans",
+                ],
+                "answer":
+                    "can",
+                "explanation":
+                    "CAN можно использовать в результате.",
+            },
+
+            {
+                "order": 26,
+                "prompt":
+                    "If the light is red, ___ the car.",
+                "options": [
+                    "stop",
+                    "to stop",
+                    "stopping",
+                    "stopped",
+                ],
+                "answer":
+                    "stop",
+                "explanation":
+                    "В результате возможна команда.",
+            },
+
+            {
+                "order": 27,
+                "prompt":
+                    "Choose the correct sentence.",
+                "options": [
+                    "If he feels sick, he stays home.",
+                    "If he feel sick, he stays home.",
+                    "If he will feel sick, he stays home.",
+                    "If he feels sick, he stay home.",
+                ],
+                "answer":
+                    "If he feels sick, he stays home.",
+                "explanation":
+                    "HE → FEELS, STAYS.",
+            },
+
+            {
+                "order": 28,
+                "prompt":
+                    "Choose the correct negative sentence.",
+                "options": [
+                    "If people don't exercise, they often feel worse.",
+                    "If people doesn't exercise, they often feel worse.",
+                    "If people don't exercises, they often feel worse.",
+                    "If people won't exercise always, they feel worse.",
+                ],
+                "answer":
+                    "If people don't exercise, they often feel worse.",
+                "explanation":
+                    "PEOPLE → DON'T + base verb.",
+            },
+
+            {
+                "order": 29,
+                "prompt":
+                    "Choose the correct IF / WHEN pair.",
+                "options": [
+                    "If I am tired, I go to bed early. / When I am tired, I go to bed early.",
+                    "If I will be tired, I go to bed early. / When I will be tired, I go to bed early.",
+                    "If I tired, I go bed early. / When I tired, I go bed early.",
+                    "If I am tiring, I will always went early. / When I tiring, I went early.",
+                ],
+                "answer":
+                    "If I am tired, I go to bed early. / When I am tired, I go to bed early.",
+                "explanation":
+                    "Обе конструкции возможны для регулярной реакции.",
+            },
+
+            {
+                "order": 30,
+                "prompt":
+                    "Choose the fully correct sequence.",
+                "options": [
+                    "If water freezes, it becomes ice. / If you feel tired, rest. / If the alarm rings, you must leave.",
+                    "If water will freeze, it becomes ice. / If you feel tired, to rest. / If the alarm rings, you must to leave.",
+                    "If water freeze, it become ice. / If you feels tired, resting. / If the alarm ring, you musts leave.",
+                    "If water froze, it will always becomes ice. / If tired, you rested. / If alarm rings, you leaving.",
+                ],
+                "answer":
+                    "If water freezes, it becomes ice. / If you feel tired, rest. / If the alarm rings, you must leave.",
+                "explanation":
+                    "Zero Conditional: Present Simple condition + regular result/modal/imperative.",
+            },
+
+        ]
+
+
+        all_exercises = (
+            training
+            +
+            final_test
+        )
+
+        valid_orders = [
+            item["order"]
+            for item in all_exercises
+        ]
+
+
+        for data in all_exercises:
+
+            if data["order"] <= 20:
+
+                section = (
+                    section_objects[
+                        data["section"]
+                    ]
+                )
+
+            else:
+
+                section = None
+
+
             GrammarExercise.objects.update_or_create(
                 lesson=lesson,
                 order=data["order"],
                 defaults={
-                    "exercise_type": GrammarExercise.Type.CHOICE,
-                    "prompt": data["prompt"],
-                    "options": data["options"],
-                    "correct_answer": data["answer"],
-                    "explanation": data["explanation"],
-                    "is_published": True,
+                    "section":
+                        section,
+
+                    "exercise_type":
+                        data.get(
+                            "type",
+                            "choice",
+                        ),
+
+                    "prompt":
+                        data["prompt"],
+
+                    "options":
+                        data["options"],
+
+                    "correct_answer":
+                        data["answer"],
+
+                    "explanation":
+                        data["explanation"],
+
+                    "is_published":
+                        True,
                 },
             )
 
+
+        GrammarExercise.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__in=valid_orders,
+        ).delete()
+
+
+        GrammarLessonSection.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__in=[
+                item["order"]
+                for item in sections
+            ],
+        ).delete()
+
+
         self.stdout.write(
             self.style.SUCCESS(
-                "✅ A1 Lesson 46 seeded: Zero Conditional"
+                "✅ Interactive A1 Lesson 46 seeded"
             )
         )
 
         self.stdout.write(
-            f"Sections: {lesson.sections.count()}"
+            f"Micro rules: "
+            f"{lesson.sections.count()}"
         )
 
         self.stdout.write(
-            f"Exercises: {lesson.exercises.count()}"
+            "Training exercises: "
+            f"{lesson.exercises.filter(section__isnull=False).count()}"
+        )
+
+        self.stdout.write(
+            "Final test: "
+            f"{lesson.exercises.filter(section__isnull=True).count()}"
         )

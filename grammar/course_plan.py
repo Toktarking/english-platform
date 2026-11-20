@@ -26,6 +26,7 @@ PRACTICE_BLOCK_ORDERS = {
     4,
     5,
     6,
+    7,
 }
 
 PRACTICE_ESTIMATED_MINUTES = 20
@@ -968,6 +969,7 @@ def _serialize_plan_item(
             4: 18,
             5: 20,
             6: 20,
+            7: 20,
         }
 
         question_count = (

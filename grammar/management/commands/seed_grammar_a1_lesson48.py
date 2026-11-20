@@ -10,9 +10,10 @@ from grammar.models import (
 class Command(BaseCommand):
 
     help = (
-        "Create/update A1 Grammar Lesson 48: "
-        "Second Conditional."
+        "Create/update interactive A1 Grammar "
+        "Lesson 48: Second Conditional."
     )
+
 
     def handle(self, *args, **options):
 
@@ -20,889 +21,959 @@ class Command(BaseCommand):
             level="A1",
             order=48,
             defaults={
-                "title": "Second Conditional",
-                "slug": "second-conditional",
-                "theory_text": (
+                "title":
+                    "Second Conditional",
+
+                "slug":
+                    "second-conditional",
+
+                "theory_text":
                     "Second Conditional: "
-                    "If + Past Simple, would + V1."
-                ),
-                "estimated_minutes": 45,
-                "pass_score": 70,
-                "xp_reward": 100,
-                "is_published": True,
+                    "If + Past Simple, would + V1.",
+
+                "estimated_minutes":
+                    20,
+
+                "pass_score":
+                    70,
+
+                "xp_reward":
+                    100,
+
+                "is_published":
+                    True,
             },
         )
+
+
+        # =================================================
+        # 10 MICRO RULES
+        # =================================================
 
         sections = [
 
             {
                 "order": 1,
-                "title": "Что такое Second Conditional",
-                "body": """Second Conditional используется для:
+                "title":
+                    "Когда нужен Second Conditional",
 
-маловероятных ситуаций;
+                "body":
+                    """Second Conditional используем,
+когда ситуация:
 
-воображаемых ситуаций;
+нереальна сейчас;
 
-нереального настоящего;
+маловероятна в будущем;
 
-гипотетического будущего;
+воображаемая;
 
-мечтаний;
-
-советов.
+гипотетическая.
 
 Пример:
 
-If I had more money, I would buy a new car.
+If I had more money,
+I would travel more.
 
-Сейчас денег недостаточно.
-
-Ситуация воображаемая или маловероятная.""",
+Сейчас денег недостаточно.""",
             },
+
 
             {
                 "order": 2,
-                "title": "Основная формула",
-                "body": """Главная формула:
+                "title":
+                    "Главная формула",
 
-If + Past Simple, would + V1
+                "body":
+                    """Основная схема:
 
-Пример:
+IF + Past Simple,
+WOULD + V1
 
-If I had more time, I would travel more.
+If I had more time,
+I would read more.
 
 Условие:
 
-If I had more time
+I had more time
 
 Результат:
 
-I would travel more
-
-Важно:
-
-Past Simple здесь часто не означает прошлое.
-
-Он показывает дистанцию от реальности.""",
+I would read more.""",
             },
+
 
             {
                 "order": 3,
-                "title": "Нереальное настоящее",
-                "body": """Second Conditional часто описывает ситуацию, которая сейчас не соответствует реальности.
+                "title":
+                    "Past Simple здесь не про прошлое",
 
-Пример:
+                "body":
+                    """В Second Conditional
+Past Simple часто
+не означает прошлое.
 
-If I knew the answer, I would tell you.
+If I knew the answer,
+I would tell you.
 
-Реальность:
+Реальность сейчас:
 
 I don't know the answer.
 
-Ещё примеры:
-
-If I had a car, I would drive to work.
-
-If she spoke English, she would apply for the job.
-
-If we lived closer, we would visit you more often.""",
+Past Simple здесь показывает,
+что ситуация нереальна.""",
             },
+
 
             {
                 "order": 4,
-                "title": "Маловероятное будущее",
-                "body": """Second Conditional можно использовать для будущего, если ситуация возможна, но маловероятна.
+                "title":
+                    "Маловероятное будущее",
 
-Пример:
+                "body":
+                    """Second Conditional может говорить
+о маловероятном будущем.
 
-If I won the lottery, I would buy a house.
+If I won the lottery,
+I would buy a house.
 
-Выиграть теоретически возможно, но вероятность небольшая.
+Выиграть возможно,
+но вероятность небольшая.
 
-Ещё примеры:
-
-If we moved abroad, we would learn another language.
-
-If they invited me, I would go.
-
-If he found a better job, he would leave.""",
+If they invited me,
+I would go.""",
             },
+
 
             {
                 "order": 5,
-                "title": "Отрицание",
-                "body": """В IF-части:
+                "title":
+                    "Отрицание",
 
-didn't + V1
+                "body":
+                    """В IF-части:
 
-If I didn't work so much, I would have more free time.
+DIDN'T + V1
 
-If she didn't live so far away, we would visit more often.
-
-Важно:
-
-после DIDN'T используется первая форма.
-
-Правильно:
-
-If she didn't work...
-
-Не:
-
-If she didn't worked...
+If I didn't work so much,
+I would have more free time.
 
 В результате:
 
-wouldn't + V1
+WOULDN'T + V1
 
-If I were you, I wouldn't do that.""",
+If I were you,
+I wouldn't buy it.
+
+После DIDN'T
+глагол без -ED.""",
             },
+
 
             {
                 "order": 6,
-                "title": "IF I WERE",
-                "body": """В Second Conditional часто используется WERE.
+                "title":
+                    "IF I WERE",
 
-Особенно в стандартном английском:
+                "body":
+                    """В гипотетических ситуациях
+часто используем WERE.
 
-If I were rich, I would travel the world.
+If I were rich,
+I would travel.
 
-If I were you, I would apologise.
+If she were here,
+she would help us.
 
-If she were here, she would know what to do.
+Особенно важно:
 
-В гипотетических конструкциях возможны:
+If I were you...
 
-if I were
-
-if he were
-
-if she were
-
-if it were
-
-В учебных заданиях лучше использовать WERE.""",
+В учебных заданиях
+используем WERE.""",
             },
+
 
             {
                 "order": 7,
-                "title": "IF I WERE YOU — совет",
-                "body": """Очень частая модель для совета:
+                "title":
+                    "IF I WERE YOU",
 
-If I were you, I would...
+                "body":
+                    """Очень частая конструкция
+для совета:
 
-Перевод:
-
-На твоём месте я бы...
+If I were you,
+I would...
 
 Примеры:
 
-If I were you, I would talk to the manager.
+If I were you,
+I would see a doctor.
 
-If I were you, I would see a doctor.
+If I were you,
+I would study more.
 
-If I were you, I wouldn't buy that car.
-
-If I were you, I would study more.""",
+If I were you,
+I wouldn't do that.""",
             },
+
 
             {
                 "order": 8,
-                "title": "Вопросы",
-                "body": """Общий вопрос:
+                "title":
+                    "COULD вместо WOULD",
 
-Would you travel more if you had enough money?
+                "body":
+                    """COULD показывает возможность.
 
-Would she accept the job if they offered it?
+If I had more time,
+I could learn Spanish.
 
-Краткие ответы:
+WOULD:
 
-Yes, I would.
+что я бы сделал.
 
-No, I wouldn't.
+If I had more money,
+I would buy a car.
 
-Специальный вопрос:
+COULD:
 
-What would you do if you lost your job?
+что было бы возможно.
 
-Where would you live if you could choose any country?
-
-Очень частая модель:
-
-What would you do if...?""",
+If I had more money,
+I could buy a car.""",
             },
+
 
             {
                 "order": 9,
-                "title": "COULD вместо WOULD",
-                "body": """COULD показывает возможность или способность.
+                "title":
+                    "MIGHT вместо WOULD",
 
-Пример:
+                "body":
+                    """MIGHT показывает
+менее уверенный результат.
 
-If I had more time, I could learn another language.
+If I had more free time,
+I might start a new hobby.
 
-If she lived closer, she could visit us more often.
+If she invited him,
+he might come.
 
-Сравните:
+После MIGHT:
 
-If I had more money, I would buy a car.
+обычная форма глагола.
 
-WOULD = предполагаемый результат.
-
-If I had more money, I could buy a car.
-
-COULD = возможность.""",
-            },
-
-            {
-                "order": 10,
-                "title": "MIGHT вместо WOULD",
-                "body": """MIGHT показывает менее уверенный результат.
-
-Примеры:
-
-If I had more free time, I might start a new hobby.
-
-If she invited him, he might come.
-
-If we moved, we might be happier.
-
-If the weather were better, we might go for a walk.
-
-После MIGHT используется первая форма без TO.""",
-            },
-
-            {
-                "order": 11,
-                "title": "WOULD не используется после IF",
-                "body": """В основной модели WOULD не ставится в IF-части.
-
-Неправильно:
-
-If I would have more money, I would travel.
-
-Правильно:
-
-If I had more money, I would travel.
-
-Основная модель:
-
-If + Past Simple, would + V1
-
-Не:
-
-If + would...
-
-Также:
-
-would buy
+might come
 
 не:
 
-would to buy""",
+might to come.""",
             },
 
+
             {
-                "order": 12,
-                "title": "First или Second Conditional",
-                "body": """First Conditional:
+                "order": 10,
+                "title":
+                    "First vs Second Conditional",
 
-реальная или вероятная ситуация в будущем.
+                "body":
+                    """First Conditional:
 
-If I have enough money, I will buy a car.
+реальная возможность.
+
+If I have enough money,
+I will buy a car.
 
 Second Conditional:
 
-маловероятная или воображаемая ситуация.
+гипотетическая ситуация.
 
-If I had enough money, I would buy a car.
+If I had enough money,
+I would buy a car.
 
-Сравните:
+FIRST = реально возможно
 
-If she studies, she will pass.
-
-If she studied more, she would pass.
-
-Во втором случае подразумевается, что сейчас она учится недостаточно.""",
-            },
-
-            {
-                "order": 13,
-                "title": "Zero, First и Second Conditional",
-                "body": """Zero Conditional:
-
-общий факт.
-
-If people don't sleep, they feel tired.
-
-First Conditional:
-
-реальная будущая ситуация.
-
-If I don't sleep tonight, I will feel tired tomorrow.
-
-Second Conditional:
-
-воображаемая ситуация.
-
-If I didn't need sleep, I would work all night.
-
-Главное различие — степень реальности ситуации.""",
-            },
-
-            {
-                "order": 14,
-                "title": "Как выбрать Second Conditional",
-                "body": """Используйте Second Conditional, если:
-
-ситуация нереальна сейчас;
-
-ситуация маловероятна в будущем;
-
-вы даёте совет;
-
-вы воображаете другую жизнь.
-
-Формула:
-
-If + Past Simple, would + V1
-
-Примеры:
-
-If I knew the answer, I would tell you.
-
-If I won the lottery, I would buy a house.
-
-If I were you, I would rest.
-
-Возможны также:
-
-could + V1
-
-might + V1""",
+SECOND = воображаемо / маловероятно.""",
             },
 
         ]
 
+
+        section_objects = {}
+
+
         for data in sections:
-            GrammarLessonSection.objects.update_or_create(
+
+            section, _ = GrammarLessonSection.objects.update_or_create(
                 lesson=lesson,
                 order=data["order"],
                 defaults={
-                    "title": data["title"],
-                    "body": data["body"],
+                    "title":
+                        data["title"],
+
+                    "body":
+                        data["body"],
                 },
             )
 
-        exercises = [
+            section_objects[
+                data["order"]
+            ] = section
 
+
+        # =================================================
+        # 20 TRAINING EXERCISES
+        # =================================================
+
+        training = [
+
+            # SECTION 1
             {
                 "order": 1,
-                "prompt": (
-                    "If I ___ near the sea, "
-                    "I would swim every day."
-                ),
+                "section": 1,
+                "type": "choice",
+                "prompt":
+                    "Which sentence is hypothetical?",
                 "options": [
-                    "live",
-                    "lived",
-                    "will live",
-                    "would live",
+                    "If I had a private plane, I would travel every week.",
+                    "If I have time tomorrow, I will call you.",
+                    "If water freezes, it becomes ice.",
+                    "I travelled last week.",
                 ],
-                "answer": "lived",
-                "explanation": (
-                    "Second Conditional: if + Past Simple."
-                ),
+                "answer":
+                    "If I had a private plane, I would travel every week.",
+                "explanation":
+                    "Воображаемая ситуация → Second Conditional.",
             },
 
             {
                 "order": 2,
-                "prompt": (
-                    "If she ___ more confident, "
-                    "she would apply for the job."
-                ),
+                "section": 1,
+                "type": "choice",
+                "prompt":
+                    "Second Conditional usually describes...",
                 "options": [
-                    "is",
-                    "were",
-                    "will be",
-                    "would be",
+                    "unreal or unlikely situations",
+                    "general facts only",
+                    "finished past actions",
+                    "certain future plans",
                 ],
-                "answer": "were",
-                "explanation": (
-                    "В гипотетической конструкции используется were."
-                ),
+                "answer":
+                    "unreal or unlikely situations",
+                "explanation":
+                    "Second Conditional = unreal / unlikely.",
             },
 
+
+            # SECTION 2
             {
                 "order": 3,
-                "prompt": (
-                    "If we had a bigger house, "
-                    "we ___ more guests."
-                ),
+                "section": 2,
+                "type": "choice",
+                "prompt":
+                    "If I ___ more money, I would travel.",
                 "options": [
-                    "invite",
-                    "will invite",
-                    "would invite",
-                    "invited yesterday",
+                    "had",
+                    "have",
+                    "will have",
+                    "would have",
                 ],
-                "answer": "would invite",
-                "explanation": (
-                    "Результат Second Conditional: would + V1."
-                ),
+                "answer":
+                    "had",
+                "explanation":
+                    "После IF → Past Simple.",
             },
 
             {
                 "order": 4,
-                "prompt": (
-                    "If he knew her number, he ___ her."
-                ),
+                "section": 2,
+                "type": "choice",
+                "prompt":
+                    "If she lived closer, we ___ her more often.",
                 "options": [
-                    "calls",
-                    "would call",
-                    "will call",
-                    "called already",
+                    "would visit",
+                    "will visit",
+                    "visited yesterday",
+                    "would visited",
                 ],
-                "answer": "would call",
-                "explanation": (
-                    "Воображаемый результат → would call."
-                ),
+                "answer":
+                    "would visit",
+                "explanation":
+                    "Результат → WOULD + V1.",
             },
 
+
+            # SECTION 3
             {
                 "order": 5,
-                "prompt": (
-                    "If they ___ more carefully, "
-                    "they wouldn't make so many mistakes."
-                ),
+                "section": 3,
+                "type": "choice",
+                "prompt":
+                    "If I knew the answer, I ___ you.",
                 "options": [
-                    "work",
-                    "worked",
-                    "will work",
-                    "would work",
+                    "would tell",
+                    "will tell",
+                    "told",
+                    "would told",
                 ],
-                "answer": "worked",
-                "explanation": (
-                    "После if используется Past Simple."
-                ),
+                "answer":
+                    "would tell",
+                "explanation":
+                    "Сейчас я не знаю ответ → unreal present.",
             },
 
             {
                 "order": 6,
-                "prompt": (
-                    "If I didn't have to work, "
-                    "I ___ more time with my family."
-                ),
+                "section": 3,
+                "type": "choice",
+                "prompt":
+                    "If he spoke English better, he ___ for that job.",
                 "options": [
-                    "spend",
-                    "will spend",
-                    "would spend",
-                    "spent yesterday",
+                    "would apply",
+                    "will apply",
+                    "applies every day",
+                    "would applied",
                 ],
-                "answer": "would spend",
-                "explanation": (
-                    "Результат → would + V1."
-                ),
+                "answer":
+                    "would apply",
+                "explanation":
+                    "Гипотетическое настоящее → WOULD + V1.",
             },
 
+
+            # SECTION 4
             {
                 "order": 7,
-                "prompt": (
-                    "If she lived closer, "
-                    "she ___ visit us more often."
-                ),
+                "section": 4,
+                "type": "choice",
+                "prompt":
+                    "If I ___ the lottery, I would buy a house.",
                 "options": [
-                    "can",
-                    "could",
-                    "will can",
-                    "could to",
+                    "won",
+                    "win",
+                    "will win",
+                    "would win",
                 ],
-                "answer": "could",
-                "explanation": (
-                    "Could выражает гипотетическую возможность."
-                ),
+                "answer":
+                    "won",
+                "explanation":
+                    "Маловероятное будущее → Past Simple.",
             },
 
             {
                 "order": 8,
-                "prompt": (
-                    "If the weather were better, "
-                    "we ___ go outside."
-                ),
+                "section": 4,
+                "type": "choice",
+                "prompt":
+                    "If they invited me, I ___ to the party.",
                 "options": [
-                    "might",
-                    "might to",
-                    "will might",
-                    "mights",
+                    "would go",
+                    "will go",
+                    "went",
+                    "would went",
                 ],
-                "answer": "might",
-                "explanation": (
-                    "Might + V1 = менее уверенный результат."
-                ),
+                "answer":
+                    "would go",
+                "explanation":
+                    "Результат гипотетической ситуации → WOULD GO.",
             },
 
+
+            # SECTION 5
             {
                 "order": 9,
-                "prompt": (
-                    "What would you do if you ___ your job?"
-                ),
+                "section": 5,
+                "type": "choice",
+                "prompt":
+                    "If she ___ so much, she would have more time.",
                 "options": [
-                    "lose",
-                    "lost",
-                    "will lose",
-                    "would lose",
+                    "didn't work",
+                    "didn't worked",
+                    "wouldn't work",
+                    "doesn't worked",
                 ],
-                "answer": "lost",
-                "explanation": (
-                    "После if → Past Simple."
-                ),
+                "answer":
+                    "didn't work",
+                "explanation":
+                    "DIDN'T + base verb.",
             },
 
             {
                 "order": 10,
-                "prompt": (
-                    "If I ___ rich, "
-                    "I would travel around the world."
-                ),
+                "section": 5,
+                "type": "choice",
+                "prompt":
+                    "If I were you, I ___ buy that car.",
                 "options": [
-                    "am",
+                    "wouldn't",
+                    "won't",
+                    "didn't",
+                    "wouldn't to",
+                ],
+                "answer":
+                    "wouldn't",
+                "explanation":
+                    "Отрицательный результат → WOULDN'T + V1.",
+            },
+
+
+            # SECTION 6
+            {
+                "order": 11,
+                "section": 6,
+                "type": "choice",
+                "prompt":
+                    "If I ___ rich, I would travel the world.",
+                "options": [
                     "were",
+                    "am",
                     "will be",
                     "would be",
                 ],
-                "answer": "were",
-                "explanation": (
-                    "Стандартная гипотетическая форма: If I were."
-                ),
-            },
-
-            {
-                "order": 11,
-                "prompt": (
-                    "If I were you, I ___ to the doctor."
-                ),
-                "options": [
-                    "go",
-                    "will go",
-                    "would go",
-                    "went yesterday",
-                ],
-                "answer": "would go",
-                "explanation": (
-                    "If I were you, I would + V1."
-                ),
+                "answer":
+                    "were",
+                "explanation":
+                    "Стандартная гипотетическая форма → IF I WERE.",
             },
 
             {
                 "order": 12,
-                "prompt": (
-                    "If she didn't spend so much money, "
-                    "she ___ more."
-                ),
+                "section": 6,
+                "type": "choice",
+                "prompt":
+                    "If she ___ here, she would know what to do.",
                 "options": [
-                    "saves",
-                    "will save",
-                    "would save",
-                    "saved already",
+                    "were",
+                    "is",
+                    "will be",
+                    "would be",
                 ],
-                "answer": "would save",
-                "explanation": (
-                    "Гипотетический результат → would save."
-                ),
+                "answer":
+                    "were",
+                "explanation":
+                    "Гипотетическое состояние → WERE.",
             },
 
+
+            # SECTION 7
             {
                 "order": 13,
-                "prompt": (
-                    "Would you move abroad if you ___ "
-                    "a good job there?"
-                ),
+                "section": 7,
+                "type": "choice",
+                "prompt":
+                    "If I were you, I ___ to the manager.",
                 "options": [
-                    "find",
-                    "found",
-                    "will find",
-                    "would find",
+                    "would talk",
+                    "will talk",
+                    "talked",
+                    "would talked",
                 ],
-                "answer": "found",
-                "explanation": (
-                    "В if-clause нужен Past Simple."
-                ),
+                "answer":
+                    "would talk",
+                "explanation":
+                    "If I were you → совет.",
             },
 
             {
                 "order": 14,
-                "prompt": (
-                    "If he ___ taller, "
-                    "he could play basketball."
-                ),
+                "section": 7,
+                "type": "build",
+                "prompt":
+                    "Собери совет.",
                 "options": [
-                    "is",
+                    "If",
+                    "I",
                     "were",
-                    "will be",
-                    "would be",
+                    "you",
+                    "I",
+                    "would",
+                    "rest",
                 ],
-                "answer": "were",
-                "explanation": (
-                    "Гипотетическое состояние → were."
-                ),
+                "answer":
+                    "If I were you I would rest",
+                "explanation":
+                    "Стандартная модель совета.",
             },
 
+
+            # SECTION 8
             {
                 "order": 15,
-                "prompt": (
-                    "I wouldn't accept the offer "
-                    "if the salary ___ low."
-                ),
+                "section": 8,
+                "type": "choice",
+                "prompt":
+                    "If I had more free time, I ___ learn another language.",
                 "options": [
-                    "is",
-                    "were",
-                    "will be",
-                    "would be",
+                    "could",
+                    "will can",
+                    "could to",
+                    "can yesterday",
                 ],
-                "answer": "were",
-                "explanation": (
-                    "Second Conditional → Past Simple / were."
-                ),
+                "answer":
+                    "could",
+                "explanation":
+                    "COULD = гипотетическая возможность.",
             },
 
             {
                 "order": 16,
-                "prompt": "Choose the correct sentence.",
+                "section": 8,
+                "type": "choice",
+                "prompt":
+                    "If we lived closer, we ___ visit you more often.",
                 "options": [
-                    "If I would know the answer, I would tell you.",
-                    "If I knew the answer, I would tell you.",
-                    "If I know the answer, I would tell you.",
-                    "If I knew the answer, I will tell you.",
+                    "could",
+                    "will can",
+                    "could to",
+                    "cans",
                 ],
-                "answer": (
-                    "If I knew the answer, I would tell you."
-                ),
-                "explanation": (
-                    "If + Past Simple, would + V1."
-                ),
+                "answer":
+                    "could",
+                "explanation":
+                    "COULD + base verb.",
             },
 
+
+            # SECTION 9
             {
                 "order": 17,
-                "prompt": "Choose the correct sentence.",
+                "section": 9,
+                "type": "choice",
+                "prompt":
+                    "If the weather were better, we ___ go for a walk.",
                 "options": [
-                    "If I were rich, I will travel.",
-                    "If I were rich, I would travel.",
-                    "If I would be rich, I would travel.",
-                    "If I were rich, I would to travel.",
+                    "might",
+                    "will might",
+                    "might to",
+                    "mights",
                 ],
-                "answer": (
-                    "If I were rich, I would travel."
-                ),
-                "explanation": (
-                    "Стандартная модель Second Conditional."
-                ),
+                "answer":
+                    "might",
+                "explanation":
+                    "MIGHT показывает менее уверенный результат.",
             },
 
             {
                 "order": 18,
-                "prompt": "Choose the correct negative sentence.",
+                "section": 9,
+                "type": "choice",
+                "prompt":
+                    "If he had more time, he ___ start a new hobby.",
                 "options": [
-                    "If she didn't studied, she would fail.",
-                    "If she didn't study, she would fail.",
-                    "If she wouldn't study, she would fail.",
-                    "If she not studied, she would fail.",
+                    "might",
+                    "might to",
+                    "will might",
+                    "mighted",
                 ],
-                "answer": (
-                    "If she didn't study, she would fail."
-                ),
-                "explanation": (
-                    "После didn't используется первая форма."
-                ),
+                "answer":
+                    "might",
+                "explanation":
+                    "После MIGHT → base verb.",
             },
 
+
+            # SECTION 10
             {
                 "order": 19,
-                "prompt": (
-                    "Which sentence gives advice?"
-                ),
+                "section": 10,
+                "type": "choice",
+                "prompt":
+                    "Which is First Conditional?",
                 "options": [
-                    "If I were you, I would talk to the manager.",
-                    "If I am you, I will talk to the manager.",
-                    "If I was manager, I talk.",
-                    "If I would be you, I would talk.",
+                    "If I have enough money, I will buy the laptop.",
+                    "If I had enough money, I would buy the laptop.",
+                    "If I were rich, I would buy ten laptops.",
+                    "If I had known, I would have bought it.",
                 ],
-                "answer": (
-                    "If I were you, I would talk to the manager."
-                ),
-                "explanation": (
-                    "If I were you... — стандартная модель совета."
-                ),
+                "answer":
+                    "If I have enough money, I will buy the laptop.",
+                "explanation":
+                    "Реальная будущая возможность → First Conditional.",
             },
 
             {
                 "order": 20,
-                "prompt": (
-                    "Which sentence describes a real future possibility?"
-                ),
+                "section": 10,
+                "type": "choice",
+                "prompt":
+                    "Which is Second Conditional?",
                 "options": [
-                    "If I have enough money, I will buy a car.",
-                    "If I had enough money, I would buy a car.",
-                    "If I had had money, I would have bought a car.",
-                    "If I were a millionaire, I would buy ten cars.",
+                    "If I had more free time, I would travel more.",
+                    "If I have time tomorrow, I will travel.",
+                    "If people exercise, they feel better.",
+                    "If I travelled yesterday, I was tired.",
                 ],
-                "answer": (
-                    "If I have enough money, I will buy a car."
-                ),
-                "explanation": (
-                    "Реальная будущая возможность → First Conditional."
-                ),
-            },
-
-            {
-                "order": 21,
-                "prompt": (
-                    "Which sentence describes an unreal present?"
-                ),
-                "options": [
-                    "If I know the answer, I will tell you.",
-                    "If I knew the answer, I would tell you.",
-                    "If I knew the answer yesterday, I told you.",
-                    "If I will know, I will tell you.",
-                ],
-                "answer": (
-                    "If I knew the answer, I would tell you."
-                ),
-                "explanation": (
-                    "Сейчас ответ неизвестен → unreal present."
-                ),
-            },
-
-            {
-                "order": 22,
-                "prompt": "Choose the correct WOULD/COULD pair.",
-                "options": [
-                    (
-                        "If I had more money, I would buy a car. / "
-                        "If I had more money, I could buy a car."
-                    ),
-                    (
-                        "If I would have money, I would buy a car. / "
-                        "If I had money, I could to buy a car."
-                    ),
-                    (
-                        "If I had money, I will buy a car. / "
-                        "If I had money, I can buy a car yesterday."
-                    ),
-                    (
-                        "If I had money, I would to buy a car. / "
-                        "If I could money, I buy car."
-                    ),
-                ],
-                "answer": (
-                    "If I had more money, I would buy a car. / "
-                    "If I had more money, I could buy a car."
-                ),
-                "explanation": (
-                    "Would = предполагаемый результат; "
-                    "could = возможность."
-                ),
-            },
-
-            {
-                "order": 23,
-                "prompt": (
-                    "Choose the correct First/Second Conditional pair."
-                ),
-                "options": [
-                    (
-                        "If she studies, she will pass. / "
-                        "If she studied more, she would pass."
-                    ),
-                    (
-                        "If she will study, she will pass. / "
-                        "If she would study, she would pass."
-                    ),
-                    (
-                        "If she studied, she will pass. / "
-                        "If she studies, she would pass."
-                    ),
-                    (
-                        "If she study, she will pass. / "
-                        "If she studied, she would to pass."
-                    ),
-                ],
-                "answer": (
-                    "If she studies, she will pass. / "
-                    "If she studied more, she would pass."
-                ),
-                "explanation": (
-                    "First = реальная возможность; "
-                    "Second = гипотетическая ситуация."
-                ),
-            },
-
-            {
-                "order": 24,
-                "prompt": "Choose the fully correct sequence.",
-                "options": [
-                    (
-                        "If I had time, I would help. / "
-                        "If I had time, I could help. / "
-                        "If she called, I might answer. / "
-                        "If I were you, I would rest."
-                    ),
-                    (
-                        "If I would have time, I would help. / "
-                        "If I had time, I could to help. / "
-                        "If she called, I will might answer. / "
-                        "If I was you, I will rest."
-                    ),
-                    (
-                        "If I have time, I would help. / "
-                        "If I had time, I can help. / "
-                        "If she would call, I might answer. / "
-                        "If I am you, I would rest."
-                    ),
-                    (
-                        "If I had time, I would to help. / "
-                        "If I had time, I could helped. / "
-                        "If she called, she mights answer. / "
-                        "If I were you, I would resting."
-                    ),
-                ],
-                "answer": (
-                    "If I had time, I would help. / "
-                    "If I had time, I could help. / "
-                    "If she called, I might answer. / "
-                    "If I were you, I would rest."
-                ),
-                "explanation": (
-                    "Second Conditional может использовать "
-                    "would, could и might в результате."
-                ),
+                "answer":
+                    "If I had more free time, I would travel more.",
+                "explanation":
+                    "Гипотетическая ситуация → Second Conditional.",
             },
 
         ]
 
-        for data in exercises:
+
+        # =================================================
+        # FINAL TEST — 10 NEW QUESTIONS
+        # =================================================
+
+        final_test = [
+
+            {
+                "order": 21,
+                "prompt":
+                    "If I ___ a bigger apartment, I would invite more friends.",
+                "options": [
+                    "had",
+                    "have",
+                    "will have",
+                    "would have",
+                ],
+                "answer":
+                    "had",
+                "explanation":
+                    "Second Conditional → IF + Past Simple.",
+            },
+
+            {
+                "order": 22,
+                "prompt":
+                    "If she knew his number, she ___ him.",
+                "options": [
+                    "would call",
+                    "will call",
+                    "called yesterday",
+                    "would called",
+                ],
+                "answer":
+                    "would call",
+                "explanation":
+                    "Результат → WOULD + V1.",
+            },
+
+            {
+                "order": 23,
+                "prompt":
+                    "If we ___ in another country, we would learn the language faster.",
+                "options": [
+                    "lived",
+                    "live",
+                    "will live",
+                    "would live",
+                ],
+                "answer":
+                    "lived",
+                "explanation":
+                    "Гипотетическая ситуация → Past Simple.",
+            },
+
+            {
+                "order": 24,
+                "prompt":
+                    "If he didn't spend so much money, he ___ more.",
+                "options": [
+                    "would save",
+                    "will save",
+                    "saved",
+                    "would saved",
+                ],
+                "answer":
+                    "would save",
+                "explanation":
+                    "WOULD + base verb.",
+            },
+
+            {
+                "order": 25,
+                "prompt":
+                    "If I ___ you, I wouldn't accept that offer.",
+                "options": [
+                    "were",
+                    "am",
+                    "will be",
+                    "would be",
+                ],
+                "answer":
+                    "were",
+                "explanation":
+                    "Совет → IF I WERE YOU.",
+            },
+
+            {
+                "order": 26,
+                "prompt":
+                    "If she had more experience, she ___ get a better job.",
+                "options": [
+                    "could",
+                    "will can",
+                    "could to",
+                    "can yesterday",
+                ],
+                "answer":
+                    "could",
+                "explanation":
+                    "COULD показывает возможность.",
+            },
+
+            {
+                "order": 27,
+                "prompt":
+                    "If they invited him, he ___ come.",
+                "options": [
+                    "might",
+                    "will might",
+                    "might to",
+                    "mights",
+                ],
+                "answer":
+                    "might",
+                "explanation":
+                    "MIGHT = менее уверенный результат.",
+            },
+
+            {
+                "order": 28,
+                "prompt":
+                    "Choose the correct sentence.",
+                "options": [
+                    "If I knew the answer, I would tell you.",
+                    "If I would know the answer, I would tell you.",
+                    "If I know the answer, I would tell you.",
+                    "If I knew the answer, I will tell you.",
+                ],
+                "answer":
+                    "If I knew the answer, I would tell you.",
+                "explanation":
+                    "IF + Past Simple, WOULD + V1.",
+            },
+
+            {
+                "order": 29,
+                "prompt":
+                    "Choose the correct First / Second Conditional pair.",
+                "options": [
+                    "If she studies, she will pass. / If she studied more, she would pass.",
+                    "If she will study, she will pass. / If she would study, she would pass.",
+                    "If she studied, she will pass. / If she studies, she would pass.",
+                    "If she study, she will pass. / If she studied, she would to pass.",
+                ],
+                "answer":
+                    "If she studies, she will pass. / If she studied more, she would pass.",
+                "explanation":
+                    "First = real possibility; Second = hypothetical situation.",
+            },
+
+            {
+                "order": 30,
+                "prompt":
+                    "Choose the fully correct sequence.",
+                "options": [
+                    "If I had time, I would help. / If I had more money, I could travel. / If I were you, I would rest.",
+                    "If I would have time, I would help. / If I had money, I could to travel. / If I was you, I will rest.",
+                    "If I have time, I would help. / If I had money, I will can travel. / If I would be you, I would rest.",
+                    "If I had time, I would to help. / If I had money, I could travelled. / If I were you, I would resting.",
+                ],
+                "answer":
+                    "If I had time, I would help. / If I had more money, I could travel. / If I were you, I would rest.",
+                "explanation":
+                    "Second Conditional использует Past Simple + would/could + V1.",
+            },
+
+        ]
+
+
+        all_exercises = (
+            training
+            +
+            final_test
+        )
+
+        valid_orders = [
+            item["order"]
+            for item in all_exercises
+        ]
+
+
+        for data in all_exercises:
+
+            if data["order"] <= 20:
+
+                section = (
+                    section_objects[
+                        data["section"]
+                    ]
+                )
+
+            else:
+
+                section = None
+
+
             GrammarExercise.objects.update_or_create(
                 lesson=lesson,
                 order=data["order"],
                 defaults={
-                    "exercise_type": GrammarExercise.Type.CHOICE,
-                    "prompt": data["prompt"],
-                    "options": data["options"],
-                    "correct_answer": data["answer"],
-                    "explanation": data["explanation"],
-                    "is_published": True,
+                    "section":
+                        section,
+
+                    "exercise_type":
+                        data.get(
+                            "type",
+                            "choice",
+                        ),
+
+                    "prompt":
+                        data["prompt"],
+
+                    "options":
+                        data["options"],
+
+                    "correct_answer":
+                        data["answer"],
+
+                    "explanation":
+                        data["explanation"],
+
+                    "is_published":
+                        True,
                 },
             )
 
+
+        GrammarExercise.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__in=valid_orders,
+        ).delete()
+
+
+        GrammarLessonSection.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__in=[
+                item["order"]
+                for item in sections
+            ],
+        ).delete()
+
+
         self.stdout.write(
             self.style.SUCCESS(
-                "✅ A1 Lesson 48 seeded: Second Conditional"
+                "✅ Interactive A1 Lesson 48 seeded"
             )
         )
 
         self.stdout.write(
-            f"Sections: {lesson.sections.count()}"
+            f"Micro rules: "
+            f"{lesson.sections.count()}"
         )
 
         self.stdout.write(
-            f"Exercises: {lesson.exercises.count()}"
+            "Training exercises: "
+            f"{lesson.exercises.filter(section__isnull=False).count()}"
+        )
+
+        self.stdout.write(
+            "Final test: "
+            f"{lesson.exercises.filter(section__isnull=True).count()}"
         )
