@@ -10,9 +10,10 @@ from grammar.models import (
 class Command(BaseCommand):
 
     help = (
-        "Create/update A1 Grammar Lesson 59: "
-        "Ordinal Numbers and Dates."
+        "Create/update interactive A1 Grammar "
+        "Lesson 59: Ordinal Numbers and Dates."
     )
+
 
     def handle(self, *args, **options):
 
@@ -20,129 +21,165 @@ class Command(BaseCommand):
             level="A1",
             order=59,
             defaults={
-                "title": "Порядковые числительные и даты",
-                "slug": "ordinal-numbers-and-dates",
-                "theory_text": (
-                    "Ordinal numbers, dates, years, centuries "
-                    "and sequence expressions."
-                ),
-                "estimated_minutes": 50,
-                "pass_score": 70,
-                "xp_reward": 100,
-                "is_published": True,
+                "title":
+                    "Порядковые числительные и даты",
+
+                "slug":
+                    "ordinal-numbers-and-dates",
+
+                "theory_text":
+                    "Ordinal numbers, dates, years, "
+                    "centuries and sequence expressions.",
+
+                "estimated_minutes":
+                    20,
+
+                "pass_score":
+                    70,
+
+                "xp_reward":
+                    100,
+
+                "is_published":
+                    True,
             },
         )
+
+
+        # =================================================
+        # 10 MICRO RULES
+        # =================================================
 
         sections = [
 
             {
                 "order": 1,
-                "title": "Что такое порядковые числительные",
-                "body": """Порядковые числительные показывают место в последовательности.
+                "title":
+                    "FIRST, SECOND, THIRD",
 
-Они отвечают на вопрос:
+                "body":
+                    """Ordinal numbers показывают
+порядок.
 
-который по счёту?
+1st — first
+
+2nd — second
+
+3rd — third
+
+4th — fourth
+
+5th — fifth
 
 Примеры:
 
 the first lesson
 
-the second student
+the second floor
 
-the third floor
+the third student
 
-the twenty-first century
-
-Сравните:
-
-one, two, three
-— количество
-
-first, second, third
-— порядок""",
+Обычно перед ordinal
+используется THE.""",
             },
+
 
             {
                 "order": 2,
-                "title": "Основные формы",
-                "body": """Первые формы нужно запомнить:
+                "title":
+                    "Окончание -TH",
 
-1 — first
+                "body":
+                    """Большинство ordinal numbers
+образуются с -TH.
 
-2 — second
+four → fourth
 
-3 — third
+six → sixth
 
-4 — fourth
+seven → seventh
 
-5 — fifth
+ten → tenth
 
-6 — sixth
+Но некоторые формы
+нужно запомнить:
 
-7 — seventh
+five → fifth
 
-8 — eighth
+eight → eighth
 
-9 — ninth
+nine → ninth
 
-10 — tenth
-
-12 — twelfth
-
-Особенно важны:
-
-first
-
-second
-
-third
-
-fifth
-
-eighth
-
-ninth
-
-twelfth""",
+twelve → twelfth""",
             },
+
 
             {
                 "order": 3,
-                "title": "Десятки и составные формы",
-                "body": """Если число заканчивается на -y:
+                "title":
+                    "20th, 30th, 40th",
+
+                "body":
+                    """Если число заканчивается
+на -Y:
 
 -y → -ieth
 
-20 — twentieth
+20 → twentieth
 
-30 — thirtieth
+30 → thirtieth
 
-40 — fortieth
+40 → fortieth
 
-90 — ninetieth
+50 → fiftieth
 
-В составном числе меняется только последняя часть:
+90 → ninetieth
 
-21st — twenty-first
+Важно:
 
-22nd — twenty-second
+fortieth
 
-23rd — twenty-third
-
-24th — twenty-fourth
-
-42nd — forty-second
-
-Не:
-
-twentieth-first""",
+не fourtieth.""",
             },
+
 
             {
                 "order": 4,
-                "title": "Окончания ST, ND, RD, TH",
-                "body": """Основные сокращения:
+                "title":
+                    "21st, 22nd, 23rd",
+
+                "body":
+                    """В составных числах
+меняется только последняя часть.
+
+21st
+→ twenty-first
+
+22nd
+→ twenty-second
+
+23rd
+→ twenty-third
+
+24th
+→ twenty-fourth
+
+42nd
+→ forty-second
+
+Не:
+
+twentieth-first.""",
+            },
+
+
+            {
+                "order": 5,
+                "title":
+                    "ST / ND / RD / TH",
+
+                "body":
+                    """Сокращения:
 
 1st
 
@@ -154,15 +191,15 @@ twentieth-first""",
 
 Обычно:
 
-числа на 1 → st
+1 → st
 
-числа на 2 → nd
+2 → nd
 
-числа на 3 → rd
+3 → rd
 
 остальные → th
 
-Но есть исключения:
+Но:
 
 11th
 
@@ -170,135 +207,52 @@ twentieth-first""",
 
 13th
 
-Не:
-
-11st
-
-12nd
-
-13rd""",
+Это исключения.""",
             },
 
-            {
-                "order": 5,
-                "title": "Артикль THE",
-                "body": """Перед порядковыми числительными обычно используется THE.
 
-Примеры:
+            {
+                "order": 6,
+                "title":
+                    "THE и possessives",
+
+                "body":
+                    """Обычно:
 
 the first lesson
 
 the second chapter
 
-the third student
-
-the twenty-first century
-
-Но если уже есть притяжательное слово:
-
-my
-
-your
-
-his
-
-her
-
-our
-
-their
-
+Но после possessive
 THE не нужен.
-
-Правильно:
 
 my first job
 
 her second child
 
+our third lesson
+
 Не:
 
-my the first job""",
+my the first job
+
+Правильно:
+
+my first job.""",
             },
 
-            {
-                "order": 6,
-                "title": "FIRST, AT FIRST и THE FIRST",
-                "body": """FIRST может означать:
-
-сначала;
-
-первым делом.
-
-First, read the instructions.
-
-AT FIRST означает:
-
-сначала;
-
-поначалу.
-
-At first, I didn't understand the rule.
-
-Обычно потом ситуация изменилась.
-
-THE FIRST — порядковое числительное:
-
-She was the first person to arrive.
-
-Сравните:
-
-First, open the file.
-
-At first, the task seemed difficult.
-
-She was the first student.""",
-            },
 
             {
                 "order": 7,
-                "title": "NEXT / THE NEXT и LAST / THE LAST",
-                "body": """NEXT без THE часто означает следующий по времени:
+                "title":
+                    "Даты",
 
-next week
+                "body":
+                    """В британском варианте:
 
-next year
+15 July
 
-next Monday
-
-THE NEXT — следующий элемент:
-
-the next chapter
-
-the next student
-
-over the next three days
-
-LAST без THE:
-
-last week
-
-last year
-
-THE LAST:
-
-the last question
-
-the last chapter
-
-the last student""",
-            },
-
-            {
-                "order": 8,
-                "title": "Как писать и читать даты",
-                "body": """Британский порядок:
-
-day + month + year
-
-15 July 2026
-
-Чтение:
+читаем:
 
 the fifteenth of July
 
@@ -310,724 +264,758 @@ the first of May
 
 the twenty-second of October
 
-Американский порядок:
+С конкретной датой:
 
-month + day + year
-
-July 15, 2026
-
-Чтение:
-
-July fifteenth""",
-            },
-
-            {
-                "order": 9,
-                "title": "ON и IN с датами",
-                "body": """С конкретным днём или датой используется ON:
-
-on Monday
+ON
 
 on 15 July
 
-on the first of May
+on the first of May.""",
+            },
 
-on July 15
 
-С месяцем используется IN:
+            {
+                "order": 8,
+                "title":
+                    "ON и IN",
 
-in July
+                "body":
+                    """ON:
 
-in September
+с конкретным днём
+или датой.
 
-С годом:
+on Monday
 
-in 2026
+on 7 March
 
-in 1998
+on 15 July 2026
 
-С месяцем и годом:
+IN:
+
+с месяцем или годом.
+
+in March
 
 in July 2026
 
-Не:
-
-in 15 July
+in 2026
 
 Не:
 
-on 2026""",
+in 15 July.""",
             },
+
+
+            {
+                "order": 9,
+                "title":
+                    "Годы и века",
+
+                "body":
+                    """Годы:
+
+1998
+→ nineteen ninety-eight
+
+2026
+→ twenty twenty-six
+
+Века:
+
+1800s
+→ nineteenth century
+
+1900s
+→ twentieth century
+
+2000s
+→ twenty-first century
+
+Century всегда ordinal.""",
+            },
+
 
             {
                 "order": 10,
-                "title": "Как читать годы",
-                "body": """Годы до 2000 часто читаются парами:
+                "title":
+                    "FIRST / AT FIRST / THE FIRST",
 
-1984 — nineteen eighty-four
+                "body":
+                    """FIRST:
 
-1998 — nineteen ninety-eight
+первое действие.
 
-2000:
+First, read the text.
 
-two thousand
+AT FIRST:
 
-2005:
+поначалу.
 
-two thousand and five
+At first,
+I didn't understand.
 
-После 2010 часто возможны два варианта:
+THE FIRST:
 
-2026
+первый по порядку.
 
-twenty twenty-six
+She was the first
+student to arrive.
 
-или:
-
-two thousand and twenty-six
-
-Первый вариант часто звучит естественнее.""",
-            },
-
-            {
-                "order": 11,
-                "title": "Века и десятилетия",
-                "body": """Примеры веков:
-
-1700s → the eighteenth century
-
-1800s → the nineteenth century
-
-1900s → the twentieth century
-
-2000s → the twenty-first century
-
-Десятилетия:
-
-the 1960s
-
-the 1990s
-
-the 2020s
-
-Важно:
-
-апостроф не нужен.
-
-Правильно:
-
-the 1990s
-
-Не:
-
-the 1990's""",
-            },
-
-            {
-                "order": 12,
-                "title": "Возрастные периоды и годовщины",
-                "body": """Возрастной период:
-
-in his twenties
-
-= от 20 до 29 лет.
-
-Примеры:
-
-She became a manager in her thirties.
-
-He is in his sixties.
-
-Дни рождения:
-
-her thirtieth birthday
-
-his eighteenth birthday
-
-Годовщины:
-
-their tenth wedding anniversary
-
-the company's fiftieth anniversary""",
-            },
-
-            {
-                "order": 13,
-                "title": "Монархи, главы и события",
-                "body": """Имена монархов читаются с порядковым числительным:
-
-Elizabeth II
-
-→ Elizabeth the Second
-
-Henry VIII
-
-→ Henry the Eighth
-
-С событиями:
-
-the First World War
-
-the Fourth Industrial Revolution
-
-С главами и уроками возможны два варианта:
-
-Chapter Five
-
-the fifth chapter
-
-Lesson Ten
-
-the tenth lesson""",
-            },
-
-            {
-                "order": 14,
-                "title": "THE FIRST TIME и главный алгоритм",
-                "body": """Частая конструкция:
-
-This is the first time + Present Perfect
-
-Пример:
-
-This is the first time I have visited London.
-
-С прошлым:
-
-It was the first time + Past Perfect
-
-It was the first time I had travelled abroad.
-
-Главный алгоритм:
-
-количество?
-
-→ cardinal number: one, two, three
-
-место в последовательности?
-
-→ ordinal number: first, second, third
-
-конкретная дата?
-
-→ ON
-
-месяц или год?
-
-→ IN
-
-век?
-
-→ ordinal number + century""",
+Это три разные конструкции.""",
             },
 
         ]
 
+
+        section_objects = {}
+
+
         for data in sections:
-            GrammarLessonSection.objects.update_or_create(
+
+            section, _ = GrammarLessonSection.objects.update_or_create(
                 lesson=lesson,
                 order=data["order"],
                 defaults={
-                    "title": data["title"],
-                    "body": data["body"],
+                    "title":
+                        data["title"],
+
+                    "body":
+                        data["body"],
                 },
             )
 
-        exercises = [
+            section_objects[
+                data["order"]
+            ] = section
 
+
+        # =================================================
+        # 20 TRAINING EXERCISES
+        # =================================================
+
+        training = [
+
+            # SECTION 1
             {
                 "order": 1,
-                "prompt": "She was the ___ person to arrive.",
+                "section": 1,
+                "prompt":
+                    "She was the ___ person to arrive.",
                 "options": [
-                    "one",
                     "first",
+                    "one",
                     "oneth",
                     "once",
                 ],
-                "answer": "first",
-                "explanation": (
-                    "1st = first."
-                ),
+                "answer":
+                    "first",
+                "explanation":
+                    "1st = FIRST.",
             },
 
             {
                 "order": 2,
-                "prompt": "This is my ___ visit to London.",
+                "section": 1,
+                "prompt":
+                    "He finished ___ in the competition.",
                 "options": [
-                    "two",
-                    "second",
-                    "twice",
-                    "twoth",
-                ],
-                "answer": "second",
-                "explanation": (
-                    "Порядок → second."
-                ),
-            },
-
-            {
-                "order": 3,
-                "prompt": "He finished ___ in the competition.",
-                "options": [
-                    "three",
                     "third",
+                    "three",
                     "threeth",
                     "thirty",
                 ],
-                "answer": "third",
-                "explanation": (
-                    "3rd = third."
-                ),
+                "answer":
+                    "third",
+                "explanation":
+                    "3rd = THIRD.",
+            },
+
+
+            # SECTION 2
+            {
+                "order": 3,
+                "section": 2,
+                "prompt":
+                    "Choose the correct form of 5th.",
+                "options": [
+                    "fifth",
+                    "fiveth",
+                    "fivth",
+                    "five-th",
+                ],
+                "answer":
+                    "fifth",
+                "explanation":
+                    "5th = FIFTH.",
             },
 
             {
                 "order": 4,
-                "prompt": "The office is on the ___ floor.",
+                "section": 2,
+                "prompt":
+                    "Choose the correct form of 12th.",
                 "options": [
-                    "five",
-                    "fifth",
-                    "fiveth",
-                    "fiftieth",
+                    "twelfth",
+                    "twelveth",
+                    "twelvth",
+                    "twelve-th",
                 ],
-                "answer": "fifth",
-                "explanation": (
-                    "5th = fifth."
-                ),
+                "answer":
+                    "twelfth",
+                "explanation":
+                    "12th = TWELFTH.",
             },
 
+
+            # SECTION 3
             {
                 "order": 5,
-                "prompt": "Her birthday is ___ 7 March.",
+                "section": 3,
+                "prompt":
+                    "20th = ?",
                 "options": [
-                    "in",
-                    "on",
-                    "at",
-                    "by",
+                    "twentieth",
+                    "twentyth",
+                    "twentyeth",
+                    "twenty-th",
                 ],
-                "answer": "on",
-                "explanation": (
-                    "С конкретной датой используется on."
-                ),
+                "answer":
+                    "twentieth",
+                "explanation":
+                    "TWENTY → TWENTIETH.",
             },
 
             {
                 "order": 6,
-                "prompt": (
-                    "The conference took place ___ March 2026."
-                ),
+                "section": 3,
+                "prompt":
+                    "40th = ?",
+                "options": [
+                    "fortieth",
+                    "fourtieth",
+                    "fortyth",
+                    "fortyeth",
+                ],
+                "answer":
+                    "fortieth",
+                "explanation":
+                    "40th = FORTIETH.",
+            },
+
+
+            # SECTION 4
+            {
+                "order": 7,
+                "section": 4,
+                "prompt":
+                    "21st = ?",
+                "options": [
+                    "twenty-first",
+                    "twentieth-first",
+                    "twenty-oneth",
+                    "twenty-one",
+                ],
+                "answer":
+                    "twenty-first",
+                "explanation":
+                    "Меняется только последняя часть.",
+            },
+
+            {
+                "order": 8,
+                "section": 4,
+                "prompt":
+                    "42nd = ?",
+                "options": [
+                    "forty-second",
+                    "fortieth-two",
+                    "fourty-second",
+                    "forty-twoth",
+                ],
+                "answer":
+                    "forty-second",
+                "explanation":
+                    "42nd = FORTY-SECOND.",
+            },
+
+
+            # SECTION 5
+            {
+                "order": 9,
+                "section": 5,
+                "prompt":
+                    "Choose the correct abbreviation for eleven.",
+                "options": [
+                    "11th",
+                    "11st",
+                    "11nd",
+                    "11rd",
+                ],
+                "answer":
+                    "11th",
+                "explanation":
+                    "11 — исключение → 11TH.",
+            },
+
+            {
+                "order": 10,
+                "section": 5,
+                "prompt":
+                    "Choose the correct abbreviation for twenty-three.",
+                "options": [
+                    "23rd",
+                    "23th",
+                    "23nd",
+                    "23st",
+                ],
+                "answer":
+                    "23rd",
+                "explanation":
+                    "23 заканчивается на 3 → RD.",
+            },
+
+
+            # SECTION 6
+            {
+                "order": 11,
+                "section": 6,
+                "prompt":
+                    "Choose the correct sentence.",
+                "options": [
+                    "This is my first job.",
+                    "This is my the first job.",
+                    "This is the my first job.",
+                    "This is my one-th job.",
+                ],
+                "answer":
+                    "This is my first job.",
+                "explanation":
+                    "После MY артикль THE не нужен.",
+            },
+
+            {
+                "order": 12,
+                "section": 6,
+                "prompt":
+                    "Choose the correct phrase.",
+                "options": [
+                    "her second child",
+                    "her the second child",
+                    "the her second child",
+                    "her two-th child",
+                ],
+                "answer":
+                    "her second child",
+                "explanation":
+                    "Possessive заменяет THE.",
+            },
+
+
+            # SECTION 7
+            {
+                "order": 13,
+                "section": 7,
+                "prompt":
+                    "15 July is read:",
+                "options": [
+                    "the fifteenth of July",
+                    "the fifteen of July",
+                    "July the fifteen-th",
+                    "the fifty of July",
+                ],
+                "answer":
+                    "the fifteenth of July",
+                "explanation":
+                    "В дате используем ordinal number.",
+            },
+
+            {
+                "order": 14,
+                "section": 7,
+                "prompt":
+                    "22 October is read:",
+                "options": [
+                    "the twenty-second of October",
+                    "the twenty-two of October",
+                    "the twentieth-two of October",
+                    "October twenty-twoth",
+                ],
+                "answer":
+                    "the twenty-second of October",
+                "explanation":
+                    "22nd = TWENTY-SECOND.",
+            },
+
+
+            # SECTION 8
+            {
+                "order": 15,
+                "section": 8,
+                "prompt":
+                    "Her birthday is ___ 7 March.",
                 "options": [
                     "on",
                     "in",
                     "at",
                     "for",
                 ],
-                "answer": "in",
-                "explanation": (
-                    "С месяцем и годом используется in."
-                ),
-            },
-
-            {
-                "order": 7,
-                "prompt": (
-                    "The university was founded ___ 1972."
-                ),
-                "options": [
+                "answer":
                     "on",
-                    "at",
-                    "in",
-                    "since",
-                ],
-                "answer": "in",
-                "explanation": (
-                    "С годом используется in."
-                ),
-            },
-
-            {
-                "order": 8,
-                "prompt": "The date 21 June is read:",
-                "options": [
-                    "the twenty-one of June",
-                    "the twenty-first of June",
-                    "June twenty-one-th",
-                    "the twentieth-first of June",
-                ],
-                "answer": "the twenty-first of June",
-                "explanation": (
-                    "21st = twenty-first."
-                ),
-            },
-
-            {
-                "order": 9,
-                "prompt": "The year 1998 is commonly read:",
-                "options": [
-                    "one thousand nine hundred ninety-eight only",
-                    "nineteen ninety-eight",
-                    "nineteen hundred ninety and eight",
-                    "ninety-eight nineteen",
-                ],
-                "answer": "nineteen ninety-eight",
-                "explanation": (
-                    "Годы до 2000 часто читаются парами."
-                ),
-            },
-
-            {
-                "order": 10,
-                "prompt": "The year 2026 can be read:",
-                "options": [
-                    "twenty twenty-six",
-                    "two zero two six only",
-                    "twenty-six twenty",
-                    "two hundred twenty-six",
-                ],
-                "answer": "twenty twenty-six",
-                "explanation": (
-                    "2026 часто читается twenty twenty-six."
-                ),
-            },
-
-            {
-                "order": 11,
-                "prompt": "The 1800s are:",
-                "options": [
-                    "the eighteenth century",
-                    "the nineteenth century",
-                    "the twentieth century",
-                    "the seventeenth century",
-                ],
-                "answer": "the nineteenth century",
-                "explanation": (
-                    "1800-е относятся к nineteenth century."
-                ),
-            },
-
-            {
-                "order": 12,
-                "prompt": "The 2000s belong to:",
-                "options": [
-                    "the twentieth century",
-                    "the twenty-first century",
-                    "the nineteenth century",
-                    "the twenty-second century",
-                ],
-                "answer": "the twenty-first century",
-                "explanation": (
-                    "2000-е относятся к twenty-first century."
-                ),
-            },
-
-            {
-                "order": 13,
-                "prompt": "The decade 1980–1989 is:",
-                "options": [
-                    "the nineteen eighties",
-                    "the nineteen eighty",
-                    "the eighteen nineties",
-                    "the 1980's",
-                ],
-                "answer": "the nineteen eighties",
-                "explanation": (
-                    "1980s = the nineteen eighties."
-                ),
-            },
-
-            {
-                "order": 14,
-                "prompt": "Henry VIII is read:",
-                "options": [
-                    "Henry Eight",
-                    "Henry the Eighth",
-                    "Henry Eightieth",
-                    "Henry the Eight",
-                ],
-                "answer": "Henry the Eighth",
-                "explanation": (
-                    "Имена монархов читаются с ordinal number."
-                ),
-            },
-
-            {
-                "order": 15,
-                "prompt": (
-                    "This is the first time I ___ this city."
-                ),
-                "options": [
-                    "visit",
-                    "visited",
-                    "have visited",
-                    "had visit",
-                ],
-                "answer": "have visited",
-                "explanation": (
-                    "This is the first time + Present Perfect."
-                ),
+                "explanation":
+                    "Конкретная дата → ON.",
             },
 
             {
                 "order": 16,
-                "prompt": "Choose the correct form of 12th.",
+                "section": 8,
+                "prompt":
+                    "The course starts ___ September 2026.",
                 "options": [
-                    "twelveth",
-                    "twelfth",
-                    "twelve-th",
-                    "twelveth",
+                    "in",
+                    "on",
+                    "at",
+                    "by",
                 ],
-                "answer": "twelfth",
-                "explanation": (
-                    "12th = twelfth."
-                ),
+                "answer":
+                    "in",
+                "explanation":
+                    "Month + year → IN.",
             },
 
+
+            # SECTION 9
             {
                 "order": 17,
-                "prompt": "Choose the correct form of 42nd.",
+                "section": 9,
+                "prompt":
+                    "1998 is commonly read:",
                 "options": [
-                    "forty-twoth",
-                    "fortieth-two",
-                    "forty-second",
-                    "fourty-second",
+                    "nineteen ninety-eight",
+                    "nineteen eight-nine",
+                    "one nine ninety-eight",
+                    "ninety-eight nineteen",
                 ],
-                "answer": "forty-second",
-                "explanation": (
-                    "В составном ordinal меняется только последняя часть."
-                ),
+                "answer":
+                    "nineteen ninety-eight",
+                "explanation":
+                    "Годы до 2000 часто читаются парами.",
             },
 
             {
                 "order": 18,
-                "prompt": "Choose the correct abbreviation.",
+                "section": 9,
+                "prompt":
+                    "The 1900s are:",
                 "options": [
-                    "11st",
-                    "11th",
-                    "11rd",
-                    "11nd",
+                    "the twentieth century",
+                    "the nineteenth century",
+                    "the twenty-first century",
+                    "the eighteenth century",
                 ],
-                "answer": "11th",
-                "explanation": (
-                    "11, 12 и 13 — исключения: th."
-                ),
+                "answer":
+                    "the twentieth century",
+                "explanation":
+                    "1900–1999 относятся к twentieth century.",
             },
 
+
+            # SECTION 10
             {
                 "order": 19,
-                "prompt": "Choose the correct sentence.",
+                "section": 10,
+                "prompt":
+                    "___, read the instructions.",
                 "options": [
-                    "This is my the first job.",
-                    "This is my first job.",
-                    "This is the my first job.",
-                    "This is my one job.",
+                    "First",
+                    "At first",
+                    "The first",
+                    "Firstly the",
                 ],
-                "answer": "This is my first job.",
-                "explanation": (
-                    "После притяжательного слова THE не нужен."
-                ),
+                "answer":
+                    "First",
+                "explanation":
+                    "FIRST показывает первое действие.",
             },
 
             {
                 "order": 20,
-                "prompt": "Choose the correct FIRST / AT FIRST pair.",
+                "section": 10,
+                "prompt":
+                    "___, I didn't like the course, but later I enjoyed it.",
                 "options": [
-                    (
-                        "First, read the text. / "
-                        "At first, I didn't understand it."
-                    ),
-                    (
-                        "At first, read the text. / "
-                        "First, I didn't understand it, but later I did."
-                    ),
-                    (
-                        "The first, read the text. / "
-                        "At first time, I didn't understand."
-                    ),
-                    (
-                        "First, I didn't understand but later. / "
-                        "At first, read the text."
-                    ),
+                    "At first",
+                    "First",
+                    "The first",
+                    "First time",
                 ],
-                "answer": (
-                    "First, read the text. / "
-                    "At first, I didn't understand it."
-                ),
-                "explanation": (
-                    "First = первое действие; At first = начальное состояние."
-                ),
-            },
-
-            {
-                "order": 21,
-                "prompt": "Choose the correct NEXT / THE NEXT pair.",
-                "options": [
-                    (
-                        "next week / "
-                        "the next chapter"
-                    ),
-                    (
-                        "the next week always / "
-                        "next the chapter"
-                    ),
-                    (
-                        "next the week / "
-                        "next chapter the"
-                    ),
-                    (
-                        "the next Monday always / "
-                        "the chapter next"
-                    ),
-                ],
-                "answer": (
-                    "next week / "
-                    "the next chapter"
-                ),
-                "explanation": (
-                    "Next week = следующий период; the next chapter = следующий элемент."
-                ),
-            },
-
-            {
-                "order": 22,
-                "prompt": "Choose the correct LAST / THE LAST pair.",
-                "options": [
-                    (
-                        "last year / "
-                        "the last question"
-                    ),
-                    (
-                        "the last year always / "
-                        "last the question"
-                    ),
-                    (
-                        "last the year / "
-                        "last question the"
-                    ),
-                    (
-                        "the year last / "
-                        "question last"
-                    ),
-                ],
-                "answer": (
-                    "last year / "
-                    "the last question"
-                ),
-                "explanation": (
-                    "Last year = прошлый год; the last question = последний вопрос."
-                ),
-            },
-
-            {
-                "order": 23,
-                "prompt": "Choose the correct date/preposition pair.",
-                "options": [
-                    (
-                        "on 15 July / "
-                        "in July / "
-                        "in 2026"
-                    ),
-                    (
-                        "in 15 July / "
-                        "on July / "
-                        "on 2026"
-                    ),
-                    (
-                        "at 15 July / "
-                        "on July / "
-                        "at 2026"
-                    ),
-                    (
-                        "on July 2026 / "
-                        "at July / "
-                        "on the year 2026"
-                    ),
-                ],
-                "answer": (
-                    "on 15 July / "
-                    "in July / "
-                    "in 2026"
-                ),
-                "explanation": (
-                    "ON → конкретная дата; IN → месяц и год."
-                ),
-            },
-
-            {
-                "order": 24,
-                "prompt": "Choose the fully correct sequence.",
-                "options": [
-                    (
-                        "1st → first / "
-                        "2nd → second / "
-                        "3rd → third / "
-                        "21st → twenty-first / "
-                        "1990s → no apostrophe / "
-                        "1900s → twentieth century"
-                    ),
-                    (
-                        "1st → oneth / "
-                        "2nd → twoth / "
-                        "3rd → threeth / "
-                        "21st → twentieth-first / "
-                        "1990s → 1990's / "
-                        "1900s → nineteenth century"
-                    ),
-                    (
-                        "1st → one / "
-                        "2nd → twice / "
-                        "3rd → three / "
-                        "21st → twenty-oneth / "
-                        "1990s → apostrophe required / "
-                        "1900s → twenty-first century"
-                    ),
-                    (
-                        "1st → firstly only / "
-                        "2nd → two-th / "
-                        "3rd → thirdth / "
-                        "21st → twenty-one-th / "
-                        "1990s → 1990's / "
-                        "1900s → eighteenth century"
-                    ),
-                ],
-                "answer": (
-                    "1st → first / "
-                    "2nd → second / "
-                    "3rd → third / "
-                    "21st → twenty-first / "
-                    "1990s → no apostrophe / "
-                    "1900s → twentieth century"
-                ),
-                "explanation": (
-                    "Это основные правила ordinal numbers, "
-                    "decades и centuries."
-                ),
+                "answer":
+                    "At first",
+                "explanation":
+                    "AT FIRST = поначалу, затем ситуация изменилась.",
             },
 
         ]
 
-        for data in exercises:
+
+        # =================================================
+        # FINAL TEST — 10 NEW QUESTIONS
+        # =================================================
+
+        final_test = [
+
+            {
+                "order": 21,
+                "prompt":
+                    "Choose the correct form of 8th.",
+                "options": [
+                    "eighth",
+                    "eightth",
+                    "eigth",
+                    "eight-th",
+                ],
+                "answer":
+                    "eighth",
+                "explanation":
+                    "8th = EIGHTH.",
+            },
+
+            {
+                "order": 22,
+                "prompt":
+                    "31st = ?",
+                "options": [
+                    "thirty-first",
+                    "thirtieth-first",
+                    "thirty-oneth",
+                    "thirty-one",
+                ],
+                "answer":
+                    "thirty-first",
+                "explanation":
+                    "В составном ordinal меняется последняя часть.",
+            },
+
+            {
+                "order": 23,
+                "prompt":
+                    "Choose the correct abbreviation for twelve.",
+                "options": [
+                    "12th",
+                    "12nd",
+                    "12st",
+                    "12rd",
+                ],
+                "answer":
+                    "12th",
+                "explanation":
+                    "12 — исключение → 12TH.",
+            },
+
+            {
+                "order": 24,
+                "prompt":
+                    "Choose the correct phrase.",
+                "options": [
+                    "our third lesson",
+                    "our the third lesson",
+                    "the our third lesson",
+                    "our three-th lesson",
+                ],
+                "answer":
+                    "our third lesson",
+                "explanation":
+                    "После OUR артикль THE не нужен.",
+            },
+
+            {
+                "order": 25,
+                "prompt":
+                    "1 May is read:",
+                "options": [
+                    "the first of May",
+                    "the one of May",
+                    "the oneth of May",
+                    "May the one-th",
+                ],
+                "answer":
+                    "the first of May",
+                "explanation":
+                    "1st = FIRST.",
+            },
+
+            {
+                "order": 26,
+                "prompt":
+                    "The meeting is ___ 18 November.",
+                "options": [
+                    "on",
+                    "in",
+                    "at",
+                    "from",
+                ],
+                "answer":
+                    "on",
+                "explanation":
+                    "Конкретная дата → ON.",
+            },
+
+            {
+                "order": 27,
+                "prompt":
+                    "The company was founded ___ 2005.",
+                "options": [
+                    "in",
+                    "on",
+                    "at",
+                    "for",
+                ],
+                "answer":
+                    "in",
+                "explanation":
+                    "Год → IN.",
+            },
+
+            {
+                "order": 28,
+                "prompt":
+                    "The 2000s belong to:",
+                "options": [
+                    "the twenty-first century",
+                    "the twentieth century",
+                    "the nineteenth century",
+                    "the twenty-second century",
+                ],
+                "answer":
+                    "the twenty-first century",
+                "explanation":
+                    "2000–2099 относятся к twenty-first century.",
+            },
+
+            {
+                "order": 29,
+                "prompt":
+                    "Choose the correct FIRST / AT FIRST / THE FIRST sequence.",
+                "options": [
+                    "First, open the book. / At first, it seemed difficult. / She was the first student.",
+                    "At first, open the book. / First, it seemed difficult but later changed. / She was first the student.",
+                    "The first, open the book. / At first time, it seemed difficult. / She was a first student.",
+                    "First the, open the book. / The first, it seemed difficult. / She was at first student.",
+                ],
+                "answer":
+                    "First, open the book. / At first, it seemed difficult. / She was the first student.",
+                "explanation":
+                    "FIRST = первое действие; AT FIRST = поначалу; THE FIRST = первый по порядку.",
+            },
+
+            {
+                "order": 30,
+                "prompt":
+                    "Choose the fully correct sequence.",
+                "options": [
+                    "1st → first / 2nd → second / 3rd → third / 21st → twenty-first / date → on 15 July / year → in 2026",
+                    "1st → oneth / 2nd → twoth / 3rd → threeth / 21st → twentieth-first / date → in 15 July / year → on 2026",
+                    "1st → one / 2nd → twice / 3rd → three / 21st → twenty-oneth / date → at 15 July / year → on 2026",
+                    "1st → firstly / 2nd → two-th / 3rd → thirdth / 21st → twenty-one-th / date → in the 15 July / year → at 2026",
+                ],
+                "answer":
+                    "1st → first / 2nd → second / 3rd → third / 21st → twenty-first / date → on 15 July / year → in 2026",
+                "explanation":
+                    "Это основные правила Ordinal Numbers and Dates.",
+            },
+
+        ]
+
+
+        all_exercises = (
+            training
+            +
+            final_test
+        )
+
+        valid_orders = [
+            item["order"]
+            for item in all_exercises
+        ]
+
+
+        for data in all_exercises:
+
+            if data["order"] <= 20:
+
+                section = (
+                    section_objects[
+                        data["section"]
+                    ]
+                )
+
+            else:
+
+                section = None
+
+
             GrammarExercise.objects.update_or_create(
                 lesson=lesson,
                 order=data["order"],
                 defaults={
-                    "exercise_type": GrammarExercise.Type.CHOICE,
-                    "prompt": data["prompt"],
-                    "options": data["options"],
-                    "correct_answer": data["answer"],
-                    "explanation": data["explanation"],
-                    "is_published": True,
+                    "section":
+                        section,
+
+                    "exercise_type":
+                        "choice",
+
+                    "prompt":
+                        data["prompt"],
+
+                    "options":
+                        data["options"],
+
+                    "correct_answer":
+                        data["answer"],
+
+                    "explanation":
+                        data["explanation"],
+
+                    "is_published":
+                        True,
                 },
             )
 
+
+        GrammarExercise.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__in=valid_orders,
+        ).delete()
+
+
+        GrammarLessonSection.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__in=[
+                item["order"]
+                for item in sections
+            ],
+        ).delete()
+
+
         self.stdout.write(
             self.style.SUCCESS(
-                "✅ A1 Lesson 59 seeded: Ordinal Numbers and Dates"
+                "✅ Interactive A1 Lesson 59 seeded"
             )
         )
 
         self.stdout.write(
-            f"Sections: {lesson.sections.count()}"
+            f"Micro rules: "
+            f"{lesson.sections.count()}"
         )
 
         self.stdout.write(
-            f"Exercises: {lesson.exercises.count()}"
+            "Training exercises: "
+            f"{lesson.exercises.filter(section__isnull=False).count()}"
+        )
+
+        self.stdout.write(
+            "Final test: "
+            f"{lesson.exercises.filter(section__isnull=True).count()}"
         )

@@ -31,6 +31,11 @@ def _questions_per_lesson(
     block,
 ):
 
+    # Practice 10:
+    # 3 lessons × 6 = 18 questions
+    if block.order == 10:
+        return 6
+
     # Practice 9:
     # 3 lessons × 6 = 18 questions
     if block.order == 9:
@@ -221,6 +226,7 @@ def block_practice(
         7,
         8,
         9,
+        10,
     }:
 
         return redirect(

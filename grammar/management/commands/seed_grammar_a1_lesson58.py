@@ -10,9 +10,10 @@ from grammar.models import (
 class Command(BaseCommand):
 
     help = (
-        "Create/update A1 Grammar Lesson 58: "
-        "Cardinal Numbers."
+        "Create/update interactive A1 Grammar "
+        "Lesson 58: Cardinal Numbers."
     )
+
 
     def handle(self, *args, **options):
 
@@ -20,173 +21,129 @@ class Command(BaseCommand):
             level="A1",
             order=58,
             defaults={
-                "title": "Количественные числительные",
-                "slug": "cardinal-numbers",
-                "theory_text": (
+                "title":
+                    "Количественные числительные",
+
+                "slug":
+                    "cardinal-numbers",
+
+                "theory_text":
                     "Cardinal numbers: numbers, quantities, "
-                    "age, money and large numbers."
-                ),
-                "estimated_minutes": 50,
-                "pass_score": 70,
-                "xp_reward": 100,
-                "is_published": True,
+                    "age, money and large numbers.",
+
+                "estimated_minutes":
+                    20,
+
+                "pass_score":
+                    70,
+
+                "xp_reward":
+                    100,
+
+                "is_published":
+                    True,
             },
         )
+
+
+        # =================================================
+        # 10 MICRO RULES
+        # =================================================
 
         sections = [
 
             {
                 "order": 1,
-                "title": "Что такое количественные числительные",
-                "body": """Количественные числительные отвечают на вопрос:
+                "title":
+                    "Числа 0–19",
 
-сколько?
+                "body":
+                    """Основные числа нужно
+хорошо запомнить.
 
-По-английски:
+0 — zero
+1 — one
+2 — two
+3 — three
+10 — ten
 
-How many?
+Особые формы:
 
-How much?
+11 — eleven
+12 — twelve
+13 — thirteen
+15 — fifteen
+18 — eighteen
 
-Примеры:
+Важно:
 
-one student
+15 = fifteen
 
-two books
-
-ten people
-
-one hundred dollars
-
-three thousand kilometres
-
-Они используются для количества, возраста, денег, расстояния, статистики и других числовых значений.""",
+не fiveteen.""",
             },
+
 
             {
                 "order": 2,
-                "title": "Числа от 0 до 19",
-                "body": """Основные числа:
+                "title":
+                    "Десятки",
 
-0 — zero
+                "body":
+                    """Основные десятки:
 
-1 — one
+20 — twenty
+30 — thirty
+40 — forty
+50 — fifty
+60 — sixty
+70 — seventy
+80 — eighty
+90 — ninety
 
-2 — two
+Особенно запомни:
 
-3 — three
-
-4 — four
-
-5 — five
-
-6 — six
-
-7 — seven
-
-8 — eight
-
-9 — nine
-
-10 — ten
-
-Особые формы нужно запомнить:
-
-11 — eleven
-
-12 — twelve
-
-13 — thirteen
-
-15 — fifteen
-
-18 — eighteen
+40 = forty
 
 Не:
 
-fiveteen
-
-Правильно:
-
-fifteen""",
+fourty.""",
             },
+
 
             {
                 "order": 3,
-                "title": "Десятки и числа 21–99",
-                "body": """Десятки:
+                "title":
+                    "Числа 21–99",
 
-20 — twenty
+                "body":
+                    """Числа между десятками
+обычно пишутся через дефис.
 
-30 — thirty
+21 — twenty-one
 
-40 — forty
+37 — thirty-seven
 
-50 — fifty
+45 — forty-five
 
-60 — sixty
+99 — ninety-nine
 
-70 — seventy
+Схема:
 
-80 — eighty
+tens + ones
 
-90 — ninety
-
-Особенно запомните:
-
-forty
-
-не fourty.
-
-Числа от 21 до 99 обычно пишутся через дефис:
-
-twenty-one
-
-thirty-seven
-
-forty-five
-
-ninety-nine""",
+thirty + seven
+→ thirty-seven.""",
             },
+
 
             {
                 "order": 4,
-                "title": "13 и 30: не путайте",
-                "body": """Важно различать:
+                "title":
+                    "HUNDRED",
 
-thirteen — 13
-
-thirty — 30
-
-fourteen — 14
-
-forty — 40
-
-fifteen — 15
-
-fifty — 50
-
-sixteen — 16
-
-sixty — 60
-
-В числах 13–19 ударение часто падает на последний слог:
-
-thirTEEN
-
-fifTEEN
-
-В десятках чаще на первый:
-
-THIRty
-
-FIFty""",
-            },
-
-            {
-                "order": 5,
-                "title": "HUNDRED",
-                "body": """Примеры:
+                "body":
+                    """После точного числа
+HUNDRED остаётся без -s.
 
 100 — one hundred
 
@@ -194,153 +151,92 @@ FIFty""",
 
 500 — five hundred
 
-После точного числа HUNDRED не получает -s.
-
 Правильно:
 
 three hundred students
 
 Не:
 
-three hundreds students
+three hundreds students.
 
-В британском английском часто используется AND:
+125:
 
-125
-
-one hundred and twenty-five
-
-406
-
-four hundred and six""",
+one hundred and twenty-five.""",
             },
 
+
             {
-                "order": 6,
-                "title": "THOUSAND, MILLION, BILLION",
-                "body": """После точного числа:
+                "order": 5,
+                "title":
+                    "THOUSAND / MILLION",
+
+                "body":
+                    """После точного числа:
 
 thousand
-
 million
-
 billion
 
-не получают окончание -s.
+тоже не получают -s.
 
-Правильно:
+2,000
 
 two thousand
 
-three million
+3,000,000
 
-five billion
+three million
 
 Не:
 
 two thousands
 
-three millions
-
-Примеры:
-
-5,200
-
-five thousand two hundred
-
-12,450
-
-twelve thousand four hundred and fifty
-
-3,000,000
-
-three million""",
+three millions.""",
             },
+
+
+            {
+                "order": 6,
+                "title":
+                    "THOUSANDS OF",
+
+                "body":
+                    """Если точного числа нет,
+используем plural + OF.
+
+hundreds of people
+
+thousands of students
+
+millions of dollars
+
+Сравни:
+
+two thousand students
+— точное число
+
+thousands of students
+— много, но нет точного числа.""",
+            },
+
 
             {
                 "order": 7,
-                "title": "HUNDREDS OF и THOUSANDS OF",
-                "body": """Если точное количество НЕ указано, используются:
+                "title":
+                    "Возраст",
 
-hundreds of
+                "body":
+                    """После BE:
 
-thousands of
-
-millions of
-
-billions of
-
-Примеры:
-
-Hundreds of people attended.
-
-Thousands of students applied.
-
-Millions of dollars were spent.
-
-Сравните:
-
-two hundred students
-— точное количество
-
-hundreds of students
-— приблизительно большое количество
-
-Не:
-
-two hundreds of students""",
-            },
-
-            {
-                "order": 8,
-                "title": "Как читать большие числа",
-                "body": """Большое число удобно делить справа налево на группы по три цифры.
-
-Пример:
-
-12,345,678
-
-12 million
-
-345 thousand
-
-678
-
-Читаем:
-
-twelve million three hundred and forty-five thousand six hundred and seventy-eight
-
-Другие примеры:
-
-1,250
-
-one thousand two hundred and fifty
-
-25,600
-
-twenty-five thousand six hundred""",
-            },
-
-            {
-                "order": 9,
-                "title": "Возраст",
-                "body": """Для возраста используется:
-
-be + number + years old
-
-Примеры:
-
-I am twenty-eight years old.
+number + years old
 
 She is ten years old.
 
-He is thirty-two years old.
+He is twenty years old.
 
-Можно короче:
+Перед noun:
 
-She is ten.
-
-Перед существительным возраст становится compound adjective:
+number-year-old + noun
 
 a ten-year-old child
 
@@ -348,682 +244,743 @@ a twenty-year-old student
 
 Важно:
 
-year остаётся в единственном числе.
-
-Не:
-
-a ten-years-old child""",
+перед noun слово YEAR
+остаётся singular.""",
             },
 
+
             {
-                "order": 10,
-                "title": "Деньги, телефоны и номера",
-                "body": """Деньги:
+                "order": 8,
+                "title":
+                    "HOW MANY / HOW MUCH",
 
-five dollars
+                "body":
+                    """HOW MANY:
 
-ten euros
+с countable plural nouns.
 
-two thousand tenge
+How many students?
 
-$5.50:
+How many books?
 
-five dollars fifty
+HOW MUCH:
 
-или:
+с uncountable nouns.
 
-five dollars and fifty cents
+How much money?
 
-Телефонные номера обычно читаются по цифрам:
+How much water?
 
-205
+Также HOW MUCH
+используем для цены.
 
-two zero five
-
-или:
-
-two oh five
-
-Также возможно:
-
-double
-
-700455
-
-seven double zero four double five
-
-Номера автобусов и комнат могут читаться по-разному:
-
-bus 205
-
-bus two oh five""",
+How much is this book?""",
             },
 
-            {
-                "order": 11,
-                "title": "Годы, время и температура",
-                "body": """Годы часто читаются особым образом:
-
-1998 — nineteen ninety-eight
-
-2000 — two thousand
-
-2005 — two thousand and five
-
-2010 — twenty ten
-
-2026 — twenty twenty-six
-
-Время:
-
-3:15 — three fifteen
-
-7:30 — seven thirty
-
-Температура:
-
-20°C — twenty degrees Celsius
-
--5°C — minus five degrees""",
-            },
 
             {
-                "order": 12,
-                "title": "HOW MANY и HOW MUCH",
-                "body": """HOW MANY используется с исчисляемыми существительными:
+                "order": 9,
+                "title":
+                    "NUMBER / AMOUNT",
 
-How many students are there?
+                "body":
+                    """NUMBER используется
+с countable nouns.
 
-How many books did you buy?
+the number of students
 
-HOW MUCH используется:
+the number of cars
 
-с неисчисляемыми существительными;
+AMOUNT используется
+с uncountable nouns.
 
-для цены.
+the amount of money
 
-Примеры:
-
-How much money do you need?
-
-How much water do you drink?
-
-How much is this book?
+the amount of information
 
 Также:
 
-number → countable nouns
-
-amount → uncountable nouns""",
+a number of students
+= несколько студентов.""",
             },
 
-            {
-                "order": 13,
-                "title": "A NUMBER OF и THE NUMBER OF",
-                "body": """A NUMBER OF означает:
-
-несколько;
-
-ряд;
-
-некоторое количество.
-
-После него plural noun и обычно plural verb:
-
-A number of students were absent.
-
-THE NUMBER OF означает:
-
-количество.
-
-Глагол обычно в единственном числе:
-
-The number of students is increasing.
-
-Сравните:
-
-A number of students were...
-
-The number of students is...""",
-            },
 
             {
-                "order": 14,
-                "title": "Главный алгоритм",
-                "body": """Проверьте:
+                "order": 10,
+                "title":
+                    "A NUMBER OF / THE NUMBER OF",
 
-1. Это точное число?
+                "body":
+                    """A NUMBER OF + plural noun
+обычно требует plural verb.
 
-После hundred/thousand/million/billion нет -s:
+A number of students
+are absent.
 
-five thousand
+THE NUMBER OF означает
+количество как один показатель.
 
-two million
+The number of students
+is increasing.
 
-2. Количество неточное?
+Главное:
 
-Используйте:
+a number of → plural verb
 
-hundreds of
-
-thousands of
-
-millions of
-
-3. Число 21–99?
-
-Используйте дефис:
-
-twenty-five
-
-4. Возраст после BE?
-
-twenty years old
-
-5. Возраст перед noun?
-
-a twenty-year-old student
-
-6. A number of?
-
-plural verb
-
-7. The number of?
-
-singular verb""",
+the number of → singular verb.""",
             },
 
         ]
 
+
+        section_objects = {}
+
+
         for data in sections:
-            GrammarLessonSection.objects.update_or_create(
+
+            section, _ = GrammarLessonSection.objects.update_or_create(
                 lesson=lesson,
                 order=data["order"],
                 defaults={
-                    "title": data["title"],
-                    "body": data["body"],
+                    "title":
+                        data["title"],
+
+                    "body":
+                        data["body"],
                 },
             )
 
-        exercises = [
+            section_objects[
+                data["order"]
+            ] = section
 
+
+        # =================================================
+        # 20 TRAINING EXERCISES
+        # =================================================
+
+        training = [
+
+            # SECTION 1
             {
                 "order": 1,
-                "prompt": "Как правильно пишется число 15?",
+                "section": 1,
+                "prompt":
+                    "Choose the correct spelling for 15.",
                 "options": [
-                    "fiveteen",
                     "fifteen",
-                    "fiftyeen",
+                    "fiveteen",
                     "fivteen",
+                    "fiftyeen",
                 ],
-                "answer": "fifteen",
-                "explanation": "15 = fifteen.",
+                "answer":
+                    "fifteen",
+                "explanation":
+                    "15 = FIFTEEN.",
             },
 
             {
                 "order": 2,
-                "prompt": "Как правильно пишется число 80?",
+                "section": 1,
+                "prompt":
+                    "Choose the correct spelling for 18.",
                 "options": [
-                    "eightty",
-                    "eighty",
-                    "eigty",
-                    "eighti",
+                    "eighteen",
+                    "eightteen",
+                    "eightyteen",
+                    "eigten",
                 ],
-                "answer": "eighty",
-                "explanation": "80 = eighty.",
+                "answer":
+                    "eighteen",
+                "explanation":
+                    "18 = EIGHTEEN.",
             },
 
+
+            # SECTION 2
             {
                 "order": 3,
-                "prompt": "37:",
+                "section": 2,
+                "prompt":
+                    "Choose the correct spelling for 40.",
                 "options": [
-                    "thirty-seven",
-                    "thirteen-seven",
-                    "thirty seven",
-                    "three-seven",
+                    "forty",
+                    "fourty",
+                    "fourti",
+                    "fortee",
                 ],
-                "answer": "thirty-seven",
-                "explanation": (
-                    "Составные числа 21–99 обычно пишутся через дефис."
-                ),
+                "answer":
+                    "forty",
+                "explanation":
+                    "40 = FORTY, без U.",
             },
 
             {
                 "order": 4,
-                "prompt": "406:",
+                "section": 2,
+                "prompt":
+                    "Choose the correct spelling for 80.",
                 "options": [
-                    "four hundred and six",
-                    "four hundreds six",
-                    "four hundred sixes",
-                    "four thousands and six",
+                    "eighty",
+                    "eightty",
+                    "eigthty",
+                    "eightyteen",
                 ],
-                "answer": "four hundred and six",
-                "explanation": (
-                    "После точного числа hundred остаётся без -s."
-                ),
+                "answer":
+                    "eighty",
+                "explanation":
+                    "80 = EIGHTY.",
             },
 
+
+            # SECTION 3
             {
                 "order": 5,
-                "prompt": "5,200:",
+                "section": 3,
+                "prompt":
+                    "37 = ?",
                 "options": [
-                    "five thousands two hundred",
-                    "five thousand two hundred",
-                    "five thousand and two hundreds",
-                    "five millions two hundred",
+                    "thirty-seven",
+                    "thirty seven",
+                    "thirteen-seven",
+                    "three-seven",
                 ],
-                "answer": "five thousand two hundred",
-                "explanation": (
-                    "После five используется thousand без -s."
-                ),
+                "answer":
+                    "thirty-seven",
+                "explanation":
+                    "Числа 21–99 обычно пишутся через дефис.",
             },
 
             {
                 "order": 6,
-                "prompt": "12,450:",
+                "section": 3,
+                "prompt":
+                    "64 = ?",
                 "options": [
-                    "twelve thousand four hundred and fifty",
-                    "twelve thousands four hundreds fifty",
-                    "one two four five zero",
-                    "twelve million four hundred fifty",
+                    "sixty-four",
+                    "sixteen-four",
+                    "sixty fourty",
+                    "six-four",
                 ],
-                "answer": "twelve thousand four hundred and fifty",
-                "explanation": (
-                    "Правильное чтение большого числа."
-                ),
+                "answer":
+                    "sixty-four",
+                "explanation":
+                    "60 + 4 → SIXTY-FOUR.",
             },
 
+
+            # SECTION 4
             {
                 "order": 7,
-                "prompt": "3,000,000:",
+                "section": 4,
+                "prompt":
+                    "300 students = ?",
                 "options": [
-                    "three millions",
-                    "three million",
-                    "three million of",
-                    "millions three",
+                    "three hundred students",
+                    "three hundreds students",
+                    "three hundred of students",
+                    "three hundreds of student",
                 ],
-                "answer": "three million",
-                "explanation": (
-                    "После точного числа million не получает -s."
-                ),
+                "answer":
+                    "three hundred students",
+                "explanation":
+                    "После точного числа HUNDRED без -s.",
             },
 
             {
                 "order": 8,
-                "prompt": "___ of students use the library.",
+                "section": 4,
+                "prompt":
+                    "406 = ?",
                 "options": [
-                    "Thousand",
-                    "Thousands",
-                    "Three thousands",
-                    "Thousand of",
+                    "four hundred and six",
+                    "four hundreds and six",
+                    "four hundred sixes",
+                    "four thousand and six",
                 ],
-                "answer": "Thousands",
-                "explanation": (
-                    "Неточное большое количество → thousands of."
-                ),
+                "answer":
+                    "four hundred and six",
+                "explanation":
+                    "Точное число → HUNDRED без -s.",
             },
 
+
+            # SECTION 5
             {
                 "order": 9,
-                "prompt": "The university has ___ students.",
+                "section": 5,
+                "prompt":
+                    "5,000 = ?",
                 "options": [
-                    "ten thousands",
-                    "ten thousand",
-                    "ten thousand of",
-                    "ten-thousands",
+                    "five thousand",
+                    "five thousands",
+                    "five thousand of",
+                    "five-thousands",
                 ],
-                "answer": "ten thousand",
-                "explanation": (
-                    "Точное число → ten thousand без -s."
-                ),
+                "answer":
+                    "five thousand",
+                "explanation":
+                    "После точного числа THOUSAND без -s.",
             },
 
             {
                 "order": 10,
-                "prompt": "She is a ___ girl.",
+                "section": 5,
+                "prompt":
+                    "2,000,000 = ?",
                 "options": [
-                    "six-years-old",
-                    "six-year-old",
-                    "six years old",
-                    "six-years old",
+                    "two million",
+                    "two millions",
+                    "two million of",
+                    "two millions of",
                 ],
-                "answer": "six-year-old",
-                "explanation": (
-                    "Перед noun: number-year-old; year остаётся singular."
-                ),
+                "answer":
+                    "two million",
+                "explanation":
+                    "После точного числа MILLION без -s.",
             },
 
+
+            # SECTION 6
             {
                 "order": 11,
-                "prompt": "The girl is ___.",
+                "section": 6,
+                "prompt":
+                    "___ of people use the internet every day.",
                 "options": [
-                    "six-year-old",
-                    "six years old",
-                    "six-years-old",
-                    "six year olds",
+                    "Millions",
+                    "Million",
+                    "Three millions",
+                    "Million of",
                 ],
-                "answer": "six years old",
-                "explanation": (
-                    "После BE: six years old."
-                ),
+                "answer":
+                    "Millions",
+                "explanation":
+                    "Неточное количество → MILLIONS OF.",
             },
 
             {
                 "order": 12,
-                "prompt": "Ten kilometres ___ a long distance to walk.",
+                "section": 6,
+                "prompt":
+                    "Choose the correct approximate phrase.",
                 "options": [
-                    "are",
-                    "is",
-                    "be",
-                    "were always",
+                    "thousands of students",
+                    "thousand students",
+                    "three thousands students",
+                    "thousands students",
                 ],
-                "answer": "is",
-                "explanation": (
-                    "Расстояние воспринимается как единое количество."
-                ),
+                "answer":
+                    "thousands of students",
+                "explanation":
+                    "Неточное количество → THOUSANDS OF.",
             },
 
+
+            # SECTION 7
             {
                 "order": 13,
-                "prompt": "A number of students ___ absent.",
+                "section": 7,
+                "prompt":
+                    "The boy is ___.",
                 "options": [
-                    "was",
-                    "were",
-                    "is",
-                    "has",
+                    "ten years old",
+                    "ten-year-old",
+                    "ten-years-old",
+                    "ten year olds",
                 ],
-                "answer": "were",
-                "explanation": (
-                    "A number of + plural noun → plural verb."
-                ),
+                "answer":
+                    "ten years old",
+                "explanation":
+                    "После BE → YEARS OLD.",
             },
 
             {
                 "order": 14,
-                "prompt": "The number of students ___ increasing.",
+                "section": 7,
+                "prompt":
+                    "He is a ___ student.",
                 "options": [
-                    "are",
-                    "is",
-                    "were",
-                    "have",
+                    "twenty-year-old",
+                    "twenty-years-old",
+                    "twenty years old",
+                    "twenty-year-olds",
                 ],
-                "answer": "is",
-                "explanation": (
-                    "The number of = количество → singular verb."
-                ),
+                "answer":
+                    "twenty-year-old",
+                "explanation":
+                    "Перед noun → NUMBER-YEAR-OLD.",
             },
 
+
+            # SECTION 8
             {
                 "order": 15,
-                "prompt": "2 × 8 = 16",
+                "section": 8,
+                "prompt":
+                    "___ students are in the room?",
                 "options": [
-                    "Two plus eight equals sixteen.",
-                    "Two times eight equals sixteen.",
-                    "Two divided by eight equals sixteen.",
-                    "Two minus eight equals sixteen.",
+                    "How many",
+                    "How much",
+                    "How amount",
+                    "How number",
                 ],
-                "answer": "Two times eight equals sixteen.",
-                "explanation": (
-                    "× читается times или multiplied by."
-                ),
+                "answer":
+                    "How many",
+                "explanation":
+                    "STUDENTS = countable plural → HOW MANY.",
             },
 
             {
                 "order": 16,
-                "prompt": "Choose the correct spelling.",
+                "section": 8,
+                "prompt":
+                    "___ money do you need?",
                 "options": [
-                    "fourty",
-                    "forty",
-                    "fourti",
-                    "fourtye",
+                    "How much",
+                    "How many",
+                    "How number",
+                    "How few many",
                 ],
-                "answer": "forty",
-                "explanation": "40 = forty, не fourty.",
+                "answer":
+                    "How much",
+                "explanation":
+                    "MONEY = uncountable → HOW MUCH.",
             },
 
+
+            # SECTION 9
             {
                 "order": 17,
-                "prompt": "Choose the correct exact-number phrase.",
+                "section": 9,
+                "prompt":
+                    "Choose the correct phrase.",
                 "options": [
-                    "three hundreds students",
-                    "three hundred students",
-                    "three hundreds of students",
-                    "three hundred of students",
+                    "the number of students",
+                    "the amount of students",
+                    "the much of students",
+                    "the numbers amount students",
                 ],
-                "answer": "three hundred students",
-                "explanation": (
-                    "После точного числа hundred без -s и без of."
-                ),
+                "answer":
+                    "the number of students",
+                "explanation":
+                    "Countable plural → NUMBER.",
             },
 
             {
                 "order": 18,
-                "prompt": "Choose the correct approximate phrase.",
+                "section": 9,
+                "prompt":
+                    "Choose the correct phrase.",
                 "options": [
-                    "thousands people",
-                    "thousands of people",
-                    "three thousands people",
-                    "thousand of people",
+                    "the amount of information",
+                    "the number of information",
+                    "the many of information",
+                    "the amounts number information",
                 ],
-                "answer": "thousands of people",
-                "explanation": (
-                    "Неточное количество → thousands of."
-                ),
+                "answer":
+                    "the amount of information",
+                "explanation":
+                    "INFORMATION = uncountable → AMOUNT.",
             },
 
+
+            # SECTION 10
             {
                 "order": 19,
-                "prompt": "Choose the correct age pair.",
+                "section": 10,
+                "prompt":
+                    "A number of students ___ absent today.",
                 "options": [
-                    (
-                        "She is twenty years old. / "
-                        "She is a twenty-year-old student."
-                    ),
-                    (
-                        "She has twenty years. / "
-                        "She is a twenty-years-old student."
-                    ),
-                    (
-                        "She is twenty-year-old. / "
-                        "She is a twenty years old student."
-                    ),
-                    (
-                        "She has twenty years old. / "
-                        "She is twenty-years student."
-                    ),
+                    "are",
+                    "is",
+                    "was",
+                    "has",
                 ],
-                "answer": (
-                    "She is twenty years old. / "
-                    "She is a twenty-year-old student."
-                ),
-                "explanation": (
-                    "После BE → years old; перед noun → year-old."
-                ),
+                "answer":
+                    "are",
+                "explanation":
+                    "A NUMBER OF + plural noun → plural verb.",
             },
 
             {
                 "order": 20,
-                "prompt": "Choose the correct HOW MANY / HOW MUCH pair.",
+                "section": 10,
+                "prompt":
+                    "The number of students ___ increasing.",
                 "options": [
-                    (
-                        "How many students? / "
-                        "How much money?"
-                    ),
-                    (
-                        "How much students? / "
-                        "How many money?"
-                    ),
-                    (
-                        "How many water? / "
-                        "How much books?"
-                    ),
-                    (
-                        "How much people? / "
-                        "How many information?"
-                    ),
+                    "is",
+                    "are",
+                    "were",
+                    "have",
                 ],
-                "answer": (
-                    "How many students? / "
-                    "How much money?"
-                ),
-                "explanation": (
-                    "Many → countable; much → uncountable."
-                ),
-            },
-
-            {
-                "order": 21,
-                "prompt": "Choose the correct NUMBER / AMOUNT pair.",
-                "options": [
-                    (
-                        "the number of students / "
-                        "the amount of information"
-                    ),
-                    (
-                        "the amount of students / "
-                        "the number of information"
-                    ),
-                    (
-                        "the number of water / "
-                        "the amount of books"
-                    ),
-                    (
-                        "the amount of people / "
-                        "the number of money"
-                    ),
-                ],
-                "answer": (
-                    "the number of students / "
-                    "the amount of information"
-                ),
-                "explanation": (
-                    "Number → countable; amount → uncountable."
-                ),
-            },
-
-            {
-                "order": 22,
-                "prompt": "Choose the correct year reading.",
-                "options": [
-                    "2026 — twenty twenty-six",
-                    "2026 — two zero two six only",
-                    "2026 — twenty hundreds twenty-six",
-                    "2026 — two thousands twenty-six only",
-                ],
-                "answer": "2026 — twenty twenty-six",
-                "explanation": (
-                    "Годы 2010+ часто читаются как twenty + number."
-                ),
-            },
-
-            {
-                "order": 23,
-                "prompt": "Choose the correct exact/approximate pair.",
-                "options": [
-                    (
-                        "five million dollars / "
-                        "millions of dollars"
-                    ),
-                    (
-                        "five millions dollars / "
-                        "million of dollars"
-                    ),
-                    (
-                        "five million of dollars / "
-                        "millions dollars"
-                    ),
-                    (
-                        "five millions of dollars / "
-                        "million dollars approximately"
-                    ),
-                ],
-                "answer": (
-                    "five million dollars / "
-                    "millions of dollars"
-                ),
-                "explanation": (
-                    "Точное число → million; "
-                    "неточное количество → millions of."
-                ),
-            },
-
-            {
-                "order": 24,
-                "prompt": "Choose the fully correct sequence.",
-                "options": [
-                    (
-                        "40 → forty / "
-                        "25 → twenty-five / "
-                        "300 → three hundred / "
-                        "5,000 → five thousand / "
-                        "2,000,000 → two million / "
-                        "approximate → thousands of"
-                    ),
-                    (
-                        "40 → fourty / "
-                        "25 → twenty five always / "
-                        "300 → three hundreds / "
-                        "5,000 → five thousands / "
-                        "2,000,000 → two millions / "
-                        "approximate → thousand people"
-                    ),
-                    (
-                        "40 → fourty / "
-                        "25 → twenty-five / "
-                        "300 → three hundred of / "
-                        "5,000 → five thousand of / "
-                        "2,000,000 → two millions / "
-                        "approximate → three thousands"
-                    ),
-                    (
-                        "40 → forty / "
-                        "25 → twentyfifth / "
-                        "300 → three hundreds / "
-                        "5,000 → five-thousand / "
-                        "2,000,000 → two million of / "
-                        "approximate → thousands people"
-                    ),
-                ],
-                "answer": (
-                    "40 → forty / "
-                    "25 → twenty-five / "
-                    "300 → three hundred / "
-                    "5,000 → five thousand / "
-                    "2,000,000 → two million / "
-                    "approximate → thousands of"
-                ),
-                "explanation": (
-                    "Это основные правила написания "
-                    "и употребления cardinal numbers."
-                ),
+                "answer":
+                    "is",
+                "explanation":
+                    "THE NUMBER OF → singular verb.",
             },
 
         ]
 
-        for data in exercises:
+
+        # =================================================
+        # FINAL TEST — 10 NEW QUESTIONS
+        # =================================================
+
+        final_test = [
+
+            {
+                "order": 21,
+                "prompt":
+                    "Choose the correct spelling for 50.",
+                "options": [
+                    "fifty",
+                    "fivety",
+                    "fiftye",
+                    "fivty",
+                ],
+                "answer":
+                    "fifty",
+                "explanation":
+                    "50 = FIFTY.",
+            },
+
+            {
+                "order": 22,
+                "prompt":
+                    "92 = ?",
+                "options": [
+                    "ninety-two",
+                    "nineteen-two",
+                    "ninety twoo",
+                    "nine-two",
+                ],
+                "answer":
+                    "ninety-two",
+                "explanation":
+                    "90 + 2 → NINETY-TWO.",
+            },
+
+            {
+                "order": 23,
+                "prompt":
+                    "700 workers = ?",
+                "options": [
+                    "seven hundred workers",
+                    "seven hundreds workers",
+                    "seven hundred of workers",
+                    "seven hundreds of workers",
+                ],
+                "answer":
+                    "seven hundred workers",
+                "explanation":
+                    "Exact number → HUNDRED без -s.",
+            },
+
+            {
+                "order": 24,
+                "prompt":
+                    "12,000 people = ?",
+                "options": [
+                    "twelve thousand people",
+                    "twelve thousands people",
+                    "twelve thousand of people",
+                    "twelve thousands of people",
+                ],
+                "answer":
+                    "twelve thousand people",
+                "explanation":
+                    "Exact number → THOUSAND без -s.",
+            },
+
+            {
+                "order": 25,
+                "prompt":
+                    "Choose the correct approximate phrase.",
+                "options": [
+                    "hundreds of cars",
+                    "hundred of cars",
+                    "two hundreds cars",
+                    "hundreds cars",
+                ],
+                "answer":
+                    "hundreds of cars",
+                "explanation":
+                    "Без точного числа → HUNDREDS OF.",
+            },
+
+            {
+                "order": 26,
+                "prompt":
+                    "She is a ___ child.",
+                "options": [
+                    "five-year-old",
+                    "five-years-old",
+                    "five years old",
+                    "five-year-olds",
+                ],
+                "answer":
+                    "five-year-old",
+                "explanation":
+                    "Перед noun → FIVE-YEAR-OLD.",
+            },
+
+            {
+                "order": 27,
+                "prompt":
+                    "___ books did you buy?",
+                "options": [
+                    "How many",
+                    "How much",
+                    "How amount",
+                    "How number",
+                ],
+                "answer":
+                    "How many",
+                "explanation":
+                    "BOOKS = countable plural.",
+            },
+
+            {
+                "order": 28,
+                "prompt":
+                    "Choose the correct pair.",
+                "options": [
+                    "the number of cars / the amount of money",
+                    "the amount of cars / the number of money",
+                    "the number of information / the amount of students",
+                    "the amount of books / the number of water",
+                ],
+                "answer":
+                    "the number of cars / the amount of money",
+                "explanation":
+                    "NUMBER → countable; AMOUNT → uncountable.",
+            },
+
+            {
+                "order": 29,
+                "prompt":
+                    "Choose the correct verb pair.",
+                "options": [
+                    "A number of workers are absent. / The number of workers is growing.",
+                    "A number of workers is absent. / The number of workers are growing.",
+                    "A number of workers was always plural. / The number of workers have growing.",
+                    "A number of workers has absent. / The number of workers were growing.",
+                ],
+                "answer":
+                    "A number of workers are absent. / The number of workers is growing.",
+                "explanation":
+                    "A NUMBER OF → plural; THE NUMBER OF → singular.",
+            },
+
+            {
+                "order": 30,
+                "prompt":
+                    "Choose the fully correct sequence.",
+                "options": [
+                    "40 → forty / 35 → thirty-five / 300 → three hundred / 4,000 → four thousand / approximate → thousands of",
+                    "40 → fourty / 35 → thirty five always / 300 → three hundreds / 4,000 → four thousands / approximate → thousand of",
+                    "40 → forty / 35 → thirteen-five / 300 → three hundred of / 4,000 → four thousand of / approximate → thousands people",
+                    "40 → fourty / 35 → thirty-fifth / 300 → three hundreds / 4,000 → four-thousands / approximate → three thousands",
+                ],
+                "answer":
+                    "40 → forty / 35 → thirty-five / 300 → three hundred / 4,000 → four thousand / approximate → thousands of",
+                "explanation":
+                    "Это основные правила Cardinal Numbers.",
+            },
+
+        ]
+
+
+        all_exercises = (
+            training
+            +
+            final_test
+        )
+
+        valid_orders = [
+            item["order"]
+            for item in all_exercises
+        ]
+
+
+        for data in all_exercises:
+
+            if data["order"] <= 20:
+
+                section = (
+                    section_objects[
+                        data["section"]
+                    ]
+                )
+
+            else:
+
+                section = None
+
+
             GrammarExercise.objects.update_or_create(
                 lesson=lesson,
                 order=data["order"],
                 defaults={
-                    "exercise_type": GrammarExercise.Type.CHOICE,
-                    "prompt": data["prompt"],
-                    "options": data["options"],
-                    "correct_answer": data["answer"],
-                    "explanation": data["explanation"],
-                    "is_published": True,
+                    "section":
+                        section,
+
+                    "exercise_type":
+                        "choice",
+
+                    "prompt":
+                        data["prompt"],
+
+                    "options":
+                        data["options"],
+
+                    "correct_answer":
+                        data["answer"],
+
+                    "explanation":
+                        data["explanation"],
+
+                    "is_published":
+                        True,
                 },
             )
 
+
+        GrammarExercise.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__in=valid_orders,
+        ).delete()
+
+
+        GrammarLessonSection.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__in=[
+                item["order"]
+                for item in sections
+            ],
+        ).delete()
+
+
         self.stdout.write(
             self.style.SUCCESS(
-                "✅ A1 Lesson 58 seeded: Cardinal Numbers"
+                "✅ Interactive A1 Lesson 58 seeded"
             )
         )
 
         self.stdout.write(
-            f"Sections: {lesson.sections.count()}"
+            f"Micro rules: "
+            f"{lesson.sections.count()}"
         )
 
         self.stdout.write(
-            f"Exercises: {lesson.exercises.count()}"
+            "Training exercises: "
+            f"{lesson.exercises.filter(section__isnull=False).count()}"
+        )
+
+        self.stdout.write(
+            "Final test: "
+            f"{lesson.exercises.filter(section__isnull=True).count()}"
         )

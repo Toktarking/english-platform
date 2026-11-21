@@ -10,9 +10,10 @@ from grammar.models import (
 class Command(BaseCommand):
 
     help = (
-        "Create/update A1 Grammar Lesson 60: "
-        "Fractions and Decimals."
+        "Create/update interactive A1 Grammar "
+        "Lesson 60: Fractions, Decimals and Percentages."
     )
+
 
     def handle(self, *args, **options):
 
@@ -20,941 +21,954 @@ class Command(BaseCommand):
             level="A1",
             order=60,
             defaults={
-                "title": "Дробные и десятичные числительные",
-                "slug": "fractions-decimals-percentages",
-                "theory_text": (
+                "title":
+                    "Дроби, десятичные числа и проценты",
+
+                "slug":
+                    "fractions-decimals-percentages",
+
+                "theory_text":
                     "Fractions, decimals, percentages, "
-                    "ratios and numerical changes."
-                ),
-                "estimated_minutes": 50,
-                "pass_score": 70,
-                "xp_reward": 100,
-                "is_published": True,
+                    "ratios and numerical changes.",
+
+                "estimated_minutes":
+                    20,
+
+                "pass_score":
+                    70,
+
+                "xp_reward":
+                    100,
+
+                "is_published":
+                    True,
             },
         )
+
+
+        # =================================================
+        # 10 MICRO RULES
+        # =================================================
 
         sections = [
 
             {
                 "order": 1,
-                "title": "Что такое дроби",
-                "body": """Дробь показывает часть целого.
+                "title":
+                    "Обычные дроби",
 
-Примеры:
+                "body":
+                    """В обычной дроби:
 
-1/2 — one half
+числитель читаем
+cardinal number.
 
-1/3 — one third
+знаменатель читаем
+ordinal number.
 
-3/4 — three quarters
+1/3
+→ one third
 
-2/5 — two fifths
+1/5
+→ one fifth
 
-В дроби 3/5:
+2/5
+→ two fifths
 
-3 — numerator, числитель.
-
-5 — denominator, знаменатель.
-
-Основное правило:
-
-числитель читается количественным числительным;
-
-знаменатель — порядковым.""",
+Если numerator больше 1,
+denominator обычно plural.""",
             },
+
 
             {
                 "order": 2,
-                "title": "Основные дроби",
-                "body": """Если числитель равен 1:
+                "title":
+                    "HALF и QUARTER",
 
-1/2 — one half
+                "body":
+                    """Особые формы:
 
-1/3 — one third
+1/2
+→ one half
 
-1/4 — one quarter
+1/4
+→ one quarter
 
-1/5 — one fifth
-
-1/6 — one sixth
-
-1/8 — one eighth
-
-1/10 — one tenth
-
-Особенно запомните:
-
-1/2 → one half
-
-1/4 → one quarter
-
-Также возможно:
-
-one fourth
-
-Но one quarter употребляется очень часто.""",
-            },
-
-            {
-                "order": 3,
-                "title": "Числитель больше одного",
-                "body": """Если числитель больше одного, знаменатель обычно ставится во множественное число.
+3/4
+→ three quarters
 
 Примеры:
 
-2/3 — two thirds
-
-3/4 — three quarters
-
-4/5 — four fifths
-
-7/10 — seven tenths
-
-Сравните:
-
-1/3 — one third
-
-2/3 — two thirds
-
-1/5 — one fifth
-
-3/5 — three fifths
-
-Не:
-
-two third
-
-Правильно:
-
-two thirds""",
-            },
-
-            {
-                "order": 4,
-                "title": "HALF, QUARTER и OF",
-                "body": """HALF:
-
-1/2 — one half
-
-Half of the students passed.
-
-Также:
-
-half the students
-
-QUARTER:
-
-1/4 — one quarter
-
-3/4 — three quarters
+Half of the class...
 
 A quarter of the students...
 
-Three quarters of the population...
-
-Частая модель:
-
-fraction + of + noun
-
-one third of the class
-
-two thirds of the population
-
-three quarters of the work""",
+Three quarters
+of the work...""",
             },
+
+
+            {
+                "order": 3,
+                "title":
+                    "Mixed Numbers",
+
+                "body":
+                    """Mixed number содержит
+целую и дробную часть.
+
+Используем AND.
+
+1 1/2
+→ one and a half
+
+2 1/3
+→ two and one third
+
+3 1/4
+→ three and a quarter
+
+5 2/3
+→ five and two thirds.""",
+            },
+
+
+            {
+                "order": 4,
+                "title":
+                    "Agreement после OF",
+
+                "body":
+                    """После fraction + OF
+глагол зависит от noun.
+
+Half of the work
+is finished.
+
+WORK = uncountable.
+
+Half of the students
+are absent.
+
+STUDENTS = plural.
+
+Смотрим на noun
+после OF.""",
+            },
+
 
             {
                 "order": 5,
-                "title": "Смешанные числа",
-                "body": """Смешанное число содержит целую и дробную части.
+                "title":
+                    "Decimals",
 
-Используется AND.
+                "body":
+                    """В английском decimal
+обычно записывается через точку.
 
-Примеры:
+1.5
+→ one point five
 
-1 1/2 — one and a half
+2.7
+→ two point seven
 
-2 1/3 — two and one third
+3.14
+→ three point one four
 
-3 1/4 — three and a quarter
+После POINT цифры
+обычно читаются отдельно.
 
-5 2/3 — five and two thirds
+Не:
 
-После one and a half существительное обычно plural:
-
-one and a half hours
-
-two and a half days
-
-Также естественно:
-
-an hour and a half""",
+three point fourteen.""",
             },
+
 
             {
                 "order": 6,
-                "title": "Согласование после дробей",
-                "body": """Глагол зависит от существительного после OF.
+                "title":
+                    "ZERO после POINT",
 
-Неисчисляемое или singular:
+                "body":
+                    """Нули после POINT
+тоже читаются.
 
-Half of the work is finished.
+6.08
 
-Two thirds of the water has been used.
+→ six point zero eight
 
-One quarter of the building was damaged.
+0.125
 
-Plural noun:
+→ zero point one two five
 
-Half of the students are absent.
+12.003
 
-Two thirds of the students have passed.
+→ twelve point zero zero three
 
-One quarter of the employees were absent.
+0.5 можно читать:
 
-Смотрите не на дробь, а на существительное после OF.""",
+zero point five.""",
             },
+
 
             {
                 "order": 7,
-                "title": "Десятичные дроби",
-                "body": """В английском десятичные числа записываются через точку.
+                "title":
+                    "Percent",
 
-Правильно:
+                "body":
+                    """Знак % читается:
 
-2.5
+per cent / percent.
 
-Не:
+5%
+→ five per cent
 
-2,5
+25%
+→ twenty-five per cent
 
-Точка читается:
+100%
+→ one hundred per cent
 
-point
-
-Примеры:
-
-1.5 — one point five
-
-2.7 — two point seven
-
-3.14 — three point one four
-
-9.99 — nine point nine nine
-
-После POINT цифры обычно читаются отдельно.""",
-            },
-
-            {
-                "order": 8,
-                "title": "ZERO и цифры после POINT",
-                "body": """Примеры:
-
-6.08 — six point zero eight
-
-10.47 — ten point four seven
-
-0.125 — zero point one two five
-
-12.003 — twelve point zero zero three
-
-Число 0.5 можно читать:
-
-zero point five
-
-или:
-
-point five
-
-Для учебных заданий безопаснее:
-
-zero point five
-
-В британском английском также встречается:
-
-nought point five""",
-            },
-
-            {
-                "order": 9,
-                "title": "Десятичные числа с существительными",
-                "body": """После decimal number, отличного от единицы, существительное обычно ставится во множественном числе.
-
-Примеры:
-
-1.5 kilometres
-
-0.5 litres
-
-2.5 kilograms
-
-Большие значения:
-
-2.5 million
-
-1.2 billion
-
-3.75 thousand
-
-После точного числа:
-
-million
-
-billion
-
-thousand
-
-обычно остаются без -s.
-
-Правильно:
-
-2.5 million people
-
-Не:
-
-2.5 millions people""",
-            },
-
-            {
-                "order": 10,
-                "title": "Проценты",
-                "body": """Знак % читается:
-
-per cent / percent
-
-Примеры:
-
-5% — five per cent
-
-20% — twenty per cent
-
-75% — seventy-five per cent
-
-100% — one hundred per cent
-
-После конкретного числа используется:
-
-per cent
-
-Не:
-
-twenty percentage
-
-PERCENTAGE используется в общем смысле:
+PERCENTAGE используется
+без конкретного числа.
 
 a high percentage
 
-a small percentage
-
-What percentage passed?""",
+a small percentage.""",
             },
 
+
             {
-                "order": 11,
-                "title": "BY, TO и FROM…TO",
-                "body": """BY показывает величину изменения.
+                "order": 8,
+                "title":
+                    "BY и TO",
+
+                "body":
+                    """BY показывает,
+НА СКОЛЬКО изменилось значение.
 
 Sales increased by 10%.
 
-= продажи выросли на 10%.
+= выросли на 10%.
 
-TO показывает новое значение.
+TO показывает
+НОВОЕ значение.
 
 The rate increased to 10%.
 
-= показатель вырос до 10%.
+= вырос до 10%.
 
-FROM…TO показывает начальное и конечное значения.
-
-The rate increased from 5% to 8%.
-
-Важно:
-
-by 10% → на 10%
-
-to 10% → до 10%
-
-from 5% to 8% → с 5% до 8%""",
+BY ≠ TO.""",
             },
 
+
             {
-                "order": 12,
-                "title": "Процент и процентные пункты",
-                "body": """Percentage points и percent — не одно и то же.
+                "order": 9,
+                "title":
+                    "FROM…TO",
 
-Если показатель вырос:
+                "body":
+                    """FROM…TO показывает
+начальное и конечное значения.
 
-с 20% до 25%,
+The rate increased
+from 5% to 8%.
 
-изменение составляет:
+= вырос с 5% до 8%.
 
-5 percentage points.
+Другой пример:
 
-Относительный рост:
+Prices fell
+from $20 to $15.
 
-25%.
+FROM = начало.
 
-Для базового уровня важно различать:
-
-increased by five per cent
-
-increased by five percentage points
-
-increased from twenty to twenty-five per cent.""",
+TO = результат.""",
             },
 
+
             {
-                "order": 13,
-                "title": "RATIO и пропорции",
-                "body": """Соотношение 3:2 читается:
+                "order": 10,
+                "title":
+                    "Ratios и proportions",
 
-three to two
+                "body":
+                    """Ratio:
 
-Пример:
+3:2
 
-The ratio of men to women was three to two.
+→ three to two
 
-ONE IN FIVE:
+4:1
+
+→ four to one
+
+One in five:
 
 один из пяти.
 
-One in five students works part-time.
+One in five students...
 
-TWO OUT OF TEN:
+Seven out of ten:
 
-двое из десяти.
+семь из десяти.
 
-Two out of ten participants disagreed.
-
-Также:
-
-Seven out of ten students passed.""",
-            },
-
-            {
-                "order": 14,
-                "title": "Главный алгоритм",
-                "body": """Обычная дробь?
-
-Числитель → cardinal number.
-
-Знаменатель → ordinal number.
-
-Если числитель больше 1:
-
-знаменатель → plural.
-
-2/3 → two thirds.
-
-Смешанное число?
-
-Используйте AND:
-
-2 1/2 → two and a half.
-
-Decimal?
-
-Используйте POINT и читайте цифры отдельно:
-
-2.75 → two point seven five.
-
-Процент?
-
-25% → twenty-five per cent.
-
-Изменение?
-
-BY → на
-
-TO → до
-
-FROM…TO → с…до
-
-Ratio?
-
-3:2 → three to two.""",
+Seven out of ten
+students passed.""",
             },
 
         ]
 
+
+        section_objects = {}
+
+
         for data in sections:
-            GrammarLessonSection.objects.update_or_create(
+
+            section, _ = GrammarLessonSection.objects.update_or_create(
                 lesson=lesson,
                 order=data["order"],
                 defaults={
-                    "title": data["title"],
-                    "body": data["body"],
+                    "title":
+                        data["title"],
+
+                    "body":
+                        data["body"],
                 },
             )
 
-        exercises = [
+            section_objects[
+                data["order"]
+            ] = section
 
+
+        # =================================================
+        # 20 TRAINING EXERCISES
+        # =================================================
+
+        training = [
+
+            # SECTION 1
             {
                 "order": 1,
-                "prompt": "1/5:",
+                "section": 1,
+                "prompt":
+                    "1/5 = ?",
                 "options": [
-                    "one five",
                     "one fifth",
+                    "one five",
                     "first five",
-                    "one five-th",
+                    "one fifths",
                 ],
-                "answer": "one fifth",
-                "explanation": (
-                    "Числитель cardinal, знаменатель ordinal."
-                ),
+                "answer":
+                    "one fifth",
+                "explanation":
+                    "1/5 = ONE FIFTH.",
             },
 
             {
                 "order": 2,
-                "prompt": "4/7:",
+                "section": 1,
+                "prompt":
+                    "2/3 = ?",
                 "options": [
-                    "four seventh",
-                    "four sevenths",
-                    "fourth seven",
-                    "four sevens",
+                    "two thirds",
+                    "two third",
+                    "second thirds",
+                    "two threes",
                 ],
-                "answer": "four sevenths",
-                "explanation": (
-                    "Числитель больше одного → denominator plural."
-                ),
+                "answer":
+                    "two thirds",
+                "explanation":
+                    "Numerator больше 1 → denominator plural.",
             },
 
+
+            # SECTION 2
             {
                 "order": 3,
-                "prompt": "1/4:",
+                "section": 2,
+                "prompt":
+                    "1/2 = ?",
                 "options": [
-                    "one quarter",
-                    "one quarters",
-                    "first quarter only as time",
-                    "one fourths",
+                    "one half",
+                    "one second",
+                    "one halves",
+                    "half one",
                 ],
-                "answer": "one quarter",
-                "explanation": (
-                    "1/4 обычно читается one quarter."
-                ),
+                "answer":
+                    "one half",
+                "explanation":
+                    "1/2 = ONE HALF.",
             },
 
             {
                 "order": 4,
-                "prompt": "5 1/2:",
+                "section": 2,
+                "prompt":
+                    "3/4 = ?",
                 "options": [
-                    "five and a half",
-                    "five half",
-                    "fifth and half",
-                    "five point half",
+                    "three quarters",
+                    "three quarter",
+                    "third quarters",
+                    "three fourth one",
                 ],
-                "answer": "five and a half",
-                "explanation": (
-                    "В mixed number используется and."
-                ),
+                "answer":
+                    "three quarters",
+                "explanation":
+                    "3/4 = THREE QUARTERS.",
             },
 
+
+            # SECTION 3
             {
                 "order": 5,
-                "prompt": "6.09:",
+                "section": 3,
+                "prompt":
+                    "2 1/2 = ?",
                 "options": [
-                    "six point nine",
-                    "six point zero nine",
-                    "six point ninety",
-                    "six comma zero nine",
+                    "two and a half",
+                    "two half",
+                    "two point half",
+                    "second and half",
                 ],
-                "answer": "six point zero nine",
-                "explanation": (
-                    "После point цифры читаются отдельно."
-                ),
+                "answer":
+                    "two and a half",
+                "explanation":
+                    "Mixed number → whole number + AND + fraction.",
             },
 
             {
                 "order": 6,
-                "prompt": "0.125:",
+                "section": 3,
+                "prompt":
+                    "3 1/4 = ?",
+                "options": [
+                    "three and a quarter",
+                    "three quarter",
+                    "third and one quarter",
+                    "three point quarter",
+                ],
+                "answer":
+                    "three and a quarter",
+                "explanation":
+                    "3 1/4 = THREE AND A QUARTER.",
+            },
+
+
+            # SECTION 4
+            {
+                "order": 7,
+                "section": 4,
+                "prompt":
+                    "Half of the work ___ finished.",
+                "options": [
+                    "is",
+                    "are",
+                    "were",
+                    "have",
+                ],
+                "answer":
+                    "is",
+                "explanation":
+                    "WORK = uncountable → singular verb.",
+            },
+
+            {
+                "order": 8,
+                "section": 4,
+                "prompt":
+                    "Half of the students ___ absent.",
+                "options": [
+                    "are",
+                    "is",
+                    "was",
+                    "has",
+                ],
+                "answer":
+                    "are",
+                "explanation":
+                    "STUDENTS = plural → ARE.",
+            },
+
+
+            # SECTION 5
+            {
+                "order": 9,
+                "section": 5,
+                "prompt":
+                    "3.14 = ?",
+                "options": [
+                    "three point one four",
+                    "three point fourteen",
+                    "three fourteen",
+                    "three comma one four",
+                ],
+                "answer":
+                    "three point one four",
+                "explanation":
+                    "После POINT цифры читаем отдельно.",
+            },
+
+            {
+                "order": 10,
+                "section": 5,
+                "prompt":
+                    "Choose the normal English decimal notation.",
+                "options": [
+                    "2.5",
+                    "2,5",
+                    "2:5",
+                    "2/5",
+                ],
+                "answer":
+                    "2.5",
+                "explanation":
+                    "В английской записи decimal separator — точка.",
+            },
+
+
+            # SECTION 6
+            {
+                "order": 11,
+                "section": 6,
+                "prompt":
+                    "6.08 = ?",
+                "options": [
+                    "six point zero eight",
+                    "six point eight",
+                    "six point eighty",
+                    "six comma zero eight",
+                ],
+                "answer":
+                    "six point zero eight",
+                "explanation":
+                    "ZERO после POINT нужно прочитать.",
+            },
+
+            {
+                "order": 12,
+                "section": 6,
+                "prompt":
+                    "0.125 = ?",
                 "options": [
                     "zero point one two five",
                     "zero point one hundred twenty-five",
                     "one hundred twenty-five point zero",
                     "zero comma one two five",
                 ],
-                "answer": "zero point one two five",
-                "explanation": (
-                    "Decimal digits после point читаются отдельно."
-                ),
+                "answer":
+                    "zero point one two five",
+                "explanation":
+                    "После POINT цифры читаются отдельно.",
             },
 
+
+            # SECTION 7
             {
-                "order": 7,
-                "prompt": "75%:",
+                "order": 13,
+                "section": 7,
+                "prompt":
+                    "75% = ?",
                 "options": [
                     "seventy-five per cent",
                     "seventy-fifth per cent",
-                    "seventy-five percentages",
+                    "seventy-five percentage",
                     "per cent seventy-five",
                 ],
-                "answer": "seventy-five per cent",
-                "explanation": (
-                    "После конкретного числа используется per cent."
-                ),
-            },
-
-            {
-                "order": 8,
-                "prompt": "A high ___ of students passed.",
-                "options": [
-                    "per cent",
-                    "percentage",
-                    "percentages exactly",
-                    "percent number",
-                ],
-                "answer": "percentage",
-                "explanation": (
-                    "Без конкретного числа: a high percentage."
-                ),
-            },
-
-            {
-                "order": 9,
-                "prompt": "Sales increased ___ ten per cent.",
-                "options": [
-                    "to",
-                    "by",
-                    "from",
-                    "at",
-                ],
-                "answer": "by",
-                "explanation": (
-                    "BY показывает величину изменения."
-                ),
-            },
-
-            {
-                "order": 10,
-                "prompt": "The rate increased ___ 5% ___ 8%.",
-                "options": [
-                    "by / to",
-                    "from / to",
-                    "at / from",
-                    "to / by",
-                ],
-                "answer": "from / to",
-                "explanation": (
-                    "Начальное и конечное значения → from...to."
-                ),
-            },
-
-            {
-                "order": 11,
-                "prompt": "Half of the work ___ complete.",
-                "options": [
-                    "are",
-                    "is",
-                    "were",
-                    "have",
-                ],
-                "answer": "is",
-                "explanation": (
-                    "Work неисчисляемое → singular verb."
-                ),
-            },
-
-            {
-                "order": 12,
-                "prompt": "Half of the students ___ absent.",
-                "options": [
-                    "is",
-                    "are",
-                    "was",
-                    "has",
-                ],
-                "answer": "are",
-                "explanation": (
-                    "Students plural → are."
-                ),
-            },
-
-            {
-                "order": 13,
-                "prompt": "One in five students ___ part-time.",
-                "options": [
-                    "work",
-                    "works",
-                    "working",
-                    "have worked always",
-                ],
-                "answer": "works",
-                "explanation": (
-                    "One in five students = one student out of every five."
-                ),
+                "answer":
+                    "seventy-five per cent",
+                "explanation":
+                    "Конкретное число + PER CENT.",
             },
 
             {
                 "order": 14,
-                "prompt": "2.5 million:",
+                "section": 7,
+                "prompt":
+                    "A high ___ of students passed.",
                 "options": [
-                    "two point five millions",
-                    "two point five million",
-                    "two and five million",
-                    "two fifth million",
+                    "percentage",
+                    "per cent",
+                    "percent number",
+                    "percentages exactly",
                 ],
-                "answer": "two point five million",
-                "explanation": (
-                    "После точного числа million не получает -s."
-                ),
+                "answer":
+                    "percentage",
+                "explanation":
+                    "Без конкретного числа используем PERCENTAGE.",
             },
 
+
+            # SECTION 8
             {
                 "order": 15,
-                "prompt": "At least 30% means:",
+                "section": 8,
+                "prompt":
+                    "Sales increased ___ 10%.",
                 "options": [
-                    "не более 30%",
-                    "ровно 30%",
-                    "не менее 30%",
-                    "около 30% обязательно",
+                    "by",
+                    "to",
+                    "from",
+                    "at",
                 ],
-                "answer": "не менее 30%",
-                "explanation": (
-                    "At least = не менее."
-                ),
+                "answer":
+                    "by",
+                "explanation":
+                    "BY = величина изменения.",
             },
 
             {
                 "order": 16,
-                "prompt": "Choose the correct reading of 3/4.",
+                "section": 8,
+                "prompt":
+                    "The rate increased ___ 10%.",
                 "options": [
-                    "three quarter",
-                    "three quarters",
-                    "third quarters",
-                    "three fourth one",
+                    "to",
+                    "by",
+                    "from",
+                    "of",
                 ],
-                "answer": "three quarters",
-                "explanation": (
-                    "3/4 = three quarters."
-                ),
+                "answer":
+                    "to",
+                "explanation":
+                    "TO = новое значение.",
             },
 
+
+            # SECTION 9
             {
                 "order": 17,
-                "prompt": "Choose the correct reading of 3.14.",
+                "section": 9,
+                "prompt":
+                    "The rate increased ___ 4% ___ 7%.",
                 "options": [
-                    "three point fourteen",
-                    "three point one four",
-                    "three fourteen",
-                    "three comma one four",
+                    "from / to",
+                    "by / to",
+                    "to / from",
+                    "at / by",
                 ],
-                "answer": "three point one four",
-                "explanation": (
-                    "После point цифры читаются отдельно."
-                ),
+                "answer":
+                    "from / to",
+                "explanation":
+                    "Начальное и конечное значения → FROM…TO.",
             },
 
             {
                 "order": 18,
-                "prompt": "Choose the correct decimal notation in English.",
+                "section": 9,
+                "prompt":
+                    "Prices fell from $30 ___ $25.",
                 "options": [
-                    "2,5",
-                    "2.5",
-                    "2:5",
-                    "2/5 for decimal",
+                    "to",
+                    "by",
+                    "from",
+                    "of",
                 ],
-                "answer": "2.5",
-                "explanation": (
-                    "В английской записи decimal separator — точка."
-                ),
+                "answer":
+                    "to",
+                "explanation":
+                    "FROM $30 TO $25.",
             },
 
+
+            # SECTION 10
             {
                 "order": 19,
-                "prompt": "Choose the correct mixed-number phrase.",
+                "section": 10,
+                "prompt":
+                    "4:1 is read:",
                 "options": [
-                    "one and a half hour",
-                    "one and a half hours",
-                    "one half and hour",
-                    "one and half hours",
+                    "four to one",
+                    "four and one",
+                    "four point one",
+                    "one from four",
                 ],
-                "answer": "one and a half hours",
-                "explanation": (
-                    "После one and a half обычно plural noun."
-                ),
+                "answer":
+                    "four to one",
+                "explanation":
+                    "Ratio 4:1 → FOUR TO ONE.",
             },
 
             {
                 "order": 20,
-                "prompt": "Choose the correct ratio reading for 4:1.",
+                "section": 10,
+                "prompt":
+                    "Seven out of ten students passed means:",
                 "options": [
-                    "four and one",
-                    "four to one",
-                    "four point one",
-                    "one from four",
+                    "7 из 10 студентов сдали",
+                    "7 студентов из 100 сдали",
+                    "10 из 7 студентов сдали",
+                    "7% студентов сдали",
                 ],
-                "answer": "four to one",
-                "explanation": (
-                    "Ratio 4:1 → four to one."
-                ),
-            },
-
-            {
-                "order": 21,
-                "prompt": "Choose the correct PERCENT / PERCENTAGE pair.",
-                "options": [
-                    (
-                        "twenty per cent / "
-                        "a high percentage"
-                    ),
-                    (
-                        "twenty percentage / "
-                        "a high per cent"
-                    ),
-                    (
-                        "twenty percentages / "
-                        "a high percent number"
-                    ),
-                    (
-                        "percentage twenty / "
-                        "per cent high"
-                    ),
-                ],
-                "answer": (
-                    "twenty per cent / "
-                    "a high percentage"
-                ),
-                "explanation": (
-                    "После числа → per cent; "
-                    "общее значение → percentage."
-                ),
-            },
-
-            {
-                "order": 22,
-                "prompt": "Choose the correct BY / TO meaning pair.",
-                "options": [
-                    (
-                        "increase by 5% = increase на 5% / "
-                        "increase to 5% = increase до 5%"
-                    ),
-                    (
-                        "increase by 5% = increase до 5% / "
-                        "increase to 5% = increase на 5%"
-                    ),
-                    (
-                        "by and to always mean the same",
-                    ),
-                    (
-                        "by is only for time / to is only for place",
-                    ),
-                ],
-                "answer": (
-                    "increase by 5% = increase на 5% / "
-                    "increase to 5% = increase до 5%"
-                ),
-                "explanation": (
-                    "BY = величина изменения; TO = новое значение."
-                ),
-            },
-
-            {
-                "order": 23,
-                "prompt": "Choose the correct fraction/agreement pair.",
-                "options": [
-                    (
-                        "Two thirds of the work is complete. / "
-                        "Two thirds of the students are ready."
-                    ),
-                    (
-                        "Two thirds of the work are complete. / "
-                        "Two thirds of the students is ready."
-                    ),
-                    (
-                        "Two third of the work is complete. / "
-                        "Two third of the students are ready."
-                    ),
-                    (
-                        "Two thirds of the work be complete. / "
-                        "Two thirds of the students be ready."
-                    ),
-                ],
-                "answer": (
-                    "Two thirds of the work is complete. / "
-                    "Two thirds of the students are ready."
-                ),
-                "explanation": (
-                    "Verb agreement зависит от noun после OF."
-                ),
-            },
-
-            {
-                "order": 24,
-                "prompt": "Choose the fully correct sequence.",
-                "options": [
-                    (
-                        "1/2 → one half / "
-                        "2/3 → two thirds / "
-                        "2 1/2 → two and a half / "
-                        "2.75 → two point seven five / "
-                        "25% → twenty-five per cent / "
-                        "3:1 → three to one"
-                    ),
-                    (
-                        "1/2 → one second / "
-                        "2/3 → two third / "
-                        "2 1/2 → two point half / "
-                        "2.75 → two point seventy-five / "
-                        "25% → twenty-five percentage / "
-                        "3:1 → three by one"
-                    ),
-                    (
-                        "1/2 → half one / "
-                        "2/3 → second thirds / "
-                        "2 1/2 → second and half / "
-                        "2.75 → two comma seven five / "
-                        "25% → per cent twenty-five / "
-                        "3:1 → three and one"
-                    ),
-                    (
-                        "1/2 → first two / "
-                        "2/3 → two three / "
-                        "2 1/2 → two halves / "
-                        "2.75 → two point seventy five / "
-                        "25% → twenty-fifth per cent / "
-                        "3:1 → one from three"
-                    ),
-                ],
-                "answer": (
-                    "1/2 → one half / "
-                    "2/3 → two thirds / "
-                    "2 1/2 → two and a half / "
-                    "2.75 → two point seven five / "
-                    "25% → twenty-five per cent / "
-                    "3:1 → three to one"
-                ),
-                "explanation": (
-                    "Это основные модели fractions, decimals, "
-                    "percentages и ratios."
-                ),
+                "answer":
+                    "7 из 10 студентов сдали",
+                "explanation":
+                    "SEVEN OUT OF TEN = семь из десяти.",
             },
 
         ]
 
-        for data in exercises:
+
+        # =================================================
+        # FINAL TEST — 10 NEW QUESTIONS
+        # =================================================
+
+        final_test = [
+
+            {
+                "order": 21,
+                "prompt":
+                    "4/5 = ?",
+                "options": [
+                    "four fifths",
+                    "four fifth",
+                    "fourth five",
+                    "four fives",
+                ],
+                "answer":
+                    "four fifths",
+                "explanation":
+                    "Numerator > 1 → denominator plural.",
+            },
+
+            {
+                "order": 22,
+                "prompt":
+                    "5 3/4 = ?",
+                "options": [
+                    "five and three quarters",
+                    "five three quarter",
+                    "fifth and three quarters",
+                    "five point three quarters",
+                ],
+                "answer":
+                    "five and three quarters",
+                "explanation":
+                    "Mixed number → FIVE AND THREE QUARTERS.",
+            },
+
+            {
+                "order": 23,
+                "prompt":
+                    "Two thirds of the water ___ been used.",
+                "options": [
+                    "has",
+                    "have",
+                    "are",
+                    "were",
+                ],
+                "answer":
+                    "has",
+                "explanation":
+                    "WATER = uncountable → singular HAS.",
+            },
+
+            {
+                "order": 24,
+                "prompt":
+                    "Two thirds of the employees ___ completed the training.",
+                "options": [
+                    "have",
+                    "has",
+                    "is",
+                    "was",
+                ],
+                "answer":
+                    "have",
+                "explanation":
+                    "EMPLOYEES = plural → HAVE.",
+            },
+
+            {
+                "order": 25,
+                "prompt":
+                    "12.04 = ?",
+                "options": [
+                    "twelve point zero four",
+                    "twelve point four",
+                    "twelve point forty",
+                    "twelve comma zero four",
+                ],
+                "answer":
+                    "twelve point zero four",
+                "explanation":
+                    "После POINT читаем каждую цифру.",
+            },
+
+            {
+                "order": 26,
+                "prompt":
+                    "40% = ?",
+                "options": [
+                    "forty per cent",
+                    "fortieth per cent",
+                    "forty percentage",
+                    "per cent forty",
+                ],
+                "answer":
+                    "forty per cent",
+                "explanation":
+                    "40% → FORTY PER CENT.",
+            },
+
+            {
+                "order": 27,
+                "prompt":
+                    "Revenue increased ___ 8%. The 8% is the size of the change.",
+                "options": [
+                    "by",
+                    "to",
+                    "from",
+                    "at",
+                ],
+                "answer":
+                    "by",
+                "explanation":
+                    "BY показывает размер изменения.",
+            },
+
+            {
+                "order": 28,
+                "prompt":
+                    "The unemployment rate fell ___ 7% ___ 5%.",
+                "options": [
+                    "from / to",
+                    "by / to",
+                    "to / from",
+                    "from / by",
+                ],
+                "answer":
+                    "from / to",
+                "explanation":
+                    "FROM = начальное значение; TO = конечное.",
+            },
+
+            {
+                "order": 29,
+                "prompt":
+                    "Choose the correct PERCENT / PERCENTAGE pair.",
+                "options": [
+                    "twenty per cent / a high percentage",
+                    "twenty percentage / a high per cent",
+                    "twenty percentages / a high percent number",
+                    "percentage twenty / per cent high",
+                ],
+                "answer":
+                    "twenty per cent / a high percentage",
+                "explanation":
+                    "После конкретного числа → PER CENT; общее понятие → PERCENTAGE.",
+            },
+
+            {
+                "order": 30,
+                "prompt":
+                    "Choose the fully correct sequence.",
+                "options": [
+                    "1/2 → one half / 2/3 → two thirds / 2.75 → two point seven five / 25% → twenty-five per cent / 3:1 → three to one",
+                    "1/2 → one second / 2/3 → two third / 2.75 → two point seventy-five / 25% → twenty-five percentage / 3:1 → three by one",
+                    "1/2 → half one / 2/3 → second thirds / 2.75 → two comma seven five / 25% → per cent twenty-five / 3:1 → three and one",
+                    "1/2 → first two / 2/3 → two three / 2.75 → two point seventy five / 25% → twenty-fifth per cent / 3:1 → one from three",
+                ],
+                "answer":
+                    "1/2 → one half / 2/3 → two thirds / 2.75 → two point seven five / 25% → twenty-five per cent / 3:1 → three to one",
+                "explanation":
+                    "Это основные модели Fractions, Decimals, Percentages and Ratios.",
+            },
+
+        ]
+
+
+        all_exercises = (
+            training
+            +
+            final_test
+        )
+
+        valid_orders = [
+            item["order"]
+            for item in all_exercises
+        ]
+
+
+        for data in all_exercises:
+
+            if data["order"] <= 20:
+
+                section = (
+                    section_objects[
+                        data["section"]
+                    ]
+                )
+
+            else:
+
+                section = None
+
+
             GrammarExercise.objects.update_or_create(
                 lesson=lesson,
                 order=data["order"],
                 defaults={
-                    "exercise_type": GrammarExercise.Type.CHOICE,
-                    "prompt": data["prompt"],
-                    "options": data["options"],
-                    "correct_answer": data["answer"],
-                    "explanation": data["explanation"],
-                    "is_published": True,
+                    "section":
+                        section,
+
+                    "exercise_type":
+                        "choice",
+
+                    "prompt":
+                        data["prompt"],
+
+                    "options":
+                        data["options"],
+
+                    "correct_answer":
+                        data["answer"],
+
+                    "explanation":
+                        data["explanation"],
+
+                    "is_published":
+                        True,
                 },
             )
 
+
+        GrammarExercise.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__in=valid_orders,
+        ).delete()
+
+
+        GrammarLessonSection.objects.filter(
+            lesson=lesson,
+        ).exclude(
+            order__in=[
+                item["order"]
+                for item in sections
+            ],
+        ).delete()
+
+
         self.stdout.write(
             self.style.SUCCESS(
-                "✅ A1 Lesson 60 seeded: Fractions and Decimals"
+                "✅ Interactive A1 Lesson 60 seeded"
             )
         )
 
         self.stdout.write(
-            f"Sections: {lesson.sections.count()}"
+            f"Micro rules: "
+            f"{lesson.sections.count()}"
         )
 
         self.stdout.write(
-            f"Exercises: {lesson.exercises.count()}"
+            "Training exercises: "
+            f"{lesson.exercises.filter(section__isnull=False).count()}"
+        )
+
+        self.stdout.write(
+            "Final test: "
+            f"{lesson.exercises.filter(section__isnull=True).count()}"
         )
